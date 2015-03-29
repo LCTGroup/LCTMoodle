@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAOLayer;
 
 namespace DTOLayer
 {
     public class DTO
     {
-        public virtual void ganDTO(System.Data.SqlClient.SqlDataReader dong);
+        public virtual void ganDTO(System.Data.SqlClient.SqlDataReader dong);        
     }
 }
