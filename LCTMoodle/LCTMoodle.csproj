@@ -112,12 +112,14 @@
     <Folder Include="Content\scripts\LCT\" />
     <Folder Include="fonts\" />
     <Folder Include="Scripts\" />
+    <Folder Include="Views\NguoiDung\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\KhoaHocController.cs" />
+    <Compile Include="Controllers\NguoiDungController.cs" />
     <Compile Include="Controllers\TrangChuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
