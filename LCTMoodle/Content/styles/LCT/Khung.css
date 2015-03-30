@@ -1,0 +1,386 @@
+﻿/*#region General */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+ul, ol {
+    list-style: none;
+}
+li {
+    display: block;
+}
+body {
+    font: normal 13px Tahoma;
+    background-color: #f5f5f5;
+}
+a {
+    color: #000;
+    text-decoration: none;
+}
+.site-image {
+    background-image: url('../../images/AllSiteImages.png');
+}
+@font-face {
+    font-family: Freeway;
+    src: url('../../fonts/SFUFreewayLight.ttf');
+}
+@font-face {
+    font-family: Berlin;
+    src: url('../../fonts/Berlin Sans FB.ttf');
+}
+@font-face {
+    font-family: Akashi;
+    src: url('../../fonts/UTM Akashi.ttf');
+}
+@font-face {
+    font-family: TamLe;
+    src: url('../../fonts/UTM Tam Le.ttf');
+}
+
+/*#endregion */
+
+/*#region Header */
+
+header {
+    position: relative;
+}
+
+/*#region Logo */
+
+header .logo {
+    height: 65px;
+    width: 370px;
+    position: absolute;
+    z-index: 11;
+    bottom: 8px;
+    left: 0px;
+}
+    header .logo a {
+        display: block;
+        height: 65px;
+        width: 370px;
+        background-position: 0px 0px;
+    }
+
+/*#endregion */
+
+/*#region Top header */
+
+header .top-header,
+header .buffer-top-header {
+    height: 35px;
+    width: 100%;
+}
+header .buffer-top-header {
+    visibility: hidden;
+}
+header .top-header {
+    background-color: #004263;
+    border-bottom: #003048 solid 1px;
+    position: fixed;
+    z-index: 10;
+}
+
+/*#endregion */
+
+/*#region Bottom header */
+
+header .bottom-header {
+    height: 50px;
+    background-image: linear-gradient(top, #f8f8f8, #fff);
+    background-image: -moz-linear-gradient(top, #f8f8f8, #fff);
+    background-image: -webkit-linear-gradient(top, #f8f8f8, #fff);
+    background-image: -o-linear-gradient(top, #f8f8f8, #fff);
+    border-bottom: 1px solid #eee;
+}
+    header .bottom-header nav {
+        float: right;
+        height: 50px;
+    }
+        header .bottom-header nav li {
+            display: block;
+            float: left;
+            border-left: 1px dashed #eee;
+        }
+        header .bottom-header nav a {
+            display: block;
+            line-height: 50px;
+            padding: 0px 10px;
+            font-family: Freeway;
+            font-size: 16px;
+            position: relative;
+        }
+        header .bottom-header nav i {
+            font-size: 30px;
+            vertical-align: -6px;
+        }
+        header .bottom-header nav a u {
+            height: 3px;
+            width: 0%;
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            background-color: #08c;
+            opacity: 0;
+            transition: 0.5s;
+        }
+        header .bottom-header nav a:hover u {
+            opacity: 1;
+            width: 100%;
+            transition: width 0.5s, opacity 1.5s;
+        }
+
+/*#endregion */
+
+/*#endregion */
+
+/*#region Điều hướng */
+
+.thanh-dieu-huong {
+    padding-left: 10px;
+    padding-top: 20px;
+}
+    .thanh-dieu-huong:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    .thanh-dieu-huong li {
+        display:block;
+        background-color: #fff;
+        float:left;
+        position: relative;
+        height: 30px;
+        margin-right: 4px;
+        line-height: 30px;
+        font-family: Freeway;
+    }
+    .thanh-dieu-huong li:before, 
+    .thanh-dieu-huong li:after {
+        border: 15px solid transparent;
+        position: absolute;
+        content: "";
+    }
+    .thanh-dieu-huong li:before {
+        top: 0px;
+        left: 0px;
+        border-left-color: #f5f5f5;
+        z-index: 1;
+    }
+    .thanh-dieu-huong li:after {
+        top: 0px;
+        left: 100%;
+        border-left-color: white;
+        z-index: 2;
+    }
+    .thanh-dieu-huong li:first-child:before {
+        border: none;
+    }
+    .thanh-dieu-huong li:last-child {
+        background-color: #08c;
+        color: white;
+    }
+    .thanh-dieu-huong li:last-child:after {
+        border-left-color: #08c;
+    }
+    .thanh-dieu-huong li a {
+        display: block;
+        padding: 0 10px 0 25px;
+        font-size: 15px;
+        transition: 0.5s;
+        z-index: 2;
+        position: relative;
+        max-width: 400px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .thanh-dieu-huong li:first-child a {
+        padding-left: 15px;
+    }
+    .thanh-dieu-huong li:first-child a:hover {
+        padding-left: 25px;
+    }
+    .thanh-dieu-huong li a:hover {
+        padding: 0 20px 0 35px;
+    }
+    .thanh-dieu-huong li:last-child a {
+        color: white;
+    }
+
+/*#endregion */
+
+/*#region Main */
+
+main {
+    min-height: calc(100vh - 85px);
+    padding: 20px 15px 20px 10px;
+    display: flex;
+}
+
+/*#region Cột trái */
+
+main > .cot-trai {
+    min-width: 210px;
+    max-width: 210px;
+}
+
+/*#region Khung menu */
+
+.cot-trai .menu {
+    border: 1px solid #ddd;
+}
+
+/*#region Thông tin người dùng */
+
+.cot-trai .khung-thong-tin {
+    background-color: #fbfbfb;
+    padding: 10px;
+    height: 40px;
+}
+
+/*#endregion */
+
+/*#region Menu */
+
+.cot-trai nav {
+    border-top: none;
+}
+    .cot-trai nav > ul > li {
+        background-color: #fefefe;
+        border-top: 1px solid #ddd;
+    }
+    .cot-trai nav li li {
+        background-color: #fbfbfb;
+        border-top: 1px solid #e5e5e5;
+    }
+    .cot-trai nav a {
+        display: block;
+        position: relative;
+        color: #333;
+    }
+    .cot-trai nav li:hover > a {
+        color: #000;
+    }
+    .cot-trai nav u {
+        display: block;
+        position: absolute;
+        background-color: #ddd;
+        left: 0px;
+        top: 0px;
+        transition: 0.5s;
+    }
+    .cot-trai nav > ul > li > a {
+        line-height: 30px;
+        padding: 5px 0px 5px 15px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    .cot-trai nav > ul > li > a u {
+        width: 5px;
+        height: 100%;
+    }
+        .cot-trai nav > ul > li:hover > a u,
+        .cot-trai nav > ul > li > a:hover u {
+            background-color: #08c;
+        }
+    .cot-trai nav > ul > li > ul > li > a {
+        padding: 5px 0px 5px 10px;
+        font-size: 13px;
+        line-height: 20px;
+    }
+    .cot-trai nav > ul > li > ul > li > a u {
+        width: 3px;
+        height: 0px;
+    }
+        .cot-trai nav > ul > li > ul > li > a:hover u {
+            background-color: #08c;
+            height: 100%;
+        }
+
+/*#endregion */
+
+/*#endregion */
+
+/*#endregion */
+
+/*#region Cột phải */
+
+main > .cot-phai {
+    min-width: 240px;
+    max-width: 240px;
+}
+
+/*#region Chức năng */
+
+.cot-phai > .khung-chuc-nang {
+    border-left: 2px solid #ddd;
+    padding-left: 15px;
+    height: 500px;
+}
+.khung-chuc-nang .hop-chuc-nang {
+    margin-bottom: 20px;
+}
+.khung-chuc-nang .ten-chuc-nang {
+    color: #08c;
+    line-height: 30px;
+    font: normal 20px Freeway;
+    position: relative;
+    margin-bottom: 10px;
+}
+    .khung-chuc-nang .ten-chuc-nang:before {
+        content: '';
+        position: absolute;
+        display: block;
+        background-color: #fff;
+        width: 10px;
+        height: 10px;
+        border: 2px solid #ddd;
+        border-radius: 50%;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        top: 9px;
+        left: -23px;
+    }
+
+/*#endregion */
+
+/*#endregion */
+
+/*#region Cột giữa */
+
+main > .cot-giua {
+    width: 100%;
+    padding: 0px 20px;
+}
+
+.cot-giua > .hop {
+
+}
+.cot-giua > .hop > .tieu-de {
+    font: normal 20px Freeway;
+    color: #08c;
+    line-height: 30px;
+    margin-bottom: 10px;
+}
+.cot-giua > .hop > .noi-dung {
+
+}
+
+/*#endregion */
+
+/*#endregion */
+
+/*#region Footer */
+
+footer {
+    background-color: #004263;
+    border-top: #003048 solid 1px;
+    padding: 20px;
+    font-family: Akashi;
+    color: #fff;
+    text-align: center;
+}
+
+/*#endregion */

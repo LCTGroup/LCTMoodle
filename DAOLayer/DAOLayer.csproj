@@ -44,7 +44,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DTO\DTOLayer.csproj">
+    <ProjectReference Include="..\DTOLayer\DTOLayer.csproj">
       <Project>{f03e2462-211a-47ab-bb76-9ad537ea4734}</Project>
       <Name>DTOLayer</Name>
     </ProjectReference>
