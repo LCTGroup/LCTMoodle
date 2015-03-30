@@ -12,5 +12,10 @@ namespace LCTMoodle.Controllers
         {
             return View();
         }
+
+        public ActionResult FormMau()
+        {
+            return View();
+        }
 	}
 }

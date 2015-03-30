@@ -358,6 +358,7 @@
     <Content Include="Views\LCT\Khung.cshtml" />
     <Content Include="Views\TrangChu\Index.cshtml" />
     <Content Include="Views\KhoaHoc\TaoKhoaHoc.cshtml" />
+    <Content Include="Views\TrangChu\FormMau.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

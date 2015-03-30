@@ -1,24 +1,29 @@
 ﻿.lct-form {
-    background-color: #fafafa;
-    border: 1px solid #eee;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 5px;
 }
     .lct-form:after {
         content: '';
         display: block;
         clear: both;
     }
-.lct-form > ul {
+.lct-form > article {
+    background-color: #fcfcfc;
+    border: 1px solid #eee;
+}
+.lct-form > article > ul {
     padding: 10px;
 }
-.lct-form > ul > li {
+.lct-form > article > ul > li {
     display: flex;
     margin: 10px 0px;
 }
-.lct-form > ul > li > .tieu-de {
+.lct-form > article > ul > li > .tieu-de {
     min-width: 200px;
     max-width: 200px;
 }
-.lct-form > ul > li > .noi-dung {
+.lct-form > article > ul > li > .noi-dung {
     width: 100%;
 }
 .lct-form .tieu-de label {
@@ -111,7 +116,7 @@
         height: 14px;
         display: block;
         background-color: #eee;
-        transition: 0.3s;
+        transition: 0.5s;
     }
     .lct-form input[type="checkbox"] + u:before {
         width: 3px;
@@ -125,9 +130,11 @@
     }
     .lct-form label:hover > input[type="checkbox"] + u:before {
         width: 5px;
+        background-color: #08c;
     }
     .lct-form label:hover > input[type="radio"] + u:before {
         transform: scale(0.5);
+        background-color: #08c;
     }
     .lct-form input[type="checkbox"]:checked + u:before,
     .lct-form input[type="radio"]:checked + u:before {
@@ -137,7 +144,7 @@
         width: 14px;
     }
     .lct-form input[type="radio"]:checked + u:before {
-        transform: none;
+        transform: scale(0.95);
     }
     .lct-form label:hover > input[type="checkbox"]:checked + u:before {
         width: 11px;
@@ -187,26 +194,60 @@
     border: 1px solid #ddd;
     background-color: #fff;
     padding: 0px 20px;
-    height: 30px;
+    height: 35px;
     margin: 0px 3px;
     font-weight: bold;
     color: #333;
     position: relative;
     outline: none;
+    transition: color 0.5s;
 }
-    .lct-form button u {
-        background-color: #eee;
+    .lct-form button:after {
+        content: '';
         display: block;
-    }
-    .lct-form button u:nth-child(1),
-    .lct-form button u:nth-child(3) {
-        width: 100%;
+        background-color: #eee;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 0%;
         height: 3px;
+        transition: 0.5s;
     }
-    .lct-form button u:nth-child(2),
-    .lct-form button u:nth-child(4) {
-        height: 30px;
-        width: 3px;
+    .lct-form button:hover:after,
+    .lct-form button:focus:after {
+        width: 100%;
+    }
+    .lct-form button.chap-nhan:hover:after,
+    .lct-form button.chap-nhan:focus:after {
+        background-color: #08c;
+    }
+    .lct-form button.thong-tin:hover:after,
+    .lct-form button.thong-tin:focus:after {
+        background-color: #0c0;
+    }
+    .lct-form button.can-than:hover:after,
+    .lct-form button.can-than:focus:after {
+        background-color: #fb0;
+    }
+    .lct-form button.nguy-hiem:hover:after,
+    .lct-form button.nguy-hiem:focus:after {
+        background-color: #e00;
+    }
+    .lct-form button.chap-nhan:hover,
+    .lct-form button.chap-nhan:focus {
+        color: #08c;
+    }
+    .lct-form button.thong-tin:hover,
+    .lct-form button.thong-tin:focus {
+        color: #0c0;
+    }
+    .lct-form button.can-than:hover,
+    .lct-form button.can-than:focus {
+        color: #fb0;
+    }
+    .lct-form button.nguy-hiem:hover,
+    .lct-form button.nguy-hiem:focus {
+        color: #e00;
     }
 
 /*#endregion */
