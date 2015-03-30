@@ -1,0 +1,212 @@
+﻿.lct-form {
+    background-color: #fafafa;
+    border: 1px solid #eee;
+}
+    .lct-form:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+.lct-form > ul {
+    padding: 10px;
+}
+.lct-form > ul > li {
+    display: flex;
+    margin: 10px 0px;
+}
+.lct-form > ul > li > .tieu-de {
+    min-width: 200px;
+    max-width: 200px;
+}
+.lct-form > ul > li > .noi-dung {
+    width: 100%;
+}
+.lct-form .tieu-de label {
+    color: #555;
+    text-align: right;
+    display: block;
+    padding: 5px;
+    padding-right: 10px;
+    line-height: 20px;
+}
+.lct-form .input {
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+/*#region text, password */
+
+.lct-form input:not([type]),
+.lct-form input[type="text"],
+.lct-form input[type="password"] {
+    border: none;
+    line-height: 20px;
+    padding: 5px 8px;
+    width: calc(100% - 19px);
+    outline: none;
+    border-left: 3px solid #eee;
+    transition: 0.5s;
+}
+    .lct-form input:not([type]):hover,
+    .lct-form input[type="text"]:hover,
+    .lct-form input[type="password"]:hover,
+    .lct-form input:not([type]):focus,
+    .lct-form input[type="text"]:focus,
+    .lct-form input[type="password"]:focus {
+        border-left-color: #08c;
+    }
+
+/*#endregion */
+
+/*#region Textarea */
+
+.lct-form textarea {
+    min-width: calc(100% - 19px);
+    max-width: calc(100% - 19px);
+    padding: 5px 8px;
+    border: none;
+    outline: none;
+    margin-bottom: -3px;
+    border-left: 3px solid #eee;
+    transition: border-left-color 0.5s;
+    height: 100px;
+}
+
+    .lct-form textarea:hover,
+    .lct-form textarea:focus {
+        border-left-color: #08c;
+    }
+
+/*#endregion */
+
+/*#region Checkbox, Radio */
+
+.lct-form .lct-checkbox-radio-label {
+    display: block;
+    padding: 5px;
+}
+.lct-form input[type="checkbox"],
+.lct-form input[type="radio"] {
+    display: none;
+}
+.lct-form input[type="checkbox"] + u,
+.lct-form input[type="radio"] + u {
+    display: inline-block;
+    vertical-align: middle;
+    width: 14px;
+    height: 14px;
+    padding: 1px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    margin-right: 4px;
+}
+.lct-form input[type="radio"] + u {
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    overflow: hidden;
+}
+    .lct-form input[type="checkbox"] + u:before,
+    .lct-form input[type="radio"] + u:before {
+        content: '';
+        height: 14px;
+        display: block;
+        background-color: #eee;
+        transition: 0.3s;
+    }
+    .lct-form input[type="checkbox"] + u:before {
+        width: 3px;
+    }
+    .lct-form input[type="radio"] + u:before {
+        width: 14px;
+        border-radius: 50%;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        transform: scale(0.3);
+    }
+    .lct-form label:hover > input[type="checkbox"] + u:before {
+        width: 5px;
+    }
+    .lct-form label:hover > input[type="radio"] + u:before {
+        transform: scale(0.5);
+    }
+    .lct-form input[type="checkbox"]:checked + u:before,
+    .lct-form input[type="radio"]:checked + u:before {
+        background-color: #08c;
+    }
+    .lct-form input[type="checkbox"]:checked + u:before {
+        width: 14px;
+    }
+    .lct-form input[type="radio"]:checked + u:before {
+        transform: none;
+    }
+    .lct-form label:hover > input[type="checkbox"]:checked + u:before {
+        width: 11px;
+    }
+    .lct-form label:hover > input[type="radio"]:checked + u:before {
+        transform: scale(0.8);
+    }
+
+/*#endregion */
+
+/*#region Fileupload */
+
+.lct-form .lct-file-label {
+    display: block;
+    padding: 5px;
+    border-left: 3px solid #eee;
+    transition: 0.5s;
+}
+    .lct-form .lct-file-label:hover {
+        border-left-color: #08c;
+    }
+.lct-form input[type="file"] {
+    display: none;
+}
+.lct-form input[type="file"] + u {
+    text-decoration: none !important;
+    margin-right: 4px;
+}
+.lct-form input[type="file"] + u:before {
+    content: '\e68a';
+    font-family: 'Pe-icon-7-stroke';
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+/*#endregion */
+
+/*#region Khung button */
+
+.lct-form .lct-khung-button {
+    border-top: 1px solid #eee;
+    padding: 20px;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+.lct-form button {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 0px 20px;
+    height: 30px;
+    margin: 0px 3px;
+    font-weight: bold;
+    color: #333;
+    position: relative;
+    outline: none;
+}
+    .lct-form button u {
+        background-color: #eee;
+        display: block;
+    }
+    .lct-form button u:nth-child(1),
+    .lct-form button u:nth-child(3) {
+        width: 100%;
+        height: 3px;
+    }
+    .lct-form button u:nth-child(2),
+    .lct-form button u:nth-child(4) {
+        height: 30px;
+        width: 3px;
+    }
+
+/*#endregion */

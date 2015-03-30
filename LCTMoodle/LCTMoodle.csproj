@@ -117,6 +117,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\KhoaHocController.cs" />
     <Compile Include="Controllers\TrangChuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -319,6 +320,7 @@
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\AllSiteImages.png" />
     <Content Include="Content\styles\LCT\bootstrap.css" />
+    <Content Include="Content\styles\LCT\Form.css" />
     <Content Include="Content\styles\LCT\icons.css" />
     <Content Include="Content\styles\LCT\Khung.css" />
     <Content Include="Global.asax" />
@@ -353,6 +355,7 @@
     <None Include="Project_Readme.html" />
     <Content Include="Views\LCT\Khung.cshtml" />
     <Content Include="Views\TrangChu\Index.cshtml" />
+    <Content Include="Views\KhoaHoc\TaoKhoaHoc.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
