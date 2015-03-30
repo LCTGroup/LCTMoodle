@@ -1,2 +1,5 @@
 bin/
 obj/
+BUS/obj/
+DTO/obj/
+DAO/obj/
