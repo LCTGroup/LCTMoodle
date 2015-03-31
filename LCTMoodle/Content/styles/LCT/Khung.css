@@ -81,7 +81,36 @@ header .top-header {
     position: fixed;
     z-index: 10;
 }
-
+    /*#region Hộp người dùng */    
+    .hop-nguoi-dung {
+        float: right;
+    }
+        .hop-nguoi-dung ul {
+            height: 35px;
+            line-height: 35px;
+            margin: 0 6px;
+        }
+            .hop-nguoi-dung ul li {
+                display: inline-block;
+                padding: 0 5px;
+                position: relative;
+            }
+                .hop-nguoi-dung ul li a {
+                    display: block;
+                    color: #fff;
+                }
+                .hop-nguoi-dung ul li a:hover {
+                    text-decoration: underline;
+                }
+            .hop-nguoi-dung ul li:not(:first-of-type):before {
+                content: '|';
+                position: absolute;
+                height: 80%;
+                width: 2px;
+                color: #fff;
+                left: -5px;
+            }
+    /*#endregion */
 /*#endregion */
 
 /*#region Bottom header */
@@ -185,6 +214,7 @@ header .bottom-header {
         border-left-color: #08c;
     }
     .thanh-dieu-huong li a {
+        font-family: Tahoma;
         display: block;
         padding: 0 10px 0 25px;
         font-size: 15px;

@@ -14,5 +14,14 @@ namespace LCTMoodle.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// Đăng nhập
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DangNhap()
+        {
+            return View();
+        }
 	}
 }

@@ -112,7 +112,6 @@
     <Folder Include="Content\scripts\LCT\" />
     <Folder Include="fonts\" />
     <Folder Include="Scripts\" />
-    <Folder Include="Views\NguoiDung\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -325,6 +324,7 @@
     <Content Include="Content\styles\LCT\Form.css" />
     <Content Include="Content\styles\LCT\icons.css" />
     <Content Include="Content\styles\LCT\Khung.css" />
+    <Content Include="Content\styles\NguoiDung\DangNhap.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -359,6 +359,7 @@
     <Content Include="Views\TrangChu\Index.cshtml" />
     <Content Include="Views\KhoaHoc\TaoKhoaHoc.cshtml" />
     <Content Include="Views\TrangChu\FormMau.cshtml" />
+    <Content Include="Views\NguoiDung\DangNhap.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
