@@ -1,0 +1,122 @@
+﻿@{
+    ViewData["TieuDe"] = "Đăng ký";
+    Layout = "~/Views/LCT/Khung.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="/Content/styles/LCT/Form.css" />
+<link rel="stylesheet" type="text/css" href="/Content/styles/NguoiDung/DangKy.css" />
+
+<article class="hop-dang-ky">
+    <section class="tieu-de">
+        <h1>ĐĂNG KÝ TÀI KHOẢN LCT MOODLE</h1>
+        <h1>ĐỂ ĐƯỢC TRẢI NGHIỆM CÁC KHOÁ HỌC BỔ ÍCH</h1>
+    </section>
+    <section class="noi-dung">
+        <form class="lct-form" action="#" method="post">
+            <article>
+                <ul>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Tên tài khoản:</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input type="text" name="TenTaiKhoan" />
+                            </article>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Mật khẩu:</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input type="password" name="MatKhau" />
+                            </article>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Nhập lại mật khẩu:</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input type="password" />
+                            </article>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Email:</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input type="text" name="Email" />
+                            </article>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Họ tên:</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input type="text" name="HoTen" />
+                            </article>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Ngày sinh:</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input type="date" name="TenTaiKhoan" />
+                            </article>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Địa chỉ:</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input type="text" name="DiaChi" />
+                            </article>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Số điện thoại:</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input type="text" name="SoDienThoai" />
+                            </article>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>&nbsp;</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <label class="lct-checkbox-radio-label">
+                                    <input type="checkbox" name="GhiNho" /><u></u>Chấp nhận quy định của Mạng xã hội LCT Moodle
+                                </label>
+                            </article>
+                        </section>
+                    </li>                    
+                </ul>
+                <section class="lct-khung-button">
+                    <button class="chap-nhan">
+                        Đăng Ký
+                    </button>
+                    <button class="nguy-hiem">
+                        Làm lại
+                    </button>
+                </section>
+            </article>
+        </form>
+    </section>
+</article>

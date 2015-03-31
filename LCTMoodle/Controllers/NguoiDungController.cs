@@ -21,6 +21,18 @@ namespace LCTMoodle.Controllers
         /// <returns></returns>
         public ActionResult DangNhap()
         {
+            ViewData["CotTrai"] = false;
+            ViewData["CotPhai"] = false;
+            return View();
+        }
+        /// <summary>
+        /// Đăng ký
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DangKy()
+        {
+            ViewData["CotTrai"] = false;
+            ViewData["CotPhai"] = false;
             return View();
         }
 	}

@@ -324,6 +324,7 @@
     <Content Include="Content\styles\LCT\Form.css" />
     <Content Include="Content\styles\LCT\icons.css" />
     <Content Include="Content\styles\LCT\Khung.css" />
+    <Content Include="Content\styles\NguoiDung\DangKy.css" />
     <Content Include="Content\styles\NguoiDung\DangNhap.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -360,6 +361,7 @@
     <Content Include="Views\KhoaHoc\TaoKhoaHoc.cshtml" />
     <Content Include="Views\TrangChu\FormMau.cshtml" />
     <Content Include="Views\NguoiDung\DangNhap.cshtml" />
+    <Content Include="Views\NguoiDung\DangKy.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
