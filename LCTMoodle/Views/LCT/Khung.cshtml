@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@{
+    bool CotTrai = true; 
+    bool CotPhai = true;
+    if (ViewData["CotTrai"] != null) { CotTrai = (bool)ViewData["CotTrai"]; }
+    if (ViewData["CotPhai"] != null) { CotPhai = (bool)ViewData["CotPhai"]; }
+}
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -15,9 +21,16 @@
     <!-- Header -->
     <header>
         <section class="logo">
-            <a href="#" class="site-image"></a>
+            <a href="/TrangChu/Index" class="site-image"></a>
         </section>
-        <section class="top-header"></section>
+        <section class="top-header">
+            <article class="hop-nguoi-dung">
+                <ul>
+                    <li><a href="/NguoiDung/DangNhap">Đăng nhập</a></li>
+                    <li><a href="/NguoiDung/DangKy">Đăng ký</a></li>
+                </ul>
+            </article>
+        </section>
         <section class="buffer-top-header"></section>
         <section class="bottom-header">
             <nav>
@@ -51,7 +64,7 @@
             </li>
             <li>
                 <a href="#">
-                    Khóa học của tôi
+                    @ViewData["TieuDe"]
                 </a>
             </li>
         </ul>
@@ -59,55 +72,61 @@
 
     <main>
         <!-- Cột trái -->
-        <aside class="cot-trai">
-            <article class="menu">
-                <section class="khung-thong-tin"></section>
-                <nav>
-                    <ul>
-                        <li>
-                            <a>
-                                <u></u>
-                                Khóa học
-                            </a>
+        @{
+            if (CotTrai == true)
+            {
+                <aside class="cot-trai">
+                    <article class="menu">
+                        <section class="khung-thong-tin"></section>
+                        <nav>
                             <ul>
                                 <li>
-                                    <a href="#">
+                                    <a>
                                         <u></u>
-                                        Tên khóa học
+                                        Khóa học
                                     </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <u></u>
+                                                Tên khóa học
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <u></u>
+                                                Tên khóa học
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a>
                                         <u></u>
-                                        Tên khóa học
+                                        Khóa học của tôi
                                     </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <u></u>
+                                                Tên khóa học
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <u></u>
+                                                Tên khóa học
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
-                        </li>
-                        <li>
-                            <a>
-                                <u></u>
-                                Khóa học của tôi
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <u></u>
-                                        Tên khóa học
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <u></u>
-                                        Tên khóa học
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </article>
-        </aside>
+                        </nav>
+                </article>
+            </aside>
+            }
+        }
+        
 
         <!-- Cột giữa -->
         <section class="cot-giua">
@@ -115,20 +134,25 @@
         </section>
 
         <!-- Cột phải -->
-        <aside class="cot-phai">
-            <article class="khung-chuc-nang">
-                <article class="hop-chuc-nang">
-                    <section class="ten-chuc-nang">
-                        Tiêu đề
-                    </section>
-                    <section class="chuc-nang">
-                        <div>
+        @{
+            if (CotPhai == true)
+            {
+                <aside class="cot-phai">
+                    <article class="khung-chuc-nang">
+                        <article class="hop-chuc-nang">
+                            <section class="ten-chuc-nang">
+                                Tiêu đề
+                            </section>
+                            <section class="chuc-nang">
+                                <div>
 
-                        </div>
-                    </section>
-                </article>
-            </article>
-        </aside>        
+                                </div>
+                            </section>
+                        </article>
+                    </article>
+                </aside>
+            }
+        }                
     </main>
 
     <footer>
