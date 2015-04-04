@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@(ViewData["TieuDe"] != null ? ViewData["TieuDe"] : "") - LCTMoodle</title>
+    <title>@(ViewData["TieuDe"] != null ? ViewData["TieuDe"] + " - " : "") LCTMoodle</title>
 
     <link href="/Content/styles/LCT/Khung.css" rel="stylesheet" />
     <link href="/Content/styles/LCT/Form.css" rel="stylesheet" />
@@ -159,6 +159,8 @@
         Copyright © 2015 - LCTMoodle - Diễn đàn học tập của mọi người
     </footer>
 
+    <script src="/Content/scripts/LCT/jquery.min.js"></script>
+    <script src="/Content/scripts/LCT/Khung.js"></script>
     @RenderSection("Scripts", false)
 </body>
 </html>

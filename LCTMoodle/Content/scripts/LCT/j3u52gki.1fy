@@ -1,0 +1,474 @@
+﻿$(function () {
+    khoiTaoInput();
+    khoiTaoThoiGian();
+})
+
+/*
+    Khởi tạo input
+*/
+function khoiTaoInput() {
+    $('.lct-form input[type="checkbox"], .lct-form input[type="radio"]').each(function () {
+        $element = $(this);
+        $element.wrap('<label class="lct-checkbox-radio-label"></label>');
+        $element.after('<u></u>' +$element.attr('data-text'));
+    });
+
+    $('.lct-form input[type="file"]').each(function () {
+        $element = $(this);
+        $element.wrap('<label class="lct-file-label"></label>');
+        $element.after('<i></i><u></u><span>' + $element.attr('data-text') + '</span>');
+    });
+}
+
+/*
+    Khởi tạo thời gian
+*/
+function khoiTaoThoiGian() {
+    $thoiGianInputs = $('.lct-form input[data-input-type="lct-thoi-gian"]');
+    $lichInputs = $('.lct-form input[data-input-type="lct-lich"]');
+
+    /*
+        Khởi tạo mặc định: 
+            Không cho điền
+            Tab => Ẩn
+            Thêm sự kiện click
+    */
+
+    // Không cho điền
+    $thoiGianInputs.on('keypress', function (e) {
+        e = e || window.event;
+        e.preventDefault();
+    });
+
+    // Focus => Hiển thị đồng hồ
+    $thoiGianInputs.on('focus', function (e) {
+        e = e || window.event;
+        if (typeof $thoiGianInput !== 'undefined' && $thoiGianInput[0] === e.target && $dongHo.css('left') != '-9999px') {
+            return;
+        }
+        $thoiGianInput = $(this);
+        /*
+            Kiểm tra xem có đồng hồ chưa
+                Nếu có => lấy
+                Nếu chưa => tạo
+        */
+        $dongHo = $('#dong_ho_form');
+        if ($dongHo.length == 0) {
+            // Khởi tạo đồng hồ
+            $dongHo = $('\
+                <article id="dong_ho_form" class="lct-dong-ho" data-buoi="" data-gio="" data-phut="" style="left: -9999px">\
+                    <section class="dong-ho">\
+		                <section class="buoi">\
+			                <i title="Sáng/Chiều"></i>\
+		                </section>\
+		                <section class="gio">' +
+                            taoTheI('gio') +
+		                '</section>\
+		                <section class="phut">' +
+                            taoTheI('phut') +
+		                '</section>\
+	                </section>\
+                </article>\
+            ');
+            $('body').prepend($dongHo);
+
+            // Sự kiện khi nhấn vào đồng hồ
+            $dongHo.find('.buoi i').on('click', function () {
+                if ($dongHo.attr('data-buoi') == 'toi') {
+                    $dongHo.attr('data-buoi',  'sang');
+                    $dongHo.find('.buoi i').attr('title', 'Tối');
+                }
+                else {
+                    $dongHo.attr('data-buoi', 'toi');
+                    $dongHo.find('.buoi i').attr('title', 'Sáng');
+                }
+                $thoiGianInput.val(layThoiGian($dongHo));
+            });
+            $dongHo.find('.gio i').on('click', function () {
+                $dongHo.attr('data-gio', $(this).attr('data-value'));
+                $thoiGianInput.val(layThoiGian($dongHo));
+            });
+            $dongHo.find('.phut i').on('click', function () {
+                $dongHo.attr('data-phut', $(this).attr('data-value'));
+                $thoiGianInput.val(layThoiGian($dongHo));
+            });
+        }
+
+        // Sự kiện để ẩn
+        // Nếu đồng hồ không ở trạng thái ẩn => không cần set sự kiện cho body thêm nữa
+        if ($dongHo.hasClass('an')) {
+            $('body').on('mouseup.AnDongHo', function (e) {
+                e = e || window.event;
+                if (e.target != $thoiGianInput[0]) {
+                    if ($dongHo.has(e.target).length == 0) {
+                        if ($(e.target).attr('data-input-type') != 'lct-thoi-gian') {
+                            $dongHo.css({
+                                left: '-9999px',
+                                transform: 'rotate(-30deg) scale(0.9, 0.9)',
+                                opacity: 0,
+                                transition: 'transform 0.5s, opacity 0.5s, left 0s 0.5s'
+                            });
+                            $('body').off('mouseup.AnDongHo');
+                        }
+                    }
+                    else {
+                        $thoiGianInput.focus();
+                    }
+                }
+            });
+        }
+
+        //Khởi tạo thời gian mặc định cho đồng hồ
+        if ($thoiGianInput.val() == '') {
+            var hienTai = new Date();
+            var gio = hienTai.getHours();
+            //Kiểm tra sáng / chiều
+            if (gio < 12) {
+                $dongHo.attr('data-buoi', 'sang');
+                $dongHo.attr('data-gio', gio);
+            }
+            else {
+                $dongHo.attr('data-buoi', 'toi');
+                $dongHo.attr('data-gio', gio - 12);
+            }
+            $dongHo.attr('data-phut', hienTai.getMinutes());
+            $thoiGianInput.val(layThoiGian($dongHo));
+        }
+        else {
+            var thoiGian = $thoiGianInput.val().split(':');
+            //Kiểm tra sáng / chiều
+            if (thoiGian[0] < 12) {
+                $dongHo.attr('data-buoi', 'sang');
+                $dongHo.attr('data-gio', thoiGian[0]);
+            }
+            else {
+                $dongHo.attr('data-buoi', 'toi');
+                $dongHo.attr('data-gio', thoiGian[0] - 12);
+            }
+            $dongHo.attr('data-phut', thoiGian[1]);
+        }
+
+        // Lấy vị trí cần đặt
+        var viTri = $thoiGianInput.offset()
+
+        if ($dongHo.css('left') == '-9999px') {
+            $dongHo.css({
+                left: viTri.left + 15,
+                top: viTri.top - 229,
+                transform: 'rotate(-30deg) scale(0.9, 0.9)',
+                opacity: 0,
+                transition: 'none'
+            });
+            setTimeout(function () {
+                $dongHo.css({
+                    transform: 'none',
+                    opacity: 1,
+                    transition: 'transform 0.5s, opacity 0.5s'
+                });
+            });
+        }
+        else {
+            $dongHo.css({
+                left: viTri.left + 15,
+                top: viTri.top - 229,
+                transform: 'none',
+                opacity: 1,
+                transition: 'top 0.5s, left 0.5s'
+            });
+        }
+    });
+
+    // Tab => ẩn
+    $thoiGianInputs.on('keydown', function xuLyNutTab(e) {
+        e = e || window.event;
+
+        if (e.keyCode == 9) {
+            if ($element.attr('data-input-type') == 'lct-thoi-gian') {
+                return;
+            }
+            $dongHo.css({
+                left: '-9999px',
+                transform: 'rotate(-30deg) scale(0.9, 0.9)',
+                opacity: 0,
+                transition: 'transform 0.5s, opacity 0.5s, left 0s 0.5s'
+            });
+            $('body').off('mouseup.AnDongHo');
+        }
+    });
+
+    // Không cho điền
+    $lichInputs.on('keypress', function (e) {
+        e = e || window.event;
+        e.preventDefault();
+    });
+
+    // Focus => Hiển thị lịch
+    $lichInputs.on('focus', function (e) {
+        e = e || window.event;
+        if (typeof $lichInput !== 'undefined' && $lichInput[0] === e.target && $lich.css('left') != '-9999px') {
+            return;
+        }
+        $lichInput = $(this);
+        /*
+            Kiểm tra xem có lịch chưa
+                Nếu có => lấy
+                Nếu chưa => tạo
+        */
+        $lich = $('#lich_form');
+        if ($lich.length == 0) {
+            // Khởi tạo lịch
+            $lich = $('\
+                <article id="lich_form" class="lct-lich" data-ngay data-thang data-nam data-thang-ht data-nam-ht style="left: -9999px">\
+		            <section class="thang-nam">\
+			            <a href="javascript:void(0)" class="thang-truoc"></a>\
+			            <span class="thang" data-value><i class="truoc"></i><i class="sau"></i></span>\
+			            -\
+			            <span class="nam" data-value><i class="truoc"></i><i class="sau"></i></span>\
+			            <a href="javascript:void(0)" class="thang-sau"></a>\
+		            </section>\
+		            <section class="lich">\
+			            <table>\
+				            <thead>\
+					            <tr>\
+						            <th>T2</th>\
+						            <th>T3</th>\
+						            <th>T4</th>\
+						            <th>T5</th>\
+						            <th>T6</th>\
+						            <th>T7</th>\
+						            <th>C<span style="font-size: 0.8em">N</span></th>\
+					            </tr>\
+				            </thead>\
+				            <tbody>\
+				            </tbody>\
+			            </table>\
+		            </section>\
+	            </article>\
+            ');
+
+            $lich.find('.thang-nam .thang-truoc, .thang-nam .thang .truoc').on('click', function () {
+                var thang = parseInt($lich.attr('data-thang-ht'));
+                if (thang == 1) {
+                    $lich.attr('data-thang-ht', '12');  
+                    $lich.attr('data-nam-ht', parseInt($lich.attr('data-nam-ht')) - 1);
+                }
+                else {
+                    $lich.attr('data-thang-ht', thang - 1);
+                }
+                capNhatLich($lich);
+            });
+            $lich.find('.thang-nam .thang-sau, .thang-nam .thang .sau').on('click', function () {
+
+            });
+
+            $('body').prepend($lich);
+        }
+
+        // Sự kiện để ẩn
+        // Nếu lịch không ở trạng thái ẩn => không cần set sự kiện cho body thêm nữa
+        if ($lich.css('left') == '-9999px') {
+            $('body').on('mouseup.AnLich', function(e) {
+                e = e || window.event;
+
+                if (e.target != $lichInput[0]) {
+                    if ($lich.has(e.target).length == 0) {
+                        if ($(e.target).attr('data-input-type') != 'lct-lich') {
+                            $lich.css({
+                                left: '-9999px',
+                                //transform: 'rotate(-30deg) scale(0.9, 0.9)',
+                                //opacity: 0,
+                                //transition: 'transform 0.5s, opacity 0.5s, left 0s 0.5s'
+                            });
+                            $('body').off('mouseup.AnLich');
+                        }
+                    }
+                    else {
+                        $lichInput.focus();
+                    }
+                }
+            });
+        }
+
+        //Khởi tạo thời gian mặc định cho lịch
+        if ($lichInput.val() == '') {
+            var date = new Date();
+            var
+                ngay = date.getDate(),
+                thang = date.getMonth() + 1,
+                nam = date.getFullYear();
+
+            $lich.attr('data-ngay', ngay);
+            $lich.attr('data-thang', thang);
+            $lich.attr('data-nam', nam);
+            $lich.attr('data-thang-ht', thang);
+            $lich.attr('data-nam-ht', nam);
+
+            capNhatLich($lich);
+        }
+        else {
+
+        }
+
+        // Lấy vị trí cần đặt
+        var viTri = $lichInput.offset()
+
+        if ($lich.css('left') == '-9999px') {
+            $lich.css({
+                left: viTri.left + 15,
+                top: viTri.top - 184,
+                //transform: 'rotate(-30deg) scale(0.9, 0.9)',
+                //opacity: 0,
+                //transition: 'none'
+            });
+            //setTimeout(function () {
+            //    $dongHo.css({
+            //        transform: 'none',
+            //        opacity: 1,
+            //        transition: 'transform 0.5s, opacity 0.5s'
+            //    });
+            //});
+        }
+        else {
+            $lich.css({
+                left: viTri.left + 15,
+                top: viTri.top - 184,
+                //transform: 'none',
+                //opacity: 1,
+                //transition: 'top 0.5s, left 0.5s'
+            });
+        }
+});
+
+    // Tab => Ẩn
+    //$thoiGianInput.on('keydown', function xuLyNutTab(e) {
+    //    e = e || window.event;
+
+    //    if (e.keyCode == 9) {
+    //        if ($element.attr('data-input-type') == 'lct-thoi-gian') {
+    //            return;
+    //        }
+    //        $dongHo.css({
+    //            left: '-9999px',
+    //            transform: 'rotate(-30deg) scale(0.9, 0.9)',
+    //            opacity: 0,
+    //            transition: 'transform 0.5s, opacity 0.5s, left 0s 0.5s'
+    //        });
+    //        $('body').off('mouseup', xuLyDongHo);
+    //        $thoiGianInput.off('keydown', xuLyNutTab);
+    //    }
+    //});
+}
+
+/*
+    Hàm của đồng hồ
+*/
+
+function taoTheI(loai) {
+    var chuoiThe = '';
+    var loai, soLuong;
+    if (loai == 'gio') {
+        loai = ' giờ';
+        soLuong = 12;
+    }
+    else {
+        loai = ' phút';
+        soLuong = 60;
+    }
+    for (var i = 1; i <= soLuong; i++) {
+        chuoiThe += '<i title="' + i + loai + '" data-value="' + i + '"></i>';
+    }
+    return chuoiThe;
+}
+
+function layThoiGian($dongHo) {
+    // Nếu là tối thì + thêm 12 vào giờ
+    var gio = parseInt($dongHo.attr('data-gio')) + ($dongHo.attr('data-buoi') == 'toi' ? 12 : 0);
+    var phut = parseInt($dongHo.attr('data-phut'));
+
+    //Nếu giờ là 24, phút là 60 thì trả về 0
+    if (gio == 24) {
+        gio = 0;
+    }
+    if (phut == 60) {
+        phut = 0;
+    }
+    return gio + ':' + phut;
+}
+
+/*
+    Hàm của lịch
+*/
+
+function capNhatLich($element) {
+    var
+        ngayChon = $element.attr('data-ngay'),
+        thangChon = $element.attr('data-thang'),
+        namChon = $element.attr('data-nam'),
+        thang = $element.attr('data-thang-ht'),
+        nam = $element.attr('data-nam-ht');
+
+    $element.find('tbody').html(taoLich(thang, nam, ngayChon, thangChon, namChon));
+    $element.find('.thang').attr('data-value', thang);
+    $element.find('.nam').attr('data-value', nam);
+}
+
+function taoLich(thang, nam, ngayChon, thangChon, namChon) {
+    // Chọn ngày 1 -> thứ bắt đầu 
+    // & xử lý để thứ bắt đầu là 2 (0), kết thúc là chủ nhật (6)
+    var thuBatDau = new Date(nam, thang - 1, 1).getDay() - 1;
+    if (thuBatDau == -1) {
+        // Chủ nhật
+        thuBatDau = 6
+    }
+
+    // Ngày âm 1 của tháng sau (0) là ngày cuối cùng của tháng cần tìm
+    var soNgayTrongThang = new Date(nam, thang, 0).getDate();
+
+    var
+    	viTri = 0, // Lưu vi trí (0 -> 6)
+    	ngay = 1, // Lưu ngày xuất ra
+    	chuoiHtml // Lưu chuỗi html là tbody của table
+
+    // Xuất dòng đầu
+    chuoiHtml += '<tr>'
+    // Kiểm tra số dòng dư ở dòng cuối
+    // Nếu tổng số ô chiếm trên 5 dòng
+    var soOChiem = (thuBatDau + soNgayTrongThang);
+    if (soOChiem / 7 > 5) {
+        // Xuất ngày dư ra ở hàng đầu
+        // Lấy ngày bắt đầu ở dòng dư
+        ngayBatDauDu = soNgayTrongThang - (soOChiem % 7) + 1;
+        // Xuất các ngày dư
+        for (var i = ngayBatDauDu; i <= soNgayTrongThang; i++) {
+            chuoiHtml += '<td><i ' + (i == ngayChon && thang == thangChon && nam == namChon ? 'class="chon"' : '')  + ' data-value="' + i + '"></i></td>';
+            viTri++;
+        }
+        // Thay thế số ngày trong tháng = (ngày bắt đầu dư - 1)
+        // để phần còn lại chỉ xuất tới phần dư
+        soNgayTrongThang = ngayBatDauDu - 1;
+    }
+    // Xuất phần còn lại của dòng
+    // Xuất phần không có trong tháng
+    while (viTri < thuBatDau) {
+        chuoiHtml += '<td>&nbsp;</td>';
+        viTri++;
+    }
+    // Xuất các ngày
+    while (viTri < 7) {
+        chuoiHtml += '<td><i ' + (ngay == ngayChon && thang == thangChon && nam == namChon ? 'class="chon"' : '') + ' data-value="' + (ngay++) + '"></i></td>';
+        viTri++;
+    }
+    chuoiHtml += '</tr>'
+
+    // Xuất toàn bộ cho đến khi hết ngày
+    while (ngay <= soNgayTrongThang) {
+        chuoiHtml += '<tr>';
+        viTri = 0
+        while (viTri++ < 7 && ngay <= soNgayTrongThang) {
+            chuoiHtml += '<td><i ' + (ngay == ngayChon && thang == thangChon && nam == namChon ? 'class="chon"' : '') + ' data-value="' + (ngay++) + '"></i></td>';
+        }
+        chuoiHtml += '</tr>';
+    }
+
+    return chuoiHtml;
+}

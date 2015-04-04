@@ -3,6 +3,10 @@
     Layout = "~/Views/LCT/Khung.cshtml";
 }
 
+@section Scripts {
+    <script src="/Content/scripts/LCT/Form.js"></script>
+}
+
 <article class="hop">
     <section class="tieu-de">
         Tên form
@@ -42,12 +46,8 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <label class="lct-checkbox-radio-label">
-                                <input type="checkbox" name="name" value="" /><u></u>Checkbox
-                            </label>
-                            <label class="lct-checkbox-radio-label">
-                                <input type="checkbox" name="name" value="" /><u></u>Checkbox
-                            </label>
+                            <input type="checkbox" name="name" value="" data-text="Checkbox" />
+                            <input type="checkbox" name="name" value="" data-text="Checkbox" />
                         </article>
                     </section>
                 </li>
@@ -59,12 +59,8 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <label class="lct-checkbox-radio-label">
-                                <input type="radio" name="name" value="" /><u></u>Radio
-                            </label>
-                            <label class="lct-checkbox-radio-label">
-                                <input type="radio" name="name" value="" /><u></u>Radio
-                            </label>
+                            <input type="radio" name="name" value="" data-text="Radio" />
+                            <input type="radio" name="name" value="" data-text="Radio" />
                         </article>
                     </section>
                 </li>
@@ -76,9 +72,55 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <label class="lct-file-label">
-                                <input type="file" name="name" value=" " /><u></u>Chọn tập tin
-                            </label>
+                            <input type="file" name="name" value="" data-text="Chọn tập tin" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Thời gian:
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input data-input-type="lct-thoi-gian" name="name" value="" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Thời gian:
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input data-input-type="lct-thoi-gian" name="name" value="" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Lịch:
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input data-input-type="lct-lich" name="name" value="" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Lịch:
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input data-input-type="lct-lich" name="name" value="" />
                         </article>
                     </section>
                 </li>

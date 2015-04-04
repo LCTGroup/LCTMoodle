@@ -109,7 +109,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\scripts\LCT\" />
     <Folder Include="fonts\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
@@ -320,6 +319,9 @@
     <Content Include="Content\ckeditor\styles.js" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\AllSiteImages.png" />
+    <Content Include="Content\scripts\LCT\Form.js" />
+    <Content Include="Content\scripts\LCT\jquery.min.js" />
+    <Content Include="Content\scripts\LCT\Khung.js" />
     <Content Include="Content\styles\LCT\bootstrap.css" />
     <Content Include="Content\styles\LCT\Form.css" />
     <Content Include="Content\styles\LCT\icons.css" />

@@ -1,0 +1,24 @@
+﻿$(function () {
+    khoiTaoThoiGian();
+})
+
+function khoiTaoThoiGian() {
+    $thoiGianInputs = $('.lct-form input[data-input-type="lct-thoi-gian"]')
+
+    /*
+        Khởi tạo mặc định: 
+            Không cho điền
+            Tạo hidden input thay thế để giữ giá trị
+    */
+    // Tạo hidden input
+    $thoiGianInputs.each(function (index, element) {
+        $element = $(element);
+        // Lấy tên input
+        var name = $element.prob('name');
+        // Xóa name của input
+        $element.removeProp('name');
+        // Tạo hidden input giữa giá trị
+        $element.after('<input type="hidden" name="' + name + '" />')
+    });
+    
+}

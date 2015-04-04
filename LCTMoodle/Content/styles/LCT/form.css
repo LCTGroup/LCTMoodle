@@ -2,6 +2,7 @@
     background-color: #fff;
     border: 1px solid #ddd;
     padding: 5px;
+    color: #555;
 }
     .lct-form:after {
         content: '';
@@ -27,7 +28,6 @@
     width: 100%;
 }
 .lct-form .tieu-de label {
-    color: #555;
     text-align: right;
     display: block;
     padding: 5px;
@@ -40,7 +40,6 @@
 }
 /*#region text, password */
 
-.lct-form input:not([type]),
 .lct-form input[type="text"],
 .lct-form input[type="password"] {
     border: none;
@@ -50,11 +49,10 @@
     outline: none;
     border-left: 3px solid #eee;
     transition: 0.5s;
+    color: #555;
 }
-    .lct-form input:not([type]):hover,
     .lct-form input[type="text"]:hover,
     .lct-form input[type="password"]:hover,
-    .lct-form input:not([type]):focus,
     .lct-form input[type="text"]:focus,
     .lct-form input[type="password"]:focus {
         border-left-color: #08c;
@@ -70,12 +68,15 @@
     padding: 5px 8px;
     border: none;
     outline: none;
-    margin-bottom: -3px;
     border-left: 3px solid #eee;
     transition: border-left-color 0.5s;
     height: 100px;
+    color: #555;
+    font-family: Tahoma;
 }
-
+.webkit .lct-form textarea {
+    margin-bottom: -3px;
+}
     .lct-form textarea:hover,
     .lct-form textarea:focus {
         border-left-color: #08c;
@@ -91,7 +92,8 @@
 }
 .lct-form input[type="checkbox"],
 .lct-form input[type="radio"] {
-    display: none;
+    position: absolute;
+    left: -9999px;
 }
 .lct-form input[type="checkbox"] + u,
 .lct-form input[type="radio"] + u {
@@ -128,10 +130,12 @@
         -webkit-border-radius: 50%;
         transform: scale(0.3);
     }
+    .lct-form label > input[type="checkbox"]:focus + u:before,
     .lct-form label:hover > input[type="checkbox"] + u:before {
         width: 5px;
         background-color: #08c;
     }
+    .lct-form label > input[type="radio"]:focus + u:before,
     .lct-form label:hover > input[type="radio"] + u:before {
         transform: scale(0.5);
         background-color: #08c;
@@ -146,9 +150,11 @@
     .lct-form input[type="radio"]:checked + u:before {
         transform: scale(0.95);
     }
+    .lct-form label > input[type="checkbox"]:checked:focus + u:before,
     .lct-form label:hover > input[type="checkbox"]:checked + u:before {
         width: 11px;
     }
+    .lct-form label > input[type="radio"]:checked:focus + u:before,
     .lct-form label:hover > input[type="radio"]:checked + u:before {
         transform: scale(0.8);
     }
@@ -160,24 +166,46 @@
 .lct-form .lct-file-label {
     display: block;
     padding: 5px;
-    border-left: 3px solid #eee;
+    line-height: 20px;
+    height: 20px;
+    margin-left: 3px;
     transition: 0.5s;
+    position: relative
 }
-    .lct-form .lct-file-label:hover {
-        border-left-color: #08c;
-    }
 .lct-form input[type="file"] {
-    display: none;
+    position: absolute;
+    left: -9999px;
 }
-.lct-form input[type="file"] + u {
+.lct-form .lct-file-label i {
     text-decoration: none !important;
     margin-right: 4px;
 }
-.lct-form input[type="file"] + u:before {
+.lct-form .lct-file-label i:before {
     content: '\e68a';
     font-family: 'Pe-icon-7-stroke';
+    font-style: normal;
     font-size: 16px;
     vertical-align: middle;
+    color: #ddd;
+    transition: 0.5s;
+}
+.lct-form .lct-file-label:hover i:before,
+.lct-form .lct-file-label input[type="file"]:focus ~ i:before {
+    color: #08c;
+}
+.lct-form .lct-file-label u {
+    display: block;
+    height: 30px;
+    width: 3px;
+    background-color: #eee;
+    transition: 0.5s;
+    position: absolute;
+    top: 0px;
+    left: -3px;
+}
+.lct-form .lct-file-label:hover u,
+.lct-form .lct-file-label input[type="file"]:focus ~ u {
+    background-color: #08c;
 }
 
 /*#endregion */
@@ -249,5 +277,679 @@
     .lct-form button.nguy-hiem:focus {
         color: #e00;
     }
+
+/*#endregion */
+
+/*#region Thời gian */
+
+.lct-form input[data-input-type="lct-thoi-gian"],
+.lct-form input[data-input-type="lct-lich"] {
+    border: none;
+    line-height: 20px;
+    padding: 5px 8px;
+    width: calc(100% - 19px);
+    outline: none;
+    border-left: 3px solid #eee;
+    transition: 0.5s;
+    color: #555;
+}
+    .lct-form input[data-input-type="lct-thoi-gian"]:hover,
+    .lct-form input[data-input-type="lct-lich"]:hover,
+    .lct-form input[data-input-type="lct-thoi-gian"]:focus,
+    .lct-form input[data-input-type="lct-lich"]:focus {
+        border-left-color: #08c;
+    }
+
+/*#region Đồng hồ */
+
+.lct-dong-ho {
+	width: 212px;
+	height: 212px;
+	background-image: linear-gradient(top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
+	background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
+	border: 1px solid #ddd;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	position: absolute;
+    z-index: 20;
+    padding: 5px;
+}
+.lct-dong-ho[data-trang-thai="an"] {
+    left: -9999px !important;
+    opacity: 0;
+    transform: rotate(-30deg) scale(0.9, 0.9);
+    transition: transform 0.5s, opacity 0.5s, left 0s 0.5s;
+}
+.lct-dong-ho[data-trang-thai="hien"] {
+    transform: none;
+    opacity: 1;
+    transition: transform 0.5s, opacity 0.5s;
+}
+.lct-dong-ho > .dong-ho {
+    border: 1px solid #ddd;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+    position: relative;
+	width: 210px;
+	height: 210px;
+    z-index: 20;
+	overflow: hidden;
+    background-color: rgba(252, 252, 252, 0.7);
+    transition: 0.5s;
+}
+.lct-dong-ho[data-buoi="toi"] > .dong-ho {
+    background-color: rgba(221, 221, 221, 0.9);
+}
+
+.lct-dong-ho .buoi i {
+	display: block;
+	position: absolute;
+	top: 113px;
+	left: 89px;
+	width: 20px;
+	height: 20px;
+	background-color: #ddd;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	z-index: 20;
+	transition: 2s;
+	cursor: pointer;
+}
+.lct-dong-ho[data-buoi="toi"] .buoi i {
+	background-color: #fff;
+}
+.lct-dong-ho .buoi i:hover {
+	box-shadow: 0px 0px 80px 80px rgba(50, 50, 50, 0.5);
+}
+.lct-dong-ho[data-buoi="toi"] .buoi i:hover {
+	background-color: #fff;
+	box-shadow: 0px 0px 80px 80px rgba(255, 255, 255, 0.7);
+}
+
+
+.lct-dong-ho .gio i {
+	position: absolute;
+	line-height: 0.7em;
+	cursor: pointer;
+}
+.lct-dong-ho .gio i:before {
+	font-style: normal;
+	font-family: Berlin;
+	color: #ddd;
+	transition: 0.5s;
+}
+.lct-dong-ho[data-buoi="toi"] .gio i:before {
+	color: #fff;
+}
+.lct-dong-ho .gio i:hover:before {
+	color: #08c;
+} 
+.lct-dong-ho .gio i:before{content: '1';}.lct-dong-ho .gio i:nth-child(2):before{content: '2';}.lct-dong-ho .gio i:nth-child(3):before{content: '3';}.lct-dong-ho .gio i:nth-child(4):before{content: '4';}.lct-dong-ho .gio i:nth-child(5):before{content: '5';}.lct-dong-ho .gio i:nth-child(6):before{content: '6';}.lct-dong-ho .gio i:nth-child(7):before{content: '7';}.lct-dong-ho .gio i:nth-child(8):before{content: '8';}.lct-dong-ho .gio i:nth-child(9):before{content: '9';}.lct-dong-ho .gio i:nth-child(10):before{content: '10';}.lct-dong-ho .gio i:nth-child(11):before{content: '11';}.lct-dong-ho .gio i:nth-child(12):before{content: '12';}
+    .lct-dong-ho[data-gio="1"] .gio i:nth-child(1):before,
+    .lct-dong-ho[data-gio="2"] .gio i:nth-child(2):before,
+    .lct-dong-ho[data-gio="3"] .gio i:nth-child(3):before,
+    .lct-dong-ho[data-gio="4"] .gio i:nth-child(4):before,
+    .lct-dong-ho[data-gio="5"] .gio i:nth-child(5):before,
+    .lct-dong-ho[data-gio="6"] .gio i:nth-child(6):before,
+    .lct-dong-ho[data-gio="7"] .gio i:nth-child(7):before,
+    .lct-dong-ho[data-gio="8"] .gio i:nth-child(8):before,
+    .lct-dong-ho[data-gio="9"] .gio i:nth-child(9):before,
+    .lct-dong-ho[data-gio="10"] .gio i:nth-child(10):before,
+    .lct-dong-ho[data-gio="11"] .gio i:nth-child(11):before,
+    .lct-dong-ho[data-gio="12"] .gio i:nth-child(12):before
+    .lct-dong-ho[data-gio="0"] .gio i:nth-child(12):before,
+    .lct-dong-ho[data-buoi="toi"] .gio i:hover:before {
+	    color: #08c;
+	    text-shadow: 
+		    1px 1px #fff,
+		    -1px 1px #fff,
+		    1px -1px #fff,
+		    -1px -1px #fff;
+    }
+
+.lct-dong-ho .gio i:nth-child(1) {
+	top: 53px;
+	left: 113px;
+	font-size: 84px;
+	transform: rotate(14deg);
+	z-index: 18;
+}
+.lct-dong-ho .gio i:nth-child(2) {
+	top: 18px;
+	left: 133px;
+	font-size: 75px;
+	transform: rotate(-33deg);
+	z-index: 16;
+}
+.lct-dong-ho .gio i:nth-child(3) {
+	top: 63px;
+	left: 152px;
+	font-size: 87px;
+	transform: rotate(59deg);
+	z-index: 17;
+}
+.lct-dong-ho .gio i:nth-child(4) {
+	top: 103px;
+	left: 154px;
+	font-size: 72px;
+	transform: rotate(21deg);
+	z-index: 16;
+}
+.lct-dong-ho .gio i:nth-child(5) {
+	top: 114px;
+	left: 111px;
+	font-size: 95px;
+	transform: rotate(-26deg);
+	z-index: 17;
+}
+.lct-dong-ho .gio i:nth-child(6) {
+	top: 145px;
+	left: 86px;
+	font-size: 66px;
+	transform: rotate(-10deg);
+	z-index: 16;
+}
+.lct-dong-ho .gio i:nth-child(7) {
+	top: 120px;
+	left: 59px;
+	font-size: 91px;
+	transform: rotate(19deg);
+	z-index: 16;
+}
+.lct-dong-ho .gio i:nth-child(8) {
+	top: 112px;
+	left: 27px;
+	font-size: 72px;
+	transform: rotate(-20deg);
+	z-index: 16;
+}
+.lct-dong-ho .gio i:nth-child(9) {
+	top: 71px;
+	left: 14px;
+	font-size: 64px;
+	transform: rotate(10deg);
+	z-index: 17;
+}
+.lct-dong-ho .gio i:nth-child(10) {
+    top: 65px;
+    left: 48px;
+    font-size: 67px;
+    transform: rotate(-37deg);
+    z-index: 16;
+}
+.lct-dong-ho .gio i:nth-child(11) {
+    top: 30px;
+    left: 38px;
+    font-size: 66px;
+    transform: rotate(41deg);
+    z-index: 16;
+}
+.lct-dong-ho .gio i:nth-child(12) {
+	top: 7px;
+	left: 76px;
+	font-size: 70px;
+	z-index: 16;
+}
+
+
+.lct-dong-ho .phut i {
+	display: block;
+	width: 2px;
+	height: 7px;
+	position: absolute;
+	z-index: 19;
+	background-color: #ddd;
+	left: 100px;
+	top: 0px;
+	border-radius: 0px 0px 40% 40%;
+	transform-origin: center 105px;
+	cursor: pointer;
+    transition: 0.5s;
+    border: 4px solid #fcfcfc;
+    border-top: none;
+}
+.lct-dong-ho[data-buoi="toi"] .phut i {
+	background-color: #fff;
+    border-color: #ddd;
+}
+.lct-dong-ho .phut i:nth-child(5n) {
+	width: 4px;
+	height: 10px;
+	left: 99px;
+}
+.lct-dong-ho .phut i:nth-child(1) {
+	transform: rotate(6deg);
+}
+.lct-dong-ho .phut i:nth-child(2) {
+	transform: rotate(12deg);
+}
+.lct-dong-ho .phut i:nth-child(3) {
+	transform: rotate(18deg);
+}
+.lct-dong-ho .phut i:nth-child(4) {
+	transform: rotate(24deg);
+}
+.lct-dong-ho .phut i:nth-child(5) {
+	transform: rotate(30deg);
+}
+.lct-dong-ho .phut i:nth-child(6) {
+	transform: rotate(36deg);
+}
+.lct-dong-ho .phut i:nth-child(7) {
+	transform: rotate(42deg);
+}
+.lct-dong-ho .phut i:nth-child(8) {
+	transform: rotate(48deg);
+}
+.lct-dong-ho .phut i:nth-child(9) {
+	transform: rotate(54deg);
+}
+.lct-dong-ho .phut i:nth-child(10) {
+	transform: rotate(60deg);
+}
+.lct-dong-ho .phut i:nth-child(11) {
+	transform: rotate(66deg);
+}
+.lct-dong-ho .phut i:nth-child(12) {
+	transform: rotate(72deg);
+}
+.lct-dong-ho .phut i:nth-child(13) {
+	transform: rotate(78deg);
+}
+.lct-dong-ho .phut i:nth-child(14) {
+	transform: rotate(84deg);
+}
+.lct-dong-ho .phut i:nth-child(15) {
+	transform: rotate(90deg);
+}
+.lct-dong-ho .phut i:nth-child(16) {
+	transform: rotate(96deg);
+}
+.lct-dong-ho .phut i:nth-child(17) {
+	transform: rotate(102deg);
+}
+.lct-dong-ho .phut i:nth-child(18) {
+	transform: rotate(108deg);
+}
+.lct-dong-ho .phut i:nth-child(19) {
+	transform: rotate(114deg);
+}
+.lct-dong-ho .phut i:nth-child(20) {
+	transform: rotate(120deg);
+}
+.lct-dong-ho .phut i:nth-child(21) {
+	transform: rotate(126deg);
+}
+.lct-dong-ho .phut i:nth-child(22) {
+	transform: rotate(132deg);
+}
+.lct-dong-ho .phut i:nth-child(23) {
+	transform: rotate(138deg);
+}
+.lct-dong-ho .phut i:nth-child(24) {
+	transform: rotate(144deg);
+}
+.lct-dong-ho .phut i:nth-child(25) {
+	transform: rotate(150deg);
+}
+.lct-dong-ho .phut i:nth-child(26) {
+	transform: rotate(156deg);
+}
+.lct-dong-ho .phut i:nth-child(27) {
+	transform: rotate(162deg);
+}
+.lct-dong-ho .phut i:nth-child(28) {
+	transform: rotate(168deg);
+}
+.lct-dong-ho .phut i:nth-child(29) {
+	transform: rotate(174deg);
+}
+.lct-dong-ho .phut i:nth-child(30) {
+	transform: rotate(180deg);
+}
+.lct-dong-ho .phut i:nth-child(31) {
+	transform: rotate(186deg);
+}
+.lct-dong-ho .phut i:nth-child(32) {
+	transform: rotate(192deg);
+}
+.lct-dong-ho .phut i:nth-child(33) {
+	transform: rotate(198deg);
+}
+.lct-dong-ho .phut i:nth-child(34) {
+	transform: rotate(204deg);
+}
+.lct-dong-ho .phut i:nth-child(35) {
+	transform: rotate(210deg);
+}
+.lct-dong-ho .phut i:nth-child(36) {
+	transform: rotate(216deg);
+}
+.lct-dong-ho .phut i:nth-child(37) {
+	transform: rotate(222deg);
+}
+.lct-dong-ho .phut i:nth-child(38) {
+	transform: rotate(228deg);
+}
+.lct-dong-ho .phut i:nth-child(39) {
+	transform: rotate(234deg);
+}
+.lct-dong-ho .phut i:nth-child(40) {
+	transform: rotate(240deg);
+}
+.lct-dong-ho .phut i:nth-child(41) {
+	transform: rotate(246deg);
+}
+.lct-dong-ho .phut i:nth-child(42) {
+	transform: rotate(252deg);
+}
+.lct-dong-ho .phut i:nth-child(43) {
+	transform: rotate(258deg);
+}
+.lct-dong-ho .phut i:nth-child(44) {
+	transform: rotate(264deg);
+}
+.lct-dong-ho .phut i:nth-child(45) {
+	transform: rotate(270deg);
+}
+.lct-dong-ho .phut i:nth-child(46) {
+	transform: rotate(276deg);
+}
+.lct-dong-ho .phut i:nth-child(47) {
+	transform: rotate(282deg);
+}
+.lct-dong-ho .phut i:nth-child(48) {
+	transform: rotate(288deg);
+}
+.lct-dong-ho .phut i:nth-child(49) {
+	transform: rotate(294deg);
+}
+.lct-dong-ho .phut i:nth-child(50) {
+	transform: rotate(300deg);
+}
+.lct-dong-ho .phut i:nth-child(51) {
+	transform: rotate(306deg);
+}
+.lct-dong-ho .phut i:nth-child(52) {
+	transform: rotate(312deg);
+}
+.lct-dong-ho .phut i:nth-child(53) {
+	transform: rotate(318deg);
+}
+.lct-dong-ho .phut i:nth-child(54) {
+	transform: rotate(324deg);
+}
+.lct-dong-ho .phut i:nth-child(55) {
+	transform: rotate(330deg);
+}
+.lct-dong-ho .phut i:nth-child(56) {
+	transform: rotate(336deg);
+}
+.lct-dong-ho .phut i:nth-child(57) {
+	transform: rotate(342deg);
+}
+.lct-dong-ho .phut i:nth-child(58) {
+	transform: rotate(348deg);
+}
+.lct-dong-ho .phut i:nth-child(59) {
+	transform: rotate(354deg);
+}
+.lct-dong-ho .phut i:nth-child(60) {
+	transform: rotate(0deg);
+}
+
+    .lct-dong-ho[data-phut="1"] .phut i:nth-child(1),
+    .lct-dong-ho[data-phut="2"] .phut i:nth-child(2),
+    .lct-dong-ho[data-phut="3"] .phut i:nth-child(3),
+    .lct-dong-ho[data-phut="4"] .phut i:nth-child(4),
+    .lct-dong-ho[data-phut="5"] .phut i:nth-child(5),
+    .lct-dong-ho[data-phut="6"] .phut i:nth-child(6),
+    .lct-dong-ho[data-phut="7"] .phut i:nth-child(7),
+    .lct-dong-ho[data-phut="8"] .phut i:nth-child(8),
+    .lct-dong-ho[data-phut="9"] .phut i:nth-child(9),
+    .lct-dong-ho[data-phut="10"] .phut i:nth-child(10),
+    .lct-dong-ho[data-phut="11"] .phut i:nth-child(11),
+    .lct-dong-ho[data-phut="12"] .phut i:nth-child(12),
+    .lct-dong-ho[data-phut="13"] .phut i:nth-child(13),
+    .lct-dong-ho[data-phut="14"] .phut i:nth-child(14),
+    .lct-dong-ho[data-phut="15"] .phut i:nth-child(15),
+    .lct-dong-ho[data-phut="16"] .phut i:nth-child(16),
+    .lct-dong-ho[data-phut="17"] .phut i:nth-child(17),
+    .lct-dong-ho[data-phut="18"] .phut i:nth-child(18),
+    .lct-dong-ho[data-phut="19"] .phut i:nth-child(19),
+    .lct-dong-ho[data-phut="20"] .phut i:nth-child(20),
+    .lct-dong-ho[data-phut="21"] .phut i:nth-child(21),
+    .lct-dong-ho[data-phut="22"] .phut i:nth-child(22),
+    .lct-dong-ho[data-phut="23"] .phut i:nth-child(23),
+    .lct-dong-ho[data-phut="24"] .phut i:nth-child(24),
+    .lct-dong-ho[data-phut="25"] .phut i:nth-child(25),
+    .lct-dong-ho[data-phut="26"] .phut i:nth-child(26),
+    .lct-dong-ho[data-phut="27"] .phut i:nth-child(27),
+    .lct-dong-ho[data-phut="28"] .phut i:nth-child(28),
+    .lct-dong-ho[data-phut="29"] .phut i:nth-child(29),
+    .lct-dong-ho[data-phut="30"] .phut i:nth-child(30),
+    .lct-dong-ho[data-phut="31"] .phut i:nth-child(31),
+    .lct-dong-ho[data-phut="32"] .phut i:nth-child(32),
+    .lct-dong-ho[data-phut="33"] .phut i:nth-child(33),
+    .lct-dong-ho[data-phut="34"] .phut i:nth-child(34),
+    .lct-dong-ho[data-phut="35"] .phut i:nth-child(35),
+    .lct-dong-ho[data-phut="36"] .phut i:nth-child(36),
+    .lct-dong-ho[data-phut="37"] .phut i:nth-child(37),
+    .lct-dong-ho[data-phut="38"] .phut i:nth-child(38),
+    .lct-dong-ho[data-phut="39"] .phut i:nth-child(39),
+    .lct-dong-ho[data-phut="40"] .phut i:nth-child(40),
+    .lct-dong-ho[data-phut="41"] .phut i:nth-child(41),
+    .lct-dong-ho[data-phut="42"] .phut i:nth-child(42),
+    .lct-dong-ho[data-phut="43"] .phut i:nth-child(43),
+    .lct-dong-ho[data-phut="44"] .phut i:nth-child(44),
+    .lct-dong-ho[data-phut="45"] .phut i:nth-child(45),
+    .lct-dong-ho[data-phut="46"] .phut i:nth-child(46),
+    .lct-dong-ho[data-phut="47"] .phut i:nth-child(47),
+    .lct-dong-ho[data-phut="48"] .phut i:nth-child(48),
+    .lct-dong-ho[data-phut="49"] .phut i:nth-child(49),
+    .lct-dong-ho[data-phut="50"] .phut i:nth-child(50),
+    .lct-dong-ho[data-phut="51"] .phut i:nth-child(51),
+    .lct-dong-ho[data-phut="52"] .phut i:nth-child(52),
+    .lct-dong-ho[data-phut="53"] .phut i:nth-child(53),
+    .lct-dong-ho[data-phut="54"] .phut i:nth-child(54),
+    .lct-dong-ho[data-phut="55"] .phut i:nth-child(55),
+    .lct-dong-ho[data-phut="56"] .phut i:nth-child(56),
+    .lct-dong-ho[data-phut="57"] .phut i:nth-child(57),
+    .lct-dong-ho[data-phut="58"] .phut i:nth-child(58),
+    .lct-dong-ho[data-phut="59"] .phut i:nth-child(59),
+    .lct-dong-ho[data-phut="60"] .phut i:nth-child(60),
+    .lct-dong-ho[data-phut="0"] .phut i:nth-child(60),
+    .lct-dong-ho .phut i:hover {
+	    width: 4px;
+	    height: 10px;
+	    left: 99px;
+	    background-color: #08c;
+    }
+
+/*#endregion */
+    
+/*#region Lịch */
+
+.lct-lich {
+	width: 212px;
+	background-image: linear-gradient(top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
+	background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
+	border: 1px solid #ddd;
+	padding: 5px;
+	font-family: Berlin;
+    position: absolute;
+    z-index: 20;
+}
+.lct-lich[data-trang-thai="an"] {
+    left: -9999px !important;
+    opacity: 0;
+    transform: scale(0.7, 0.7);
+    transition: transform 0.5s, opacity 0.5s, left 0s 0.5s;
+}
+.lct-lich[data-trang-thai="hien"] {
+    transform: none;
+    opacity: 1;
+    transition: transform 0.5s, opacity 0.5s;
+}
+
+.lct-lich .thang-nam {
+	font-size: 30px;
+	text-align: center;
+	color: #555;
+	border: 1px solid #eee;
+	border-bottom: 1px dashed #f0f0f0;
+	background-color: #fafafa;
+	position: relative;
+	height: 35px;
+	overflow: hidden;
+}
+.lct-lich .thang-nam a {
+	display: block;
+	background-color: #aaa;
+	height: 20px;
+	width: 5px;
+	position: absolute;
+	top: 7.5px;
+	transition: 0.5s;
+}
+	.lct-lich .thang-nam a:hover {
+		background-color: #08c;
+	}
+	.lct-lich .thang-nam a:before,
+	.lct-lich .thang-nam a:after {
+		content: '';
+		display: block;
+		width: 0px;
+		height: 0px;
+		border: 10px solid transparent;
+		position: absolute;
+		transition: 0.5s;
+	}
+	.lct-lich .thang-nam a:before {
+		border-right-color: #aaa;
+		right: 100%;
+	}
+	.lct-lich .thang-nam a:hover:before {
+		border-right-color: #08c;
+	}
+	.lct-lich .thang-nam a:after {
+		border-right-color: #fafafa;
+		right: 0px;
+	}
+	.lct-lich .thang-nam a.thang-truoc {
+		left: 15px;
+	}
+	.lct-lich .thang-nam a.thang-sau {
+		right: 15px;
+		transform: rotate(180deg);
+	}
+.lct-lich .thang-nam span {
+	height: 35px;
+	line-height: 35px;
+	cursor: default;
+}
+.lct-lich .thang-nam .thang,
+.lct-lich .thang-nam .nam {
+	position: relative;
+}
+    .lct-lich .thang-nam .thang:before,
+    .lct-lich .thang-nam .nam:before {
+	    content: attr(data-value);
+    }
+.lct-lich .thang-nam i {
+	display: block;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+	position: absolute;
+	border: 5px solid transparent;
+	left: calc(50% - 5.5px);
+	transition: 0.5s;
+	cursor: pointer;
+}
+    .lct-lich .thang-nam .thang:hover i,
+    .lct-lich .thang-nam .nam:hover i {
+	    opacity: 1;
+    }
+.lct-lich .thang-nam .truoc {
+	border-top-color: #555;
+	bottom: -7px;
+}
+	.lct-lich .thang-nam .truoc:hover {
+		border-top-color: #08c;
+	}
+.lct-lich .thang-nam .sau {
+	border-bottom-color: #555;
+	top: -4px;	
+}
+	.lct-lich .thang-nam .sau:hover {
+		border-bottom-color: #08c;
+	}
+
+.lct-lich .lich {
+	border: 1px solid #eee;
+	border-top: none;
+	width: 210px;
+    background-color: rgba(252, 252, 252, 0.7);
+}
+.lct-lich .lich table {
+	width: 100%;
+}
+.lct-lich .lich td,
+.lct-lich .lich th {
+	width: 14.285%;
+	text-align: center;
+}
+.lct-lich .lich th {
+	font-size: 18px;
+    color: #555;
+    cursor: default;
+}
+.lct-lich .lich td {
+	padding: 1px 2px;
+	color: #777;
+}
+.lct-lich .lich td i {
+	display: none;
+	font-style: normal;
+	border: 1px solid #fafafa;
+	background-color: #fff;
+	position: relative;
+	cursor: pointer;
+	transition: 0.5s;
+}
+    .lct-lich .lich td i[data-value] {
+        display: block;
+    }
+    .lct-lich .lich td i.chon {
+        background-color: #08c;
+        color: #fff !important;
+    }
+    .lct-lich .lich td i:before {
+	    content: attr(data-value);
+    }
+    .lct-lich .lich td i:after {
+	    content: '';
+	    display: block;
+	    width: 100%;
+	    height: 2px;
+	    position: absolute;
+	    bottom: 0px;
+	    left: 0px;
+    }
+    .lct-lich .lich td i:hover {
+	    color: #000;
+    }
+    .lct-lich .lich td i:hover:after {
+	    background-color: #08c;
+	    transition: 0.5s;
+    }
+
+/*#endregion */
 
 /*#endregion */
