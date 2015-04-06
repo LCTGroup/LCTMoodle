@@ -21,11 +21,26 @@
             <a href="/TrangChu/Index" class="site-image"></a>
         </section>
         <section class="top-header">
-            <article class="hop-nguoi-dung">
-                <ul>
-                    <li><a href="/NguoiDung/DangNhap">Đăng nhập</a></li>
-                    <li><a href="/NguoiDung/DangKy">Đăng ký</a></li>
-                </ul>
+            <article class="hop-nguoi-dung">               
+                @if (Session["NguoiDung"] == null)
+                {
+                    <ul class="chua-dang-nhap">
+                        <li><a href="/NguoiDung/DangNhap">Đăng nhập</a></li>
+                        <li><a href="/NguoiDung/DangKy">Đăng ký</a></li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="da-dang-nhap">
+                        <li><a href="#"><i class="pe-7s-chat"></i></a></li>
+                        <li><a href="#"><i class="pe-7s-bell"></i></a></li>
+                        <li>
+                            <a href="#">
+                                sadasdass
+                            </a>
+                        </li>
+                    </ul>
+                }                                    
             </article>
         </section>
         <section class="buffer-top-header"></section>
@@ -80,13 +95,11 @@
                                 <ul>
                                     <li>
                                         <a href="#">
-                                            <u></u>
                                             Tên khóa học
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <u></u>
                                             Tên khóa học
                                         </a>
                                     </li>
@@ -100,13 +113,11 @@
                                 <ul>
                                     <li>
                                         <a href="#">
-                                            <u></u>
                                             Tên khóa học
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <u></u>
                                             Tên khóa học
                                         </a>
                                     </li>
