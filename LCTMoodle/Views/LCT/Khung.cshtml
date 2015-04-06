@@ -1,8 +1,6 @@
 ﻿@{
-    bool CotTrai = true; 
-    bool CotPhai = true;
-    if (ViewData["CotTrai"] != null) { CotTrai = (bool)ViewData["CotTrai"]; }
-    if (ViewData["CotPhai"] != null) { CotPhai = (bool)ViewData["CotPhai"]; }
+    bool CotTrai = ViewData["CotTrai"] == null ? true : (bool)ViewData["CotTrai"];
+    bool CotPhai = ViewData["CotPhai"] == null ? true : (bool)ViewData["CotPhai"];
 }
 <!DOCTYPE html>
 
@@ -12,7 +10,6 @@
     <title>@(ViewData["TieuDe"] != null ? ViewData["TieuDe"] + " - " : "") LCTMoodle</title>
 
     <link href="/Content/styles/LCT/Khung.css" rel="stylesheet" />
-    <link href="/Content/styles/LCT/Form.css" rel="stylesheet" />
     <link href="/Content/styles/LCT/bootstrap.css" rel="stylesheet" />
     <link href="/Content/styles/LCT/icons.css" rel="stylesheet" />
     @RenderSection("Styles", false)
@@ -62,71 +59,64 @@
                     Trang chủ
                 </a>
             </li>
-            <li>
-                <a href="#">
-                    @ViewData["TieuDe"]
-                </a>
-            </li>
+            @RenderSection("ThanhDieuHuong", false)
         </ul>
     </nav>
 
     <main>
         <!-- Cột trái -->
-        @{
-            if (CotTrai == true)
-            {
-                <aside class="cot-trai">
-                    <article class="menu">
-                        <section class="khung-thong-tin"></section>
-                        <nav>
-                            <ul>
-                                <li>
-                                    <a>
-                                        <u></u>
-                                        Khóa học
-                                    </a>
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                <u></u>
-                                                Tên khóa học
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <u></u>
-                                                Tên khóa học
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a>
-                                        <u></u>
-                                        Khóa học của tôi
-                                    </a>
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                <u></u>
-                                                Tên khóa học
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <u></u>
-                                                Tên khóa học
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav>
+        @if (CotTrai)
+        {
+            <aside class="cot-trai">
+                <article class="menu">
+                    <section class="khung-thong-tin"></section>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a>
+                                    <u></u>
+                                    Khóa học
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <u></u>
+                                            Tên khóa học
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <u></u>
+                                            Tên khóa học
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a>
+                                    <u></u>
+                                    Khóa học của tôi
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <u></u>
+                                            Tên khóa học
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <u></u>
+                                            Tên khóa học
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
                 </article>
             </aside>
-            }
-        }
-        
+        }        
 
         <!-- Cột giữa -->
         <section class="cot-giua">
@@ -134,25 +124,23 @@
         </section>
 
         <!-- Cột phải -->
-        @{
-            if (CotPhai == true)
-            {
-                <aside class="cot-phai">
-                    <article class="khung-chuc-nang">
-                        <article class="hop-chuc-nang">
-                            <section class="ten-chuc-nang">
-                                Tiêu đề
-                            </section>
-                            <section class="chuc-nang">
-                                <div>
+        @if (CotPhai)
+        {
+            <aside class="cot-phai">
+                <article class="khung-chuc-nang">
+                    <article class="hop-chuc-nang">
+                        <section class="ten-chuc-nang">
+                            Tiêu đề
+                        </section>
+                        <section class="chuc-nang">
+                            <div>
 
-                                </div>
-                            </section>
-                        </article>
+                            </div>
+                        </section>
                     </article>
-                </aside>
-            }
-        }                
+                </article>
+            </aside>
+        }          
     </main>
 
     <footer>

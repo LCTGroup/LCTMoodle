@@ -16,7 +16,10 @@ body {
 }
 a {
     color: #000;
-    text-decoration: none;
+    text-decoration: none;  
+}
+a:hover {
+    text-decoration: underline;
 }
 .site-image {
     background-image: url('../../images/AllSiteImages.png');
@@ -140,6 +143,9 @@ header .bottom-header {
             font-size: 16px;
             position: relative;
         }
+            header .bottom-header nav a:hover {
+                text-decoration: none;
+            }
         header .bottom-header nav i {
             font-size: 30px;
             vertical-align: -6px;
@@ -397,7 +403,20 @@ main > .cot-giua {
 .cot-giua > .hop > .noi-dung {
 
 }
+.cot-giua > .hop-form {
 
+}
+.cot-giua > .hop-form > .tieu-de {
+    text-align: center;
+    font: normal 30px Freeway;
+    color: #08c;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+.cot-giua > .hop-form > .noi-dung {
+    width: 50%;
+    margin: 0 auto;
+}
 /*#endregion */
 
 /*#endregion */

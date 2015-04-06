@@ -21,8 +21,10 @@ namespace LCTMoodle.Controllers
         /// <returns></returns>
         public ActionResult DangNhap()
         {
+            //Tắt hiển thị cột trái, cột phải
             ViewData["CotTrai"] = false;
             ViewData["CotPhai"] = false;
+
             return View();
         }
         /// <summary>
@@ -31,8 +33,10 @@ namespace LCTMoodle.Controllers
         /// <returns></returns>
         public ActionResult DangKy()
         {
+            //Tắt hiển thị cột trái, cột phải
             ViewData["CotTrai"] = false;
             ViewData["CotPhai"] = false;
+         
             return View();
         }
 	}

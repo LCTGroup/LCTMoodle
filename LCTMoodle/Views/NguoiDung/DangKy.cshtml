@@ -2,14 +2,18 @@
     ViewData["TieuDe"] = "Đăng ký";
     Layout = "~/Views/LCT/Khung.cshtml";
 }
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="/Content/styles/LCT/Form.css" />    
+}
+@section Scripts {
+    <script src="/Content/scripts/LCT/Form.js"></script>
+}
 
-<link rel="stylesheet" type="text/css" href="/Content/styles/LCT/Form.css" />
-<link rel="stylesheet" type="text/css" href="/Content/styles/NguoiDung/DangKy.css" />
-
-<article class="hop-dang-ky">
+<article class="hop-form">
     <section class="tieu-de">
-        <h1>ĐĂNG KÝ TÀI KHOẢN LCT MOODLE</h1>
-        <h1>ĐỂ ĐƯỢC TRẢI NGHIỆM CÁC KHOÁ HỌC BỔ ÍCH</h1>
+        Đăng ký tài khoản LCTMoodle
+        <br />
+        để được trải nghiệm các khoá học bổ ích        
     </section>
     <section class="noi-dung">
         <form class="lct-form" action="#" method="post">
@@ -71,7 +75,7 @@
                         </section>
                         <section class="noi-dung">
                             <article class="input">
-                                <input type="date" name="TenTaiKhoan" />
+                                <input data-input-type="lct-lich" name="NgaySinh" value="" />
                             </article>
                         </section>
                     </li>
@@ -100,19 +104,17 @@
                             <label>&nbsp;</label>
                         </section>
                         <section class="noi-dung">
-                            <article class="input">
-                                <label class="lct-checkbox-radio-label">
-                                    <input type="checkbox" name="GhiNho" /><u></u>Chấp nhận quy định của Mạng xã hội LCT Moodle
-                                </label>
+                            <article class="input">                                
+                                <input type="checkbox" name="GhiNho" data-text="Chấp nhận quy định của Mạng xã hội LCT Moodle" />                                
                             </article>
                         </section>
                     </li>                    
                 </ul>
                 <section class="lct-khung-button">
-                    <button class="chap-nhan">
+                    <button type="submit" class="chap-nhan">
                         Đăng Ký
                     </button>
-                    <button class="nguy-hiem">
+                    <button type="reset" class="can-than">
                         Làm lại
                     </button>
                 </section>
@@ -120,3 +122,4 @@
         </form>
     </section>
 </article>
+

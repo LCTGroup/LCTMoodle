@@ -38,7 +38,16 @@
     border: 1px solid #ddd;
     background-color: #fff;
 }
-/*#region text, password */
+
+/*#region Đường dẫn */
+
+.lct-form a {
+    color: #555;
+}
+
+/*#endregion */
+
+/*#region Text, password */
 
 .lct-form input[type="text"],
 .lct-form input[type="password"] {
