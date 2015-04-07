@@ -1,5 +1,5 @@
 @font-face {
-	font-family: 'Pe-icon-7-stroke';
+	font-family: 'Icon';
 	src:url('../../fonts/Pe-icon-7-stroke.eot?d7yf1v');
 	src:url('../../fonts/Pe-icon-7-stroke.eot?#iefixd7yf1v') format('embedded-opentype'),
 		url('../../fonts/Pe-icon-7-stroke.woff?d7yf1v') format('woff'),
@@ -10,7 +10,7 @@
 }
 
 [class^="pe-7s-"], [class*=" pe-7s-"] {
-	font-family: 'Pe-icon-7-stroke';
+	font-family: 'Icon';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;

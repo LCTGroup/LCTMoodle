@@ -3,13 +3,18 @@
     Layout = "~/Views/LCT/Khung.cshtml";
 }
 
-<link rel="stylesheet" type="text/css" href="/Content/styles/LCT/Form.css" />
-<link rel="stylesheet" type="text/css" href="/Content/styles/NguoiDung/DangNhap.css" />
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="/Content/styles/LCT/Form.css" />    
+}
+@section Scripts {
+    <script src="/Content/scripts/LCT/Form.js"></script>
+}
 
-<article class="hop-dang-nhap">
+<article class="hop-form">
     <section class="tieu-de">
-        <h1>LCT MOODLE</h1>
-        <h1>MẠNG XÃ HỘI HỌC TẬP CỦA MỌI NGƯỜI</h1>
+        LCTMoodle
+        <br />
+        Mạng xã hội học tập của mọi người
     </section>
     <section class="noi-dung">
         <form class="lct-form" action="#" method="post">
@@ -40,10 +45,8 @@
                             <label>&nbsp;</label>
                         </section>          
                         <section class="noi-dung">
-                            <article class="input">
-                                <label class="lct-checkbox-radio-label">
-                                    <input type="checkbox" name="GhiNho" /><u></u>Ghi nhớ
-                                </label>                                
+                            <article class="input">                                
+                                <input type="checkbox" name="GhiNho" data-text="Ghi nhớ" />
                             </article>
                         </section>
                     </li>
@@ -52,7 +55,7 @@
                             <label>&nbsp;</label>
                         </section>
                         <section class="noi-dung">                            
-                                <a href="#">Quên mật khẩu!</a>                            
+                                <a href="#">Quên mật khẩu?</a>                            
                         </section>
                     </li>                    
                 </ul>

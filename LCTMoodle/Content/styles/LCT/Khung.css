@@ -16,7 +16,10 @@ body {
 }
 a {
     color: #000;
-    text-decoration: none;
+    text-decoration: none;  
+}
+a:hover {
+    text-decoration: underline;
 }
 .site-image {
     background-image: url('../../images/AllSiteImages.png');
@@ -81,28 +84,36 @@ header .top-header {
     position: fixed;
     z-index: 10;
 }
+
     /*#region Hộp người dùng */    
+
     .hop-nguoi-dung {
         float: right;
     }
-        .hop-nguoi-dung ul {
-            height: 35px;
-            line-height: 35px;
+
+        /*#region Chưa đăng nhập */
+
+        .hop-nguoi-dung ul.chua-dang-nhap {
+            height: 35px;            
             margin: 0 6px;
         }
-            .hop-nguoi-dung ul li {
+            .hop-nguoi-dung ul.chua-dang-nhap li {
                 display: inline-block;
                 padding: 0 5px;
                 position: relative;
             }
-                .hop-nguoi-dung ul li a {
+                .hop-nguoi-dung ul.chua-dang-nhap li a {
                     display: block;
                     color: #fff;
+                    font-size: 1.6em;
+                    line-height: 35px;
+                    transition: 0.2s;           
                 }
-                .hop-nguoi-dung ul li a:hover {
-                    text-decoration: underline;
+                .hop-nguoi-dung ul.chua-dang-nhap li a:hover {
+                    text-decoration: none;
+                    text-shadow: 0px 0px 5px #fff;
                 }
-            .hop-nguoi-dung ul li:not(:first-of-type):before {
+            .hop-nguoi-dung ul.chua-dang-nhap li:not(:first-of-type):before {
                 content: '|';
                 position: absolute;
                 height: 80%;
@@ -110,6 +121,36 @@ header .top-header {
                 color: #fff;
                 left: -5px;
             }
+
+        /*#endregion */
+
+         /*#region Đã đăng nhập */
+
+        .hop-nguoi-dung ul.da-dang-nhap {
+            height: 35px;            
+            margin: 0 6px;
+        }
+            .hop-nguoi-dung ul.da-dang-nhap li {
+                display: inline-block;
+                padding: 0 5px;
+                position: relative;
+            }
+                .hop-nguoi-dung ul.da-dang-nhap li a {
+                    display: block;
+                    color: #fff;                                                            
+                }
+                .hop-nguoi-dung ul.da-dang-nhap li a:hover {
+                    text-decoration: none;
+                    text-shadow: 0px 0px 5px #fff;
+                }
+                    .hop-nguoi-dung ul.da-dang-nhap li a i {                        
+                        font-size: 1.6em;
+                        line-height: 35px;
+                        transition: 0.2s;           
+                    }      
+
+        /*#endregion */
+        
     /*#endregion */
 /*#endregion */
 
@@ -140,6 +181,9 @@ header .bottom-header {
             font-size: 16px;
             position: relative;
         }
+            header .bottom-header nav a:hover {
+                text-decoration: none;
+            }
         header .bottom-header nav i {
             font-size: 30px;
             vertical-align: -6px;
@@ -234,6 +278,7 @@ header .bottom-header {
     }
     .thanh-dieu-huong li a:hover {
         padding: 0 20px 0 35px;
+        text-decoration: none;
     }
     .thanh-dieu-huong li:last-child a {
         color: white;
@@ -290,10 +335,14 @@ main > .cot-trai {
         position: relative;
         color: #333;
     }
+    .cot-trai nav a:hover {
+        text-decoration:  none;
+    }
     .cot-trai nav li:hover > a {
         color: #000;
     }
-    .cot-trai nav u {
+    .cot-trai nav a:after {
+        content: '';
         display: block;
         position: absolute;
         background-color: #ddd;
@@ -307,12 +356,12 @@ main > .cot-trai {
         font-size: 15px;
         font-weight: bold;
     }
-    .cot-trai nav > ul > li > a u {
+    .cot-trai nav > ul > li > a:after {
         width: 5px;
         height: 100%;
     }
-        .cot-trai nav > ul > li:hover > a u,
-        .cot-trai nav > ul > li > a:hover u {
+        .cot-trai nav > ul > li:hover > a:after,
+        .cot-trai nav > ul > li > a:hover:after {
             background-color: #08c;
         }
     .cot-trai nav > ul > li > ul > li > a {
@@ -320,11 +369,11 @@ main > .cot-trai {
         font-size: 13px;
         line-height: 20px;
     }
-    .cot-trai nav > ul > li > ul > li > a u {
+    .cot-trai nav > ul > li > ul > li > a:after {
         width: 3px;
         height: 0px;
     }
-        .cot-trai nav > ul > li > ul > li > a:hover u {
+        .cot-trai nav > ul > li > ul > li > a:hover:after {
             background-color: #08c;
             height: 100%;
         }
@@ -397,7 +446,20 @@ main > .cot-giua {
 .cot-giua > .hop > .noi-dung {
 
 }
+.cot-giua > .hop-form {
 
+}
+.cot-giua > .hop-form > .tieu-de {
+    text-align: center;
+    font: normal 30px Freeway;
+    color: #08c;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+.cot-giua > .hop-form > .noi-dung {
+    width: 50%;
+    margin: 0 auto;
+}
 /*#endregion */
 
 /*#endregion */

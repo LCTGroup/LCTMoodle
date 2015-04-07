@@ -11,6 +11,14 @@ $(function () {
     Khởi tạo input
 */
 function khoiTaoInput() {
+    $('.lct-form .input').append($('<i class="mac-dinh" title="Mặc định"></i>').on('click', function () {
+        //Thẻ chứa
+        $chua = $(this).parent();
+
+        // Text, thời gian
+        $chua.find('input[type="text"], textarea, input[data-type="lct-thoi-gian"], input[data-type="lct-lich"]').val('');
+    }));
+
     $('.lct-form input[type="checkbox"], .lct-form input[type="radio"]').each(function () {
         $element = $(this);
         $element.wrap('<label class="lct-checkbox-radio-label"></label>');
@@ -82,10 +90,18 @@ function khoiTaoInputThoiGian(loai, idForm, hamKhoiTao, hamXuLyMacDinh, hamXuLyL
                         //Nếu đối tượng vừa được nhấn vào có cùng loại với input thì không làm gì cả
                         if ($(e.target).attr('data-input-type') != loai) {
                             $form.attr('data-trang-thai', 'an');
+                            $('body').off('mouseup.' + loai);
                             $('body').off('mousedown.' + loai);
                         }
                     }
-                    else {
+                }
+            });
+            $('body').on('mouseup.' + loai, function (e) {
+                e = e || window.event;
+                //Nếu nhấn vào input đang xử lý thì ko làm gì cả
+                if (e.target != $input[0]) {
+                    //Nếu không phải vừa nhấn vào đối tượng trên form => tắt
+                    if ($form.has(e.target).length != 0) {
                         $input.focus();
                     }
                 }
@@ -126,6 +142,7 @@ function khoiTaoInputThoiGian(loai, idForm, hamKhoiTao, hamXuLyMacDinh, hamXuLyL
         if (e.keyCode == 9) {
             $form.attr('data-trang-thai', 'an');
             $('body').off('mouseup.' + loai);
+            $('body').off('mousedown.' + loai);
         }
     });
 }
