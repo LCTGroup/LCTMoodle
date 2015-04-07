@@ -37,6 +37,56 @@
 .lct-form .input {
     border: 1px solid #ddd;
     background-color: #fff;
+    position: relative;
+}
+.lct-form .input > i.mac-dinh:before {
+    content: '\e61c';
+    font: normal 13px Icon;
+    display: block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    transition: 0.5s;
+    opacity: 0.2;
+}
+.lct-form .input:hover > i.mac-dinh:before {
+    opacity: 0.5;
+}
+.lct-form .input > i.mac-dinh:hover:before {
+    opacity: 1;
+    color: #08c;
+    animation: xoay 1s infinite;
+    -webkit-animation: xoay 1s infinite;
+    -moz-animation: xoay 1s infinite;
+}
+
+@keyframes xoay {
+    0% {
+        transform: none;
+    }
+    100% {
+        transform: rotate(1turn);
+    }
+}
+@-webkit-keyframes xoay {
+    0% {
+        transform: none;
+    }
+    100% {
+        transform: rotate(1turn);
+    }
+}
+@-moz-keyframes xoay {
+    0% {
+        transform: none;
+    }
+    100% {
+        transform: rotate(1turn);
+    }
 }
 
 /*#region Đường dẫn */
@@ -191,7 +241,7 @@
 }
 .lct-form .lct-file-label i:before {
     content: '\e68a';
-    font-family: 'Pe-icon-7-stroke';
+    font-family: 'Icon';
     font-style: normal;
     font-size: 16px;
     vertical-align: middle;
