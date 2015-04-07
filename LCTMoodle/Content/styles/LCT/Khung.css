@@ -97,29 +97,27 @@ header .top-header {
             height: 35px;            
             margin: 0 6px;
         }
-            .hop-nguoi-dung ul.chua-dang-nhap li {
+            .hop-nguoi-dung ul.chua-dang-nhap > li {
                 display: inline-block;
                 padding: 0 5px;
                 position: relative;
             }
-                .hop-nguoi-dung ul.chua-dang-nhap li a {
+                .hop-nguoi-dung ul.chua-dang-nhap > li > a {
                     display: block;
-                    color: #fff;
-                    font-size: 1.6em;
+                    color: #fff;                    
                     line-height: 35px;
                     transition: 0.2s;           
                 }
-                .hop-nguoi-dung ul.chua-dang-nhap li a:hover {
+                .hop-nguoi-dung ul.chua-dang-nhap > li > a:hover {
                     text-decoration: none;
                     text-shadow: 0px 0px 5px #fff;
                 }
-            .hop-nguoi-dung ul.chua-dang-nhap li:not(:first-of-type):before {
+            .hop-nguoi-dung ul.chua-dang-nhap > li:last-of-type:before {
                 content: '|';
                 position: absolute;
-                height: 80%;
-                width: 2px;
                 color: #fff;
                 left: -5px;
+                top: 9px;
             }
 
         /*#endregion */
@@ -130,27 +128,101 @@ header .top-header {
             height: 35px;            
             margin: 0 6px;
         }
-            .hop-nguoi-dung ul.da-dang-nhap li {
-                display: inline-block;
+            .hop-nguoi-dung ul.da-dang-nhap > li {
+                float: left;
                 padding: 0 5px;
+                height: 100%;
+            }
+            .hop-nguoi-dung ul.da-dang-nhap > li:last-of-type {
+                padding: 0 5px 0 20px;
                 position: relative;
             }
-                .hop-nguoi-dung ul.da-dang-nhap li a {
-                    display: block;
-                    color: #fff;                                                            
+                .hop-nguoi-dung ul.da-dang-nhap > li:last-of-type:before {
+                    content: '|';
+                    position: absolute;
+                    color: #ddd;
+                    top: 10px;
+                    left: 7px;
                 }
-                .hop-nguoi-dung ul.da-dang-nhap li a:hover {
-                    text-decoration: none;
-                    text-shadow: 0px 0px 5px #fff;
+                .hop-nguoi-dung ul.da-dang-nhap > li > a {
+                    display: block;        
+                    color: #ddd;                      
                 }
-                    .hop-nguoi-dung ul.da-dang-nhap li a i {                        
-                        font-size: 1.6em;
-                        line-height: 35px;
-                        transition: 0.2s;           
-                    }      
+                .hop-nguoi-dung ul.da-dang-nhap > li > a:hover {
+                    text-shadow: 0 0 5px #fff;
+                    text-decoration: none;                                  
+                }
+                    .hop-nguoi-dung ul.da-dang-nhap > li > a > i {
+                        line-height: 35px;                                 
+                        font-size: 1.6em;                        
+                    }
+                    .hop-nguoi-dung ul.da-dang-nhap > li > a > span {
+                        line-height: 35px;                           
+                    }
+                    .hop-nguoi-dung ul.da-dang-nhap > li > a > img {
+                        display: block;
+                        float: left;                                       
+                        padding: 7px;
+                        width: 22px;
+                        height: 22px;
+                    }
 
-        /*#endregion */
-        
+                    /*#region Hộp điều khiển */
+
+                    .hop-dieu-khien {
+                        position: absolute;                               
+                        z-index: 1;
+                        top: 35px;
+                        right: calc(0% - 6px);
+                        background-color: #004263;
+                        padding: 5px;
+                    }
+                        .hop-dieu-khien > ul {                            
+                        }
+                            .hop-dieu-khien > ul > li {
+                                display: block;
+                                width: 100%;
+                                height: 30px;                                
+                            }
+                                .hop-dieu-khien > ul > li > a {
+                                    display: block;
+                                    color: #ddd;
+                                    display: table;
+                                    width: 100%;
+                                    position: relative;
+                                    padding-left: 5px;
+                                }                                
+                                .hop-dieu-khien > ul > li > a:after {
+                                    content: '';
+                                    display: block;
+                                    position: absolute;
+                                    background-color: #ddd;
+                                    left: 0px;
+                                    top: 0px;
+                                    transition: 0.5s;
+                                    height: 100%;
+                                    width: 5px;
+                                }         
+                                .hop-dieu-khien > ul > li > a:hover:after {
+                                    background-color: #08c;
+                                }                            
+                                    .hop-dieu-khien > ul > li > a > i {
+                                        font-size: 2em;
+                                        line-height: 30px;
+                                        float: left;
+                                        padding: 0 5px;
+                                        width: 25px;
+                                        text-align: center;
+                                    }
+                                    .hop-dieu-khien > ul > li > a > span {
+                                        line-height: 30px;
+                                        float: left;
+                                        padding: 0 5px;
+                                    }
+                    /*#endregion */
+
+        /*#endregion */        
+
     /*#endregion */
 /*#endregion */
 

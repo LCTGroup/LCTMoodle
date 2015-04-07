@@ -319,6 +319,7 @@
     <Content Include="Content\ckeditor\styles.js" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\AllSiteImages.png" />
+    <Content Include="Content\images\user-avatar.jpg" />
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.min.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />

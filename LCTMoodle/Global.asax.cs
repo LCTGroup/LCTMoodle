@@ -20,7 +20,7 @@ namespace LCTMoodle
 
         protected void Session_Start()
         {
-            Session["NguoiDung"] = "asd";
+            Session["NguoiDung"] = "PenguinBlue-Chip";
         }
     }
 }
