@@ -2,6 +2,29 @@
 
 var mangTam = Array();
 
+/*
+	Khởi tạo
+*/
 $(function () {
-    
+    init_HopDieuKhien();
 });
+
+/*
+	Ẩn hiện Hộp điều khiển
+*/
+function init_HopDieuKhien() {
+    $('.toggle-target').on('mouseover', function () {        
+        //Lấy tên đối tượng cần ẩn hiện
+        $tenDoiTuongAnHien = $(this).attr('data-toggle-target');
+
+        //Lấy đối tượng cần ẩn hiện
+        $doiTuongCanAnHien = $("[data-toggle='" + $tenDoiTuongAnHien + "']")
+
+        //Xử lý
+        $doiTuongCanAnHien.show();
+        $doiTuongCanAnHien.on('mouseleave', function () {
+            $(this).hide();
+        });
+
+    });
+}

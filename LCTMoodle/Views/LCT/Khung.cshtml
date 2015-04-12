@@ -34,11 +34,20 @@
                 {
                     <ul class="da-dang-nhap">
                         <li><a href="#"><i class="pe-7s-chat"></i></a></li>
-                        <li><a href="#"><i class="pe-7s-bell"></i></a></li>
+                        <li><a href="#"><i class="pe-7s-global"></i></a></li>
                         <li>
-                            <a href="#">
-                                sadasdass
+                            <a href="#" class="toggle-target" data-toggle-target="hop-dieu-khien">
+                                <img src="/Content/images/user-avatar.jpg" />
+                                <span>@Session["NguoiDung"]</span>
                             </a>
+                            <div class="hop-dieu-khien" data-toggle="hop-dieu-khien" hidden>
+                                <ul>
+                                    <li><a href="#"><i class="pe-7s-user"></i><span>Thông tin cá nhân</span></a></li>                                    
+                                    <li><a href="#"><i class="pe-7s-key"></i><span>Đổi mật khẩu</span></a></li>
+                                    <li><a href="#"><i class="pe-7s-tools"></i><span>Cài đặt</span></a></li>
+                                    <li><a href="#"><i class="pe-7s-close"></i><span>Thoát</span></a></li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 }                                    
