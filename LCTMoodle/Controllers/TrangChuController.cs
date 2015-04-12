@@ -17,5 +17,10 @@ namespace LCTMoodle.Controllers
         {
             return View();
         }
+
+        public ActionResult CayMau()
+        {
+            return View();
+        }
 	}
 }

@@ -14,7 +14,7 @@ namespace LCTMoodle
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
+                name: "MacDinh",
                 url: "{controller}/{action}/{ma}",
                 defaults: new { controller = "TrangChu", action = "Index", ma = UrlParameter.Optional }
             );

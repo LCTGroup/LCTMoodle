@@ -19,49 +19,92 @@
                 <li>
                     <section class="tieu-de">
                         <label>
-                            Tiêu đề:
+                            Select:
                         </label>
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input type="text" name="name" />
+                            <select name="select">
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="3">Option 3</option>
+                            </select>
                         </article>
                     </section>
                 </li>
                 <li>
                     <section class="tieu-de">
                         <label>
-                            Tiêu đề:
+                            Text:
                         </label>
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <textarea name="name"></textarea>
+                            <input type="text" name="name" data-mac-dinh="Mặc định (text)" placeholder="Hãy nhập..." />
                         </article>
                     </section>
                 </li>
                 <li>
                     <section class="tieu-de">
                         <label>
-                            Tiêu đề:
+                            Text:
                         </label>
                     </section>
                     <section class="noi-dung">
                         <article class="input">
+                            <input type="text" name="name" data-mac-dinh="Mặc định (text)" placeholder="Hãy nhập..." />
+                            <input type="text" name="name" data-mac-dinh="Mặc định (text)" placeholder="Hãy nhập..." />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Textarea:
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <textarea name="name" data-mac-dinh="Mặc định (textarea)" placeholder="Hãy nhập"></textarea>
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Text & Textarea:
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input type="text" name="name" data-mac-dinh="Mặc định (text)" placeholder="Hãy nhập..." />
+                            <textarea name="name" data-mac-dinh="Mặc định (textarea)" placeholder="Hãy nhập"></textarea>
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Checkbox:
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input type="checkbox" name="name" value="" data-text="Checkbox" data-mac-dinh />
+                            <input type="checkbox" name="name" value="" data-text="Checkbox" data-mac-dinh />
                             <input type="checkbox" name="name" value="" data-text="Checkbox" />
-                            <input type="checkbox" name="name" value="" data-text="Checkbox" />
                         </article>
                     </section>
                 </li>
                 <li>
                     <section class="tieu-de">
                         <label>
-                            Tiêu đề:
+                            Radio:
                         </label>
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input type="radio" name="name" value="" data-text="Radio" />
+                            <input type="radio" name="name" value="" data-text="Radio" data-mac-dinh />
                             <input type="radio" name="name" value="" data-text="Radio" />
                         </article>
                     </section>
@@ -69,12 +112,25 @@
                 <li>
                     <section class="tieu-de">
                         <label>
-                            Tiêu đề:
+                            Tập tin:
                         </label>
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input type="file" name="name" value="" data-text="Chọn tập tin" />
+                            <input type="file" name="name" value="" data-thu-muc="AnhDaiDien_ChuDe/" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Thời gian & lịch:
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input data-input-type="lct-thoi-gian" name="name" value="" data-mac-dinh="00:00" placeholder="Chọn thời gian" />
+                            <input data-input-type="lct-lich" name="name" value="" data-mac-dinh="23.12.1234" placeholder="Chọn ngày" />
                         </article>
                     </section>
                 </li>
@@ -86,19 +142,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-input-type="lct-thoi-gian" name="name" value="" />
-                        </article>
-                    </section>
-                </li>
-                <li>
-                    <section class="tieu-de">
-                        <label>
-                            Thời gian:
-                        </label>
-                    </section>
-                    <section class="noi-dung">
-                        <article class="input">
-                            <input data-input-type="lct-thoi-gian" name="name" value="" />
+                            <input data-input-type="lct-thoi-gian" name="name" value="" data-mac-dinh="00:00" placeholder="Chọn thời gian" />
                         </article>
                     </section>
                 </li>
@@ -110,19 +154,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-input-type="lct-lich" name="name" value="" />
-                        </article>
-                    </section>
-                </li>
-                <li>
-                    <section class="tieu-de">
-                        <label>
-                            Lịch:
-                        </label>
-                    </section>
-                    <section class="noi-dung">
-                        <article class="input">
-                            <input data-input-type="lct-lich" name="name" value="" />
+                            <input data-input-type="lct-lich" name="name" value="" data-mac-dinh="23.12.1234" placeholder="Chọn ngày" />
                         </article>
                     </section>
                 </li>

@@ -108,24 +108,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="fonts\" />
     <Folder Include="Scripts\" />
+    <Folder Include="Uploads\AnhDaiDien_ChuDe\" />
+    <Folder Include="Views\TapTin\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ChuDeController.cs" />
     <Compile Include="Controllers\KhoaHocController.cs" />
+    <Compile Include="Controllers\LCTController.cs" />
     <Compile Include="Controllers\NguoiDungController.cs" />
+    <Compile Include="Controllers\TapTinController.cs" />
     <Compile Include="Controllers\TrangChuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\LCTHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebServices\WindowsPhone\ClassTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ChucNang.sql" />
+    <Content Include="App_Data\Query.sql" />
     <Content Include="Content\ckeditor\adapters\jquery.js" />
     <Content Include="Content\ckeditor\build-config.js" />
     <Content Include="Content\ckeditor\ckeditor.js" />
@@ -319,6 +326,8 @@
     <Content Include="Content\ckeditor\styles.js" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\AllSiteImages.png" />
+    <Content Include="Content\images\LCT\mini_logo.png" />
+    <Content Include="Content\scripts\ChuDe\QuanLy.js" />
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.min.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
@@ -364,6 +373,23 @@
     <Content Include="Views\TrangChu\FormMau.cshtml" />
     <Content Include="Views\NguoiDung\DangNhap.cshtml" />
     <Content Include="Views\NguoiDung\DangKy.cshtml" />
+    <Content Include="Views\TrangChu\CayMau.cshtml" />
+    <Content Include="Views\ChuDe\QuanLy.cshtml" />
+    <Content Include="Views\ChuDe\_Form.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">
+      <Project>{627d2c50-34f0-4368-83c9-df1239210201}</Project>
+      <Name>BUSLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAOLayer\DAOLayer.csproj">
+      <Project>{e084c23e-8bd2-4b97-ac36-26964589bca0}</Project>
+      <Name>DAOLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DTOLayer\DTOLayer.csproj">
+      <Project>{f03e2462-211a-47ab-bb76-9ad537ea4734}</Project>
+      <Name>DTOLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

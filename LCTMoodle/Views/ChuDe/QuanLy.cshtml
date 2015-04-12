@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["TieuDe"] = "Quản lý chủ đề";
+    Layout = "~/Views/LCT/Khung.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="/Content/styles/LCT/Form.css" />
+}
+@section Scripts {
+    <script src="/Content/scripts/LCT/Form.js"></script>
+    <script src="/Content/scripts/ChuDe/QuanLy.js"></script>
+}
+
+<article class="hop">
+    <section class="tieu-de">
+        Quản lý chủ đề
+    </section>
+    <section id="cay-chu-de" class="noi-dung lct-cay" data-ma-hien-tai="0" data-pham-vi="Khóa học">
+        <section class="cay">
+            <ul class="nut">
+                <li>
+                    <a href="#">
+                        Chủ đề gốc
+                    </a>
+                    <u>
+                        <ul class="nut-con">
+                            @*<li>
+                                <a href="#">
+                                    a123123
+                                </a>
+                            </li>*@
+                        </ul>
+                    </u>
+                </li>
+            </ul>
+        </section>
+        <section class="con">
+            <a href="javascript:void(0)" data-chuc-nang="tao"><i class="pe-7s-plus"></i>Hiện chưa có nút con, hãy tạo một nút con mới</a>
+            <ul class="muc">
+                @*<li>
+                    <section class="mo-ta">
+                        <img src="#">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        </p>
+                    </section>
+                    <a href="#" class="ten" data-so-luong="8">
+                        defdef
+                    </a>
+                    <section class="chuc-nang">
+                        <i class="pe-7s-config"></i>
+                        <ul>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    Xoa chu de
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    Xoa chu de
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">
+                                    Xoa chu de
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                </li>*@
+            </ul>
+        </section>
+        <section class="khung-chuc-nang">
+            <ul>
+                <li>
+                    <a href="javascript:void(0)" class="pe-7s-tools"></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" data-chuc-nang="tao" class="pe-7s-plus">
+                        <u></u>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="pe-7s-close-circle">
+                        <u></u>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </section>
+</article>

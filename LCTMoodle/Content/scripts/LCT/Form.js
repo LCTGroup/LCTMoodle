@@ -3,42 +3,121 @@ $inputVuaFocus = [];
 
 
 $(function () {
-    khoiTaoInput();
-    khoiTaoThoiGian();
+    khoiTaoLCTForm($('.lct-form'));
 })
 
 /*
     Khởi tạo input
 */
-function khoiTaoInput() {
-    $('.lct-form .input').append($('<i class="mac-dinh" title="Mặc định"></i>').on('click', function () {
+function khoiTaoLCTForm($form) {
+    // Thêm nút mặc định
+    $form.find('.input').append($('<i class="mac-dinh" title="Mặc định"></i>').on('click', function () {
+        /*
+            Khởi tạo sự kiện cho nó làm mới
+        */
         //Thẻ chứa
         $chua = $(this).parent();
 
         // Text, thời gian
-        $chua.find('input[type="text"], textarea, input[data-type="lct-thoi-gian"], input[data-type="lct-lich"]').val('');
+        $chua.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
+            this.value = this.getAttribute('data-mac-dinh');
+        });
+
+        // Checkbox, radio button
+        $chua.find('input[type="checkbox"], input[type="radio"]').each(function () {
+            this.checked = this.getAttribute('data-mac-dinh') != null;
+        });
+
+        // Tập tin
+        $chua.find('input[type="file"]').each(function () {
+            $phanTu = $(this);
+
+            $phanTu.removeClass('co');
+            $phanTu.find('~ input[type="hidden"]').val('');
+        });
     }));
 
-    $('.lct-form input[type="checkbox"], .lct-form input[type="radio"]').each(function () {
+    //Xử lý hiển thị đúng form
+    $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
         $element = $(this);
         $element.wrap('<label class="lct-checkbox-radio-label"></label>');
         $element.after('<u></u>' +$element.attr('data-text'));
     });
 
-    $('.lct-form input[type="file"]').each(function () {
-        $element = $(this);
-        $element.wrap('<label class="lct-file-label"></label>');
-        $element.after('<i></i><u></u><span>' + $element.attr('data-text') + '</span>');
+    $form.find('input[type="file"]').each(function () {
+        $phanTu = $(this);
+        $phanTu.wrap('<label class="lct-file-label"></label>');
+        var name = $phanTu.attr('name');
+        $phanTu.removeAttr('name');
+        $phanTu.after('<input type="hidden" name="' + name + '"><img /><i></i><u></u>');
     });
-}
 
-/*
-    Khởi tạo thời gian
-*/
+    //Xử lý upload file = ajax
+    $form.find('input[type="file"]').on('change', function () {
+        //Kiểm tra tồn tại
+        if (this.files.length == 0) {
+            return;
+        }
 
-function khoiTaoThoiGian() {
-    khoiTaoInputThoiGian('lct-thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
-    khoiTaoInputThoiGian('lct-lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
+        $phanTu = $(this);
+
+        //Lấy, xử lý thanh thể hiện xử lý
+        var thanhTheHien = $phanTu.find('~ u')[0];
+        thanhTheHien.style.height = '0%';
+        $phanTu.addClass('dang');
+
+        //Lấy data
+        var data = new FormData();
+        data.append('TapTin', this.files[0]);
+        data.append('ThuMuc', $phanTu.attr('data-thu-muc'));
+
+        //post request
+        $.ajax({
+            url: '/TapTin/ThemTapTin',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            data: data,
+            dataType: 'JSON',
+            xhr: function () {
+                var xhr = $.ajaxSettings.xhr();
+                if (xhr.upload) { //Kiểm tra nếu thuộc tính tồn tại
+                    xhr.upload.addEventListener('progress', function (e) {
+                        if (e.lengthComputable) {
+                            thanhTheHien.style.height = Math.ceil(e.loaded / e.total) * 100 + '%';
+                        }
+                    }, false);
+                }
+                return xhr;
+            }
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                $phanTu.addClass('co');
+                $phanTu.find('~ img').attr('src', '/TapTin/LayTapTin/' + data.ketQua);
+                $phanTu.find('~ input[type="hidden"]').val(data.ketQua);
+            }
+            else {
+                alert('Thêm file thất bại');
+            }
+        }).fail(function () {
+            alert('Thêm file thất bại')
+        }).always(function () {
+            thanhTheHien.style.height = '110px';
+            $phanTu.removeClass('dang');
+        });
+    });
+
+    //Khởi tạo thời gian
+    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-thoi-gian"]'), 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
+    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-lich"]'), 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
+
+    //Xử lý lấy giá trị mặc định
+    $form.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
+        this.value = this.getAttribute('data-mac-dinh');
+    });
+    $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
+        this.checked = this.getAttribute('data-mac-dinh') != null;
+    });
 }
 
 // loai Loại input (lct-thoi-gian, lct-lich)
@@ -46,12 +125,9 @@ function khoiTaoThoiGian() {
 // hàm khởi tạo form lúc chưa có
 // hàm xử lý giá trị mặc định
 // hàm xử lý lấy giá trị khi đã có
-function khoiTaoInputThoiGian(loai, idForm, hamKhoiTao, hamXuLyMacDinh, hamXuLyLayGiaTri) {
+function khoiTaoInputThoiGian($inputs, idForm, hamKhoiTao, hamXuLyMacDinh, hamXuLyLayGiaTri) {
     //Lấy/tạo form nhập
     $form = $('#' + idForm);
-
-    //Lấy tất cả input
-    $inputs = $('.lct-form input[data-input-type="' + loai + '"]');
 
     //Không cho điền
     $inputs.on('keypress', function (e) {
