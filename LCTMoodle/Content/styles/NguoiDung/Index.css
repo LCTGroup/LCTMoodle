@@ -1,0 +1,47 @@
+﻿.khung-nguoi-dung {
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -o-flex;    
+    flex-direction: column;
+}
+    .khung-nguoi-dung .khung-tren {        
+        flex-direction: row;                
+        background: -webkit-linear-gradient(left, #eaeaea, #f5f5f5); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(right, #eaeaea, #f5f5f5); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(right, #eaeaea, #f5f5f5); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(to right, #eaeaea, #f5f5f5); /* Standard syntax (must be last) */
+    }
+        .khung-nguoi-dung .khung-tren .hinh-dai-dien {            
+            float: left;
+            height: 100px;
+        }
+            .khung-nguoi-dung .khung-tren .hinh-dai-dien img {
+                height: 100%;
+            }
+        .khung-nguoi-dung .khung-tren .thong-tin-nguoi-dung {            
+            padding-left: 10px;
+            float: left;
+            height: 100px;
+        }
+            .khung-nguoi-dung .khung-tren .ten-nguoi-dung {
+                line-height: 50px;
+                color: #333;
+                font-size: 2em;
+            }
+            .khung-nguoi-dung .khung-tren .loai-nguoi-dung {
+                color: #666;                
+            }
+    .khung-nguoi-dung .khung-duoi {
+        flex-direction: column;
+        padding: 10px 0;
+    }
+        .khung-nguoi-dung .khung-duoi > .item {
+
+        }
+            .khung-nguoi-dung .khung-duoi > .item > .tieu-de {
+                color: #333;
+            }
+            .khung-nguoi-dung .khung-duoi > .item > .noi-dung {
+                padding: 0 10px;
+            }

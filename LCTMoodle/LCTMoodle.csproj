@@ -329,6 +329,7 @@
     <Content Include="Content\styles\LCT\Khung.css" />
     <Content Include="Content\styles\NguoiDung\DangKy.css" />
     <Content Include="Content\styles\NguoiDung\DangNhap.css" />
+    <Content Include="Content\styles\NguoiDung\Index.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -365,6 +366,7 @@
     <Content Include="Views\TrangChu\FormMau.cshtml" />
     <Content Include="Views\NguoiDung\DangNhap.cshtml" />
     <Content Include="Views\NguoiDung\DangKy.cshtml" />
+    <Content Include="Views\NguoiDung\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
