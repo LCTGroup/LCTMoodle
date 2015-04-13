@@ -1,3 +1,4 @@
 bin/
 obj/
 /LCTMoodle/Uploads/
+*.suo
