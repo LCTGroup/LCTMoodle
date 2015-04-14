@@ -22,36 +22,13 @@ function khoiTaoNut() {
             contentType: 'JSON'
         }).done(function (data) {
             if (data.trangThai == 1) {
-                $popupFull = $('#popup_full');
+                $popup = layPopupFull();
+                $popup.trigger('Mo');
+                $noiDungPopup = $popup.find('#noi_dung');
 
-                if ($popupFull.length == 0) {
-                    $popupFull = $(
-                        '<article id="popup_full" class="popup-full">\
-                            <section class="khung-tat"></section>\
-                            <section id="noi_dung" class="khung-noi-dung">\
-                            </section>\
-                        </article>');
-
-                    $popupFull.find('.khung-tat').on('click', function () {
-                        $popupFull.hide();
-                    })
-
-                    $popupFull.on('HoanTat', function (e, data) {
-                        $popupFull.hide();
-                        console.log('OK');
-                        console.log(data);
-                    })
-
-                    $('body').prepend($popupFull);
-                }
-
-                $popupFull.show();
-
-                $html = $(data.ketQua);
-
-                khoiTaoLCTForm($html.siblings('.lct-form'));
-
-                $html.siblings('.lct-form').on('submit', function (e) {
+                $noiDungPopup.html(data.ketQua);
+                khoiTaoLCTForm($noiDungPopup.find('.lct-form'));                    
+                $noiDungPopup.find('.lct-form').on('submit', function (e) {
                     e = e || window.event;
                     e.preventDefault();
 
@@ -68,21 +45,21 @@ function khoiTaoNut() {
                         dataType: 'JSON',
                         data: $form.serialize()
                     }).done(function (data) {
-                        $popupFull.trigger('HoanTat', data);
+                        $popup.trigger('Tat');
                     }).fail(function () {
-                        $popupFull.trigger('HoanTat', false);
+                        $popup.trigger('Tat');
                     }).always(function () {
                         mangTam['DangTaoChuDe'] = false;
                     });
                 });
-
-                $popupFull.find('#noi_dung').html($html);
             }
             else {
                 alert('Thất bại');
+                $popup.trigger('Tat');
             }
         }).fail(function () {
             alert('Thất bại');
+            $popup.trigger('Tat');
         });
     });
 }

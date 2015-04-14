@@ -108,8 +108,8 @@ function khoiTaoLCTForm($form) {
     });
 
     //Khởi tạo thời gian
-    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-thoi-gian"]'), 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
-    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-lich"]'), 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
+    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-thoi-gian"]'), 'lct-thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
+    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-lich"]'), 'lct-lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
 
     //Xử lý lấy giá trị mặc định
     $form.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
@@ -125,15 +125,9 @@ function khoiTaoLCTForm($form) {
 // hàm khởi tạo form lúc chưa có
 // hàm xử lý giá trị mặc định
 // hàm xử lý lấy giá trị khi đã có
-function khoiTaoInputThoiGian($inputs, idForm, hamKhoiTao, hamXuLyMacDinh, hamXuLyLayGiaTri) {
-    //Lấy/tạo form nhập
-    $form = $('#' + idForm);
-
-    //Không cho điền
-    $inputs.on('keypress', function (e) {
-        e = e || window.event;
-        e.preventDefault();
-    });
+function khoiTaoInputThoiGian($inputs, loai, idInput, hamKhoiTao, hamXuLyMacDinh, hamXuLyLayGiaTri) {
+    //Lấy form nhập
+    $formInput = $('#' + idInput);
 
     //Xử lý focus => hiển thị
     $inputs.on('focus', function (e) {
@@ -141,14 +135,14 @@ function khoiTaoInputThoiGian($inputs, idForm, hamKhoiTao, hamXuLyMacDinh, hamXu
         $input = $(e.target);
 
         //Lấy form
-        $form = $('#' + idForm);
-        if ($form.length == 0) {
-            $form = hamKhoiTao(idForm);
-            $('body').prepend($form)
+        $formInput = $('#' + idInput);
+        if ($formInput.length == 0) {
+            $formInput = hamKhoiTao(idInput);
+            $('body').prepend($formInput)
         }
 
         //Nếu input vừa được focus & focus tiếp => ko xử lý
-        if (e.target === $inputVuaFocus[0] && $form.attr('data-trang-thai') == 'hien') {
+        if (e.target === $inputVuaFocus[0] && $formInput.attr('data-trang-thai') == 'hien') {
             return;
         }
 
@@ -156,16 +150,16 @@ function khoiTaoInputThoiGian($inputs, idForm, hamKhoiTao, hamXuLyMacDinh, hamXu
 
         //Lắng nghe sự kiện để ẩn
         //Nếu form ở trạng thái hiện => đang lắng nghe => ko cần
-        if ($form.attr('data-trang-thai') == 'an') {
+        if ($formInput.attr('data-trang-thai') == 'an') {
             $('body').on('mousedown.' + loai, function (e) {
                 e = e || window.event;
                 //Nếu nhấn vào input đang xử lý thì ko làm gì cả
                 if (e.target != $input[0]) {
                     //Nếu không phải vừa nhấn vào đối tượng trên form => tắt
-                    if ($form.has(e.target).length == 0) {
+                    if ($formInput.has(e.target).length == 0) {
                         //Nếu đối tượng vừa được nhấn vào có cùng loại với input thì không làm gì cả
                         if ($(e.target).attr('data-input-type') != loai) {
-                            $form.attr('data-trang-thai', 'an');
+                            $formInput.attr('data-trang-thai', 'an');
                             $('body').off('mouseup.' + loai);
                             $('body').off('mousedown.' + loai);
                         }
@@ -177,7 +171,7 @@ function khoiTaoInputThoiGian($inputs, idForm, hamKhoiTao, hamXuLyMacDinh, hamXu
                 //Nếu nhấn vào input đang xử lý thì ko làm gì cả
                 if (e.target != $input[0]) {
                     //Nếu không phải vừa nhấn vào đối tượng trên form => tắt
-                    if ($form.has(e.target).length != 0) {
+                    if ($formInput.has(e.target).length != 0) {
                         $input.focus();
                     }
                 }
@@ -186,27 +180,27 @@ function khoiTaoInputThoiGian($inputs, idForm, hamKhoiTao, hamXuLyMacDinh, hamXu
 
         //Khởi tạo giá trị cho form
         if ($input.val() == '') {
-            hamXuLyMacDinh($form, $input);
+            hamXuLyMacDinh($formInput, $input);
         }
         else {
-            hamXuLyLayGiaTri($form, $input);
+            hamXuLyLayGiaTri($formInput, $input);
         }
 
         //Đưa form vào vị trí hiển thị
         var viTri = $input.offset();
 
         //Nếu đang ẩn => hiện lên
-        if ($form.attr('data-trang-thai') == 'an') {
-            $form.attr('data-trang-thai', 'hien');
-            $form.css({
+        if ($formInput.attr('data-trang-thai') == 'an') {
+            $formInput.attr('data-trang-thai', 'hien');
+            $formInput.css({
                 left: viTri.left + 15,
-                top: viTri.top - $form.outerHeight() - 5
+                top: viTri.top - $formInput.outerHeight() - 5
             });
         }
         else {
-            $form.animate({
+            $formInput.animate({
                 left: viTri.left + 15,
-                top: viTri.top - $form.outerHeight() - 5
+                top: viTri.top - $formInput.outerHeight() - 5
             }, 500);
         }
     })
@@ -216,7 +210,7 @@ function khoiTaoInputThoiGian($inputs, idForm, hamKhoiTao, hamXuLyMacDinh, hamXu
         e = e || window.event;
 
         if (e.keyCode == 9) {
-            $form.attr('data-trang-thai', 'an');
+            $formInput.attr('data-trang-thai', 'an');
             $('body').off('mouseup.' + loai);
             $('body').off('mousedown.' + loai);
         }

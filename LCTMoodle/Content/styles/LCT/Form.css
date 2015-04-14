@@ -1534,7 +1534,7 @@
 
     .lct-cay .muc p {
         font-size: 11px;
-        line-height: 1.2em;
+        line-height: 1.3em;
         overflow: hidden;
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -1546,15 +1546,28 @@
         text-align: center;
         font-weight: bold;
         color: #333;
+        width: 90%;
+        margin: 0 auto;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
         .lct-cay .muc .ten:hover {
             color: #000;
         }
 
-        .lct-cay .muc .ten:after {
-            content: '(' attr(data-so-luong) ')';
-            font-weight: normal;
+        .lct-cay .muc .ten:before {
+            content: attr(data-so-luong);
+            font: normal 15px Berlin;
+            display: inline-block;
+            font: normal 15px Berlin;
+            padding: 3px 5px;
+            line-height: 15px;
+            text-align: center;
+            color: black;
+            background-color: #f5f5f5;
+            border: 1px solid #eee;
         }
 
     .lct-cay .muc .chuc-nang {

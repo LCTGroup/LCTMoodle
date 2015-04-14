@@ -28,3 +28,42 @@ function init_HopDieuKhien() {
 
     });
 }
+
+/*
+    Popup
+*/
+//Popup full
+function layPopupFull() {
+    $popupFull = $('#popup_full');
+
+    if ($popupFull.length == 0) {
+        $popupFull = $(
+            '<article id="popup_full" class="popup-full">\
+                            <section class="khung-tat"></section>\
+                            <section id="noi_dung" class="khung-noi-dung">\
+                            </section>\
+                        </article>');
+
+        $popupFull.find('.khung-tat').on('click', function () {
+            $popupFull.trigger('Tat');
+        })
+
+        $popupFull.on('Mo', function () {
+            $popupFull.show();
+            $(document).on('keyup.tat_popup', function (e) {
+                if (e.keyCode == 27) {
+                    $popupFull.trigger('Tat');
+                }
+            });
+        })
+
+        $popupFull.on('Tat', function () {
+            $popupFull.hide();
+            $(document).off('keyup.tat_popup');
+        })
+
+        $('body').prepend($popupFull);
+    }
+    
+    return $popupFull;
+}

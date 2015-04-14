@@ -132,7 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ChucNang.sql" />
-    <Content Include="App_Data\Query.sql" />
+    <Content Include="App_Data\TapTin.sql" />
+    <Content Include="App_Data\ChuDe.sql" />
     <Content Include="Content\ckeditor\adapters\jquery.js" />
     <Content Include="Content\ckeditor\build-config.js" />
     <Content Include="Content\ckeditor\ckeditor.js" />
@@ -326,12 +327,11 @@
     <Content Include="Content\ckeditor\styles.js" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\AllSiteImages.png" />
-<<<<<<< HEAD
+    <Content Include="Content\images\LCT\ChuDe\he-thong.png" />
+    <Content Include="Content\images\LCT\ChuDe\khoa-hoc.png" />
     <Content Include="Content\images\LCT\mini_logo.png" />
     <Content Include="Content\scripts\ChuDe\QuanLy.js" />
-=======
     <Content Include="Content\images\user-avatar.jpg" />
->>>>>>> 22524512f626879f1e84035251f906ddb3d2d973
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.min.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
@@ -378,7 +378,6 @@
     <Content Include="Views\TrangChu\FormMau.cshtml" />
     <Content Include="Views\NguoiDung\DangNhap.cshtml" />
     <Content Include="Views\NguoiDung\DangKy.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\TrangChu\CayMau.cshtml" />
     <Content Include="Views\ChuDe\QuanLy.cshtml" />
     <Content Include="Views\ChuDe\_Form.cshtml" />
@@ -396,9 +395,7 @@
       <Project>{f03e2462-211a-47ab-bb76-9ad537ea4734}</Project>
       <Name>DTOLayer</Name>
     </ProjectReference>
-=======
     <Content Include="Views\NguoiDung\Index.cshtml" />
->>>>>>> 22524512f626879f1e84035251f906ddb3d2d973
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BUSLayer;
 using DTOLayer;
+using LCTMoodle.Helpers;
 
 namespace LCTMoodle.Controllers
 {
@@ -12,13 +13,14 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult QuanLy()
         {
+
             return View();
         }
 
         public ActionResult _Form(int maChuDeCha, string phamVi = "Hệ thống")
         {
             ViewData["MaChuDeCha"] = maChuDeCha;
-            ViewData["PhamVi"] = phamVi;
+            ViewData["PhamVi"] = LCTHelper.layDanhSachPhamVi()[phamVi];
 
             return Json(new
             {
