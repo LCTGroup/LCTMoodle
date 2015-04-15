@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["TieuDe"] = "Quản lý chủ đề";
     Layout = "~/Views/LCT/Khung.cshtml";
+
+    var danhSachPhamVi = LCTMoodle.Helpers.LCTHelper.layDanhSachPhamVi_DayDu();
 }
 
 @section Styles {
@@ -9,49 +11,63 @@
 @section Scripts {
     <script src="/Content/scripts/LCT/Form.js"></script>
     <script src="/Content/scripts/ChuDe/QuanLy.js"></script>
+    
+    <script>
+        var phamVi = [];
+        @foreach (KeyValuePair<string, Dictionary<string, string>> phamVi in danhSachPhamVi) {
+            <text>
+                phamVi.push({
+                    ma: '@phamVi.Value["Ma"]',
+                    ten: '@phamVi.Key',
+                    moTa: '@phamVi.Value["MoTa"]',
+                    hinh: '@phamVi.Value["Hinh"]'
+                });
+            </text>
+        }
+        mangNutCon['PhamVi'] = phamVi;
+    </script>
 }
 
-<article class="hop">
-    <section class="tieu-de">
-        Quản lý chủ đề
-    </section>
-    <section id="cay-chu-de" class="noi-dung lct-cay" data-ma-hien-tai="0" data-pham-vi="Khóa học">
-        <section class="cay">
-            <ul class="nut">
-                <li>
-                    <a href="#">
-                        Chọn phạm vi
-                    </a>
-                    <u>
-                        <ul class="nut-con">
+    <article class="hop">
+        <section class="tieu-de">
+            Quản lý chủ đề
+        </section>
+        <section id="cay_chu_de" class="noi-dung lct-cay" data-ma="PhamVi" data-pham-vi="Khóa học">
+            <section class="cay">
+                <ul id="danh_sach_nut" class="nut">
+                    <li>
+                        <a data-chuc-nang="mo-pham-vi-goc" data-loai="pham-vi-goc" data-value="PhamVi" href="javascript:void(0)">
+                            Chọn phạm vi
+                        </a>
+                        <u>
+                            @*<ul class="nut-con">
                             <li>
                                 <a href="#">
                                     a123123
                                 </a>
                             </li>
-                        </ul>
-                    </u>
-                </li>
-            </ul>
-        </section>
-        <section class="con">
-            <a href="javascript:void(0)" data-chuc-nang="tao"><i class="pe-7s-plus"></i>Hiện chưa có nút con, hãy tạo một nút con mới</a>
-            <ul class="muc">
-                @foreach (KeyValuePair<string, Dictionary<string, string>> phamVi in LCTMoodle.Helpers.LCTHelper.layDanhSachPhamVi_DayDu())
-                {
-                    <li>
-                        <section class="mo-ta">
-                            <img src="/Content/images/LCT/ChuDe/@phamVi.Value["Hinh"]">
-                            <p>
-                                @phamVi.Value["MoTa"]
-                            </p>
-                        </section>
-                        <a href="#" class="ten" data-value="@phamVi.Value" data-so-luong="0">
-                            @phamVi.Key
-                        </a>
+                        </ul>*@
+                        </u>
                     </li>
-                }                
-                    @*<li>
+                </ul>
+            </section>
+            <section class="con">
+                <ul id="danh_sach_chu_de" class="muc">
+                    @foreach (KeyValuePair<string, Dictionary<string, string>> phamVi in danhSachPhamVi)
+                    {
+                        <li>
+                            <section class="mo-ta">
+                                <img src="/Content/images/LCT/ChuDe/@phamVi.Value["Hinh"]">
+                                <p>
+                                    @phamVi.Value["MoTa"]
+                                </p>
+                            </section>
+                            <a href="javascript:void(0)" class="ten" data-chuc-nang="mo-pham-vi" data-value="@phamVi.Value["Ma"]">
+                                @phamVi.Key
+                            </a>
+                        </li>
+                    }
+                        @*<li>
                 <section class="mo-ta">
                     <img src="#">
                     <p>
@@ -80,26 +96,29 @@
                             </a>
                         </li>
                     </ul>
-                </section>
-            </li>*@
-</ul>
-        </section>
-        <section class="khung-chuc-nang">
-            <ul>
-                <li>
-                    <a href="javascript:void(0)" class="pe-7s-tools"></a>
-                </li>
-                <li>
-                    <a href="javascript:void(0)" data-chuc-nang="tao" class="pe-7s-plus">
-                        <u></u>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript:void(0)" class="pe-7s-close-circle">
-                        <u></u>
-                    </a>
-                </li>
-            </ul>
-        </section>
-    </section>
+                </section>*@
+                </ul>
+                <a href="javascript:void(0)" data-chuc-nang="tao">
+                    <i class="pe-7s-plus"></i>
+    Hiện chưa có nút con, hãy tạo một nút con mới
+</a>
+</section>
+<section class="khung-chuc-nang">
+    <ul>
+        <li>
+            <a href="javascript:void(0)" class="pe-7s-tools"></a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" data-chuc-nang="tao" class="pe-7s-plus">
+                <u></u>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" class="pe-7s-close-circle">
+                <u></u>
+            </a>
+        </li>
+    </ul>
+</section>
+</section>
 </article>

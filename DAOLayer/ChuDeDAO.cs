@@ -11,7 +11,8 @@ namespace DAOLayer
     {
         public static KetQua themChuDe(ChuDeDataDTO chuDe)
         {
-            return layDong<ChuDeViewDTO>(
+            return layDong<ChuDeViewDTO>
+            (
                 "themChuDe",
                 new object[] 
                 {
@@ -21,6 +22,19 @@ namespace DAOLayer
                     chuDe.phamVi,
                     chuDe.maChuDeCha,
                     chuDe.maHinhDaiDien
+                }
+            );
+        }
+
+        public static KetQua layChuDeTheoMaChuDeChaVaPhamVi(int maChuDeCha, string phamVi)
+        {
+            return layDanhSachDong<ChuDeViewDTO>
+            (
+                "layChuDeTheoMaChuDeChaVaPhamVi",
+                new object[] 
+                { 
+                    maChuDeCha,
+                    phamVi
                 }
             );
         }

@@ -43,7 +43,7 @@ END
 
 GO
 --Lấy chủ đề theo mã chủ đề cha và phạm vi
-CREATE PROC dbo.layChuDeTheoMaChuDeChaVa (
+CREATE PROC dbo.layChuDeTheoMaChuDeChaVaPhamVi (
 	@0 INT, --Mã chủ đề cha
 	@1 NVARCHAR(MAX) --Phạm vi
 )

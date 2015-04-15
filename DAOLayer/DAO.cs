@@ -99,7 +99,7 @@ namespace DAOLayer
                     do
                     {
                         DTOs.Add((DTO)Activator.CreateInstance(typeof(T)));
-                        DTOs[i].gan(dr);
+                        DTOs[i++].gan(dr);
                     }
                     while (dr.Read());
 

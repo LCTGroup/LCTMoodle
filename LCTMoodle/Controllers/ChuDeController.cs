@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BUSLayer;
 using DTOLayer;
+using DAOLayer;
 using LCTMoodle.Helpers;
 
 namespace LCTMoodle.Controllers
@@ -13,18 +14,25 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult QuanLy()
         {
-
             return View();
         }
 
-        public ActionResult _Form(int maChuDeCha, string phamVi = "Hệ thống")
+        /// <summary>
+        /// Lấy danh sách chủ đề theo mã chủ đề cha và phạm vi.
+        /// </summary>
+        public ActionResult XuLyLayDanhSach(int maChuDeCha, string phamVi)
+        {
+            return Json(ChuDeDAO.layChuDeTheoMaChuDeChaVaPhamVi(maChuDeCha, phamVi), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult _Form(int maChuDeCha, string phamVi = "HeThong")
         {
             ViewData["MaChuDeCha"] = maChuDeCha;
-            ViewData["PhamVi"] = LCTHelper.layDanhSachPhamVi()[phamVi];
+            ViewData["PhamVi"] = phamVi;
 
-            return Json(new
+            return Json(new KetQua()
             {
-                trangThai = 1,
+                trangThai = 0,
                 ketQua = renderPartialViewToString(ControllerContext, "~/Views/ChuDe/_Form.cshtml",null, ViewData)
             }, JsonRequestBehavior.AllowGet);
         }
@@ -34,11 +42,7 @@ namespace LCTMoodle.Controllers
         {
             KetQua ketQua = ChuDeBUS.themChuDe(form);
 
-            return Json(new KetQua()
-            {
-                trangThai = ketQua.trangThai,
-                ketQua = ketQua.ketQua
-            });
+            return Json(ketQua);
         }
 	}
 }
