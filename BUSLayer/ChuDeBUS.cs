@@ -11,7 +11,7 @@ namespace BUSLayer
 {
     public class ChuDeBUS : BUS
     {
-        public static KetQua themChuDe(System.Web.Mvc.FormCollection form)
+        public static KetQua themChuDe(Dictionary<string, string> form)
         {
             return ChuDeDAO.themChuDe(new ChuDeDataDTO() 
             {
