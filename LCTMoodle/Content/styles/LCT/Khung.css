@@ -546,29 +546,67 @@ main > .cot-giua {
     padding: 0px 20px;
 }
 
-.cot-giua > .hop {
-
+/*.cot-giua .hop-vien {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 5px;
 }
-.cot-giua > .hop > .tieu-de {
+
+    .cot-giua .hop-vien > .hop {
+        background-color: #fcfcfc;
+        border: 1px solid #eee;
+    }*/
+
+
+.cot-giua .hop-2-vien > .noi-dung {
+    padding: 10px;
+    position: relative;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    z-index: -1;
+}
+    .cot-giua .hop-2-vien > .noi-dung:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: calc(100% - 12px);
+        height: calc(100% - 12px);
+        background-color: #fcfcfc;
+        border: 1px solid #eee;
+        z-index: -1;
+    }
+
+.cot-giua .hop-1-vien > .noi-dung {
+    background-color: #fcfcfc;
+    border: 1px solid #eee;
+    padding: 5px;
+}
+
+.cot-giua .hop {
+    margin-bottom: 20px;
+}
+.cot-giua .hop > .tieu-de {
     font: normal 20px Freeway;
     color: #08c;
     line-height: 30px;
     margin-bottom: 5px;
 }
-.cot-giua > .hop > .noi-dung {
+.cot-giua .hop > .noi-dung {
 
 }
-.cot-giua > .hop-form {
+.cot-giua .hop-form {
 
 }
-.cot-giua > .hop-form > .tieu-de {
+.cot-giua .hop-form > .tieu-de {
     text-align: center;
     font: normal 30px Freeway;
     color: #08c;
     line-height: 30px;
     margin-bottom: 20px;
 }
-.cot-giua > .hop-form > .noi-dung {
+.cot-giua .hop-form > .noi-dung {
     width: 50%;
     margin: 0 auto;
 }
