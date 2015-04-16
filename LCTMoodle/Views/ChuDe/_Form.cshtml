@@ -1,55 +1,54 @@
-﻿<section class="tieu-de">
-    Tạo chủ đề
-</section>
-<form id="tao_chu_de_form" action="/ChuDe/XuLyThemChuDe" method="post" class="lct-form">
-    <input type="hidden" name="MaChuDeCha" value="@ViewData["MaChuDeCha"]" />
-    <input type="hidden" name="PhamVi" value="@ViewData["PhamVi"]" />
-    <article>
-        <ul>
-            <li>
-                <section class="tieu-de">
-                    <label>
-                        Tên chủ đề:
-                    </label>
-                </section>
-                <section class="noi-dung">
-                    <article class="input">
-                        <input type="text" name="Ten" placeholder="Nhập tên chủ đề..." />
-                    </article>
-                </section>
-            </li>
-            <li>
-                <section class="tieu-de">
-                    <label>
-                        Mô tả:
-                    </label>
-                </section>
-                <section class="noi-dung">
-                    <article class="input">
-                        <textarea name="MoTa" placeholder="Nhập mô tả chủ đề..."></textarea>
-                    </article>
-                </section>
-            </li>
-            <li>
-                <section class="tieu-de">
-                    <label>
-                        Hình đại diện:
-                    </label>
-                </section>
-                <section class="noi-dung">
-                    <article class="input">
-                        <input type="file" name="MaHinhDaiDien" data-thu-muc="AnhDaiDien_ChuDe/" />
-                    </article>
-                </section>
-            </li>
-        </ul>
-        <section class="lct-khung-button">
-            <button type="submit" class="chap-nhan">
-                Tạo
-            </button>
-            <button type="reset" class="can-than">
-                Làm lại
-            </button>
-        </section>
-    </article>
-</form>
+﻿<article class="hop hop-2-vien">
+    <form id="tao_chu_de_form" action="/ChuDe/XuLyThemChuDe" method="post" class="noi-dung lct-form">
+        <input type="hidden" name="MaChuDeCha" value="@ViewData["MaChuDeCha"]" />
+        <input type="hidden" name="PhamVi" value="@ViewData["PhamVi"]" />
+        <article>
+            <ul>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Tên chủ đề:
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input type="text" name="Ten" placeholder="Nhập tên chủ đề..." />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Mô tả:
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <textarea name="MoTa" placeholder="Nhập mô tả chủ đề..."></textarea>
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Hình đại diện:
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input type="file" name="MaHinhDaiDien" data-thu-muc="AnhDaiDien_ChuDe/" />
+                        </article>
+                    </section>
+                </li>
+            </ul>
+            <section class="lct-khung-button">
+                <button type="submit" class="chap-nhan">
+                    Tạo
+                </button>
+                <button type="reset" class="can-than">
+                    Làm lại
+                </button>
+            </section>
+        </article>
+    </form>
+</article>
