@@ -39,14 +39,14 @@ function layPopupFull() {
     if ($popupFull.length == 0) {
         $popupFull = $(
             '<article id="popup_full" class="popup-full">\
-                            <section class="khung-tat"></section>\
-                            <section id="noi_dung" class="khung-noi-dung">\
-                            </section>\
-                        </article>');
+                <section class="khung-tat"></section>\
+                <section id="noi_dung" class="khung-noi-dung">\
+                </section>\
+            </article>');
 
         $popupFull.find('.khung-tat').on('click', function () {
             $popupFull.trigger('Tat');
-        })
+        });
 
         $popupFull.on('Mo', function () {
             $popupFull.show();
@@ -55,12 +55,12 @@ function layPopupFull() {
                     $popupFull.trigger('Tat');
                 }
             });
-        })
+        });
 
         $popupFull.on('Tat', function () {
             $popupFull.hide();
             $(document).off('keyup.tat_popup');
-        })
+        });
 
         $('body').prepend($popupFull);
     }

@@ -14,9 +14,9 @@ namespace DTOLayer
         public string thuMuc;
         public DateTime thoiDiemTao;
 
-        //public override object[] kiemTra()
+        //public override KetQua kiemTra()
         //{
-            
+
         //}
     }
 }

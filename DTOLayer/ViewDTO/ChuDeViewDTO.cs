@@ -14,7 +14,7 @@ namespace DTOLayer
         public int maNguoiTao;
         public DateTime thoiDiemTao;
         public string phamVi;
-        public int maChuDeCha;
+        public ChuDeViewDTO chuDeCha;
         public TapTinViewDTO hinhDaiDien;
 
         public override void gan(System.Data.SqlClient.SqlDataReader dong)
@@ -24,7 +24,7 @@ namespace DTOLayer
                 switch (dong.GetName(i))
                 {
                     case "Ma":
-                        ma = (dong.IsDBNull(i)) ? 0 : dong.GetInt32(i); break;
+                        ma = layInt(dong, i); break;
                     case "Ten":
                         ten = layString(dong, i); break;
                     case "MoTa":
@@ -36,7 +36,11 @@ namespace DTOLayer
                     case "PhamVi":
                         phamVi = layString(dong, i); break;
                     case "MaChuDeCha":
-                        maChuDeCha = layInt(dong, i); break;
+                        chuDeCha = new ChuDeViewDTO()
+                        {
+                            ma = layInt(dong, i)
+                        };
+                        break;
                     case "MaHinhDaiDien":
                         hinhDaiDien = new TapTinViewDTO()
                         {
