@@ -42,6 +42,7 @@
         padding: 5px;
         padding-right: 10px;
         line-height: 20px;
+        font-size: 13px;
     }
 
     .lct-form .input {
@@ -114,6 +115,7 @@
 
 .lct-form a {
     color: #555;
+    font-size: 13px;
 }
 
 /*#endregion */
@@ -130,6 +132,7 @@
     border-left: 3px solid #eee;
     transition: 0.5s;
     color: #555;
+    font-size: 13px;
 }
 
     .lct-form input[type="text"]:hover,
@@ -154,6 +157,7 @@
     height: 100px;
     color: #555;
     font-family: Tahoma;
+    font-size: 13px;
 }
 
 .webkit .lct-form textarea {
@@ -180,6 +184,7 @@
     color: #555;
     -moz-appearance: none;
     -webkit-appearance: none;
+    font-size: 13px;
 }
 
     .lct-form select:hover,
@@ -194,6 +199,7 @@
 .lct-form .lct-checkbox-radio-label {
     display: block;
     padding: 5px;
+    font-size: 13px;
 }
 
 .lct-form input[type="checkbox"],
@@ -371,7 +377,7 @@
 }
 
 .lct-form .lct-file-label:hover i:before,
-.lct-form .lct-file-label input[type="file"]:focus ~ i:before
+.lct-form .lct-file-label input[type="file"]:focus ~ i:before,
 .lct-form .lct-file-label input[type="file"].dang ~ i:before {
     color: #08c;
 }
@@ -488,6 +494,7 @@
     border-left: 3px solid #eee;
     transition: 0.5s;
     color: #555;
+    font-size: 13px;
 }
 
     .lct-form input[data-input-type="lct-thoi-gian"]:hover,
@@ -1237,7 +1244,7 @@
         border: 1px solid #eee;
         border-top: none;
         width: 210px;
-        background-color: rgba(252, 252, 252, 0.7);
+        background-color: #fcfcfc;
     }
 
         .lct-lich .lich table {
@@ -1392,7 +1399,7 @@
             left: 100%;
             top: -1px;
             background-color: #fff;
-            border: 1px solid #eee;
+            border: 1px solid #ddd;
             z-index: 1;
             max-height: 100px;
             overflow-y: scroll;
@@ -1405,7 +1412,7 @@
         .lct-cay .cay .nut-con > li {
         }
 
-            .lct-cay .cay .nut-con > li:first-child {
+            .lct-cay .cay .nut > li:nth-last-child(2) .nut-con > li:first-child {
                 background-color: #08c;
             }
 
@@ -1420,10 +1427,12 @@
             .lct-cay .cay .nut-con > li a {
                 border-left: 3px solid #eee;
                 float: none;
+                white-space: nowrap;
             }
 
-            .lct-cay .cay .nut-con > li:first-child a {
+            .lct-cay .cay .nut > li:nth-last-child(2) .nut-con > li:first-child a {
                 color: #fff;
+                font-weight: bold;
             }
 
             .lct-cay .cay .nut-con > li:hover a {

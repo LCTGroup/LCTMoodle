@@ -52,6 +52,21 @@ function khoiTaoLCTForm($form) {
         $phanTu.after('<input type="hidden" name="' + name + '"><img /><i></i><u></u>');
     });
 
+    $form.find('textarea[data-input-type="editor"]').each(function () {
+        var phanTu = this;
+        CKEDITOR.replace(phanTu);
+        setTimeout(function () {
+            $(phanTu).find('~ div iframe').contents().find('body').on({
+                focus: function () {
+                    $(this).parent().addClass('focus');
+                },
+                focusout: function () {
+                    $(this).parent().removeClass('focus');
+                }
+            });
+        }, 1000);
+    });
+
     //Xử lý upload file = ajax
     $form.find('input[type="file"]').on('change', function () {
         //Kiểm tra tồn tại

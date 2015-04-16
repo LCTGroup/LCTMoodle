@@ -16,6 +16,24 @@ body
 	background-color: #fff;
 
 	margin: 20px;
+    position: relative;
+}
+
+html:after {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: #eee;
+    transition: 0.5s;
+}
+
+html.focus:after,
+html:hover:after {
+    background-color: #08c;
 }
 
 .cke_editable

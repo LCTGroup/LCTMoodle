@@ -16,12 +16,12 @@
         var phamVi = [];
         @foreach (KeyValuePair<string, Dictionary<string, string>> phamVi in danhSachPhamVi) {
             <text>
-                phamVi.push({
-                    ma: '@phamVi.Value["Ma"]',
-                    ten: '@phamVi.Key',
-                    moTa: '@phamVi.Value["MoTa"]',
-                    hinh: '@phamVi.Value["Hinh"]'
-                });
+            phamVi.push({
+                ma: '@phamVi.Value["Ma"]',
+                ten: '@phamVi.Key',
+                moTa: '@phamVi.Value["MoTa"]',
+                hinh: '@phamVi.Value["Hinh"]'
+            });
             </text>
         }
         mangNutCon['PhamVi'] = phamVi;
@@ -40,13 +40,18 @@
                             Chọn phạm vi
                         </a>
                         <u>
-                            @*<ul class="nut-con">
-                            <li>
-                                <a href="#">
-                                    a123123
-                                </a>
-                            </li>
-                        </ul>*@
+                            <ul class="nut-con">
+                                @foreach (KeyValuePair<string, Dictionary<string, string>> phamVi in danhSachPhamVi)
+                                {
+                                    <text>
+                                    <li>
+                                        <a data-chuc-nang="mo-nut-con-nut-pham-vi" data-value="@phamVi.Value["Ma"]" href="javascript:void(0)">
+                                            @phamVi.Key
+                                        </a>
+                                    </li>
+                                    </text>
+                                }
+                            </ul>
                         </u>
                     </li>
                 </ul>
