@@ -17,9 +17,9 @@ namespace DTOLayer
         public int maChuDeCha;
         public int maHinhDaiDien;
 
-        //public override object[] kiemTra()
+        //public override KetQua kiemTra()
         //{
-            
+
         //}
     }
 }

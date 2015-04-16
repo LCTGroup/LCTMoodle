@@ -12,6 +12,7 @@ namespace DTOLayer
         /// 0: Thành công ---
         /// 1: Không có dòng dữ liệu nào ---
         /// 2: Lỗi truy vấn / Lỗi xử lý
+        /// 3: Lỗi ràng buộc
         /// </summary>
         public int trangThai;
         public object ketQua;
@@ -19,13 +20,13 @@ namespace DTOLayer
 
     public class DTO
     {
-        public virtual object[] kiemTra()
+        public virtual KetQua kiemTra()
         {
-            return new object[] 
-            {
-                true,
-                null
-            };
+            //Duyết tất cả những thuộc tính có ràng buộc
+            //Nếu có thuộc tính nào ko hợp lệ
+            //(Đối tượng kết quả là 1 mảng lỗi)
+            //=> Đưa 1 dòng message vào kết quả
+            return null;
         }
         public virtual void gan(System.Data.SqlClient.SqlDataReader dong)
         {
