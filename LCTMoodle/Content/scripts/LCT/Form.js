@@ -19,8 +19,11 @@ function khoiTaoLCTForm($form) {
         $chua = $(this).parent();
 
         // Text, thời gian
-        $chua.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
+        $chua.find('input[type="text"], textarea[data-input-type!="editor"], input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
             this.value = this.getAttribute('data-mac-dinh');
+        });
+        $chua.find('textarea[data-input-type="editor"]').each(function () {
+            CKEDITOR.instances[this.getAttribute('name')].setData(this.getAttribute('data-mac-dinh'));
         });
 
         // Checkbox, radio button
@@ -55,7 +58,7 @@ function khoiTaoLCTForm($form) {
     $form.find('textarea[data-input-type="editor"]').each(function () {
         var phanTu = this;
         CKEDITOR.replace(phanTu);
-        setTimeout(function () {
+        CKEDITOR.on('instanceReady', function () {
             $(phanTu).find('~ div iframe').contents().find('body').on({
                 focus: function () {
                     $(this).parent().addClass('focus');
@@ -64,7 +67,7 @@ function khoiTaoLCTForm($form) {
                     $(this).parent().removeClass('focus');
                 }
             });
-        }, 1000);
+        });
     });
 
     //Xử lý upload file = ajax
@@ -132,6 +135,13 @@ function khoiTaoLCTForm($form) {
     });
     $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
         this.checked = this.getAttribute('data-mac-dinh') != null;
+    });
+
+    //Xử lý ajax submit chung
+    $form.on('submit', function () {
+        $form.find('textarea[data-input-type="editor"]').each(function () {
+            CKEDITOR.instances[this.getAttribute('name')].updateElement();
+        });
     });
 }
 

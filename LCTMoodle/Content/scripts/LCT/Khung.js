@@ -75,7 +75,7 @@ function layPopupFull() {
 
 /*
     Tham số gồm:
-        url (bắt buộc),
+        url hoặc href của phần tử (bắt buộc),
         width, height,
         data (mảng {}),
         thanhCong (function (data: nội dung popup)),
@@ -84,13 +84,13 @@ function layPopupFull() {
 function khoiTaoPopupFull($phanTu, thamSo) {
     if (typeof thamSo === 'undefined') {
         thamSo = {};
-    }    
+    }
 
     $phanTu.on('click', function () {
         $.ajax({
-            type: ('method' in thamSo) ? thamSo.method : $phanTu.is('[data-method]') ? $phanTu.attr('data-method') : 'GET',
-            url: thamSo.url,
-            data: ('data' in thamSo) ? thamSo.data : {},
+            type: 'method' in thamSo ? thamSo.method : $phanTu.is('[data-method]') ? $phanTu.attr('data-method') : 'GET',
+            url: 'url' in thamSo ? thamSo.url : $phanTu.attr('href'),
+            data: 'data' in thamSo ? (typeof thamSo.data == 'function' ? thamSo.data() : thamSo.data) : {},
             contentType: 'JSON'
         }).done(function (data) {
             if (data.trangThai == 0) {
