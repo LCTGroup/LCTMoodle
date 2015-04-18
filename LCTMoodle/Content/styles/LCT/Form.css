@@ -48,7 +48,7 @@
 
         .lct-form .input > i.mac-dinh:before {
             content: '\e61c';
-            font: normal 13px Icon;
+            font: normal 13px 'Stroke Icon';
             display: block;
             width: 20px;
             height: 20px;
@@ -80,20 +80,9 @@
         .lct-form .loi {
             color: #fff;
             background-color: #e00;
-            padding: 5px;
+            padding: 5px 10px;
             font-weight: bold;
-            line-height: 30px;
-        }
-
-        .lct-form .loi:before {
-            font: normal 30px Icon;
-            content: '\e6c5';
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            vertical-align: middle;
+            line-height: 20px;
         }
 
 @keyframes xoay {
@@ -327,7 +316,7 @@
 
     .lct-form .lct-file-label i:before {
         content: '\e68a';
-        font-family: 'Icon';
+        font-family: 'Stroke Icon';
         font-style: normal;
         font-size: 16px;
         vertical-align: middle;
@@ -388,7 +377,7 @@
 
 .lct-form .lct-file-label i:before {
     content: '\e68a';
-    font: normal 60px Icon;
+    font: normal 60px 'Stroke Icon';
     vertical-align: middle;
     color: #ddd;
     transition: 0.5s;

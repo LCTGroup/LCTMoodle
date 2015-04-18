@@ -5,10 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using BUSLayer;
 using DTOLayer;
+using Helpers;
 
 namespace LCTMoodle.Controllers
 {
-    public class TapTinController : Controller
+    public class TapTinController : LCTController
     {
         public ActionResult LayTapTin(int ma)
         {
@@ -17,7 +18,7 @@ namespace LCTMoodle.Controllers
             if (ketQua.trangThai == 0)
             {
                 TapTinViewDTO tapTin = ketQua.ketQua as TapTinViewDTO;
-                return File(TapTinBUS.layDuongDan(tapTin.thuMuc, tapTin.ma + "_" + tapTin.ten), tapTin.loai, tapTin.ten);
+                return File(TapTinHelper.layDuongDan(tapTin.thuMuc, tapTin.ma + "_" + tapTin.ten), tapTin.loai, tapTin.ten);
             }
             else
             {

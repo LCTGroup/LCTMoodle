@@ -63,6 +63,10 @@
       <Project>{f03e2462-211a-47ab-bb76-9ad537ea4734}</Project>
       <Name>DTOLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Helper\Helpers.csproj">
+      <Project>{752edde4-57aa-4c15-aa3c-748429b1a135}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

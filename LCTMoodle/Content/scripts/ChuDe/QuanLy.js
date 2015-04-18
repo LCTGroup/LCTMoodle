@@ -70,76 +70,6 @@ function khoiTao_NutTao($nutTao) {
             });
         }
     });
-
-    //Nút tạo
-
-
-    /*
-    $nutTao.on('click', function () {
-        $.ajax({
-            type: 'GET',
-            url: '/ChuDe/_Form',
-            data: {
-                maChuDeCha: parseInt($cay.attr('data-ma')) || 0,
-                phamVi: $cay.attr('data-pham-vi')
-            },
-            contentType: 'JSON'
-        }).done(function (data) {
-            if (data.trangThai == 0) {
-                $popup = layPopupFull();
-                $popup.trigger('Mo');
-                $noiDungPopup = $popup.find('#noi_dung');
-
-                $noiDungPopup.html(data.ketQua);
-                khoiTaoLCTForm($noiDungPopup.find('.lct-form'));                    
-                $noiDungPopup.find('.lct-form').on('submit', function (e) {
-                    e = e || window.event;
-                    e.preventDefault();
-
-                    if (mangTam.hasOwnProperty("DangTaoChuDe") && mangTam['DangTaoChuDe']) {
-                        return;
-                    }
-                    mangTam['DangTaoChuDe'] = true;
-
-                    $form = $(this);
-
-                    $.ajax({
-                        url: $form.attr('action'),
-                        type: $form.attr('method'),
-                        dataType: 'JSON',
-                        data: $form.serialize()
-                    }).done(function (data) {
-                        $popup.trigger('Tat');
-
-                        $nutCon = $(taoNutCon(data.ketQua));
-                        khoiTaoNut_MoNutCon($nutCon.find('*[data-chuc-nang="mo-nut-con"]'));
-                        $danhSachNutCon.prepend($nutCon);
-                        $danhSachNutCon.removeClass('rong');
-
-                        var key = parseInt($cay.attr('data-ma')) > 0 ? $cay.attr('data-ma') : $cay.attr('data-pham-vi');
-                        if (key in mangNutCon) {
-                            mangNutCon[key].push(data.ketQua);
-                        }
-                        else {
-                            mangNutCon[key] = [data.ketQua];
-                        }
-
-                        taoNutConChoNut($danhSachNut.find('li:last-child'), data.ketQua);
-                    }).fail(function () {
-                        $popup.trigger('Tat');
-                    }).always(function () {
-                        mangTam['DangTaoChuDe'] = false;
-                    });
-                });
-            }
-            else {
-                alert('Thất bại');
-            }
-        }).fail(function () {
-            alert('Thất bại');
-        });
-    });
-    */
 }
 
 //Nút mở nút
@@ -175,6 +105,12 @@ function khoiTao_MoNut($nutMo) {
     */
 
     $nutMo.on('click', function () {
+        //Kiểm tra xem có đang mở nút khác ko
+        if ('dangMoNut' in mangTam && mangTam['dangMoNut']) {
+            return;
+        }
+        mangTam['dangMoNut'] = true;
+
         $phanTu = $(this);
         
         //Lấy một số dữ liệu cần thiết
@@ -345,6 +281,8 @@ function khoiTao_MoNut($nutMo) {
                 alert('Dữ liệu không hợp lệ');
                 return;
         }
+
+        mangTam['dangMoNut'] = false;
     });
 }
 

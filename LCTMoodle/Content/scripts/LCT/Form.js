@@ -138,7 +138,12 @@ function khoiTaoLCTForm($form) {
     });
 
     //Xử lý ajax submit chung
-    $form.on('submit', function () {
+    $form.on('submit', function (e) {
+        e = e || window.event;
+        e.preventDefault();
+
+        //Validate
+
         $form.find('textarea[data-input-type="editor"]').each(function () {
             CKEDITOR.instances[this.getAttribute('name')].updateElement();
         });

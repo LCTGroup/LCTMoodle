@@ -108,8 +108,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="fonts\" />
-    <Folder Include="Scripts\" />
     <Folder Include="Uploads\AnhDaiDien_ChuDe\" />
     <Folder Include="Views\TapTin\" />
   </ItemGroup>
@@ -126,7 +124,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\LCTHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebServices\WindowsPhone\ClassTest.cs" />
   </ItemGroup>
@@ -326,11 +323,10 @@
     <Content Include="Content\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="Content\ckeditor\styles.js" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
-    <Content Include="Content\images\AllSiteImages.png" />
+    <Content Include="Content\images\LCT\AllSiteImages.png" />
     <Content Include="Content\images\LCT\ChuDe\he-thong.png" />
     <Content Include="Content\images\LCT\ChuDe\khoa-hoc.png" />
     <Content Include="Content\images\LCT\mini_logo.png" />
-    <Content Include="Content\scripts\ChuDe\QuanLy - Copy.js" />
     <Content Include="Content\scripts\ChuDe\QuanLy.js" />
     <Content Include="Content\images\user-avatar.jpg" />
     <Content Include="Content\scripts\LCT\Form.js" />
@@ -382,7 +378,6 @@
     <Content Include="Views\TrangChu\CayMau.cshtml" />
     <Content Include="Views\ChuDe\QuanLy.cshtml" />
     <Content Include="Views\ChuDe\_Form.cshtml" />
-    <Content Include="Views\ChuDe\QuanLy - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">
@@ -398,6 +393,10 @@
       <Name>DTOLayer</Name>
     </ProjectReference>
     <Content Include="Views\NguoiDung\Index.cshtml" />
+    <ProjectReference Include="..\Helper\Helpers.csproj">
+      <Project>{752edde4-57aa-4c15-aa3c-748429b1a135}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
