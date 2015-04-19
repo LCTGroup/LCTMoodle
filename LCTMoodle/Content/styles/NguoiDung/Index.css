@@ -1,7 +1,8 @@
 ﻿/*#region Khung trên */
 
 .khung-tren {
-    display: flex;
+    display: flex;    
+    padding: 5px;
 }
 
     .khung-tren .hinh-dai-dien {
