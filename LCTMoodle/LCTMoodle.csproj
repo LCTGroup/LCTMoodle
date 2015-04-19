@@ -331,6 +331,7 @@
     <Content Include="Content\images\LCT\ChuDe\he-thong.png" />
     <Content Include="Content\images\LCT\ChuDe\khoa-hoc.png" />
     <Content Include="Content\images\LCT\mini_logo.png" />
+    <Content Include="Content\scripts\ChuDe\QuanLy - Copy.js" />
     <Content Include="Content\scripts\ChuDe\QuanLy.js" />
     <Content Include="Content\images\user-avatar.jpg" />
     <Content Include="Content\scripts\LCT\Form.js" />
@@ -382,6 +383,7 @@
     <Content Include="Views\TrangChu\CayMau.cshtml" />
     <Content Include="Views\ChuDe\QuanLy.cshtml" />
     <Content Include="Views\ChuDe\_Form.cshtml" />
+    <Content Include="Views\ChuDe\QuanLy - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

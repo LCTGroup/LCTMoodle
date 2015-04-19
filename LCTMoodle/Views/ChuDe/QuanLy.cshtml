@@ -32,27 +32,26 @@
         <section class="tieu-de">
             Quản lý chủ đề
         </section>
-        <section id="cay_chu_de" class="noi-dung lct-cay" data-ma="PhamVi" data-pham-vi="Khóa học">
+        <section id="cay_chu_de" class="noi-dung lct-cay" data-value="PhamVi" data-pham-vi>
             <section class="cay">
                 <ul id="danh_sach_nut" class="nut">
                     <li>
-                        <a data-chuc-nang="mo-pham-vi-goc" data-loai="pham-vi-goc" data-value="PhamVi" href="javascript:void(0)">
+                        <a data-chuc-nang="mo-nut" data-loai="nut-pham-vi-goc" data-value="PhamVi" href="javascript:void(0)">
                             Chọn phạm vi
                         </a>
-                        <u>
-                            <ul class="nut-con">
-                                @foreach (KeyValuePair<string, Dictionary<string, string>> phamVi in danhSachPhamVi)
-                                {
-                                    <text>
+                        <ul class="nut-con">
+                            @foreach (KeyValuePair<string, Dictionary<string, string>> phamVi in danhSachPhamVi)
+                            {
+                                <text>
                                     <li>
-                                        <a data-chuc-nang="mo-nut-con-nut-pham-vi" data-value="@phamVi.Value["Ma"]" href="javascript:void(0)">
+                                        <a data-chuc-nang="mo-nut" data-loai="nut-con-pham-vi-tren-nut" data-value="@phamVi.Value["Ma"]" href="javascript:void(0)">
                                             @phamVi.Key
                                         </a>
                                     </li>
-                                    </text>
-                                }
-                            </ul>
-                        </u>
+                                </text>
+                            }
+                        </ul>
+
                     </li>
                 </ul>
             </section>
@@ -67,46 +66,16 @@
                                     @phamVi.Value["MoTa"]
                                 </p>
                             </section>
-                            <a href="javascript:void(0)" class="ten" data-chuc-nang="mo-pham-vi" data-value="@phamVi.Value["Ma"]">
+                            <a href="javascript:void(0)" class="ten" data-chuc-nang="mo-nut" data-loai="nut-con-pham-vi" data-value="@phamVi.Value["Ma"]">
                                 @phamVi.Key
                             </a>
                         </li>
                     }
-                        @*<li>
-                <section class="mo-ta">
-                    <img src="#">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    </p>
-                </section>
-                <a href="#" class="ten" data-so-luong="8">
-                    defdef
-                </a>
-                <section class="chuc-nang">
-                    <i class="pe-7s-config"></i>
-                    <ul>
-                        <li>
-                            <a href="javascript:void(0)">
-                                Xoa chu de
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                Xoa chu de
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">
-                                Xoa chu de
-                            </a>
-                        </li>
-                    </ul>
-                </section>*@
                 </ul>
                 <a href="javascript:void(0)" data-chuc-nang="tao">
                     <i class="pe-7s-plus"></i>
-    Hiện chưa có nút con, hãy tạo một nút con mới
-</a>
+                    Hiện chưa có nút con, hãy tạo một nút con mới
+                </a>
 </section>
 <section class="khung-chuc-nang">
     <ul>
@@ -115,11 +84,6 @@
         </li>
         <li>
             <a href="javascript:void(0)" data-chuc-nang="tao" class="pe-7s-plus">
-                <u></u>
-            </a>
-        </li>
-        <li>
-            <a href="javascript:void(0)" class="pe-7s-close-circle">
                 <u></u>
             </a>
         </li>
