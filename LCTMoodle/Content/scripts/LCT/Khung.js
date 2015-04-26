@@ -31,7 +31,7 @@ function init_OnOffTarget() {
 
         //Xử lý sự kiện nhấn chuột ra ngoài đối tượng
         $(document).on('click', function (e) {
-            if (!$(e.target).is($target) && $target.has($(e.target)).length == 0 && !$(e.target).is($obj) && $obj.has($(e.target)).length == 0) {
+            if ($target.has($(e.target)).length == 0 && !$(e.target).is($obj) && !$(e.target).is($target) && $obj.has($(e.target)).length == 0) {
                 $target.hide();
             }
         });

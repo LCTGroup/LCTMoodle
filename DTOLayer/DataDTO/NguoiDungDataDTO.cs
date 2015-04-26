@@ -4,25 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DTOLayer.DataDTO
+namespace DTOLayer
 {
     public class NguoiDungDataDTO : DTO
-    {
-        public class ChuDeDataDTO : DTO
-        {
-            public int ma;
-            public string tenTaiKhoan;
-            public string matKhau;
-            public string email;
-            public string hoTen;
-            public DateTime ngaySinh;
-            public string diaChi;
-            public string soDienThoai;
+    {        
+        public int ma;
+        public string tenTaiKhoan;
+        public string matKhau;
+        public string email;
+        public string hoTen;
+        public DateTime ngaySinh;
+        public string diaChi;
+        public string soDienThoai;
 
-            //public override KetQua kiemTra()
-            //{
+        //public override KetQua kiemTra()
+        //{
 
-            //}
-        }
+        //}
     }
 }

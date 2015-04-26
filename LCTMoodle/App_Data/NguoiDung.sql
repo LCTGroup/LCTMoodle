@@ -28,7 +28,7 @@ AS
 BEGIN
 	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, HoTen, NgaySinh, DiaChi, SoDienThoai) VALUES (@0, @1, @2, @3, @4, @5, @6);
 
-	SELECT *		
+	SELECT Ma		
 	FROM dbo.NguoiDung
 	WHERE Ma=@@IDENTITY;
 END
