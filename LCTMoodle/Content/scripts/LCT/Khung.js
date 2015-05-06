@@ -8,14 +8,14 @@ var mangTam = [];
 */
 $(function () {
     $body = $('body');
-    init_OnOffTarget();
+    khoiTao_TatMoDoiTuong($('[data-show-target]'));
 });
 
 /*
 	Bật tắt đối tượng Target
 */
-function init_OnOffTarget() {
-    $('[data-show-target]').on('click', function (e) {        
+function khoiTao_TatMoDoiTuong($doiTuong) {
+    $doiTuong.on('click', function (e) {        
         //Lấy đối tượng 
         // $obj: đối tượng nút nhấn
         // $target: đối tượng popup sẽ được hiển thị
@@ -42,27 +42,33 @@ function init_OnOffTarget() {
     Popup
 */
 //Popup full
-function layPopupFull() {
+function layPopupFull(thamSo) {
     $popupFull = $('#popup_full');
 
     if ($popupFull.length == 0) {
         $popupFull = $(
-            '<section id="popup_full" class="popup-full">\
+            '<article id="popup_full" class="popup-full-container">\
                 <section class="khung-tat"></section>\
-                <section id="noi_dung" class="khung-noi-dung">\
+                <section class="popup-full">\
+                    <article id="noi_dung_popup" class="khung-noi-dung">\
+                    </article>\
                 </section>\
-            </section>');
+            </article>');
 
         $popupFull.find('.khung-tat').on('click', function () {
-            $popupFull.trigger('Tat');
+            if ($popupFull.is('[data-esc]')) {
+                $popupFull.trigger('Tat');
+            }
         });
 
         $popupFull.on('Mo', function () {
             $popupFull.show();
             $(document).on('keydown.tat_popup', function (e) {
-                e = e || window.event;
-                if (e.keyCode == 27) {
-                    $popupFull.trigger('Tat');
+                if ($popupFull.is('[data-esc]')) {
+                    e = e || window.event;
+                    if (e.keyCode == 27) {
+                        $popupFull.trigger('Tat');
+                    }
                 }
             });
             $body.addClass('khong-scroll');
@@ -77,45 +83,91 @@ function layPopupFull() {
         $body.prepend($popupFull);
     }
 
+    if ('esc' in thamSo && !thamSo.esc) {
+        $popupFull.removeAttr('data-esc');
+    }
+    else {
+        $popupFull.attr('data-esc', '');
+    }
+
     return $popupFull;
 }
 
 /*
-    Tham số gồm:
-        url hoặc href của phần tử (bắt buộc),
-        width, height,
-        data (mảng {} hoặc function),
-        thanhCong (function (data: nội dung popup)),
-        thatBai (function ()),
-        hoanThanh (function ())
+    Có 2 cách để đưa nội dung cho popup
+        1. Chỉ định html cho popup
+            html: 
+                Bắt buộc
+                Hiển thị html trong popup
+        2. Sử dụng ajax để load nội dung cho popup
+            url: Bắt buộc
+                Đường dẫn để lấy nội dung
+            type: Mặc định: GET
+                Phương thức request
+            data: Mặc định: rỗng
+                Dữ liệu request
+                Có 2 loại dữ liệu truyền vào
+                    Mảng
+                    Hàm trả về mảng
+            thanhCong: Mặc định: không thực hiện
+                Hàm thực hiện lúc lấy nội dung thành công
+                Tham số truyền cho hàm thành công là nội dung được lấy về
+            thatBai: Mặc định: không thực hiện
+                Hàm thực hiện lúc lấy nội dung thất bại
+            hoanTat: Mặc định: không thực hiện
+                Hàm thực hiện lúc lấy nội dung hoàn tất
+
+    Một số thiết lập bổ sung
+        width: Mặc định: 90% màn hình
+            Chiều ngang của nội dung popup
+        height: Mặc định: auto
+            Chiều cao của nội dung popup
+        esc: Mặc định: true
+            Cho phép bấm ra ngoài là tắt popup
 */
-function khoiTaoPopupFull($phanTu, thamSo) {
+function moPopupFull(thamSo) {
     if (typeof thamSo === 'undefined') {
         thamSo = {};
     }
 
-    $phanTu.on('click', function () {
+    if ('html' in thamSo) {
+        $popup = layPopupFull({
+            esc: 'esc' in thamSo ? thamSo.esc : true
+        });
+
+        $noiDungPopup = $popup.find('#noi_dung');
+
+        $noiDungPopup.css('width', 'width' in thamSo ? thamSo.width : '90vw');
+        $noiDungPopup.css('height', 'height' in thamSo ? thamSo.height : 'auto');
+
+        $noiDungPopup.html(thamSo.html);
+
+        $popup.trigger('Mo');
+    }
+    else if ('url' in thamSo) {
         $.ajax({
-            type: 'method' in thamSo ? thamSo.method : $phanTu.is('[data-method]') ? $phanTu.attr('data-method') : 'GET',
-            url: 'url' in thamSo ? thamSo.url : $phanTu.attr('href'),
+            url: thamSo.url,
+            type: 'type' in thamSo ? thamSo.method : 'GET',
             data: 'data' in thamSo ? (typeof thamSo.data == 'function' ? thamSo.data() : thamSo.data) : {},
             contentType: 'JSON'
         }).done(function (data) {
             if (data.trangThai == 0) {
-                $popup = layPopupFull();
+                $popup = layPopupFull({
+                    esc: 'esc' in thamSo ? thamSo.esc : true
+                });
 
-                $popup.trigger('Mo');
-                
-                $noiDungPopup = $popup.find('#noi_dung');
+                $noiDungPopup = $popup.find('#noi_dung_popup');
 
-                $noiDungPopup.css('width', 'width' in thamSo ? thamSo.width : 'auto');
+                $noiDungPopup.css('width', 'width' in thamSo ? thamSo.width : '90vw');
                 $noiDungPopup.css('height', 'height' in thamSo ? thamSo.height : 'auto');
 
                 $noiDungPopup.html(data.ketQua);
 
                 if ('thanhCong' in thamSo) {
                     thamSo.thanhCong($noiDungPopup);
-                }                
+                }
+
+                $popup.trigger('Mo');
             }
             else {
                 if ('thatBai' in thamSo) {
@@ -133,9 +185,128 @@ function khoiTaoPopupFull($phanTu, thamSo) {
                 alert('Thất bại');
             }
         }).always(function () {
-            if ('hoanThanh' in thamSo) {
-                thamSo.hoanThanh();
+            if ('hoanTat' in thamSo) {
+                thamSo.hoanTat();
             }
         });
-    });
+    }
 }
+
+/*
+    tieuDe: Không bắt buộc
+        Tiêu đề của thông báo
+    thongBao: Không bắt buộc
+        Đoạn thông báo
+    nut: Mặc định: Nút thoát
+        Danh sách nút xử lý ở thông báo
+        Gồm:
+            ten: Mặc định: Nút xử lý
+                Tên của nút
+            loai: Mặc định: chap-nhan
+                Loại nút (chap-nhan, can-than, ...)
+            xuLy: Mặc định: Tắt popup
+                Xử lý khi nhấn vào nút
+                Trả về false nếu muốn chặn tắt popup
+    esc: Mặc định: true
+        Cho phép bấm ra ngoài là tắt popup
+*/
+function moPopup(thamSo) {
+    if (typeof thamSo === 'undefined') {
+        thamSo = {};
+    }
+
+    $popup = layPopupFull({
+        esc: 'esc' in thamSo ? thamSo.esc : true
+    });
+
+    $noiDungPopup = $popup.find('#noi_dung_popup');
+
+    $noiDungPopup.html('\
+        <article class="hop hop-1-vien">\
+            <section class="tieu-de">\
+            </section>\
+            <article class="noi-dung lct-form">\
+                <ul class="danh-sach-hien-thi">\
+                </ul>\
+                <section class="danh-sach-nut lct-khung-button">\
+                </section>\
+            </article>\
+        </article>\
+    ');
+
+    var
+        $tieuDe = $noiDungPopup.find('.tieu-de'),
+        $danhSachHienThi = $noiDungPopup.find('.danh-sach-hien-thi'),
+        $danhSachNut = $noiDungPopup.find('.danh-sach-nut');
+
+    if ('tieuDe' in thamSo) {
+        $tieuDe.text(thamSo.tieuDe);
+    }
+    else {
+        $tieuDe.remove();
+    }
+
+    if ('thongBao' in thamSo) {
+        $danhSachHienThi.append('\
+            <li class="thong-bao">\
+                ' + thamSo.thongBao + '\
+            </li>\
+        ');
+    }
+
+    if ($danhSachHienThi.children().length == 0) {
+        $danhSachHienThi.remove();
+    }
+
+    if ('nut' in thamSo) {
+        $(thamSo.nut).each(function () {
+            var n = this;
+
+            var $nut = $('<button class="' + (n.loai || 'chap-nhan') + '">' + (n.ten || 'Nút xử lý') + '</button>');
+
+            $nut.on('click', function () {
+                if ('xuLy' in n) {
+                    if (n.xuLy() == false) {
+                        return;
+                    }
+                }
+                $popup.trigger('Tat');
+            });
+
+            $danhSachNut.append($nut);
+        })
+    }
+
+    if ($danhSachNut.children().length == 0) {
+        var $nut = $('<button class="chap-nhan">Tắt</button>');
+
+        $nut.on('click', function () {
+            $popup.trigger('Tat');
+        });
+
+        $danhSachNut.append($nut);
+    }
+    
+    $popup.trigger('Mo');
+}
+
+$(function () {
+    moPopup({
+        tieuDe: 'Tieu de',
+        thongBao: 'Thong bao',
+        nut: [{
+            ten: 'Nút 1',
+            loai: 'chap-nhan',
+            xuLy: function () {
+                alert('a');
+            }
+        }, {
+            ten: 'Nút 2',
+            loai: 'can-than',
+            xuLy: function () {
+                alert('b');
+                return false;
+            }
+        }]
+    });
+})
