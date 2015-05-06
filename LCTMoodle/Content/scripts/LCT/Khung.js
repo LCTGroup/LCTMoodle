@@ -8,26 +8,33 @@ var mangTam = [];
 */
 $(function () {
     $body = $('body');
-    init_HopDieuKhien();
+    init_OnOffTarget();
 });
 
 /*
-	Ẩn hiện Hộp điều khiển
+	Bật tắt đối tượng Target
 */
-function init_HopDieuKhien() {
-    $('.toggle-target').on('mouseover', function () {        
-        //Lấy tên đối tượng cần ẩn hiện
-        $tenDoiTuongAnHien = $(this).attr('data-toggle-target');
+function init_OnOffTarget() {
+    $('[data-show-target]').on('click', function (e) {        
+        //Lấy đối tượng 
+        // $obj: đối tượng nút nhấn
+        // $target: đối tượng popup sẽ được hiển thị
+        $obj = $(this);
+        $target = $('[data-target="' + $obj.attr('data-show-target') + '"');
+        
+        //Xử lý sự kiện click của nút nhấn
+        if ($target.is(':visible')) {
+            $target.hide();           
+        } else {
+            $target.show();            
+        }
 
-        //Lấy đối tượng cần ẩn hiện
-        $doiTuongCanAnHien = $("[data-toggle='" + $tenDoiTuongAnHien + "']")
-
-        //Xử lý
-        $doiTuongCanAnHien.show();
-        $doiTuongCanAnHien.on('mouseleave', function () {
-            $(this).hide();
+        //Xử lý sự kiện nhấn chuột ra ngoài đối tượng
+        $(document).on('click', function (e) {
+            if (!$(e.target).is($target) && $target.has($(e.target)).length == 0 && !$(e.target).is($obj) && $obj.has($(e.target)).length == 0) {
+                $target.hide();
+            }
         });
-
     });
 }
 

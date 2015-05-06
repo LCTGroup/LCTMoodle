@@ -222,7 +222,7 @@ header .top-header {
             .hop-nguoi-dung ul.da-dang-nhap > li {
                 float: left;
                 padding: 0 5px;
-                height: 100%;
+                height: 100%;                
             }
             .hop-nguoi-dung ul.da-dang-nhap > li:last-of-type {
                 padding: 0 5px 0 20px;
@@ -237,7 +237,8 @@ header .top-header {
                 }
                 .hop-nguoi-dung ul.da-dang-nhap > li > a {
                     display: block;        
-                    color: #ddd;                      
+                    color: #ddd;
+                    transition: 0.2s;                      
                 }
                 .hop-nguoi-dung ul.da-dang-nhap > li > a:hover {
                     text-shadow: 0 0 5px #fff;
@@ -245,7 +246,7 @@ header .top-header {
                 }
                     .hop-nguoi-dung ul.da-dang-nhap > li > a > i {
                         line-height: 35px;                                 
-                        font-size: 1.6em;                        
+                        font-size: 20px;                        
                     }
                     .hop-nguoi-dung ul.da-dang-nhap > li > a > span {
                         line-height: 35px;                           
@@ -267,21 +268,27 @@ header .top-header {
                         right: calc(0% - 6px);
                         background-color: #004263;
                         padding: 5px;
+                        display: none;
                     }
-                        .hop-dieu-khien > ul {                            
+                        .hop-dieu-khien > ul {     
+                            width: 152px;                       
                         }
                             .hop-dieu-khien > ul > li {
                                 display: block;
                                 width: 100%;
-                                height: 30px;                                
+                                height: 30px; 
+                                transition: 0.2s;                               
                             }
+                                .hop-dieu-khien > ul > li:hover {
+                                    text-shadow: 0 0 5px #fff;                           
+                                }
                                 .hop-dieu-khien > ul > li > a {
                                     display: block;
                                     color: #ddd;
                                     display: table;
                                     width: 100%;
                                     position: relative;
-                                    padding-left: 5px;
+                                    padding-left: 3px;
                                 }                                
                                 .hop-dieu-khien > ul > li > a:after {
                                     content: '';
@@ -290,15 +297,15 @@ header .top-header {
                                     background-color: #ddd;
                                     left: 0px;
                                     top: 0px;
-                                    transition: 0.5s;
+                                    transition: 0.2s;
                                     height: 100%;
-                                    width: 5px;
+                                    width: 3px;
                                 }         
                                 .hop-dieu-khien > ul > li > a:hover:after {
-                                    background-color: #08c;
+                                    background-color: #08c;                                    
                                 }                            
                                     .hop-dieu-khien > ul > li > a > i {
-                                        font-size: 2em;
+                                        font-size: 20px;
                                         line-height: 30px;
                                         float: left;
                                         padding: 0 5px;
@@ -315,6 +322,7 @@ header .top-header {
         /*#endregion */        
 
     /*#endregion */
+
 /*#endregion */
 
 /*#region Bottom header */

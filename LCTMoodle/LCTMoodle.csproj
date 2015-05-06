@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ChucNang.sql" />
+    <Content Include="App_Data\NguoiDung.sql" />
     <Content Include="App_Data\TapTin.sql" />
     <Content Include="App_Data\ChuDe.sql" />
     <Content Include="Content\ckeditor\adapters\jquery.js" />
