@@ -14,9 +14,6 @@ body {
     font: normal 13px Tahoma;
     background-color: #f5f5f5;
 }
-body.khong-scroll {
-    overflow: hidden;
-}
 a {
     color: #000;
     text-decoration: none;  
@@ -102,6 +99,10 @@ a:hover {
 /*#endregion */
 
 /*#region Popup */
+
+body.khong-scroll {
+    overflow: hidden;
+}
 
 .popup-full {
     position: fixed;
