@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Helper.Fakes</name>
+    </assembly>
+    <members>
+        <member name="T:Helpers.Fakes.ShimLCTHelper">
+            <summary>Shim type of Helpers.LCTHelper</summary>
+        </member>
+        <member name="M:Helpers.Fakes.ShimLCTHelper.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Helpers.Fakes.ShimLCTHelper.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Helpers.Fakes.ShimLCTHelper.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Helpers.Fakes.ShimLCTHelper.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Helpers.Fakes.ShimLCTHelper.layDanhSachPhamVi">
+            <summary>Sets the shim of LCTHelper.layDanhSachPhamVi()</summary>
+        </member>
+        <member name="P:Helpers.Fakes.ShimLCTHelper.layDanhSachPhamVi_DayDu">
+            <summary>Sets the shim of LCTHelper.layDanhSachPhamVi_DayDu()</summary>
+        </member>
+        <member name="T:Helpers.Fakes.ShimTapTinHelper">
+            <summary>Shim type of Helpers.TapTinHelper</summary>
+        </member>
+        <member name="M:Helpers.Fakes.ShimTapTinHelper.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Helpers.Fakes.ShimTapTinHelper.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Helpers.Fakes.ShimTapTinHelper.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Helpers.Fakes.ShimTapTinHelper.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Helpers.Fakes.ShimTapTinHelper.layDuongDanGoc">
+            <summary>Sets the shim of TapTinHelper.layDuongDanGoc()</summary>
+        </member>
+        <member name="P:Helpers.Fakes.ShimTapTinHelper.layDuongDanStringString">
+            <summary>Sets the shim of TapTinHelper.layDuongDan(String thuMuc, String ten)</summary>
+        </member>
+    </members>
+</doc>

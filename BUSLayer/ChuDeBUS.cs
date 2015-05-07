@@ -12,7 +12,7 @@ namespace BUSLayer
     public class ChuDeBUS : BUS
     {
         public static KetQua themChuDe(Dictionary<string, string> form)
-        {
+        {            
             return ChuDeDAO.themChuDe(new ChuDeDataDTO() 
             {
                 ten = form["Ten"],

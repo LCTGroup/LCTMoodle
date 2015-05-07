@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -108,8 +109,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="fonts\" />
-    <Folder Include="Scripts\" />
     <Folder Include="Uploads\AnhDaiDien_ChuDe\" />
     <Folder Include="Views\TapTin\" />
   </ItemGroup>
@@ -126,7 +125,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\LCTHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebServices\WindowsPhone\ClassTest.cs" />
   </ItemGroup>
@@ -327,20 +325,21 @@
     <Content Include="Content\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="Content\ckeditor\styles.js" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
-    <Content Include="Content\images\AllSiteImages.png" />
+    <Content Include="Content\images\LCT\AllSiteImages.png" />
     <Content Include="Content\images\LCT\ChuDe\he-thong.png" />
     <Content Include="Content\images\LCT\ChuDe\khoa-hoc.png" />
     <Content Include="Content\images\LCT\mini_logo.png" />
     <Content Include="Content\scripts\ChuDe\QuanLy.js" />
     <Content Include="Content\images\user-avatar.jpg" />
     <Content Include="Content\scripts\LCT\Form.js" />
-    <Content Include="Content\scripts\LCT\jquery.min.js" />
+    <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
     <Content Include="Content\scripts\NguoiDung\DangKy.js" />
     <Content Include="Content\styles\LCT\bootstrap.css" />
+    <Content Include="Content\styles\LCT\filled-icons.css" />
     <Content Include="Content\styles\LCT\Form.css" />
-    <Content Include="Content\styles\LCT\icons.css" />
     <Content Include="Content\styles\LCT\Khung.css" />
+    <Content Include="Content\styles\LCT\stroke-icons.css" />
     <Content Include="Content\styles\NguoiDung\Index.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -367,10 +366,10 @@
     <Content Include="Content\fonts\Pe-icon-7-stroke.eot" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.ttf" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.woff" />
-    <Content Include="Content\fonts\Berlin Sans FB.TTF" />
-    <Content Include="Content\fonts\SFUFreewayLight.TTF" />
-    <Content Include="Content\fonts\UTM Akashi.ttf" />
-    <Content Include="Content\fonts\UTM Tam Le.ttf" />
+    <Content Include="Content\fonts\Berlin.TTF" />
+    <Content Include="Content\fonts\Freeway.TTF" />
+    <Content Include="Content\fonts\Akashi.ttf" />
+    <Content Include="Content\fonts\TamLe.ttf" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\LCT\Khung.cshtml" />
     <Content Include="Views\TrangChu\Index.cshtml" />
@@ -381,7 +380,6 @@
     <Content Include="Views\TrangChu\CayMau.cshtml" />
     <Content Include="Views\ChuDe\QuanLy.cshtml" />
     <Content Include="Views\ChuDe\_Form.cshtml" />
-    <Content Include="Views\ChuDe\QuanLy - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">
@@ -397,6 +395,10 @@
       <Name>DTOLayer</Name>
     </ProjectReference>
     <Content Include="Views\NguoiDung\Index.cshtml" />
+    <ProjectReference Include="..\Helper\Helpers.csproj">
+      <Project>{752edde4-57aa-4c15-aa3c-748429b1a135}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

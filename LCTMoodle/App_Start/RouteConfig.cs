@@ -13,6 +13,8 @@ namespace LCTMoodle
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: "MacDinh",
                 url: "{controller}/{action}/{ma}",

@@ -1,16 +1,15 @@
 @font-face {
-	font-family: 'Icon';
-	src:url('../../fonts/Pe-icon-7-stroke.eot?d7yf1v');
-	src:url('../../fonts/Pe-icon-7-stroke.eot?#iefixd7yf1v') format('embedded-opentype'),
-		url('../../fonts/Pe-icon-7-stroke.woff?d7yf1v') format('woff'),
-		url('../../fonts/Pe-icon-7-stroke.ttf?d7yf1v') format('truetype'),
-		url('../../fonts/Pe-icon-7-stroke.svg?d7yf1v#Pe-icon-7-stroke') format('svg');
+	font-family: 'Stroke Icon';
+	src:url('/Pe-icon-7-stroke.eot/');
+    src:url('/Pe-icon-7-stroke.woff/'),
+		url('/Pe-icon-7-stroke.ttf/'),
+		url('/Pe-icon-7-stroke.svg/');
 	font-weight: normal;
 	font-style: normal;
 }
 
 [class^="pe-7s-"], [class*=" pe-7s-"] {
-	font-family: 'Icon';
+	font-family: 'Stroke Icon';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;

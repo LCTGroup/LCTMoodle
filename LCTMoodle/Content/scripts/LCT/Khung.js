@@ -84,9 +84,10 @@ function layPopupFull() {
     Tham số gồm:
         url hoặc href của phần tử (bắt buộc),
         width, height,
-        data (mảng {}),
+        data (mảng {} hoặc function),
         thanhCong (function (data: nội dung popup)),
-        thatBai (function ())
+        thatBai (function ()),
+        hoanThanh (function ())
 */
 function khoiTaoPopupFull($phanTu, thamSo) {
     if (typeof thamSo === 'undefined') {
@@ -130,6 +131,10 @@ function khoiTaoPopupFull($phanTu, thamSo) {
             }
             else {
                 alert('Thất bại');
+            }
+        }).always(function () {
+            if ('hoanThanh' in thamSo) {
+                thamSo.hoanThanh();
             }
         });
     });

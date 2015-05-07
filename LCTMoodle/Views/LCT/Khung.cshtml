@@ -7,12 +7,14 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link href="~/Content/images/LCT/mini_logo.png" rel="icon" />
+    <link href="/mini_logo.png/LCT/" rel="icon" />
     <title>@(ViewData["TieuDe"] != null ? ViewData["TieuDe"] + " - " : "") LCTMoodle</title>
 
-    <link href="/Content/styles/LCT/Khung.css" rel="stylesheet" />
-    <link href="/Content/styles/LCT/bootstrap.css" rel="stylesheet" />
-    <link href="/Content/styles/LCT/icons.css" rel="stylesheet" />
+    <link href="/Khung.css/LCT" rel="stylesheet" />
+    <link href="/Form.css/LCT" rel="stylesheet" />
+    <link href="/bootstrap.css/LCT" rel="stylesheet" />
+    <link href="/filled-icons.css/LCT" rel="stylesheet" />
+    <link href="/stroke-icons.css/LCT" rel="stylesheet" />
     @RenderSection("Styles", false)
 </head>
 <body>
@@ -167,10 +169,10 @@
         Copyright © 2015 - LCTMoodle - Diễn đàn học tập của mọi người
     </footer>
 
-    <script src="/Content/scripts/LCT/jquery.min.js"></script>
-    <script src="/Content/scripts/LCT/Khung.js"></script>
-    <script src="/Content/scripts/LCT/Form.js"></script>
-    <script src="/Content/ckeditor/ckeditor.js"></script>
+    <script src="/jquery.js/LCT"></script>
+    <script src="/Khung.js/LCT"></script>
+    <script src="/Form.js/LCT"></script>
+    <script src="/Plugin/ckeditor/ckeditor.js"></script>
     @RenderSection("Scripts", false)
 </body>
 </html>

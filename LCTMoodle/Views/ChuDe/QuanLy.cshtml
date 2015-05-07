@@ -2,15 +2,14 @@
     ViewData["TieuDe"] = "Quản lý chủ đề";
     Layout = "~/Views/LCT/Khung.cshtml";
 
-    var danhSachPhamVi = LCTMoodle.Helpers.LCTHelper.layDanhSachPhamVi_DayDu();
+    var danhSachPhamVi = Helpers.LCTHelper.layDanhSachPhamVi_DayDu();
 }
 
 @section Styles {
-    <link rel="stylesheet" type="text/css" href="/Content/styles/LCT/Form.css" />
+    <link rel="stylesheet" type="text/css" href="/Form.css/LCT" />
 }
 @section Scripts {
-    <script src="/Content/scripts/LCT/Form.js"></script>
-    <script src="/Content/scripts/ChuDe/QuanLy.js"></script>
+    <script src="/QuanLy.js/ChuDe/"></script>
     
     <script>
         var phamVi = [];

@@ -6,21 +6,12 @@ using System.Threading.Tasks;
 using DAOLayer;
 using DTOLayer;
 using System.IO;
+using Helpers;
 
 namespace BUSLayer
 {
     public class TapTinBUS : BUS
     {
-        private static string layDuongDanGoc()
-        {
-            return System.Web.Hosting.HostingEnvironment.MapPath("~/Uploads/");
-        }
-
-        public static string layDuongDan(string thuMuc, string ten)
-        {
-            return layDuongDanGoc() + thuMuc + ten;
-        }
-
         public static KetQua layTapTin(int maTapTin)
         {
             return TapTinDAO.layTapTinTheoMa(maTapTin);
@@ -43,7 +34,7 @@ namespace BUSLayer
             {
                 var tapTinDaLuu = ketQua.ketQua as TapTinViewDTO;
 
-                var duongDan = layDuongDanGoc() + tapTinDaLuu.thuMuc + tapTinDaLuu.ma.ToString() + "_" + tapTinDaLuu.ten;
+                var duongDan = TapTinHelper.layDuongDanGoc() + tapTinDaLuu.thuMuc + tapTinDaLuu.ma.ToString() + "_" + tapTinDaLuu.ten;
 
                 //Lưu tập tin
                 tapTinLuu.SaveAs(duongDan);

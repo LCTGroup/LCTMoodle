@@ -14,9 +14,6 @@ body {
     font: normal 13px Tahoma;
     background-color: #f5f5f5;
 }
-body.khong-scroll {
-    overflow: hidden;
-}
 a {
     color: #000;
     text-decoration: none;  
@@ -25,23 +22,23 @@ a:hover {
     text-decoration: underline;
 }
 .site-image {
-    background-image: url('../../images/AllSiteImages.png');
+    background-image: url('/AllSiteImages.png/LCT');
 }
 @font-face {
     font-family: Freeway;
-    src: url('../../fonts/SFUFreewayLight.ttf');
+    src: url('/Freeway.ttf/');
 }
 @font-face {
     font-family: Berlin;
-    src: url('../../fonts/Berlin Sans FB.ttf');
+    src: url('/Berlin.ttf/');
 }
 @font-face {
     font-family: Akashi;
-    src: url('../../fonts/UTM Akashi.ttf');
+    src: url('/Akashi.ttf/');
 }
 @font-face {
     font-family: TamLe;
-    src: url('../../fonts/UTM Tam Le.ttf');
+    src: url('/TamLe.ttf/');
 }
 
 /*#endregion */
@@ -102,6 +99,10 @@ a:hover {
 /*#endregion */
 
 /*#region Popup */
+
+body.khong-scroll {
+    overflow: hidden;
+}
 
 .popup-full {
     position: fixed;

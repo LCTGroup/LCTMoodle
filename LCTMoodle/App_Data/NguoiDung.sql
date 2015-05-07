@@ -39,5 +39,7 @@ CREATE PROC dbo.layNguoiDung (
 )
 AS
 BEGIN
-	
+	SELECT Ma 
+	FROM dbo.NguoiDung 
+	WHERE 
 END

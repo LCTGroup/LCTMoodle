@@ -10,6 +10,64 @@ namespace LCTMoodle.Controllers
 {
     public class LCTController : Controller
     {
+        [Route("~/{tapTin}.{dinhDang}/{*thuMuc?}")]
+        public ActionResult Index(string tapTin, string dinhDang, string thuMuc = null)
+        {
+            string loaiTapTin;
+
+            switch (dinhDang)
+            {
+                case "png":
+                    thuMuc = "images/" + thuMuc;
+                    loaiTapTin = "image/png";
+                    break;
+
+                case "jpg":
+                case "jpeg":
+                    thuMuc = "images/" + thuMuc;
+                    loaiTapTin = "image/jpeg";
+                    break;
+
+                case "js":
+                    thuMuc = "scripts/" + thuMuc;
+                    loaiTapTin = "text/javascript";
+                    break;
+
+                case "css":
+                    thuMuc = "styles/" + thuMuc;
+                    loaiTapTin = "text/css";
+                    break;
+
+                case "woff":
+                case "ttf":
+                case "eot":
+                case "otf":
+                case "svg":
+                    thuMuc = "fonts/" + thuMuc;
+                    loaiTapTin = "application/octet-stream";
+                    break;
+
+                default:
+                    loaiTapTin = "text/plain";
+                    break;
+            }
+
+            return File
+                (
+                    string.Format
+                        (
+                            "{0}/{1}/{2}.{3}",
+                            Server.MapPath("~/Content/"),
+                            thuMuc,
+                            tapTin,
+                            dinhDang
+                        ),
+                    loaiTapTin,
+                    tapTin + "." + dinhDang
+                );
+        }
+
+        [NonAction]
         public string renderPartialViewToString(ControllerContext controllerContextontrollerContext, 
             string partialViewName, object model = null , ViewDataDictionary viewData = null, TempDataDictionary tempData = null)
         {
