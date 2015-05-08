@@ -48,23 +48,30 @@ function khoiTao_NutTao($nutTao) {
                         data: $form.serialize()
                     }).done(function (data) {
                         $popup.trigger('Tat');
+                        
+                        if (data.trangthai == 0) {
+                            $nutCon = $(taoNutCon(data.ketQua));
+                            khoiTao_MoNut($nutCon.find('[data-chuc-nang="mo-nut"]'));
+                            $danhSachNutCon.prepend($nutCon);
+                            $danhSachNutCon.removeClass('rong');
 
-                        $nutCon = $(taoNutCon(data.ketQua));
-                        khoiTao_MoNut($nutCon.find('[data-chuc-nang="mo-nut"]'));
-                        $danhSachNutCon.prepend($nutCon);
-                        $danhSachNutCon.removeClass('rong');
+                            var key = parseInt($cay.attr('data-value')) > 0 ? $cay.attr('data-value') : $cay.attr('data-pham-vi');
+                            if (key in mangNutCon) {
+                                mangNutCon[key].push(data.ketQua);
+                            }
+                            else {
+                                mangNutCon[key] = [data.ketQua];
+                            }
 
-                        var key = parseInt($cay.attr('data-value')) > 0 ? $cay.attr('data-value') : $cay.attr('data-pham-vi');
-                        if (key in mangNutCon) {
-                            mangNutCon[key].push(data.ketQua);
+                            taoNutConTrenNut($danhSachNut.find('li:last-child'), data.ketQua);
                         }
                         else {
-                            mangNutCon[key] = [ data.ketQua ];
+                            alert('Thất bại');
                         }
-
-                        taoNutConTrenNut($danhSachNut.find('li:last-child'), data.ketQua);
                     }).fail(function () {
                         $popup.trigger('Tat');
+
+                        alert('Thất bại');
                     }).always(function () {
                         mangTam['DangTaoChuDe'] = false;
                     });
