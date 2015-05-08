@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -139,7 +140,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ChucNang.sql" />
-    <Content Include="App_Data\KhoaHoc.sql" />
     <Content Include="App_Data\NguoiDung.sql" />
     <Content Include="App_Data\TapTin.sql" />
     <Content Include="App_Data\ChuDe.sql" />
@@ -336,6 +336,7 @@
     <Content Include="Content\ckeditor\styles.js" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\LCT\AllSiteImages.png" />
+    <Content Include="Content\images\LCT\AllSiteImages_temp.png" />
     <Content Include="Content\images\LCT\ChuDe\he-thong.png" />
     <Content Include="Content\images\LCT\ChuDe\khoa-hoc.png" />
     <Content Include="Content\images\LCT\mini_logo.png" />
@@ -344,6 +345,7 @@
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
+    <Content Include="Content\scripts\NguoiDung\DangKy.js" />
     <Content Include="Content\styles\LCT\bootstrap.css" />
     <Content Include="Content\styles\LCT\filled-icons.css" />
     <Content Include="Content\styles\LCT\Form.css" />

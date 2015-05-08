@@ -16,7 +16,7 @@ CREATE TABLE dbo.NguoiDung (
 GO
 --Thêm người dùng
 CREATE PROC dbo.themNguoiDung (
-	@0 NVARCHAR(MAX), --Tên đăng nhập
+	@0 NVARCHAR(MAX), --Tên tài khoản
 	@1 NVARCHAR(MAX), --Mật khẩu
 	@2 NVARCHAR(MAX), --Email
 	@3 NVARCHAR(MAX), --Họ và tên
@@ -28,7 +28,19 @@ AS
 BEGIN
 	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, HoTen, NgaySinh, DiaChi, SoDienThoai) VALUES (@0, @1, @2, @3, @4, @5, @6);
 
-	SELECT *		
-	FROM dbo.NguoiDung
-	WHERE Ma=@@IDENTITY;
+	SELECT @@IDENTITY Ma
 END
+
+GO
+--Lấy người dùng
+CREATE PROC dbo.layNguoiDung (
+	@0 NVARCHAR(MAX) --Tên tài khoản
+)
+AS
+BEGIN
+	SELECT Ma, MatKhau
+	FROM dbo.NguoiDung 
+	WHERE TenTaiKhoan = @0
+END
+
+select * from dbo.NguoiDung

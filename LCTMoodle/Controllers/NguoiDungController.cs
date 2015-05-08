@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BUSLayer;
+using DTOLayer;
+using DAOLayer;
 
 namespace LCTMoodle.Controllers
 {
-    public class NguoiDungController : Controller
+    public class NguoiDungController : LCTController
     {
         //
         // GET: /NguoiDung/
@@ -38,6 +41,15 @@ namespace LCTMoodle.Controllers
             ViewData["CotPhai"] = false;
          
             return View();
+        }
+
+        [HttpPost]        
+        public ActionResult XuLyThemNguoiDung(FormCollection formCollection)
+        {
+            Dictionary<string, string> form = formCollection.AllKeys.ToDictionary(k => k, v => formCollection[v]);
+            KetQua ketQua = NguoiDungBUS.themNguoiDung(form);
+
+            return Json(ketQua);
         }
 	}
 }
