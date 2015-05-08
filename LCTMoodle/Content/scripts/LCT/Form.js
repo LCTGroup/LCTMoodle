@@ -286,61 +286,83 @@ function khoiTaoGiaTriMacDinh($form) {
     })
 }
 
+function xuLyTatMo($form, $input, dangKhoiTao) {
+    var doiTuongTat = '',
+        doiTuongMo = '';
+
+    if ($input.is('input[type="checkbox"], input[type="radio"]')) {
+        if ($input[0].checked) {
+            doiTuongMo = $input.attr('data-mo');
+            doiTuongTat = $input.attr('data-tat');
+        }
+        else {
+            doiTuongMo = $input.attr('data-tat');
+            doiTuongTat = $input.attr('data-mo');
+        }
+    }
+    else if ($input.is('select')) {
+        var $option = $input.children(':selected');
+
+        doiTuongMo = $option.attr('data-mo');
+        doiTuongTat = $option.attr('data-tat');
+    }
+
+    $form.find('[data-doi-tuong~="' + doiTuongMo + '"]').each(function () {
+        var $doiTuong = $(this);
+
+        if (!$doiTuong.is('textarea, input, select')) {
+            $doiTuong.find('input, textarea, select').prop('disabled', false);
+            $doiTuong.removeClass('tat');
+        }
+        else if ($doiTuong.is('textarea[data-input-type="editor"]')) {
+            $doiTuong.prop('disabled', false);
+            if (dangKhoiTao === true) {
+                CKEDITOR.on('instanceReady', function () {
+                    $doiTuong.next().removeClass('tat').find('iframe').attr('tabindex', '0');
+                });
+            }
+            $doiTuong.next().removeClass('tat').find('iframe').attr('tabindex', '0');
+        }
+        else if ($doiTuong.is('input[type="checkbox"], input[type="radio"], input[type="file"]')) {
+            $doiTuong.prop('disabled', false);
+            $doiTuong.parent().removeClass('tat');
+        }
+        else {
+            $doiTuong.prop('disabled', false).removeClass('tat');
+        }
+    });
+
+    $form.find('[data-doi-tuong~="' + doiTuongTat + '"]').each(function () {
+        var $doiTuong = $(this);
+
+        if (!$doiTuong.is('textarea, input, select')) {
+            $doiTuong.find('input, textarea, select').prop('disabled', true);
+            $doiTuong.addClass('tat');
+        }
+        else if ($doiTuong.is('input[type="checkbox"], input[type="radio"], input[type="file"]')) {
+            $doiTuong.prop('disabled', true);
+            $doiTuong.parent().addClass('tat');
+        }
+        else if ($doiTuong.is('textarea[data-input-type="editor"]')) {
+            $doiTuong.prop('disabled', true);
+            if (dangKhoiTao === true) {
+                CKEDITOR.on('instanceReady', function () {
+                    $doiTuong.next().addClass('tat').find('iframe').attr('tabindex', '-1');
+                });
+            }
+            $doiTuong.next().addClass('tat').find('iframe').attr('tabindex', '-1');
+        }
+        else {
+            $doiTuong.prop('disabled', true).addClass('tat');
+        }
+    });
+}
+
 function khoiTaoTatMo($form) {
     $form.find('[data-chuc-nang="tat-mo"]').on('change', function () {
-        var $input = $(this);
-
-        var doiTuongTat = '',
-            doiTuongMo = '';
-
-        if ($input.is('input[type="checkbox"], input[type="radio"]')) {
-            if ($input[0].checked) {
-                doiTuongMo = $input.attr('data-mo');
-                doiTuongTat = $input.attr('data-tat');
-            }
-            else {
-                doiTuongMo = $input.attr('data-tat');
-                doiTuongTat = $input.attr('data-mo');
-            }
-        }
-        else if ($input.is('select')) {
-            var $option = $input.children(':selected');
-
-            doiTuongMo = $option.attr('data-mo');
-            doiTuongTat = $option.attr('data-tat');
-        }
-        
-        $form.find('[data-doi-tuong~="' + doiTuongTat + '"]').addClass('tat').prop('disabled', true).attr('tabindex', '-1')
-            .find('input, textarea, select').prop('disabled', true).attr('tabindex', '-1');
-        $form.find('[data-doi-tuong~="' + doiTuongMo + '"]').removeClass('tat').prop('disabled', false).removeAttr('tabindex')
-            .find('input, textarea, select').prop('disabled', false).removeAttr('tabindex');
+        xuLyTatMo($form, $(this));
     }).each(function () {
-        var $input = $(this);
-
-        var doiTuongTat = '',
-            doiTuongMo = '';
-
-        if ($input.is('input[type="checkbox"], input[type="radio"]')) {
-            if ($input[0].checked) {
-                doiTuongMo = $input.attr('data-mo');
-                doiTuongTat = $input.attr('data-tat');
-            }
-            else {
-                doiTuongMo = $input.attr('data-tat');
-                doiTuongTat = $input.attr('data-mo');
-            }
-        }
-        else if ($input.is('select')) {
-            var $option = $input.children(':selected');
-
-            doiTuongMo = $option.attr('data-mo');
-            doiTuongTat = $option.attr('data-tat');
-        }
-
-        $form.find('[data-doi-tuong~="' + doiTuongTat + '"]').addClass('tat').prop('disabled', true).attr('tabindex', '-1')
-            .find('input, textarea, select').prop('disabled', true).attr('tabindex', '-1');
-        $form.find('[data-doi-tuong~="' + doiTuongMo + '"]').removeClass('tat').prop('disabled', false).removeAttr('tabindex')
-            .find('input, textarea, select').prop('disabled', false).removeAttr('tabindex');
+        xuLyTatMo($form, $(this), true);
     });
 }
 

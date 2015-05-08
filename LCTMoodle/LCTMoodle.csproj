@@ -342,6 +342,7 @@
     <Content Include="Content\images\LCT\mini_logo.png" />
     <Content Include="Content\scripts\ChuDe\QuanLy.js" />
     <Content Include="Content\images\user-avatar.jpg" />
+    <Content Include="Content\scripts\KhoaHoc\Tao.js" />
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />

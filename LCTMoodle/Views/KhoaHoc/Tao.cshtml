@@ -68,16 +68,16 @@
                 <li>
                     <section class="tieu-de">
                         <label>
-                            Khóa học có thời hạn
+                            Khóa học thời hạn
                         </label>
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-mac-dinh data-chuc-nang="tat-mo" data-mo="thoi-han-khoa-hoc" type="checkbox" name="name" value="" data-text="Khóa học có thời hạn" />
+                            <input data-chuc-nang="tat-mo" data-mo="khoa-hoc-thoi-han" type="checkbox" name="name" value="" data-text="Khóa học có thời hạn" />
                         </article>
                     </section>
                 </li>
-                <li data-doi-tuong="thoi-han-khoa-hoc">
+                <li data-doi-tuong="khoa-hoc-thoi-han">
                     <section class="tieu-de">
                         <label>
                             Thời hạn
@@ -90,20 +90,21 @@
                         </article>
                     </section>
                 </li>
-                <li data-doi-tuong="thoi-han-khoa-hoc">
+                <li>
                     <section class="tieu-de">
                         <label>
-                            Đăng ký khóa học
+                            Khóa học đăng ký
                         </label>
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input type="checkbox" name="name" value="" data-text="Khóa học đăng ký" />
-                            <input type="checkbox" name="name" value="" data-text="Đăng ký có thời hạn" />
+                            <input data-chuc-nang="tat-mo" data-mo="khoa-hoc-dang-ky" type="checkbox" name="name" value="" data-text="Khóa học đăng ký" />
+                            <input data-doi-tuong="khoa-hoc-dang-ky" type="checkbox" name="name" value="" data-text="Đăng ký có thời hạn" />
+                            <textarea data-doi-tuong="khoa-hoc-dang-ky" name="name" data-input-type="editor" data-mac-dinh="Mặc định (editor)" placeholder="Hãy nhập"></textarea>
                         </article>
                     </section>
                 </li>
-                <li>
+                <li data-doi-tuong="khoa-hoc-dang-ky">
                     <section class="tieu-de">
                         <label>
                             Thời hạn đăng ký
@@ -111,7 +112,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" data-input-type="lct-thoi-gian" name="name" value="" placeholder="Chọn giờ" />
+                            <input data-input-type="lct-thoi-gian" name="name" value="" placeholder="Chọn giờ" />
                             <input data-input-type="lct-lich" name="name" value="" placeholder="Chọn ngày" />
                         </article>
                     </section>
@@ -128,7 +129,7 @@
                         </article>
                     </section>
                 </li>
-                <li data-doi-tuong="thoi-han-khoa-hoc">
+                <li>
                     <section class="tieu-de">
                         <label>
                             Chế độ riêng tư

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.IO;
+using Helpers;
 
 namespace LCTMoodle
 {
@@ -18,16 +19,8 @@ namespace LCTMoodle
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            taoThuMuc(Server.MapPath("~/Uploads/HinhDaiDien_ChuDe"));
-            taoThuMuc(Server.MapPath("~/Uploads/HinhDaiDien_KhoaHoc"));
-        }
-
-        static private void taoThuMuc(string duongDanThuMuc)
-        {
-            if (!Directory.Exists(duongDanThuMuc))
-            {
-                Directory.CreateDirectory(duongDanThuMuc);
-            }
+            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/HinhDaiDien_ChuDe"));
+            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/HinhDaiDien_KhoaHoc"));
         }
 
         protected void Session_Start()
