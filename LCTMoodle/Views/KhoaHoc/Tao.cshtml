@@ -25,7 +25,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-regex-validate="asdf||\d" data-mac-dinh="abc" type="text" name="Ten" placeholder="Hãy nhập" />
+                            <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Hãy nhập tên khóa học" />
                         </article>
                     </section>
                 </li>
@@ -37,7 +37,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <textarea name="MoTa" placeholder="Hãy nhập"></textarea>
+                            <textarea data-validate="bat-buoc" name="MoTa" placeholder="Hãy mô tả về khóa học của bạn"></textarea>
                         </article>
                     </section>
                 </li>
@@ -49,7 +49,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input type="text" name="ChuDe" placeholder="Hãy nhập" />
+                            <input type="text" name="ChuDe" placeholder="Để tạm" />
                         </article>
                     </section>
                 </li>
@@ -61,7 +61,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" type="file" name="HinhDaiDien" value="" data-thu-muc="HinhDaiDien_KhoaHoc/" />
+                            <input data-validate="bat-buoc" type="file" name="HinhDaiDien" data-thu-muc="HinhDaiDien_KhoaHoc" />
                         </article>
                     </section>
                 </li>
@@ -73,11 +73,11 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input type="checkbox" name="name" value="" data-text="Khóa học có thời hạn" />
+                            <input data-mac-dinh data-chuc-nang="tat-mo" data-mo="thoi-han-khoa-hoc" type="checkbox" name="name" value="" data-text="Khóa học có thời hạn" />
                         </article>
                     </section>
                 </li>
-                <li>
+                <li data-doi-tuong="thoi-han-khoa-hoc">
                     <section class="tieu-de">
                         <label>
                             Thời hạn
@@ -85,12 +85,12 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-input-type="lct-thoi-gian" name="name" value="" data-mac-dinh="00:00" placeholder="Chọn thời gian" />
-                            <input data-input-type="lct-lich" name="name" value="" data-mac-dinh="23.12.1234" placeholder="Chọn ngày" />
+                            <input data-input-type="lct-thoi-gian" name="name" value="" placeholder="Chọn giờ" />
+                            <input data-input-type="lct-lich" name="name" value="" placeholder="Chọn ngày" />
                         </article>
                     </section>
                 </li>
-                <li>
+                <li data-doi-tuong="thoi-han-khoa-hoc">
                     <section class="tieu-de">
                         <label>
                             Đăng ký khóa học
@@ -111,8 +111,8 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" data-input-type="lct-thoi-gian" name="name" value="" data-mac-dinh="00:00" placeholder="Chọn thời gian" />
-                            <input data-input-type="lct-lich" name="name" value="" data-mac-dinh="23.12.1234" placeholder="Chọn ngày" />
+                            <input data-validate="bat-buoc" data-input-type="lct-thoi-gian" name="name" value="" placeholder="Chọn giờ" />
+                            <input data-input-type="lct-lich" name="name" value="" placeholder="Chọn ngày" />
                         </article>
                     </section>
                 </li>
@@ -128,7 +128,7 @@
                         </article>
                     </section>
                 </li>
-                <li>
+                <li data-doi-tuong="thoi-han-khoa-hoc">
                     <section class="tieu-de">
                         <label>
                             Chế độ riêng tư

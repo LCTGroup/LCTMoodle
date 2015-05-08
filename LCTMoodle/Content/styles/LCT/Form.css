@@ -19,7 +19,7 @@
                 margin: 10px 0px;
             }
 
-                .lct-form ul > li.tat {
+                .lct-form .tat {
                     pointer-events: none;
                     opacity: 0.5;
                 }
@@ -157,6 +157,7 @@
     transition: 0.5s;
     color: #555;
     font-size: 13px;
+    background-color: #fff;
 }
 
     .lct-form input[type="text"][class^="loi-"],
@@ -171,6 +172,10 @@
     .lct-form input[type="text"]:focus,
     .lct-form input[type="password"]:focus {
         border-left-color: #08c;
+    }
+
+    .lct-form input[type="text"]:disabled,
+    .lct-form input[type="password"]:disabled {
     }
 
 /*#endregion */
@@ -189,6 +194,7 @@
     color: #555;
     font-family: Tahoma;
     font-size: 13px;
+    background-color: #fff;
 }
 
     .lct-form textarea[class^="loi-"],
@@ -546,6 +552,7 @@
     transition: 0.5s;
     color: #555;
     font-size: 13px;
+    background-color: #fff;
 }
 
     .lct-form input[data-input-type="lct-thoi-gian"][class^="loi-"],

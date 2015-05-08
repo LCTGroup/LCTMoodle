@@ -26,6 +26,9 @@ function khoiTaoLCTForm($form) {
     //Xử lý lấy giá trị mặc định
     khoiTaoGiaTriMacDinh($form);
 
+    //Khởi tạo tắt, mở đối tượng
+    khoiTaoTatMo($form);
+
     //Khởi tạo bắt lỗi
     khoiTaoBatLoi($form);
 
@@ -281,6 +284,64 @@ function khoiTaoGiaTriMacDinh($form) {
             $macDinh.prop('selected', true);
         }
     })
+}
+
+function khoiTaoTatMo($form) {
+    $form.find('[data-chuc-nang="tat-mo"]').on('change', function () {
+        var $input = $(this);
+
+        var doiTuongTat = '',
+            doiTuongMo = '';
+
+        if ($input.is('input[type="checkbox"], input[type="radio"]')) {
+            if ($input[0].checked) {
+                doiTuongMo = $input.attr('data-mo');
+                doiTuongTat = $input.attr('data-tat');
+            }
+            else {
+                doiTuongMo = $input.attr('data-tat');
+                doiTuongTat = $input.attr('data-mo');
+            }
+        }
+        else if ($input.is('select')) {
+            var $option = $input.children(':selected');
+
+            doiTuongMo = $option.attr('data-mo');
+            doiTuongTat = $option.attr('data-tat');
+        }
+        
+        $form.find('[data-doi-tuong~="' + doiTuongTat + '"]').addClass('tat').prop('disabled', true).attr('tabindex', '-1')
+            .find('input, textarea, select').prop('disabled', true).attr('tabindex', '-1');
+        $form.find('[data-doi-tuong~="' + doiTuongMo + '"]').removeClass('tat').prop('disabled', false).removeAttr('tabindex')
+            .find('input, textarea, select').prop('disabled', false).removeAttr('tabindex');
+    }).each(function () {
+        var $input = $(this);
+
+        var doiTuongTat = '',
+            doiTuongMo = '';
+
+        if ($input.is('input[type="checkbox"], input[type="radio"]')) {
+            if ($input[0].checked) {
+                doiTuongMo = $input.attr('data-mo');
+                doiTuongTat = $input.attr('data-tat');
+            }
+            else {
+                doiTuongMo = $input.attr('data-tat');
+                doiTuongTat = $input.attr('data-mo');
+            }
+        }
+        else if ($input.is('select')) {
+            var $option = $input.children(':selected');
+
+            doiTuongMo = $option.attr('data-mo');
+            doiTuongTat = $option.attr('data-tat');
+        }
+
+        $form.find('[data-doi-tuong~="' + doiTuongTat + '"]').addClass('tat').prop('disabled', true).attr('tabindex', '-1')
+            .find('input, textarea, select').prop('disabled', true).attr('tabindex', '-1');
+        $form.find('[data-doi-tuong~="' + doiTuongMo + '"]').removeClass('tat').prop('disabled', false).removeAttr('tabindex')
+            .find('input, textarea, select').prop('disabled', false).removeAttr('tabindex');
+    });
 }
 
 function baoLoi($input, loai, noiDung) {
