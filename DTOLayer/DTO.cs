@@ -18,6 +18,90 @@ namespace DTOLayer
         public object ketQua;
     }
 
+    public class PhamVi
+    {
+        public string ma;
+        public string ten;
+        public string moTa;
+        public string hinh;
+
+        public static PhamVi lay(string ma)
+        {
+            var danhSach = layDanhSach();
+            int soLuong = danhSach.Count;
+
+            for (int i = 0; i < soLuong; i++)
+            {
+                if (danhSach[i].ma.Equals(ma))
+                {
+                    return danhSach[i];
+                }
+            }
+
+            return null;
+        }
+
+        public static List<PhamVi> layDanhSach()
+        {
+            return new List<PhamVi>()
+            {
+                new PhamVi() 
+                {
+                    ma = "HeThong",
+                    ten = "Hệ thống",
+                    moTa = "Những chủ đề trong phạm vi toàn hệ thống",
+                    hinh = "he-thong.png"
+                },
+                new PhamVi() 
+                {
+                    ma = "KhoaHoc",
+                    ten = "Khóa học",
+                    moTa = "Những chủ đề trong phạm vi khóa học",
+                    hinh = "khoa-hoc.png"
+                }
+            };
+        }
+    }
+
+    public class CheDoRiengTu
+    {
+        public string ma;
+        public string ten;
+
+        public static CheDoRiengTu lay(string ma)
+        {
+            var danhSach = layDanhSach();
+            int soLuong = danhSach.Count;
+
+            for (int i = 0; i < soLuong; i++)
+            {
+                if (danhSach[i].ma.Equals(ma))
+                {
+                    return danhSach[i];
+                }
+            }
+
+            return null;
+        }
+
+        public static List<CheDoRiengTu> layDanhSach()
+        {
+            return new List<CheDoRiengTu>()
+            {
+                new CheDoRiengTu() 
+                {
+                    ma = "NoiBo",
+                    ten = "Nội bộ"
+                },
+                new CheDoRiengTu()
+                {
+                    ma = "CongKhai",
+                    ten = "Công khai"
+                }
+            };
+        }
+    }
+
     public class DTO
     {
         public virtual KetQua kiemTra()
@@ -42,9 +126,15 @@ namespace DTOLayer
         {
             return dong.IsDBNull(index) ? macDinh : dong.GetInt32(index);
         }
+
         public DateTime layDateTime(System.Data.SqlClient.SqlDataReader dong, int index, DateTime macDinh)
         {
             return dong.IsDBNull(index) ? macDinh : dong.GetDateTime(index);
+        }
+
+        public bool layBool(System.Data.SqlClient.SqlDataReader dong, int index, bool macDinh)
+        {
+            return dong.IsDBNull(index) ? macDinh : dong.GetBoolean(index);
         }
     }
 }

@@ -36,6 +36,10 @@ html:hover:after {
     background-color: #08c;
 }
 
+html.loi:after {
+    background-color: #e00;
+}
+
 .cke_editable
 {
 	font-size: 13px;

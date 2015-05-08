@@ -2,7 +2,7 @@
     ViewData["TieuDe"] = "Quản lý chủ đề";
     Layout = "~/Views/LCT/Khung.cshtml";
 
-    var danhSachPhamVi = Helpers.LCTHelper.layDanhSachPhamVi_DayDu();
+    var danhSachPhamVi = DTOLayer.PhamVi.layDanhSach();
 }
 
 @section Styles {
@@ -13,13 +13,14 @@
     
     <script>
         var phamVi = [];
-        @foreach (KeyValuePair<string, Dictionary<string, string>> phamVi in danhSachPhamVi) {
+        @foreach (var phamVi in danhSachPhamVi)
+        {
             <text>
             phamVi.push({
-                ma: '@phamVi.Value["Ma"]',
-                ten: '@phamVi.Key',
-                moTa: '@phamVi.Value["MoTa"]',
-                hinh: '@phamVi.Value["Hinh"]'
+                ma: '@phamVi.ma',
+                ten: '@phamVi.ten',
+                moTa: '@phamVi.moTa',
+                hinh: '@phamVi.hinh'
             });
             </text>
         }
@@ -39,12 +40,12 @@
                             Chọn phạm vi
                         </a>
                         <ul class="nut-con">
-                            @foreach (KeyValuePair<string, Dictionary<string, string>> phamVi in danhSachPhamVi)
+                            @foreach (var phamVi in danhSachPhamVi)
                             {
                                 <text>
                                     <li>
-                                        <a data-chuc-nang="mo-nut" data-loai="nut-con-pham-vi-tren-nut" data-value="@phamVi.Value["Ma"]" href="javascript:void(0)">
-                                            @phamVi.Key
+                                        <a data-chuc-nang="mo-nut" data-loai="nut-con-pham-vi-tren-nut" data-value="@phamVi.ma" href="javascript:void(0)">
+                                            @phamVi.ten
                                         </a>
                                     </li>
                                 </text>
@@ -56,17 +57,17 @@
             </section>
             <section class="con">
                 <ul id="danh_sach_chu_de" class="muc">
-                    @foreach (KeyValuePair<string, Dictionary<string, string>> phamVi in danhSachPhamVi)
+                    @foreach (var phamVi in danhSachPhamVi)
                     {
                         <li>
                             <section class="mo-ta">
-                                <img src="/Content/images/LCT/ChuDe/@phamVi.Value["Hinh"]">
+                                <img src="/Content/images/LCT/ChuDe/@phamVi.hinh">
                                 <p>
-                                    @phamVi.Value["MoTa"]
+                                    @phamVi.moTa
                                 </p>
                             </section>
-                            <a href="javascript:void(0)" class="ten" data-chuc-nang="mo-nut" data-loai="nut-con-pham-vi" data-value="@phamVi.Value["Ma"]">
-                                @phamVi.Key
+                            <a href="javascript:void(0)" class="ten" data-chuc-nang="mo-nut" data-loai="nut-con-pham-vi" data-value="@phamVi.ma">
+                                @phamVi.ten
                             </a>
                         </li>
                     }

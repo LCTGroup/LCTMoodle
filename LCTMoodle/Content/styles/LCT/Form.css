@@ -18,6 +18,12 @@
                 display: flex;
                 margin: 10px 0px;
             }
+
+                .lct-form ul > li.tat {
+                    pointer-events: none;
+                    opacity: 0.5;
+                }
+
                 .lct-form ul > li.loi-dan {
                     background-color: #f8f8f8;
                     border: 1px solid #eee;
@@ -25,21 +31,21 @@
                     color: #555;
                 }
                                 
-                .lct-form ul > li.loi-dan:not(:first-child) {
-                    margin-top: 30px;
-                }
+                    .lct-form ul > li.loi-dan:not(:first-child) {
+                        margin-top: 30px;
+                    }
 
                 .lct-form ul > li.thong-bao {
                     padding: 10px;
                     color: #555;
                 }
 
-                .lct-form li > .tieu-de {
-                    min-width: 150px;
-                    max-width: 150px;
-                }
+                    .lct-form li > .tieu-de {
+                        min-width: 150px;
+                        max-width: 150px;
+                    }
 
-                .lct-form li > .noi-dung {
+                    .lct-form li > .noi-dung {
                     width: 100%;
                 }
                 
@@ -86,10 +92,6 @@
             animation: xoay 1s infinite;
             -webkit-animation: xoay 1s infinite;
             -moz-animation: xoay 1s infinite;
-        }
-
-        .lct-form li.co-loi .tieu-de {
-            border-right-color: #e00;
         }
 
         .lct-form .loi {
@@ -157,6 +159,13 @@
     font-size: 13px;
 }
 
+    .lct-form input[type="text"][class^="loi-"],
+    .lct-form input[type="text"][class*=" loi-"],
+    .lct-form input[type="password"][class^="loi-"],
+    .lct-form input[type="password"][class*=" loi-"] {
+        border-left-color: #e00;
+    }
+
     .lct-form input[type="text"]:hover,
     .lct-form input[type="password"]:hover,
     .lct-form input[type="text"]:focus,
@@ -181,6 +190,11 @@
     font-family: Tahoma;
     font-size: 13px;
 }
+
+    .lct-form textarea[class^="loi-"],
+    .lct-form textarea[class*=" loi-"] {
+        border-left-color: #e00;
+    }
 
 .webkit .lct-form textarea {
     margin-bottom: -3px;
@@ -208,6 +222,11 @@
     -webkit-appearance: none;
     font-size: 13px;
 }
+
+    .lct-form select[class^="loi-"],
+    .lct-form select[class*=" loi-"] {
+        border-left-color: #e00;
+    }
 
     .lct-form select:hover,
     .lct-form select:focus {
@@ -398,9 +417,14 @@
     transition: 0.5s;
 }
 
-.lct-form .lct-file-label:hover i:before,
-.lct-form .lct-file-label input[type="file"]:focus ~ i:before,
-.lct-form .lct-file-label input[type="file"].dang ~ i:before {
+    .lct-form .lct-file-label input[type="file"][class^="loi-"] ~ i:before,
+    .lct-form .lct-file-label input[type="file"][class*=" loi-"] ~ i:before {
+        color: #e00;
+    }
+
+.lct-form li .lct-file-label:hover i:before,
+.lct-form li .lct-file-label input[type="file"]:focus ~ i:before,
+.lct-form li .lct-file-label input[type="file"].dang ~ i:before {
     color: #08c;
 }
 
@@ -414,6 +438,11 @@
     top: 0px;
     left: -3px;
 }
+
+    .lct-form .lct-file-label input[type="file"][class^="loi-"] ~ u,
+    .lct-form .lct-file-label input[type="file"][class*=" loi-"] ~ u {
+        background-color: #e00;
+    }
 
 .lct-form .lct-file-label:hover u,
 .lct-form .lct-file-label input[type="file"]:focus ~ u,
@@ -518,6 +547,13 @@
     color: #555;
     font-size: 13px;
 }
+
+    .lct-form input[data-input-type="lct-thoi-gian"][class^="loi-"],
+    .lct-form input[data-input-type="lct-thoi-gian"][class*=" loi-"],
+    .lct-form input[data-input-type="lct-lich"][class^="loi-"],
+    .lct-form input[data-input-type="lct-lich"][class*=" loi-"] {
+        border-left-color: #e00;
+    }
 
     .lct-form input[data-input-type="lct-thoi-gian"]:hover,
     .lct-form input[data-input-type="lct-lich"]:hover,
@@ -1691,7 +1727,7 @@
         background-color: #fff;
     }
 
-        .lct-cay[data-ma="PhamVi"] .khung-chuc-nang {
+        .lct-cay[data-pham-vi=""] .khung-chuc-nang {
             display: none;
         }
 

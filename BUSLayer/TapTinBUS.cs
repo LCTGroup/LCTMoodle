@@ -34,7 +34,7 @@ namespace BUSLayer
             {
                 var tapTinDaLuu = ketQua.ketQua as TapTinViewDTO;
 
-                var duongDan = TapTinHelper.layDuongDanGoc() + tapTinDaLuu.thuMuc + tapTinDaLuu.ma.ToString() + "_" + tapTinDaLuu.ten;
+                var duongDan = TapTinHelper.layDuongDanGoc() + tapTinDaLuu.thuMuc + "/" + tapTinDaLuu.ma.ToString() + "_" + tapTinDaLuu.ten;
 
                 //Lưu tập tin
                 tapTinLuu.SaveAs(duongDan);

@@ -14,7 +14,7 @@ namespace Helpers
 
         public static string layDuongDan(string thuMuc, string ten)
         {
-            return layDuongDanGoc() + thuMuc + ten;
+            return layDuongDanGoc() + thuMuc + "/" + ten;
         }
 
     }

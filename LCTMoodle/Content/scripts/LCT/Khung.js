@@ -26,7 +26,7 @@ function khoiTao_TatMoDoiTuong($doiTuong) {
         if ($target.is(':visible')) {
             $target.hide();           
         } else {
-            $target.show();            
+            $target.show();
         }
 
         //Xử lý sự kiện nhấn chuột ra ngoài đối tượng
@@ -289,24 +289,3 @@ function moPopup(thamSo) {
     
     $popup.trigger('Mo');
 }
-
-$(function () {
-    moPopup({
-        tieuDe: 'Tieu de',
-        thongBao: 'Thong bao',
-        nut: [{
-            ten: 'Nút 1',
-            loai: 'chap-nhan',
-            xuLy: function () {
-                alert('a');
-            }
-        }, {
-            ten: 'Nút 2',
-            loai: 'can-than',
-            xuLy: function () {
-                alert('b');
-                return false;
-            }
-        }]
-    });
-})
