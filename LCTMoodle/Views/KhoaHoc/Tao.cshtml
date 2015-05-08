@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["TieuDe"] = "TaoKhoaHoc";
+    Layout = "~/Views/LCT/Khung.cshtml";
+}
+
+@section Styles {
+}
+
+@section Scripts {
+    <script src="/Tao.js/KhoaHoc/"></script>
+}
+
+<article class="hop hop-2-vien">
+    <section class="tieu-de">
+        Tạo khóa học
+    </section>
+    <form action="#" method="post" class="noi-dung lct-form">
+        <article>
+            <ul>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Tên
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input data-regex-validate="asdf||\d" data-mac-dinh="abc" type="text" name="Ten" placeholder="Hãy nhập" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Mô tả
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <textarea name="MoTa" placeholder="Hãy nhập"></textarea>
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Chủ đề
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input type="text" name="ChuDe" placeholder="Hãy nhập" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Ảnh đại diện
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input data-validate="bat-buoc" type="file" name="HinhDaiDien" value="" data-thu-muc="HinhDaiDien_KhoaHoc/" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Khóa học có thời hạn
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input type="checkbox" name="name" value="" data-text="Khóa học có thời hạn" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Thời hạn
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input data-input-type="lct-thoi-gian" name="name" value="" data-mac-dinh="00:00" placeholder="Chọn thời gian" />
+                            <input data-input-type="lct-lich" name="name" value="" data-mac-dinh="23.12.1234" placeholder="Chọn ngày" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Đăng ký khóa học
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input type="checkbox" name="name" value="" data-text="Khóa học đăng ký" />
+                            <input type="checkbox" name="name" value="" data-text="Đăng ký có thời hạn" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Thời hạn đăng ký
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input data-validate="bat-buoc" data-input-type="lct-thoi-gian" name="name" value="" data-mac-dinh="00:00" placeholder="Chọn thời gian" />
+                            <input data-input-type="lct-lich" name="name" value="" data-mac-dinh="23.12.1234" placeholder="Chọn ngày" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Phí tham gia
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input type="text" name="name" placeholder="Hãy nhập" />
+                        </article>
+                    </section>
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Chế độ riêng tư
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <section class="input">
+                            <select name="select">
+                                <option value="1">Nội bộ</option>
+                                <option value="2" data-mac-dinh>Công khai</option>
+                            </select>
+                        </section>
+                    </section>
+                </li>
+            </ul>
+            <section class="lct-khung-button">
+                <button type="submit" class="chap-nhan">
+                    Tạo khóa học
+                </button>
+            </section>
+        </article>
+    </form>
+</article>
+
