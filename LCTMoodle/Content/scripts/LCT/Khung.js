@@ -291,6 +291,7 @@ function moPopup(thamSo) {
 }
 
 $(function () {
+    /*
     moPopup({
         tieuDe: 'Tieu de',
         thongBao: 'Thong bao',
@@ -309,4 +310,5 @@ $(function () {
             }
         }]
     });
+    */
 })

@@ -26,5 +26,16 @@ namespace DAOLayer
                 }
             );
         }
+        public static KetQua layNguoiDung(NguoiDungViewDTO nguoiDung)
+        {
+            return layDong<NguoiDungViewDTO>
+            (
+                "layNguoiDung",
+                new object[]
+                {
+                    nguoiDung.tenTaiKhoan
+                }
+            );
+        }
     }
 }

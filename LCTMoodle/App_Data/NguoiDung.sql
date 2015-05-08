@@ -34,12 +34,13 @@ END
 GO
 --Lấy người dùng
 CREATE PROC dbo.layNguoiDung (
-	@0 NVARCHAR(MAX), --Tên tài khoản
-	@1 NVARCHAR(MAX) --Mật khẩu
+	@0 NVARCHAR(MAX) --Tên tài khoản
 )
 AS
 BEGIN
-	SELECT Ma 
+	SELECT Ma, MatKhau
 	FROM dbo.NguoiDung 
-	WHERE 
+	WHERE TenTaiKhoan = @0
 END
+
+select * from nguoidung

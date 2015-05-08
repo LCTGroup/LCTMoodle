@@ -19,7 +19,7 @@ namespace DTOLayer
 
         //public override KetQua kiemTra()
         //{
-
+            
         //}
     }
 }
