@@ -11,6 +11,29 @@ $(function () {
 */
 function khoiTaoLCTForm($form) {
     // Thêm nút mặc định
+    khoiTaoNutMacDinh($form);
+
+    //Xử lý hiển thị đúng form
+    khoiTaoHienThiInput($form);
+
+    //Xử lý upload file = ajax
+    khoiTaoTapTinInput($form)
+
+    //Khởi tạo thời gian
+    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-thoi-gian"]'), 'lct-thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
+    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-lich"]'), 'lct-lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
+
+    //Xử lý lấy giá trị mặc định
+    khoiTaoGiaTriMacDinh($form);
+
+    //Khởi tạo bắt lỗi
+    khoiTaoBatLoi($form);
+
+    //Xử lý ajax submit chung
+    khoiTaoSubmit($form);
+}
+
+function khoiTaoNutMacDinh($form) {
     $form.find('.input').append($('<i class="mac-dinh" title="Mặc định"></i>').on('click', function () {
         /*
             Khởi tạo sự kiện cho nó làm mới
@@ -24,6 +47,17 @@ function khoiTaoLCTForm($form) {
         });
         $chua.find('textarea[data-input-type="editor"]').each(function () {
             CKEDITOR.instances[this.getAttribute('name')].setData(this.getAttribute('data-mac-dinh'));
+        });
+        $chua.find('select').each(function () {
+            var $select = $(this);
+            var $macDinh = $select.children('[data-mac-dinh]');
+
+            if ($macDinh.length == 0) {
+                $select.children()[0].selected = true;
+            }
+            else {
+                $macDinh.prop('selected', true);
+            }
         });
 
         // Checkbox, radio button
@@ -39,12 +73,13 @@ function khoiTaoLCTForm($form) {
             $phanTu.find('~ input[type="hidden"]').val('');
         });
     }));
+}
 
-    //Xử lý hiển thị đúng form
+function khoiTaoHienThiInput($form) {
     $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
         $element = $(this);
         $element.wrap('<label class="lct-checkbox-radio-label"></label>');
-        $element.after('<u></u>' +$element.attr('data-text'));
+        $element.after('<u></u>' + $element.attr('data-text'));
     });
 
     $form.find('input[type="file"]').each(function () {
@@ -55,22 +90,27 @@ function khoiTaoLCTForm($form) {
         $phanTu.after('<input type="hidden" name="' + name + '"><img /><i></i><u></u>');
     });
 
+    //Trường hợp đặc biệt, xử lý validate riêng cho editor
     $form.find('textarea[data-input-type="editor"]').each(function () {
-        var phanTu = this;
-        CKEDITOR.replace(phanTu);
+        CKEDITOR.replace(this);
+        var $phanTu = $(this);
+
         CKEDITOR.on('instanceReady', function () {
-            $(phanTu).find('~ div iframe').contents().find('body').on({
+            var $htmlTag = $phanTu.find('~ div iframe').contents().find('html');
+
+            $htmlTag.find('body').on({
                 focus: function () {
-                    $(this).parent().addClass('focus');
+                    $htmlTag.addClass('focus');
                 },
                 focusout: function () {
-                    $(this).parent().removeClass('focus');
+                    $htmlTag.removeClass('focus');
                 }
             });
         });
     });
+}
 
-    //Xử lý upload file = ajax
+function khoiTaoTapTinInput($form) {
     $form.find('input[type="file"]').on('change', function () {
         //Kiểm tra tồn tại
         if (this.files.length == 0) {
@@ -122,30 +162,6 @@ function khoiTaoLCTForm($form) {
         }).always(function () {
             thanhTheHien.style.height = '110px';
             $phanTu.removeClass('dang');
-        });
-    });
-
-    //Khởi tạo thời gian
-    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-thoi-gian"]'), 'lct-thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
-    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-lich"]'), 'lct-lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
-
-    //Xử lý lấy giá trị mặc định
-    $form.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
-        this.value = this.getAttribute('data-mac-dinh');
-    });
-    $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
-        this.checked = this.getAttribute('data-mac-dinh') != null;
-    });
-
-    //Xử lý ajax submit chung
-    $form.on('submit', function (e) {
-        e = e || window.event;
-        e.preventDefault();
-
-        //Validate
-
-        $form.find('textarea[data-input-type="editor"]').each(function () {
-            CKEDITOR.instances[this.getAttribute('name')].updateElement();
         });
     });
 }
@@ -243,6 +259,391 @@ function khoiTaoInputThoiGian($inputs, loai, idInput, hamKhoiTao, hamXuLyMacDinh
             $formInput.attr('data-trang-thai', 'an');
             $('body').off('mouseup.' + loai);
             $('body').off('mousedown.' + loai);
+        }
+    });
+}
+
+function khoiTaoGiaTriMacDinh($form) {
+    $form.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
+        this.value = this.getAttribute('data-mac-dinh');
+    });
+    $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
+        this.checked = this.getAttribute('data-mac-dinh') != null;
+    });
+    $form.find('select').each(function () {
+        var $select = $(this);
+        var $macDinh = $select.children('[data-mac-dinh]');
+
+        if ($macDinh.length == 0) {
+            $select.children()[0].selected = true;
+        }
+        else {
+            $macDinh.prop('selected', true);
+        }
+    })
+}
+
+function baoLoi($input, loai, noiDung) {
+    var $khungInput = $input.closest('.input');
+    var $khungLoi = $khungInput.find('~ .loi');
+
+    if ($khungLoi.length == 0) {
+        $khungLoi = $('<section class="loi"></section>');
+        $khungInput.after($khungLoi);
+    }
+
+    if ($khungLoi.children('[data-type="' + loai + '"]').length == 0) {
+        if (typeof noiDung === 'undefined') {
+            switch (loai) {
+                case 'bat-buoc':
+                    noiDung = 'Nội dung bắt buộc';
+                    break;
+                case 'so-nguyen':
+                    noiDung = 'Nội dung chỉ cho phép số nguyên';
+                    break;
+                case 'so-thuc':
+                    noiDung = 'Nội dung chỉ cho phép số thực';
+                    break;
+                case 'chu':
+                    noiDung = 'Nội dung chỉ cho phép chữ';
+                    break;
+                case 'email':
+                    noiDung = 'Email không hợp lệ';
+                    break;
+                default:
+                    noiDung = 'Giá trị không hợp lệ';
+                    break;
+            }
+        }
+
+        $khungLoi.append('<p data-type="' + loai + '">' + noiDung + '</p>');
+    }
+}
+
+function tatLoi($input, loai) {
+    var $khungLoi = $input.closest('.input').siblings('.loi');
+    $khungLoi.children('[data-type="' + loai + '"]').remove();
+
+    if ($khungLoi.children().length == 0) {
+        $khungLoi.remove();
+    }
+}
+
+function khoiTaoBatLoi($form) {
+    //Bắt buộc
+    $form.find('[data-validate~="bat-buoc"]').each(function () {
+        var $input = $(this);
+        var name = $input.attr('name');
+
+        if ($input.is('[data-input-type="editor"]')) {
+            CKEDITOR.on('instanceReady', function () {
+                var $htmlTag = $input.find('~ div iframe').contents().find('html');
+
+                CKEDITOR.instances[name].on('blur', function () {
+                    if (!this.getData()) {
+                        $htmlTag.addClass('loi');
+                    }
+                    else {
+                        $htmlTag.removeClass('loi');
+                    }
+                });
+            });
+        }
+        else {
+            $input.on('focusout', function () {
+                if (!this.value) {
+                    $input.addClass('loi-bat-buoc');
+                    baoLoi($input, 'bat-buoc');
+                }
+                else {
+                    $input.removeClass('loi-bat-buoc');
+                    tatLoi($input, 'bat-buoc');
+                }
+            })
+        }
+    });
+
+    //Chỉ số nguyên
+    $form.find('[data-validate~="so-nguyen"]').each(function () {
+        var $input = $(this);
+
+        $input.on({
+            'keydown': function (e) {
+                e = e || window.event;
+                var keyCode = e.keyCode;
+
+                if (
+                    //number
+                    (!e.shiftKey &&
+                    ((48 <= keyCode && keyCode <= 57) ||
+                    (96 <= keyCode && keyCode <= 105))) ||
+
+                    //backspace, delete, tab, enter
+                    $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
+
+                    //home, end, left, right, down, up
+                    (35 <= keyCode && keyCode <= 40) ||
+
+                    //ctrl A | Z | X | C | V |...
+                    e.ctrlKey) {
+                    return;
+                }
+
+                e.preventDefault();
+            },
+            'paste': function () {
+                setTimeout(function () {
+                    $input.val($input.val().replace(/\D/g, ''));
+                });
+            },
+            'focusout': function () {
+                if (/\D/.test($input.val())) {
+                    $input.addClass('loi-so-nguyen');
+                    baoLoi($input, 'so-nguyen');
+                }
+                else {
+                    $input.removeClass('loi-so-nguyen');
+                    tatLoi($input, 'so-nguyen');
+                }
+            }
+        });
+    });
+
+    //Chỉ số thực
+    $form.find('[data-validate~="so-thuc"]').each(function () {
+        var $input = $(this);
+
+        $input.on({
+            'keydown': function (e) {
+                e = e || window.event;
+                var keyCode = e.keyCode;
+
+                if (
+                    //number
+                    (!e.shiftKey &&
+                    ((48 <= keyCode && keyCode <= 57) ||
+                    (96 <= keyCode && keyCode <= 105))) ||
+
+                    //dấu chấm thập phân
+                    keyCode == 190 && $input.val().indexOf('.') === -1 ||
+
+                    //backspace, delete, tab, enter
+                    $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
+
+                    //home, end, left, right, down, up
+                    (35 <= keyCode && keyCode <= 40) ||
+
+                    //ctrl A | Z | X | C | V |...
+                    e.ctrlKey) {
+                    return;
+                }
+
+                e.preventDefault();
+            },
+            'paste': function () {
+                setTimeout(function () {
+                    var chuoi = $input.val();
+
+                    var viTriDau = chuoi.indexOf('.');
+
+                    if (viTriDau === -1) {
+                        chuoi = chuoi.replace(/\D/g, '');
+                    }
+                    else {
+                        chuoi = chuoi.slice(0, viTriDau).replace(/\D/g, '') + '.' + chuoi.slice(viTriDau).replace(/\D/g, '');
+                    }
+
+                    $input.val(chuoi);
+                });
+            },
+            'focusout': function () {
+                var chuoi = $input.val();
+
+                if (/\D&[^.]/.test(chuoi) || chuoi.indexOf('.') !== chuoi.lastIndexOf('.')) {
+                    $input.addClass('loi-so-thuc');
+                    baoLoi($input, 'so-thuc');
+                }
+                else {
+                    $input.removeClass('loi-so-thuc');
+                    tatLoi($input, 'so-thuc');
+                }
+            }
+        });
+    });
+
+    //Chỉ chữ
+    $form.find('[data-validate~="chu"]').each(function () {
+        var $input = $(this);
+
+        $input.on({
+            'keydown': function (e) {
+                e = e || window.event;
+                var keyCode = e.keyCode;
+
+                if (
+                    //number
+                    (65 < keyCode && keyCode < 90) ||
+
+                    //backspace, delete, tab, enter
+                    $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
+
+                    //home, end, left, right, down, up
+                    (35 <= keyCode && keyCode <= 40) ||
+
+                    //ctrl A | Z | X | C | V |...
+                    e.ctrlKey) {
+                    return;
+                }
+
+                e.preventDefault();
+            },
+            'paste': function () {
+                setTimeout(function () {
+                    $input.val($input.val().replace(/[^a-z\s]/ig, ''));
+                });
+            },
+            'focusout': function () {
+                if (/[^a-z\s]/i.test($input.val())) {
+                    $input.addClass('loi-chu');
+                    baoLoi($input, 'chu');
+                }
+                else {
+                    $input.removeClass('loi-chu');
+                    tatLoi($input, 'chu');
+                }
+            }
+        });
+    });
+
+    //Chỉ email
+    $form.find('[data-validate~="email"]').each(function () {
+        var $input = $(this);
+
+        $input.on({
+            'focusout': function () {
+                if ($input.val() && !/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/i.test($input.val())) {
+                    $input.addClass('loi-email');
+                    baoLoi($input, 'email');
+                }
+                else {
+                    $input.removeClass('loi-email');
+                    tatLoi($input, 'email');
+                }
+            }
+        });
+    });
+
+    //Regex
+    $form.find('[data-regex-validate]').each(function () {
+        var $input = $(this);
+        var name = this.name;
+
+        var duLieu = $input.attr('data-regex-validate').split('||');
+
+        var tenLoi = duLieu[0];
+        var pattern = duLieu[1];
+        var flags = duLieu[2];
+
+        var reg = new RegExp(pattern, flags);
+
+        $input.on('focusout', function () {
+            if (this.value && !reg.test(this.value)) {
+                $input.addClass('loi-regex');
+                baoLoi($input, 'regex-' + name, tenLoi);
+            }
+            else {
+                $input.removeClass('loi-regex');
+                tatLoi($input, 'regex-' + name);
+            }
+        })
+    });
+}
+
+function khoiTaoSubmit($form) {
+    $form.on('submit', function (e) {
+        e = e || window.event;
+        e.preventDefault();
+
+        $form.find('textarea[data-input-type="editor"]').each(function () {
+            CKEDITOR.instances[this.getAttribute('name')].updateElement();
+        });
+
+        //Validate
+        var coLoi = false;
+
+        $form.find('[data-validate~="bat-buoc"]').each(function () {
+            var $input = $(this);
+
+            if (!this.value) {
+                $input.addClass('loi-bat-buoc');
+                baoLoi($input, 'bat-buoc');
+
+                coLoi = true;
+            }
+        });
+        $form.find('[data-validate~="so-nguyen"]').each(function () {
+            var $input = $(this);
+            
+            if (/\D/.test($input.val())) {
+                $input.addClass('loi-so-nguyen');
+                baoLoi($input, 'so-nguyen');
+
+                coLoi = true;
+            }
+        });
+        $form.find('[data-validate~="so-thuc"]').each(function () {
+            var $input = $(this);
+            var chuoi = $input.val();
+
+            if (/\D&[^.]/.test(chuoi) || chuoi.indexOf('.') !== chuoi.lastIndexOf('.')) {
+                $input.addClass('loi-so-thuc');
+                baoLoi($input, 'so-thuc');
+
+                coLoi = true;
+            }
+        });
+        $form.find('[data-validate~="chu"]').each(function () {
+            var $input = $(this);
+
+            if (/[^a-z\s]/i.test($input.val())) {
+                $input.addClass('loi-chu');
+                baoLoi($input, 'chu');
+
+                coLoi = true;
+            }
+        });
+        $form.find('[data-validate~="email"]').each(function () {
+            var $input = $(this);
+
+            if ($input.val() && !/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/i.test($input.val())) {
+                $input.addClass('loi-email');
+                baoLoi($input, 'email');
+
+                coLoi = true;
+            }
+        });
+        $form.find('[data-regex-validate]').each(function () {
+            var $input = $(this);
+            var name = this.name;
+
+            var duLieu = $input.attr('data-regex-validate').split('||');
+
+            var tenLoi = duLieu[0];
+            var pattern = duLieu[1];
+            var flags = duLieu[2];
+
+            var reg = new RegExp(pattern, flags);
+
+            if (this.value && !reg.test(this.value)) {
+                $input.addClass('loi-regex');
+                baoLoi($input, 'regex-' + name, tenLoi);
+
+                coLoi = true;
+            }
+        });
+
+        if (coLoi) {
+            e.stopImmediatePropagation();
         }
     });
 }

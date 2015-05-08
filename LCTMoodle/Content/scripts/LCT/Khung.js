@@ -26,7 +26,7 @@ function khoiTao_TatMoDoiTuong($doiTuong) {
         if ($target.is(':visible')) {
             $target.hide();           
         } else {
-            $target.show();            
+            $target.show();
         }
 
         //Xử lý sự kiện nhấn chuột ra ngoài đối tượng

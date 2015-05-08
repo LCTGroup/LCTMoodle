@@ -1,7 +1,7 @@
 ﻿use rtcmfraf_Moodle;
 
 GO
---Chủ đề
+--Tạo chủ đề
 CREATE TABLE dbo.ChuDe (
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	Ten NVARCHAR(MAX) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE dbo.ChuDe (
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
 	PhamVi NVARCHAR(MAX) DEFAULT 'HeThong' NOT NULL,
 	MaChuDeCha INT DEFAULT 0 NOT NULL,
-	MaHinhDaiDien INT
+	MaHinhDaiDien INT DEFAULT NULL
 );
 
 GO

@@ -16,7 +16,6 @@ namespace DTOLayer
         public DateTime ngaySinh;
         public string diaChi;
         public string soDienThoai;       
-        
         public override void gan(System.Data.SqlClient.SqlDataReader dong)
         {
             for (int i = 0; i < dong.FieldCount; i++)

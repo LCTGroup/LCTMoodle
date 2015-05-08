@@ -43,4 +43,4 @@ BEGIN
 	WHERE TenTaiKhoan = @0
 END
 
-select * from nguoidung
+select * from dbo.NguoiDung

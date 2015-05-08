@@ -31,10 +31,10 @@ namespace LCTMoodle.Controllers
             ViewData["PhamVi"] = phamVi;
 
             return Json(new KetQua()
-            {
-                trangThai = 0,
-                ketQua = renderPartialViewToString(ControllerContext, "~/Views/ChuDe/_Form.cshtml", null, ViewData)
-            }, JsonRequestBehavior.AllowGet);
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "~/Views/ChuDe/_Form.cshtml", null, ViewData)
+                }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -44,6 +44,15 @@ namespace LCTMoodle.Controllers
             KetQua ketQua = ChuDeBUS.themChuDe(form);
 
             return Json(ketQua);
+        }
+
+        public ActionResult Chon(string phamVi = "HeThong")
+        {
+            return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "~/Views/ChuDe/_Chon.cshtml")
+                }, JsonRequestBehavior.AllowGet);
         }
 	}
 }

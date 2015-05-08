@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DTOLayer
 {
     public class NguoiDungDataDTO : DTO
-    {        
+    {
         public int ma;
         public string tenTaiKhoan;
         public string matKhau;
@@ -19,7 +19,6 @@ namespace DTOLayer
 
         //public override KetQua kiemTra()
         //{
-            
         //}
     }
 }

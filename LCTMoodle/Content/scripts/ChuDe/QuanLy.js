@@ -50,16 +50,16 @@ function khoiTao_NutTao($nutTao) {
                         $popup.trigger('Tat');
 
                         $nutCon = $(taoNutCon(data.ketQua));
-                        khoiTao_MoNut($nutCon.find('*[data-chuc-nang="mo-nut"]'));
+                        khoiTao_MoNut($nutCon.find('[data-chuc-nang="mo-nut"]'));
                         $danhSachNutCon.prepend($nutCon);
                         $danhSachNutCon.removeClass('rong');
 
-                        var key = parseInt($cay.attr('data-ma')) > 0 ? $cay.attr('data-ma') : $cay.attr('data-pham-vi');
+                        var key = parseInt($cay.attr('data-value')) > 0 ? $cay.attr('data-value') : $cay.attr('data-pham-vi');
                         if (key in mangNutCon) {
                             mangNutCon[key].push(data.ketQua);
                         }
                         else {
-                            mangNutCon[key] = [data.ketQua];
+                            mangNutCon[key] = [ data.ketQua ];
                         }
 
                         taoNutConTrenNut($danhSachNut.find('li:last-child'), data.ketQua);

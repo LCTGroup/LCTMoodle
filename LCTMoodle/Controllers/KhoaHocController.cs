@@ -8,7 +8,7 @@ namespace LCTMoodle.Controllers
 {
     public class KhoaHocController : Controller
     {
-        public ActionResult TaoKhoaHoc()
+        public ActionResult Tao()
         {
             return View();
         }
