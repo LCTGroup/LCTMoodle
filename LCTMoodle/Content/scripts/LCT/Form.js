@@ -318,6 +318,8 @@ function baoLoi($input, loai, noiDung) {
 
         $khungLoi.append('<p data-type="' + loai + '">' + noiDung + '</p>');
     }
+
+    $input.addClass('loi-' + loai);
 }
 
 function tatLoi($input, loai) {
@@ -327,6 +329,8 @@ function tatLoi($input, loai) {
     if ($khungLoi.children().length == 0) {
         $khungLoi.remove();
     }
+
+    $input.removeClass('loi-' + loai);
 }
 
 function khoiTaoBatLoi($form) {
@@ -340,26 +344,34 @@ function khoiTaoBatLoi($form) {
                 var $htmlTag = $input.find('~ div iframe').contents().find('html');
 
                 CKEDITOR.instances[name].on('blur', function () {
-                    if (!this.getData()) {
-                        $htmlTag.addClass('loi');
+                    if (this.getData()) {
+                        tatLoi($input, 'bat-buoc');
                     }
                     else {
-                        $htmlTag.removeClass('loi');
+                        baoLoi($input, 'bat-buoc');
                     }
                 });
             });
         }
-        else {
+        else if ($input.is('[data-type="file"]')) {
             $input.on('focusout', function () {
-                if (!this.value) {
-                    $input.addClass('loi-bat-buoc');
-                    baoLoi($input, 'bat-buoc');
-                }
-                else {
-                    $input.removeClass('loi-bat-buoc');
+                if ($input.siblings('input[type="hidden"]').val()) {
                     tatLoi($input, 'bat-buoc');
                 }
-            })
+                else {
+                    baoLoi($input, 'bat-buoc');
+                }
+            });
+        }
+        else {
+            $input.on('focusout', function () {
+                if (this.value) {
+                    tatLoi($input, 'bat-buoc');
+                }
+                else {
+                    baoLoi($input, 'bat-buoc');
+                }
+            });
         }
     });
 
@@ -398,11 +410,9 @@ function khoiTaoBatLoi($form) {
             },
             'focusout': function () {
                 if (/\D/.test($input.val())) {
-                    $input.addClass('loi-so-nguyen');
                     baoLoi($input, 'so-nguyen');
                 }
                 else {
-                    $input.removeClass('loi-so-nguyen');
                     tatLoi($input, 'so-nguyen');
                 }
             }
@@ -460,11 +470,9 @@ function khoiTaoBatLoi($form) {
                 var chuoi = $input.val();
 
                 if (/\D&[^.]/.test(chuoi) || chuoi.indexOf('.') !== chuoi.lastIndexOf('.')) {
-                    $input.addClass('loi-so-thuc');
                     baoLoi($input, 'so-thuc');
                 }
                 else {
-                    $input.removeClass('loi-so-thuc');
                     tatLoi($input, 'so-thuc');
                 }
             }
@@ -504,11 +512,9 @@ function khoiTaoBatLoi($form) {
             },
             'focusout': function () {
                 if (/[^a-z\s]/i.test($input.val())) {
-                    $input.addClass('loi-chu');
                     baoLoi($input, 'chu');
                 }
                 else {
-                    $input.removeClass('loi-chu');
                     tatLoi($input, 'chu');
                 }
             }
@@ -522,11 +528,9 @@ function khoiTaoBatLoi($form) {
         $input.on({
             'focusout': function () {
                 if ($input.val() && !/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/i.test($input.val())) {
-                    $input.addClass('loi-email');
                     baoLoi($input, 'email');
                 }
                 else {
-                    $input.removeClass('loi-email');
                     tatLoi($input, 'email');
                 }
             }
@@ -548,11 +552,9 @@ function khoiTaoBatLoi($form) {
 
         $input.on('focusout', function () {
             if (this.value && !reg.test(this.value)) {
-                $input.addClass('loi-regex');
                 baoLoi($input, 'regex-' + name, tenLoi);
             }
             else {
-                $input.removeClass('loi-regex');
                 tatLoi($input, 'regex-' + name);
             }
         })
@@ -575,7 +577,6 @@ function khoiTaoSubmit($form) {
             var $input = $(this);
 
             if (!this.value) {
-                $input.addClass('loi-bat-buoc');
                 baoLoi($input, 'bat-buoc');
 
                 coLoi = true;
@@ -585,7 +586,6 @@ function khoiTaoSubmit($form) {
             var $input = $(this);
             
             if (/\D/.test($input.val())) {
-                $input.addClass('loi-so-nguyen');
                 baoLoi($input, 'so-nguyen');
 
                 coLoi = true;
@@ -596,7 +596,6 @@ function khoiTaoSubmit($form) {
             var chuoi = $input.val();
 
             if (/\D&[^.]/.test(chuoi) || chuoi.indexOf('.') !== chuoi.lastIndexOf('.')) {
-                $input.addClass('loi-so-thuc');
                 baoLoi($input, 'so-thuc');
 
                 coLoi = true;
@@ -606,7 +605,6 @@ function khoiTaoSubmit($form) {
             var $input = $(this);
 
             if (/[^a-z\s]/i.test($input.val())) {
-                $input.addClass('loi-chu');
                 baoLoi($input, 'chu');
 
                 coLoi = true;
@@ -616,7 +614,6 @@ function khoiTaoSubmit($form) {
             var $input = $(this);
 
             if ($input.val() && !/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/i.test($input.val())) {
-                $input.addClass('loi-email');
                 baoLoi($input, 'email');
 
                 coLoi = true;
@@ -635,7 +632,6 @@ function khoiTaoSubmit($form) {
             var reg = new RegExp(pattern, flags);
 
             if (this.value && !reg.test(this.value)) {
-                $input.addClass('loi-regex');
                 baoLoi($input, 'regex-' + name, tenLoi);
 
                 coLoi = true;
