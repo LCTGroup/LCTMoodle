@@ -26,7 +26,51 @@ namespace DTOLayer
 
         public override KetQua kiemTra()
         {
+            KetQua ketQua = new KetQua();
+            List<string> danhSachLoi = new List<string>();
 
+            #region Bắt lỗi
+            if (ten.Length == 0)
+            {
+                danhSachLoi.Add("Tên không được bỏ trống");
+            }
+            if (moTa.Length == 0)
+            {
+                danhSachLoi.Add("Mô tả không được bỏ trống");
+            }
+            if (maChuDe == 0)
+            {
+                danhSachLoi.Add("Chủ đề không được bỏ trống");
+            }
+            if (maHinhDaiDien == 0)
+            {
+                danhSachLoi.Add("Hình đại diện không được bỏ trống");
+            }
+            if (maNguoiTao == 0)
+            {
+                danhSachLoi.Add("Người tạo không được bỏ trống");
+            }
+            if (cheDoRiengTu.Length == 0)
+            {
+                danhSachLoi.Add("Chế độ riêng tư không được bỏ trống");
+            }
+            else if (CheDoRiengTu.lay(cheDoRiengTu) == null)
+            {
+                danhSachLoi.Add("Chế độ riêng tư không hợp lệ");
+            }
+            #endregion
+
+            if (danhSachLoi.Count > 0)
+            {
+                ketQua.trangThai = 3;
+                ketQua.ketQua = danhSachLoi;
+            }
+            else
+            {
+                ketQua.trangThai = 0;
+            }
+
+            return ketQua;
         }
     }
 }

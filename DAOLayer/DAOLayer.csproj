@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KhoaHocDAO.cs" />
     <Compile Include="NguoiDungDAO.cs" />
     <Compile Include="TapTinDAO.cs" />
     <Compile Include="ChuDeDAO.cs" />

@@ -22,6 +22,7 @@ namespace DTOLayer
             KetQua ketQua = new KetQua();
             List<string> danhSachLoi = new List<string>();
 
+            #region Bắt lỗi
             if (ten.Length == 0)
             {
                 danhSachLoi.Add("Tên không được bỏ trống");
@@ -37,7 +38,8 @@ namespace DTOLayer
             if (maHinhDaiDien == 0)
             {
                 danhSachLoi.Add("Hình đại diện không được bỏ trống");
-            }
+            } 
+            #endregion
 
             if (danhSachLoi.Count > 0)
             {
@@ -48,7 +50,6 @@ namespace DTOLayer
             {
                 ketQua.trangThai = 0;
             }
-            
             
             return ketQua;
         }

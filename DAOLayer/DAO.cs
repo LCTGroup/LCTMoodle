@@ -30,7 +30,7 @@ namespace DAOLayer
                 lenh.CommandType = CommandType.StoredProcedure;
                 for (int i = 0; i < danhSachThamSo.Length; i++)
                 {
-                    lenh.Parameters.AddWithValue("@" + i, danhSachThamSo[i]);
+                    lenh.Parameters.AddWithValue("@" + i, danhSachThamSo[i] == null ? DBNull.Value : danhSachThamSo[i]);
                 }
                 SqlDataReader dong = lenh.ExecuteReader();
 
@@ -87,7 +87,7 @@ namespace DAOLayer
                 lenh.CommandType = CommandType.StoredProcedure;
                 for (int i = 0; i < danhSachThamSo.Length; i++)
                 {
-                    lenh.Parameters.AddWithValue("@" + i, danhSachThamSo[i]);
+                    lenh.Parameters.AddWithValue("@" + i, danhSachThamSo[i] == null ? DBNull.Value : danhSachThamSo[i]);
                 }
                 SqlDataReader dr = lenh.ExecuteReader();
 
@@ -151,14 +151,22 @@ namespace DAOLayer
                 lenh.CommandType = CommandType.StoredProcedure;
                 for (int i = 0; i < danhSachThamSo.Length; i++)
                 {
-                    lenh.Parameters.AddWithValue("@" + i, danhSachThamSo[i]);
+                    lenh.Parameters.AddWithValue("@" + i, danhSachThamSo[i] == null ? DBNull.Value : danhSachThamSo[i]);
                 }
-                lenh.ExecuteNonQuery();
-
-                return new KetQua()
+                if (lenh.ExecuteNonQuery() == 0)
                 {
-                    trangThai = 0
-                };
+                    return new KetQua()
+                    {
+                        trangThai = 1
+                    };
+                }
+                else
+                {
+                    return new KetQua()
+                    {
+                        trangThai = 0
+                    };
+                }
             }
             catch (SqlException e)
             {
@@ -191,7 +199,7 @@ namespace DAOLayer
                 lenh.CommandType = CommandType.StoredProcedure;
                 for (int i = 0; i < danhSachThamSo.Length; i++)
                 {
-                    lenh.Parameters.AddWithValue("@" + i, danhSachThamSo[i]);
+                    lenh.Parameters.AddWithValue("@" + i, danhSachThamSo[i] == null ? DBNull.Value : danhSachThamSo[i]);
                 }
 
                 object ketQua = lenh.ExecuteScalar();

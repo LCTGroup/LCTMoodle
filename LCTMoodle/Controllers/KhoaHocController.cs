@@ -16,9 +16,7 @@ namespace LCTMoodle.Controllers
 
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            var form = chuyenDuLieuForm(formCollection);
-            KhoaHocBUS.themKhoaHoc(form);
-            return Json(1);
+            return Json(KhoaHocBUS.themKhoaHoc(chuyenDuLieuForm(formCollection)));
         }
 	}
 }

@@ -40,9 +40,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            KetQua ketQua = ChuDeBUS.themChuDe(chuyenDuLieuForm(formCollection));
-
-            return Json(ketQua);
+            return Json(ChuDeBUS.themChuDe(chuyenDuLieuForm(formCollection)));
         }
 
         public ActionResult Chon(string phamVi = "HeThong")
