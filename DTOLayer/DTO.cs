@@ -32,12 +32,12 @@ namespace DTOLayer
             return dong.IsDBNull(index) ? macDinh : dong.GetInt32(index);
         }
 
-        public DateTime layDateTime(System.Data.SqlClient.SqlDataReader dong, int index, DateTime macDinh)
+        public DateTime? layDateTime(System.Data.SqlClient.SqlDataReader dong, int index, DateTime? macDinh = null)
         {
             return dong.IsDBNull(index) ? macDinh : dong.GetDateTime(index);
         }
 
-        public bool layBool(System.Data.SqlClient.SqlDataReader dong, int index, bool macDinh)
+        public bool layBool(System.Data.SqlClient.SqlDataReader dong, int index, bool macDinh = false)
         {
             return dong.IsDBNull(index) ? macDinh : dong.GetBoolean(index);
         }
@@ -106,6 +106,7 @@ namespace DTOLayer
     {
         public string ma;
         public string ten;
+        public bool macDinh;
 
         public static CheDoRiengTu lay(string ma)
         {
@@ -130,7 +131,8 @@ namespace DTOLayer
                 new CheDoRiengTu() 
                 {
                     ma = "NoiBo",
-                    ten = "Nội bộ"
+                    ten = "Nội bộ",
+                    macDinh = true
                 },
                 new CheDoRiengTu()
                 {

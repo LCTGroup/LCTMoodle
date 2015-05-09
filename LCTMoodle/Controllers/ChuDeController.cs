@@ -38,10 +38,9 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
-        public ActionResult XuLyThemChuDe(FormCollection formCollection)
+        public ActionResult XuLyThem(FormCollection formCollection)
         {
-            Dictionary<string, string> form = formCollection.AllKeys.ToDictionary(k => k, v => formCollection[v]);
-            KetQua ketQua = ChuDeBUS.themChuDe(form);
+            KetQua ketQua = ChuDeBUS.themChuDe(chuyenDuLieuForm(formCollection));
 
             return Json(ketQua);
         }

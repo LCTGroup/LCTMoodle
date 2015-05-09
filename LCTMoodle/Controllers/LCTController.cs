@@ -67,9 +67,16 @@ namespace LCTMoodle.Controllers
                 );
         }
 
+        #region Helper
         [NonAction]
-        public string renderPartialViewToString(ControllerContext controllerContextontrollerContext, 
-            string partialViewName, object model = null , ViewDataDictionary viewData = null, TempDataDictionary tempData = null)
+        public Dictionary<string, string> chuyenDuLieuForm(FormCollection formCollection)
+        {
+            return formCollection.AllKeys.ToDictionary(k => k, v => formCollection[v]);
+        }
+
+        [NonAction]
+        public string renderPartialViewToString(ControllerContext controllerContextontrollerContext,
+            string partialViewName, object model = null, ViewDataDictionary viewData = null, TempDataDictionary tempData = null)
         {
             if (viewData == null)
             {
@@ -86,9 +93,10 @@ namespace LCTMoodle.Controllers
             var viewResult = ViewEngines.Engines.FindPartialView(controllerContextontrollerContext, partialViewName);
             var viewContext = new ViewContext(controllerContextontrollerContext, viewResult.View, viewData, tempData, sw);
             viewResult.View.Render(viewContext, sw);
-            
+
             var s = sw.GetStringBuilder().ToString();
             return s;
-        }
+        } 
+        #endregion
 	}
 }

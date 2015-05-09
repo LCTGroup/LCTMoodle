@@ -12,7 +12,7 @@ namespace DTOLayer
         public string ten;
         public string loai;
         public string thuMuc;
-        public DateTime thoiDiemTao;
+        public DateTime? thoiDiemTao;
 
         public override void gan(System.Data.SqlClient.SqlDataReader dong)
         {
@@ -29,7 +29,7 @@ namespace DTOLayer
                     case "ThuMuc":
                         thuMuc = layString(dong, i); break;
                     case "ThoiDiemTao":
-                        thoiDiemTao = layDateTime(dong, i, DateTime.MinValue); break;
+                        thoiDiemTao = layDateTime(dong, i); break;
                     default:
                         break;
                 }

@@ -15,12 +15,12 @@ namespace BUSLayer
         {
             ChuDeDataDTO chuDe = new ChuDeDataDTO()
             {
-                ten = form["Ten"],
-                moTa = form["MoTa"],
-                maHinhDaiDien = int.Parse(form["MaHinhDaiDien"]),
-                maChuDeCha = int.Parse(form["MaChuDeCha"]),
-                phamVi = form["PhamVi"],
-                maNguoiTao = 1
+                ten = layString(form, "Ten"),
+                moTa = layString(form, "MoTa"),
+                maHinhDaiDien = layInt(form, "MaHinhDaiDien"),
+                maChuDeCha = layInt(form, "MaChuDeCha"),
+                phamVi = layString(form, "PhamVi"),
+                maNguoiTao = 1 //Để tạm
             };
 
             KetQua ketQua = chuDe.kiemTra();

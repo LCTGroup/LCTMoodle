@@ -11,32 +11,32 @@ $(function () {
 */
 function khoiTaoLCTForm($form) {
     // Thêm nút mặc định
-    khoiTaoNutMacDinh($form);
+    khoiTaoNutMacDinh_LCT($form);
 
     //Xử lý hiển thị đúng form
-    khoiTaoHienThiInput($form);
+    khoiTaoHienThiInput_LCT($form);
 
     //Xử lý upload file = ajax
-    khoiTaoTapTinInput($form)
+    khoiTaoTapTinInput_LCT($form)
 
     //Khởi tạo thời gian
-    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-thoi-gian"]'), 'lct-thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
-    khoiTaoInputThoiGian($form.find('input[data-input-type="lct-lich"]'), 'lct-lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
+    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="lct-thoi-gian"]'), 'lct-thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
+    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="lct-lich"]'), 'lct-lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
 
     //Xử lý lấy giá trị mặc định
-    khoiTaoGiaTriMacDinh($form);
+    khoiTaoGiaTriMacDinh_LCT($form);
 
     //Khởi tạo tắt, mở đối tượng
-    khoiTaoTatMo($form);
+    khoiTaoTatMo_LCT($form);
 
     //Khởi tạo bắt lỗi
-    khoiTaoBatLoi($form);
+    khoiTaoBatLoi_LCT($form);
 
     //Xử lý ajax submit chung
-    khoiTaoSubmit($form);
+    khoiTaoSubmit_LCT($form);
 }
 
-function khoiTaoNutMacDinh($form) {
+function khoiTaoNutMacDinh_LCT($form) {
     $form.find('.input').append($('<i class="mac-dinh" title="Mặc định"></i>').on('click', function () {
         /*
             Khởi tạo sự kiện cho nó làm mới
@@ -78,7 +78,7 @@ function khoiTaoNutMacDinh($form) {
     }));
 }
 
-function khoiTaoHienThiInput($form) {
+function khoiTaoHienThiInput_LCT($form) {
     $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
         $element = $(this);
         $element.wrap('<label class="lct-checkbox-radio-label"></label>');
@@ -113,7 +113,7 @@ function khoiTaoHienThiInput($form) {
     });
 }
 
-function khoiTaoTapTinInput($form) {
+function khoiTaoTapTinInput_LCT($form) {
     $form.find('input[type="file"]').on('change', function () {
         //Kiểm tra tồn tại
         if (this.files.length == 0) {
@@ -174,7 +174,7 @@ function khoiTaoTapTinInput($form) {
 // hàm khởi tạo form lúc chưa có
 // hàm xử lý giá trị mặc định
 // hàm xử lý lấy giá trị khi đã có
-function khoiTaoInputThoiGian($inputs, loai, idInput, hamKhoiTao, hamXuLyMacDinh, hamXuLyLayGiaTri) {
+function khoiTaoInputThoiGian_LCT($inputs, loai, idInput, hamKhoiTao, hamXuLyMacDinh, hamXuLyLayGiaTri) {
     //Lấy form nhập
     $formInput = $('#' + idInput);
 
@@ -266,7 +266,7 @@ function khoiTaoInputThoiGian($inputs, loai, idInput, hamKhoiTao, hamXuLyMacDinh
     });
 }
 
-function khoiTaoGiaTriMacDinh($form) {
+function khoiTaoGiaTriMacDinh_LCT($form) {
     $form.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
         this.value = this.getAttribute('data-mac-dinh');
     });
@@ -389,7 +389,7 @@ function xuLyTatMo($form, $input, dangKhoiTao, tatHet) {
     });
 }
 
-function khoiTaoTatMo($form) {
+function khoiTaoTatMo_LCT($form) {
     $form.find('[data-chuc-nang="tat-mo"]').on('change', function () {
         xuLyTatMo($form, $(this));
     }).each(function () {
@@ -447,7 +447,7 @@ function tatLoi($input, loai) {
     $input.removeClass('loi-' + loai);
 }
 
-function khoiTaoBatLoi($form) {
+function khoiTaoBatLoi_LCT($form) {
     //Bắt buộc
     $form.find('[data-validate~="bat-buoc"]').each(function () {
         var $input = $(this);
@@ -675,7 +675,7 @@ function khoiTaoBatLoi($form) {
     });
 }
 
-function khoiTaoSubmit($form) {
+function khoiTaoSubmit_LCT($form) {
     $form.on('submit', function (e) {
         e = e || window.event;
         e.preventDefault();
@@ -687,7 +687,7 @@ function khoiTaoSubmit($form) {
         //Validate
         var coLoi = false;
 
-        $form.find('[data-validate~="bat-buoc"]').each(function () {
+        $form.find('[data-validate~="bat-buoc"]:not(:disabled)').each(function () {
             var $input = $(this);
 
             if (!this.value) {
@@ -696,7 +696,7 @@ function khoiTaoSubmit($form) {
                 coLoi = true;
             }
         });
-        $form.find('[data-validate~="so-nguyen"]').each(function () {
+        $form.find('[data-validate~="so-nguyen"]:not(:disabled)').each(function () {
             var $input = $(this);
             
             if (/\D/.test($input.val())) {
@@ -705,7 +705,7 @@ function khoiTaoSubmit($form) {
                 coLoi = true;
             }
         });
-        $form.find('[data-validate~="so-thuc"]').each(function () {
+        $form.find('[data-validate~="so-thuc"]:not(:disabled)').each(function () {
             var $input = $(this);
             var chuoi = $input.val();
 
@@ -715,7 +715,7 @@ function khoiTaoSubmit($form) {
                 coLoi = true;
             }
         });
-        $form.find('[data-validate~="chu"]').each(function () {
+        $form.find('[data-validate~="chu"]:not(:disabled)').each(function () {
             var $input = $(this);
 
             if (/[^a-z\s]/i.test($input.val())) {
@@ -724,7 +724,7 @@ function khoiTaoSubmit($form) {
                 coLoi = true;
             }
         });
-        $form.find('[data-validate~="email"]').each(function () {
+        $form.find('[data-validate~="email"]:not(:disabled)').each(function () {
             var $input = $(this);
 
             if ($input.val() && !/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/i.test($input.val())) {
@@ -733,7 +733,7 @@ function khoiTaoSubmit($form) {
                 coLoi = true;
             }
         });
-        $form.find('[data-regex-validate]').each(function () {
+        $form.find('[data-regex-validate]:not(:disabled)').each(function () {
             var $input = $(this);
             var name = this.name;
 

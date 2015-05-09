@@ -14,9 +14,9 @@ namespace DTOLayer
         public ChuDeViewDTO chuDe;
         public TapTinViewDTO hinhDaiDien;
         public NguoiDungViewDTO nguoiTao;
-        public DateTime thoiDiemTao;
+        public DateTime? thoiDiemTao;
         public bool canDangKy;
-        public DateTime hanDangKy;
+        public DateTime? hanDangKy;
         public int phiThamGia;
         public CheDoRiengTu cheDoRiengTu;
         public bool coBangDiem;
@@ -57,13 +57,13 @@ namespace DTOLayer
                             };
                         break;
                     case "ThoiDiemTao":
-                        thoiDiemTao = layDateTime(dong, i, DateTime.MinValue);
+                        thoiDiemTao = layDateTime(dong, i);
                         break;
                     case "CanDangKy":
                         canDangKy = layBool(dong, i, false);
                         break;
                     case "HanDangKy":
-                        hanDangKy = layDateTime(dong, i, DateTime.MinValue);
+                        hanDangKy = layDateTime(dong, i);
                         break;
                     case "PhiThamGia":
                         phiThamGia = layInt(dong, i);

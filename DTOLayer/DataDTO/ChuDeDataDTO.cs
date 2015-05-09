@@ -12,7 +12,7 @@ namespace DTOLayer
         public string ten;
         public string moTa;
         public int maNguoiTao;
-        public DateTime thoiDiemTao;
+        public DateTime? thoiDiemTao;
         public string phamVi;
         public int maChuDeCha;
         public int maHinhDaiDien;

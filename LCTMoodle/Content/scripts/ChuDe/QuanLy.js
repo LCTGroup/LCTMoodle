@@ -42,14 +42,14 @@ function khoiTao_NutTao($nutTao) {
                     $form = $(this);
 
                     $.ajax({
-                        url: $form.attr('action'),
-                        type: $form.attr('method'),
+                        url: '/ChuDe/XuLyThem',
+                        type: 'POST',
                         dataType: 'JSON',
                         data: $form.serialize()
                     }).done(function (data) {
                         $popup.trigger('Tat');
                         
-                        if (data.trangthai == 0) {
+                        if (data.trangThai == 0) {
                             $nutCon = $(taoNutCon(data.ketQua));
                             khoiTao_MoNut($nutCon.find('[data-chuc-nang="mo-nut"]'));
                             $danhSachNutCon.prepend($nutCon);

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BUS.Properties {
+namespace BUSLayer.Properties {
     using System;
     
     

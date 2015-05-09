@@ -12,7 +12,7 @@ namespace DTOLayer
         public string ten;
         public string moTa;
         public int maNguoiTao;
-        public DateTime thoiDiemTao;
+        public DateTime? thoiDiemTao;
         public string phamVi;
         public ChuDeViewDTO chuDeCha;
         public TapTinViewDTO hinhDaiDien;
@@ -30,7 +30,7 @@ namespace DTOLayer
                     case "MoTa":
                         moTa = layString(dong, i); break;
                     case "ThoiDiemTao":
-                        thoiDiemTao = layDateTime(dong, i, DateTime.MinValue); break;
+                        thoiDiemTao = layDateTime(dong, i); break;
                     case "MaNguoiTao":
                         maNguoiTao = layInt(dong, i); break;
                     case "PhamVi":

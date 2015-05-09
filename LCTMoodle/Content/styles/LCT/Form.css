@@ -152,11 +152,12 @@
     line-height: 20px;
     padding: 5px 8px;
     width: calc(100% - 19px);
+    height: 20px;
     outline: none;
     border-left: 3px solid #eee;
     transition: 0.5s;
     color: #555;
-    font-size: 13px;
+    font: normal 13px tahoma;
     background-color: #fff;
 }
 
@@ -192,8 +193,7 @@
     transition: border-left-color 0.5s;
     height: 100px;
     color: #555;
-    font-family: Tahoma;
-    font-size: 13px;
+    font: normal 13px tahoma;
     background-color: #fff;
 }
 
@@ -226,7 +226,7 @@
     color: #555;
     -moz-appearance: none;
     -webkit-appearance: none;
-    font-size: 13px;
+    font: normal 13px tahoma;
 }
 
     .lct-form select[class^="loi-"],
@@ -246,7 +246,7 @@
 .lct-form .lct-checkbox-radio-label {
     display: block;
     padding: 5px;
-    font-size: 13px;
+    font: normal 13px tahoma;
 }
 
 .lct-form input[type="checkbox"],
@@ -334,57 +334,6 @@
 
 /*#region Fileupload */
 
-/*.lct-form .lct-file-label {
-    display: block;
-    padding: 5px;
-    line-height: 20px;
-    height: 20px;
-    margin-left: 3px;
-    transition: 0.5s;
-    position: relative;
-}
-
-.lct-form input[type="file"] {
-    position: absolute;
-    left: -9999px;
-}
-
-.lct-form .lct-file-label i {
-    text-decoration: none !important;
-    margin-right: 4px;
-}
-
-    .lct-form .lct-file-label i:before {
-        content: '\e68a';
-        font-family: 'Stroke Icon';
-        font-style: normal;
-        font-size: 16px;
-        vertical-align: middle;
-        color: #ddd;
-        transition: 0.5s;
-    }
-
-.lct-form .lct-file-label:hover i:before,
-.lct-form .lct-file-label input[type="file"]:focus ~ i:before {
-    color: #08c;
-}
-
-.lct-form .lct-file-label u {
-    display: block;
-    height: 30px;
-    width: 3px;
-    background-color: #eee;
-    transition: 0.5s;
-    position: absolute;
-    top: 0px;
-    left: -3px;
-}
-
-.lct-form .lct-file-label:hover u,
-.lct-form .lct-file-label input[type="file"]:focus ~ u {
-    background-color: #08c;
-}*/
-
 .lct-form .lct-file-label {
     display: block;
     padding: 5px;
@@ -394,6 +343,7 @@
     transition: 0.5s;
     position: relative;
     text-align: center;
+    font: normal 13px tahoma;
 }
 
 .lct-form input[type="file"] {
@@ -418,7 +368,7 @@
 .lct-form .lct-file-label i:before {
     content: '\e68a';
     font: normal 60px 'Stroke Icon';
-    vertical-align: middle;
+    line-height: 100px;
     color: #ddd;
     transition: 0.5s;
 }
@@ -458,87 +408,6 @@
 
 /*#endregion */
 
-/*#region Khung button */
-
-.lct-form .lct-khung-button {
-    border-top: 1px solid #eee;
-    padding: 20px;
-    background-color: #f8f8f8;
-    text-align: center;
-}
-
-.lct-form button {
-    border: 1px solid #ddd;
-    background-color: #fff;
-    padding: 0px 20px;
-    height: 35px;
-    margin: 5px;
-    font-weight: bold;
-    color: #333;
-    position: relative;
-    outline: none;
-    transition: color 0.5s;
-}
-
-    .lct-form button:after {
-        content: '';
-        display: block;
-        background-color: #eee;
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        width: 0%;
-        height: 3px;
-        transition: 0.5s;
-    }
-
-    .lct-form button:hover:after,
-    .lct-form button:focus:after {
-        width: 100%;
-    }
-
-    .lct-form button.chap-nhan:hover:after,
-    .lct-form button.chap-nhan:focus:after {
-        background-color: #08c;
-    }
-
-    .lct-form button.thong-tin:hover:after,
-    .lct-form button.thong-tin:focus:after {
-        background-color: #0c0;
-    }
-
-    .lct-form button.can-than:hover:after,
-    .lct-form button.can-than:focus:after {
-        background-color: #fb0;
-    }
-
-    .lct-form button.nguy-hiem:hover:after,
-    .lct-form button.nguy-hiem:focus:after {
-        background-color: #e00;
-    }
-
-    .lct-form button.chap-nhan:hover,
-    .lct-form button.chap-nhan:focus {
-        color: #08c;
-    }
-
-    .lct-form button.thong-tin:hover,
-    .lct-form button.thong-tin:focus {
-        color: #0c0;
-    }
-
-    .lct-form button.can-than:hover,
-    .lct-form button.can-than:focus {
-        color: #fb0;
-    }
-
-    .lct-form button.nguy-hiem:hover,
-    .lct-form button.nguy-hiem:focus {
-        color: #e00;
-    }
-
-/*#endregion */
-
 /*#region Thời gian */
 
 .lct-form input[data-input-type="lct-thoi-gian"],
@@ -551,7 +420,7 @@
     border-left: 3px solid #eee;
     transition: 0.5s;
     color: #555;
-    font-size: 13px;
+    font: normal 13px tahoma;
     background-color: #fff;
 }
 
@@ -1815,6 +1684,87 @@
         }
 
 /*#endregion */
+
+/*#endregion */
+
+/*#region Khung button */
+
+.lct-form .lct-khung-button {
+    border-top: 1px solid #eee;
+    padding: 20px;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+.lct-form button {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 0px 20px;
+    height: 35px;
+    margin: 5px;
+    font-weight: bold;
+    color: #333;
+    position: relative;
+    outline: none;
+    transition: color 0.5s;
+}
+
+    .lct-form button:after {
+        content: '';
+        display: block;
+        background-color: #eee;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 0%;
+        height: 3px;
+        transition: 0.5s;
+    }
+
+    .lct-form button:hover:after,
+    .lct-form button:focus:after {
+        width: 100%;
+    }
+
+    .lct-form button.chap-nhan:hover:after,
+    .lct-form button.chap-nhan:focus:after {
+        background-color: #08c;
+    }
+
+    .lct-form button.thong-tin:hover:after,
+    .lct-form button.thong-tin:focus:after {
+        background-color: #0c0;
+    }
+
+    .lct-form button.can-than:hover:after,
+    .lct-form button.can-than:focus:after {
+        background-color: #fb0;
+    }
+
+    .lct-form button.nguy-hiem:hover:after,
+    .lct-form button.nguy-hiem:focus:after {
+        background-color: #e00;
+    }
+
+    .lct-form button.chap-nhan:hover,
+    .lct-form button.chap-nhan:focus {
+        color: #08c;
+    }
+
+    .lct-form button.thong-tin:hover,
+    .lct-form button.thong-tin:focus {
+        color: #0c0;
+    }
+
+    .lct-form button.can-than:hover,
+    .lct-form button.can-than:focus {
+        color: #fb0;
+    }
+
+    .lct-form button.nguy-hiem:hover,
+    .lct-form button.nguy-hiem:focus {
+        color: #e00;
+    }
 
 /*#endregion */
 

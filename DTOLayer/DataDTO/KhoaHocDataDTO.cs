@@ -14,18 +14,19 @@ namespace DTOLayer
         public int maChuDe;
         public int maHinhDaiDien;
         public int maNguoiTao;
-        public DateTime thoiDiemTao;
+        public DateTime? thoiDiemTao;
+        public DateTime? han;
         public bool canDangKy;
-        public DateTime hanDangKy;
+        public DateTime? hanDangKy;
         public int phiThamGia;
-        public int cheDoRiengTu;
+        public string cheDoRiengTu;
         public bool coBangDiem;
         public bool coBangDiemDanh;
         public bool canDuyetBaiViet;
 
-        //public override KetQua kiemTra()
-        //{
+        public override KetQua kiemTra()
+        {
 
-        //}
+        }
     }
 }

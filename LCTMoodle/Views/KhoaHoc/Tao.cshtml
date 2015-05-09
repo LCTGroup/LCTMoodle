@@ -14,7 +14,7 @@
     <section class="tieu-de">
         Tạo khóa học
     </section>
-    <form action="#" method="post" class="noi-dung lct-form">
+    <form id="tao_khoa_hoc_form" class="noi-dung lct-form">
         <article>
             <ul>
                 <li>
@@ -73,7 +73,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-chuc-nang="tat-mo" data-mo="khoa-hoc-thoi-han" type="checkbox" name="name" value="" data-text="Khóa học có thời hạn" />
+                            <input data-chuc-nang="tat-mo" data-mo="khoa-hoc-thoi-han" name="CoHan" type="checkbox" value="" data-text="Khóa học có thời hạn" />
                         </article>
                     </section>
                 </li>
@@ -85,8 +85,8 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-input-type="lct-thoi-gian" name="name" value="" placeholder="Chọn giờ" />
-                            <input data-input-type="lct-lich" name="name" value="" placeholder="Chọn ngày" />
+                            <input data-validate="bat-buoc" data-input-type="lct-thoi-gian" name="Han_Gio" placeholder="Chọn giờ" />
+                            <input data-validate="bat-buoc" data-input-type="lct-lich" name="Han_Ngay" value="" placeholder="Chọn ngày" />
                         </article>
                     </section>
                 </li>
@@ -98,8 +98,8 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-chuc-nang="tat-mo" data-mo="khoa-hoc-dang-ky" type="checkbox" name="name" value="" data-text="Khóa học đăng ký" />
-                            <input data-chuc-nang="tat-mo" data-mo="khoa-hoc-thoi-han-dang-ky" data-doi-tuong="khoa-hoc-dang-ky" type="checkbox" name="name" value="" data-text="Đăng ký có thời hạn" />
+                            <input data-chuc-nang="tat-mo" data-mo="khoa-hoc-dang-ky" name="CanDangKy" type="checkbox" value="" data-text="Khóa học đăng ký" />
+                            <input data-chuc-nang="tat-mo" data-mo="khoa-hoc-thoi-han-dang-ky" data-doi-tuong="khoa-hoc-dang-ky" name="CoHanDangKy" type="checkbox" value="" data-text="Đăng ký có thời hạn" />
                         </article>
                     </section>
                 </li>
@@ -111,8 +111,8 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-input-type="lct-thoi-gian" name="name" value="" placeholder="Chọn giờ" />
-                            <input data-input-type="lct-lich" name="name" value="" placeholder="Chọn ngày" />
+                            <input data-validate="bat-buoc" data-input-type="lct-thoi-gian" name="HanDangKy_Gio" placeholder="Chọn giờ" />
+                            <input data-validate="bat-buoc" data-input-type="lct-lich" name="HanDangKy_Ngay" placeholder="Chọn ngày" />
                         </article>
                     </section>
                 </li>
@@ -124,7 +124,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input type="text" name="name" placeholder="Hãy nhập" />
+                            <input type="text" name="PhiThamGia" placeholder="Hãy nhập" />
                         </article>
                     </section>
                 </li>
@@ -136,9 +136,11 @@
                     </section>
                     <section class="noi-dung">
                         <section class="input">
-                            <select name="select">
-                                <option value="1">Nội bộ</option>
-                                <option value="2" data-mac-dinh>Công khai</option>
+                            <select name="CheDoRiengTu">
+                                @foreach (var cheDoRiengTu in DTOLayer.CheDoRiengTu.layDanhSach())
+                                {
+                                    <option value="@cheDoRiengTu.ma" @(cheDoRiengTu.macDinh ? "data-mac-dinh" : null) >@cheDoRiengTu.ten</option>
+                                }
                             </select>
                         </section>
                     </section>

@@ -13,9 +13,10 @@ namespace DTOLayer
         public string matKhau;
         public string email;
         public string hoTen;
-        public DateTime ngaySinh;
+        public DateTime? ngaySinh;
         public string diaChi;
-        public string soDienThoai;       
+        public string soDienThoai;      
+ 
         public override void gan(System.Data.SqlClient.SqlDataReader dong)
         {
             for (int i = 0; i < dong.FieldCount; i++)
@@ -33,7 +34,7 @@ namespace DTOLayer
                     case "HoTen":
                         hoTen = layString(dong, i); break;
                     case "NgaySinh":
-                        ngaySinh = layDateTime(dong, i, DateTime.MinValue); break;
+                        ngaySinh = layDateTime(dong, i); break;
                     case "DiaChi":
                         diaChi = layString(dong, i); break;
                     case "SoDienThoai":
