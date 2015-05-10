@@ -11,7 +11,7 @@ namespace BUSLayer
 {
     public class ChuDeBUS : BUS
     {
-        public static KetQua themChuDe(Dictionary<string, string> form)
+        public static KetQua them(Dictionary<string, string> form)
         {
             ChuDeDataDTO chuDe = new ChuDeDataDTO()
             {
@@ -30,7 +30,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return ChuDeDAO.themChuDe(chuDe);
+            return ChuDeDAO.them(chuDe);
         }
     }
 }

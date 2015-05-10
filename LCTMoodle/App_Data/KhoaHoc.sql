@@ -42,3 +42,30 @@ BEGIN
 	SELECT @@IDENTITY
 END
 SELECT * FROM dbo.KhoaHoc
+
+GO
+--Lấy khóa học theo mã
+CREATE PROC dbo.layKhoaHocTheoMa(
+	@0 INT --Ma
+)
+AS
+BEGIN
+	SELECT 
+		Ma,
+		Ten,
+		MoTa,
+		MaHinhDaiDien,
+		MaChuDe,
+		MaNguoiTao,
+		ThoiDiemTao,
+		Han,
+		CanDangKy,
+		HanDangKy,
+		PhiThamGia,
+		CheDoRiengTu,
+		CoBangDiem,
+		CoBangDiemDanh,
+		CanDuyetBaiViet
+		FROM dbo.KhoaHoc
+		WHERE Ma = @0
+END

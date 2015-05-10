@@ -22,7 +22,7 @@ namespace LCTMoodle.Controllers
         /// </summary>
         public ActionResult XuLyLayDanhSach(int maChuDeCha, string phamVi)
         {
-            return Json(ChuDeDAO.layChuDeTheoMaChuDeChaVaPhamVi(maChuDeCha, phamVi), JsonRequestBehavior.AllowGet);
+            return Json(ChuDeDAO.layTheoMaChuDeChaVaPhamVi(maChuDeCha, phamVi), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _Form(int maChuDeCha, string phamVi = "HeThong")
@@ -40,7 +40,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            return Json(ChuDeBUS.themChuDe(chuyenDuLieuForm(formCollection)));
+            return Json(ChuDeBUS.them(chuyenDuLieuForm(formCollection)));
         }
 
         public ActionResult Chon(string phamVi = "HeThong")

@@ -11,9 +11,9 @@ namespace BUSLayer
 {
     public class NguoiDungBUS : BUS
     {
-        public static KetQua themNguoiDung(Dictionary<string, string> form)
+        public static KetQua them(Dictionary<string, string> form)
         {
-            return NguoiDungDAO.themNguoiDung(new NguoiDungDataDTO() 
+            return NguoiDungDAO.them(new NguoiDungDataDTO() 
             { 
                 tenTaiKhoan = form["TenTaiKhoan"],
                 matKhau = form["MatKhau"],

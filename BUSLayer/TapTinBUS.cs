@@ -12,16 +12,16 @@ namespace BUSLayer
 {
     public class TapTinBUS : BUS
     {
-        public static KetQua layTapTin(int maTapTin)
+        public static KetQua lay(int maTapTin)
         {
-            return TapTinDAO.layTapTinTheoMa(maTapTin);
+            return TapTinDAO.layTheoMa(maTapTin);
 
         }
 
-        public static KetQua themTapTin(System.Web.HttpPostedFileBase tapTinLuu, string thuMuc)
+        public static KetQua them(System.Web.HttpPostedFileBase tapTinLuu, string thuMuc)
         {
             //Thêm vào CSDL
-            var ketQua = TapTinDAO.themTapTin(
+            var ketQua = TapTinDAO.them(
                 new TapTinDataDTO()
                 {
                     ten = tapTinLuu.FileName,

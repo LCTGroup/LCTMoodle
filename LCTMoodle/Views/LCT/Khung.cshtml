@@ -17,158 +17,164 @@
     <link href="/stroke-icons.css/LCT" rel="stylesheet" />
     @RenderSection("Styles", false)
 </head>
-<body>
-    <!-- Header -->
-    <header>
-        <section class="logo">
-            <a href="/TrangChu/Index" class="site-image"></a>
-        </section>
-        <section class="top-header">
-            <article class="hop-nguoi-dung">
-                @if (Session["NguoiDung"] == null)
+<body class="tai">
+    <article class="bieu-tuong-tai">
+        Đang tải
+    </article>
+    <article class="khung">
+        <!-- Header -->
+        <header>
+            <section class="logo">
+                <a href="/TrangChu/Index" class="site-image"></a>
+            </section>
+            <section class="top-header">
+                <article class="hop-nguoi-dung">
+                    @if (Session["NguoiDung"] == null)
                 {
-                    <ul class="chua-dang-nhap">
-                        <li><a href="/NguoiDung/DangNhap">Đăng nhập</a></li>
-                        <li><a href="/NguoiDung/DangKy">Đăng ký</a></li>
-                    </ul>
+                        <ul class="chua-dang-nhap">
+                            <li><a href="/NguoiDung/DangNhap">Đăng nhập</a></li>
+                            <li><a href="/NguoiDung/DangKy">Đăng ký</a></li>
+                        </ul>
                 }
                 else
                 {
-                    <ul class="da-dang-nhap">
-                        <li><a href="#"><i class="pe-7s-chat"></i></a></li>
-                        <li><a href="#"><i class="pe-7s-global"></i></a></li>
-                        <li>
-                            <a href="javascript:void(0)" data-show-target="HopDieuKhien">
-                                <img src="/Content/images/user-avatar.jpg" />
-                                <span>@Session["NguoiDung"]</span>
-                            </a>
-                            <div class="hop-dieu-khien" data-target="HopDieuKhien">
-                                <ul>
-                                    <li><a href="#"><i class="pe-7s-user"></i><span>Thông tin cá nhân</span></a></li>                                    
-                                    <li><a href="#"><i class="pe-7s-config"></i><span>Cài đặt</span></a></li>
-                                    <li><a href="#"><i class="pe-7s-power"></i><span>Thoát</span></a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                }
-            </article>
-        </section>
-        <section class="buffer-top-header"></section>
-        <section class="bottom-header">
-            <nav>
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="pe-7s-study"></i>
-                            <u></u>
-                            Khóa học của tôi
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="pe-7s-help1"></i>
-                            <u></u>
-                            Hỏi đáp
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </section>
-    </header>
-
-    <!-- Thanh điều hướng -->
-    <nav class="thanh-dieu-huong">
-        <ul>
-            <li>
-                <a href="#">
-                    Trang chủ
-                </a>
-            </li>
-            @RenderSection("ThanhDieuHuong", false)
-        </ul>
-    </nav>
-
-    <main>
-        <!-- Cột trái -->
-        @if (CotTrai)
-        {
-            <aside class="cot-trai">
-                <article class="menu">
-                    <section class="khung-thong-tin"></section>
-                    <nav>
-                        <ul>
+                        <ul class="da-dang-nhap">
+                            <li><a href="#"><i class="pe-7s-chat"></i></a></li>
+                            <li><a href="#"><i class="pe-7s-global"></i></a></li>
                             <li>
-                                <a>
-                                    <u></u>
-                                    Khóa học
+                                <a href="javascript:void(0)" data-show-target="HopDieuKhien">
+                                    <img src="/Content/images/user-avatar.jpg" />
+                                    <span>@Session["NguoiDung"]</span>
                                 </a>
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            Tên khóa học
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Tên khóa học
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a>
-                                    <u></u>
-                                    Khóa học của tôi
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            Tên khóa học
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Tên khóa học
-                                        </a>
-                                    </li>
-                                </ul>
+                                <div class="hop-dieu-khien" data-target="HopDieuKhien">
+                                    <ul>
+                                        <li><a href="#"><i class="pe-7s-user"></i><span>Thông tin cá nhân</span></a></li>
+                                        <li><a href="#"><i class="pe-7s-config"></i><span>Cài đặt</span></a></li>
+                                        <li><a href="#"><i class="pe-7s-power"></i><span>Thoát</span></a></li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
-                    </nav>
+                }
                 </article>
-            </aside>
-        }
+            </section>
+            <section class="buffer-top-header"></section>
+            <section class="bottom-header">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <i class="pe-7s-study"></i>
+                                <u></u>
+                                Khóa học của tôi
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="pe-7s-help1"></i>
+                                <u></u>
+                                Hỏi đáp
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </section>
+        </header>
 
-        <!-- Cột giữa -->
-        <section class="cot-giua">
-            @RenderBody()
-        </section>
+        <!-- Thanh điều hướng -->
+        <nav class="thanh-dieu-huong">
+            <ul>
+                <li>
+                    <a href="#">
+                        Trang chủ
+                    </a>
+                </li>
+                @RenderSection("ThanhDieuHuong", false)
+            </ul>
+        </nav>
 
-        <!-- Cột phải -->
-        @if (CotPhai)
+        <!-- Main -->
+        <main>
+            <!-- Cột trái -->
+            @if (CotTrai)
         {
-            <aside class="cot-phai">
-                <article class="khung-chuc-nang">
-                    <article class="hop-chuc-nang">
-                        <section class="ten-chuc-nang">
-                            Tiêu đề
-                        </section>
-                        <section class="chuc-nang">
-                            <div>
-
-                            </div>
-                        </section>
+                <aside class="cot-trai">
+                    <article class="menu">
+                        <section class="khung-thong-tin"></section>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a>
+                                        <u></u>
+                                        Khóa học
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                Tên khóa học
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                Tên khóa học
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a>
+                                        <u></u>
+                                        Khóa học của tôi
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                Tên khóa học
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                Tên khóa học
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
                     </article>
-                </article>
-            </aside>
+                </aside>
         }
-    </main>
 
-    <footer>
-        Copyright © 2015 - LCTMoodle - Diễn đàn học tập của mọi người
-    </footer>
+            <!-- Cột giữa -->
+            <section class="cot-giua">
+                @RenderBody()
+            </section>
 
+            <!-- Cột phải -->
+            @if (CotPhai)
+        {
+                <aside class="cot-phai">
+                    <article class="khung-chuc-nang">
+                        <article class="hop-chuc-nang">
+                            <section class="ten-chuc-nang">
+                                Tiêu đề
+                            </section>
+                            <section class="chuc-nang">
+                                <div>
+
+                                </div>
+                            </section>
+                        </article>
+                    </article>
+                </aside>
+        }
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            Copyright © 2015 - LCTMoodle - Diễn đàn học tập của mọi người
+        </footer>
+    </article>
     <script src="/jquery.js/LCT"></script>
     <script src="/Khung.js/LCT"></script>
     <script src="/Form.js/LCT"></script>

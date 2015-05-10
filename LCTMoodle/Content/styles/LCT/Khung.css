@@ -4,9 +4,6 @@
     margin: 0;
     padding: 0;
 }
-ul, ol {
-    list-style: none;
-}
 li {
     display: block;
 }
@@ -39,6 +36,139 @@ a:hover {
 @font-face {
     font-family: TamLe;
     src: url('/TamLe.ttf/');
+}
+
+/*#endregion */
+
+/*#region Biểu tượng tải */
+
+body.tai > .khung,
+body:not(.tai) > .bieu-tuong-tai {
+    display: none;
+}
+.bieu-tuong-tai {
+    text-align: center;
+    margin-top: 10%;
+}
+
+/*#endregion */
+
+/*#region Nội dung CKEDITOR */
+
+.noi-dung-ckeditor {
+    font-size: 13px;
+    line-height: 1.6;
+    margin: .4em 0;
+}
+
+.noi-dung-ckeditor * {
+    margin: .4em 0;
+}
+
+.noi-dung-ckeditor blockquote {
+	font-style: italic;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	border: 0 solid #ddd;
+    padding: 2px 8px 2px 20px;
+	border-left-width: 3px;
+}
+
+.noi-dung-ckeditor .cke_contents_rtl blockquote {
+    padding: 0 8px 0 20px;
+	border-left-width: 0;
+	border-right-width: 3px;
+}
+
+.noi-dung-ckeditor a {
+	color: #0782C1;
+}
+
+.noi-dung-ckeditor ol,
+.noi-dung-ckeditor ul {
+	/* IE7: reset rtl list margin. (#7334) */
+	*margin-right: 0px;
+	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
+	padding-left: 40px;
+}
+
+.noi-dung-ckeditor ol {
+    list-style: decimal;
+}
+
+.noi-dung-ckeditor ul {
+    list-style: circle;
+}
+
+.noi-dung-ckeditor h1,
+.noi-dung-ckeditor h2,
+.noi-dung-ckeditor h3,
+.noi-dung-ckeditor h4,
+.noi-dung-ckeditor h5,
+.noi-dung-ckeditor h6 {
+	font-weight: normal;
+    margin: .5em 0;
+}
+
+.noi-dung-ckeditor p {
+    margin: .5em 0;
+}
+
+.noi-dung-ckeditor hr {
+	border: 0px;
+	border-top: 1px solid #ccc;
+}
+
+.noi-dung-ckeditor img.right {
+	border: 1px solid #ccc;
+	float: right;
+	margin-left: 15px;
+	padding: 5px;
+}
+
+.noi-dung-ckeditor img.left {
+	border: 1px solid #ccc;
+	float: left;
+	margin-right: 15px;
+	padding: 5px;
+}
+
+.noi-dung-ckeditor pre {
+	white-space: pre-wrap; /* CSS 2.1 */
+	word-wrap: break-word; /* IE7 */
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	-webkit-tab-size: 4;
+	tab-size: 4;
+}
+
+.noi-dung-ckeditor .marker {
+	background-color: Yellow;
+}
+
+.noi-dung-ckeditor span[lang] {
+	font-style: italic;
+}
+
+.noi-dung-ckeditor figure {
+	text-align: center;
+	border: solid 1px #ccc;
+	border-radius: 2px;
+	background: rgba(0,0,0,0.05);
+	padding: 10px;
+	margin: 10px 20px;
+	display: inline-block;
+}
+
+.noi-dung-ckeditor figure > figcaption {
+	text-align: center;
+	display: block; /* For IE8 */
+}
+
+.noi-dung-ckeditor a > img {
+	padding: 1px;
+	margin: 1px;
+	border: none;
+	outline: 1px solid #0782C1;
 }
 
 /*#endregion */
@@ -470,7 +600,7 @@ header .bottom-header {
 /*#region Main */
 
 main {
-    min-height: calc(100vh - 85px);
+    min-height: calc(100vh - 150px);
     padding: 20px 15px 20px 10px;
     display: flex;
 }
@@ -627,6 +757,7 @@ footer {
     font-family: Akashi;
     color: #fff;
     text-align: center;
+    margin-top: 100px;
 }
 
 /*#endregion */

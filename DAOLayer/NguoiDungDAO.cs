@@ -9,7 +9,7 @@ namespace DAOLayer
 {
     public class NguoiDungDAO : DAO
     {       
-        public static KetQua themNguoiDung(NguoiDungDataDTO nguoiDung)
+        public static KetQua them(NguoiDungDataDTO nguoiDung)
         {
             return layGiaTri<int>
             (
@@ -26,7 +26,7 @@ namespace DAOLayer
                 }
             );
         }
-        public static KetQua layNguoiDung(NguoiDungViewDTO nguoiDung)
+        public static KetQua lay(NguoiDungViewDTO nguoiDung)
         {
             return layDong<NguoiDungViewDTO>
             (

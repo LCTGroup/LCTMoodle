@@ -9,7 +9,7 @@ namespace DAOLayer
 {
     public class ChuDeDAO : DAO
     {
-        public static KetQua themChuDe(ChuDeDataDTO chuDe)
+        public static KetQua them(ChuDeDataDTO chuDe)
         {
             return layDong<ChuDeViewDTO>
             (
@@ -26,7 +26,7 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua layChuDeTheoMaChuDeChaVaPhamVi(int maChuDeCha, string phamVi)
+        public static KetQua layTheoMaChuDeChaVaPhamVi(int maChuDeCha, string phamVi)
         {
             return layDanhSachDong<ChuDeViewDTO>
             (

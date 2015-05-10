@@ -120,13 +120,14 @@
     <Folder Include="Plugin\ckeditor\samples\plugins\magicline\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\toolbar\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\wysiwygarea\" />
-    <Folder Include="Uploads\AnhDaiDien_ChuDe\" />
+    <Folder Include="Views\BaiVietDienDan\" />
     <Folder Include="Views\TapTin\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaiVietDienDanController.cs" />
     <Compile Include="Controllers\ChuDeController.cs" />
     <Compile Include="Controllers\KhoaHocController.cs" />
     <Compile Include="Controllers\LCTController.cs" />
@@ -339,11 +340,13 @@
     <Content Include="Content\images\LCT\mini_logo.png" />
     <Content Include="Content\scripts\ChuDe\QuanLy.js" />
     <Content Include="Content\images\user-avatar.jpg" />
+    <Content Include="Content\scripts\KhoaHoc\Xem.js" />
     <Content Include="Content\scripts\KhoaHoc\Tao.js" />
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
     <Content Include="Content\scripts\NguoiDung\DangKy.js" />
+    <Content Include="Content\styles\KhoaHoc\Xem.css" />
     <Content Include="Content\styles\LCT\bootstrap.css" />
     <Content Include="Content\styles\LCT\filled-icons.css" />
     <Content Include="Content\styles\LCT\Form.css" />
@@ -553,6 +556,7 @@
     <Content Include="Views\TrangChu\CayMau.cshtml" />
     <Content Include="Views\ChuDe\QuanLy.cshtml" />
     <Content Include="Views\ChuDe\_Form.cshtml" />
+    <Content Include="Views\KhoaHoc\Xem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">
