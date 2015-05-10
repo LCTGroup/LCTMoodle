@@ -12,11 +12,6 @@ namespace LCTMoodle.Controllers
         public ActionResult Tao()
         {
             return View();
-        }
-
-        public ActionResult XuLyThem(FormCollection formCollection)
-        {
-            return Json(KhoaHocBUS.themKhoaHoc(chuyenDuLieuForm(formCollection)));
-        }
+        }       
 	}
 }
