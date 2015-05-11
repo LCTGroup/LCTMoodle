@@ -13,7 +13,7 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult LayTapTin(int ma)
         {
-            KetQua ketQua = TapTinBUS.layTapTin(ma);
+            KetQua ketQua = TapTinBUS.lay(ma);
 
             if (ketQua.trangThai == 0)
             {
@@ -29,7 +29,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult ThemTapTin(FormCollection form)
         {
-            KetQua ketQua = TapTinBUS.themTapTin(Request.Files["TapTin"], form["ThuMuc"]);
+            KetQua ketQua = TapTinBUS.them(Request.Files["TapTin"], form["ThuMuc"]);
 
             return Json(
                 new KetQua()

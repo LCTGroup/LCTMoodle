@@ -8,7 +8,6 @@ namespace DTOLayer
 {
     public class TapTinViewDTO : DTO
     {
-        public int ma;
         public string ten;
         public string loai;
         public string thuMuc;

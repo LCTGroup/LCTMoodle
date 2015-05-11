@@ -8,7 +8,6 @@ namespace DTOLayer
 {
     public class KhoaHocViewDTO : DTO
     {
-        public int ma;
         public string ten;
         public string moTa;
         public ChuDeViewDTO chuDe;

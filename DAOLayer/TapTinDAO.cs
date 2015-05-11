@@ -9,7 +9,7 @@ namespace DAOLayer
 {
     public class TapTinDAO : DAO
     {
-        public static KetQua themTapTin(TapTinDataDTO tapTin)
+        public static KetQua them(TapTinDataDTO tapTin)
         {
             return layDong<TapTinViewDTO>(
                 "themTapTin",
@@ -22,7 +22,7 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua layTapTinTheoMa(int ma)
+        public static KetQua layTheoMa(int ma)
         {
             return layDong<TapTinViewDTO>(
                 "layTapTinTheoMa",

@@ -47,7 +47,7 @@ namespace LCTMoodle.Controllers
         public ActionResult XuLyThemNguoiDung(FormCollection formCollection)
         {
             Dictionary<string, string> form = formCollection.AllKeys.ToDictionary(k => k, v => formCollection[v]);
-            KetQua ketQua = NguoiDungBUS.themNguoiDung(form);
+            KetQua ketQua = NguoiDungBUS.them(form);
 
             return Json(ketQua);
         }

@@ -448,6 +448,8 @@ function tatLoi($input, loai) {
 }
 
 function khoiTaoBatLoi_LCT($form) {
+    var auto = $form.is('[data-validate-auto]');
+
     //Bắt buộc
     $form.find('[data-validate~="bat-buoc"]').each(function () {
         var $input = $(this);
@@ -462,7 +464,9 @@ function khoiTaoBatLoi_LCT($form) {
                         tatLoi($input, 'bat-buoc');
                     }
                     else {
-                        baoLoi($input, 'bat-buoc');
+                        if (auto) {
+                            baoLoi($input, 'bat-buoc');
+                        }
                     }
                 });
             });
@@ -473,7 +477,9 @@ function khoiTaoBatLoi_LCT($form) {
                     tatLoi($input, 'bat-buoc');
                 }
                 else {
-                    baoLoi($input, 'bat-buoc');
+                    if (auto) {
+                        baoLoi($input, 'bat-buoc');
+                    }
                 }
             });
         }
@@ -483,7 +489,9 @@ function khoiTaoBatLoi_LCT($form) {
                     tatLoi($input, 'bat-buoc');
                 }
                 else {
-                    baoLoi($input, 'bat-buoc');
+                    if (auto) {
+                        baoLoi($input, 'bat-buoc');
+                    }
                 }
             });
         }
@@ -524,7 +532,9 @@ function khoiTaoBatLoi_LCT($form) {
             },
             'focusout': function () {
                 if (/\D/.test($input.val())) {
-                    baoLoi($input, 'so-nguyen');
+                    if (auto) {
+                        baoLoi($input, 'so-nguyen');
+                    }
                 }
                 else {
                     tatLoi($input, 'so-nguyen');
@@ -584,7 +594,9 @@ function khoiTaoBatLoi_LCT($form) {
                 var chuoi = $input.val();
 
                 if (/\D&[^.]/.test(chuoi) || chuoi.indexOf('.') !== chuoi.lastIndexOf('.')) {
-                    baoLoi($input, 'so-thuc');
+                    if (auto) {
+                        baoLoi($input, 'so-thuc');
+                    }
                 }
                 else {
                     tatLoi($input, 'so-thuc');
@@ -626,7 +638,9 @@ function khoiTaoBatLoi_LCT($form) {
             },
             'focusout': function () {
                 if (/[^a-z\s]/i.test($input.val())) {
-                    baoLoi($input, 'chu');
+                    if (auto) {
+                        baoLoi($input, 'chu');
+                    }
                 }
                 else {
                     tatLoi($input, 'chu');
@@ -666,7 +680,9 @@ function khoiTaoBatLoi_LCT($form) {
 
         $input.on('focusout', function () {
             if (this.value && !reg.test(this.value)) {
-                baoLoi($input, 'regex-' + name, tenLoi);
+                if (auto) {
+                    baoLoi($input, 'regex-' + name, tenLoi);
+                }
             }
             else {
                 tatLoi($input, 'regex-' + name);

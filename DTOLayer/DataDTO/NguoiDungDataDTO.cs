@@ -8,7 +8,6 @@ namespace DTOLayer
 {
     public class NguoiDungDataDTO : DTO
     {
-        public int ma;
         public string tenTaiKhoan;
         public string matKhau;
         public string email;

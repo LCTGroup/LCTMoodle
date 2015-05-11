@@ -8,6 +8,8 @@ namespace DTOLayer
 {
     public class DTO
     {
+        public int ma;
+
         public virtual KetQua kiemTra()
         {
             //Duyết tất cả những thuộc tính có ràng buộc

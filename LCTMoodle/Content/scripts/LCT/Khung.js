@@ -8,6 +8,7 @@ var mangTam = [];
 */
 $(function () {
     $body = $('body');
+    $body.removeClass('tai');
     khoiTao_TatMoDoiTuong($('[data-show-target]'));
 });
 
