@@ -3,13 +3,15 @@ $inputVuaFocus = [];
 
 
 $(function () {
-    khoiTaoLCTForm($('.lct-form'));
+
 })
 
 /*
     Khởi tạo input
 */
-function khoiTaoLCTForm($form) {
+function khoiTaoLCTForm($form, thamSo) {
+    thamSo = thamSo || {};
+
     // Thêm nút mặc định
     khoiTaoNutMacDinh_LCT($form);
 
@@ -30,10 +32,10 @@ function khoiTaoLCTForm($form) {
     khoiTaoTatMo_LCT($form);
 
     //Khởi tạo bắt lỗi
-    khoiTaoBatLoi_LCT($form);
+    khoiTaoBatLoi_LCT($form, thamSo);
 
     //Xử lý ajax submit chung
-    khoiTaoSubmit_LCT($form);
+    khoiTaoSubmit_LCT($form, thamSo);
 }
 
 function khoiTaoNutMacDinh_LCT($form) {
@@ -45,7 +47,7 @@ function khoiTaoNutMacDinh_LCT($form) {
         $chua = $(this).parent();
 
         // Text, thời gian
-        $chua.find('input[type="text"], textarea[data-input-type!="editor"], input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
+        $chua.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
             this.value = this.getAttribute('data-mac-dinh');
         });
         $chua.find('textarea[data-input-type="editor"]').each(function () {
@@ -98,7 +100,9 @@ function khoiTaoHienThiInput_LCT($form) {
         CKEDITOR.replace(this);
         var $phanTu = $(this);
 
-        CKEDITOR.on('instanceReady', function () {
+        CKEDITOR.on('instanceReady', function (e) {
+            e.removeListener();
+
             var $htmlTag = $phanTu.find('~ div iframe').contents().find('html');
 
             $htmlTag.find('body').on({
@@ -270,8 +274,10 @@ function khoiTaoGiaTriMacDinh_LCT($form) {
     $form.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
         this.value = this.getAttribute('data-mac-dinh');
     });
-    $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
-        this.checked = this.getAttribute('data-mac-dinh') != null;
+    $form.find('textarea[data-input-type="editor"]').each(function () {
+        CKEDITOR.instances[this.getAttribute('name')].setData(this.getAttribute('data-mac-dinh'));
+
+        console.log(this);
     });
     $form.find('select').each(function () {
         var $select = $(this);
@@ -283,7 +289,16 @@ function khoiTaoGiaTriMacDinh_LCT($form) {
         else {
             $macDinh.prop('selected', true);
         }
-    })
+    });
+    $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
+        this.checked = this.getAttribute('data-mac-dinh') != null;
+    });
+    $form.find('input[type="file"]').each(function () {
+        $phanTu = $(this);
+
+        $phanTu.removeClass('co');
+        $phanTu.find('~ input[type="hidden"]').val('');
+    });
 }
 
 function xuLyTatMoDoiTuong($doiTuong, tat, dangKhoiTao) {
@@ -299,7 +314,9 @@ function xuLyTatMoDoiTuong($doiTuong, tat, dangKhoiTao) {
     else if ($doiTuong.is('textarea[data-input-type="editor"]')) {
         $doiTuong.prop('disabled', tat);
         if (dangKhoiTao === true) {
-            CKEDITOR.on('instanceReady', function () {
+            CKEDITOR.on('instanceReady', function (e) {
+                e.removeListener();
+
                 if (tat) {
                     $doiTuong.next().addClass('tat').find('iframe').attr('tabindex', '-1');
                 }
@@ -407,7 +424,7 @@ function baoLoi($input, loai, noiDung) {
     }
 
     if ($khungLoi.children('[data-type="' + loai + '"]').length == 0) {
-        if (typeof noiDung === 'undefined') {
+        if (typeof noiDung === undefined) {
             switch (loai) {
                 case 'bat-buoc':
                     noiDung = 'Nội dung bắt buộc';
@@ -425,7 +442,7 @@ function baoLoi($input, loai, noiDung) {
                     noiDung = 'Email không hợp lệ';
                     break;
                 default:
-                    noiDung = 'Giá trị không hợp lệ';
+                    noiDung = 'Nội dung không hợp lệ';
                     break;
             }
         }
@@ -447,16 +464,19 @@ function tatLoi($input, loai) {
     $input.removeClass('loi-' + loai);
 }
 
-function khoiTaoBatLoi_LCT($form) {
+function khoiTaoBatLoi_LCT($form, thamSo) {
     var auto = $form.is('[data-validate-auto]');
 
     //Bắt buộc
     $form.find('[data-validate~="bat-buoc"]').each(function () {
         var $input = $(this);
-        var name = $input.attr('name');
 
         if ($input.is('[data-input-type="editor"]')) {
-            CKEDITOR.on('instanceReady', function () {
+            var name = $input.attr('name');
+
+            CKEDITOR.on('instanceReady', function (e) {
+                e.removeListener();
+
                 var $htmlTag = $input.find('~ div iframe').contents().find('html');
 
                 CKEDITOR.instances[name].on('blur', function () {
@@ -498,187 +518,184 @@ function khoiTaoBatLoi_LCT($form) {
     });
 
     //Chỉ số nguyên
-    $form.find('[data-validate~="so-nguyen"]').each(function () {
-        var $input = $(this);
+    $form.find('[data-validate~="so-nguyen"]').on({
+        'keydown': function (e) {
+            e = e || window.event;
+            var keyCode = e.keyCode;
 
-        $input.on({
-            'keydown': function (e) {
-                e = e || window.event;
-                var keyCode = e.keyCode;
+            if (
+                //number
+                (!e.shiftKey &&
+                ((48 <= keyCode && keyCode <= 57) ||
+                (96 <= keyCode && keyCode <= 105))) ||
 
-                if (
-                    //number
-                    (!e.shiftKey &&
-                    ((48 <= keyCode && keyCode <= 57) ||
-                    (96 <= keyCode && keyCode <= 105))) ||
+                //backspace, delete, tab, enter
+                $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
 
-                    //backspace, delete, tab, enter
-                    $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
+                //home, end, left, right, down, up
+                (35 <= keyCode && keyCode <= 40) ||
 
-                    //home, end, left, right, down, up
-                    (35 <= keyCode && keyCode <= 40) ||
+                //ctrl A | Z | X | C | V |...
+                e.ctrlKey) {
+                return;
+            }
 
-                    //ctrl A | Z | X | C | V |...
-                    e.ctrlKey) {
-                    return;
-                }
+            e.preventDefault();
+        },
+        'paste': function () {
+            var $input = $(this);
 
-                e.preventDefault();
-            },
-            'paste': function () {
-                setTimeout(function () {
-                    $input.val($input.val().replace(/\D/g, ''));
-                });
-            },
-            'focusout': function () {
-                if (/\D/.test($input.val())) {
-                    if (auto) {
-                        baoLoi($input, 'so-nguyen');
-                    }
-                }
-                else {
-                    tatLoi($input, 'so-nguyen');
+            setTimeout(function () {
+                $input.val($input.val().replace(/\D/g, ''));
+            });
+        },
+        'focusout': function () {
+            var $input = $(this);
+
+            if (/\D/.test($input.val())) {
+                if (auto) {
+                    baoLoi($input, 'so-nguyen');
                 }
             }
-        });
+            else {
+                tatLoi($input, 'so-nguyen');
+            }
+        }
     });
 
     //Chỉ số thực
-    $form.find('[data-validate~="so-thuc"]').each(function () {
-        var $input = $(this);
+    $form.find('[data-validate~="so-thuc"]').on({
+        'keydown': function (e) {
+            e = e || window.event;
+            var keyCode = e.keyCode;
 
-        $input.on({
-            'keydown': function (e) {
-                e = e || window.event;
-                var keyCode = e.keyCode;
+            if (
+                //number
+                (!e.shiftKey &&
+                ((48 <= keyCode && keyCode <= 57) ||
+                (96 <= keyCode && keyCode <= 105))) ||
 
-                if (
-                    //number
-                    (!e.shiftKey &&
-                    ((48 <= keyCode && keyCode <= 57) ||
-                    (96 <= keyCode && keyCode <= 105))) ||
+                //dấu chấm thập phân
+                keyCode == 190 && $input.val().indexOf('.') === -1 ||
 
-                    //dấu chấm thập phân
-                    keyCode == 190 && $input.val().indexOf('.') === -1 ||
+                //backspace, delete, tab, enter
+                $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
 
-                    //backspace, delete, tab, enter
-                    $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
+                //home, end, left, right, down, up
+                (35 <= keyCode && keyCode <= 40) ||
 
-                    //home, end, left, right, down, up
-                    (35 <= keyCode && keyCode <= 40) ||
+                //ctrl A | Z | X | C | V |...
+                e.ctrlKey) {
+                return;
+            }
 
-                    //ctrl A | Z | X | C | V |...
-                    e.ctrlKey) {
-                    return;
-                }
+            e.preventDefault();
+        },
+        'paste': function () {
+            var $input = $(this);
 
-                e.preventDefault();
-            },
-            'paste': function () {
-                setTimeout(function () {
-                    var chuoi = $input.val();
-
-                    var viTriDau = chuoi.indexOf('.');
-
-                    if (viTriDau === -1) {
-                        chuoi = chuoi.replace(/\D/g, '');
-                    }
-                    else {
-                        chuoi = chuoi.slice(0, viTriDau).replace(/\D/g, '') + '.' + chuoi.slice(viTriDau).replace(/\D/g, '');
-                    }
-
-                    $input.val(chuoi);
-                });
-            },
-            'focusout': function () {
+            setTimeout(function () {
                 var chuoi = $input.val();
 
-                if (/\D&[^.]/.test(chuoi) || chuoi.indexOf('.') !== chuoi.lastIndexOf('.')) {
-                    if (auto) {
-                        baoLoi($input, 'so-thuc');
-                    }
+                var viTriDau = chuoi.indexOf('.');
+
+                if (viTriDau === -1) {
+                    chuoi = chuoi.replace(/\D/g, '');
                 }
                 else {
-                    tatLoi($input, 'so-thuc');
+                    chuoi = chuoi.slice(0, viTriDau).replace(/\D/g, '') + '.' + chuoi.slice(viTriDau).replace(/\D/g, '');
+                }
+
+                $input.val(chuoi);
+            });
+        },
+        'focusout': function () {
+            var $input = $(this);
+
+            var chuoi = $input.val();
+
+            if (/\D&[^.]/.test(chuoi) || chuoi.indexOf('.') !== chuoi.lastIndexOf('.')) {
+                if (auto) {
+                    baoLoi($input, 'so-thuc');
                 }
             }
-        });
+            else {
+                tatLoi($input, 'so-thuc');
+            }
+        }
     });
 
     //Chỉ chữ
-    $form.find('[data-validate~="chu"]').each(function () {
-        var $input = $(this);
+    $form.find('[data-validate~="chu"]').on({
+        'keydown': function (e) {
+            e = e || window.event;
+            var keyCode = e.keyCode;
 
-        $input.on({
-            'keydown': function (e) {
-                e = e || window.event;
-                var keyCode = e.keyCode;
+            if (
+                //number
+                (65 < keyCode && keyCode < 90) ||
 
-                if (
-                    //number
-                    (65 < keyCode && keyCode < 90) ||
+                //backspace, delete, tab, enter
+                $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
 
-                    //backspace, delete, tab, enter
-                    $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
+                //home, end, left, right, down, up
+                (35 <= keyCode && keyCode <= 40) ||
 
-                    //home, end, left, right, down, up
-                    (35 <= keyCode && keyCode <= 40) ||
+                //ctrl A | Z | X | C | V |...
+                e.ctrlKey) {
+                return;
+            }
 
-                    //ctrl A | Z | X | C | V |...
-                    e.ctrlKey) {
-                    return;
-                }
-
-                e.preventDefault();
-            },
-            'paste': function () {
-                setTimeout(function () {
-                    $input.val($input.val().replace(/[^a-z\s]/ig, ''));
-                });
-            },
-            'focusout': function () {
-                if (/[^a-z\s]/i.test($input.val())) {
-                    if (auto) {
-                        baoLoi($input, 'chu');
-                    }
-                }
-                else {
-                    tatLoi($input, 'chu');
+            e.preventDefault();
+        },
+        'paste': function () {
+            var $input = $(this);
+            setTimeout(function () {
+                $input.val($input.val().replace(/[^a-z\s]/ig, ''));
+            });
+        },
+        'focusout': function () {
+            var $input = $(this);
+            if (/[^a-z\s]/i.test($input.val())) {
+                if (auto) {
+                    baoLoi($input, 'chu');
                 }
             }
-        });
+            else {
+                tatLoi($input, 'chu');
+            }
+        }
     });
 
     //Chỉ email
-    $form.find('[data-validate~="email"]').each(function () {
-        var $input = $(this);
-
-        $input.on({
-            'focusout': function () {
-                if ($input.val() && !/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/i.test($input.val())) {
+    $form.find('[data-validate~="email"]').on({
+        'focusout': function () {
+            var $input = $(this);
+            if ($input.val() && !/^([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+([a-z0-9]{2,4})+$/i.test($input.val())) {
+                if (auto) {
                     baoLoi($input, 'email');
                 }
-                else {
-                    tatLoi($input, 'email');
-                }
             }
-        });
+            else {
+                tatLoi($input, 'email');
+            }
+        }
     });
 
     //Regex
     $form.find('[data-regex-validate]').each(function () {
-        var $input = $(this);
-        var name = this.name;
-
-        var duLieu = $input.attr('data-regex-validate').split('||');
-
-        var tenLoi = duLieu[0];
-        var pattern = duLieu[1];
-        var flags = duLieu[2];
-
-        var reg = new RegExp(pattern, flags);
-
         $input.on('focusout', function () {
+            var $input = $(this);
+            var name = this.name;
+
+            var duLieu = $input.attr('data-regex-validate').split('||');
+
+            var tenLoi = duLieu[0];
+            var pattern = duLieu[1];
+            var flags = duLieu[2];
+
+            var reg = new RegExp(pattern, flags);
+
             if (this.value && !reg.test(this.value)) {
                 if (auto) {
                     baoLoi($input, 'regex-' + name, tenLoi);
@@ -689,6 +706,33 @@ function khoiTaoBatLoi_LCT($form) {
             }
         })
     });
+
+    //Custom
+    if ('validates' in thamSo) {
+        $(thamSo.validates).each(function (index) {
+            var $input = this.input;
+
+            if ('validate' in thamSo) {
+                var loai = 'custom-' + index;
+                var thongBao = this.thongBao;
+
+                $input.on('focusout', function () {
+                    if (this.validate() == false) {
+                        if (auto) {
+                            baoLoi($input, loai, thongBao);
+                        }
+                    }
+                    else {
+                        tatLoi($input, loai);
+                    }
+                });
+            }
+
+            if ('customEvent' in thamSo) {
+                $input.on(thamSo.customEvent);
+            }
+        });
+    }
 }
 
 function khoiTaoSubmit_LCT($form) {
@@ -767,6 +811,24 @@ function khoiTaoSubmit_LCT($form) {
                 coLoi = true;
             }
         });
+
+        //Custom
+        if ('validates' in thamSo) {
+            $(thamSo.validates).each(function (index) {
+                if ('validate' in thamSo) {
+                    var $input = this.input;
+                    var loai = 'custom-' + index;
+                    var thongBao = this.thongBao;
+
+                    if (this.validate() == false) {
+                        baoLoi($input, loai, thongBao);
+                    }
+                    else {
+                        tatLoi($input, loai);
+                    }
+                }
+            });
+        }
 
         if (coLoi) {
             e.stopImmediatePropagation();

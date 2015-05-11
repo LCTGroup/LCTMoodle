@@ -1,0 +1,21 @@
+﻿@model DTOLayer.KhoaHocViewDTO
+@{
+    ViewData["TieuDe"] = "Khóa học";
+    Layout = "~/Views/LCT/Khung.cshtml";
+
+    DTOLayer.KhoaHocViewDTO khoaHoc = Model;
+}
+
+@section Styles {
+    <link href="/Xem.css/KhoaHoc/" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script>
+        var maKhoaHoc = '@khoaHoc.ma';
+    </script>
+    <script src="/Xem.js/KhoaHoc/"></script>
+}
+
+<section class="khung-danh-sach-nhom"></section>
+<section id="khung_hien_thi"></section>

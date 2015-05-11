@@ -40,6 +40,23 @@ function khoiTao_TatMoDoiTuong($doiTuong) {
 }
 
 /*
+    Lấy giá trị querystring
+*/
+function layQueryString(key) {
+    var danhSach = window.location.search.substr(1).split('&');
+    
+    var soLuong = danhSach.length;
+    for (var i = 0; i < soLuong; i++) {
+        var query = danhSach[i].split('=');
+
+        if (query[0] == key) {
+            return query[1] || null;
+        }
+    }
+    return undefined;
+}
+
+/*
     Popup
 */
 //Popup full
@@ -127,7 +144,7 @@ function layPopupFull(thamSo) {
             Cho phép bấm ra ngoài là tắt popup
 */
 function moPopupFull(thamSo) {
-    if (typeof thamSo === 'undefined') {
+    if (typeof thamSo === undefined) {
         thamSo = {};
     }
 
@@ -212,7 +229,7 @@ function moPopupFull(thamSo) {
         Cho phép bấm ra ngoài là tắt popup
 */
 function moPopup(thamSo) {
-    if (typeof thamSo === 'undefined') {
+    if (typeof thamSo === undefined) {
         thamSo = {};
     }
 
@@ -290,26 +307,3 @@ function moPopup(thamSo) {
     
     $popup.trigger('Mo');
 }
-
-$(function () {
-    /*
-    moPopup({
-        tieuDe: 'Tieu de',
-        thongBao: 'Thong bao',
-        nut: [{
-            ten: 'Nút 1',
-            loai: 'chap-nhan',
-            xuLy: function () {
-                alert('a');
-            }
-        }, {
-            ten: 'Nút 2',
-            loai: 'can-than',
-            xuLy: function () {
-                alert('b');
-                return false;
-            }
-        }]
-    });
-    */
-})
