@@ -44,7 +44,7 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]        
-        public ActionResult XuLyThemNguoiDung(FormCollection formCollection)
+        public ActionResult XuLyThem(FormCollection formCollection)
         {
             Dictionary<string, string> form = formCollection.AllKeys.ToDictionary(k => k, v => formCollection[v]);
             KetQua ketQua = NguoiDungBUS.them(form);

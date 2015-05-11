@@ -2,6 +2,8 @@
     Khởi tạo
 */
 $(function () {
+    khoiTaoLCTForm($('#them_nguoi_dung'));
+
     khoiTaoThemNguoiDung($('#them_nguoi_dung'));
 });
 

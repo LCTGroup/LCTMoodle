@@ -426,8 +426,8 @@ function baoLoi($input, loai, noiDung) {
         $khungInput.after($khungLoi);
     }
 
-    if ($khungLoi.children('[data-type="' + loai + '"]').length == 0) {
-        if (typeof noiDung === undefined) {
+    if ($khungLoi.children('[data-type="' + loai + '"]').length == 0) {        
+        if (typeof noiDung === undefined) {            
             switch (loai) {
                 case 'bat-buoc':
                     noiDung = 'Nội dung bắt buộc';
@@ -512,9 +512,9 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
                     tatLoi($input, 'bat-buoc');
                 }
                 else {
-                    if (auto) {
+                    if (auto) {                        
                         baoLoi($input, 'bat-buoc');
-                    }
+                    }                    
                 }
             });
         }
