@@ -29,52 +29,54 @@ function khoiTao_NutTao($nutTao) {
             },
             width: '450px',
             thanhCong: function ($noiDung) {
-                khoiTaoLCTForm($noiDung.find('.lct-form'));
-                $noiDung.find('.lct-form').on('submit', function (e) {
-                    e = e || window.event;
-                    e.preventDefault();
+                $form = $noiDung.find('#tao_chu_de_form');
+                khoiTaoLCTForm($form, {
+                    submit: function (e) {
+                        if ('DangTaoChuDe' in mangTam && mangTam['DangTaoChuDe']) {
+                            return;
+                        }
+                        mangTam['DangTaoChuDe'] = true;
 
-                    if ('DangTaoChuDe' in mangTam && mangTam['DangTaoChuDe']) {
-                        return;
-                    }
-                    mangTam['DangTaoChuDe'] = true;
+                        $.ajax({
+                            url: '/ChuDe/XuLyThem',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: $form.serialize()
+                        }).done(function (data) {
+                            $noiDung.trigger('Tat');
 
-                    $form = $(this);
+                            if (data.trangThai == 0) {
+                                $nutCon = $(taoNutCon(data.ketQua));
+                                khoiTao_MoNut($nutCon.find('[data-chuc-nang="mo-nut"]'));
+                                $danhSachNutCon.prepend($nutCon);
+                                $danhSachNutCon.removeClass('rong');
 
-                    $.ajax({
-                        url: '/ChuDe/XuLyThem',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: $form.serialize()
-                    }).done(function (data) {
-                        $popup.trigger('Tat');
-                        
-                        if (data.trangThai == 0) {
-                            $nutCon = $(taoNutCon(data.ketQua));
-                            khoiTao_MoNut($nutCon.find('[data-chuc-nang="mo-nut"]'));
-                            $danhSachNutCon.prepend($nutCon);
-                            $danhSachNutCon.removeClass('rong');
+                                var key = parseInt($cay.attr('data-value')) > 0 ? $cay.attr('data-value') : $cay.attr('data-pham-vi');
+                                if (key in mangNutCon) {
+                                    mangNutCon[key].push(data.ketQua);
+                                }
+                                else {
+                                    mangNutCon[key] = [data.ketQua];
+                                }
 
-                            var key = parseInt($cay.attr('data-value')) > 0 ? $cay.attr('data-value') : $cay.attr('data-pham-vi');
-                            if (key in mangNutCon) {
-                                mangNutCon[key].push(data.ketQua);
+                                taoNutConTrenNut($danhSachNut.find('li:last-child'), data.ketQua);
                             }
                             else {
-                                mangNutCon[key] = [data.ketQua];
+                                moPopup({
+                                    tieuDe: 'Thông báo',
+                                    thongBao: 'Tạo chủ đề thất bại'
+                                });
                             }
-
-                            taoNutConTrenNut($danhSachNut.find('li:last-child'), data.ketQua);
-                        }
-                        else {
-                            alert('Thất bại');
-                        }
-                    }).fail(function () {
-                        $popup.trigger('Tat');
-
-                        alert('Thất bại');
-                    }).always(function () {
-                        mangTam['DangTaoChuDe'] = false;
-                    });
+                        }).fail(function () {
+                            $noiDung.trigger('Tat');
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: 'Tạo chủ đề thất bại'
+                            });
+                        }).always(function () {
+                            mangTam['DangTaoChuDe'] = false;
+                        });
+                    }
                 });
             }
         });

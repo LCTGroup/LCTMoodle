@@ -5,22 +5,24 @@
 });
 
 function khoiTaoSubmit($form) {
-    $form.on('submit', function () {
-        $.ajax({
-            url: '/KhoaHoc/XuLyThem',
-            type: 'POST',
-            data: $form.serialize(),
-            dataType: 'JSON'
-        }).done(function (data) {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Thêm khóa học thành công'
+    khoiTaoLCTForm($form, {
+        submit: function () {
+            $.ajax({
+                url: '/KhoaHoc/XuLyThem',
+                type: 'POST',
+                data: $form.serialize(),
+                dataType: 'JSON'
+            }).done(function (data) {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Thêm khóa học thành công'
+                });
+            }).fail(function () {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Thêm khóa học thất bại'
+                });
             });
-        }).fail(function () {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Thêm khóa học thất bại'
-            });
-        });
+        }
     })
 }

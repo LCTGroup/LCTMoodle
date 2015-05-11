@@ -427,7 +427,7 @@ function baoLoi($input, loai, noiDung) {
     }
 
     if ($khungLoi.children('[data-type="' + loai + '"]').length == 0) {
-        if (typeof noiDung === undefined) {
+        if (typeof noiDung === 'undefined') {
             switch (loai) {
                 case 'bat-buoc':
                     noiDung = 'Nội dung bắt buộc';
