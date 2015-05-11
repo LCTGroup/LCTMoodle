@@ -711,6 +711,7 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
     });
 
     //Custom
+        /*  */
     if ('validates' in thamSo) {
         $(thamSo.validates).each(function (index) {
             var $input = this.input;
