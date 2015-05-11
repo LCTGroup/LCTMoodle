@@ -12,6 +12,11 @@ $(function () {
 function khoiTaoLCTForm($form, thamSo) {
     thamSo = thamSo || {};
 
+    //Khởi tạo
+    if ('khoiTao' in thamSo) {
+        thamSo.khoiTao();
+    }
+
     // Thêm nút mặc định
     khoiTaoNutMacDinh_LCT($form);
 
@@ -276,8 +281,6 @@ function khoiTaoGiaTriMacDinh_LCT($form) {
     });
     $form.find('textarea[data-input-type="editor"]').each(function () {
         CKEDITOR.instances[this.getAttribute('name')].setData(this.getAttribute('data-mac-dinh'));
-
-        console.log(this);
     });
     $form.find('select').each(function () {
         var $select = $(this);
@@ -712,7 +715,7 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
         $(thamSo.validates).each(function (index) {
             var $input = this.input;
 
-            if ('validate' in thamSo) {
+            if ('validate' in this) {
                 var loai = 'custom-' + index;
                 var thongBao = this.thongBao;
 
@@ -728,14 +731,14 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
                 });
             }
 
-            if ('customEvent' in thamSo) {
-                $input.on(thamSo.customEvent);
+            if ('customEvent' in this) {
+                $input.on(this.customEvent);
             }
         });
     }
 }
 
-function khoiTaoSubmit_LCT($form) {
+function khoiTaoSubmit_LCT($form, thamSo) {
     $form.on('submit', function (e) {
         e = e || window.event;
         e.preventDefault();
@@ -830,8 +833,10 @@ function khoiTaoSubmit_LCT($form) {
             });
         }
 
-        if (coLoi) {
-            e.stopImmediatePropagation();
+        if (!coLoi) {
+            if ('submit' in thamSo) {
+                thamSo.submit();
+            }
         }
     });
 }

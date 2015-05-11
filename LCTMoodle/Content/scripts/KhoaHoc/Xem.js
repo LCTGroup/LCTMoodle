@@ -87,41 +87,49 @@ function layKhungFormTao_DienDan() {
 */
 //Khởi tạo
 function khoiTaoForm_DienDan($form) {
-    khoiTaoLCTForm($form);
-
     var $doiTuongTaoBaiViet = $form.find('[data-doi-tuong="tao-bai-viet"]');
+    var $doiTuongBatDauBaiViet = $form.find('[data-chuc-nang="bat-dau-tao-bai-viet"]');
 
-    $doiTuongTaoBaiViet.hide();
-
-    $form.find('[data-chuc-nang="bat-dau-tao-bai-viet"]').on('focus', function () {
-        $doiTuongTaoBaiViet.show();
-    });
-
-    $form.on('submit', function () {
-        $.ajax({
-            url: '/BaiVietDienDan/XuLyThem',
-            type: 'POST',
-            data: $form.serialize(),
-            dataType: 'JSON',
-            processData: false
-        }).done(function (data) {
-            if (data.trangThai == 0) {
-                $danhSach.prepend(layBaiViet_DienDan(data.ketQua));
-
-                khoiTaoGiaTriMacDinh_LCT($form);
+    khoiTaoLCTForm($form, {
+        khoiTao: function () {
+            $doiTuongTaoBaiViet.hide();
+        },
+        validates: [
+            {
+                input: $doiTuongBatDauBaiViet,
+                customEvent: {
+                    focus: function () {
+                        $doiTuongTaoBaiViet.show();
+                    }
+                }
             }
-            else {
+        ],
+        submit: function () {
+            $.ajax({
+                url: '/BaiVietDienDan/XuLyThem',
+                type: 'POST',
+                data: $form.serialize(),
+                dataType: 'JSON',
+                processData: false
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    $danhSach.prepend(layBaiViet_DienDan(data.ketQua));
+
+                    khoiTaoGiaTriMacDinh_LCT($form);
+                }
+                else {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Thêm bài viết thất bại'
+                    });
+                }
+            }).fail(function () {
                 moPopup({
                     tieuDe: 'Thông báo',
                     thongBao: 'Thêm bài viết thất bại'
                 });
-            }
-        }).fail(function () {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Thêm bài viết thất bại'
             });
-        });
+        }
     });
 }
 
