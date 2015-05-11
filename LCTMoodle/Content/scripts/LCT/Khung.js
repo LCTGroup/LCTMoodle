@@ -53,7 +53,7 @@ function layQueryString(key) {
             return query[1] || null;
         }
     }
-    return undefined;
+    return 'undefined';
 }
 
 /*
@@ -144,7 +144,7 @@ function layPopupFull(thamSo) {
             Cho phép bấm ra ngoài là tắt popup
 */
 function moPopupFull(thamSo) {
-    if (typeof thamSo === undefined) {
+    if (typeof thamSo === 'undefined') {
         thamSo = {};
     }
 
@@ -229,7 +229,7 @@ function moPopupFull(thamSo) {
         Cho phép bấm ra ngoài là tắt popup
 */
 function moPopup(thamSo) {
-    if (typeof thamSo === undefined) {
+    if (typeof thamSo === 'undefined') {
         thamSo = {};
     }
 

@@ -120,6 +120,7 @@
     <Folder Include="Plugin\ckeditor\samples\plugins\toolbar\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\wysiwygarea\" />
     <Folder Include="Views\BaiVietDienDan\" />
+    <Folder Include="Views\BinhLuan\" />
     <Folder Include="Views\TapTin\" />
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +128,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaiVietDienDanController.cs" />
+    <Compile Include="Controllers\BinhLuanController.cs" />
     <Compile Include="Controllers\ChuDeController.cs" />
     <Compile Include="Controllers\KhoaHocController.cs" />
     <Compile Include="Controllers\LCTController.cs" />
