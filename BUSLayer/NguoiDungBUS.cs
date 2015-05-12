@@ -15,13 +15,13 @@ namespace BUSLayer
         {
             return NguoiDungDAO.them(new NguoiDungDataDTO() 
             { 
-                tenTaiKhoan = form["TenTaiKhoan"],
-                matKhau = form["MatKhau"],
-                email = form["Email"],
-                hoTen = form["HoTen"],
-                ngaySinh = Convert.ToDateTime(form["NgaySinh"]),
-                diaChi = form["DiaChi"],
-                soDienThoai = form["SoDienThoai"]
+                tenTaiKhoan = layString(form, "TenTaiKhoan"),
+                matKhau = layString(form, "MatKhau"),
+                email = layString(form, "Email"),
+                hoTen = layString(form, "HoTen"),
+                ngaySinh = layDateTime(form, "NgaySinh"),
+                diaChi = layString(form, "DiaChi"),
+                soDienThoai = layString(form, "SoDienThoai")
             });
         }
     }
