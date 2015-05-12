@@ -12,47 +12,73 @@ namespace BUSLayer
 {
     public class TapTinBUS : BUS
     {
-        public static KetQua lay(int maTapTin)
+        public static KetQua them(System.Web.HttpPostedFileBase tapTinLuu)
         {
-            return TapTinDAO.layTheoMa(maTapTin);
+            TapTinDataDTO tapTin = new TapTinDataDTO()
+            {
+                ten = tapTinLuu.FileName,
+                loai = tapTinLuu.ContentType
+            };
 
-        }
-
-        public static KetQua them(System.Web.HttpPostedFileBase tapTinLuu, string thuMuc)
-        {
-            //Thêm vào CSDL
-            var ketQua = TapTinDAO.them(
-                new TapTinDataDTO()
-                {
-                    ten = tapTinLuu.FileName,
-                    loai = tapTinLuu.ContentType,
-                    thuMuc = thuMuc
-                }
-            );
+            KetQua ketQua = TapTinDAO.them(tapTin);
 
             if (ketQua.trangThai == 0)
             {
-                var tapTinDaLuu = ketQua.ketQua as TapTinViewDTO;
+                TapTinViewDTO tapTinDaLuu = ketQua.ketQua as TapTinViewDTO;
 
-                var duongDan = TapTinHelper.layDuongDanGoc() + tapTinDaLuu.thuMuc + "/" + tapTinDaLuu.ma.ToString() + "_" + tapTinDaLuu.ten;
+                string duongDan = TapTinHelper.layDuongDanGoc() + "Tam/" + tapTinDaLuu.ma + Path.GetExtension(tapTinDaLuu.ten);
 
                 //Lưu tập tin
-                tapTinLuu.SaveAs(duongDan);
+                try
+                {
+                    tapTinLuu.SaveAs(duongDan);
+                }
+                catch (Exception loi)
+                {
+                    return new KetQua()
+                    {
+                        trangThai = 2,
+                        ketQua = loi.Message
+                    };
+                }
+            }
 
-                return new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua = tapTinDaLuu
-                };
-            }
-            else
+            return ketQua;
+        }
+
+        public static KetQua chuyen(int maTapTin, string loai)
+        {
+            KetQua ketQua = TapTinDAO.chuyen(maTapTin, loai);
+
+            if (ketQua.trangThai == 0)
             {
-                return new KetQua()
+                string duongDanGoc = TapTinHelper.layDuongDanGoc();
+                TapTinViewDTO tapTin = ketQua.ketQua as TapTinViewDTO;
+                string duoi = Path.GetExtension(tapTin.ten);
+
+                try
                 {
-                    trangThai = 2,
-                    ketQua = "Xử lý thêm tập tin thất bại (themTapTin - TapTinBUS)"
-                };
+                    File.Move(
+                        duongDanGoc + "Tam/" + maTapTin + duoi,
+                        duongDanGoc + loai + "/" + tapTin.ma + duoi
+                    );
+                }
+                catch (Exception loi)
+                {
+                    return new KetQua()
+                    {
+                        trangThai = 2,
+                        ketQua = loi.Message
+                    };
+                }
             }
+
+            return ketQua;
+        }
+
+        public static KetQua lay(int maTapTin, string loai)
+        {
+            return TapTinDAO.lay(maTapTin, loai);
         }
     }
 }

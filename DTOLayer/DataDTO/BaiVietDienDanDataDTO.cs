@@ -8,6 +8,8 @@ namespace DTOLayer
 {
     public class BaiVietDienDanDataDTO : DTO
     {
+        public static int abc;
+        public int ma;
         public string tieuDe;
         public string noiDung;
         public int maTapTin;

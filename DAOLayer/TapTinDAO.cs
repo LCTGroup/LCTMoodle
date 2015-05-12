@@ -11,26 +11,41 @@ namespace DAOLayer
     {
         public static KetQua them(TapTinDataDTO tapTin)
         {
-            return layDong<TapTinViewDTO>(
-                "themTapTin",
-                new object[] 
-                {
-                    tapTin.ten,
-                    tapTin.loai,
-                    tapTin.thuMuc
-                }
-            );
+            return layDong<TapTinViewDTO>
+                (
+                    "themTapTin",
+                    new object[] 
+                    { 
+                        tapTin.ten,
+                        tapTin.loai
+                    }
+                );
         }
 
-        public static KetQua layTheoMa(int ma)
+        public static KetQua chuyen(int maTapTin, string loai)
         {
-            return layDong<TapTinViewDTO>(
-                "layTapTinTheoMa",
-                new object[] 
-                {
-                    ma
-                }
-            );
+            return layDong<TapTinViewDTO>
+                (
+                    "chuyenTapTin",
+                    new object[] 
+                    { 
+                        maTapTin,
+                        loai
+                    }
+                );
+        }
+       
+        public static KetQua lay(int maTapTin, string loai)
+        {
+            return layDong<TapTinViewDTO>
+                (
+                    "layTapTin",
+                    new object[] 
+                    { 
+                        maTapTin,
+                        loai
+                    }
+                );
         }
     }
 }

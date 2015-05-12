@@ -11,14 +11,15 @@ namespace LCTMoodle.Controllers
 {
     public class TapTinController : LCTController
     {
-        public ActionResult LayTapTin(int ma)
+        [Route("TapTin/{ma:int}/{loai}")]
+        public ActionResult Lay(int ma, string loai)
         {
-            KetQua ketQua = TapTinBUS.lay(ma);
+            KetQua ketQua = TapTinBUS.lay(ma, loai);
 
             if (ketQua.trangThai == 0)
             {
                 TapTinViewDTO tapTin = ketQua.ketQua as TapTinViewDTO;
-                return File(TapTinHelper.layDuongDan(tapTin.thuMuc, tapTin.ma + "_" + tapTin.ten), tapTin.loai, tapTin.ten);
+                return File(TapTinHelper.layDuongDan(loai, tapTin.ma + System.IO.Path.GetExtension(tapTin.ten)), tapTin.loai, tapTin.ten);
             }
             else
             {
@@ -27,17 +28,11 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
-        public ActionResult ThemTapTin(FormCollection form)
+        public ActionResult XuLyThem(FormCollection form)
         {
-            KetQua ketQua = TapTinBUS.them(Request.Files["TapTin"], form["ThuMuc"]);
+            KetQua ketQua = TapTinBUS.them(Request.Files["TapTin"]);
 
-            return Json(
-                new KetQua()
-                {
-                    trangThai = ketQua.trangThai,
-                    ketQua = (ketQua.ketQua as TapTinViewDTO).ma
-                }
-            );
+            return Json(ketQua);
         }
 	}
 }

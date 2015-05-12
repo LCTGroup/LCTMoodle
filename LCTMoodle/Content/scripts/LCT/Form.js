@@ -139,11 +139,10 @@ function khoiTaoTapTinInput_LCT($form) {
         //Lấy data
         var data = new FormData();
         data.append('TapTin', this.files[0]);
-        data.append('ThuMuc', $phanTu.attr('data-thu-muc'));
 
         //post request
         $.ajax({
-            url: '/TapTin/ThemTapTin',
+            url: '/TapTin/XuLyThem',
             type: 'POST',
             processData: false,
             contentType: false,
@@ -163,8 +162,8 @@ function khoiTaoTapTinInput_LCT($form) {
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $phanTu.addClass('co');
-                $phanTu.find('~ img').attr('src', '/TapTin/LayTapTin/' + data.ketQua);
-                $phanTu.find('~ input[type="hidden"]').val(data.ketQua);
+                $phanTu.find('~ img').attr('src', '/TapTin/' + data.ketQua.ma + '/Tam');
+                $phanTu.find('~ input[type="hidden"]').val(data.ketQua.ma);
             }
             else {
                 alert('Thêm file thất bại');

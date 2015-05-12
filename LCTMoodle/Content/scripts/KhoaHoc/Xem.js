@@ -102,28 +102,6 @@ function khoiTaoForm_DienDan($form) {
                         $doiTuongTaoBaiViet.show();
                     }
                 }
-            },
-            {
-                input: $('[... tai khoan input]'),
-                thongBao: 'Tài khoản không được phép trùng',
-                validate: function () {
-                    $.ajax({
-                        url: '... đường dẫn xử lý ',
-                        type: '...',
-                        dataType: 'JSON',
-                        //....
-                    }).done(function (data) {
-                        if (data.trangThai == 0) {
-                            if (data.ketQua != 'gi gi do tu quy dinh') {
-                                return false; // => ko hợp lệ
-                            }
-                        }
-                    }).fail(function () {
-                        moPopup({
-                            thongBao: 'kiểm tra tài khoản thât bại'
-                        })
-                    })
-                }
             }
         ],
         submit: function () {
