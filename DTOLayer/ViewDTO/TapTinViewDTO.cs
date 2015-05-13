@@ -8,9 +8,9 @@ namespace DTOLayer
 {
     public class TapTinViewDTO : DTO
     {
+        public int ma;
         public string ten;
         public string loai;
-        public string thuMuc;
         public DateTime? thoiDiemTao;
 
         public override void gan(System.Data.SqlClient.SqlDataReader dong)
@@ -25,8 +25,6 @@ namespace DTOLayer
                         ten = layString(dong, i); break;
                     case "Loai":
                         loai = layString(dong, i); break;
-                    case "ThuMuc":
-                        thuMuc = layString(dong, i); break;
                     case "ThoiDiemTao":
                         thoiDiemTao = layDateTime(dong, i); break;
                     default:

@@ -109,6 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Plugin\ckeditor\adapters\" />
     <Folder Include="Plugin\ckeditor\samples\assets\inlineall\" />
     <Folder Include="Plugin\ckeditor\samples\assets\outputxhtml\" />
@@ -142,11 +143,6 @@
     <Compile Include="WebServices\WindowsPhone\ClassTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ChucNang.sql" />
-    <Content Include="App_Data\ChuDe.sql" />
-    <Content Include="App_Data\KhoaHoc.sql" />
-    <Content Include="App_Data\NguoiDung.sql" />
-    <Content Include="App_Data\TapTin.sql" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\LCT\AllSiteImages.png" />
     <Content Include="Content\images\LCT\AllSiteImages_temp.png" />

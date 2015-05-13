@@ -12,9 +12,9 @@ namespace Helpers
             return System.Web.Hosting.HostingEnvironment.MapPath("~/Uploads/");
         }
 
-        public static string layDuongDan(string thuMuc, string ten)
+        public static string layDuongDan(string loai, string ten)
         {
-            return layDuongDanGoc() + thuMuc + "/" + ten;
+            return layDuongDanGoc() + loai + "/" + ten;
         }
 
     }

@@ -19,8 +19,9 @@ namespace LCTMoodle
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/HinhDaiDien_ChuDe"));
-            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/HinhDaiDien_KhoaHoc"));
+            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/Tam"));
+            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/ChuDe_HinhDaiDien"));
+            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/KhoaHoc_HinhDaiDien"));
         }
 
         protected void Session_Start()

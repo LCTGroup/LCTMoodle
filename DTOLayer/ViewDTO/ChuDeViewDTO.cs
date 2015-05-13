@@ -8,6 +8,7 @@ namespace DTOLayer
 {
     public class ChuDeViewDTO : DTO
     {
+        public int ma;
         public string ten;
         public string moTa;
         public int maNguoiTao;

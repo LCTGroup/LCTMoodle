@@ -8,6 +8,7 @@ namespace DTOLayer
 {
     public class BaiVietDienDanViewDTO : DTO
     {
+        public int ma;
         public string tieuDe;
         public string noiDung;
         public TapTinViewDTO tapTin;
