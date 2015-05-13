@@ -13,16 +13,23 @@ namespace BUSLayer
     {
         public static KetQua them(Dictionary<string, string> form)
         {
+            KetQua ketQua = TapTinBUS.chuyen(layInt(form, "TapTin"), "BaiVietDienDan_TapTin");
+
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
             BaiVietDienDanDataDTO baiVietDienDan = new BaiVietDienDanDataDTO()
             {
                 tieuDe = layString(form, "TieuDe"),
                 noiDung = layString(form, "NoiDung"),
-                maTapTin = layInt(form, "TapTin"),
+                maTapTin = (ketQua.ketQua as TapTinViewDTO).ma,
                 maNguoiTao = 1, //Tạm
                 maKhoaHoc = layInt(form, "KhoaHoc")
             };
             
-            KetQua ketQua = baiVietDienDan.kiemTra();
+            ketQua = baiVietDienDan.kiemTra();
 
             if (ketQua.trangThai != 0)
             {

@@ -48,6 +48,18 @@ namespace BUSLayer
 
         public static KetQua chuyen(int maTapTin, string loai)
         {
+            if (maTapTin == 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = new TapTinViewDTO()
+                    {
+                        ma = 0
+                    }
+                };
+            }
+
             KetQua ketQua = TapTinDAO.chuyen(maTapTin, loai);
 
             if (ketQua.trangThai == 0)
