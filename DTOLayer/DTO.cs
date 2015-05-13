@@ -50,7 +50,7 @@ namespace DTOLayer
         /// <summary>
         /// 0: Thành công ---
         /// 1: Không có dòng dữ liệu nào ---
-        /// 2: Lỗi truy vấn / Lỗi xử lý
+        /// 2: Lỗi truy vấn / Lỗi xử lý ---
         /// 3: Lỗi ràng buộc
         /// </summary>
         public int trangThai;

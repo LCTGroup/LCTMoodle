@@ -62,7 +62,7 @@ function layKhungFormTao_DienDan() {
                         '<li data-doi-tuong="tao-bai-viet">' +
                             '<section class="noi-dung">' +
                                 '<article class="input">' +
-                                    '<input type="file" name="TapTin" value="" data-thu-muc="HinhDaiDien_ChuDe" />' +
+                                    '<input type="file" name="TapTin" />' +
                                 '</article>' +
                             '</section>' +
                         '</li>' +
