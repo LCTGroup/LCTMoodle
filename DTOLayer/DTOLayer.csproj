@@ -52,7 +52,12 @@
     <Compile Include="ViewDTO\NguoiDungViewDTO.cs" />
     <Compile Include="ViewDTO\TapTinViewDTO.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Helper\Helpers.csproj">
+      <Project>{752edde4-57aa-4c15-aa3c-748429b1a135}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

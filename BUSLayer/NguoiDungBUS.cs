@@ -12,8 +12,8 @@ namespace BUSLayer
     public class NguoiDungBUS : BUS
     {
         public static KetQua them(Dictionary<string, string> form)
-        {
-            return NguoiDungDAO.them(new NguoiDungDataDTO() 
+        {            
+            NguoiDungDataDTO nguoiDung = new NguoiDungDataDTO()
             { 
                 tenTaiKhoan = layString(form, "TenTaiKhoan"),
                 matKhau = layString(form, "MatKhau"),
@@ -22,7 +22,12 @@ namespace BUSLayer
                 ngaySinh = layDateTime(form, "NgaySinh"),
                 diaChi = layString(form, "DiaChi"),
                 soDienThoai = layString(form, "SoDienThoai")
-            });
+            };
+            KetQua ketQua = nguoiDung.kiemTra();
+            
+            return ketQua.trangThai == 3 ?
+                ketQua : 
+                NguoiDungDAO.them(nguoiDung);            
         }
     }
 }
