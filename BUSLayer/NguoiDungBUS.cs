@@ -12,9 +12,9 @@ namespace BUSLayer
     public class NguoiDungBUS : BUS
     {
         public static KetQua them(Dictionary<string, string> form)
-        {            
+        {
             NguoiDungDataDTO nguoiDung = new NguoiDungDataDTO()
-            { 
+            {
                 tenTaiKhoan = layString(form, "TenTaiKhoan"),
                 matKhau = layString(form, "MatKhau"),
                 email = layString(form, "Email"),
