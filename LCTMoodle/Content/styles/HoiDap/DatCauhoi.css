@@ -1,0 +1,77 @@
+﻿/*#region Compose*/
+.khung-dang-cau-hoi {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: block;
+    background-color: #fafafa;
+    position: relative;
+    padding-bottom: 45px;
+}
+    .khung-dang-cau-hoi > .chu-de-cau-hoi {
+        width: 100%;     
+        padding: 10px;
+        font: normal 14px tahoma;
+        border: 1px solid #ddd;
+        outline: none;
+        margin-bottom: 5px;
+    }
+    .khung-dang-cau-hoi > .title-editor {
+        width: calc(100% - 22px);     
+        padding: 10px;
+        font: normal 14px tahoma;
+        border: 1px solid #ddd;
+        outline: none;
+        margin-bottom: 5px;
+    }
+    .khung-dang-cau-hoi > .editor {
+        width: calc(100% - 22px); 
+        height: 50px;                  
+        line-height: 24px;
+        padding: 10px;
+        font: normal 14px tahoma;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        resize: none;
+        outline: none;
+    }
+/*#region PostButton*/
+.khung-dang-cau-hoi > .post-button-container {
+    margin-top: 5px;
+    display: inline-block;
+    position: relative;
+    width: auto;
+    border: 1px solid #ddd;
+    background-color: white;
+    float: right;
+}
+    .khung-dang-cau-hoi > .post-button-container > .post-button {
+        font-size: 14px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        height: 30px;
+        padding: 0 10px;
+        transition: padding-left 0.5s;
+        position: relative;
+    }
+        .khung-dang-cau-hoi > .post-button-container > i {
+            font-size: 15px;
+            position: absolute;
+            top: 8px;
+            left: 9px;
+            color: #08c;
+            z-index: 0;
+            transform: scale(0, 0);
+        }
+        .khung-dang-cau-hoi > .post-button-container:hover {
+            border-color: #08c;
+        }
+        .khung-dang-cau-hoi > .post-button-container:hover > .post-button {
+            padding-left: 30px;
+        }
+        .khung-dang-cau-hoi > .post-button-container:hover > i {
+            transition: transform 0.2s 0.5s;
+            transform: none;
+        }
+/*#endregion PostButton*/

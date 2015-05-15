@@ -3,10 +3,11 @@
 GO
 --Tập tin
 	--Tam
-	--ChuDe_HinhDaiDien
+	--ChuDe_HinhDaiDien	
 	--BaiVietDienDan_TapTin
+	--NguoiDung_HinhDaiDien
 
-CREATE TABLE dbo.TapTin_BaiVietDienDan_TapTin (
+CREATE TABLE dbo.TapTin_NguoiDung_HinhDaiDien (
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	Ten NVARCHAR(MAX) NOT NULL,
 	Loai NVARCHAR(MAX) NOT NULL,

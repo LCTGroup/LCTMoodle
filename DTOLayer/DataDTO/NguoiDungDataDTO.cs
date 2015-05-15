@@ -17,14 +17,14 @@ namespace DTOLayer
         public DateTime? ngaySinh;
         public string diaChi;
         public string soDienThoai;
+        public int maHinhDaiDien;
 
         /// <summary>
         /// Kiểm tra
         /// </summary>
         /// <returns>ketQua.TrangThai != 3 : dữ liệu hợp lệ</returns>
         public override KetQua kiemTra()
-        {
-            KetQua ketQua = new KetQua();
+        {            
             List<string> thongBao = new List<string>();
 
             #region Kiểm tra Valid
@@ -55,6 +55,7 @@ namespace DTOLayer
 
             #endregion
            
+            KetQua ketQua = new KetQua();
             ketQua.trangThai = (thongBao.Count > 0) ? 3 : 0;
             ketQua.ketQua = thongBao;
             return ketQua;

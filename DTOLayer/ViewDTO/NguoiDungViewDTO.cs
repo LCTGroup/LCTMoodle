@@ -15,7 +15,8 @@ namespace DTOLayer
         public string hoTen;
         public DateTime? ngaySinh;
         public string diaChi;
-        public string soDienThoai;      
+        public string soDienThoai;
+        public TapTinViewDTO hinhDaiDien;
  
         public override void gan(System.Data.SqlClient.SqlDataReader dong)
         {
@@ -39,6 +40,12 @@ namespace DTOLayer
                         diaChi = layString(dong, i); break;
                     case "SoDienThoai":
                         soDienThoai = layString(dong, i); break;
+                    case "MaHinhDaiDien":
+                        hinhDaiDien = new TapTinViewDTO()
+                        {
+                            ma = layInt(dong, i)
+                        };
+                        break;
                     default:
                         break;
                 }

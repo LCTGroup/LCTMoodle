@@ -1,0 +1,112 @@
+﻿/*#region mục chủ đề câu hỏi*/
+.muc-chu-de-cau-hoi {
+
+}
+    /*#region tên chủ đề của mục*/
+    .muc-chu-de-cau-hoi > .ten-chu-de > h2 {
+        font: normal 20px FreeWay;
+        color: #08c;
+        margin-bottom: 10px;
+    }
+    /*#endregion tên chủ đề của mục*/
+    /*#region danh sách câu hỏi của chủ đề*/
+    .muc-chu-de-cau-hoi > .danh-sach-cau-hoi {
+        border: 1px solid #eee;
+        margin-bottom: 20px;
+    }
+        /*#region mục câu hỏi*/
+        .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi {
+            background-color: white;
+            padding: 10px;
+            display: flex;
+            position: relative;
+            border-bottom: 1px solid #eee;
+        }  
+        .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi:nth-child(even) {
+            background-color: #fafafa;
+        }  
+        .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi:last-child {
+            border-bottom: none;
+        }  
+            /*#region trạng thái câu hỏi*/
+            .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .trang-thai-cau-hoi {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 3px;
+                height: 100%;
+            }
+                .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi.chua-tra-loi > .trang-thai-cau-hoi {
+                    background-color: #ddd;
+                }
+                .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi.da-tra-loi > .trang-thai-cau-hoi {
+                    background-color: #08c;
+                }
+            /*#endregion trạng thái câu hỏi*/
+            /*#region cột trái*/
+            .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-trai {
+                width: 100%;
+            }
+                .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-trai > .tieu-de {
+
+                }
+                    .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-trai > .tieu-de > a {
+                        font: bold 16px tahoma;
+                        text-decoration: none;
+                        color: #000;
+                    }
+                        .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-trai > .tieu-de > a:hover {
+                            text-decoration: underline;
+                        }
+                .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-trai >  ul.tu-khoa {
+                    
+                }          
+                    .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-trai > ul.tu-khoa > li {
+                        display: inline-block;
+                        margin-top: 4px;
+                    }          
+                        .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-trai > ul.tu-khoa > li > a {
+                            background-color: white;
+                            display: block;
+                            padding: 5px;
+                            border: 1px solid #eee;
+                            color: black;
+                            text-decoration: none;
+                            font-size: 12px;
+                        }          
+                            .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-trai > ul.tu-khoa > li > a:hover {
+                                box-shadow: #d5f1ff 0px 0px 3px;
+                            }          
+            /*#endregion cột trái*/
+            /*#region cột phải*/
+            .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-phai {
+                border-left: 1px solid #eee;
+                padding-left: 10px;
+                min-width: 160px;
+            }
+                .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-phai > .thoi-gian {
+                    font: normal 15px Berlin;
+                    white-space: nowrap;
+                }
+                .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-phai > .thong-tin-them {
+                    margin-top: 5px;
+                }
+                    .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-phai > .thong-tin-them > span {
+                        display: inline-block;
+                        background: no-repeat left center;
+                        padding-left: 28px;
+                        font: normal 15px Berlin;
+                        min-height: 24px;
+                        line-height: 24px;
+                        margin-right: 5px;
+                    }                
+                        .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-phai > .thong-tin-them > span:nth-child(1) {
+                            background-image: url('../../image/icon/24/view.png');
+                        }                
+                        .muc-chu-de-cau-hoi > .danh-sach-cau-hoi > .muc-cau-hoi > .cot-phai > .thong-tin-them > span:nth-child(2) {
+                            background-image: url('../../image/icon/24/comment.png');
+                        }  
+            /*#endregion cột phải*/
+        /*#endregion mục câu hỏi*/
+    /*#endregion danh sách câu hỏi của chủ đề*/
+/*#endregion mục câu hỏi*/

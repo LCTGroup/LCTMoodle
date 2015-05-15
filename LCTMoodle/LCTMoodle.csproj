@@ -109,7 +109,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Plugin\ckeditor\adapters\" />
     <Folder Include="Plugin\ckeditor\samples\assets\inlineall\" />
     <Folder Include="Plugin\ckeditor\samples\assets\outputxhtml\" />
@@ -120,6 +119,12 @@
     <Folder Include="Plugin\ckeditor\samples\plugins\magicline\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\toolbar\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\wysiwygarea\" />
+    <Folder Include="Uploads\BaiVietDienDan_TapTin\" />
+    <Folder Include="Uploads\ChuDe_HinhDaiDien\" />
+    <Folder Include="Uploads\HinhDaiDien_ChuDe\" />
+    <Folder Include="Uploads\HinhDaiDien_KhoaHoc\" />
+    <Folder Include="Uploads\KhoaHoc_HinhDaiDien\" />
+    <Folder Include="Uploads\Tam\" />
     <Folder Include="Views\BaiVietDienDan\" />
     <Folder Include="Views\BinhLuan\" />
     <Folder Include="Views\TapTin\" />
@@ -131,6 +136,7 @@
     <Compile Include="Controllers\BaiVietDienDanController.cs" />
     <Compile Include="Controllers\BinhLuanController.cs" />
     <Compile Include="Controllers\ChuDeController.cs" />
+    <Compile Include="Controllers\HoiDapController.cs" />
     <Compile Include="Controllers\KhoaHocController.cs" />
     <Compile Include="Controllers\LCTController.cs" />
     <Compile Include="Controllers\NguoiDungController.cs" />
@@ -143,6 +149,12 @@
     <Compile Include="WebServices\WindowsPhone\ClassTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\BaiVietDienDan.sql" />
+    <Content Include="App_Data\ChucNang.sql" />
+    <Content Include="App_Data\ChuDe.sql" />
+    <Content Include="App_Data\KhoaHoc.sql" />
+    <Content Include="App_Data\NguoiDung.sql" />
+    <Content Include="App_Data\TapTin.sql" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\LCT\AllSiteImages.png" />
     <Content Include="Content\images\LCT\AllSiteImages_temp.png" />
@@ -151,12 +163,17 @@
     <Content Include="Content\images\LCT\mini_logo.png" />
     <Content Include="Content\scripts\ChuDe\QuanLy.js" />
     <Content Include="Content\images\user-avatar.jpg" />
+    <Content Include="Content\scripts\HoiDap\CauHoi.js" />
+    <Content Include="Content\scripts\HoiDap\DatCauHoi.js" />
     <Content Include="Content\scripts\KhoaHoc\Xem.js" />
     <Content Include="Content\scripts\KhoaHoc\Tao.js" />
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
     <Content Include="Content\scripts\NguoiDung\DangKy.js" />
+    <Content Include="Content\styles\HoiDap\CauHoi.css" />
+    <Content Include="Content\styles\HoiDap\DatCauhoi.css" />
+    <Content Include="Content\styles\HoiDap\Index.css" />
     <Content Include="Content\styles\KhoaHoc\Xem.css" />
     <Content Include="Content\styles\LCT\bootstrap.css" />
     <Content Include="Content\styles\LCT\filled-icons.css" />
@@ -322,6 +339,7 @@
     <Content Include="Plugin\ckeditor\skins\office2013\images\lock.png" />
     <Content Include="Plugin\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="Plugin\ckeditor\styles.js" />
+    <Content Include="Uploads\AnhDaiDien_ChuDe\1_Hoang-duong-anh-comment-facebook.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -358,6 +376,7 @@
     <Content Include="Views\ChuDe\QuanLy.cshtml" />
     <Content Include="Views\ChuDe\_Form.cshtml" />
     <Content Include="Views\KhoaHoc\Xem.cshtml" />
+    <Content Include="Views\HoiDap\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

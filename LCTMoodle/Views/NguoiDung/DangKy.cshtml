@@ -20,7 +20,7 @@
                 <ul>
                     <li>
                         <section class="tieu-de">
-                            <label>Tên tài khoản:</label>
+                            <label>(*) Tên tài khoản:</label>
                         </section>
                         <section class="noi-dung">
                             <article class="input">
@@ -30,7 +30,7 @@
                     </li>
                     <li>
                         <section class="tieu-de">
-                            <label>Mật khẩu:</label>
+                            <label>(*) Mật khẩu:</label>
                         </section>
                         <section class="noi-dung">
                             <article class="input">
@@ -40,7 +40,7 @@
                     </li>
                     <li>
                         <section class="tieu-de">
-                            <label>Nhập lại mật khẩu:</label>
+                            <label>(*) Nhập lại mật khẩu:</label>
                         </section>
                         <section class="noi-dung">
                             <article class="input">
@@ -50,7 +50,7 @@
                     </li>
                     <li>
                         <section class="tieu-de">
-                            <label>Email:</label>
+                            <label>(*) Email:</label>
                         </section>
                         <section class="noi-dung">
                             <article class="input">
@@ -60,17 +60,17 @@
                     </li>
                     <li>
                         <section class="tieu-de">
-                            <label>Họ tên:</label>
+                            <label>(*) Họ tên:</label>
                         </section>
                         <section class="noi-dung">
                             <article class="input">
-                                <input type="text" name="HoTen" />
+                                <input type="text" name="HoTen" data-validate="bat-buoc" />
                             </article>
                         </section>
                     </li>
                     <li>
                         <section class="tieu-de">
-                            <label>Ngày sinh:</label>
+                            <label>(*) Ngày sinh:</label>
                         </section>
                         <section class="noi-dung">
                             <article class="input">
@@ -95,6 +95,16 @@
                         <section class="noi-dung">
                             <article class="input">
                                 <input type="text" name="SoDienThoai" />
+                            </article>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Ảnh đại diện</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input type="file" name="HinhDaiDien" />
                             </article>
                         </section>
                     </li>

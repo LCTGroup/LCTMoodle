@@ -11,7 +11,7 @@ namespace LCTMoodle.Controllers
     public class LCTController : Controller
     {
         [Route("~/{tapTin}.{dinhDang}/{*thuMuc?}")]
-        public ActionResult Index(string tapTin, string dinhDang, string thuMuc = null)
+        public ActionResult LayContent(string tapTin, string dinhDang, string thuMuc = null)
         {
             string loaiTapTin;
 

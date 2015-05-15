@@ -204,7 +204,6 @@ body:not(.tai) > .bieu-tuong-tai {
     color: #08c;
     line-height: 30px;
     margin-bottom: 5px;
-    padding: 0 5px;
 }
 .hop > .tieu-de.can-giua {
     text-align: center;

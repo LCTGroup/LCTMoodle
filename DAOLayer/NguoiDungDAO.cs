@@ -22,13 +22,14 @@ namespace DAOLayer
                     nguoiDung.hoTen,
                     nguoiDung.ngaySinh,
                     nguoiDung.diaChi,
-                    nguoiDung.soDienThoai
+                    nguoiDung.soDienThoai,
+                    nguoiDung.maHinhDaiDien
                 }
             );
         }
         public static KetQua lay(NguoiDungViewDTO nguoiDung)
         {
-            return layDong<NguoiDungViewDTO>
+            return layDong<NguoiDungDataDTO>
             (
                 "layNguoiDung",
                 new object[]

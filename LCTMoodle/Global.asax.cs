@@ -23,11 +23,28 @@ namespace LCTMoodle
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/ChuDe_HinhDaiDien"));
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/KhoaHoc_HinhDaiDien"));
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BaiVietDienDan_TapTin"));
+            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/NguoiDung_HinhDaiDien"));
         }
-
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Request.Browser.Cookies)
+            {
+                //supports the cookies
+            }
+            else
+            {
+                //not supports the cookies
+                //redirect user on specific page
+                //for this or show messages
+            }
+        }
         protected void Session_Start()
         {
-            Session["NguoiDung"] = null;
+            HttpCookie nguoiDungCookie = new HttpCookie("NguoiDung");
+            if (nguoiDungCookie.Value == null)
+            {
+                Session["NguoiDung"] = null;
+            }            
         }
     }
 }

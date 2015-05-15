@@ -10,7 +10,8 @@ CREATE TABLE dbo.NguoiDung (
 	HoTen NVARCHAR(MAX) NOT NULL,
 	NgaySinh DATETIME,
 	DiaChi NVARCHAR(MAX),
-	SoDienThoai NVARCHAR(MAX)
+	SoDienThoai NVARCHAR(MAX),
+	MaHinhDaiDien INT
 );
 
 GO
@@ -22,11 +23,12 @@ CREATE PROC dbo.themNguoiDung (
 	@3 NVARCHAR(MAX), --Họ và tên
 	@4 DATETIME, --Ngày Sinh
 	@5 NVARCHAR(MAX), --Địa chỉ
-	@6 NVARCHAR(MAX) --Số điện thoại
+	@6 NVARCHAR(MAX), --Số điện thoại
+	@7 INT --Hình đại diện
 )
 AS
 BEGIN
-	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, HoTen, NgaySinh, DiaChi, SoDienThoai) VALUES (@0, @1, @2, @3, @4, @5, @6);
+	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, HoTen, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien) VALUES (@0, @1, @2, @3, @4, @5, @6, @7);
 
 	SELECT @@IDENTITY Ma
 END
@@ -38,9 +40,10 @@ CREATE PROC dbo.layNguoiDung (
 )
 AS
 BEGIN
-	SELECT Ma, MatKhau
-	FROM dbo.NguoiDung 
+	SELECT *
+	FROM dbo.NguoiDung
 	WHERE TenTaiKhoan = @0
 END
 
+drop proc dbo.layNguoiDung
 select * from dbo.NguoiDung
