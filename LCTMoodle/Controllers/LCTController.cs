@@ -10,7 +10,6 @@ namespace LCTMoodle.Controllers
 {
     public class LCTController : Controller
     {
-        [Route("~/{tapTin}.{dinhDang}/{*thuMuc?}")]
         public ActionResult LayContent(string tapTin, string dinhDang, string thuMuc = null)
         {
             string loaiTapTin;
@@ -52,19 +51,24 @@ namespace LCTMoodle.Controllers
                     break;
             }
 
-            return File
-                (
-                    string.Format
-                        (
-                            "{0}/{1}/{2}.{3}",
-                            Server.MapPath("~/Content/"),
-                            thuMuc,
-                            tapTin,
-                            dinhDang
-                        ),
+            string duongDan = string.Format (
+                "{0}/{1}/{2}.{3}",
+                Server.MapPath("~/Content/"),
+                thuMuc,
+                tapTin,
+                dinhDang
+            );
+
+            if (System.IO.File.Exists(duongDan)) {
+                return File (
+                    duongDan,
                     loaiTapTin,
                     tapTin + "." + dinhDang
                 );
+            }
+
+            return null;
+
         }
 
         #region Helper

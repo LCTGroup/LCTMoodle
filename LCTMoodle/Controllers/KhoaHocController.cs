@@ -11,7 +11,6 @@ namespace LCTMoodle.Controllers
 {
     public class KhoaHocController : LCTController
     {
-        [Route("KhoaHoc/{ma:int}")]
         public ActionResult Xem(int ma)
         {
             KetQua ketQua = KhoaHocDAO.layTheoMa(ma);

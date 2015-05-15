@@ -13,7 +13,26 @@ namespace LCTMoodle
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapMvcAttributeRoutes();
+            routes.MapRoute(
+                name: "Content",
+                url: "{tapTin}.{dinhDang}/{*thuMuc}",
+                defaults: new { controller = "LCT", action = "LayContent" }
+            );
+
+            routes.MapRoute(
+                name: "LayTapTin",
+                url: "TapTin/{ma}/{loai}",
+                defaults: new { controller = "TapTin", action = "Lay" },
+                constraints: new { ma = @"\d+" }
+            );
+
+            routes.MapRoute(
+                name: "XemKhoaHoc",
+                url: "KhoaHoc/{ma}",
+                defaults: new { controller = "KhoaHoc", action = "Xem" },
+                constraints: new { ma = @"\d+" }
+            );
+            
 
             routes.MapRoute(
                 name: "MacDinh",

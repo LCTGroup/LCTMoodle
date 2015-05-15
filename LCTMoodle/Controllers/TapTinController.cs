@@ -11,7 +11,6 @@ namespace LCTMoodle.Controllers
 {
     public class TapTinController : LCTController
     {
-        [Route("TapTin/{ma:int}/{loai}")]
         public ActionResult Lay(int ma, string loai)
         {
             KetQua ketQua = TapTinBUS.lay(ma, loai);
@@ -19,7 +18,13 @@ namespace LCTMoodle.Controllers
             if (ketQua.trangThai == 0)
             {
                 TapTinViewDTO tapTin = ketQua.ketQua as TapTinViewDTO;
-                return File(TapTinHelper.layDuongDan(loai, tapTin.ma + System.IO.Path.GetExtension(tapTin.ten)), tapTin.loai, tapTin.ten);
+
+                string duongDan = TapTinHelper.layDuongDan(loai, tapTin.ma + System.IO.Path.GetExtension(tapTin.ten));
+                if (System.IO.File.Exists(duongDan))
+                {
+                    return File(duongDan, tapTin.loai, tapTin.ten);
+                }
+                return null;
             }
             else
             {
