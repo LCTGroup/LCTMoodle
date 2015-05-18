@@ -27,11 +27,11 @@ namespace DAOLayer
                 }
             );
         }
-        public static KetQua lay(NguoiDungViewDTO nguoiDung)
+        public static KetQua lay(NguoiDungDataDTO nguoiDung)
         {
-            return layDong<NguoiDungDataDTO>
+            return layDong<NguoiDungViewDTO>
             (
-                "layNguoiDung",
+                "layNguoiDungTheoTenTaiKhoan",
                 new object[]
                 {
                     nguoiDung.tenTaiKhoan

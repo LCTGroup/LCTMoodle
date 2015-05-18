@@ -2,12 +2,15 @@
     Khởi tạo
 */
 $(function () {
-    $form = $('#them_nguoi_dung');
+    //Khởi tạo xử lý đăng ký    
+    khoiTaoThemNguoiDung($('#dang_ky'));
 
-    khoiTaoThemNguoiDung($form);
+    //Khởi tạo xử lý đăng nhập
+    $formDangNhap = khoiTaoDangNhap($('#dang_nhap'));
 });
 
-function khoiTaoThemNguoiDung($form) {    
+//Xử lý đăng ký
+function khoiTaoThemNguoiDung($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
             $.ajax({
@@ -67,8 +70,58 @@ function khoiTaoThemNguoiDung($form) {
                     thongBao: '\
                     <div style="width: 26px; height: 26px; background-position-x: -370px;" class="site-image"></div> \
                     <span style="padding-left: 10px; line-height: 26px;">Lỗi Ajax</span>\
-                '
+                    '
                 });
+            })
+        }
+    });
+}
+
+//Xử lý đăng nhập
+function khoiTaoDangNhap($form) {
+    khoiTaoLCTForm($form, {
+        submit: function (e) {
+            $.ajax({
+                url: $form.attr('action'),
+                method: $form.attr('method'),
+                data: $form.serialize(),
+                asyne: false
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: data.ketQua,
+                        nut: [{
+                            ten: 'Về trang chủ',
+                            xuLy: function () {
+                                window.location = '/TrangChu/';
+                            }
+                        }],
+                        esc: false
+                    });
+                }
+                if (data.trangThai == 1) {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: data.ketQua                        
+                    });
+                }
+                
+            }).fail(function () {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: '\
+                    <div style="width: 26px; height: 26px; background-position-x: -370px;" class="site-image"></div> \
+                    <span style="padding-left: 10px; line-height: 26px;">Lỗi Ajax</span>\
+                    ',
+                    nut: [{
+                        ten: 'Về trang chủ',
+                        xuLy: function () {
+                            window.location = '/TrangChu/';
+                        }
+                    }],
+                    esc: false
+                })
             })
         }
     });

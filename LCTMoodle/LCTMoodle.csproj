@@ -165,7 +165,7 @@
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
-    <Content Include="Content\scripts\NguoiDung\DangKy.js" />
+    <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
     <Content Include="Content\styles\HoiDap\CauHoi.css" />
     <Content Include="Content\styles\HoiDap\DatCauhoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
@@ -335,6 +335,10 @@
     <Content Include="Plugin\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="Plugin\ckeditor\styles.js" />
     <Content Include="Uploads\AnhDaiDien_ChuDe\1_Hoang-duong-anh-comment-facebook.jpg" />
+    <Content Include="Uploads\NguoiDung_HinhDaiDien\1.jpg" />
+    <Content Include="Uploads\NguoiDung_HinhDaiDien\2.jpg" />
+    <Content Include="Uploads\NguoiDung_HinhDaiDien\3.jpg" />
+    <Content Include="Uploads\NguoiDung_HinhDaiDien\4.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

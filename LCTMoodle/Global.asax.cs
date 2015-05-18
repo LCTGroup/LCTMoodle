@@ -27,26 +27,11 @@ namespace LCTMoodle
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.Browser.Cookies)
-            {
-                //supports the cookies
-            }
-            else
-            {
-                //not supports the cookies
-                //redirect user on specific page
-                //for this or show messages
-            }
+            
         }
         protected void Session_Start()
         {
-            Response.Cache.SetExpires(DateTime.Now);
 
-            HttpCookie nguoiDungCookie = new HttpCookie("NguoiDung");
-            if (nguoiDungCookie.Value == null)
-            {
-                Session["NguoiDung"] = null;
-            }            
         }
     }
 }

@@ -27,7 +27,7 @@ namespace LCTMoodle.Controllers
             //Tắt hiển thị cột trái, cột phải
             ViewData["CotTrai"] = false;
             ViewData["CotPhai"] = false;
-
+            
             return View();
         }
         /// <summary>
@@ -48,6 +48,15 @@ namespace LCTMoodle.Controllers
         {
             Dictionary<string, string> form = formCollection.AllKeys.ToDictionary(k => k, v => formCollection[v]);
             KetQua ketQua = NguoiDungBUS.them(form);
+
+            return Json(ketQua);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyKiemTraDangNhap(FormCollection formCollection)
+        {
+            Dictionary<string,string> form = formCollection.AllKeys.ToDictionary(k => k, v => formCollection[v]);
+            KetQua ketQua = NguoiDungBUS.kiemTraDangNhap(form);
 
             return Json(ketQua);
         }

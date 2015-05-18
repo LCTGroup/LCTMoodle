@@ -36,16 +36,39 @@ namespace BUSLayer
                 ketQua :
                 NguoiDungDAO.them(nguoiDung);
         }
-        //public static KetQua kiemTraDangNhap(Dictionary<string, string> form)
-        //{
-        //    NguoiDungViewDTO nguoiDungDangNhap = new NguoiDungViewDTO()
-        //    {
-        //        tenTaiKhoan = layString(form, "TenTaiKhoan"),
-        //        matKhau = layString(form, "MatKhau")
-        //    };
+        public static KetQua kiemTraDangNhap(Dictionary<string, string> form)
+        {
+            NguoiDungDataDTO nguoiDungDangNhap = new NguoiDungDataDTO()
+            {
+                tenTaiKhoan = layString(form, "TenTaiKhoan"),
+                matKhau = layString(form, "MatKhau")
+            };
+            
+            KetQua ketQua = NguoiDungDAO.lay(nguoiDungDangNhap);
+            if (ketQua.trangThai == 1)
+            {
+                ketQua.ketQua = "Tên tài khoản không tồn tại";
+                return ketQua;
+            }
 
-        //    KetQua ketQua = NguoiDungDAO.lay(nguoiDungDangNhap);
-        //}
+            NguoiDungViewDTO nguoiDung = ketQua.ketQua as NguoiDungViewDTO;
+            
+            if (string.Equals(nguoiDung.matKhau, nguoiDungDangNhap.matKhau))
+            {
+                if (layBool(form, "GhiNho"))
+                {            
+                    //Lưu mã người dùng vào Session
+                    System.Web.HttpContext.Current.Session["NguoiDung"] = nguoiDung.ma;                                       
+                }
+                ketQua.ketQua = "Đăng nhập thành công";
+            }
+            else
+            {
+                ketQua.trangThai = 1;
+                ketQua.ketQua = "Mật khẩu không đúng";
+            }
+            return ketQua;            
+        }
 
     }
 }

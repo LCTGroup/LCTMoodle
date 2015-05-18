@@ -35,15 +35,15 @@ END
 
 GO
 --Lấy người dùng
-CREATE PROC dbo.layNguoiDung (
+CREATE PROC dbo.layNguoiDungTheoTenTaiKhoan (
 	@0 NVARCHAR(MAX) --Tên tài khoản
 )
 AS
 BEGIN
 	SELECT *
 	FROM dbo.NguoiDung
-	WHERE TenTaiKhoan = @0
+	WHERE TenTaiKhoan like @0
 END
 
-drop proc dbo.layNguoiDung
+dbo.layNguoiDungTheoTenTaiKhoan 'FunkyHpio'
 select * from dbo.NguoiDung
