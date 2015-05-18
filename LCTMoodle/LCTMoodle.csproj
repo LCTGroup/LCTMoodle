@@ -109,6 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Plugin\ckeditor\adapters\" />
     <Folder Include="Plugin\ckeditor\samples\assets\inlineall\" />
     <Folder Include="Plugin\ckeditor\samples\assets\outputxhtml\" />
@@ -149,12 +150,6 @@
     <Compile Include="WebServices\WindowsPhone\ClassTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\BaiVietDienDan.sql" />
-    <Content Include="App_Data\ChucNang.sql" />
-    <Content Include="App_Data\ChuDe.sql" />
-    <Content Include="App_Data\KhoaHoc.sql" />
-    <Content Include="App_Data\NguoiDung.sql" />
-    <Content Include="App_Data\TapTin.sql" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\LCT\AllSiteImages.png" />
     <Content Include="Content\images\LCT\AllSiteImages_temp.png" />
@@ -170,7 +165,7 @@
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
-    <Content Include="Content\scripts\NguoiDung\DangKy.js" />
+    <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
     <Content Include="Content\styles\HoiDap\CauHoi.css" />
     <Content Include="Content\styles\HoiDap\DatCauhoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
@@ -340,6 +335,10 @@
     <Content Include="Plugin\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="Plugin\ckeditor\styles.js" />
     <Content Include="Uploads\AnhDaiDien_ChuDe\1_Hoang-duong-anh-comment-facebook.jpg" />
+    <Content Include="Uploads\NguoiDung_HinhDaiDien\1.jpg" />
+    <Content Include="Uploads\NguoiDung_HinhDaiDien\2.jpg" />
+    <Content Include="Uploads\NguoiDung_HinhDaiDien\3.jpg" />
+    <Content Include="Uploads\NguoiDung_HinhDaiDien\4.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
