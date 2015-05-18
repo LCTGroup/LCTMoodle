@@ -32,7 +32,7 @@
         .phan-cau-hoi > .action-button > ul {
             background-color: white;
             border: 1px solid #ddd;
-            font: normal 12px Tahoma;
+            font-size: 12px;
             position: absolute;
             z-index: 4;
             top: 26px;
@@ -78,7 +78,7 @@
         padding-right: 25px;
     }
         .phan-cau-hoi > .tieu-de:after {
-            font: normal 12px Tahoma;
+            font-size: 12px;
             content: ' - ' attr(data-time);
         }
     .phan-cau-hoi > .noi-dung {
@@ -190,7 +190,7 @@
                     background-color: #ddd;
                 }
             .phan-cau-hoi > .thong-tin > .thong-tin-bai > .nguoi-dang {
-                font: bold 14px Tahoma;
+                font-size: 14px;
             }
             .phan-cau-hoi > .thong-tin > .thong-tin-bai > .thong-tin-them {
                 margin-top: 5px;
@@ -316,7 +316,7 @@
                     .phan-tra-loi > ul > li > .tra-loi > .action-button > ul {
                         background-color: white;
                         border: 1px solid #ddd;
-                        font: normal 12px Tahoma;
+                        font-size: 12px;
                         position: absolute;
                         z-index: 4;
                         top: 26px;
@@ -363,13 +363,15 @@
                             }
                 /*#endregion Action button*/
                 .phan-tra-loi > ul > li > .tra-loi > .nguoi-tra-loi {
-                    font: bold 14px Tahoma;
+                    font-weight: bold;
+                    font-size: 14px;
                     margin-bottom: 5px;
                     padding-right: 25px;
                 }
                     .phan-tra-loi > ul > li > .tra-loi > .nguoi-tra-loi:after {
                         content: ' - ' attr(data-time);
-                        font: normal 11px Tahoma;
+                        font-size: 11px;
+                        font-weight: normal;
                     }
                 .phan-tra-loi > ul > li > .tra-loi > .noi-dung {
                     background-color: #fff;
@@ -444,7 +446,6 @@
             height: 50px;                  
             line-height: 24px;
             padding: 10px;
-            font: normal 14px tahoma;
             font-size: 14px;
             border: 1px solid #ddd;
             resize: none;
