@@ -27,7 +27,7 @@
                 .lct-form ul > li.loi-dan {
                     background-color: #f8f8f8;
                     border: 1px solid #eee;
-                    padding: 10px;
+                    padding: 5px;
                     color: #555;
                 }
                                 
@@ -36,16 +36,54 @@
                     }
 
                 .lct-form ul > li.thong-bao {
-                    padding: 10px;
+                    padding: 5px;
                     color: #555;
                 }
 
-                    .lct-form li > .tieu-de {
-                        min-width: 150px;
-                        max-width: 150px;
+                    .lct-form ul > li.thong-bao p {
+                        line-height: 30px;
+                        padding: 5px 0;
                     }
 
-                    .lct-form li > .noi-dung {
+                    .lct-form ul > li.thong-bao .bieu-tuong:before {
+                        font-family: Stroke Icon;
+                        line-height: 40px;
+                        font-size: 40px;
+                        min-width: 40px;
+                        padding-right: 5px;
+                    }
+
+                    .lct-form ul > li.thong-bao .bieu-tuong.thanh-cong:before {
+                        content: '\e66c';
+                        color: #08c;
+                    }
+
+                    .lct-form ul > li.thong-bao .bieu-tuong.nguy-hiem:before {
+                        content: '\e681';
+                        color: #e00;
+                    }
+
+                    .lct-form ul > li.thong-bao .bieu-tuong.thong-tin:before {
+                        content: '\e647';
+                        color: #0c0;
+                    }
+
+                    .lct-form ul > li.thong-bao .bieu-tuong.canh-bao:before {
+                        content: '\e67b';
+                        color: #fb0;
+                    }
+
+                    .lct-form ul > li.thong-bao .bieu-tuong.hoi:before {
+                        content: '\e64a';
+                        color: #0c0;
+                    }
+
+                .lct-form li > .tieu-de {
+                    min-width: 150px;
+                    max-width: 150px;
+                }
+
+                .lct-form li > .noi-dung {
                     width: 100%;
                 }
                 
@@ -1696,20 +1734,30 @@
     text-align: center;
 }
 
-.lct-form button {
+.lct-form button,
+.lct-form .lct-khung-button a {
     border: 1px solid #ddd;
     background-color: #fff;
     padding: 0px 20px;
     height: 35px;
     margin: 5px;
-    font-weight: bold;
+    font: bold 13px Tahoma;
     color: #333;
     position: relative;
     outline: none;
     transition: color 0.5s;
 }
 
-    .lct-form button:after {
+.lct-form .lct-khung-button a {
+    height: 33px;
+    line-height: 33px;
+    display: inline-block;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+    .lct-form button:after,
+    .lct-form .lct-khung-button a:after {
         content: '';
         display: block;
         background-color: #eee;
@@ -1722,47 +1770,65 @@
     }
 
     .lct-form button:hover:after,
-    .lct-form button:focus:after {
+    .lct-form button:focus:after,
+    .lct-form .lct-khung-button a:hover:after,
+    .lct-form .lct-khung-button a:focus:after {
         width: 100%;
     }
-
+    
     .lct-form button.chap-nhan:hover:after,
-    .lct-form button.chap-nhan:focus:after {
+    .lct-form button.chap-nhan:focus:after,
+    .lct-form .lct-khung-button a.chap-nhan:hover:after,
+    .lct-form .lct-khung-button a.chap-nhan:focus:after {
         background-color: #08c;
     }
 
     .lct-form button.thong-tin:hover:after,
-    .lct-form button.thong-tin:focus:after {
+    .lct-form button.thong-tin:focus:after,
+    .lct-form .lct-khung-button a.thong-tin:hover:after,
+    .lct-form .lct-khung-button a.thong-tin:focus:after {
         background-color: #0c0;
     }
 
     .lct-form button.can-than:hover:after,
-    .lct-form button.can-than:focus:after {
+    .lct-form button.can-than:focus:after,
+    .lct-form .lct-khung-button a.can-than:hover:after,
+    .lct-form .lct-khung-button a.can-than:focus:after {
         background-color: #fb0;
     }
 
     .lct-form button.nguy-hiem:hover:after,
-    .lct-form button.nguy-hiem:focus:after {
+    .lct-form button.nguy-hiem:focus:after,
+    .lct-form .lct-khung-button a.nguy-hiem:hover:after,
+    .lct-form .lct-khung-button a.nguy-hiem:focus:after {
         background-color: #e00;
     }
 
     .lct-form button.chap-nhan:hover,
-    .lct-form button.chap-nhan:focus {
+    .lct-form button.chap-nhan:focus,
+    .lct-form .lct-khung-button a.chap-nhan:hover,
+    .lct-form .lct-khung-button a.chap-nhan:focus {
         color: #08c;
     }
 
     .lct-form button.thong-tin:hover,
-    .lct-form button.thong-tin:focus {
+    .lct-form button.thong-tin:focus,
+    .lct-form .lct-khung-button a.thong-tin:hover,
+    .lct-form .lct-khung-button a.thong-tin:focus {
         color: #0c0;
     }
 
-    .lct-form button.can-than:hover,
-    .lct-form button.can-than:focus {
+    .lct-form button.canh-bao:hover,
+    .lct-form button.canh-bao:focus,
+    .lct-form .lct-khung-button a.canh-bao:hover,
+    .lct-form .lct-khung-button a.canh-bao:focus {
         color: #fb0;
     }
 
     .lct-form button.nguy-hiem:hover,
-    .lct-form button.nguy-hiem:focus {
+    .lct-form button.nguy-hiem:focus,
+    .lct-form .lct-khung-button a.nguy-hiem:hover,
+    .lct-form .lct-khung-button a.nguy-hiem:focus {
         color: #e00;
     }
 

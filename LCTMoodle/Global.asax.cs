@@ -27,16 +27,11 @@ namespace LCTMoodle
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            HttpCookie nguoiDungCookie = HttpContext.Current.Request.Cookies["NguoiDung"];
-
-            if (nguoiDungCookie.Value == null)
-            {
-                Session["NguoiDung"] = null;
-            }
+            
         }
         protected void Session_Start()
         {
-            Session["NguoiDung"] = null;
+
         }
     }
 }
