@@ -215,6 +215,9 @@ function moPopupFull(thamSo) {
         Tiêu đề của thông báo
     thongBao: Không bắt buộc
         Đoạn thông báo
+    bieuTuong: Không bắt buộc (chỉ sử dụng được khi có thông báo)
+        Biểu tượng trước thông báo
+        Gồm: thanh-cong, nguy-hiem, thong-tin, canh-bao, hoi
     nut: Mặc định: Nút thoát
         Danh sách nút xử lý ở thông báo
         Gồm:
@@ -222,9 +225,13 @@ function moPopupFull(thamSo) {
                 Tên của nút
             loai: Mặc định: chap-nhan
                 Loại nút (chap-nhan, can-than, ...)
-            xuLy: Mặc định: Tắt popup
-                Xử lý khi nhấn vào nút
-                Trả về false nếu muốn chặn tắt popup
+            * Có 2 loại xử lý:
+                href: Không bắt buộc
+                    Nút đường dẫn
+                    Ưu tiên hơn nếu có cả href & xuLy
+                xuLy: Mặc định: Tắt popup
+                    Xử lý khi nhấn vào nút
+                    Trả về false nếu muốn chặn tắt popup
     esc: Mặc định: true
         Cho phép bấm ra ngoài là tắt popup
 */
@@ -241,7 +248,7 @@ function moPopup(thamSo) {
 
     $noiDungPopup.html('\
         <article class="hop hop-1-vien">\
-            <section class="tieu-de">\
+            <section class="tieu-de" style="padding: 0 5px;">\
             </section>\
             <article class="noi-dung lct-form">\
                 <ul class="danh-sach-hien-thi">\
@@ -265,11 +272,19 @@ function moPopup(thamSo) {
     }
 
     if ('thongBao' in thamSo) {
-        $danhSachHienThi.append('\
-            <li class="thong-bao">\
-                ' + thamSo.thongBao + '\
-            </li>\
-        ');
+        var htmlBieuTuong = '';
+
+        if ('bieuTuong' in thamSo &&
+            $.inArray(thamSo.bieuTuong, ['thanh-cong', 'nguy-hiem', 'thong-tin', 'canh-bao', 'hoi']) !== -1) {
+            htmlBieuTuong = '<span class="bieu-tuong ' + thamSo.bieuTuong + '"></span>';
+        }
+
+        $danhSachHienThi.append(
+            '<li class="thong-bao">' +
+                htmlBieuTuong +
+                '<p>' + thamSo.thongBao + '</p>' +
+            '</li>'
+        );
     }
 
     if ($danhSachHienThi.children().length == 0) {
@@ -280,16 +295,23 @@ function moPopup(thamSo) {
         $(thamSo.nut).each(function () {
             var n = this;
 
-            var $nut = $('<button class="' + (n.loai || 'chap-nhan') + '">' + (n.ten || 'Nút xử lý') + '</button>');
+            var $nut;
 
-            $nut.on('click', function () {
-                if ('xuLy' in n) {
-                    if (n.xuLy() == false) {
-                        return;
+            if ('href' in n) {
+                $nut = '<a href="' + n.href + '" class="' + (n.loai || 'chap-nhan') + '">' + (n.ten || 'Nút xử lý') + '</a>'
+            }
+            else {
+                $nut = $('<button class="' + (n.loai || 'chap-nhan') + '">' + (n.ten || 'Nút xử lý') + '</button>');
+
+                $nut.on('click', function () {
+                    if ('xuLy' in n) {
+                        if (n.xuLy() == false) {
+                            return;
+                        }
                     }
-                }
-                $popup.trigger('Tat');
-            });
+                    $popup.trigger('Tat');
+                });
+            }
 
             $danhSachNut.append($nut);
         })

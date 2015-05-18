@@ -10,6 +10,7 @@ namespace LCTMoodle.Controllers
 {
     public class LCTController : Controller
     {
+        [OutputCache(Duration = 3600, Location = System.Web.UI.OutputCacheLocation.ServerAndClient)]
         public ActionResult LayContent(string tapTin, string dinhDang, string thuMuc = null)
         {
             string loaiTapTin;

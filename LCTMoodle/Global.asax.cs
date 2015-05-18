@@ -40,6 +40,8 @@ namespace LCTMoodle
         }
         protected void Session_Start()
         {
+            Response.Cache.SetExpires(DateTime.Now);
+
             HttpCookie nguoiDungCookie = new HttpCookie("NguoiDung");
             if (nguoiDungCookie.Value == null)
             {
