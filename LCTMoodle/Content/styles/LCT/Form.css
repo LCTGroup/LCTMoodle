@@ -195,7 +195,6 @@
     border-left: 3px solid #eee;
     transition: 0.5s;
     color: #555;
-    font: normal 13px tahoma;
     background-color: #fff;
 }
 
@@ -231,7 +230,6 @@
     transition: border-left-color 0.5s;
     height: 100px;
     color: #555;
-    font: normal 13px tahoma;
     background-color: #fff;
 }
 
@@ -264,7 +262,6 @@
     color: #555;
     -moz-appearance: none;
     -webkit-appearance: none;
-    font: normal 13px tahoma;
 }
 
     .lct-form select[class^="loi-"],
@@ -284,7 +281,6 @@
 .lct-form .lct-checkbox-radio-label {
     display: block;
     padding: 5px;
-    font: normal 13px tahoma;
 }
 
 .lct-form input[type="checkbox"],
@@ -381,7 +377,6 @@
     transition: 0.5s;
     position: relative;
     text-align: center;
-    font: normal 13px tahoma;
 }
 
 .lct-form input[type="file"] {
@@ -458,7 +453,6 @@
     border-left: 3px solid #eee;
     transition: 0.5s;
     color: #555;
-    font: normal 13px tahoma;
     background-color: #fff;
 }
 
@@ -1741,8 +1735,8 @@
     padding: 0px 20px;
     height: 35px;
     margin: 5px;
-    font: bold 13px Tahoma;
     color: #333;
+    font-weight: bold;
     position: relative;
     outline: none;
     transition: color 0.5s;

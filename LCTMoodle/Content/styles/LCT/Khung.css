@@ -8,8 +8,10 @@ li {
     display: block;
 }
 body {
-    font: normal 13px Tahoma;
     background-color: #f5f5f5;
+}
+body, textarea, select, input {
+    font: normal 13px 'Segoe ui';
 }
 a {
     color: #000;
@@ -568,7 +570,6 @@ header .bottom-header {
         border-left-color: #08c;
     }
     .thanh-dieu-huong li a {
-        font-family: Tahoma;
         display: block;
         padding: 0 10px 0 25px;
         font-size: 15px;
