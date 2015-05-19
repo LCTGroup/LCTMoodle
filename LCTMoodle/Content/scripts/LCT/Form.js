@@ -31,7 +31,7 @@ function khoiTaoLCTForm($form, thamSo) {
     khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="lct-lich"]'), 'lct-lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
 
     //Xử lý lấy giá trị mặc định
-    khoiTaoGiaTriMacDinh_LCT($form);
+    khoiTaoLCTFormMacDinh($form);
 
     //Khởi tạo tắt, mở đối tượng
     khoiTaoTatMo_LCT($form);
@@ -274,7 +274,7 @@ function khoiTaoInputThoiGian_LCT($inputs, loai, idInput, hamKhoiTao, hamXuLyMac
     });
 }
 
-function khoiTaoGiaTriMacDinh_LCT($form) {
+function khoiTaoLCTFormMacDinh($form) {
     $form.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
         this.value = this.getAttribute('data-mac-dinh');
     });

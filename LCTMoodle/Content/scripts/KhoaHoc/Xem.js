@@ -115,7 +115,7 @@ function khoiTaoForm_DienDan($form) {
                 if (data.trangThai == 0) {
                     $danhSach.prepend(layBaiViet_DienDan(data.ketQua));
 
-                    khoiTaoGiaTriMacDinh_LCT($form);
+                    khoiTaoLCTFormMacDinh($form);
                 }
                 else {
                     moPopup({
@@ -200,7 +200,7 @@ function layBaiViet_DienDan(baiViet) {
         '... tạm';
 
     var $htmlBaiViet = $(
-        '<li>' +
+        '<li class="muc-bai-viet" data-ma=' + baiViet.ma + '>' +
             '<section class="khung-bai-viet">' +
                 '<section class="khung-chuc-nang"></section>' +
                 '<section class="khung-thong-tin">' +
@@ -240,5 +240,5 @@ function layBaiViet_DienDan(baiViet) {
 
 //Khởi tạo
 function khoiTaoBaiViet_DienDan($baiViet) {
-    
+    $baiViet.find('.khung-bai-viet').after(layKhungBinhLuan('BaiVietDienDan', $baiViet.attr('data-ma')));
 }

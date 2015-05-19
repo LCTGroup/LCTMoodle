@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DTOLayer;
+using BUSLayer;
+using DAOLayer;
+using Helpers;
 
 namespace LCTMoodle.Controllers
 {
-    public class BinhLuanController : Controller
+    public class BinhLuanController : LCTController
     {
-        //
-        // GET: /BinhLuan/
-        public ActionResult Index()
+        public ActionResult Them(FormCollection formCollection)
         {
-            return View();
+            return Json(BinhLuanBUS.them(chuyenDuLieuForm(formCollection)));
+        }
+
+        public ActionResult Lay(string loaiDoiTuong, int maDoiTuong)
+        {
+            return Json(BinhLuanDAO.layTheoDoiTuong(loaiDoiTuong, maDoiTuong), JsonRequestBehavior.AllowGet);
         }
 	}
 }

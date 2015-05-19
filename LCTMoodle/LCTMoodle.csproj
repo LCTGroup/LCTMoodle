@@ -156,6 +156,7 @@
     <Content Include="Content\images\LCT\ChuDe\he-thong.png" />
     <Content Include="Content\images\LCT\ChuDe\khoa-hoc.png" />
     <Content Include="Content\images\LCT\mini_logo.png" />
+    <Content Include="Content\scripts\BinhLuan\Khung.js" />
     <Content Include="Content\scripts\ChuDe\QuanLy.js" />
     <Content Include="Content\images\user-avatar.jpg" />
     <Content Include="Content\scripts\HoiDap\CauHoi.js" />
@@ -166,6 +167,7 @@
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
     <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
+    <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\HoiDap\CauHoi.css" />
     <Content Include="Content\styles\HoiDap\DatCauhoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />

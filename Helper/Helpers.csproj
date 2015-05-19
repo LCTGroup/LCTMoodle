@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="LCTHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BinhLuanHelper.cs" />
     <Compile Include="TapTinHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
