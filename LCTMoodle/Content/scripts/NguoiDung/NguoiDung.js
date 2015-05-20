@@ -23,54 +23,42 @@ function khoiTaoThemNguoiDung($form) {
                     case 0:
                         moPopup({
                             tieuDe: 'Thông báo',
-                            thongBao: '\
-                            <div style="width: 26px; height: 26px; background-position-x: -370px;" class="site-image"></div> \
-                            <span style="padding-left: 10px; line-height: 26px;">Đăng ký thành công.</span>\
-                        ',
+                            thongBao: 'Đăng ký thành công',
                             nut: [{
                                 ten: 'Về trang chủ',
-                                xuLy: function () {
-                                    window.location = '/TrangChu/';
-                                }
+                                href: '/TrangChu/'
                             }],
-                            esc: false
+                            esc: false,
+                            bieuTuong: 'thanh-cong'
                         });
                         break;
                     case 1:
                         moPopup({
                             tieuDe: 'Thông báo',
-                            thongBao: '\
-                            <div style="width: 26px; height: 26px; background-position-x: -370px;" class="site-image"></div> \
-                            <span style="padding-left: 10px; line-height: 26px;">Đăng ký chưa thành công.</span>\
-                        '
+                            thongBao: 'Đăng ký chưa thành công',
+                            bieuTuong: 'nguy-hiem'
                         });
                         break;
                     case 2:
                         moPopup({
                             tieuDe: 'Thông báo',
-                            thongBao: '\
-                            <div style="width: 26px; height: 26px; background-position-x: -370px;" class="site-image"></div> \
-                            <span style="padding-left: 10px; line-height: 26px;">Lỗi kết nối CSDL hoặc lỗi truy vấn.</span>\
-                        '
+                            thongBao: 'Lỗi kết nối CSDL hoặc lỗi truy vấn.',
+                            bieuTuong: 'nguy-hiem'
                         });
                         break;
                     case 3:
                         moPopup({
                             tieuDe: 'Thông báo',
-                            thongBao: '\
-                            <div style="width: 26px; height: 26px; background-position-x: -370px;" class="site-image"></div> \
-                            <span style="padding-left: 10px; line-height: 26px;">Lỗi ràng buộc dữ liệu.</span>\
-                        '
+                            thongBao: data.ketQua,
+                            bieuTuong: 'nguy-hiem'
                         });
                         break;
                 }
             }).fail(function () {               
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: '\
-                    <div style="width: 26px; height: 26px; background-position-x: -370px;" class="site-image"></div> \
-                    <span style="padding-left: 10px; line-height: 26px;">Lỗi Ajax</span>\
-                    '
+                    thongBao: 'Lỗi ajax',
+                    bieuTuong: 'nguy-hiem'
                 });
             })
         }
@@ -92,35 +80,35 @@ function khoiTaoDangNhap($form) {
                         tieuDe: 'Thông báo',
                         thongBao: data.ketQua,
                         nut: [{
-                            ten: 'Về trang chủ',
+                            ten: 'Về trang chủ',                            
                             xuLy: function () {
                                 window.location = '/TrangChu/';
                             }
                         }],
-                        esc: false
+                        esc: false,
+                        bieuTuong: 'thanh-cong'
                     });
                 }
                 if (data.trangThai == 1) {
                     moPopup({
                         tieuDe: 'Thông báo',
-                        thongBao: data.ketQua                        
+                        thongBao: data.ketQua,
+                        bieuTuong: 'nguy-hiem'
                     });
                 }
                 
             }).fail(function () {
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: '\
-                    <div style="width: 26px; height: 26px; background-position-x: -370px;" class="site-image"></div> \
-                    <span style="padding-left: 10px; line-height: 26px;">Lỗi Ajax</span>\
-                    ',
+                    thongBao: 'Lỗi ajax',                    
                     nut: [{
                         ten: 'Về trang chủ',
                         xuLy: function () {
                             window.location = '/TrangChu/';
                         }
                     }],
-                    esc: false
+                    esc: false,
+                    bieuTuong: 'nguy-hiem'
                 })
             })
         }

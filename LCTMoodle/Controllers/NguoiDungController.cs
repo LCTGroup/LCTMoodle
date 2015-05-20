@@ -14,7 +14,7 @@ namespace LCTMoodle.Controllers
         //
         // GET: /NguoiDung/
         public ActionResult Index()
-        {
+        {            
             return View();
         }
 
@@ -26,8 +26,8 @@ namespace LCTMoodle.Controllers
         {
             //Tắt hiển thị cột trái, cột phải
             ViewData["CotTrai"] = false;
-            ViewData["CotPhai"] = false;
-            
+            ViewData["CotPhai"] = false;                        
+
             return View();
         }
         /// <summary>
@@ -59,6 +59,13 @@ namespace LCTMoodle.Controllers
             KetQua ketQua = NguoiDungBUS.kiemTraDangNhap(form);
 
             return Json(ketQua);
+        }
+
+        public ActionResult XuLyDangXuat()
+        {
+            NguoiDungBUS.xuLyDangXuat();
+
+            return RedirectToAction("Index", "TrangChu");
         }
 	}
 }

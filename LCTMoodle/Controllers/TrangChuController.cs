@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BUSLayer;
+using DTOLayer;
+using DAOLayer;
 
 namespace LCTMoodle.Controllers
 {
@@ -10,6 +13,8 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult Index()
         {
+            NguoiDungBUS.kiemTraCookie();
+
             return View();
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using DAOLayer;
 using DTOLayer;
 using System.IO;
@@ -56,10 +57,18 @@ namespace BUSLayer
             if (string.Equals(nguoiDung.matKhau, nguoiDungDangNhap.matKhau))
             {
                 if (layBool(form, "GhiNho"))
-                {            
-                    //Lưu mã người dùng vào Session
-                    System.Web.HttpContext.Current.Session["NguoiDung"] = nguoiDung.ma;                                       
-                }
+                {
+                    //Lưu Cookie
+                    HttpCookie cookieNguoiDung = new HttpCookie("NguoiDung");                    
+                    cookieNguoiDung.Values.Add("TenTaiKhoan", nguoiDung.tenTaiKhoan);
+                    cookieNguoiDung.Values.Add("MatKhau", nguoiDung.matKhau);
+                    cookieNguoiDung.Expires = DateTime.Now.AddDays(7);
+
+                    HttpContext.Current.Response.Cookies.Add(cookieNguoiDung);
+                }                
+                //Lưu mã người dùng vào Session
+                HttpContext.Current.Session["NguoiDung"] = nguoiDung.tenTaiKhoan;
+
                 ketQua.ketQua = "Đăng nhập thành công";
             }
             else
@@ -69,6 +78,34 @@ namespace BUSLayer
             }
             return ketQua;            
         }
+        public static void xuLyDangXuat()
+        {
+            //Xóa session            
+            HttpContext.Current.Session.Abandon();
+            
+            //Xóa Cookie
+            HttpCookie cookie = HttpContext.Current.Request.Cookies["NguoiDung"];
+            cookie.Expires = DateTime.Now.AddDays(-7);
+            cookie.Value = null;
+            HttpContext.Current.Response.Cookies.Remove("NguoiDung");
+            HttpContext.Current.Response.Cookies.Add(cookie);
+        }
+        public static void kiemTraCookie()
+        {
+            if (HttpContext.Current.Request.Cookies["NguoiDung"] != null && HttpContext.Current.Session["NguoiDung"] == null)
+            {               
+                Dictionary<string, string> formDangNhap = new Dictionary<string, string>();
 
+                formDangNhap.Add("TenTaiKhoan", HttpContext.Current.Request.Cookies["NguoiDung"]["TenTaiKhoan"]);
+                formDangNhap.Add("MatKhau", HttpContext.Current.Request.Cookies["NguoiDung"]["MatKhau"]);
+
+                KetQua ketQua = NguoiDungBUS.kiemTraDangNhap(formDangNhap);
+
+                if (ketQua.trangThai == 0)
+                {
+                    HttpContext.Current.Session["NguoiDung"] = formDangNhap["TenTaiKhoan"];
+                }            
+            }
+        }
     }
 }
