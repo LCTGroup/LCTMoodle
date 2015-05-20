@@ -1,0 +1,37 @@
+﻿.khung-binh-luan .khung-danh-sach {
+    padding: 0 10px;
+}
+
+    .khung-binh-luan .khung-danh-sach .muc-binh-luan {
+        display: flex;
+        margin: 10px 0;
+    }
+
+        .khung-binh-luan .khung-danh-sach .muc-binh-luan .trai {
+            min-width: 35px;
+            padding-right: 5px;
+        }
+
+            .khung-binh-luan .khung-danh-sach .muc-binh-luan .trai .hinh-dai-dien,
+            .khung-binh-luan .khung-danh-sach .muc-binh-luan .trai img {
+                height: 35px;
+                width: 35px;
+            }
+
+            .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .nguoi-dung {
+                font-weight: bold;
+                display: inline;
+            }
+
+            .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .noi-dung {
+                display: inline;
+            }
+
+            .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .thong-tin {
+                display: block;
+            }
+
+                .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .thong-tin .thoi-gian {
+                    color: #888;
+                    font-size: 11px;
+                }
