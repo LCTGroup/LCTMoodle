@@ -1,0 +1,13 @@
+﻿@model List<DTOLayer.BaiVietDienDanViewDTO>
+
+<section class="hop">
+    <section class="tieu-de">
+        Danh sách bài viết
+    </section>
+    <ul id="danh_sach_bai_viet" class="noi-dung danh-sach-bai-viet">
+        @foreach(var baiViet in Model)
+        {
+            @Html.Partial("~/Views/BaiVietDienDan/_Muc.cshtml", baiViet, ViewData);
+        }
+    </ul>
+</section>

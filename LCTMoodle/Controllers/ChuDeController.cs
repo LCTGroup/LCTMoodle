@@ -33,7 +33,7 @@ namespace LCTMoodle.Controllers
             return Json(new KetQua()
                 {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "~/Views/ChuDe/_Form.cshtml", null, ViewData)
+                    ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", null, ViewData)
                 }, JsonRequestBehavior.AllowGet);
         }
 
@@ -48,7 +48,7 @@ namespace LCTMoodle.Controllers
             return Json(new KetQua()
                 {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "~/Views/ChuDe/_Chon.cshtml")
+                    ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Chon.cshtml")
                 }, JsonRequestBehavior.AllowGet);
         }
 	}

@@ -1,0 +1,27 @@
+﻿@model List<DTOLayer.BinhLuanViewDTO>
+
+<section data-doi-tuong="khung-binh-luan" class="khung-binh-luan">
+    <section class="khung-danh-sach">
+        <ul data-doi-tuong="danh-sach">
+            @foreach (var binhLuan in Model)
+            {
+                @Html.Partial("~/Views/BinhLuan/_Muc.cshtml", binhLuan);
+            }
+        </ul>
+    </section>
+    <section class="khung-form">
+        <form data-doi-tuong="binh-luan-form" class="lct-form">
+            <input name="Loai" value="@ViewData["LoaiDoiTuong"]" type="hidden" />
+            <input name="DoiTuong" value="@ViewData["MaDoiTuong"]" type="hidden" />
+            <ul style="padding: 0 10px 10px 10px; margin-top: 10px;">
+                <li style="margin: 0;">
+                    <article class="noi-dung">
+                        <article class="input">
+                            <input data-validate="bat-buoc" type="text" name="NoiDung" placeholder="Viết bình luận của bạn" />
+                        </article>
+                    </article>
+                </li>
+            </ul>
+        </form>
+    </section>
+</section>

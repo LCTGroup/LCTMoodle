@@ -83,6 +83,8 @@ namespace LCTMoodle.Controllers
         public string renderPartialViewToString(ControllerContext controllerContextontrollerContext,
             string partialViewName, object model = null, ViewDataDictionary viewData = null, TempDataDictionary tempData = null)
         {
+            partialViewName = "~/Views/" + partialViewName;
+
             if (viewData == null)
             {
                 viewData = new ViewDataDictionary();

@@ -126,8 +126,6 @@
     <Folder Include="Uploads\HinhDaiDien_KhoaHoc\" />
     <Folder Include="Uploads\KhoaHoc_HinhDaiDien\" />
     <Folder Include="Uploads\Tam\" />
-    <Folder Include="Views\BaiVietDienDan\" />
-    <Folder Include="Views\BinhLuan\" />
     <Folder Include="Views\TapTin\" />
   </ItemGroup>
   <ItemGroup>
@@ -378,6 +376,11 @@
     <Content Include="Views\ChuDe\_Form.cshtml" />
     <Content Include="Views\KhoaHoc\Xem.cshtml" />
     <Content Include="Views\HoiDap\Index.cshtml" />
+    <Content Include="Views\BaiVietDienDan\_Form.cshtml" />
+    <Content Include="Views\BaiVietDienDan\_DanhSach.cshtml" />
+    <Content Include="Views\BaiVietDienDan\_Muc.cshtml" />
+    <Content Include="Views\BinhLuan\_Khung.cshtml" />
+    <Content Include="Views\BinhLuan\_Muc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

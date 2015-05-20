@@ -11,15 +11,52 @@ namespace LCTMoodle.Controllers
 {
     public class BaiVietDienDanController : LCTController
     {
+        public ActionResult _Khung(int maKhoaHoc)
+        {
+            ViewData["MaKhoaHoc"] = maKhoaHoc;
+
+            KetQua ketQua = BaiVietDienDanDAO.layTheoMaKhoaHoc(maKhoaHoc);
+            List<BaiVietDienDanViewDTO> danhSachBaiViet = 
+                ketQua.trangThai == 0 ?
+                ketQua.ketQua as List<BaiVietDienDanViewDTO> :
+                new List<BaiVietDienDanViewDTO>();
+
+            try
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 0,
+                        ketQua =
+                            renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Form.cshtml", null, ViewData) +
+                            renderPartialViewToString(ControllerContext, "BaiVietDienDan/_DanhSach.cshtml", danhSachBaiViet, ViewData)
+                    }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 2
+                    }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [ValidateInput(false)]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            return Json(BaiVietDienDanBUS.them(chuyenDuLieuForm(formCollection)));
-        }
+            KetQua ketQua = BaiVietDienDanBUS.them(chuyenDuLieuForm(formCollection));
 
-        public ActionResult LayDanhSach(int maKhoaHoc)
-        {
-            return Json(BaiVietDienDanDAO.layTheoMaKhoaHoc(maKhoaHoc), JsonRequestBehavior.AllowGet);
+            if (ketQua.trangThai == 0)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 0,
+                        ketQua = renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Muc.cshtml", ketQua.ketQua)
+                    });
+            }
+            else
+            {
+                return Json(ketQua);
+            }
         }
 	}
 }
