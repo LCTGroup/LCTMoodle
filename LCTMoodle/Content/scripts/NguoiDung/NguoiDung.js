@@ -26,9 +26,7 @@ function khoiTaoThemNguoiDung($form) {
                             thongBao: 'Đăng ký thành công',
                             nut: [{
                                 ten: 'Về trang chủ',
-                                xuLy: function () {
-                                    window.location = '/TrangChu/';
-                                }
+                                href: '/TrangChu/'
                             }],
                             esc: false,
                             bieuTuong: 'thanh-cong'
@@ -59,10 +57,8 @@ function khoiTaoThemNguoiDung($form) {
             }).fail(function () {               
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: '\
-                    <div style="width: 26px; height: 26px; background-position-x: -370px;" class="site-image"></div> \
-                    <span style="padding-left: 10px; line-height: 26px;">Lỗi Ajax</span>\
-                    '
+                    thongBao: 'Lỗi ajax',
+                    bieuTuong: 'nguy-hiem'
                 });
             })
         }
@@ -84,7 +80,7 @@ function khoiTaoDangNhap($form) {
                         tieuDe: 'Thông báo',
                         thongBao: data.ketQua,
                         nut: [{
-                            ten: 'Về trang chủ',
+                            ten: 'Về trang chủ',                            
                             xuLy: function () {
                                 window.location = '/TrangChu/';
                             }

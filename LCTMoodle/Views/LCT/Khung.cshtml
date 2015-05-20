@@ -1,6 +1,6 @@
 ﻿@{
     bool CotTrai = ViewData["CotTrai"] == null ? true : (bool)ViewData["CotTrai"];
-    bool CotPhai = ViewData["CotPhai"] == null ? true : (bool)ViewData["CotPhai"];
+    bool CotPhai = ViewData["CotPhai"] == null ? true : (bool)ViewData["CotPhai"];       
 }
 <!DOCTYPE html>
 
@@ -29,32 +29,32 @@
             </section>
             <section class="top-header">
                 <article class="hop-nguoi-dung">
-                    @if (Session["NguoiDung"] == null)
+                @if (Session["NguoiDung"] == null)
                 {
-                        <ul class="chua-dang-nhap">
-                            <li><a href="/NguoiDung/DangNhap">Đăng nhập</a></li>
-                            <li><a href="/NguoiDung/DangKy">Đăng ký</a></li>
-                        </ul>
+                    <ul class="chua-dang-nhap">
+                        <li><a href="/NguoiDung/DangNhap">Đăng nhập</a></li>
+                        <li><a href="/NguoiDung/DangKy">Đăng ký</a></li>
+                    </ul>
                 }
                 else
-                {
-                        <ul class="da-dang-nhap">
-                            <li><a href="#"><i class="pe-7s-chat"></i></a></li>
-                            <li><a href="#"><i class="pe-7s-global"></i></a></li>
-                            <li>
-                                <a href="javascript:void(0)" data-show-target="HopDieuKhien">
-                                    <img src="/Content/images/user-avatar.jpg" />
-                                    <span>@Session["NguoiDung"]</span>
-                                </a>
-                                <div class="hop-dieu-khien" data-target="HopDieuKhien">
-                                    <ul>
-                                        <li><a href="#"><i class="pe-7s-user"></i><span>Thông tin cá nhân</span></a></li>
-                                        <li><a href="#"><i class="pe-7s-config"></i><span>Cài đặt</span></a></li>
-                                        <li><a href="#"><i class="pe-7s-power"></i><span>Thoát</span></a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
+                {                    
+                    <ul class="da-dang-nhap">
+                        <li><a href="#"><i class="pe-7s-chat"></i></a></li>
+                        <li><a href="#"><i class="pe-7s-global"></i></a></li>
+                        <li>
+                            <a href="javascript:void(0)" data-show-target="HopDieuKhien">
+                                <img src="/Content/images/user-avatar.jpg" />
+                                <span>@Session["NguoiDung"]</span>
+                            </a>
+                            <div class="hop-dieu-khien" data-target="HopDieuKhien">
+                                <ul>
+                                    <li><a href="/NguoiDung/"><i class="pe-7s-user"></i><span>Thông tin cá nhân</span></a></li>
+                                    <li><a href="#"><i class="pe-7s-config"></i><span>Cài đặt</span></a></li>
+                                    <li><a href="#" id="btnDangXuat"><i class="pe-7s-power"></i><span>Thoát</span></a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
                 }
                 </article>
             </section>
