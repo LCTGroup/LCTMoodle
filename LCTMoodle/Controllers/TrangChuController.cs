@@ -12,9 +12,7 @@ namespace LCTMoodle.Controllers
     public class TrangChuController : Controller
     {
         public ActionResult Index()
-        {
-            NguoiDungBUS.kiemTraCookie();
-
+        {            
             return View();
         }
 

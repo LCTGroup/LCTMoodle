@@ -1,6 +1,8 @@
 ﻿@{
     bool CotTrai = ViewData["CotTrai"] == null ? true : (bool)ViewData["CotTrai"];
-    bool CotPhai = ViewData["CotPhai"] == null ? true : (bool)ViewData["CotPhai"];       
+    bool CotPhai = ViewData["CotPhai"] == null ? true : (bool)ViewData["CotPhai"];
+
+    BUSLayer.NguoiDungBUS.kiemTraCookie();       
 }
 <!DOCTYPE html>
 
@@ -50,7 +52,7 @@
                                 <ul>
                                     <li><a href="/NguoiDung/"><i class="pe-7s-user"></i><span>Thông tin cá nhân</span></a></li>
                                     <li><a href="#"><i class="pe-7s-config"></i><span>Cài đặt</span></a></li>
-                                    <li><a href="#" id="btnDangXuat"><i class="pe-7s-power"></i><span>Thoát</span></a></li>
+                                    <li><a href="/NguoiDung/xuLyDangXuat"><i class="pe-7s-power"></i><span>Thoát</span></a></li>
                                 </ul>
                             </div>
                         </li>

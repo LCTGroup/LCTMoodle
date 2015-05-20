@@ -80,15 +80,14 @@ namespace BUSLayer
         }
         public static void xuLyDangXuat()
         {
+            //Xóa Cookie
+            HttpCookie cookie = HttpContext.Current.Request.Cookies["NguoiDung"];            
+            cookie.Value = null;
+            cookie.Expires = DateTime.Now.AddDays(-1);
+            HttpContext.Current.Response.Cookies.Add(cookie);            
+
             //Xóa session            
             HttpContext.Current.Session.Abandon();
-            
-            //Xóa Cookie
-            HttpCookie cookie = HttpContext.Current.Request.Cookies["NguoiDung"];
-            cookie.Expires = DateTime.Now.AddDays(-7);
-            cookie.Value = null;
-            HttpContext.Current.Response.Cookies.Remove("NguoiDung");
-            HttpContext.Current.Response.Cookies.Add(cookie);
         }
         public static void kiemTraCookie()
         {

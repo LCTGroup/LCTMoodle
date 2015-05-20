@@ -9,9 +9,7 @@ var mangTam = [];
 $(function () {
     $body = $('body');
     $body.removeClass('tai');
-    khoiTao_TatMoDoiTuong($('[data-show-target]'));
-
-    xuLyDangXuat($('#btnDangXuat'));
+    khoiTao_TatMoDoiTuong($('[data-show-target]')); 
 });
 
 /*
@@ -337,23 +335,9 @@ function moPopup(thamSo) {
 */
 function xuLyDangXuat($btnDangXuat) {
     $btnDangXuat.on('click', function () {
-        moPopup({
-            ten: 'Thông báo',
-            thongBao: 'Bạn có muốn thoát?',
-            bieuTuong: 'canh-bao',
-            nut: [{
-                ten: "Có",
-                xuLy: function () {
-                    $.ajax({
-                        url: '/NguoiDung/XuLyDangXuat/'                        
-                    });
-                    window.location = "/TrangChu/";
-                }
-            },
-            {
-                ten: "Không",                
-            }],
-            esc: false
-        })
+        $.ajax({
+            url: '/NguoiDung/XuLyDangXuat/'
+        });
+        window.location = "/TrangChu/";
     });
 }

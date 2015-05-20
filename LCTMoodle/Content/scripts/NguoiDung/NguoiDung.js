@@ -6,7 +6,7 @@ $(function () {
     khoiTaoThemNguoiDung($('#dang_ky'));
 
     //Khởi tạo xử lý đăng nhập
-    $formDangNhap = khoiTaoDangNhap($('#dang_nhap'));
+    khoiTaoDangNhap($('#dang_nhap'));
 });
 
 //Xử lý đăng ký
@@ -61,7 +61,16 @@ function khoiTaoThemNguoiDung($form) {
                     bieuTuong: 'nguy-hiem'
                 });
             })
-        }
+        },
+        validates: [{
+            input: $('#NhapLaiMatKhau'),
+            thongBao: 'Mật khẩu chưa khớp',
+            validate: function () {
+                if ($('#NhapLaiMatKhau').val() != $('#MatKhau').val()) {
+                    return false;
+                }
+            }            
+        }]
     });
 }
 

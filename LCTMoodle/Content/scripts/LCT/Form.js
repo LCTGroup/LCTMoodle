@@ -716,11 +716,13 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
             var $input = this.input;
 
             if ('validate' in this) {
+                var validate = this;
+
                 var loai = 'custom-' + index;
-                var thongBao = this.thongBao;
+                var thongBao = validate.thongBao;
 
                 $input.on('focusout', function () {
-                    if (this.validate() == false) {
+                    if (validate.validate() === false) {
                         if (auto) {
                             baoLoi($input, loai, thongBao);
                         }
@@ -818,12 +820,12 @@ function khoiTaoSubmit_LCT($form, thamSo) {
         //Custom
         if ('validates' in thamSo) {
             $(thamSo.validates).each(function (index) {
-                if ('validate' in thamSo) {
+                if ('validate' in this) {
                     var $input = this.input;
                     var loai = 'custom-' + index;
                     var thongBao = this.thongBao;
 
-                    if (this.validate() == false) {
+                    if (this.validate() === false) {
                         baoLoi($input, loai, thongBao);
                     }
                     else {
