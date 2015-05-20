@@ -8,7 +8,6 @@ namespace DTOLayer
 {
     public class TapTinDataDTO : DTO
     {
-        public int ma;
         public string ten;
         public string loai;
         public DateTime thoiDiemTao;

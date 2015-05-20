@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaiVietDienDanDAO.cs" />
+    <Compile Include="BinhLuanDAO.cs" />
     <Compile Include="KhoaHocDAO.cs" />
     <Compile Include="NguoiDungDAO.cs" />
     <Compile Include="TapTinDAO.cs" />
