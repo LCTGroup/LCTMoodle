@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E084C23E-8BD2-4B97-AC36-26964589BCA0}</ProjectGuid>
+    <ProjectGuid>{752EDDE4-57AA-4C15-AA3C-748429B1A135}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DAOLayer</RootNamespace>
-    <AssemblyName>DAO</AssemblyName>
+    <RootNamespace>Helpers</RootNamespace>
+    <AssemblyName>Helper</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,8 +31,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,20 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaiVietDienDanDAO.cs" />
-    <Compile Include="BinhLuanDAO.cs" />
-    <Compile Include="KhoaHocDAO.cs" />
-    <Compile Include="NguoiDungDAO.cs" />
-    <Compile Include="TapTinDAO.cs" />
-    <Compile Include="ChuDeDAO.cs" />
-    <Compile Include="DAO.cs" />
+    <Compile Include="LCTHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DTOLayer\DTOLayer.csproj">
-      <Project>{f03e2462-211a-47ab-bb76-9ad537ea4734}</Project>
-      <Name>DTOLayer</Name>
-    </ProjectReference>
+    <Compile Include="BinhLuanHelper.cs" />
+    <Compile Include="TapTinHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
