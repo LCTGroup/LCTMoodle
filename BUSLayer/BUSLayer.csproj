@@ -40,7 +40,6 @@
   <ItemGroup>
     <Compile Include="BaiVietDienDanBUS.cs" />
     <Compile Include="BUS.cs" />
-    <Compile Include="BinhLuanBUS.cs" />
     <Compile Include="KhoaHocBUS.cs" />
     <Compile Include="NguoiDungBUS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
