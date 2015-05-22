@@ -9,31 +9,33 @@ var mangTam = [];
 $(function () {
     $body = $('body');
     $body.removeClass('tai');
-    khoiTao_TatMoDoiTuong($('[data-show-target]')); 
+    
+    khoiTaoTatMoDoiTuong($('[data-mo-doi-tuong]'));
 });
 
 /*
 	Bật tắt đối tượng Target
 */
-function khoiTao_TatMoDoiTuong($doiTuong) {
-    $doiTuong.on('click', function (e) {        
+function khoiTaoTatMoDoiTuong($danhSachNut) {
+    $danhSachNut.on('click', function () {        
         //Lấy đối tượng 
-        // $obj: đối tượng nút nhấn
-        // $target: đối tượng popup sẽ được hiển thị
-        $obj = $(this);
-        $target = $('[data-target="' + $obj.attr('data-show-target') + '"');
+        // $nut: nút nhấn
+        // $doiTuong: đối tượng popup sẽ được hiển thị
+        var $nut = $(this);
+        var $doiTuong = $('[data-doi-tuong="' + $nut.attr('data-mo-doi-tuong') + '"');
         
         //Xử lý sự kiện click của nút nhấn
-        if ($target.is(':visible')) {
-            $target.hide();           
+        if ($doiTuong.is(':visible')) {
+            $doiTuong.hide();           
         } else {
-            $target.show();
+            $doiTuong.show();
         }
 
         //Xử lý sự kiện nhấn chuột ra ngoài đối tượng
-        $(document).on('click', function (e) {
-            if ($target.has($(e.target)).length == 0 && !$(e.target).is($obj) && !$(e.target).is($target) && $obj.has($(e.target)).length == 0) {
-                $target.hide();
+        $(document).on('click.tat_mo', function (e) {
+            if ($doiTuong.has($(e.target)).length == 0 && !$(e.target).is($obj) && !$(e.target).is($doiTuong) && $obj.has($(e.target)).length == 0) {
+                $doiTuong.hide();
+                $(document).off('click.tat_mo');
             }
         });
     });

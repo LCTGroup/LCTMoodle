@@ -1,0 +1,38 @@
+﻿@model DTOLayer.BaiVietDienDanViewDTO
+
+<li class="muc-bai-viet" data-ma=@Model.ma>
+    <section class="khung-bai-viet">
+        <section class="khung-chuc-nang"></section>
+        <section class="khung-thong-tin">
+            <section class="trai">
+                <article class="hinh-dai-dien">
+                    <img src="#" />
+                </article>
+            </section>
+            <section class="phai">
+                <section class="nguoi-dung">
+                    <a href="#">Lê Bình Chiêu</a>
+                </section>
+                <section class="bai-viet">
+                    <section class="thoi-gian">
+                        @Model.thoiDiemTao
+                    </section>
+                </section>
+            </section>
+        </section>
+        <section class="khung-noi-dung">
+            <h2 class="tieu-de">
+                @Model.tieuDe
+            </h2>
+            <section class="noi-dung noi-dung-ckeditor">
+                @Html.Raw(Model.noiDung)
+            </section>
+        </section>
+        <section class="khung-dieu-khien"></section>
+    </section>
+    @Html.Partial("~/Views/BinhLuan/_Khung.cshtml", null, new ViewDataDictionary()
+        {
+            { "LoaiDoiTuong", "BaiVietDienDan" },
+            { "MaDoiTuong", Model.ma }
+        })
+</li>

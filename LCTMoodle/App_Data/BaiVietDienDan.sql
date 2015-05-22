@@ -39,7 +39,7 @@ BEGIN
 END
 
 GO
---Lấy bài viết diễn đàn theo mà khóa học
+--Lấy bài viết diễn đàn theo mã khóa học
 ALTER PROC dbo.layBaiVietDienDanTheoMaKhoaHoc (
 	@0 INT --MaKhoaHoc
 )

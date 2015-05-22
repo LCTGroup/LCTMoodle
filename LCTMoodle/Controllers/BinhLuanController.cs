@@ -14,12 +14,20 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult Them(FormCollection formCollection)
         {
-            return Json(BinhLuanBUS.them(chuyenDuLieuForm(formCollection)));
-        }
+            KetQua ketQua = BinhLuanBUS.them(chuyenDuLieuForm(formCollection));
 
-        public ActionResult Lay(string loaiDoiTuong, int maDoiTuong)
-        {
-            return Json(BinhLuanDAO.layTheoDoiTuong(loaiDoiTuong, maDoiTuong), JsonRequestBehavior.AllowGet);
+            if (ketQua.trangThai == 0)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 0,
+                        ketQua = renderPartialViewToString(ControllerContext, "BinhLuan/_Item.cshtml", ketQua.ketQua)
+                    });
+            }
+            else
+            {
+                return Json(ketQua);
+            }
         }
 	}
 }
