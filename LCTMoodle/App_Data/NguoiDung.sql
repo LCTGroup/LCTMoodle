@@ -45,5 +45,4 @@ BEGIN
 	WHERE TenTaiKhoan like @0
 END
 
-dbo.layNguoiDungTheoTenTaiKhoan 'FunkyHpio'
 select * from dbo.NguoiDung

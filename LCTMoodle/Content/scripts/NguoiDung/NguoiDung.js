@@ -54,7 +54,7 @@ function khoiTaoThemNguoiDung($form) {
                         });
                         break;
                 }
-            }).fail(function () {               
+            }).fail(function () {
                 moPopup({
                     tieuDe: 'Thông báo',
                     thongBao: 'Lỗi ajax',
@@ -62,15 +62,43 @@ function khoiTaoThemNguoiDung($form) {
                 });
             })
         },
-        validates: [{
-            input: $('#NhapLaiMatKhau'),
-            thongBao: 'Mật khẩu chưa khớp',
-            validate: function () {
-                if ($('#NhapLaiMatKhau').val() != $('#MatKhau').val()) {
-                    return false;
+        validates: [
+            {
+                input: $('#NhapLaiMatKhau'),
+                thongBao: 'Mật khẩu chưa khớp',
+                validate: function () {
+                    if ($('#NhapLaiMatKhau').val() != $('#MatKhau').val()) {
+                        return false;
+                    }
+                }            
+            },
+            {
+                input: $('#TenTaiKhoan'),
+                thongBao: 'Tài khoản đã tồn tại',
+                validate: function () {
+                    var ketQua;
+
+                    $.ajax({
+                        url: '/NguoiDung/KiemTraTenTaiKhoan',
+                        data: { tenTaiKhoan: $('#TenTaiKhoan').val() },
+                        dataType: 'JSON',
+                        async: false
+                    }).done(function (data) {
+                        if (data.trangThai == 0) {
+                            ketQua = false;
+                        }
+                        else {
+                            ketQua = true;
+                        }
+                    }).fail(function () {
+                        moPopup({
+                            tieuDe: 'Thông báo',
+                            noiDung: 'Lỗi ajax'
+                        })
+                    });
+                    return ketQua;
                 }
-            }            
-        }]
+            }]
     });
 }
 

@@ -27,7 +27,7 @@ namespace DAOLayer
                 }
             );
         }
-        public static KetQua lay(NguoiDungDataDTO nguoiDung)
+        public static KetQua lay(NguoiDungViewDTO nguoiDung)
         {
             return layDong<NguoiDungViewDTO>
             (
@@ -37,6 +37,6 @@ namespace DAOLayer
                     nguoiDung.tenTaiKhoan
                 }
             );
-        }
+        }        
     }
 }

@@ -17,13 +17,13 @@ namespace BUSLayer
             KetQua ketQua = TapTinBUS.chuyen(layInt(form, "HinhDaiDien"), "NguoiDung_HinhDaiDien");
             if (ketQua.trangThai != 0)
             {
-                return ketQua;
+                return ketQua;                
             }
 
             NguoiDungDataDTO nguoiDung = new NguoiDungDataDTO()
             {
                 tenTaiKhoan = layString(form, "TenTaiKhoan"),
-                matKhau = layString(form, "MatKhau"),
+                matKhau = Helpers.NguoiDungHelper.layMaMD5(layString(form, "MatKhau")),
                 email = layString(form, "Email"),
                 hoTen = layString(form, "HoTen"),
                 ngaySinh = layDateTime(form, "NgaySinh"),
@@ -31,7 +31,7 @@ namespace BUSLayer
                 soDienThoai = layString(form, "SoDienThoai"),
                 maHinhDaiDien = (ketQua.ketQua as TapTinViewDTO).ma
             };
-            ketQua = nguoiDung.kiemTra();
+            ketQua = nguoiDung.kiemTra();            
 
             return ketQua.trangThai == 3 ?
                 ketQua :
@@ -39,7 +39,7 @@ namespace BUSLayer
         }
         public static KetQua kiemTraDangNhap(Dictionary<string, string> form)
         {
-            NguoiDungDataDTO nguoiDungDangNhap = new NguoiDungDataDTO()
+            NguoiDungViewDTO nguoiDungDangNhap = new NguoiDungViewDTO()
             {
                 tenTaiKhoan = layString(form, "TenTaiKhoan"),
                 matKhau = layString(form, "MatKhau")
@@ -54,7 +54,7 @@ namespace BUSLayer
 
             NguoiDungViewDTO nguoiDung = ketQua.ketQua as NguoiDungViewDTO;
             
-            if (string.Equals(nguoiDung.matKhau, nguoiDungDangNhap.matKhau))
+            if (Helpers.NguoiDungHelper.soSanhChuoiMaHoa(nguoiDungDangNhap.matKhau, nguoiDung.matKhau))
             {
                 if (layBool(form, "GhiNho"))
                 {
@@ -81,11 +81,14 @@ namespace BUSLayer
         public static void xuLyDangXuat()
         {
             //Xóa Cookie
-            HttpCookie cookie = HttpContext.Current.Request.Cookies["NguoiDung"];            
-            cookie.Value = null;
-            cookie.Expires = DateTime.Now.AddDays(-1);
-            HttpContext.Current.Response.Cookies.Add(cookie);            
-
+            if (HttpContext.Current.Request.Cookies["NguoiDung"] != null)
+            {
+                HttpCookie cookie = HttpContext.Current.Request.Cookies["NguoiDung"];
+                cookie.Value = null;
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                HttpContext.Current.Response.Cookies.Add(cookie); 
+            }
+                       
             //Xóa session            
             HttpContext.Current.Session.Abandon();
         }
@@ -103,8 +106,17 @@ namespace BUSLayer
                 if (ketQua.trangThai == 0)
                 {
                     HttpContext.Current.Session["NguoiDung"] = formDangNhap["TenTaiKhoan"];
-                }            
+                }
             }
+        }
+        public static KetQua kiemTraTenTaiKhoan(string tenTaiKhoan)
+        {
+            NguoiDungViewDTO nguoiDung = new NguoiDungViewDTO()
+            {
+                tenTaiKhoan = tenTaiKhoan
+            };
+            
+            return NguoiDungDAO.lay(nguoiDung);
         }
     }
 }
