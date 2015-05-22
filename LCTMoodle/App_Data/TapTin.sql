@@ -7,8 +7,9 @@ GO
 	--BaiVietDienDan_TapTin
 	--NguoiDung_HinhDaiDien
 	--BinhLuan_BaiVietDienDan_TapTin
+	--BinhLuan_BaiVietBaiGiang_TapTin
 
-CREATE TABLE dbo.TapTin_BinhLuan_BaiVietDienDan_TapTin (
+CREATE TABLE dbo.TapTin_BinhLuan_BaiVietBaiGiang_TapTin (
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	Ten NVARCHAR(MAX) NOT NULL,
 	Loai NVARCHAR(MAX) NOT NULL,

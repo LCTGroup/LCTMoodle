@@ -27,8 +27,7 @@ namespace LCTMoodle.Controllers
                     {
                         trangThai = 0,
                         ketQua =
-                            renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Form.cshtml", null, ViewData) +
-                            renderPartialViewToString(ControllerContext, "BaiVietDienDan/_DanhSach.cshtml", danhSachBaiViet, ViewData)
+                            renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Khung.cshtml", danhSachBaiViet, ViewData)
                     }, JsonRequestBehavior.AllowGet);
             }
             catch
@@ -50,7 +49,7 @@ namespace LCTMoodle.Controllers
                 return Json(new KetQua()
                     {
                         trangThai = 0,
-                        ketQua = renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Muc.cshtml", ketQua.ketQua)
+                        ketQua = renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Item.cshtml", ketQua.ketQua)
                     });
             }
             else

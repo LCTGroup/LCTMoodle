@@ -21,20 +21,16 @@
             </section>
         </section>
         <section class="khung-noi-dung">
-            <h1 class="tieu-de">
+            <h2 class="tieu-de">
                 @Model.tieuDe
-            </h1>
+            </h2>
             <section class="noi-dung noi-dung-ckeditor">
                 @Html.Raw(Model.noiDung)
             </section>
         </section>
         <section class="khung-dieu-khien"></section>
     </section>
-    @{
-        var ketQua = DAOLayer.BinhLuanDAO.layTheoDoiTuong("BaiVietDienDan", Model.ma);
-        var danhSachBinhLuan = ketQua.trangThai == 0 ? ketQua.ketQua : new List<DTOLayer.BinhLuanViewDTO>();
-    }
-    @Html.Partial("~/Views/BinhLuan/_Khung.cshtml", danhSachBinhLuan, new ViewDataDictionary()
+    @Html.Partial("~/Views/BinhLuan/_Khung.cshtml", null, new ViewDataDictionary()
         {
             { "LoaiDoiTuong", "BaiVietDienDan" },
             { "MaDoiTuong", Model.ma }

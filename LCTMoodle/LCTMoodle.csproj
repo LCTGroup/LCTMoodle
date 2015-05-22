@@ -120,18 +120,13 @@
     <Folder Include="Plugin\ckeditor\samples\plugins\magicline\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\toolbar\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\wysiwygarea\" />
-    <Folder Include="Uploads\BaiVietDienDan_TapTin\" />
-    <Folder Include="Uploads\ChuDe_HinhDaiDien\" />
-    <Folder Include="Uploads\HinhDaiDien_ChuDe\" />
-    <Folder Include="Uploads\HinhDaiDien_KhoaHoc\" />
-    <Folder Include="Uploads\KhoaHoc_HinhDaiDien\" />
-    <Folder Include="Uploads\Tam\" />
     <Folder Include="Views\TapTin\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaiVietBaiGiangController.cs" />
     <Compile Include="Controllers\BaiVietDienDanController.cs" />
     <Compile Include="Controllers\BinhLuanController.cs" />
     <Compile Include="Controllers\ChuDeController.cs" />
@@ -334,11 +329,6 @@
     <Content Include="Plugin\ckeditor\skins\office2013\images\lock.png" />
     <Content Include="Plugin\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="Plugin\ckeditor\styles.js" />
-    <Content Include="Uploads\AnhDaiDien_ChuDe\1_Hoang-duong-anh-comment-facebook.jpg" />
-    <Content Include="Uploads\NguoiDung_HinhDaiDien\1.jpg" />
-    <Content Include="Uploads\NguoiDung_HinhDaiDien\2.jpg" />
-    <Content Include="Uploads\NguoiDung_HinhDaiDien\3.jpg" />
-    <Content Include="Uploads\NguoiDung_HinhDaiDien\4.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -378,9 +368,14 @@
     <Content Include="Views\HoiDap\Index.cshtml" />
     <Content Include="Views\BaiVietDienDan\_Form.cshtml" />
     <Content Include="Views\BaiVietDienDan\_DanhSach.cshtml" />
-    <Content Include="Views\BaiVietDienDan\_Muc.cshtml" />
+    <Content Include="Views\BaiVietDienDan\_Item.cshtml" />
     <Content Include="Views\BinhLuan\_Khung.cshtml" />
-    <Content Include="Views\BinhLuan\_Muc.cshtml" />
+    <Content Include="Views\BinhLuan\_Item.cshtml" />
+    <Content Include="Views\BaiVietDienDan\_Khung.cshtml" />
+    <Content Include="Views\BaiVietBaiGiang\_Khung.cshtml" />
+    <Content Include="Views\BaiVietBaiGiang\_Form.cshtml" />
+    <Content Include="Views\BaiVietBaiGiang\_DanhSach.cshtml" />
+    <Content Include="Views\BaiVietBaiGiang\_Item.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">
