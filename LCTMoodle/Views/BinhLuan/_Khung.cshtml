@@ -3,7 +3,7 @@
     var danhSachBinhLuan = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BinhLuanViewDTO> : new List<DTOLayer.BinhLuanViewDTO>();
 }
 
-<section data-doi-tuong="khung-binh-luan" class="khung-binh-luan">
+<article data-doi-tuong="khung-binh-luan" class="khung-binh-luan">
     <section class="khung-danh-sach">
         <ul data-doi-tuong="danh-sach">
             @foreach (var binhLuan in danhSachBinhLuan)
@@ -17,13 +17,23 @@
             <input name="Loai" value="@ViewData["LoaiDoiTuong"]" type="hidden" />
             <input name="DoiTuong" value="@ViewData["MaDoiTuong"]" type="hidden" />
             <ul style="padding: 0 10px 10px 10px; margin-top: 10px;">
-                <li style="margin: 0;">
+                <li style="margin: 0; width: calc(100% - 35px);">
                     <article class="noi-dung">
-                        <article class="input">
+                        <article class="input" style="border-right: 0;">
                             <input data-validate="bat-buoc" type="text" name="NoiDung" placeholder="Viết bình luận của bạn" />
                         </article>
                     </article>
                 </li>
+                <li style="margin: 0; width: 35px;">
+                    <article class="noi-dung">
+                        <article class="input" style="border-left: 0;">
+                            <input type="file" name="name" value="" />
+                        </article>
+                    </article>
+                </li>
+                @*<li style="margin: 0; width: 30px;">
+                    <button class="chap-nhan" style="width: 32px; height: 32px; margin: 0; padding: 0;"><i class="pe-7s-check" style="font-size: 20px;"></i></button>
+                </li>*@
             </ul>
         </form>
     </section>

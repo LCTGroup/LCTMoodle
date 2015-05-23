@@ -69,5 +69,133 @@
 
 /*#endregion */
 
+/*#endregion */
+
+/*#region Bài giảng */
+
+[data-hien-thi="bai-giang"] {
+
+}
+
+/*#region Khung bài viết */
+
+[data-hien-thi="bai-giang"] .muc-bai-viet {
+    margin: 10px 0;
+}
+
+    [data-hien-thi="bai-giang"] .muc-bai-viet .tieu-de {
+        color: #333;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        [data-hien-thi="bai-giang"] .muc-bai-viet.mo .tieu-de {
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-bottom: 0;
+            text-align: center;
+            padding-top: 10px;
+            font-weight: normal;
+            font-size: 22px;
+        }
+
+        [data-hien-thi="bai-giang"] .muc-bai-viet .tieu-de i {
+            font-size: 26px;
+            vertical-align: middle
+        }
+
+            [data-hien-thi="bai-giang"] .muc-bai-viet.mo .tieu-de i {
+                font-size: 26px;
+                vertical-align: -3px;
+            }
+
+    [data-hien-thi="bai-giang"] .muc-bai-viet .khung-noi-dung {
+        background-color: #fff;
+        border: 1px solid #eee;
+        padding: 10px;
+        margin-top: 5px;
+        display: none;
+    }
+
+        [data-hien-thi="bai-giang"] .muc-bai-viet.mo .khung-noi-dung {
+            border-top: 0;
+            margin-top: 0;
+            display: block;
+        }
+
+/*#endregion */
+
+/*#endregion */
+
+/*#region Bài tập */
+
+[data-hien-thi="bai-tap"] .muc-bai-viet {
+    border: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+[data-hien-thi="bai-tap"] .khung-binh-luan {
+    border-top: 1px solid #f5f5f5;
+    background-color: #fcfcfc;
+}
+
+/*#region Khung bài viết */
+
+[data-hien-thi="bai-tap"] .khung-bai-viet {
+    background-color: #fff;
+}
+
+    [data-hien-thi="bai-tap"] .khung-bai-viet .khung-thong-tin {
+        display: flex;
+        background-color: #fcfcfc;
+        border-bottom: 1px solid #f8f8f8;
+        padding: 10px;
+    }
+
+        [data-hien-thi="bai-tap"] .khung-bai-viet .khung-thong-tin .trai {
+            min-width: 40px;
+            max-width: 40px;
+            margin-right: 10px;
+        }
+
+            [data-hien-thi="bai-tap"] .khung-bai-viet .khung-thong-tin .trai .hinh-dai-dien {
+                height: 40px;
+                width: 40px;
+            }
+
+                [data-hien-thi="bai-tap"] .khung-bai-viet .khung-thong-tin .trai .hinh-dai-dien img {
+                    height: 40px;
+                    width: 40px;
+                }
+
+        [data-hien-thi="bai-tap"] .khung-bai-viet .khung-thong-tin .phai {
+            width: 100%;
+            line-height: 20px;
+        }
+
+            [data-hien-thi="bai-tap"] .khung-bai-viet .khung-thong-tin .phai .nguoi-dung a {
+                font-weight: bold;
+                font-size: 14px;
+                color: #333;
+            }
+
+            [data-hien-thi="bai-tap"] .khung-bai-viet .khung-thong-tin .phai .bai-viet .thoi-gian {
+                font-size: 12px;
+                color: #888;
+            }
+
+    [data-hien-thi="bai-tap"] .khung-bai-viet .khung-noi-dung {
+        padding: 10px;
+        color: #333;
+    }
+
+        [data-hien-thi="bai-tap"] .khung-bai-viet .khung-noi-dung .tieu-de {
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 25px;
+            margin-bottom: 5px;
+        }
+
+/*#endregion */
 
 /*#endregion */

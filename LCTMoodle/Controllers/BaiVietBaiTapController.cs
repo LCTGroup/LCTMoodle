@@ -9,17 +9,17 @@ using DAOLayer;
 
 namespace LCTMoodle.Controllers
 {
-    public class BaiVietBaiGiangController : LCTController
+    public class BaiVietBaiTapController : LCTController
     {
         public ActionResult _Khung(int maKhoaHoc)
         {
             ViewData["MaKhoaHoc"] = maKhoaHoc;
 
-            KetQua ketQua = BaiVietBaiGiangDAO.layTheoMaKhoaHoc(maKhoaHoc);
-            List<BaiVietBaiGiangViewDTO> danhSachBaiViet = 
+            KetQua ketQua = BaiVietBaiTapDAO.layTheoMaKhoaHoc(maKhoaHoc);
+            List<BaiVietBaiTapViewDTO> danhSachBaiViet = 
                 ketQua.trangThai == 0 ?
-                ketQua.ketQua as List<BaiVietBaiGiangViewDTO> :
-                new List<BaiVietBaiGiangViewDTO>();
+                ketQua.ketQua as List<BaiVietBaiTapViewDTO> :
+                new List<BaiVietBaiTapViewDTO>();
 
             try
             {
@@ -27,7 +27,7 @@ namespace LCTMoodle.Controllers
                     {
                         trangThai = 0,
                         ketQua =
-                            renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Khung.cshtml", danhSachBaiViet, ViewData)
+                            renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Khung.cshtml", danhSachBaiViet, ViewData)
                     }, JsonRequestBehavior.AllowGet);
             }
             catch
@@ -42,14 +42,14 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            KetQua ketQua = BaiVietBaiGiangBUS.them(chuyenDuLieuForm(formCollection));
+            KetQua ketQua = BaiVietBaiTapBUS.them(chuyenDuLieuForm(formCollection));
 
             if (ketQua.trangThai == 0)
             {
                 return Json(new KetQua()
                     {
                         trangThai = 0,
-                        ketQua = renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Item.cshtml", ketQua.ketQua)
+                        ketQua = renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Item.cshtml", ketQua.ketQua)
                     });
             }
             else

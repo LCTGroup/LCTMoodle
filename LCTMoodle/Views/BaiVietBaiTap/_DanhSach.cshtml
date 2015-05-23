@@ -1,4 +1,4 @@
-﻿@model List<DTOLayer.BaiVietBaiGiangViewDTO>
+﻿@model List<DTOLayer.BaiVietBaiTapViewDTO>
 
 <section class="hop">
     <section class="tieu-de">
@@ -7,7 +7,7 @@
     <ul id="danh_sach_bai_viet" class="noi-dung">
         @foreach(var baiViet in Model)
         {
-            @Html.Partial("~/Views/BaiVietBaiGiang/_Item.cshtml", baiViet, ViewData);
+            @Html.Partial("~/Views/BaiVietBaiTap/_Item.cshtml", baiViet, ViewData);
         }
     </ul>
 </section>

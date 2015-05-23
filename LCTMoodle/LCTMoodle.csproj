@@ -127,6 +127,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaiVietBaiGiangController.cs" />
+    <Compile Include="Controllers\BaiVietBaiTapController.cs" />
     <Compile Include="Controllers\BaiVietDienDanController.cs" />
     <Compile Include="Controllers\BinhLuanController.cs" />
     <Compile Include="Controllers\ChuDeController.cs" />
@@ -376,6 +377,10 @@
     <Content Include="Views\BaiVietBaiGiang\_Form.cshtml" />
     <Content Include="Views\BaiVietBaiGiang\_DanhSach.cshtml" />
     <Content Include="Views\BaiVietBaiGiang\_Item.cshtml" />
+    <Content Include="Views\BaiVietBaiTap\_DanhSach.cshtml" />
+    <Content Include="Views\BaiVietBaiTap\_Form.cshtml" />
+    <Content Include="Views\BaiVietBaiTap\_Item.cshtml" />
+    <Content Include="Views\BaiVietBaiTap\_Khung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

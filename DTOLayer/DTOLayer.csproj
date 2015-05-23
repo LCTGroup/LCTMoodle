@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataDTO\BaiVietBaiGiangDataDTO.cs" />
+    <Compile Include="DataDTO\BaiVietBaiTapDataDTO.cs" />
     <Compile Include="DataDTO\BaiVietDienDanDataDTO.cs" />
     <Compile Include="DataDTO\BinhLuanDataDTO.cs" />
     <Compile Include="DataDTO\KhoaHocDataDTO.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="DTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewDTO\BaiVietBaiGiangViewDTO.cs" />
+    <Compile Include="ViewDTO\BaiVietBaiTapViewDTO.cs" />
     <Compile Include="ViewDTO\BaiVietDienDanViewDTO.cs" />
     <Compile Include="ViewDTO\BinhLuanViewDTO.cs" />
     <Compile Include="ViewDTO\ChuDeViewDTO.cs" />

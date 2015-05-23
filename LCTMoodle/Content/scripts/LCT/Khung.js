@@ -219,7 +219,7 @@ function moPopupFull(thamSo) {
         Đoạn thông báo
     bieuTuong: Không bắt buộc (chỉ sử dụng được khi có thông báo)
         Biểu tượng trước thông báo
-        Gồm: thanh-cong, nguy-hiem, thong-tin, canh-bao, hoi
+        Gồm: thanh-cong, nguy-hiem, thong-tin, can-than, hoi
     nut: Mặc định: Nút thoát
         Danh sách nút xử lý ở thông báo
         Gồm:
@@ -300,7 +300,7 @@ function moPopup(thamSo) {
             var $nut;
 
             if ('href' in n) {
-                $nut = '<a href="' + n.href + '" class="' + (n.loai || 'chap-nhan') + '">' + (n.ten || 'Nút xử lý') + '</a>'
+                $nut = '<a href="' + n.href + '" class="button ' + (n.loai || 'chap-nhan') + '">' + (n.ten || 'Nút xử lý') + '</a>'
             }
             else {
                 $nut = $('<button class="' + (n.loai || 'chap-nhan') + '">' + (n.ten || 'Nút xử lý') + '</button>');
