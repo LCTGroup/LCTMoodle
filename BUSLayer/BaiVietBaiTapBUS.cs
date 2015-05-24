@@ -15,7 +15,7 @@ namespace BUSLayer
         public static KetQua them(Dictionary<string, string> form)
         {
             //Chuyển tập tin
-            KetQua ketQua = TapTinBUS.chuyen(layInt(form, "TapTin"), "BaiVietBaiTap_TapTin");
+            KetQua ketQua = TapTinBUS.chuyen("BaiVietBaiTap_TapTin", layInt(form, "TapTin"));
 
             if (ketQua.trangThai != 0)
             {
@@ -55,7 +55,10 @@ namespace BUSLayer
             {
                 ketQua = TapTinBUS.lay("BaiVietBaiTap_TapTin", baiVietMoi.tapTin.ma);
 
-                baiVietMoi.tapTin = ketQua.trangThai == 0 ? ketQua.ketQua as TapTinViewDTO : null;
+                if (ketQua.trangThai == 0)
+                {
+                    baiVietMoi.tapTin = ketQua.ketQua as TapTinViewDTO;
+                }
             }
 
             return new KetQua()
@@ -82,7 +85,10 @@ namespace BUSLayer
                 {
                     ketQua = TapTinDAO.lay("BaiVietBaiTap_TapTin", baiViet.tapTin.ma);
 
-                    baiViet.tapTin = ketQua.trangThai == 0 ? ketQua.ketQua as TapTinViewDTO : null;
+                    if (ketQua.trangThai == 0)
+                    {
+                        baiViet.tapTin = ketQua.ketQua as TapTinViewDTO;
+                    }
                 }
             }
 

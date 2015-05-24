@@ -72,19 +72,19 @@ function layKhung_DienDan() {
 }
 
 function khoiTaoForm_DienDan($form) {
-    var $doiTuongTaoBaiViet = $form.find('[data-doi-tuong="tao-bai-viet"]');
+    var $doiTuongAn = $form.find('[data-an]');
     var $doiTuongBatDauBaiViet = $form.find('[data-chuc-nang="bat-dau-tao-bai-viet"]');
 
     khoiTaoLCTForm($form, {
         khoiTao: function () {
-            $doiTuongTaoBaiViet.hide();
+            $doiTuongAn.hide();
         },
         validates: [
             {
                 input: $doiTuongBatDauBaiViet,
                 customEvent: {
                     focus: function () {
-                        $doiTuongTaoBaiViet.show();
+                        $doiTuongAn.show();
                     }
                 }
             }
@@ -105,7 +105,7 @@ function khoiTaoForm_DienDan($form) {
                     $danhSach.prepend($htmlBaiViet);
 
                     khoiTaoLCTFormMacDinh($form);
-                    $doiTuongTaoBaiViet.hide();
+                    $doiTuongAn.hide();
                 }
                 else {
                     moPopup({
@@ -170,19 +170,19 @@ function layKhung_BaiGiang() {
 }
 
 function khoiTaoForm_BaiGiang($form) {
-    var $doiTuongTaoBaiViet = $form.find('[data-doi-tuong="tao-bai-viet"]');
+    var $doiTuongAn = $form.find('[data-an]');
     var $doiTuongBatDauBaiViet = $form.find('[data-chuc-nang="bat-dau-tao-bai-viet"]');
 
     khoiTaoLCTForm($form, {
         khoiTao: function () {
-            $doiTuongTaoBaiViet.hide();
+            $doiTuongAn.hide();
         },
         validates: [
             {
                 input: $doiTuongBatDauBaiViet,
                 customEvent: {
                     focus: function () {
-                        $doiTuongTaoBaiViet.show();
+                        $doiTuongAn.show();
                     }
                 }
             }
@@ -202,7 +202,7 @@ function khoiTaoForm_BaiGiang($form) {
                     $danhSach.append($mucBaiViet);
 
                     khoiTaoLCTFormMacDinh($form);
-                    $doiTuongTaoBaiViet.hide();
+                    $doiTuongAn.hide();
                 }
                 else {
                     moPopup({
@@ -249,6 +249,7 @@ function hienThi_BaiTap() {
     $danhSach = $khungHienThi.find('#danh_sach_bai_viet');
 
     khoiTaoForm_BaiTap($khungHienThi.find('#tao_bai_viet_form'));
+    khoiTaoItem_BaiTap($danhSach.find('[data-doi-tuong="muc-bai-viet"]'));
 }
 
 function layKhung_BaiTap() {
@@ -282,19 +283,19 @@ function layKhung_BaiTap() {
 }
 
 function khoiTaoForm_BaiTap($form) {
-    var $doiTuongTaoBaiViet = $form.find('[data-doi-tuong="tao-bai-viet"]');
+    var $doiTuongAn = $form.find('[data-an]');
     var $doiTuongBatDauBaiViet = $form.find('[data-chuc-nang="bat-dau-tao-bai-viet"]');
 
     khoiTaoLCTForm($form, {
         khoiTao: function () {
-            $doiTuongTaoBaiViet.hide();
+            $doiTuongAn.hide();
         },
         validates: [
             {
                 input: $doiTuongBatDauBaiViet,
                 customEvent: {
                     focus: function () {
-                        $doiTuongTaoBaiViet.show();
+                        $doiTuongAn.show();
                     }
                 }
             }
@@ -313,7 +314,7 @@ function khoiTaoForm_BaiTap($form) {
                     $danhSach.prepend($htmlBaiViet);
 
                     khoiTaoLCTFormMacDinh($form);
-                    $doiTuongTaoBaiViet.hide();
+                    $doiTuongAn.hide();
                 }
                 else {
                     moPopup({
@@ -328,6 +329,73 @@ function khoiTaoForm_BaiTap($form) {
                 });
             });
         }
+    });
+}
+
+function khoiTaoItem_BaiTap($danhSachBaiTap) {
+    $danhSachBaiTap.each(function () {
+        var $baiTap = $(this);
+
+        var $form = $baiTap.find('[data-doi-tuong="nop-bai-form"]');
+
+        khoiTaoLCTForm($form, {
+            validates: [{
+                input: $form.find('[data-chuc-nang="thay-doi-input"]'),
+                customEvent: {
+                    click: function () {
+                        var $doiTuong = $(this);
+
+                        if ($doiTuong.attr('data-value') == 'duong-dan') {
+                            $form.find('[data-doi-tuong="duong-dan"]').show().find('input').prop('disabled', false);
+                            $form.find('[data-doi-tuong="tap-tin"]').hide().find('input').prop('disabled', true);
+                            $doiTuong.attr({
+                                'data-value': 'tap-tin',
+                                'class': 'pe-7s-cloud-upload',
+                                'title': 'Nộp bằng tập tin'
+                            });
+                        }
+                        else {
+                            $form.find('[data-doi-tuong="tap-tin"]').show().find('input').prop('disabled', false);;
+                            $form.find('[data-doi-tuong="duong-dan"]').hide().find('input').prop('disabled', true);;
+                            $doiTuong.attr({
+                                'data-value': 'duong-dan',
+                                'class': 'pe-7s-cloud',
+                                'title': 'Nộp bằng đường dẫn'
+                            });
+                        }
+                    }
+                }
+            }],
+            submit: function () {
+                $.ajax({
+                    url: '/BaiTapNop/XuLyThem',
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'JSON'
+                }).done(function (data) {
+                    if (data.trangThai == 0) {
+                        moPopup({
+                            tieuDe: 'Thông báo',
+                            thongBao: 'Nộp bài thành công',
+                            bieuTuong: 'thanh-cong'
+                        });
+                    }
+                    else {
+                        moPopup({
+                            tieuDe: 'Thông báo',
+                            thongBao: 'Nộp bài thất bại',
+                            bieuTuong: 'nguy-hiem'
+                        });
+                    }
+                }).fail(function () {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Nộp bài thất bại',
+                        bieuTuong: 'nguy-hiem'
+                    });
+                });
+            }
+        });
     });
 }
 

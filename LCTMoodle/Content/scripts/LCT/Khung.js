@@ -226,7 +226,7 @@ function moPopupFull(thamSo) {
             ten: Mặc định: Nút xử lý
                 Tên của nút
             loai: Mặc định: chap-nhan
-                Loại nút (chap-nhan, can-than, ...)
+                Loại nút (chap-nhan, thong-tin, can-than,....)
             * Có 2 loại xử lý:
                 href: Không bắt buộc
                     Nút đường dẫn
@@ -277,7 +277,7 @@ function moPopup(thamSo) {
         var htmlBieuTuong = '';
 
         if ('bieuTuong' in thamSo &&
-            $.inArray(thamSo.bieuTuong, ['thanh-cong', 'nguy-hiem', 'thong-tin', 'canh-bao', 'hoi']) !== -1) {
+            $.inArray(thamSo.bieuTuong, ['thanh-cong', 'nguy-hiem', 'thong-tin', 'can-than', 'hoi']) !== -1) {
             htmlBieuTuong = '<span class="bieu-tuong ' + thamSo.bieuTuong + '"></span>';
         }
 

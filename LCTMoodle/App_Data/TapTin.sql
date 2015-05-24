@@ -9,8 +9,9 @@ GO
 	--NguoiDung_HinhDaiDien
 	--BinhLuan_BaiVietDienDan_TapTin
 	--BinhLuan_BaiVietBaiGiang_TapTin
+	--BaiTapNop_TapTin
 
-CREATE TABLE dbo.TapTin_BaiVietBaiTap_TapTin (
+CREATE TABLE dbo.TapTin_BaiTapNop_TapTin (
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	Ten NVARCHAR(MAX) NOT NULL,
 	Loai NVARCHAR(MAX) NOT NULL,
@@ -43,19 +44,19 @@ END
 GO
 --Chuyển tập tin tạm -> bảng chính thức
 ALTER PROC dbo.chuyenTapTin (
-	@0 INT, --Mã tập tin tạm
-	@1 NVARCHAR(MAX) --Tên loại
+	@0 NVARCHAR(MAX), --Loại
+	@1 INT --Mã tập tin tạm
 )
 AS
 BEGIN
 	EXEC ('
-		INSERT INTO dbo.TapTin_' + @1 + ' (Ten, Loai, Duoi)
+		INSERT INTO dbo.TapTin_' + @0 + ' (Ten, Loai, Duoi)
 			SELECT TOP 1 Ten, Loai, Duoi
 				FROM dbo.TapTin_Tam
-				WHERE Ma = ' + @0 + ';
+				WHERE Ma = ' + @1 + ';
 
 		DELETE FROM dbo.TapTin_Tam
-			WHERE Ma = ' + @0 + ';
+			WHERE Ma = ' + @1 + ';
 
 		SELECT
 			Ma,
@@ -63,7 +64,7 @@ BEGIN
 			Loai,
 			Duoi,
 			ThoiDiemTao
-			FROM dbo.TapTin_' + @1 + '
+			FROM dbo.TapTin_' + @0 + '
 			WHERE Ma = @@IDENTITY;
 	')
 END

@@ -14,7 +14,7 @@ namespace BUSLayer
     {
         public static KetQua them(Dictionary<string, string> form)
         {
-            KetQua ketQua = TapTinBUS.chuyen(layInt(form, "TapTin"), "BaiVietDienDan_TapTin");
+            KetQua ketQua = TapTinBUS.chuyen("BaiVietDienDan_TapTin", layInt(form, "TapTin"));
 
             if (ketQua.trangThai != 0)
             {

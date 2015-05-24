@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataDTO\BaiTapNopDataDTO.cs" />
     <Compile Include="DataDTO\BaiVietBaiGiangDataDTO.cs" />
     <Compile Include="DataDTO\BaiVietBaiTapDataDTO.cs" />
     <Compile Include="DataDTO\BaiVietDienDanDataDTO.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="DataDTO\ChuDeDataDTO.cs" />
     <Compile Include="DTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewDTO\BaiTapNopViewDTO.cs" />
     <Compile Include="ViewDTO\BaiVietBaiGiangViewDTO.cs" />
     <Compile Include="ViewDTO\BaiVietBaiTapViewDTO.cs" />
     <Compile Include="ViewDTO\BaiVietDienDanViewDTO.cs" />

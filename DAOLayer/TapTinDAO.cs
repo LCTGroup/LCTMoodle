@@ -24,15 +24,15 @@ namespace DAOLayer
                 );
         }
 
-        public static KetQua chuyen(int maTapTin, string loai)
+        public static KetQua chuyen(string loai, int ma)
         {
             return layDong<TapTinViewDTO>
                 (
                     "chuyenTapTin",
                     new object[] 
                     { 
-                        maTapTin,
-                        loai
+                        loai,
+                        ma
                     }
                 );
         }

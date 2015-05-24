@@ -196,6 +196,44 @@
             margin-bottom: 5px;
         }
 
+        [data-hien-thi="bai-tap"] .khung-bai-viet .khung-noi-dung .thoi-han {
+            font-size: 11px;
+            margin: 5px 0;
+        }
+
+            [data-hien-thi="bai-tap"] .khung-bai-viet .khung-noi-dung .thoi-han span {
+                font-weight: bold;
+            }
+
+        [data-hien-thi="bai-tap"] .khung-bai-viet .khung-noi-dung .tap-tin {
+            padding: 5px;
+            border-top: 1px dashed #eee;
+        }
+
+            [data-hien-thi="bai-tap"] .khung-bai-viet .khung-noi-dung .tap-tin a {
+                display: flex;
+            }
+
+            [data-hien-thi="bai-tap"] .khung-bai-viet .khung-noi-dung .tap-tin img {
+                width: 25px;
+                height: 25px;
+                margin-right: 5px;
+            }
+
+            [data-hien-thi="bai-tap"] .khung-bai-viet .khung-noi-dung .tap-tin span {
+                align-self: center;
+                color: #555;
+            }
+
+    [data-hien-thi="bai-tap"] .khung-nop-bai {
+        background-color: #fcfcfc;
+        border-top: 1px solid #f5f5f5;
+    }
+
+        [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop {
+            padding: 5px 10px;
+        }
+
 /*#endregion */
 
 /*#endregion */

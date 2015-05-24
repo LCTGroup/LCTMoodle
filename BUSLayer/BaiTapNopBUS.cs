@@ -10,34 +10,33 @@ using Data;
 
 namespace BUSLayer
 {
-    public class BaiVietBaiGiangBUS : BUS
+    public class BaiTapNopBUS : BUS
     {
         public static KetQua them(Dictionary<string, string> form)
         {
-            KetQua ketQua = TapTinBUS.chuyen("BaiVietBaiGiang_TapTin", layInt(form, "TapTin"));
+            KetQua ketQua = TapTinBUS.chuyen("BaiTapNop_TapTin", layInt(form, "TapTin"));
 
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            BaiVietBaiGiangDataDTO baiVietBaiGiang = new BaiVietBaiGiangDataDTO()
+            BaiTapNopDataDTO baiTapNop = new BaiTapNopDataDTO()
             {
-                tieuDe = layString(form, "TieuDe"),
-                noiDung = layString(form, "NoiDung"),
                 maTapTin = (ketQua.ketQua as TapTinViewDTO).ma,
-                maNguoiTao = 1, //Tạm
-                maKhoaHoc = layInt(form, "KhoaHoc")
+                duongDan = layString(form, "DuongDan"),
+                maNguoiTao = 1,
+                maBaiVietBaiTap = layInt(form, "BaiVietBaiTap")
             };
-            
-            ketQua = baiVietBaiGiang.kiemTra();
+
+            ketQua = baiTapNop.kiemTra();
 
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            return BaiVietBaiGiangDAO.them(baiVietBaiGiang);
+            return BaiTapNopDAO.them(baiTapNop);
         }
     }
 }

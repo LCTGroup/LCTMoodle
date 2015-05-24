@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaiTapNopDAO.cs" />
     <Compile Include="BaiVietBaiGiangDAO.cs" />
     <Compile Include="BaiVietBaiTapDAO.cs" />
     <Compile Include="BaiVietDienDanDAO.cs" />

@@ -418,7 +418,7 @@
 .lct-form li .lct-file-label:hover i,
 .lct-form li .lct-file-label input[type="file"]:focus ~ i,
 .lct-form li .lct-file-label input[type="file"].dang ~ i {
-    color: #08c;
+    color: #08c !important;
 }
 
 .lct-form .lct-file-label u {
@@ -440,7 +440,7 @@
 .lct-form .lct-file-label:hover u,
 .lct-form .lct-file-label input[type="file"]:focus ~ u,
 .lct-form .lct-file-label input[type="file"].dang ~ u {
-    background-color: #08c;
+    background-color: #08c !important;
 }
 
 /*#endregion */

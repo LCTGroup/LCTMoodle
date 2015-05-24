@@ -53,9 +53,9 @@ namespace BUSLayer
             return ketQua;
         }
 
-        public static KetQua chuyen(int maTapTin, string loai)
+        public static KetQua chuyen(string loai, int ma)
         {
-            if (maTapTin == 0)
+            if (ma == 0)
             {
                 return new KetQua()
                 {
@@ -67,7 +67,7 @@ namespace BUSLayer
                 };
             }
 
-            KetQua ketQua = TapTinDAO.chuyen(maTapTin, loai);
+            KetQua ketQua = TapTinDAO.chuyen(loai, ma);
 
             if (ketQua.trangThai == 0)
             {
@@ -77,7 +77,7 @@ namespace BUSLayer
                 try
                 {
                     File.Move(
-                        duongDanGoc + "Tam/" + maTapTin + tapTin.duoi,
+                        duongDanGoc + "Tam/" + ma + tapTin.duoi,
                         duongDanGoc + loai + "/" + tapTin.ma + tapTin.duoi
                     );
                 }
