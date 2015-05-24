@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DTOLayer;
+using Data;
 
 namespace DAOLayer
 {
@@ -17,7 +18,8 @@ namespace DAOLayer
                     new object[] 
                     { 
                         tapTin.ten,
-                        tapTin.loai
+                        tapTin.loai,
+                        tapTin.duoi
                     }
                 );
         }
@@ -35,15 +37,15 @@ namespace DAOLayer
                 );
         }
        
-        public static KetQua lay(int maTapTin, string loai)
+        public static KetQua lay(string loai, int ma)
         {
             return layDong<TapTinViewDTO>
                 (
                     "layTapTin",
                     new object[] 
                     { 
-                        maTapTin,
-                        loai
+                        loai,
+                        ma
                     }
                 );
         }

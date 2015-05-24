@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BUSLayer;
 using DTOLayer;
 using DAOLayer;
+using Data;
 
 namespace LCTMoodle.Controllers
 {
@@ -15,7 +16,7 @@ namespace LCTMoodle.Controllers
         {
             ViewData["MaKhoaHoc"] = maKhoaHoc;
 
-            KetQua ketQua = BaiVietBaiTapDAO.layTheoMaKhoaHoc(maKhoaHoc);
+            KetQua ketQua = BaiVietBaiTapBUS.layTheoMaKhoaHoc(maKhoaHoc);
             List<BaiVietBaiTapViewDTO> danhSachBaiViet = 
                 ketQua.trangThai == 0 ?
                 ketQua.ketQua as List<BaiVietBaiTapViewDTO> :

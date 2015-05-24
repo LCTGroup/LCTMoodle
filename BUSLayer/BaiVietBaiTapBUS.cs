@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DAOLayer;
 using DTOLayer;
 using System.IO;
+using Data;
 
 namespace BUSLayer
 {
@@ -13,6 +14,7 @@ namespace BUSLayer
     {
         public static KetQua them(Dictionary<string, string> form)
         {
+            //Chuyển tập tin
             KetQua ketQua = TapTinBUS.chuyen(layInt(form, "TapTin"), "BaiVietBaiTap_TapTin");
 
             if (ketQua.trangThai != 0)
@@ -20,7 +22,8 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            BaiVietBaiTapDataDTO baiVietBaiTap = new BaiVietBaiTapDataDTO()
+            //Tạo bài viết
+            BaiVietBaiTapDataDTO baiViet = new BaiVietBaiTapDataDTO()
             {
                 tieuDe = layString(form, "TieuDe"),
                 noiDung = layString(form, "NoiDung"),
@@ -30,14 +33,64 @@ namespace BUSLayer
                 maKhoaHoc = layInt(form, "KhoaHoc")
             };
             
-            ketQua = baiVietBaiTap.kiemTra();
+            ketQua = baiViet.kiemTra();
 
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            return BaiVietBaiTapDAO.them(baiVietBaiTap);
+            //Thêm bài viết
+            ketQua = BaiVietBaiTapDAO.them(baiViet);
+
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            BaiVietBaiTapViewDTO baiVietMoi = ketQua.ketQua as BaiVietBaiTapViewDTO;
+
+            //Lấy tập tin
+            if (baiVietMoi.tapTin != null)
+            {
+                ketQua = TapTinBUS.lay("BaiVietBaiTap_TapTin", baiVietMoi.tapTin.ma);
+
+                baiVietMoi.tapTin = ketQua.trangThai == 0 ? ketQua.ketQua as TapTinViewDTO : null;
+            }
+
+            return new KetQua()
+            {
+                trangThai = 0,
+                ketQua = baiVietMoi
+            };
+        }
+
+        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
+        {
+            KetQua ketQua = BaiVietBaiTapDAO.layTheoMaKhoaHoc(maKhoaHoc);
+            
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            List<BaiVietBaiTapViewDTO> danhSachBaiViet = ketQua.ketQua as List<BaiVietBaiTapViewDTO>;
+
+            foreach (BaiVietBaiTapViewDTO baiViet in danhSachBaiViet)
+            {
+                if (baiViet.tapTin != null)
+                {
+                    ketQua = TapTinDAO.lay("BaiVietBaiTap_TapTin", baiViet.tapTin.ma);
+
+                    baiViet.tapTin = ketQua.trangThai == 0 ? ketQua.ketQua as TapTinViewDTO : null;
+                }
+            }
+
+            return new KetQua()
+            {
+                trangThai = 0,
+                ketQua = danhSachBaiViet
+            };
         }
     }
 }

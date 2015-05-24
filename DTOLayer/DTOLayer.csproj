@@ -59,6 +59,10 @@
     <Compile Include="ViewDTO\TapTinViewDTO.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{655388bf-cf36-441e-83f9-6ea5e3a1a972}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Helper\Helpers.csproj">
       <Project>{752edde4-57aa-4c15-aa3c-748429b1a135}</Project>
       <Name>Helpers</Name>

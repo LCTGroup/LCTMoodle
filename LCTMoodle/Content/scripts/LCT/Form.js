@@ -164,7 +164,7 @@ function khoiTaoTapTinInput_LCT($form) {
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $phanTu.addClass('co');
-                $phanTu.find('~ img').attr('src', '/TapTin/' + data.ketQua.ma + '/Tam');
+                $phanTu.find('~ img').attr('src', '/LayTapTin/Tam/' + data.ketQua.ma);
                 $phanTu.find('~ input[type="hidden"]').val(data.ketQua.ma);
             }
             else {

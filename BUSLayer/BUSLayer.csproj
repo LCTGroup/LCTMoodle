@@ -65,6 +65,10 @@
       <Project>{e084c23e-8bd2-4b97-ac36-26964589bca0}</Project>
       <Name>DAOLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{655388bf-cf36-441e-83f9-6ea5e3a1a972}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DTOLayer\DTOLayer.csproj">
       <Project>{f03e2462-211a-47ab-bb76-9ad537ea4734}</Project>
       <Name>DTOLayer</Name>

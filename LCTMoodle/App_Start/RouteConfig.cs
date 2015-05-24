@@ -21,7 +21,7 @@ namespace LCTMoodle
 
             routes.MapRoute(
                 name: "LayTapTin",
-                url: "TapTin/{ma}/{loai}",
+                url: "LayTapTin/{loai}/{ma}",
                 defaults: new { controller = "TapTin", action = "Lay" },
                 constraints: new { ma = @"\d+" }
             );

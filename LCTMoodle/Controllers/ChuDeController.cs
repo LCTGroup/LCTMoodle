@@ -7,6 +7,7 @@ using BUSLayer;
 using DTOLayer;
 using DAOLayer;
 using Helpers;
+using Data;
 
 namespace LCTMoodle.Controllers
 {

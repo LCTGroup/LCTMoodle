@@ -32,10 +32,15 @@ namespace DTOLayer
                         noiDung = layString(dong, i);
                         break;
                     case "MaTapTin":
-                        tapTin = new TapTinViewDTO()
-                        {
-                            ma = layInt(dong, i)
-                        };
+                        int maTapTin = layInt(dong, i);
+
+                        tapTin = maTapTin != 0 ?
+                            new TapTinViewDTO()
+                            {
+                                ma = layInt(dong, i)
+                            }
+                            :
+                            null;
                         break;
                     case "ThoiDiemHetHan":
                         thoiDiemHetHan = layDateTime(dong, i);

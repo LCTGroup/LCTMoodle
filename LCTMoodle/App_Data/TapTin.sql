@@ -14,24 +14,27 @@ CREATE TABLE dbo.TapTin_BaiVietBaiTap_TapTin (
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	Ten NVARCHAR(MAX) NOT NULL,
 	Loai NVARCHAR(MAX) NOT NULL,
+	Duoi NVARCHAR(MAX) NOT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL
 );
 
 GO
 --Thêm tập tin (chỉ thêm vào bảng tạm)
-CREATE PROC dbo.themTapTin (
-	@0 NVARCHAR(MAX), --Tên tập tin
-	@1 NVARCHAR(MAX) --Loại tập tin
+ALTER PROC dbo.themTapTin (
+	@0 NVARCHAR(MAX), --Ten
+	@1 NVARCHAR(MAX), --Loai
+	@2 NVARCHAR(MAX) --Duoi
 )
 AS
 BEGIN
-	INSERT INTO dbo.TapTin_Tam (Ten, Loai) VALUES
-		(@0, @1);
+	INSERT INTO dbo.TapTin_Tam (Ten, Loai, Duoi) VALUES
+		(@0, @1, @2);
 
 	SELECT 
 		Ma,
 		Ten,
 		Loai,
+		Duoi,
 		ThoiDiemTao
 		FROM dbo.TapTin_Tam
 		WHERE Ma = @@IDENTITY;
@@ -46,8 +49,8 @@ ALTER PROC dbo.chuyenTapTin (
 AS
 BEGIN
 	EXEC ('
-		INSERT INTO dbo.TapTin_' + @1 + ' (Ten, Loai)
-			SELECT TOP 1 Ten, Loai
+		INSERT INTO dbo.TapTin_' + @1 + ' (Ten, Loai, Duoi)
+			SELECT TOP 1 Ten, Loai, Duoi
 				FROM dbo.TapTin_Tam
 				WHERE Ma = ' + @0 + ';
 
@@ -58,6 +61,7 @@ BEGIN
 			Ma,
 			Ten,
 			Loai,
+			Duoi,
 			ThoiDiemTao
 			FROM dbo.TapTin_' + @1 + '
 			WHERE Ma = @@IDENTITY;
@@ -66,9 +70,9 @@ END
 
 GO
 --Lấy tập tin
-CREATE PROC dbo.layTapTin (
-	@0 INT, --Mã tập tin
-	@1 NVARCHAR(MAX) --Loại
+ALTER PROC dbo.layTapTin (
+	@0 NVARCHAR(MAX), --Loại
+	@1 INT --Mã
 )
 AS
 BEGIN
@@ -77,8 +81,9 @@ BEGIN
 			Ma,
 			Ten,
 			Loai,
+			Duoi,
 			ThoiDiemTao
-			FROM dbo.TapTin_' + @1 + '
-			WHERE Ma = ' + @0 + '
+			FROM dbo.TapTin_' + @0 + '
+			WHERE Ma = ' + @1 + '
 	')
 END

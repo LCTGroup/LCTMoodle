@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOLayer", "DTOLayer\DTOLay
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helper\Helpers.csproj", "{752EDDE4-57AA-4C15-AA3C-748429B1A135}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{655388BF-CF36-441E-83F9-6EA5E3A1A972}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{752EDDE4-57AA-4C15-AA3C-748429B1A135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{752EDDE4-57AA-4C15-AA3C-748429B1A135}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{752EDDE4-57AA-4C15-AA3C-748429B1A135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{655388BF-CF36-441E-83F9-6EA5E3A1A972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{655388BF-CF36-441E-83F9-6EA5E3A1A972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{655388BF-CF36-441E-83F9-6EA5E3A1A972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{655388BF-CF36-441E-83F9-6EA5E3A1A972}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
