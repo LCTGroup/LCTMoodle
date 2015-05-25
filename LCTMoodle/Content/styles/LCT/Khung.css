@@ -20,9 +20,6 @@ a {
 a:hover {
     text-decoration: underline;
 }
-.site-image {
-    background-image: url('/AllSiteImages.png/LCT');
-}
 @font-face {
     font-family: Freeway;
     src: url('/Freeway.ttf/');
@@ -295,7 +292,7 @@ header .logo {
         display: block;
         height: 65px;
         width: 370px;
-        background-position: 0px 0px;
+        background-image: url('/logo.png/lct');
     }
 
 /*#endregion */
@@ -707,7 +704,6 @@ main > .cot-phai {
 .cot-phai > .khung-chuc-nang {
     border-left: 2px solid #ddd;
     padding-left: 15px;
-    height: 500px;
 }
 .khung-chuc-nang .hop-chuc-nang {
     margin-bottom: 20px;
@@ -733,6 +729,56 @@ main > .cot-phai {
         top: 9px;
         left: -23px;
     }
+
+/*#region Danh sách nút chức năng */
+
+.khung-chuc-nang .chuc-nang .danh-sach {
+    border: 1px solid #ddd;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .khung-chuc-nang .chuc-nang .danh-sach li {
+        width: 100%;
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
+    }
+
+        .khung-chuc-nang .chuc-nang .danh-sach li:last-child {
+            border-bottom: 0;
+        }
+
+    .khung-chuc-nang .chuc-nang .danh-sach a {
+        display: block;
+        padding: 10px 5px;
+        text-align: center;
+        text-decoration: none;
+        position: relative;
+        font-size: 14px;
+    }
+
+        .khung-chuc-nang .chuc-nang .danh-sach li:nth-child(even) a {
+            background-color: #fcfcfc;
+        }
+
+        .khung-chuc-nang .chuc-nang .danh-sach a:after {
+            content: '';
+            display: block;
+            width: 0%;
+            height: 3px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: #eee;
+            transition: 0.5s;
+        }
+
+        .khung-chuc-nang .chuc-nang .danh-sach a:hover:after {
+            background-color: #08c;
+            width: 100%;
+        }
+
+/*#endregion */
 
 /*#endregion */
 

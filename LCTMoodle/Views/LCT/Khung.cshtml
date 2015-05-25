@@ -8,9 +8,11 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
     <link href="/mini_logo.png/LCT/" rel="icon" />
     <title>@(ViewData["TieuDe"] != null ? ViewData["TieuDe"] + " - " : "")LCTMoodle</title>
+
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
 
     <link href="/Khung.css/LCT" rel="stylesheet" />
     <link href="/Form.css/LCT" rel="stylesheet" />
@@ -27,7 +29,7 @@
         <!-- Header -->
         <header>
             <section class="logo">
-                <a href="/TrangChu/Index" class="site-image"></a>
+                <a href="~/"></a>
             </section>
             <section class="top-header">
                 <article class="hop-nguoi-dung">
@@ -87,11 +89,24 @@
         <nav class="thanh-dieu-huong">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="~/">
                         Trang chủ
                     </a>
                 </li>
-                @RenderSection("ThanhDieuHuong", false)
+                @if (ViewData.ContainsKey("DieuHuong"))
+                {
+                    List<string> danhSach = ViewData["DieuHuong"] as List<string>;
+                    int soLuong = danhSach.Count;
+                    
+                    for (int i = 0; i < soLuong; i += 2)
+                    {
+                        <li>
+                            <a href="@danhSach[i + 1]">
+                                @danhSach[i]
+                            </a>                            
+                        </li>   
+                    }
+                }
             </ul>
         </nav>
 
@@ -99,7 +114,7 @@
         <main>
             <!-- Cột trái -->
             @if (CotTrai)
-        {
+            {
                 <aside class="cot-trai">
                     <article class="menu">
                         <section class="khung-thong-tin"></section>
@@ -145,7 +160,7 @@
                         </nav>
                     </article>
                 </aside>
-        }
+            }
 
             <!-- Cột giữa -->
             <section class="cot-giua">
@@ -154,9 +169,31 @@
 
             <!-- Cột phải -->
             @if (CotPhai)
-        {
+            {
                 <aside class="cot-phai">
                     <article class="khung-chuc-nang">
+                        @if (ViewData.ContainsKey("ChucNang"))
+                        {
+                            <article class="hop-chuc-nang">
+                                <section class="ten-chuc-nang">
+                                    Chức năng
+                                </section>
+                                <section class="chuc-nang">
+                                    <ul id="danh_sach_chuc_nang_lct" class="danh-sach">
+                                        @{
+                                            List<string> danhSach = ViewData["ChucNang"] as List<string>;
+                                            int soLuong = danhSach.Count;
+                                        }
+                                        @for (int i = 0; i < soLuong; i += 2)
+                                        {
+                                            <li>
+                                                <a @Html.Raw(danhSach[i + 1])>@danhSach[i]</a>
+                                            </li>   
+                                        }
+                                    </ul>
+                                </section>
+                            </article>   
+                        }
                         <article class="hop-chuc-nang">
                             <section class="ten-chuc-nang">
                                 Tiêu đề
@@ -169,7 +206,7 @@
                         </article>
                     </article>
                 </aside>
-        }
+            }
         </main>
 
         <!-- Footer -->

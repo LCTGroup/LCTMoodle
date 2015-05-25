@@ -38,13 +38,20 @@ namespace LCTMoodle.Controllers
 
         public ActionResult _Khung(int ma)
         {
-            ViewData["Ma"] = ma;
+            KetQua ketQua = KhoaHocDAO.layTheoMa(ma);
 
-            return Json(new KetQua()
+            if (ketQua.trangThai == 0)
+            {
+                return Json(new KetQua()
                 {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "KhoaHoc/_Khung.cshtml", null, ViewData)
+                    ketQua = renderPartialViewToString(ControllerContext, "KhoaHoc/_Khung.cshtml", ketQua.ketQua)
                 }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(ketQua);
+            }
         }
 	}
 }

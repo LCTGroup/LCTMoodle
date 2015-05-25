@@ -15,14 +15,21 @@
         margin-bottom: -1px;
     }
 
-        [data-hien-thi="khung"] .ten-nhom span {
+        [data-hien-thi="khung"] .ten-nhom a {
+            display: inline-block;
             padding: 5px 15px 0;
             background-color: #fff;
             border: 1px solid #ddd;
             border-bottom: 0;
             color: #555;
             font-weight: bold;
+            transition: 0.5s;
         }
+
+            [data-hien-thi="khung"] .ten-nhom a:hover {
+                text-decoration: none;
+                color: #08c;
+            }
 
     [data-hien-thi="khung"] .khung-danh-sach-bai-viet {
         background-color: #fff;
@@ -79,9 +86,21 @@
             }
 
                 [data-hien-thi="khung"] .bai-viet.co-bieu-tuong .bieu-tuong {
-                      background-position: -370px -48px;
+                      background-image: url('/KhoaHoc.png/KhoaHoc');
                       width: 48px;
                       height: 48px;
+                }
+
+                [data-hien-thi="khung"] .bai-viet.co-bieu-tuong .bieu-tuong.bai-tap {
+                      background-position: 0px 0px;
+                }
+
+                [data-hien-thi="khung"] .bai-viet.co-bieu-tuong .bieu-tuong.dien-dan {
+                      background-position: 0px -144px;
+                }
+
+                [data-hien-thi="khung"] .bai-viet.co-bieu-tuong .bieu-tuong.bai-giang {
+                      background-position: 0px -48px;
                 }
 
 /*#endregion */

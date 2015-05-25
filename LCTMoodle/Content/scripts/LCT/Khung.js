@@ -24,7 +24,7 @@ function khoiTaoTatMoDoiTuong($danhSachNut) {
         // $nut: nút nhấn
         // $doiTuong: đối tượng popup sẽ được hiển thị
         var $nut = $(this);
-        var $doiTuong = $('[data-doi-tuong="' + $nut.attr('data-mo-doi-tuong') + '"]');
+        var $doiTuong = $('[data-doi-tuong~="' + $nut.attr('data-mo-doi-tuong') + '"]');
         
         //Xử lý sự kiện click của nút nhấn
         if ($doiTuong.is(':visible')) {            

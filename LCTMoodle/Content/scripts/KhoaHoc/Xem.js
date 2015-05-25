@@ -6,12 +6,12 @@ var $khungHienThi, $danhSach;
 $(function () {
     $khungHienThi = $('#khung_hien_thi');
 
-    hienThi();
+    hienThi(layQueryString('hienthi').toLowerCase());
+
+    khoiTaoQuayLai();
 });
 
-function hienThi() {
-    var nhom = layQueryString('hienthi').toLowerCase();
-
+function hienThi(nhom) {
     switch (nhom) {
         case 'diendan':
             hienThi_DienDan();
@@ -25,6 +25,22 @@ function hienThi() {
         default:
             hienThi_Khung();
             break;
+    }
+}
+
+function khoiTaoQuayLai() {
+    history.replaceState({
+        hienThi: layQueryString('hienthi').toLowerCase()
+    }, document.title, window.location.href);
+
+    window.onpopstate = function (e) {
+        var state = e.state || null;
+        if (state === null) {
+            window.location = window.location.href;
+        }
+        else {
+            hienThi(state.hienThi);
+        }
     }
 }
 
@@ -66,7 +82,18 @@ function layKhung_Khung() {
         })
     });
 
+    khoiTaoKhung($khung);
+
     return $khung;
+}
+
+function khoiTaoKhung($khung) {
+    $khung.find('[data-chuc-nang="hien-thi"]').on('click', function () {
+        var nhom = $(this).attr('data-value');
+        hienThi(nhom);
+
+        history.pushState({ hienThi: nhom }, '', '?hienthi=' + nhom);
+    });
 }
 
 //#endregion
@@ -78,6 +105,7 @@ function hienThi_DienDan() {
 
     $khungHienThi.html($khung);
     $khungHienThi.attr('data-hien-thi', 'dien-dan');
+    document.title = 'Diễn đàn - ' + tieuDe;
 
     $danhSach = $khungHienThi.find('#danh_sach_bai_viet');
 
@@ -176,6 +204,7 @@ function hienThi_BaiGiang() {
 
     $khungHienThi.html($khung);
     $khungHienThi.attr('data-hien-thi', 'bai-giang');
+    document.title = 'Bài giảng - ' + tieuDe;
 
     $danhSach = $khungHienThi.find('#danh_sach_bai_viet');
 
@@ -289,6 +318,7 @@ function hienThi_BaiTap() {
 
     $khungHienThi.html($khung);
     $khungHienThi.attr('data-hien-thi', 'bai-tap');
+    document.title = 'Bài tập - ' + tieuDe;
 
     $danhSach = $khungHienThi.find('#danh_sach_bai_viet');
 

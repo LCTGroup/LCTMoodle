@@ -1,153 +1,144 @@
-﻿<article class="hop">
+﻿@model DTOLayer.KhoaHocViewDTO
+@{
+    Data.KetQua ketQua = DAOLayer.BaiVietBaiGiangDAO.layTheoMaKhoaHoc(Model.ma);
+    var danhSachBaiGiang = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BaiVietBaiGiangViewDTO> : null;
+
+    ketQua = DAOLayer.BaiVietBaiTapDAO.layTheoMaKhoaHoc(Model.ma);
+    var danhSachBaiTap = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BaiVietBaiTapViewDTO> : null;
+
+    ketQua = DAOLayer.BaiVietDienDanDAO.layTheoMaKhoaHoc(Model.ma);
+    var danhSachDienDan = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BaiVietDienDanViewDTO> : null;
+}
+
+<article class="hop">
     <section class="tieu-de">
         Bài viết nổi bật
     </section>
     <section class="noi-dung">
         <ul class="danh-sach-nhom">
-            <li class="khung-nhom">
-                <section class="ten-nhom">
-                    <span>Bài tập</span>
-                </section>
-                <section class="khung-danh-sach-bai-viet">
-                    <ul class="danh-sach-bai-viet">
-                        <li class="bai-viet co-bieu-tuong">
-                            <section class="khung-bieu-tuong">
-                                <article class="bieu-tuong site-image"></article>
-                            </section>
-                            <section class="khung-noi-dung">
-                                <section class="tieu-de">
-                                    123123123123123
+            @if (danhSachBaiGiang != null)
+            {
+                <li class="khung-nhom">
+                    <section class="ten-nhom">
+                        <a href="javascript:void(0)" data-chuc-nang="hien-thi" data-value="baigiang">Bài giảng</a>
+                    </section>
+                    <section class="khung-danh-sach-bai-viet">
+                        <ul class="danh-sach-bai-viet">
+                            <li class="bai-viet co-bieu-tuong">
+                                <section class="khung-bieu-tuong">
+                                    <article class="bieu-tuong bai-giang"></article>
                                 </section>
-                                <section class="noi-dung">
-                                    3 giờ trước - Lê Bình Chiêu 3 giờ trước - Lê Bình Chiêu 
-                                    3 giờ trước - Lê Bình Chiêu 3 giờ trước - Lê Bình Chiêu 
-                                    3 giờ trước - Lê Bình Chiêu 3 giờ trước - Lê Bình Chiêu 
-                                    3 giờ trước - Lê Bình Chiêu 3 giờ trước - Lê Bình Chiêu 
-                                    3 giờ trước - Lê Bình Chiêu 3 giờ trước - Lê Bình Chiêu 
+                                <section class="khung-noi-dung">
+                                    <section class="tieu-de">
+                                        @danhSachBaiGiang[0].tieuDe
+                                    </section>
+                                    <section class="noi-dung">
+                                        @Html.Raw(System.Text.RegularExpressions.Regex.Replace(danhSachBaiGiang[0].noiDung, "<.*?>", ""))
+                                    </section>
+                                    <section class="thong-tin-dang">
+                                        @danhSachBaiGiang[0].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        - Lê Bình Chiêu
+                                    </section>
                                 </section>
-                                <section class="thong-tin-dang">
-                                    3 giờ trước - Lê Bình Chiêu
+                            </li>
+                            @for (int i = 1; i < 3 && i < danhSachBaiGiang.Count; i++)
+                            {
+                                <li class="bai-viet">
+                                    <section class="tieu-de">
+                                        @danhSachBaiGiang[i].tieuDe
+                                    </section>
+                                    <section class="thong-tin-dang">
+                                        @danhSachBaiGiang[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        - Lê Bình Chiêu
+                                    </section>
+                                </li>
+                            }
+                        </ul>
+                    </section>
+                </li>
+            }
+            @if (danhSachBaiTap != null)
+            {
+                <li class="khung-nhom">
+                    <section class="ten-nhom">
+                        <a href="javascript:void(0)" data-chuc-nang="hien-thi" data-value="baitap">Bài tập</a>
+                    </section>
+                    <section class="khung-danh-sach-bai-viet">
+                        <ul class="danh-sach-bai-viet">
+                            <li class="bai-viet co-bieu-tuong">
+                                <section class="khung-bieu-tuong">
+                                    <article class="bieu-tuong bai-tap"></article>
                                 </section>
-                            </section>
-                        </li>
-                        <li class="bai-viet">
-                            <section class="tieu-de">
-                                123123123123123
-                            </section>
-                            <section class="thong-tin-dang">
-                                20/3/2014 - Lê Bình Chiêu
-                            </section>
-                        </li>
-                        <li class="bai-viet">
-                            <section class="tieu-de">
-                                123123123123123
-                            </section>
-                            <section class="thong-tin-dang">
-                                20/3/2014 - Lê Bình Chiêu
-                            </section>
-                        </li>
-                    </ul>
-                </section>
-            </li>
-            <li class="khung-nhom">
-                <section class="ten-nhom">
-                    <span>Bài tập</span>
-                </section>
-                <section class="khung-danh-sach-bai-viet">
-                    <ul class="danh-sach-bai-viet">
-                        <li class="bai-viet">
-                            <section class="tieu-de">
-                                123123123123123
-                            </section>
-                            <section class="thong-tin-dang">
-                                12312312312 312 31 231 23
-                            </section>
-                        </li>
-                        <li class="bai-viet">
-                            <section class="tieu-de">
-                                123123123123123
-                            </section>
-                            <section class="thong-tin-dang">
-                                12312312312 312 31 231 23
-                            </section>
-                        </li>
-                        <li class="bai-viet">
-                            <section class="tieu-de">
-                                123123123123123
-                            </section>
-                            <section class="thong-tin-dang">
-                                12312312312 312 31 231 23
-                            </section>
-                        </li>
-                    </ul>
-                </section>
-            </li>
-            <li class="khung-nhom">
-                <section class="ten-nhom">
-                    <span>Bài tập</span>
-                </section>
-                <section class="khung-danh-sach-bai-viet">
-                    <ul class="danh-sach-bai-viet">
-                        <li class="bai-viet">
-                            <section class="tieu-de">
-                                123123123123123
-                            </section>
-                            <section class="thong-tin-dang">
-                                12312312312 312 31 231 23
-                            </section>
-                        </li>
-                        <li class="bai-viet">
-                            <section class="tieu-de">
-                                123123123123123
-                            </section>
-                            <section class="thong-tin-dang">
-                                12312312312 312 31 231 23
-                            </section>
-                        </li>
-                        <li class="bai-viet">
-                            <section class="tieu-de">
-                                123123123123123
-                            </section>
-                            <section class="thong-tin-dang">
-                                12312312312 312 31 231 23
-                            </section>
-                        </li>
-                    </ul>
-                </section>
-            </li>
-            <li class="khung-nhom">
-                <section class="ten-nhom">
-                    <span>Bài tập</span>
-                </section>
-                <section class="khung-danh-sach-bai-viet">
-                    <ul class="danh-sach-bai-viet">
-                        <li class="bai-viet">
-                            <section class="tieu-de">
-                                123123123123123
-                            </section>
-                            <section class="thong-tin-dang">
-                                12312312312 312 31 231 23
-                            </section>
-                        </li>
-                        <li class="bai-viet">
-                            <section class="tieu-de">
-                                123123123123123
-                            </section>
-                            <section class="thong-tin-dang">
-                                12312312312 312 31 231 23
-                            </section>
-                        </li>
-                        <li class="bai-viet">
-                            <section class="tieu-de">
-                                123123123123123
-                            </section>
-                            <section class="thong-tin-dang">
-                                12312312312 312 31 231 23
-                            </section>
-                        </li>
-                    </ul>
-                </section>
-            </li>
+                                <section class="khung-noi-dung">
+                                    <section class="tieu-de">
+                                        @danhSachBaiTap[0].tieuDe
+                                    </section>
+                                    <section class="noi-dung">
+                                        @Html.Raw(System.Text.RegularExpressions.Regex.Replace(danhSachBaiTap[0].noiDung, "<.*?>", ""))
+                                    </section>
+                                    <section class="thong-tin-dang">
+                                        @danhSachBaiTap[0].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        - Lê Bình Chiêu
+                                    </section>
+                                </section>
+                            </li>
+                            @for (int i = 1; i < 3 && i < danhSachBaiTap.Count; i++)
+                            {
+                                <li class="bai-viet">
+                                    <section class="tieu-de">
+                                        @danhSachBaiTap[i].tieuDe
+                                    </section>
+                                    <section class="thong-tin-dang">
+                                        @danhSachBaiTap[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        - Lê Bình Chiêu
+                                    </section>
+                                </li>
+                            }
+                        </ul>
+                    </section>
+                </li>
+            }
+            @if (danhSachDienDan != null)
+            {
+                <li class="khung-nhom">
+                    <section class="ten-nhom">
+                        <a href="javascript:void(0)" data-chuc-nang="hien-thi" data-value="diendan">Diễn đàn</a>
+                    </section>
+                    <section class="khung-danh-sach-bai-viet">
+                        <ul class="danh-sach-bai-viet">
+                            <li class="bai-viet co-bieu-tuong">
+                                <section class="khung-bieu-tuong">
+                                    <article class="bieu-tuong dien-dan"></article>
+                                </section>
+                                <section class="khung-noi-dung">
+                                    <section class="tieu-de">
+                                        @danhSachDienDan[0].tieuDe
+                                    </section>
+                                    <section class="noi-dung">
+                                        @Html.Raw(System.Text.RegularExpressions.Regex.Replace(danhSachDienDan[0].noiDung, "<.*?>", ""))
+                                    </section>
+                                    <section class="thong-tin-dang">
+                                        @danhSachDienDan[0].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        - Lê Bình Chiêu
+                                    </section>
+                                </section>
+                            </li>
+                            @for (int i = 1; i < 3 && i < danhSachDienDan.Count; i++)
+                            {
+                                <li class="bai-viet">
+                                    <section class="tieu-de">
+                                        @danhSachDienDan[i].tieuDe
+                                    </section>
+                                    <section class="thong-tin-dang">
+                                        @danhSachDienDan[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        - Lê Bình Chiêu
+                                    </section>
+                                </li>
+                            }
+                        </ul>
+                    </section>
+                </li>
+            }
         </ul>
     </section>
 </article>
