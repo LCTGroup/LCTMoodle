@@ -1,4 +1,92 @@
-﻿/*#region Diễn đàn */
+﻿/*#region Khung */
+
+[data-hien-thi="khung"] .danh-sach-nhom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+    [data-hien-thi="khung"] .khung-nhom {
+        width: 250px;
+        margin: 20px 0;
+    }
+
+    [data-hien-thi="khung"] .ten-nhom {
+        margin-bottom: -1px;
+    }
+
+        [data-hien-thi="khung"] .ten-nhom span {
+            padding: 5px 15px 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-bottom: 0;
+            color: #555;
+            font-weight: bold;
+        }
+
+    [data-hien-thi="khung"] .khung-danh-sach-bai-viet {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 5px 10px;
+    }
+
+    [data-hien-thi="khung"] .bai-viet {
+        margin: 5px 0;
+    }
+
+    [data-hien-thi="khung"] .bai-viet .tieu-de {
+        font-weight: bold;
+        color: #333;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    [data-hien-thi="khung"] .bai-viet .thong-tin-dang {
+        font-size: 11px;
+        color: #888;
+        text-align: right;
+    }
+
+        [data-hien-thi="khung"] .bai-viet.co-bieu-tuong {
+            display: flex;
+        }
+
+            [data-hien-thi="khung"] .bai-viet.co-bieu-tuong .khung-noi-dung {
+                width: 100%;
+            }
+
+                [data-hien-thi="khung"] .bai-viet.co-bieu-tuong .noi-dung {
+                    display: block;
+                    max-width: 100%;
+                    height: 34px;
+                    font-size: 12px;
+                    line-height: 1.4;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    color: #555;
+                }
+            
+            [data-hien-thi="khung"] .bai-viet.co-bieu-tuong .khung-bieu-tuong {
+                  min-width: 48px;
+                  max-width: 48px;
+                  height: 48px;
+                  padding: 6px;
+                  padding-left: 0;
+            }
+
+                [data-hien-thi="khung"] .bai-viet.co-bieu-tuong .bieu-tuong {
+                      background-position: -370px -48px;
+                      width: 48px;
+                      height: 48px;
+                }
+
+/*#endregion */
+
+/*#region Diễn đàn */
 
 [data-hien-thi="dien-dan"] .muc-bai-viet {
     border: 1px solid #eee;

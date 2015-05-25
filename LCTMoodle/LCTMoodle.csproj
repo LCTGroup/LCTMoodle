@@ -382,6 +382,7 @@
     <Content Include="Views\BaiVietBaiTap\_Form.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Item.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Khung.cshtml" />
+    <Content Include="Views\KhoaHoc\_Khung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

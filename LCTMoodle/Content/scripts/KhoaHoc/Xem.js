@@ -22,7 +22,51 @@ function hienThi() {
         case 'baitap':
             hienThi_BaiTap();
             break;
+        default:
+            hienThi_Khung();
+            break;
     }
+}
+
+//#endregion
+
+//#region Khung
+
+function hienThi_Khung() {
+    var $khung = layKhung_Khung();
+
+    $khungHienThi.html($khung);
+    $khungHienThi.attr('data-hien-thi', 'khung');
+}
+
+function layKhung_Khung() {
+    var $khung;
+
+    $.ajax({
+        url: '/KhoaHoc/_Khung',
+        data: { ma: maKhoaHoc },
+        dataType: 'JSON',
+        async: false
+    }).done(function (data) {
+        if (data.trangThai == 0) {
+            $khung = $(data.ketQua);
+        }
+        else {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Lấy khung thất bại',
+                bieuTuong: 'nguy-hiem'
+            })
+        }
+    }).fail(function () {
+        moPopup({
+            tieuDe: 'Thông báo',
+            thongBao: 'Lấy khung thất bại',
+            bieuTuong: 'nguy-hiem'
+        })
+    });
+
+    return $khung;
 }
 
 //#endregion
