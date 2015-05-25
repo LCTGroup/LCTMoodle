@@ -17,26 +17,30 @@ $(function () {
 	Bật tắt đối tượng Target
 */
 function khoiTaoTatMoDoiTuong($danhSachNut) {
-    $danhSachNut.on('click', function () {        
+    $danhSachNut.on('click', function (e) {
+        e.stopPropagation();
+
         //Lấy đối tượng 
         // $nut: nút nhấn
         // $doiTuong: đối tượng popup sẽ được hiển thị
         var $nut = $(this);
-        var $doiTuong = $('[data-doi-tuong="' + $nut.attr('data-mo-doi-tuong') + '"');
+        var $doiTuong = $('[data-doi-tuong="' + $nut.attr('data-mo-doi-tuong') + '"]');
         
         //Xử lý sự kiện click của nút nhấn
-        if ($doiTuong.is(':visible')) {
-            $doiTuong.hide();           
-        } else {
+        if ($doiTuong.is(':visible')) {            
+            $doiTuong.hide();
+        } else {            
             $doiTuong.show();
         }
 
+        $doiTuong.on('click', function (e) {
+            e.stopPropagation();
+        });
+
         //Xử lý sự kiện nhấn chuột ra ngoài đối tượng
         $(document).on('click.tat_mo', function (e) {
-            if ($doiTuong.has($(e.target)).length == 0 && !$(e.target).is($obj) && !$(e.target).is($doiTuong) && $obj.has($(e.target)).length == 0) {
-                $doiTuong.hide();
-                $(document).off('click.tat_mo');
-            }
+            $doiTuong.hide();
+            $(document).off('click.tat_mo');
         });
     });
 }

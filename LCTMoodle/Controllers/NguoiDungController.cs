@@ -15,8 +15,8 @@ namespace LCTMoodle.Controllers
         //
         // GET: /NguoiDung/
         public ActionResult Index()
-        {            
-            return View();
+        {
+            return View(NguoiDungBUS.lay(Session["NguoiDung"] as string));
         }
 
         /// <summary>
@@ -68,5 +68,13 @@ namespace LCTMoodle.Controllers
 
             return RedirectToAction("Index", "TrangChu");
         }
+        
+        [HttpGet]
+        public ActionResult KiemTraTenTaiKhoan(string tenTaiKhoan)
+        {
+            KetQua ketQua = NguoiDungBUS.kiemTraTenTaiKhoan(tenTaiKhoan);
+            
+            return Json(ketQua, JsonRequestBehavior.AllowGet);
+        }        
 	}
 }

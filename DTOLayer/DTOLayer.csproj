@@ -44,7 +44,10 @@
     <Compile Include="DataDTO\BaiVietBaiTapDataDTO.cs" />
     <Compile Include="DataDTO\BaiVietDienDanDataDTO.cs" />
     <Compile Include="DataDTO\BinhLuanDataDTO.cs" />
+    <Compile Include="DataDTO\HoiDapDiemDataDTO.cs" />
+    <Compile Include="DataDTO\CauHoiDataDTO.cs" />
     <Compile Include="DataDTO\KhoaHocDataDTO.cs" />
+    <Compile Include="DataDTO\TraLoiDataDTO.cs" />
     <Compile Include="DataDTO\NguoiDungDataDTO.cs" />
     <Compile Include="DataDTO\TapTinDataDTO.cs" />
     <Compile Include="DataDTO\ChuDeDataDTO.cs" />
@@ -55,8 +58,11 @@
     <Compile Include="ViewDTO\BaiVietBaiTapViewDTO.cs" />
     <Compile Include="ViewDTO\BaiVietDienDanViewDTO.cs" />
     <Compile Include="ViewDTO\BinhLuanViewDTO.cs" />
+    <Compile Include="ViewDTO\HoiDapDiemViewDTO.cs" />
     <Compile Include="ViewDTO\ChuDeViewDTO.cs" />
+    <Compile Include="ViewDTO\TraLoiViewDTO.cs" />
     <Compile Include="ViewDTO\KhoaHocViewDTO.cs" />
+    <Compile Include="ViewDTO\CauHoiViewDTO.cs" />
     <Compile Include="ViewDTO\NguoiDungViewDTO.cs" />
     <Compile Include="ViewDTO\TapTinViewDTO.cs" />
   </ItemGroup>

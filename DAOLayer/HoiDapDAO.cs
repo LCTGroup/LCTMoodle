@@ -8,7 +8,7 @@ using Data;
 
 namespace DAOLayer
 {
-    public class NguoiDungDAO : DAO
+    public class HoiDapDAO : DAO
     {       
         public static KetQua them(NguoiDungDataDTO nguoiDung)
         {

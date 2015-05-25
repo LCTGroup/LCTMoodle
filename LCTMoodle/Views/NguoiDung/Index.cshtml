@@ -1,6 +1,7 @@
-﻿@{
+﻿@model DTOLayer.NguoiDungViewDTO
+@{
     ViewData["Title"] = "Người Dùng";
-    Layout = "~/Views/LCT/Khung.cshtml";
+    Layout = "~/Views/LCT/Khung.cshtml";   
 }
 @section Styles {
     <link rel="stylesheet" href="/Index.css/NguoiDung/" />
@@ -17,7 +18,7 @@
                     <img src="/Content/images/user-avatar-01.jpg" />
                 </div>
                 <div class="thong-tin-nguoi-dung">
-                    <div class="ten-nguoi-dung">PenguinBlue-Chip</div>
+                    <div class="ten-nguoi-dung">@Model.hoTen</div>
                     <div class="loai-nguoi-dung">Người dùng</div>
                 </div>
             </article>
@@ -29,37 +30,37 @@
     <section class="noi-dung khung-duoi">
         <div class="dong-noi-dung">
             <div class="tieu-de">Tên đăng nhập</div>
-            <div class="noi-dung" data-change="TenDangNhap">PenguinBlue-Chip</div>
+            <div class="noi-dung" data-change="TenDangNhap">@Model.tenTaiKhoan</div>
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="TenDangNhap"></a>
         </div> 
         <div class="dong-noi-dung">
             <div class="tieu-de">Mật khẩu</div>
-            <div class="noi-dung" data-change="MatKhau">*****</div>
+            <div class="noi-dung" data-change="MatKhau">**********</div>
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="MatKhau"></a>
         </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Email</div>
-            <div class="noi-dung" data-change="Email">penguinbluechip@gmail.com</div>
+            <div class="noi-dung" data-change="Email">@Model.email</div>
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="Email"></a>
         </div>       
         <div class="dong-noi-dung">
             <div class="tieu-de">Họ tên</div>
-            <div class="noi-dung" data-change="HoTen">Nguyễn Chiến</div>
+            <div class="noi-dung" data-change="HoTen">@Model.hoTen</div>
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="HoTen"></a>
         </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Ngày sinh</div>
-            <div class="noi-dung" data-change="NgaySinh">28-4-1994</div>
+            <div class="noi-dung" data-change="NgaySinh">@Model.ngaySinh</div>
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="NgaySinh"></a>
         </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Họ tên</div>
-            <div class="noi-dung" data-change="DiaChi">Địa chỉ</div>
+            <div class="noi-dung" data-change="DiaChi">@Model.diaChi</div>
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="DiaChi"></a>
         </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Số điện thoại</div>
-            <div class="noi-dung" data-change="SoDienThoai"></div>
+            <div class="noi-dung" data-change="SoDienThoai">@Model.soDienThoai</div>
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="SoDienThoai"></a>
         </div>
     </section>

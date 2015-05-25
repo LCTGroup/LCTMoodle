@@ -25,5 +25,10 @@ namespace LCTMoodle.Controllers
         {
             return View();
         }
+
+        public ActionResult TrangMau()
+        {
+            return View();
+        }
 	}
 }
