@@ -18,7 +18,9 @@ function khoiTaoLCTForm($form, thamSo) {
     }
 
     // Thêm nút mặc định
-    khoiTaoNutMacDinh_LCT($form);
+    if ($form.is('[data-nut-mac-dinh]')) {
+        khoiTaoNutMacDinh_LCT($form);
+    }
 
     //Xử lý hiển thị đúng form
     khoiTaoHienThiInput_LCT($form);
@@ -162,7 +164,7 @@ function khoiTaoTapTinInput_LCT($form) {
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $phanTu.addClass('co');
-                $phanTu.find('~ img').attr('src', '/TapTin/' + data.ketQua.ma + '/Tam');
+                $phanTu.find('~ img').attr('src', '/LayTapTin/Tam/' + data.ketQua.ma);
                 $phanTu.find('~ input[type="hidden"]').val(data.ketQua.ma);
             }
             else {
@@ -171,7 +173,7 @@ function khoiTaoTapTinInput_LCT($form) {
         }).fail(function () {
             alert('Thêm file thất bại')
         }).always(function () {
-            thanhTheHien.style.height = '110px';
+            thanhTheHien.style.height = '';
             $phanTu.removeClass('dang');
         });
     });

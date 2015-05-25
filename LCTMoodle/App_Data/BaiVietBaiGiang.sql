@@ -40,7 +40,7 @@ END
 
 GO
 --Lấy bài viết bài giảng theo mã khóa học
-CREATE PROC dbo.layBaiVietBaiGiangTheoMaKhoaHoc (
+ALTER PROC dbo.layBaiVietBaiGiangTheoMaKhoaHoc (
 	@0 INT --MaKhoaHoc
 )
 AS
@@ -55,5 +55,5 @@ BEGIN
 		MaKhoaHoc
 		FROM dbo.BaiVietBaiGiang
 		WHERE MaKhoaHoc = @0
-		ORDER BY ThoiDiemTao DESC
+		ORDER BY ThoiDiemTao ASC
 END

@@ -223,14 +223,14 @@ function moPopupFull(thamSo) {
         Đoạn thông báo
     bieuTuong: Không bắt buộc (chỉ sử dụng được khi có thông báo)
         Biểu tượng trước thông báo
-        Gồm: thanh-cong, nguy-hiem, thong-tin, canh-bao, hoi
+        Gồm: thanh-cong, nguy-hiem, thong-tin, can-than, hoi
     nut: Mặc định: Nút thoát
         Danh sách nút xử lý ở thông báo
         Gồm:
             ten: Mặc định: Nút xử lý
                 Tên của nút
             loai: Mặc định: chap-nhan
-                Loại nút (chap-nhan, can-than, ...)
+                Loại nút (chap-nhan, thong-tin, can-than,....)
             * Có 2 loại xử lý:
                 href: Không bắt buộc
                     Nút đường dẫn
@@ -281,7 +281,7 @@ function moPopup(thamSo) {
         var htmlBieuTuong = '';
 
         if ('bieuTuong' in thamSo &&
-            $.inArray(thamSo.bieuTuong, ['thanh-cong', 'nguy-hiem', 'thong-tin', 'canh-bao', 'hoi']) !== -1) {
+            $.inArray(thamSo.bieuTuong, ['thanh-cong', 'nguy-hiem', 'thong-tin', 'can-than', 'hoi']) !== -1) {
             htmlBieuTuong = '<span class="bieu-tuong ' + thamSo.bieuTuong + '"></span>';
         }
 
@@ -304,7 +304,7 @@ function moPopup(thamSo) {
             var $nut;
 
             if ('href' in n) {
-                $nut = '<a href="' + n.href + '" class="' + (n.loai || 'chap-nhan') + '">' + (n.ten || 'Nút xử lý') + '</a>'
+                $nut = '<a href="' + n.href + '" class="button ' + (n.loai || 'chap-nhan') + '">' + (n.ten || 'Nút xử lý') + '</a>'
             }
             else {
                 $nut = $('<button class="' + (n.loai || 'chap-nhan') + '">' + (n.ten || 'Nút xử lý') + '</button>');

@@ -10,6 +10,7 @@ namespace DTOLayer
     {
         public string ten;
         public string loai;
+        public string duoi;
         public DateTime thoiDiemTao;
 
         //public override KetQua kiemTra()

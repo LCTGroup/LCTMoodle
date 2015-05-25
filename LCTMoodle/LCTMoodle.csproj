@@ -126,7 +126,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaiTapNopController.cs" />
     <Compile Include="Controllers\BaiVietBaiGiangController.cs" />
+    <Compile Include="Controllers\BaiVietBaiTapController.cs" />
     <Compile Include="Controllers\BaiVietDienDanController.cs" />
     <Compile Include="Controllers\BinhLuanController.cs" />
     <Compile Include="Controllers\ChuDeController.cs" />
@@ -379,6 +381,10 @@
     <Content Include="Views\BaiVietBaiGiang\_Item.cshtml" />
     <Content Include="Views\TrangChu\TrangMau.cshtml" />
     <Content Include="Views\HoiDap\CauHoi.cshtml" />
+    <Content Include="Views\BaiVietBaiTap\_DanhSach.cshtml" />
+    <Content Include="Views\BaiVietBaiTap\_Form.cshtml" />
+    <Content Include="Views\BaiVietBaiTap\_Item.cshtml" />
+    <Content Include="Views\BaiVietBaiTap\_Khung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">
@@ -388,6 +394,10 @@
     <ProjectReference Include="..\DAOLayer\DAOLayer.csproj">
       <Project>{e084c23e-8bd2-4b97-ac36-26964589bca0}</Project>
       <Name>DAOLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{655388bf-cf36-441e-83f9-6ea5e3a1a972}</Project>
+      <Name>Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\DTOLayer\DTOLayer.csproj">
       <Project>{f03e2462-211a-47ab-bb76-9ad537ea4734}</Project>

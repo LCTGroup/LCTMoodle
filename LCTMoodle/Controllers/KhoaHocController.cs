@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BUSLayer;
 using DAOLayer;
 using DTOLayer;
+using Data;
 
 namespace LCTMoodle.Controllers
 {

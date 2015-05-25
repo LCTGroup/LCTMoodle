@@ -398,7 +398,7 @@ function taoNutCon(danhSachNutCon) {
         $htmlDanhSachNutCon += '\
             <li>\
                 <section class="mo-ta">\
-                    <img src="/taptin/' + this.hinhDaiDien.ma + '/chude_hinhdaidien">\
+                    <img src="/LayTapTin/chude_hinhdaidien/' + this.hinhDaiDien.ma + '">\
                     <p>\
                         ' + this.moTa + '\
                     </p>\

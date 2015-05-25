@@ -1,0 +1,78 @@
+﻿@model DTOLayer.BaiVietBaiTapViewDTO
+
+<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma=@Model.ma>
+    <section class="khung-bai-viet">
+        <section class="khung-chuc-nang"></section>
+        <section class="khung-thong-tin">
+            <section class="trai">
+                <article class="hinh-dai-dien">
+                    <img src="#" />
+                </article>
+            </section>
+            <section class="phai">
+                <section class="nguoi-dung">
+                    <a href="#">Lê Bình Chiêu</a>
+                </section>
+                <section class="bai-viet">
+                    <section class="thoi-gian">
+                        @Model.thoiDiemTao
+                    </section>
+                </section>
+            </section>
+        </section>
+        <section class="khung-noi-dung">
+            <h2 class="tieu-de">
+                @Model.tieuDe
+            </h2>
+            @if (Model.thoiDiemHetHan.HasValue)
+            {
+                <section class="thoi-han">
+                    Thời hạn: <span>@Model.thoiDiemHetHan.Value.ToString("d/M/yyyy H:MM")</span>
+                </section>   
+            }
+            <section class="noi-dung noi-dung-ckeditor">
+                @Html.Raw(Model.noiDung)
+            </section>
+            @if (@Model.tapTin != null)
+            {
+                <section class="tap-tin">
+                    <a href="/LayTapTin/BaiVietBaiTap_TapTin/@Model.tapTin.ma">
+                        <img src="/LayTapTin/BaiVietBaiTap_TapTin/@Model.tapTin.ma" />
+                        <span>@Model.tapTin.ten</span>
+                    </a>
+                </section>   
+            }
+        </section>
+        <section class="khung-dieu-khien"></section>
+    </section>
+    <section class="khung-nop-bai">
+        <section class="danh-sach-nop">
+            Bạn và 40 người khác đã nộp
+        </section>
+        <form data-doi-tuong="nop-bai-form" class="lct-form">
+            <input type="hidden" name="BaiVietBaiTap" value="@Model.ma" />
+            <ul style="flex-wrap: nowrap; padding: 5px 10px 10px;">
+                <li style="margin: 0; min-width: 32px; max-width: 32px;">
+                    <i data-chuc-nang="thay-doi-input" title="Nộp bằng đường dẫn" data-value="duong-dan" style="line-height: 32px; width: 32px; font-size: 20px; color: #888; cursor: pointer;" class="pe-7s-cloud"></i>
+                </li>
+                <li data-doi-tuong="tap-tin" style="width: 100%; margin: 0;">
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input name="TapTin" data-validate="bat-buoc" type="file" />
+                        </article>
+                    </section>
+                </li>
+                <li data-doi-tuong="duong-dan" style="width: 100%; margin: 0; display: none;">
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input disabled="disabled" name="DuongDan" data-validate="bat-buoc" type="text" placeholder="Nhập đường dẫn" />
+                        </article>
+                    </section>
+                </li>
+                <li style="min-width: 50px; max-width: 50px; margin: 0; margin-left: 4px;">
+                    <button style="padding: 0; margin: 0; width: 100%; height: 32px;" class="chap-nhan" type="submit">Nộp</button>
+                </li>
+            </ul>
+        </form>
+    </section>
+</li>

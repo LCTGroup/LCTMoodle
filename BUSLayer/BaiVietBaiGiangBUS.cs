@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DAOLayer;
 using DTOLayer;
 using System.IO;
+using Data;
 
 namespace BUSLayer
 {
@@ -13,7 +14,7 @@ namespace BUSLayer
     {
         public static KetQua them(Dictionary<string, string> form)
         {
-            KetQua ketQua = TapTinBUS.chuyen(layInt(form, "TapTin"), "BaiVietBaiGiang_TapTin");
+            KetQua ketQua = TapTinBUS.chuyen("BaiVietBaiGiang_TapTin", layInt(form, "TapTin"));
 
             if (ketQua.trangThai != 0)
             {

@@ -7,17 +7,24 @@ using DAOLayer;
 using DTOLayer;
 using System.IO;
 using Helpers;
+using Data;
 
 namespace BUSLayer
 {
     public class TapTinBUS : BUS
     {
+        public static KetQua lay(string loai, int ma)
+        {
+            return TapTinDAO.lay(loai, ma);
+        }
+
         public static KetQua them(System.Web.HttpPostedFileBase tapTinLuu)
         {
             TapTinDataDTO tapTin = new TapTinDataDTO()
             {
                 ten = tapTinLuu.FileName,
-                loai = tapTinLuu.ContentType
+                loai = tapTinLuu.ContentType,
+                duoi = Path.GetExtension(tapTinLuu.FileName)
             };
 
             KetQua ketQua = TapTinDAO.them(tapTin);
@@ -26,7 +33,7 @@ namespace BUSLayer
             {
                 TapTinViewDTO tapTinDaLuu = ketQua.ketQua as TapTinViewDTO;
 
-                string duongDan = TapTinHelper.layDuongDanGoc() + "Tam/" + tapTinDaLuu.ma + Path.GetExtension(tapTinDaLuu.ten);
+                string duongDan = TapTinHelper.layDuongDanGoc() + "Tam/" + tapTinDaLuu.ma + tapTinDaLuu.duoi;
 
                 //Lưu tập tin
                 try
@@ -46,9 +53,9 @@ namespace BUSLayer
             return ketQua;
         }
 
-        public static KetQua chuyen(int maTapTin, string loai)
+        public static KetQua chuyen(string loai, int ma)
         {
-            if (maTapTin == 0)
+            if (ma == 0)
             {
                 return new KetQua()
                 {
@@ -60,19 +67,18 @@ namespace BUSLayer
                 };
             }
 
-            KetQua ketQua = TapTinDAO.chuyen(maTapTin, loai);
+            KetQua ketQua = TapTinDAO.chuyen(loai, ma);
 
             if (ketQua.trangThai == 0)
             {
                 string duongDanGoc = TapTinHelper.layDuongDanGoc();
                 TapTinViewDTO tapTin = ketQua.ketQua as TapTinViewDTO;
-                string duoi = Path.GetExtension(tapTin.ten);
 
                 try
                 {
                     File.Move(
-                        duongDanGoc + "Tam/" + maTapTin + duoi,
-                        duongDanGoc + loai + "/" + tapTin.ma + duoi
+                        duongDanGoc + "Tam/" + ma + tapTin.duoi,
+                        duongDanGoc + loai + "/" + tapTin.ma + tapTin.duoi
                     );
                 }
                 catch (Exception loi)
@@ -86,11 +92,6 @@ namespace BUSLayer
             }
 
             return ketQua;
-        }
-
-        public static KetQua lay(int maTapTin, string loai)
-        {
-            return TapTinDAO.lay(maTapTin, loai);
         }
     }
 }

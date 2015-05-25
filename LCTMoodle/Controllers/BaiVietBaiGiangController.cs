@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BUSLayer;
 using DTOLayer;
 using DAOLayer;
+using Data;
 
 namespace LCTMoodle.Controllers
 {
@@ -49,7 +50,7 @@ namespace LCTMoodle.Controllers
                 return Json(new KetQua()
                     {
                         trangThai = 0,
-                        ketQua = 1//renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Item.cshtml", ketQua.ketQua)
+                        ketQua = renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Item.cshtml", ketQua.ketQua)
                     });
             }
             else

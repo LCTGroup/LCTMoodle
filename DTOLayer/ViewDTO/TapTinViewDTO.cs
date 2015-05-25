@@ -10,6 +10,7 @@ namespace DTOLayer
     {
         public string ten;
         public string loai;
+        public string duoi;
         public DateTime? thoiDiemTao;
 
         public override void gan(System.Data.SqlClient.SqlDataReader dong)
@@ -24,6 +25,8 @@ namespace DTOLayer
                         ten = layString(dong, i); break;
                     case "Loai":
                         loai = layString(dong, i); break;
+                    case "Duoi":
+                        duoi = layString(dong, i); break;
                     case "ThoiDiemTao":
                         thoiDiemTao = layDateTime(dong, i); break;
                     default:

@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaiTapNopDAO.cs" />
     <Compile Include="BaiVietBaiGiangDAO.cs" />
+    <Compile Include="BaiVietBaiTapDAO.cs" />
     <Compile Include="BaiVietDienDanDAO.cs" />
     <Compile Include="BinhLuanDAO.cs" />
     <Compile Include="KhoaHocDAO.cs" />
@@ -52,6 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{655388bf-cf36-441e-83f9-6ea5e3a1a972}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DTOLayer\DTOLayer.csproj">
       <Project>{f03e2462-211a-47ab-bb76-9ad537ea4734}</Project>
       <Name>DTOLayer</Name>
