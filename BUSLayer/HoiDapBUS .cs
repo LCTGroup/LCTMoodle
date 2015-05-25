@@ -10,7 +10,7 @@ using System.IO;
 
 namespace BUSLayer
 {
-    public class NguoiDungBUS : BUS
+    public class HoiDapBUS : BUS
     {
         public static KetQua them(Dictionary<string, string> form)
         {

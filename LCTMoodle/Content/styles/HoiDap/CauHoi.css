@@ -1,494 +1,138 @@
-﻿/*#region Phần câu hỏi*/
-.phan-cau-hoi {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-    position: relative;
+﻿/*#region Câu hỏi */
+
+.cau-hoi {    
+    display: flex;
+    flex-direction: row;
 }
-    /*#region Action button*/
-    .phan-cau-hoi > .action-button {
-        position: absolute;
-        top: 5px;
-        right: 0px;
-        visibility: hidden;
-    }
-        .phan-cau-hoi:hover > .action-button {
-            visibility: visible;
-        }
-        .phan-cau-hoi > .action-button:hover > i {
-            color: #08c;
-        }
-        .phan-cau-hoi > .action-button:hover > ul {
-            visibility: visible;
-        }
-        .phan-cau-hoi > .action-button > i {
-            width: 25px;
-            height: 25px;
-            font-size: 15px;
-            text-align: center;
-            line-height: 25px;
-            display: block;
-            color: #ddd;
-        }
-        .phan-cau-hoi > .action-button > ul {
-            background-color: white;
-            border: 1px solid #ddd;
-            font-size: 12px;
-            position: absolute;
-            z-index: 4;
-            top: 26px;
-            right: -4px;
-            visibility: hidden;
-        }
-            .phan-cau-hoi > .action-button > ul:before {
-                display: block;
-                content: '';
-                position: absolute;
-                top: -14px;
-                right: 9px;
-                border: 7px solid transparent;
-                border-bottom-color: #ddd;
-            }
-            .phan-cau-hoi > .action-button > ul:after {
-                display: block;
-                content: '';
-                position: absolute;
-                top: -12px;
-                right: 10px;
-                border: 6px solid transparent;
-                border-bottom-color: white;
-            }
-            .phan-cau-hoi > .action-button > ul > li {
-                border-left: 3px solid transparent;
-            }
-            .phan-cau-hoi > .action-button > ul > li:hover {
-                background-color: #fafafa;
-                border-left-color: #08c;
-            }
-                .phan-cau-hoi > .action-button > ul > li > a {
-                    text-decoration: none;
-                    color: black;
-                    display: block;
-                    padding: 5px;
-                    width: 70px;
-                }
-    /*#endregion Action button*/
-    .phan-cau-hoi > .tieu-de {
-        font: normal 20px Freeway;
-        margin-bottom: 5px;
-        padding-right: 25px;
-    }
-        .phan-cau-hoi > .tieu-de:after {
-            font-size: 12px;
-            content: ' - ' attr(data-time);
-        }
-    .phan-cau-hoi > .noi-dung {
-        background-color: #fff;
-        border: 1px solid #eee;
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-        .phan-cau-hoi > .noi-dung p {
-            text-indent: 10px;
-            margin: 5px 0px;
-            font-size: 14px;
-            line-height: 25px;
-        }
-        .phan-cau-hoi > .noi-dung pre {
-            white-space: pre-wrap;
-            /* CSS3 */
-            white-space: -moz-pre-wrap;
-            /* Mozilla, post millennium */
-            white-space: -pre-wrap;
-            /* Opera 4-6 */
-            white-space: -o-pre-wrap;
-            /* Opera 7 */
-            word-wrap: break-word;
-            /* Internet Explorer 5.5+ */
-            border: solid 1px #ddd;
-            background: #fafafa;
-            padding: 10px;
-            -moz-background-clip: padding;
-            -webkit-background-clip: padding-box;
-            background-clip: padding-box;
-            margin: 5px 0px;
-        }
-        .phan-cau-hoi > .noi-dung blockquote {
-            margin: 5px 0px 5px 20px;
-            padding-left: 20px;
-            font-style: italic;
-            font-size: 14px;
-            border-left: solid 5px #eee;
-        }
-        .phan-cau-hoi > .noi-dung ul,
-        .phan-cau-hoi > .noi-dung ol {            
-            font-size: 14px;
-            padding-left: 25px;
-        }
-    .phan-cau-hoi > .thong-tin {
+
+    /*#region Thông tin người đăng */
+
+    .cau-hoi > .thong-tin {
         display: flex;
+        flex-direction: column;   
+        min-width: 80px;
+        max-width: 80px;
+        padding: 10px;
+        border-right: 1px solid #f5f5f5;
+        background-color: #f8f8f8;
     }
-        .phan-cau-hoi > .thong-tin > .danh-gia {
+        .cau-hoi > .thong-tin > .nguoi-dung {            
+            display: flex;
+            flex-direction: column;     
+            margin-bottom: 10px;       
+        }
+            .cau-hoi > .thong-tin > .nguoi-dung > .hinh-dai-dien {                
+                width: 80px;
+                height: 80px;
+                background-color: #ff6a00; 
+            }
+                .cau-hoi > .thong-tin > .nguoi-dung > .hinh-dai-dien > img {                
+                    width: 100%;
+                }
+            .cau-hoi > .thong-tin > .nguoi-dung > span {
+                width: 100%;
+                text-align: center;
+            }
+        .cau-hoi > .thong-tin > .cau-hoi {
             display: flex;
             flex-direction: column;
-            margin-right: 10px;
+            padding: 0;
         }
-            .phan-cau-hoi > .thong-tin > .danh-gia > button {
-                background: transparent url(../../image/icon/30/arrow.png);
-                width: 30px;
-                height: 30px;
-                margin: 0px auto;
-                border: none;
-                outline: none;
-                opacity: 0.3;
-                transition: opacity 0.5s;
-            }
-                .phan-cau-hoi > .thong-tin > .danh-gia.khong > button {
-                    opacity: 0.05;
-                }               
-                .phan-cau-hoi > .thong-tin > .danh-gia.co > button:hover {
-                    opacity: 1;
-                }   
-                .phan-cau-hoi > .thong-tin > .danh-gia > button.tang {
-                    transform: rotate(-90deg);
-                }
-                    .phan-cau-hoi > .thong-tin > .danh-gia > button.tang.da {
-                        background-position-y: -30px;
-                    }
-                .phan-cau-hoi > .thong-tin > .danh-gia > button.giam {
-                    transform: rotate(90deg);
-                }
-                    .phan-cau-hoi > .thong-tin > .danh-gia > button.giam.da {
-                        background-position-y: -60px;
-                    }
-                .phan-cau-hoi > .thong-tin > .danh-gia > button.da {
-                    opacity: 1;
-                }
-            .phan-cau-hoi > .thong-tin > .danh-gia > .diem {
-                font: normal 30px Berlin;
+            .cau-hoi > .thong-tin > .cau-hoi > .diem-so {
                 text-align: center;
-                margin: -7px 0px;
+                font-size: 25px;
             }
-        .phan-cau-hoi > .thong-tin > .thong-tin-bai {
-            background-color: white;
-            padding: 10px;
-            border: 1px solid #eee;
-            position: relative;
+            .cau-hoi > .thong-tin > .cau-hoi > i {
+                text-align: center;
+                font-size: 30px;
+                cursor: pointer;
+            }
+        .cau-hoi > .thong-tin > .thoi-gian {
+            margin-top: 10px;
+            font-size: 11px;
+            text-align: center;
+            color: #bbb;
         }
-            .phan-cau-hoi > .thong-tin > .thong-tin-bai:before {
-                content: '';
-                display: block;
-                position: absolute;
-                height: 100%;
-                width: 3px;
-                top: 0px;
-                left: 0px;
-            }
-                .phan-cau-hoi > .thong-tin > .thong-tin-bai.da-tra-loi:before {
-                    background-color: #08c;
-                }
-                .phan-cau-hoi > .thong-tin > .thong-tin-bai.chua-tra-loi:before {
-                    background-color: #ddd;
-                }
-            .phan-cau-hoi > .thong-tin > .thong-tin-bai > .nguoi-dang {
-                font-size: 14px;
-            }
-            .phan-cau-hoi > .thong-tin > .thong-tin-bai > .thong-tin-them {
-                margin-top: 5px;
-            }
-                .phan-cau-hoi > .thong-tin > .thong-tin-bai > .thong-tin-them > span {
-                    display: inline-block;
-                    background: no-repeat top center;
-                    padding-top: 24px;
-                    font: normal 15px Berlin;
-                    min-width: 24px;
-                    text-align: center;
-                    margin-right: 5px;
-                }                
-                    .phan-cau-hoi > .thong-tin > .thong-tin-bai > .thong-tin-them > span:nth-child(1) {
-                        background-image: url('../../image/icon/24/view.png');
-                    }                
-                    .phan-cau-hoi > .thong-tin > .thong-tin-bai > .thong-tin-them > span:nth-child(2) {
-                        background-image: url('../../image/icon/24/comment.png');
-                    }   
-        .phan-cau-hoi > .thong-tin >  ul.tu-khoa {
-            margin-left: 10px;
-        }          
-            .phan-cau-hoi > .thong-tin > ul.tu-khoa > li {
-                display: inline-block;
-                margin-bottom: 4px;
-            }          
-                .phan-cau-hoi > .thong-tin > ul.tu-khoa > li > a {
-                    background-color: white;
-                    display: block;
-                    padding: 5px;
-                    border: 1px solid #eee;
-                    color: black;
-                    text-decoration: none;
-                    font-size: 12px;
-                }              
-                    .phan-cau-hoi > .thong-tin > ul.tu-khoa > li > a:hover {
-                        box-shadow: #d5f1ff 0px 0px 3px;
-                    } 
-/*#endregion Phần câu hỏi*/
-/*#region Phần trả lời*/
-.phan-tra-loi {
 
+    /*#endregion */
+    
+    /*#region Nội dung câu hỏi */
+    
+    .cau-hoi > .chi-tiet {
+        width: 100%;  
+        padding: 10px;
+    }
+        .cau-hoi > .chi-tiet > .noi-dung {
+
+        }
+            .cau-hoi > .chi-tiet > .tieu-de {            
+                font-size: 18px;
+            }
+            .cau-hoi > .chi-tiet > .noi-dung {
+                padding-top: 5px;
+            }
+            .cau-hoi > .chi-tiet > .nut-tra-loi {
+                margin-top: 10px;                
+            }
+                .cau-hoi > .chi-tiet > .nut-tra-loi > a {
+                    color: #08c;
+                }
+
+    /*#endregion */
+                
+/*#endregion */
+
+/*#region Trả lời */
+
+.tra-loi {
+    border: 1px solid #ddd;
 }
-    .phan-tra-loi > ul {
-
+    .tra-loi > .chi-tiet {
+        padding: 10px;
     }
-        .phan-tra-loi > ul > li {
+    .tra-loi > .thong-tin {
+        display: flex;
+        flex-direction: row;
+        border-top: 1px solid #f5f5f5;
+        background-color: #f8f8f8;
+    }
+        .tra-loi > .thong-tin > .diem {
             display: flex;
-            margin: 10px 0px 20px 0px;
-            padding-bottom: 20px;
-            border-bottom: 1px dashed #ddd;
-        }
-            .phan-tra-loi > ul > li > .danh-gia {
-                display: flex;
-                flex-direction: column;
-                margin-right: 10px;
-            }
-                .phan-tra-loi > ul > li > .danh-gia > button {
-                    background: transparent url(../../image/icon/30/arrow.png);
-                    width: 30px;
-                    height: 30px;
-                    margin: 0px auto;
-                    border: none;
-                    outline: none;
-                    opacity: 0.3;
-                    transition: opacity 0.5s;
-                }
-                    .phan-tra-loi > ul > li > .danh-gia.khong > button {
-                        opacity: 0.05;
-                    }               
-                    .phan-tra-loi > ul > li > .danh-gia.co > button:hover {
-                        opacity: 1;
-                    }   
-                    .phan-tra-loi > ul > li > .danh-gia > button.tang {
-                        transform: rotate(-90deg);
-                    }
-                        .phan-tra-loi > ul > li > .danh-gia > button.tang.da {
-                            background-position-y: -30px;
-                        }
-                    .phan-tra-loi > ul > li > .danh-gia > button.giam {
-                        transform: rotate(90deg);
-                    }
-                        .phan-tra-loi > ul > li > .danh-gia > button.giam.da {
-                            background-position-y: -60px;
-                        }
-                    .phan-tra-loi > ul > li > .danh-gia > button.da {
-                        opacity: 1;
-                    }
-                .phan-tra-loi > ul > li > .danh-gia > .diem {
-                    font: normal 30px Berlin;
-                    text-align: center;
-                    margin: -7px 0px;
-                }
-            .phan-tra-loi > ul > li > .tra-loi {
-                width: 100%;
-                position: relative;
-            }
-                /*#region Action button*/
-                .phan-tra-loi > ul > li > .tra-loi > .action-button {
-                    position: absolute;
-                    top: -2px;
-                    right: 0px;
-                    visibility: hidden;
-                }
-                    .phan-tra-loi > ul > li:hover > .tra-loi > .action-button {
-                        visibility: visible;
-                    }
-                    .phan-tra-loi > ul > li > .tra-loi > .action-button:hover > i {
-                        color: #08c;
-                    }
-                    .phan-tra-loi > ul > li > .tra-loi > .action-button:hover > ul {
-                        visibility: visible;
-                    }
-                    .phan-tra-loi > ul > li > .tra-loi > .action-button > i {
-                        width: 25px;
-                        height: 25px;
-                        font-size: 15px;
-                        text-align: center;
-                        line-height: 25px;
-                        display: block;
-                        color: #ddd;
-                    }
-                    .phan-tra-loi > ul > li > .tra-loi > .action-button > ul {
-                        background-color: white;
-                        border: 1px solid #ddd;
-                        font-size: 12px;
-                        position: absolute;
-                        z-index: 4;
-                        top: 26px;
-                        right: -4px;
-                        visibility: hidden;
-                    }
-                        .phan-tra-loi > ul > li > .tra-loi > .action-button > ul:before {
-                            display: block;
-                            content: '';
-                            position: absolute;
-                            top: -14px;
-                            right: 9px;
-                            border: 7px solid transparent;
-                            border-bottom-color: #ddd;
-                        }
-                        .phan-tra-loi > ul > li > .tra-loi > .action-button > ul:after {
-                            display: block;
-                            content: '';
-                            position: absolute;
-                            top: -12px;
-                            right: 10px;
-                            border: 6px solid transparent;
-                            border-bottom-color: white;
-                        }
-                        .phan-tra-loi > ul > li > .tra-loi > .action-button > ul > li {
-                            border-left: 3px solid transparent;
-                        }
-                            .phan-tra-loi > ul > li.da-duyet > .tra-loi > .action-button > ul > li.duyet {
-                                display: none;
-                            }
-                            .phan-tra-loi > ul > li.chua-duyet > .tra-loi > .action-button > ul > li.bo-duyet {
-                                display: none;
-                            }
-                            .phan-tra-loi > ul > li > .tra-loi > .action-button > ul > li:hover {
-                                background-color: #fafafa;
-                                border-left-color: #08c;
-                            }
-                            .phan-tra-loi > ul > li > .tra-loi > .action-button > ul > li > a {
-                                text-decoration: none;
-                                color: black;
-                                display: block;
-                                padding: 5px;
-                                width: 70px;
-                            }
-                /*#endregion Action button*/
-                .phan-tra-loi > ul > li > .tra-loi > .nguoi-tra-loi {
-                    font-weight: bold;
-                    font-size: 14px;
-                    margin-bottom: 5px;
-                    padding-right: 25px;
-                }
-                    .phan-tra-loi > ul > li > .tra-loi > .nguoi-tra-loi:after {
-                        content: ' - ' attr(data-time);
-                        font-size: 11px;
-                        font-weight: normal;
-                    }
-                .phan-tra-loi > ul > li > .tra-loi > .noi-dung {
-                    background-color: #fff;
-                    border: 1px solid #eee;
-                    padding: 10px;
-                    position: relative;
-                }
-                    .phan-tra-loi > ul > li > .tra-loi > .noi-dung:before {
-                        content: '';
-                        display: block;
-                        position: absolute;
-                        height: 100%;
-                        width: 3px;
-                        top: 0px;
-                        left: 0px;
-                    }
-                        .phan-tra-loi > ul > li.da-duyet > .tra-loi > .noi-dung:before {
-                            background-color: #08c;
-                        }
-                        .phan-tra-loi > ul > li.chua-duyet > .tra-loi > .noi-dung:before {
-                            background-color: #ddd;
-                        }
-                    .phan-tra-loi > ul > li > .tra-loi > .noi-dung p {
-                        text-indent: 10px;
-                        margin: 5px 0px;
-                        font-size: 14px;
-                        line-height: 25px;
-                    }
-                    .phan-tra-loi > ul > li > .tra-loi > .noi-dung pre {
-                        white-space: pre-wrap;
-                        /* CSS3 */
-                        white-space: -moz-pre-wrap;
-                        /* Mozilla, post millennium */
-                        white-space: -pre-wrap;
-                        /* Opera 4-6 */
-                        white-space: -o-pre-wrap;
-                        /* Opera 7 */
-                        word-wrap: break-word;
-                        /* Internet Explorer 5.5+ */
-                        border: solid 1px #ddd;
-                        background: #fafafa;
-                        padding: 10px;
-                        -moz-background-clip: padding;
-                        -webkit-background-clip: padding-box;
-                        background-clip: padding-box;
-                        margin: 5px 0px;
-                    }
-                    .phan-tra-loi > ul > li > .tra-loi > .noi-dung blockquote {
-                        margin: 5px 0px 5px 20px;
-                        padding-left: 20px;
-                        font-style: italic;
-                        font-size: 14px;
-                        border-left: solid 5px #eee;
-                    }
-                    .phan-tra-loi > ul > li > .tra-loi > .noi-dung ul,
-                    .phan-tra-loi > ul > li > .tra-loi > .noi-dung ol {            
-                        font-size: 14px;
-                        padding-left: 25px;
-                    }
-    /*#region Compose*/
-    .khung-soan-tra-loi {
-        border: 1px solid #ddd;
-        padding: 10px 10px 45px 10px;
-        margin: 10px 0px;
-        display: block;
-        background-color: #fafafa;
-        position: relative;
-        padding-bottom: 45px;
-    }
-        .khung-soan-tra-loi > .editor {
-            width: calc(100% - 22px); 
-            height: 50px;                  
-            line-height: 24px;
+            flex-direction: column;
+            padding: 0;
+            min-width: 80px;
+            max-width: 80px;
             padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ddd;
-            resize: none;
-            outline: none;
         }
-    /*#region PostButton*/
-    .khung-soan-tra-loi > .post-button-container {
-        margin-top: 5px;
-        display: inline-block;
-        position: relative;
-        width: auto;
-        border: 1px solid #ddd;
-        background-color: white;
-        float: right;
-    }
-        .khung-soan-tra-loi > .post-button-container > .post-button {
-            font-size: 14px;
-            background-color: transparent;
-            border: none;
-            outline: none;
-            height: 30px;
-            padding: 0 10px;
-            transition: padding-left 0.5s;
-            position: relative;
+            .tra-loi > .thong-tin > .diem > span {
+                text-align: center;
+                font-size: 20px;
+            }
+            .tra-loi > .thong-tin > .diem > i {
+                text-align: center;
+                font-size: 25px;
+                cursor: pointer;
+            }
+        .tra-loi > .thong-tin > .thong-tin-them {
+            text-align: left;
+            color: #bbb;
+            padding: 10px;
         }
-            .khung-soan-tra-loi > .post-button-container > i {
-                font-size: 15px;
-                position: absolute;
-                top: 8px;
-                left: 9px;
-                color: #08c;
-                z-index: 0;
-                transform: scale(0, 0);
+            .tra-loi > .thong-tin > .thong-tin-them > .nguoi-dang {
+
             }
-            .khung-soan-tra-loi > .post-button-container:hover {
-                border-color: #08c;
+            .tra-loi > .thong-tin > .thong-tin-them > .thoi-gian {
+
             }
-            .khung-soan-tra-loi > .post-button-container:hover > .post-button {
-                padding-left: 30px;
-            }
-            .khung-soan-tra-loi > .post-button-container:hover > i {
-                transition: transform 0.2s 0.5s;
-                transform: none;
-            }
-    /*#endregion PostButton*/
-/*#endregion Phần trả lời*/
+/*#endregion */
+
+/*#region mod Hộp */
+
+.hop-1-vien:not(:first-child) {
+    margin-bottom: 10px;
+}
+
+.hop-form > .noi-dung {
+    width: 100%;
+}
+/*#endregion */

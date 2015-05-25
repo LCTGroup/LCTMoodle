@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "Hỏi đáp";
+    Layout = "~/Views/LCT/Khung.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/CauHoi.css/HoiDap/" />
+}
+@section Scripts {
+    <script src="/CauHoi.js/HoiDap/"></script>
+}
+
+<!-- region Câu hỏi -->
+
+<article class="hop hop-1-vien">
+    <section class="noi-dung">
+        <article class="cau-hoi">
+            <section class="thong-tin">
+                <div class="nguoi-dung">
+                    <div class="hinh-dai-dien">
+                        <img />
+                    </div>
+                    <span>Tên người dùng</span>
+                </div>
+                <div class="cau-hoi">
+                    <i class="pe-7s-angle-up"></i>
+                    <span class="diem-so">5</span>
+                    <i class="pe-7s-angle-down"></i>
+                </div>
+                <div class="thoi-gian">Đăng lúc 24/5/2015</div>
+            </section>
+            <section class="chi-tiet">
+                <div class="tieu-de">Cách kết nối Connect string trong MVC5</div>
+                <div class="noi-dung">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+                <div class="nut-tra-loi">
+                    <a href="#traloi">Trả lời câu hỏi này</a>
+                </div>
+            </section>
+
+        </article>
+    </section>
+</article>
+
+<!-- endregion Câu hỏi -->
+
+<!-- region Trả lời -->
+
+<article class="hop hop-1-vien">
+    <section class="tieu-de">Danh sách trả lời</section>
+    <section class="noi-dung">
+        <article class="tra-loi">
+            <div class="chi-tiet">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+            <div class="thong-tin">
+                <div class="diem">
+                    <i class="pe-7s-angle-up"></i>
+                    <span class="diem-so">5</span>
+                    <i class="pe-7s-angle-down"></i>
+                </div>
+                <div class="thong-tin-them">
+                    <div class="nguoi-dang">trả lời lúc 24/5/2015</div>
+                    <div class="thoi-gian">bởi <a href="#">NMC</a></div>
+                </div>
+            </div>
+        </article>
+    </section>
+</article>
+
+<article class="hop hop-1-vien">
+    <section class="noi-dung">
+        <article class="tra-loi">
+            <div class="chi-tiet">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+            <div class="thong-tin">
+                <div class="diem">
+                    <i class="pe-7s-angle-up"></i>
+                    <span class="diem-so">5</span>
+                    <i class="pe-7s-angle-down"></i>
+                </div>
+                <div class="thong-tin-them">
+                    <div class="nguoi-dang">trả lời lúc 24/5/2015</div>
+                    <div class="thoi-gian">bởi <a href="#">NMC</a></div>
+                </div>
+            </div>
+        </article>
+    </section>
+</article>
+
+<!-- endregion Trả lời -->
+
+<!-- region Fom Trả lời -->
+
+<article class="hop hop-2-vien">
+    <section class="tieu-de">Trả lời câu hỏi</section>
+    <section class="noi-dung">
+        <article class="hop-form">
+            <section class="noi-dung">
+                <form class="lct-form" id="tra_loi_cau_hoi">
+                    <article>
+                        <ul>
+                            <li>
+                                <a id="traloi"></a>
+                                    <section class="noi-dung">
+                                        <article class="input">
+                                            <textarea data-validate="bat-buoc" name="NoiDung" data-input-type="editor" placeholder="Nội dung"></textarea>
+                                        </article>
+                                    </section>
+</li>
+                        </ul>
+                        <section class="lct-khung-button">
+                            <button class="chap-nhan">Trả lời</button>
+                        </section>
+                    </article>
+                </form>
+            </section>
+        </article>
+    </section>
+</article>
+
+<!-- endregion Fom Trả lời -->
