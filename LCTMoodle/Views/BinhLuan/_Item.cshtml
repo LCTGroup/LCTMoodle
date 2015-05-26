@@ -1,6 +1,6 @@
 ﻿@model DTOLayer.BinhLuanViewDTO
 
-<li class="muc-binh-luan">
+<li data-doi-tuong="muc-binh-luan" class="muc-binh-luan" data-loai-doi-tuong="@Model.loaiDoiTuong">
     <section class="trai">
         <article class="hinh-dai-dien">
             <img src="#" />
@@ -16,5 +16,15 @@
         <section class="thong-tin">
             <span class="thoi-gian">18 giờ trước</span>
         </section>
+    </section>
+    <section class="khung-chuc-nang-lct" style="top: 0; right: 0;">
+        <ul data-doi-tuong="cnbl-@Model.ma">
+            <li>
+                <a data-chuc-nang="xoa-binh-luan" data-value="@Model.ma">Xóa bình luận</a>
+            </li>
+        </ul>
+        <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbl-@Model.ma">
+            <i class="pe-7f-config"></i>
+        </button>
     </section>
 </li>

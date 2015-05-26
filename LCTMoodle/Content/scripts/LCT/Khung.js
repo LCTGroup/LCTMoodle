@@ -24,13 +24,13 @@ function khoiTaoTatMoDoiTuong($danhSachNut) {
         // $nut: nút nhấn
         // $doiTuong: đối tượng popup sẽ được hiển thị
         var $nut = $(this);
-        var $doiTuong = $('[data-doi-tuong~="' + $nut.attr('data-mo-doi-tuong') + '"]');
+        var $doiTuong = $('[data-doi-tuong="' + $nut.attr('data-mo-doi-tuong') + '"]');
         
         //Xử lý sự kiện click của nút nhấn
         if ($doiTuong.is(':visible')) {            
-            $doiTuong.hide();
+            $doiTuong.hide().removeClass('mo');
         } else {            
-            $doiTuong.show();
+            $doiTuong.show().addClass('mo');
         }
 
         $doiTuong.on('click', function (e) {
@@ -39,7 +39,7 @@ function khoiTaoTatMoDoiTuong($danhSachNut) {
 
         //Xử lý sự kiện nhấn chuột ra ngoài đối tượng
         $(document).on('click.tat_mo', function (e) {
-            $doiTuong.hide();
+            $doiTuong.hide().removeClass('mo');
             $(document).off('click.tat_mo');
         });
     });
@@ -120,8 +120,7 @@ function layPopupFull(thamSo) {
 /*
     Có 2 cách để đưa nội dung cho popup
         1. Chỉ định html cho popup
-            html: 
-                Bắt buộc
+            html: Bắt buộc
                 Hiển thị html trong popup
         2. Sử dụng ajax để load nội dung cho popup
             url: Bắt buộc
@@ -173,7 +172,7 @@ function moPopupFull(thamSo) {
             url: thamSo.url,
             type: 'type' in thamSo ? thamSo.method : 'GET',
             data: 'data' in thamSo ? (typeof thamSo.data == 'function' ? thamSo.data() : thamSo.data) : {},
-            contentType: 'JSON'
+            dataType: 'JSON'
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $popup = layPopupFull({
@@ -197,16 +196,10 @@ function moPopupFull(thamSo) {
                 if ('thatBai' in thamSo) {
                     thamSo.thatBai();
                 }
-                else {
-                    alert('Thất bại');
-                }
             }
         }).fail(function () {
             if ('thatBai' in thamSo) {
                 thamSo.thatBai();
-            }
-            else {
-                alert('Thất bại');
             }
         }).always(function () {
             if ('hoanTat' in thamSo) {

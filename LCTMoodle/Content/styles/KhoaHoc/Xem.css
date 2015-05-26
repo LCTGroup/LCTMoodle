@@ -121,6 +121,7 @@
 
 [data-hien-thi="dien-dan"] .khung-bai-viet {
     background-color: #fff;
+    position: relative;
 }
 
     [data-hien-thi="dien-dan"] .khung-bai-viet .khung-thong-tin {
@@ -158,7 +159,7 @@
             }
 
             [data-hien-thi="dien-dan"] .khung-bai-viet .khung-thong-tin .phai .bai-viet .thoi-gian {
-                font-size: 12px;
+                font-size: 11px;
                 color: #888;
             }
 
@@ -180,14 +181,11 @@
 
 /*#region Bài giảng */
 
-[data-hien-thi="bai-giang"] {
-
-}
-
 /*#region Khung bài viết */
 
 [data-hien-thi="bai-giang"] .muc-bai-viet {
     margin: 10px 0;
+    position: relative;
 }
 
     [data-hien-thi="bai-giang"] .muc-bai-viet .tieu-de {
@@ -250,6 +248,7 @@
 
 [data-hien-thi="bai-tap"] .khung-bai-viet {
     background-color: #fff;
+    position: relative;
 }
 
     [data-hien-thi="bai-tap"] .khung-bai-viet .khung-thong-tin {
@@ -287,7 +286,7 @@
             }
 
             [data-hien-thi="bai-tap"] .khung-bai-viet .khung-thong-tin .phai .bai-viet .thoi-gian {
-                font-size: 12px;
+                font-size: 11px;
                 color: #888;
             }
 
@@ -340,6 +339,91 @@
         [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop {
             padding: 5px 10px;
         }
+
+            [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop a {
+                cursor: pointer;
+                color: #555;
+            }
+
+/*#endregion */
+
+/*#region Danh sách nộp */
+
+.khung-danh-sach-nop {
+    padding: 10px;
+}
+
+.khung-danh-sach-nop .so-luong {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: right;
+    color: #555;
+}
+
+.khung-danh-sach-nop .khung-danh-sach {
+
+}
+
+.khung-danh-sach-nop ul {
+
+}
+
+.khung-danh-sach-nop li {
+    display: flex;
+    margin-top: 10px;
+    border-top: 1px dashed #DDD;
+    padding-top: 10px;
+}
+
+.khung-danh-sach-nop .trai {
+    min-width: 4px;
+    max-width: 40px;
+    margin-right: 5px;
+}
+
+.khung-danh-sach-nop .hinh-dai-dien {
+    width: 40px;
+    height: 40px;
+}
+
+.khung-danh-sach-nop .hinh-dai-dien img {
+    width: 40px;
+    height: 40px;
+}
+
+.khung-danh-sach-nop .thong-tin {
+
+}
+
+.khung-danh-sach-nop .nguoi-nop {
+    font-weight: bold;
+    color: #333;
+}
+
+.khung-danh-sach-nop .thoi-gian {
+    font-size: 11px;
+    color: #555;
+}
+
+.khung-danh-sach-nop .bai-nop {
+    margin-top: 5px;
+}
+
+.khung-danh-sach-nop .bai-nop a {
+    display: block;
+}
+
+.khung-danh-sach-nop .bai-nop img {
+    height: 20px;
+    width: 20px;
+    vertical-align: bottom;
+}
+
+.khung-danh-sach-nop .bai-nop span {
+    color: #555;
+    font-size: 12px;
+}
 
 /*#endregion */
 

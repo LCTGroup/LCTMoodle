@@ -30,5 +30,11 @@ namespace LCTMoodle.Controllers
                 return Json(ketQua);
             }
         }
+
+        [HttpPost]
+        public ActionResult Xoa(string loaiDoiTuong, int ma)
+        {
+            return Json(BinhLuanDAO.xoaTheoMa(loaiDoiTuong, ma));
+        }
 	}
 }

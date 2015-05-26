@@ -21,6 +21,7 @@ namespace DAOLayer
         /// <param name="tenStoredProcedure">Tên stored procedure</param>
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
         protected static KetQua layDong<T>(string tenStoredProcedure, object[] danhSachThamSo)
+            where T : DTO, new()
         {
             SqlConnection ketNoi = new SqlConnection(chuoiKetNoi);
             try
@@ -35,7 +36,7 @@ namespace DAOLayer
                 }
                 SqlDataReader dong = lenh.ExecuteReader();
 
-                DTO DTO = (DTO)Activator.CreateInstance(typeof(T));
+                T DTO = new T();
                 if (dong.Read())
                 {
                     DTO.gan(dong);
@@ -44,7 +45,7 @@ namespace DAOLayer
                     return new KetQua()
                         {
                             trangThai = 0,
-                            ketQua = (T)Convert.ChangeType(DTO, typeof(T))
+                            ketQua = DTO
                         };
                 }
                 else
@@ -53,7 +54,7 @@ namespace DAOLayer
                     return new KetQua()
                         {
                             trangThai = 1,
-                            ketQua = "Không có dòng dữ liệu nào"
+                            ketQua = DTO
                         };
                 }
             }
@@ -78,6 +79,7 @@ namespace DAOLayer
         /// <param name="tenStoredProcedure">Tên stored procedure</param>
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
         protected static KetQua layDanhSachDong<T>(string tenStoredProcedure, object[] danhSachThamSo)
+            where T : DTO, new()
         {
             SqlConnection ketNoi = new SqlConnection(chuoiKetNoi);
             try
@@ -92,14 +94,14 @@ namespace DAOLayer
                 }
                 SqlDataReader dr = lenh.ExecuteReader();
 
-                List<DTO> DTOs = ((List<T>)Activator.CreateInstance(typeof(List<>).MakeGenericType(typeof(T)))).ConvertAll<DTO>(X => (DTO)Convert.ChangeType(X, typeof(DTO)));
+                List<T> DTOs = new List<T>();
                                 
                 if (dr.Read())
                 {
                     int i = 0;
                     do
                     {
-                        DTOs.Add((DTO)Activator.CreateInstance(typeof(T)));
+                        DTOs.Add(new T());
                         DTOs[i++].gan(dr);
                     }
                     while (dr.Read());
@@ -109,7 +111,7 @@ namespace DAOLayer
                     return new KetQua()
                         {
                             trangThai = 0,
-                            ketQua = DTOs.ConvertAll<T>(X => (T)Convert.ChangeType(X, typeof(T)))
+                            ketQua = DTOs
                         };
                 }
                 else
@@ -118,7 +120,7 @@ namespace DAOLayer
                     return new KetQua()
                     {
                         trangThai = 1,
-                        ketQua = "Không có dòng dữ liệu nào"
+                        ketQua = DTOs
                     };
                 }
             }
@@ -186,7 +188,7 @@ namespace DAOLayer
         /// <summary>
         /// Thực hiện stored procedure lấy về 1 giá trị
         /// </summary>
-        /// <typeparam name="T">Đối tượng DTO</typeparam>
+        /// <typeparam name="T">Kiểu dữ liệu</typeparam>
         /// <param name="tenStoredProcedure">Tên stored procedure</param>
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
         protected static KetQua layGiaTri<T>(string tenStoredProcedure, object[] danhSachThamSo)
@@ -208,7 +210,7 @@ namespace DAOLayer
                 return new KetQua()
                     {
                         trangThai = 0,
-                        ketQua = (T)Convert.ChangeType(ketQua, typeof(T))
+                        ketQua = (T)ketQua
                     };
             }
             catch (SqlException e)

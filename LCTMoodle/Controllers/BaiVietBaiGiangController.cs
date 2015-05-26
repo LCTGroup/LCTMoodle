@@ -58,5 +58,14 @@ namespace LCTMoodle.Controllers
                 return Json(ketQua);
             }
         }
+
+        [HttpPost]
+        public ActionResult Xoa(int ma)
+        {
+            return Json(
+                BaiVietBaiGiangDAO.xoaTheoMa(ma),
+                JsonRequestBehavior.AllowGet
+            );
+        }
 	}
 }

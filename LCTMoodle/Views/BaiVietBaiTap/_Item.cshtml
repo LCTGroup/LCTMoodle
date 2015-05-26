@@ -2,7 +2,6 @@
 
 <li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma=@Model.ma>
     <section class="khung-bai-viet">
-        <section class="khung-chuc-nang"></section>
         <section class="khung-thong-tin">
             <section class="trai">
                 <article class="hinh-dai-dien">
@@ -43,11 +42,22 @@
                 </section>   
             }
         </section>
-        <section class="khung-dieu-khien"></section>
+        <section class="khung-chuc-nang-lct">
+            <ul data-doi-tuong="cnbt-@Model.ma">
+                <li>
+                    <a data-chuc-nang="xoa-bai-viet" data-value="@Model.ma">Xóa bài viết</a>
+                </li>
+            </ul>
+            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbt-@Model.ma">
+                <i class="pe-7f-config"></i>
+            </button>
+        </section>
     </section>
     <section class="khung-nop-bai">
         <section class="danh-sach-nop">
-            Bạn và 40 người khác đã nộp
+            <a data-chuc-nang="xem-danh-sach-nop">
+                Bạn và 40 người khác đã nộp
+            </a>
         </section>
         <form data-doi-tuong="nop-bai-form" class="lct-form">
             <input type="hidden" name="BaiVietBaiTap" value="@Model.ma" />

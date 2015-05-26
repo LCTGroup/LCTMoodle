@@ -152,6 +152,7 @@
     <Content Include="Content\images\LCT\ChuDe\khoa-hoc.png" />
     <Content Include="Content\images\LCT\mini_logo.png" />
     <Content Include="Content\scripts\BinhLuan\Khung.js" />
+    <Content Include="Content\scripts\ChuDe\QuanLy - Copy.js" />
     <Content Include="Content\scripts\ChuDe\QuanLy.js" />
     <Content Include="Content\images\user-avatar.jpg" />
     <Content Include="Content\scripts\HoiDap\CauHoi.js" />
@@ -366,7 +367,7 @@
     <Content Include="Views\NguoiDung\DangKy.cshtml" />
     <Content Include="Views\TrangChu\CayMau.cshtml" />
     <Content Include="Views\ChuDe\QuanLy.cshtml" />
-    <Content Include="Views\ChuDe\_Form.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Form.cshtml" />
     <Content Include="Views\KhoaHoc\Xem.cshtml" />
     <Content Include="Views\HoiDap\Index.cshtml" />
     <Content Include="Views\BaiVietDienDan\_Item.cshtml" />
@@ -380,6 +381,18 @@
     <Content Include="Views\BaiVietBaiTap\_Item.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Khung.cshtml" />
     <Content Include="Views\KhoaHoc\_Khung.cshtml" />
+    <Content Include="Views\BaiTapNop\_DanhSachNop.cshtml" />
+    <Content Include="Views\ChuDe\QuanLy - Copy.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_DanhSach_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_DanhSach_PhamVi_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_Con_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_DanhSach.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_DanhSach_PhamVi.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_PhamVi_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_Con_PhamVi_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_HeThong_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_Con_HeThong_Item.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

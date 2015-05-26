@@ -1,6 +1,6 @@
 ﻿@model DTOLayer.BaiVietDienDanViewDTO
 
-<li class="muc-bai-viet" data-ma=@Model.ma>
+<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma=@Model.ma>
     <section class="khung-bai-viet">
         <section class="khung-chuc-nang"></section>
         <section class="khung-thong-tin">
@@ -18,6 +18,16 @@
                         @Model.thoiDiemTao
                     </section>
                 </section>
+            </section>
+            <section class="khung-chuc-nang-lct">
+                <ul data-doi-tuong="cndd-@Model.ma">
+                    <li>
+                        <a data-chuc-nang="xoa-bai-viet" data-value="@Model.ma">Xóa bài viết</a>
+                    </li>
+                </ul>
+                <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cndd-@Model.ma">
+                    <i class="pe-7f-config"></i>
+                </button>
             </section>
         </section>
         <section class="khung-noi-dung">

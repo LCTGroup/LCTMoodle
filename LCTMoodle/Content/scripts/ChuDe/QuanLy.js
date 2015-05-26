@@ -1,438 +1,196 @@
-﻿$cay = null;
-$danhSachNutCon = null;
-$danhSachNut = null;
-//Xác định bằng PhamVi, <Tên phạm vi> (KhoaHoc, HeThong, ...), <Mã cha>
-mangNutCon = [];
+﻿var $_Khung, $_Cay, $_DanhSach;
 
+//Xác định bằng PhamVi, <Mã phạm vi> (KhoaHoc, HoiDap, ...), <Mã chủ đề>
+var mangNut = {};
+
+//Khởi tạo
 $(function () {
-    $cay = $('#cay_chu_de');
-    $danhSachNutCon = $('#danh_sach_chu_de');
-    $danhSachNut = $('#danh_sach_nut');
+    $_Khung = $('#khung_quan_ly');
+    $_Cay = $('#khung_cay');
+    $_DanhSach = $('#khung_danh_sach');
 
-    khoiTao_NutTao($cay.find('[data-chuc-nang="tao"]'));
-    khoiTao_MoNut($cay.find('[data-chuc-nang="mo-nut"]'));
+    khoiTao_MoNut($_Khung.find('[data-chuc-nang="mo-nut"]'));
 })
 
+//#region Xử lý nút nhấn
+
 /*
-    Khởi tạo các nút xử lý
+    Danh sách loại
 */
-//Nút tạo
-function khoiTao_NutTao($nutTao) {
-    $nutTao.on('click', function () {
-        moPopupFull({
-            url: '/ChuDe/_Form',
-            data: function() {
-                return {
-                    maChuDeCha: parseInt($cay.attr('data-value')) || 0,
-                    phamVi: $cay.attr('data-pham-vi')
-                };
-            },
-            width: '450px',
-            thanhCong: function ($noiDung) {
-                $form = $noiDung.find('#tao_chu_de_form');
-                khoiTaoLCTForm($form, {
-                    submit: function (e) {
-                        if ('DangTaoChuDe' in mangTam && mangTam['DangTaoChuDe']) {
-                            return;
-                        }
-                        mangTam['DangTaoChuDe'] = true;
+/*
+    Các loại nút ở cây
+        cay-he-thong
+        cay-pham-vi
+        cay-nut
 
-                        $.ajax({
-                            url: '/ChuDe/XuLyThem',
-                            type: 'POST',
-                            dataType: 'JSON',
-                            data: $form.serialize()
-                        }).done(function (data) {
-                            $noiDung.trigger('Tat');
+        cay-con-pham-vi
+        cay-con-nut
 
-                            if (data.trangThai == 0) {
-                                $nutCon = $(taoNutCon(data.ketQua));
-                                khoiTao_MoNut($nutCon.find('[data-chuc-nang="mo-nut"]'));
-                                $danhSachNutCon.prepend($nutCon);
-                                $danhSachNutCon.removeClass('rong');
+    Các loại nút ở danh sách
+        ds-pham-vi
+        ds-nut
+*/
 
-                                var key = parseInt($cay.attr('data-value')) > 0 ? $cay.attr('data-value') : $cay.attr('data-pham-vi');
-                                if (key in mangNutCon) {
-                                    mangNutCon[key].push(data.ketQua);
-                                }
-                                else {
-                                    mangNutCon[key] = [data.ketQua];
-                                }
-
-                                taoNutConTrenNut($danhSachNut.find('li:last-child'), data.ketQua);
-                            }
-                            else {
-                                moPopup({
-                                    tieuDe: 'Thông báo',
-                                    thongBao: 'Tạo chủ đề thất bại'
-                                });
-                            }
-                        }).fail(function () {
-                            $noiDung.trigger('Tat');
-                            moPopup({
-                                tieuDe: 'Thông báo',
-                                thongBao: 'Tạo chủ đề thất bại'
-                            });
-                        }).always(function () {
-                            mangTam['DangTaoChuDe'] = false;
-                        });
-                    }
-                });
-            }
-        });
+function khoiTao_MoNut($nutMo) {
+    $nutMo.on('click', function () {
+        moNut(this);
     });
 }
 
-//Nút mở nút
-function khoiTao_MoNut($nutMo) {
+var a = b = 0;
+function moNut(obj) {
+    //Kiểm tra xem có đang mở nút khác ko
+    if ('dangMoNut' in mangTam && mangTam['dangMoNut']) {
+        return;
+    }
+    mangTam['dangMoNut'] = true;
 
-    /*
-        Danh sách loại
-    */
-    /*
-    switch (loai) {        
-        //Các loại nút ở trên cây
-        case 'nut-pham-vi-goc':
-            break;
-        case 'nut-pham-vi':
-            break;
-        case 'nut':
-            break;
-        case 'nut-con-pham-vi-tren-nut':
-            break;
-        case 'nut-con-tren-nut':
-            break;
+    var
+        $muc = $(obj).closest('[data-doi-tuong="muc"]'),
+        loai = $muc.attr('data-loai'),
+        ma = $muc.attr('data-ma');
+        
+    //#region Lấy dữ liệu
+    if (!(ma in mangNut)) {
+        //#region Ajax lấy dữ liệu
+        //Lấy tham số gửi đi
+        data = null;
+        switch (loai) {
+            case 'cay-he-thong':
+            case 'cay-pham-vi':
+            case 'cay-con-pham-vi':
+            case 'ds-pham-vi':
+                data = {
+                    phamVi: ma
+                };
+                break;
+            case 'cay-nut':
+            case 'cay-con-nut':
+            case 'ds-nut':
+                data = {
+                    maChuDeCha: ma,
+                    phamVi: $_Khung.attr('data-pham-vi')
+                }
+                break;
+            default:
+                return;
+        }
 
-        //Các loại nút con ở danh sách nút con
-        case 'nut-con':
-            break;
-        case 'nut-con-pham-vi':
-            break;
+        //Lấy dữ liệu
+        //Để xác định lấy dữ liệu thành công hay thất bại
+        var thanhCong;
 
+        $.ajax({
+            url: '/ChuDe/_Khung',
+            data: data,
+            contentType: 'JSON',
+            async: false
+        }).done(function (data) {
+            if (data.trangThai == 0 || data.trangThai == 1) {
+                //Lưu lại kết quả lấy được
+                mangNut[ma] = data.ketQua;
+
+                thanhCong = true;
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Mở nút thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
+
+                thanhCong = false;
+            }
+        }).fail(function () {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Mở nút thất bại',
+                bieuTuong: 'nguy-hiem'
+            });
+            thanhCong = false;
+        });
+
+        if (!thanhCong) {
+            return;
+        }
+        //#endregion
+    }
+
+    var duLieuNutCon = mangNut[ma],
+        $cay = $(duLieuNutCon.cay),
+        $danhSach = $(duLieuNutCon.danhSach);
+
+    khoiTao_MoNut($cay.find('[data-chuc-nang="mo-nut"]'));
+    khoiTao_MoNut($danhSach.find('[data-chuc-nang="mo-nut"]'));
+    //#endregion
+
+    //#region Hiển thị
+    //Hiển thị cây
+    switch (loai) {
+        case 'cay-he-thong':
+        case 'cay-pham-vi':
+        case 'cay-nut':
+            $muc.find('~ *').remove();
+            break;
+        case 'cay-con-pham-vi':
+        case 'cay-con-nut':
+            var $mucCha = $muc.parent().closest('[data-doi-tuong="muc"]');
+            $mucCha.find('~ *').remove();
+            $mucCha.after($cay)
+            break;
+        case 'ds-pham-vi':
+        case 'ds-nut':
+            $_Cay.append($cay);
+            break;
         default:
-            alert('Dữ liệu không hợp lệ');
             return;
     }
-    */
 
-    $nutMo.on('click', function () {
-        //Kiểm tra xem có đang mở nút khác ko
-        if ('dangMoNut' in mangTam && mangTam['dangMoNut']) {
-            return;
-        }
-        mangTam['dangMoNut'] = true;
+    //Điều chỉnh hiển thị cây con
+    var $danhSachMuc = $_Cay.find(':nth-last-child(2) [data-doi-tuong="danh-sach-muc"]');
+    $danhSachMuc.prepend($danhSachMuc.children('[data-ma="' + ma + '"]'));
 
-        $phanTu = $(this);
-        
-        //Lấy một số dữ liệu cần thiết
-        var text = $phanTu.text();
-        var loai = $phanTu.attr('data-loai');
-        var value = $phanTu.attr('data-value');
+    //Hiển thị danh sách
+    if ($danhSach.length) {
+        $_DanhSach.removeClass('rong');
 
-        /*
-            Lấy danh sách nút
-        */
-        //Lấy danh sách nút nếu trước đó chưa lấy
-        if (!(value in mangNutCon)) {
-            /*
-                Nếu chưa có => Ajax để lấy
-            */
-            //Lấy tham số gửi đi
-            data = null;
-            switch (loai) {
-                /*
-                Không cần xét trường hợp này vì không bao giờ xảy ra
-                case 'nut-pham-vi-goc':
-                    break;
-                */
-                case 'nut-pham-vi':
-                case 'nut-con-pham-vi-tren-nut':
-                case 'nut-con-pham-vi':
-                    data = {
-                        maChuDeCha: 0,
-                        phamVi: value
-                    };
-                    break;
-                case 'nut':
-                case 'nut-con-tren-nut':
-                case 'nut-con':
-                    data = {
-                        maChuDeCha: value,
-                        phamVi: $cay.attr('data-pham-vi')
-                    }
-                    break;
-                default:
-                    alert('Dữ liệu không hợp lệ');
-                    return;
-            }
-            
-            //Lấy dữ liệu
-            var thanhCong; //Để xác định lấy dữ liệu thành công hay thất bại
-            $.ajax({
-                url: '/ChuDe/XuLyLayDanhSach',
-                data: data,
-                contentType: 'JSON',
-                async: false
-            }).done(function (data) {
-                if (data.trangThai == 0) {
-                    //Lưu lại kết quả lấy được
-                    mangNutCon[value] = data.ketQua;
-                    thanhCong = true;
-                }
-                else if (data.trangThai == 1) {
-                    //Lưu lại kết quả lấy được
-                    mangNutCon[value] = [];
-                    thanhCong = true;
-                }
-                else {
-                    alert('Lấy danh sách nút con thất bại');
-                    thanhCong = false;
-                }
-            }).fail(function () {
-                alert('Lấy danh sách nút con thất bại');
-                thanhCong = false;
+        $_DanhSach.html($danhSach);
+    }
+    else {
+        $_DanhSach.addClass('rong');
+        $_DanhSach.html('');
+    }
+
+    //#endregion
+
+    //#region Cập nhật giá trị cây
+    switch (loai) {
+        //Các loại nút ở trên cây
+        case 'cay-he-thong':
+            $_Khung.attr({
+                'data-ma': '',
+                'data-pham-vi': 'PhamVi'
             });
+            break;
+        case 'cay-pham-vi':
+        case 'cay-con-pham-vi':
+        case 'ds-pham-vi':
+            $_Khung.attr({
+                'data-ma': '0',
+                'data-pham-vi': ma
+            });
+            break;
+        case 'cay-nut':
+        case 'cay-con-nut':
+        case 'ds-nut':
+            $_Khung.attr('data-ma', ma);
+            break;
+        default:
+            return;
+    }
+    //#endregion
 
-            if (!thanhCong) {
-                return;
-            }
-        }
+    mangTam['dangMoNut'] = false;
+};
 
-        var danhSachNutCon = mangNutCon[value];
-
-        /*
-            Hiển thị ra danh sách nút
-        */
-        if (danhSachNutCon.length == 0) {
-            $danhSachNutCon.addClass('rong');
-            $danhSachNutCon.html('');
-        }
-        else {
-            $danhSachNutCon.removeClass('rong');
-            switch (loai) {
-                //Các loại nút ở trên cây
-                case 'nut-pham-vi-goc':
-                    $danhSachNutCon.html(taoNutCon_PhamVi(danhSachNutCon));
-                    break;
-                case 'nut-pham-vi':
-                case 'nut':
-                case 'nut-con-pham-vi-tren-nut':
-                case 'nut-con-tren-nut':
-                case 'nut-con':
-                case 'nut-con-pham-vi':
-                    $danhSachNutCon.html(taoNutCon(danhSachNutCon));
-                    break;
-
-                default:
-                    alert('Dữ liệu không hợp lệ');
-                    return;
-            }
-        }
-
-        /*
-            Hiển thị nút ở cây và
-            Điều chỉnh hiển thị nút con trên cây
-        */
-        $nut = null;
-        switch (loai) {
-            case 'nut-pham-vi-goc':
-            case 'nut-pham-vi':
-            case 'nut':
-                $phanTu.parent().find('~ li').remove();
-                break;
-            case 'nut-con-pham-vi-tren-nut':
-                $($phanTu.parents('li')[1]).find('~ li').remove();
-                $nut = taoNut(text, value, 'nut-pham-vi');
-            case 'nut-con-tren-nut':
-                $($phanTu.parents('li')[1]).find('~ li').remove();
-                $nut = taoNut(text, value, 'nut');
-                break;
-            case 'nut-con-pham-vi':
-                $nut = taoNut(text, value, 'nut-pham-vi');
-                break;
-            case 'nut-con':
-                $nut = taoNut(text, value, 'nut');
-                break;
-
-            default:
-                alert('Dữ liệu không hợp lệ');
-                return;
-        }
-        if ($nut != null) {
-            $danhSachNut.append($nut);
-            dieuChinhNutConTrenNut($nut.prev(), value);
-        }
-
-        /*
-            Cập nhật giá trị cây
-        */
-        switch (loai) {
-            //Các loại nút ở trên cây
-            case 'nut-pham-vi-goc':
-                $cay.attr({
-                    'data-value': '',
-                    'data-pham-vi': ''
-                });
-                break;
-            case 'nut-pham-vi':
-            case 'nut-con-pham-vi-tren-nut':
-            case 'nut-con-pham-vi':
-                $cay.attr({
-                    'data-value': '0',
-                    'data-pham-vi': value
-                });
-                break;
-            case 'nut':
-            case 'nut-con-tren-nut':
-            case 'nut-con':
-                $cay.attr('data-value', value);
-                break;
-
-            default:
-                alert('Dữ liệu không hợp lệ');
-                return;
-        }
-
-        mangTam['dangMoNut'] = false;
-    });
-}
-
-/*
-    Chức năng hỗ trợ
-*/
-
-//Tạo nút ở cây
-//loai: Là loại của nút
-function taoNut(text, value, loai) {
-    /*
-        Tạo danh sách nút con trên nút
-    */
-    var htmlDanhSachNutCon = '';
-    var danhSachNutCon = mangNutCon[value];
-    var soLuongNutCon = danhSachNutCon.length;
-
-    $(danhSachNutCon).each(function () {
-        //Không cần xử lý trường hợp nút con trên nút là phạm vi vì không xảy ra trường hợp này
-        htmlDanhSachNutCon += '\
-            <li>\
-                <a data-chuc-nang="mo-nut" data-loai="nut-con-tren-nut" data-value="' + this.ma + '" href="javascript:void(0)">\
-                    ' + this.ten + '\
-                </a>\
-            </li>\
-        ';
-    });
-
-    $htmlNut = $('\
-        <li>\
-            <a data-chuc-nang="mo-nut" data-loai="' + loai + '" data-value="' + value + '" href="javascript:void(0)">\
-                ' + text + '\
-            </a>\
-            <ul class="nut-con">\
-                ' + htmlDanhSachNutCon + '\
-            </ul>\
-        </li>\
-    ');
-
-    khoiTao_MoNut($htmlNut.find('[data-chuc-nang="mo-nut"]'));
-
-    return $htmlNut;
-}
-
-//Điều chỉnh nút trên cùng cho nút ở cây
-function dieuChinhNutConTrenNut($nutCanChinh, value) {
-    $khungChuaDanhSach = $nutCanChinh.find('.nut-con');
-    $nutLenDau = $khungChuaDanhSach.find('*[data-value="' + value + '"]').parent();
-
-    $khungChuaDanhSach.prepend($nutLenDau);
-}
-
-//Tạo nút con ở danh sách dạng phạm vi
-function taoNutCon_PhamVi(danhSachNutCon) {
-    var soLuongNut = danhSachNutCon.length;
-
-    var $htmlDanhSachNutCon = '';
-    $(danhSachNutCon).each(function () {
-        $htmlDanhSachNutCon += '\
-            <li>\
-                <section class="mo-ta">\
-                    <img src="/Content/images/LCT/ChuDe/' + this.hinh + '">\
-                    <p>\
-                        ' + this.moTa + '\
-                    </p>\
-                </section>\
-                <a href="javascript:void(0)" class="ten" data-chuc-nang="mo-nut" data-loai="nut-con-pham-vi" data-value="' + this.ma + '">\
-                    ' + this.ten + '\
-                </a>\
-            </li>\
-        ';
-    });
-
-    $htmlDanhSachNutCon = $($htmlDanhSachNutCon);
-
-    khoiTao_MoNut($htmlDanhSachNutCon.find('[data-chuc-nang="mo-nut"]'));
-
-    return $htmlDanhSachNutCon;
-}
-
-//Thêm 1 nút con cho nút ở cây
-function taoNutConTrenNut($nutCanTao, nutConCanThem) {
-    $htmlNutCon = $('\
-        <li>\
-            <a data-chuc-nang="mo-nut" data-loai="nut-con-tren-nut" data-value="' + nutConCanThem.ma + '" href="javascript:void(0)">\
-                ' + nutConCanThem.ten + '\
-            </a>\
-        </li>\
-    ');
-
-    khoiTao_MoNut($htmlNutCon.find('[data-chuc-nang="mo-nut"]'));
-
-    $nutCanTao.find('.nut-con').append($htmlNutCon);
-}
-
-//Tạo nút con ở danh sách
-function taoNutCon(danhSachNutCon) {
-    var soLuongNut = danhSachNutCon.length;
-
-    var $htmlDanhSachNutCon = '';
-    $(danhSachNutCon).each(function () {
-        $htmlDanhSachNutCon += '\
-            <li>\
-                <section class="mo-ta">\
-                    <img src="/LayTapTin/chude_hinhdaidien/' + this.hinhDaiDien.ma + '">\
-                    <p>\
-                        ' + this.moTa + '\
-                    </p>\
-                </section>\
-                <a href="javascript:void(0)" data-chuc-nang="mo-nut" data-loai="nut-con" data-value="' + this.ma + '" class="ten">\
-                    ' + this.ten + '\
-                </a>\
-                <section class="chuc-nang">\
-                    <i class="pe-7s-config"></i>\
-                    <ul>\
-                        <li>\
-                            <a href="javascript:void(0)">\
-                                Xoa chu de\
-                            </a>\
-                        </li>\
-                        <li>\
-                            <a href="javascript:void(0)">\
-                                Xoa chu de\
-                            </a>\
-                        </li>\
-                        <li>\
-                            <a href="javascript:void(0)">\
-                                Xoa chu de\
-                            </a>\
-                        </li>\
-                    </ul>\
-                </section>\
-            </li>\
-        ';
-    });
-
-    $htmlDanhSachNutCon = $($htmlDanhSachNutCon);
-
-    khoiTao_MoNut($htmlDanhSachNutCon.find('[data-chuc-nang="mo-nut"]'));
-
-    return $htmlDanhSachNutCon;
-}
+//#endregion

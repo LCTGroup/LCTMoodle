@@ -4,6 +4,8 @@
 
         khoiTaoForm($khung.find('[data-doi-tuong="binh-luan-form"]'));
     });
+
+    khoiTaoXoa($danhSachKhung.find('[data-chuc-nang="xoa-binh-luan"]'));
 }
 
 function khoiTaoForm($form) {
@@ -35,5 +37,52 @@ function khoiTaoForm($form) {
                 });
             });
         }
+    });
+}
+
+function khoiTaoXoa($danhSachNut) {
+    $danhSachNut.on('click', function () {
+        var $nut = $(this);
+
+        moPopup({
+            tieuDe: 'Xác nhận',
+            thongBao: 'Bạn có chắc muốn xóa bình luận này?',
+            bieuTuong: 'hoi',
+            nut: [
+                {
+                    ten: 'Có',
+                    xuLy: function () {
+                        var $mucBinhLuan = $nut.closest('[data-doi-tuong="muc-binh-luan"]');
+
+                        $.ajax({
+                            url: '/BinhLuan/Xoa/' + $nut.attr('data-value'),
+                            data: { loaiDoiTuong: $mucBinhLuan.attr('data-loai-doi-tuong') },
+                            type: 'POST',
+                            dataType: 'JSON'
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $mucBinhLuan.remove();
+                            }
+                            else {
+                                moPopup({
+                                    tieuDe: 'Thông báo',
+                                    thongBao: 'Xóa bài viết thất bại',
+                                    bieuTuong: 'nguy-hiem'
+                                })
+                            }
+                        }).fail(function () {
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: 'Xóa bài viết thất bại',
+                                bieuTuong: 'nguy-hiem'
+                            })
+                        });
+                    }
+                },
+                {
+                    ten: 'Không',
+                }
+            ]
+        });
     });
 }

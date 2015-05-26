@@ -11,9 +11,6 @@
 }
 
 <article class="hop">
-    <section class="tieu-de">
-        Bài viết nổi bật
-    </section>
     <section class="noi-dung">
         <ul class="danh-sach-nhom">
             @if (danhSachBaiGiang != null)
@@ -30,7 +27,9 @@
                                 </section>
                                 <section class="khung-noi-dung">
                                     <section class="tieu-de">
-                                        @danhSachBaiGiang[0].tieuDe
+                                        <a href="#">
+                                            @danhSachBaiGiang[0].tieuDe
+                                        </a>
                                     </section>
                                     <section class="noi-dung">
                                         @Html.Raw(System.Text.RegularExpressions.Regex.Replace(danhSachBaiGiang[0].noiDung, "<.*?>", ""))
@@ -45,7 +44,9 @@
                             {
                                 <li class="bai-viet">
                                     <section class="tieu-de">
-                                        @danhSachBaiGiang[i].tieuDe
+                                        <a href="#">
+                                            @danhSachBaiGiang[i].tieuDe
+                                        </a>
                                     </section>
                                     <section class="thong-tin-dang">
                                         @danhSachBaiGiang[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
@@ -71,7 +72,9 @@
                                 </section>
                                 <section class="khung-noi-dung">
                                     <section class="tieu-de">
-                                        @danhSachBaiTap[0].tieuDe
+                                        <a href="#">
+                                            @danhSachBaiTap[0].tieuDe
+                                        </a>
                                     </section>
                                     <section class="noi-dung">
                                         @Html.Raw(System.Text.RegularExpressions.Regex.Replace(danhSachBaiTap[0].noiDung, "<.*?>", ""))
@@ -86,7 +89,9 @@
                             {
                                 <li class="bai-viet">
                                     <section class="tieu-de">
-                                        @danhSachBaiTap[i].tieuDe
+                                        <a href="#">
+                                            @danhSachBaiTap[i].tieuDe
+                                        </a>
                                     </section>
                                     <section class="thong-tin-dang">
                                         @danhSachBaiTap[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
@@ -112,7 +117,9 @@
                                 </section>
                                 <section class="khung-noi-dung">
                                     <section class="tieu-de">
-                                        @danhSachDienDan[0].tieuDe
+                                        <a href="#">
+                                            @danhSachDienDan[0].tieuDe
+                                        </a>
                                     </section>
                                     <section class="noi-dung">
                                         @Html.Raw(System.Text.RegularExpressions.Regex.Replace(danhSachDienDan[0].noiDung, "<.*?>", ""))
@@ -127,7 +134,9 @@
                             {
                                 <li class="bai-viet">
                                     <section class="tieu-de">
-                                        @danhSachDienDan[i].tieuDe
+                                        <a href="#">
+                                            @danhSachDienDan[i].tieuDe
+                                        </a>
                                     </section>
                                     <section class="thong-tin-dang">
                                         @danhSachDienDan[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")

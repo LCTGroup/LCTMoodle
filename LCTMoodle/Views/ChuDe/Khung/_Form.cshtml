@@ -1,0 +1,49 @@
+﻿<article class="hop hop-1-vien">
+    <form id="tao_chu_de_form" class="noi-dung lct-form">
+        <input type="hidden" name="ChuDeCha" value="@ViewData["MaChuDeCha"]" />
+        <input type="hidden" name="PhamVi" value="@ViewData["PhamVi"]" />
+        <ul>
+            <li>
+                <section class="tieu-de">
+                    <label>
+                        Tên chủ đề:
+                    </label>
+                </section>
+                <section class="noi-dung">
+                    <article class="input">
+                        <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Nhập tên chủ đề..." />
+                    </article>
+                </section>
+            </li>
+            <li>
+                <section class="tieu-de">
+                    <label>
+                        Mô tả:
+                    </label>
+                </section>
+                <section class="noi-dung">
+                    <article class="input">
+                        <textarea data-validate="bat-buoc" name="MoTa" placeholder="Nhập mô tả chủ đề..."></textarea>
+                    </article>
+                </section>
+            </li>
+            <li>
+                <section class="tieu-de">
+                    <label>
+                        Hình đại diện:
+                    </label>
+                </section>
+                <section class="noi-dung">
+                    <article class="input">
+                        <input data-validate="bat-buoc" type="file" name="HinhDaiDien" />
+                    </article>
+                </section>
+            </li>
+        </ul>
+        <section class="lct-khung-button">
+            <button type="submit" class="chap-nhan">
+                Tạo
+            </button>
+        </section>
+    </form>
+</article>

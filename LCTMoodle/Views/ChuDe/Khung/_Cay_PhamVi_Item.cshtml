@@ -1,0 +1,18 @@
+﻿@model List<DTOLayer.ChuDeViewDTO>
+@*
+    ViewData: 
+        Ma: Mã của phạm vi
+        Ten: Tên của phạm vi
+*@
+
+<li data-doi-tuong="muc" data-loai="cay-pham-vi" data-ma="@ViewData["Ma"]">
+    <a data-chuc-nang="mo-nut">
+        @ViewData["Ten"]
+    </a>
+    <ul data-doi-tuong="danh-sach-muc" class="nut-con">
+        @foreach (DTOLayer.ChuDeViewDTO chuDe in Model)
+        {
+            @Html.Partial("~/Views/ChuDe/Khung/_Cay_Con_PhamVi_Item.cshtml", chuDe)
+        }
+    </ul>
+</li>

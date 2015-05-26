@@ -34,7 +34,8 @@ BEGIN
 			MaTapTin,
 			MaDoiTuong,
 			MaNguoiTao,
-			ThoiDiemTao
+			ThoiDiemTao,
+			''' + @4 + ''' AS LoaiDoiTuong
 			FROM dbo.BinhLuan_' + @4 + '
 			WHERE Ma = @@IDENTITY
 	')
@@ -42,7 +43,7 @@ END
 
 GO
 --Lấy bình luận theo đối tượng
-CREATE PROC dbo.layBinhLuanTheoDoiTuong(
+ALTER PROC dbo.layBinhLuanTheoDoiTuong(
 	@0 NVARCHAR(MAX), --Loại đối tượng
 	@1 INT --MaDoiTuong
 )
@@ -55,8 +56,23 @@ BEGIN
 			MaTapTin,
 			MaDoiTuong,
 			MaNguoiTao,
-			ThoiDiemTao
+			ThoiDiemTao,
+			''' + @0 + ''' AS LoaiDoiTuong
 			FROM dbo.BinhLuan_' + @0 + '
 			WHERE MaDoiTuong = ' + @1 + '
+	')
+END
+
+GO
+--Xóa bình luận theo loại và mã
+CREATE PROC dbo.xoaBinhLuanTheoMa(
+	@0 NVARCHAR(MAX), --Loại đối tượng
+	@1 INT --Ma
+)
+AS
+BEGIN
+	EXEC('
+		DELETE FROM dbo.BinhLuan_' + @0 + '
+			WHERE Ma = ' + @1 + '
 	')
 END
