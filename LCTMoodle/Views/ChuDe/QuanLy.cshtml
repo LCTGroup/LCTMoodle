@@ -4,90 +4,47 @@
 
     var danhSachPhamVi = Data.PhamVi.layDanhSach();
 }
-
 @section Styles {
-    <link rel="stylesheet" type="text/css" href="/Form.css/LCT" />
 }
 @section Scripts {
-    <script src="/QuanLy.js/ChuDe/"></script>
-    
+    <script src="/Khung.js/ChuDe/"></script>
     <script>
-        var phamVi = [];
-        @foreach (var phamVi in danhSachPhamVi)
-        {
-            <text>
-            phamVi.push({
-                ma: '@phamVi.ma',
-                ten: '@phamVi.ten',
-                moTa: '@phamVi.moTa',
-                hinh: '@phamVi.hinh'
-            });
-            </text>
-        }
-        mangNutCon['PhamVi'] = phamVi;
+        $(function () {
+            khoiTaoKhungChuDe($('#khung_quan_ly'));
+        })
     </script>
 }
 
-    <article class="hop">
-        <section class="tieu-de">
-            Quản lý chủ đề
+<article class="hop">
+    <section class="tieu-de">
+        Quản lý chủ đề
+    </section>
+    <section id="khung_quan_ly" class="noi-dung lct-cay" data-ma data-pham-vi>
+        <section class="cay">
+            <ul id="khung_cay" class="nut">
+                @Html.Partial("~/Views/ChuDe/Khung/_Cay_HeThong_Item.cshtml", Data.PhamVi.layDanhSach())
+            </ul>
         </section>
-        <section id="cay_chu_de" class="noi-dung lct-cay" data-value="PhamVi" data-pham-vi>
-            <section class="cay">
-                <ul id="danh_sach_nut" class="nut">
-                    <li>
-                        <a data-chuc-nang="mo-nut" data-loai="nut-pham-vi-goc" data-value="PhamVi" href="javascript:void(0)">
-                            Chọn phạm vi
-                        </a>
-                        <ul class="nut-con">
-                            @foreach (var phamVi in danhSachPhamVi)
-                            {
-                                <text>
-                                    <li>
-                                        <a data-chuc-nang="mo-nut" data-loai="nut-con-pham-vi-tren-nut" data-value="@phamVi.ma" href="javascript:void(0)">
-                                            @phamVi.ten
-                                        </a>
-                                    </li>
-                                </text>
-                            }
-                        </ul>
-
-                    </li>
-                </ul>
-            </section>
-            <section class="con">
-                <ul id="danh_sach_chu_de" class="muc">
-                    @foreach (var phamVi in danhSachPhamVi)
-                    {
-                        <li>
-                            <section class="mo-ta">
-                                <img src="/Content/images/LCT/ChuDe/@phamVi.hinh">
-                                <p>
-                                    @phamVi.moTa
-                                </p>
-                            </section>
-                            <a href="javascript:void(0)" class="ten" data-chuc-nang="mo-nut" data-loai="nut-con-pham-vi" data-value="@phamVi.ma">
-                                @phamVi.ten
-                            </a>
-                        </li>
-                    }
-                </ul>
-                <a href="javascript:void(0)" data-chuc-nang="tao">
-                    <i class="pe-7s-plus"></i>
-                    Hiện chưa có nút con, hãy tạo một nút con mới
-                </a>
-</section>
-<section class="khung-chuc-nang">
-    <ul>
-        <li>
-            <a href="javascript:void(0)" class="pe-7s-tools"></a>
-        </li>
-        <li>
-            <a href="javascript:void(0)" data-chuc-nang="tao" class="pe-7s-plus">
-                <u></u>
+        <section class="con">
+            <ul id="khung_danh_sach" class="khung-danh-sach">
+                @Html.Partial("~/Views/ChuDe/Khung/_DanhSach_PhamVi.cshtml", Data.PhamVi.layDanhSach())
+            </ul>
+            <a href="javascript:void(0)" data-chuc-nang="tao">
+                <i class="pe-7s-plus"></i>
+                Hiện chưa có nút con, hãy tạo một nút con mới
             </a>
-        </li>
-    </ul>
-</section>
-</section>
+        </section>
+        <section class="khung-chuc-nang">
+            <ul>
+                <li>
+                    <a class="pe-7s-tools"></a>
+                </li>
+                <li>
+                    <a data-chuc-nang="tao" class="pe-7s-plus">
+                        <u></u>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </section>
 </article>

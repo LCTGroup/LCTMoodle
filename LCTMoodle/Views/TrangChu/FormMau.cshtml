@@ -6,6 +6,7 @@
 
 }
 @section Scripts {
+    <script src="/Khung.js/ChuDe/"></script>
     <script>
         khoiTaoLCTForm($('#form_mau'));
     </script>
@@ -15,11 +16,23 @@
     <section class="tieu-de">
         Tên form
     </section>
-    <form id="form_mau" action="#" method="post" class="noi-dung lct-form">
+    <form id="form_mau" action="#" method="post" class="noi-dung lct-form" data-nut-mac-dinh>
         <article>
             <ul>
                 <li class="loi-dan">
                     Hãy nhập các thông tin sau
+                </li>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Chọn chủ đề
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <section class="input">
+                            <input data-validate="bat-buoc" data-input-type="chu-de" name="chon-chu-de" data-pham-vi="KhoaHoc" data-ten-mac-dinh="" data-ma-mac-dinh="" placeholder="Chọn chủ đề" />
+                        </section>
+                    </section>
                 </li>
                 <li>
                     <section class="tieu-de">
@@ -159,7 +172,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input type="file" name="name" value="" />
+                            <input data-validate="bat-buoc" type="file" name="name" value="" />
                         </article>
                     </section>
                 </li>

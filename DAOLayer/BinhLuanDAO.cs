@@ -34,5 +34,17 @@ namespace DAOLayer
                 }
             );
         }
+
+        public static KetQua xoaTheoMa(string loaiDoiTuong, int ma)
+        {
+            return khongTruyVan(
+                "xoaBinhLuanTheoMa",
+                new object[] 
+                { 
+                    loaiDoiTuong,
+                    ma
+                }
+            );
+        }
     }
 }

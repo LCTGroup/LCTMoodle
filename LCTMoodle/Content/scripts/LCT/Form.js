@@ -26,7 +26,10 @@ function khoiTaoLCTForm($form, thamSo) {
     khoiTaoHienThiInput_LCT($form);
 
     //Xử lý upload file = ajax
-    khoiTaoTapTinInput_LCT($form)
+    khoiTaoTapTinInput_LCT($form);
+
+    //Xử lý chọn chủ đề
+    khoiTaoChuDeInput_LCT($form);
 
     //Khởi tạo thời gian
     khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="lct-thoi-gian"]'), 'lct-thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
@@ -84,6 +87,14 @@ function khoiTaoNutMacDinh_LCT($form) {
             $phanTu.removeClass('co');
             $phanTu.find('~ input[type="hidden"]').val('');
         });
+
+        // Chủ đề
+        $chua.find('input[data-input-type="chu-de"]').each(function () {
+            var $phanTu = $(this);
+
+            $phanTu.val($phanTu.attr('data-ten-mac-dinh'));
+            $phanTu.next().val($phanTu.attr('data-ma-mac-dinh'));
+        })
     }));
 }
 
@@ -101,6 +112,16 @@ function khoiTaoHienThiInput_LCT($form) {
         $phanTu.removeAttr('name');
         $phanTu.after('<input type="hidden" name="' + name + '"><img /><i></i><u></u>');
     });
+
+    $form.find('input[data-input-type="chu-de"]').each(function () {
+        $phanTu = $(this);
+
+        $phanTu.after($('<input type="hidden" />').attr({
+            'name': $phanTu.attr('name')
+        }));
+
+        $phanTu.removeAttr('name');
+    })
 
     //Trường hợp đặc biệt, xử lý validate riêng cho editor
     $form.find('textarea[data-input-type="editor"]').each(function () {
@@ -175,6 +196,29 @@ function khoiTaoTapTinInput_LCT($form) {
         }).always(function () {
             thanhTheHien.style.height = '';
             $phanTu.removeClass('dang');
+        });
+    });
+}
+
+function khoiTaoChuDeInput_LCT($form) {
+    $form.find('input[data-input-type="chu-de"]').on('focus', function (e, mo) {
+        var $phanTu = $(this);
+
+        moPopupFull({
+            url: '/ChuDe/_Chon',
+            data: { phamVi: $phanTu.attr('data-pham-vi') },
+            thanhCong: function ($popup) {
+                var $khung = $popup.find('#khung_quan_ly');
+
+                khoiTaoKhungChuDe($khung);
+
+                $khung.on('chon', function (e, data) {
+                    $popup.tat();
+                    $phanTu.val(data.ten);
+                    $phanTu.next().val(data.ma);
+                    $phanTu.focusout();
+                });
+            }
         });
     });
 }
@@ -303,6 +347,12 @@ function khoiTaoLCTFormMacDinh($form) {
         $phanTu.removeClass('co');
         $phanTu.find('~ input[type="hidden"]').val('');
     });
+    $form.find('input[data-input-type="chu-de"]').each(function () {
+        var $phanTu = $(this);
+
+        $phanTu.val($phanTu.attr('data-ten-mac-dinh'));
+        $phanTu.next().val($phanTu.attr('data-ma-mac-dinh'));
+    })
 }
 
 function xuLyTatMoDoiTuong($doiTuong, tat, dangKhoiTao) {
@@ -495,9 +545,9 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
                 });
             });
         }
-        else if ($input.is('[data-type="file"]')) {
+        else if ($input.is('[type="file"]')) {
             $input.on('focusout', function () {
-                if ($input.siblings('input[type="hidden"]').val()) {
+                if ($input.next().val()) {
                     tatLoi($input, 'bat-buoc');
                 }
                 else {
@@ -506,6 +556,18 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
                     }
                 }
             });
+        }
+        else if ($input.is('[data-input-type="chu-de"]')) {
+            $input.on('focusout', function () {
+                if ($input.next().val()) {
+                    tatLoi($input, 'bat-buoc');
+                }
+                else {
+                    if (auto) {
+                        baoLoi($input, 'bat-buoc');
+                    }
+                }
+            })
         }
         else {
             $input.on('focusout', function () {
@@ -757,10 +819,25 @@ function khoiTaoSubmit_LCT($form, thamSo) {
         $form.find('[data-validate~="bat-buoc"]:not(:disabled)').each(function () {
             var $input = $(this);
 
-            if (!this.value) {
-                baoLoi($input, 'bat-buoc');
-
-                coLoi = true;
+            if ($input.is('[type="file"]')) {
+                if (!$input.next().val()) {
+                    baoLoi($input, 'bat-buoc');
+                    coLoi = true;
+                }
+            }
+            else if ($input.is('[data-input-type="chu-de"]')) {
+                if (!$input.next().val()) {
+                    baoLoi($input, 'bat-buoc');
+                    coLoi = true;
+                }
+            }
+            else {
+                $input.on('focusout', function () {
+                    if (!this.value) {
+                        baoLoi($input, 'bat-buoc');
+                        coLoi = true;
+                    }
+                });
             }
         });
         $form.find('[data-validate~="so-nguyen"]:not(:disabled)').each(function () {

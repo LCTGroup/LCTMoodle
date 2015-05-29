@@ -43,9 +43,9 @@ END
 
 GO
 --Lấy chủ đề theo mã chủ đề cha và phạm vi
-ALTER PROC dbo.layChuDeTheoMaChuDeChaVaPhamVi (
-	@0 INT, --Mã chủ đề cha
-	@1 NVARCHAR(MAX) --Phạm vi
+ALTER PROC dbo.layChuDeTheoMaChuDeCha (
+	@0 NVARCHAR(MAX), --Phạm vi
+	@1 INT --MaChuDeCha
 )
 AS
 BEGIN
@@ -60,6 +60,40 @@ BEGIN
 		MaHinhDaiDien
 		FROM dbo.ChuDe
 		WHERE 
-			MaChuDeCha = @0 AND
-			PhamVi = @1
+			MaChuDeCha = @1 AND
+			PhamVi = @0
+END
+
+GO
+--Lấy chủ đề theo mã chủ đề
+ALTER PROC dbo.layChuDeTheoMa (
+	@0 NVARCHAR(MAX), --PhamVi
+	@1 INT --Ma
+)
+AS
+BEGIN
+	SELECT 
+		Ma,
+		Ten,
+		MoTa,
+		MaNguoiTao,
+		ThoiDiemTao,
+		PhamVi,
+		MaChuDeCha,
+		MaHinhDaiDien
+		FROM dbo.ChuDe
+		WHERE 
+			PhamVi = @0 AND
+			Ma = @1
+END
+
+GO
+--Xóa chủ đề theo mã chủ đề
+CREATE PROC dbo.xoaChuDeTheoMa (
+	@0 INT --Ma
+)
+AS
+BEGIN
+	DELETE FROM dbo.ChuDe
+		WHERE Ma = @0
 END

@@ -35,5 +35,23 @@ namespace LCTMoodle.Controllers
         {
             return Json(KhoaHocBUS.them(chuyenDuLieuForm(formCollection)));
         }
+
+        public ActionResult _Khung(int ma)
+        {
+            KetQua ketQua = KhoaHocDAO.layTheoMa(ma);
+
+            if (ketQua.trangThai == 0)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "KhoaHoc/_Khung.cshtml", ketQua.ketQua)
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(ketQua);
+            }
+        }
 	}
 }

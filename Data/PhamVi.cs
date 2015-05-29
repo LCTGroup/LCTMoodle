@@ -35,9 +35,9 @@ namespace Data
             {
                 new PhamVi() 
                 {
-                    ma = "HeThong",
-                    ten = "Hệ thống",
-                    moTa = "Những chủ đề trong phạm vi toàn hệ thống",
+                    ma = "HoiDap",
+                    ten = "Hỏi đáp",
+                    moTa = "Những chủ đề trong phạm vi hỏi đáp",
                     hinh = "he-thong.png"
                 },
                 new PhamVi() 

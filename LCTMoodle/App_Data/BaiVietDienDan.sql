@@ -57,3 +57,14 @@ BEGIN
 		WHERE MaKhoaHoc = @0
 		ORDER BY ThoiDiemTao DESC
 END
+
+GO
+--Xóa bài viết diễn đàn theo mã
+CREATE PROC dbo.xoaBaiVietDienDanTheoMa (
+	@0 INT --Ma
+)
+AS
+BEGIN
+	DELETE FROM dbo.BaiVietDienDan
+		WHERE Ma = @0
+END

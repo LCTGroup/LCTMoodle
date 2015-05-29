@@ -13,30 +13,41 @@ namespace DAOLayer
         public static KetQua them(BaiVietBaiTapDataDTO baiVietBaiTap)
         {
             return layDong<BaiVietBaiTapViewDTO>
-                (
-                    "themBaiVietBaiTap",
-                    new object[] 
-                    {
-                        baiVietBaiTap.tieuDe,
-                        baiVietBaiTap.noiDung,
-                        baiVietBaiTap.maTapTin,
-                        baiVietBaiTap.thoiDiemHetHan,
-                        baiVietBaiTap.maNguoiTao,
-                        baiVietBaiTap.maKhoaHoc
-                    }
-                );
+            (
+                "themBaiVietBaiTap",
+                new object[] 
+                {
+                    baiVietBaiTap.tieuDe,
+                    baiVietBaiTap.noiDung,
+                    baiVietBaiTap.maTapTin,
+                    baiVietBaiTap.thoiDiemHetHan,
+                    baiVietBaiTap.maNguoiTao,
+                    baiVietBaiTap.maKhoaHoc
+                }
+            );
         }
 
         public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
         {
             return layDanhSachDong<BaiVietBaiTapViewDTO>
-                (
-                    "layBaiVietBaiTapTheoMaKhoaHoc",
-                    new object[] 
-                    { 
-                        maKhoaHoc
-                    }
-                );
+            (
+                "layBaiVietBaiTapTheoMaKhoaHoc",
+                new object[] 
+                { 
+                    maKhoaHoc
+                }
+            );
+        }
+
+        public static KetQua xoaTheoMa(int ma)
+        {
+            return khongTruyVan(
+                "xoaBaiVietBaiTapTheoMa",
+                new object[] 
+                { 
+                    ma
+                }
+            );
         }
     }
 }

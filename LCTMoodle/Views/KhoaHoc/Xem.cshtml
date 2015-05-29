@@ -1,9 +1,21 @@
 ﻿@model DTOLayer.KhoaHocViewDTO
 @{
-    ViewData["TieuDe"] = "Khóa học";
+    ViewData["TieuDe"] = Model.ten;
     Layout = "~/Views/LCT/Khung.cshtml";
 
-    DTOLayer.KhoaHocViewDTO khoaHoc = Model;
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Khóa học của tôi", "/KhoaHoc",
+        Model.ten, "/KhoaHoc/" + Model.ma
+    };
+
+    ViewData["ChucNang"] = new List<string>()
+    {
+        "Bài giảng", "href=?hienthi=baigiang",
+        "Bài tập", "href='?hienthi=baitap'",
+        "Diễn đàn", "href='?hienthi=diendan'",
+        "Đăng ký vào khóa học", "href=javascript:void(0) data-chuc-nang=xoa-khoa-hoc data-value=" + Model.ma
+    };
 }
 
 @section Styles {
@@ -13,7 +25,8 @@
 
 @section Scripts {
     <script>
-        var maKhoaHoc = '@khoaHoc.ma';
+        var maKhoaHoc = '@Model.ma';
+        var tieuDe = '@Html.Raw(Model.ten)' + ' - LCTMoodle';
     </script>
     <script src="/Xem.js/KhoaHoc/"></script>
     <script src="/Khung.js/BinhLuan/"></script>

@@ -18,5 +18,14 @@ namespace LCTMoodle.Controllers
             
             return Json(ketQua);
         }
+
+        public ActionResult _DanhSachNop(int maBaiTap)
+        {
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "BaiTapNop/_DanhSachNop.cshtml")
+            }, JsonRequestBehavior.AllowGet);
+        }
 	}
 }

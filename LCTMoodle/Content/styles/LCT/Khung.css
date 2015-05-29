@@ -14,14 +14,12 @@ body, textarea, select, input {
     font: normal 13px 'Segoe ui';
 }
 a {
+    cursor: pointer;
     color: #000;
     text-decoration: none;  
 }
 a:hover {
     text-decoration: underline;
-}
-.site-image {
-    background-image: url('/AllSiteImages.png/LCT');
 }
 @font-face {
     font-family: Freeway;
@@ -52,6 +50,106 @@ body:not(.tai) > .bieu-tuong-tai {
     text-align: center;
     margin-top: 10%;
 }
+
+/*#endregion */
+
+/*#region Khung chức năng */
+
+.khung-chuc-nang-lct {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+    .khung-chuc-nang-lct button {
+        background-color: transparent;
+        border: 0;
+        outline: 0;
+        height: 15px;
+        width: 15px;
+        cursor: pointer;
+    }
+
+        .khung-chuc-nang-lct button i {
+            display: block;
+            font-size: 15px;
+            transition: 0.5s;
+            color: transparent;
+        }
+            
+            :hover > .khung-chuc-nang-lct button i,
+            .khung-chuc-nang-lct ul.mo + button i {
+                color: #ddd;
+            }
+                
+            .khung-chuc-nang-lct button:hover i {
+                color: #08c;
+            }
+
+    .khung-chuc-nang-lct ul {
+        position: absolute;
+        top: 21px;
+        right: -3px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        display: none;
+        z-index: 9;
+    }
+
+        .khung-chuc-nang-lct ul:before,
+        .khung-chuc-nang-lct ul:after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            position: absolute;
+            right: 5px;
+        }
+
+        .khung-chuc-nang-lct ul:before {
+            border-bottom-color: #ddd;
+            top: -10px;
+        }
+
+        .khung-chuc-nang-lct ul:after {
+            border-bottom-color: #fff;
+            top: -9px;
+        }
+
+    .khung-chuc-nang-lct li a {
+        display: block;
+        padding: 3px 10px;
+        border-bottom: 1px solid #eee;
+        text-decoration: none;
+        position: relative;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+        .khung-chuc-nang-lct li:last-child a {
+            border-bottom: 0;
+        }
+
+        .khung-chuc-nang-lct li:nth-child(even) a {
+            background-color: #fcfcfc;
+        }
+
+        .khung-chuc-nang-lct li a:before {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 3px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #eee;
+            transition: 0.5s;
+        }
+
+            .khung-chuc-nang-lct li a:hover:before {
+                background-color: #08c;
+            }
 
 /*#endregion */
 
@@ -266,11 +364,12 @@ body.khong-scroll {
             display: inline-block;
             max-width: 90vw;
             max-height: 90vh;
-            background-color: #fff;
+            background-color: #f5f5f5;
             padding: 5px;
             border: 1px solid #ddd;
             position: relative;
             overflow-y: auto;
+            overflow-x: hidden;
         }
 
 /*#endregion */
@@ -295,7 +394,7 @@ header .logo {
         display: block;
         height: 65px;
         width: 370px;
-        background-position: 0px 0px;
+        background-image: url('/logo.png/lct');
     }
 
 /*#endregion */
@@ -707,7 +806,6 @@ main > .cot-phai {
 .cot-phai > .khung-chuc-nang {
     border-left: 2px solid #ddd;
     padding-left: 15px;
-    height: 500px;
 }
 .khung-chuc-nang .hop-chuc-nang {
     margin-bottom: 20px;
@@ -733,6 +831,57 @@ main > .cot-phai {
         top: 9px;
         left: -23px;
     }
+
+/*#region Danh sách nút chức năng */
+
+.khung-chuc-nang .chuc-nang .danh-sach {
+    border: 1px solid #ddd;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .khung-chuc-nang .chuc-nang .danh-sach li {
+        width: 100%;
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
+    }
+
+        .khung-chuc-nang .chuc-nang .danh-sach li:last-child {
+            border-bottom: 0;
+        }
+
+    .khung-chuc-nang .chuc-nang .danh-sach a {
+        display: block;
+        padding: 10px 5px;
+        text-align: center;
+        text-decoration: none;
+        position: relative;
+        font-size: 14px;
+        color: #333;
+    }
+
+        .khung-chuc-nang .chuc-nang .danh-sach li:nth-child(even) a {
+            background-color: #fcfcfc;
+        }
+
+        .khung-chuc-nang .chuc-nang .danh-sach a:after {
+            content: '';
+            display: block;
+            width: 0%;
+            height: 3px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: #eee;
+            transition: 0.5s;
+        }
+
+        .khung-chuc-nang .chuc-nang .danh-sach a:hover:after {
+            background-color: #08c;
+            width: 100%;
+        }
+
+/*#endregion */
 
 /*#endregion */
 

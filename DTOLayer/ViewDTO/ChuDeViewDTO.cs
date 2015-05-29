@@ -15,6 +15,7 @@ namespace DTOLayer
         public string phamVi;
         public ChuDeViewDTO chuDeCha;
         public TapTinViewDTO hinhDaiDien;
+        public List<ChuDeViewDTO> danhSachChuDeCon;
 
         public override void gan(System.Data.SqlClient.SqlDataReader dong)
         {
@@ -35,10 +36,14 @@ namespace DTOLayer
                     case "PhamVi":
                         phamVi = layString(dong, i); break;
                     case "MaChuDeCha":
-                        chuDeCha = new ChuDeViewDTO()
+                        int maChuDeCha = layInt(dong, i);
+                        if (maChuDeCha != 0)
                         {
-                            ma = layInt(dong, i)
-                        };
+                            chuDeCha = new ChuDeViewDTO()
+                            {
+                                ma = maChuDeCha
+                            };
+                        }
                         break;
                     case "MaHinhDaiDien":
                         hinhDaiDien = new TapTinViewDTO()

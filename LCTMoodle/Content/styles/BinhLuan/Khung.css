@@ -1,9 +1,18 @@
-﻿.khung-binh-luan .khung-danh-sach {
+﻿.khung-binh-luan {
     padding: 0 10px;
 }
 
+    .khung-binh-luan:after {
+        content: '';
+        display: block;
+        clear: both;
+        margin-top: -10px;
+        height: 10px;
+    }
+
     .khung-binh-luan .khung-danh-sach .muc-binh-luan {
         display: flex;
+        position: relative;
         margin: 10px 0;
     }
 
@@ -23,8 +32,13 @@
                 display: inline;
             }
 
+            .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .nguoi-dung a {
+                color: #333;
+            }
+
             .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .noi-dung {
                 display: inline;
+                color: #333;
             }
 
             .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .thong-tin {
@@ -35,3 +49,6 @@
                     color: #888;
                     font-size: 11px;
                 }
+    .khung-binh-luan .khung-form {
+        margin: 10px 0;
+    }

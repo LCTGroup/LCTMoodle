@@ -1,0 +1,6 @@
+﻿@model List<DTOLayer.ChuDeViewDTO>
+
+@foreach (DTOLayer.ChuDeViewDTO chuDe in Model)
+{
+    @Html.Partial("~/Views/ChuDe/Khung/_DanhSach_Item.cshtml", chuDe)
+}

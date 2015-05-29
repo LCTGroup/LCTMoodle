@@ -146,13 +146,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
+    <Content Include="Content\images\ChuDe\ChuDe.png" />
+    <Content Include="Content\images\ChuDe\MacDinh\he-thong.png" />
+    <Content Include="Content\images\ChuDe\MacDinh\khoa-hoc.png" />
+    <Content Include="Content\images\HeThong\HeThong.png" />
+    <Content Include="Content\images\KhoaHoc\KhoaHoc.png" />
     <Content Include="Content\images\LCT\AllSiteImages.png" />
     <Content Include="Content\images\LCT\AllSiteImages_temp.png" />
     <Content Include="Content\images\LCT\ChuDe\he-thong.png" />
     <Content Include="Content\images\LCT\ChuDe\khoa-hoc.png" />
     <Content Include="Content\images\LCT\mini_logo.png" />
     <Content Include="Content\scripts\BinhLuan\Khung.js" />
-    <Content Include="Content\scripts\ChuDe\QuanLy.js" />
+    <Content Include="Content\scripts\ChuDe\Khung.js" />
     <Content Include="Content\images\user-avatar.jpg" />
     <Content Include="Content\scripts\HoiDap\CauHoi.js" />
     <Content Include="Content\scripts\HoiDap\DatCauHoi.js" />
@@ -356,6 +361,9 @@
     <Content Include="Plugin\ckeditor\plugins\wsc\LICENSE.md" />
     <Content Include="Plugin\ckeditor\plugins\wsc\README.md" />
     <Content Include="Plugin\ckeditor\README.md" />
+    <Content Include="Content\images\ChuDe\ChuDe.psd" />
+    <Content Include="Content\images\HeThong\HeThong.psd" />
+    <Content Include="Content\images\KhoaHoc\KhoaHoc.psd" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\LCT\Khung.cshtml" />
     <Content Include="Views\TrangChu\Index.cshtml" />
@@ -368,23 +376,30 @@
     <Content Include="Views\ChuDe\_Form.cshtml" />
     <Content Include="Views\KhoaHoc\Xem.cshtml" />
     <Content Include="Views\HoiDap\Index.cshtml" />
-    <Content Include="Views\BaiVietDienDan\_Form.cshtml" />
-    <Content Include="Views\BaiVietDienDan\_DanhSach.cshtml" />
     <Content Include="Views\BaiVietDienDan\_Item.cshtml" />
     <Content Include="Views\BinhLuan\_Khung.cshtml" />
     <Content Include="Views\BinhLuan\_Item.cshtml" />
     <Content Include="Views\BaiVietDienDan\_Khung.cshtml" />
     <Content Include="Views\BaiVietBaiGiang\_Khung.cshtml" />
-    <Content Include="Views\BaiVietBaiGiang\_Form.cshtml" />
-    <Content Include="Views\BaiVietBaiGiang\_DanhSach.cshtml" />
     <Content Include="Views\BaiVietBaiGiang\_Item.cshtml" />
     <Content Include="Views\TrangChu\TrangMau.cshtml" />
     <Content Include="Views\HoiDap\CauHoi.cshtml" />
-    <Content Include="Views\BaiVietBaiTap\_DanhSach.cshtml" />
-    <Content Include="Views\BaiVietBaiTap\_Form.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Item.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Khung.cshtml" />
     <Content Include="Views\HoiDap\_itemTraLoi.cshtml" />
+    <Content Include="Views\KhoaHoc\_Khung.cshtml" />
+    <Content Include="Views\BaiTapNop\_DanhSachNop.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_DanhSach_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_DanhSach_PhamVi_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_Con_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_DanhSach.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_DanhSach_PhamVi.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_PhamVi_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_Con_PhamVi_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_HeThong_Item.cshtml" />
+    <Content Include="Views\ChuDe\Khung\_Cay_Con_HeThong_Item.cshtml" />
+    <Content Include="Views\ChuDe\_Chon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">
