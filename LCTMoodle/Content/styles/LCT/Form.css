@@ -259,6 +259,7 @@
     color: #555;
     -moz-appearance: none;
     -webkit-appearance: none;
+    cursor: pointer;
 }
 
     .lct-form select[class^="loi-"],
@@ -279,6 +280,7 @@
     display: block;
     padding: 5px;
     width: 100%;
+    cursor: pointer;
 }
 
 .lct-form input[type="checkbox"],
@@ -374,6 +376,7 @@
     margin-left: 3px;
     transition: 0.5s;
     position: relative;
+    cursor: pointer;
 }
 
 .lct-form input[type="file"] {
@@ -454,6 +457,7 @@
     transition: 0.5s;
     color: #555;
     background-color: #fff;
+    cursor: pointer;
 }
 
     .lct-form input[data-input-type="chu-de"][class^="loi-"],
@@ -481,6 +485,7 @@
     transition: 0.5s;
     color: #555;
     background-color: #fff;
+    cursor: pointer;
 }
 
     .lct-form input[data-input-type="lct-thoi-gian"][class^="loi-"],

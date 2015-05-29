@@ -19,16 +19,6 @@
                     </section>
                 </section>
             </section>
-            <section class="khung-chuc-nang-lct">
-                <ul data-doi-tuong="cndd-@Model.ma">
-                    <li>
-                        <a data-chuc-nang="xoa-bai-viet" data-value="@Model.ma">Xóa bài viết</a>
-                    </li>
-                </ul>
-                <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cndd-@Model.ma">
-                    <i class="pe-7f-config"></i>
-                </button>
-            </section>
         </section>
         <section class="khung-noi-dung">
             <h2 class="tieu-de">
@@ -38,7 +28,16 @@
                 @Html.Raw(Model.noiDung)
             </section>
         </section>
-        <section class="khung-dieu-khien"></section>
+        <section class="khung-chuc-nang-lct">
+            <ul data-doi-tuong="cndd-@Model.ma">
+                <li>
+                    <a data-chuc-nang="xoa-bai-viet" data-value="@Model.ma">Xóa bài viết</a>
+                </li>
+            </ul>
+            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cndd-@Model.ma">
+                <i class="pe-7f-config"></i>
+            </button>
+        </section>
     </section>
     @Html.Partial("~/Views/BinhLuan/_Khung.cshtml", null, new ViewDataDictionary()
         {
