@@ -85,7 +85,7 @@ namespace LCTMoodle.Controllers
                     }, JsonRequestBehavior.AllowGet);
                 }
 
-                ketQua = ChuDeDAO.layTheoMa(maChuDeCha);
+                ketQua = ChuDeDAO.layTheoMa(phamVi, maChuDeCha);
 
                 if (ketQua.trangThai != 0)
                 {
@@ -117,31 +117,69 @@ namespace LCTMoodle.Controllers
             } 
         }
 
-        public ActionResult _Form(int maChuDeCha, string phamVi = "HeThong")
+        public ActionResult _Form(string phamVi, int maChuDeCha)
         {
-            ViewData["MaChuDeCha"] = maChuDeCha;
             ViewData["PhamVi"] = phamVi;
+            ViewData["MaChuDeCha"] = maChuDeCha;
 
             return Json(new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", null, ViewData)
-                }, JsonRequestBehavior.AllowGet);
+            {
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", null, ViewData)
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            return Json(ChuDeBUS.them(chuyenDuLieuForm(formCollection)));
+            KetQua ketQua = ChuDeBUS.them(chuyenDuLieuForm(formCollection));
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua);
+            }
+
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = new
+                {
+                    cayCon_Item = renderPartialViewToString(ControllerContext,
+                        "ChuDe/Khung/_Cay_Con_Item.cshtml",
+                        ketQua.ketQua
+                    ),
+                    danhSach_Item = renderPartialViewToString(ControllerContext,
+                        "ChuDe/Khung/_DanhSach_Item.cshtml",
+                        ketQua.ketQua
+                    )
+                }
+            });
+        }
+        
+        [HttpPost]
+        public ActionResult XuLyXoa(int ma)
+        {
+            return Json(ChuDeDAO.xoaTheoMa(ma));
         }
 
-        public ActionResult Chon(string phamVi = "HeThong")
+        public ActionResult _Chon(string phamVi, int maChuDeCha = 0)
         {
-            return Json(new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Chon.cshtml")
-                }, JsonRequestBehavior.AllowGet);
+            KetQua ketQua = ChuDeBUS.layTheoMa(phamVi, maChuDeCha);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 0,
+                        ketQua = renderPartialViewToString(ControllerContext,
+                        "ChuDe/_Chon.cshtml",
+                        ketQua.ketQua)
+                    }, JsonRequestBehavior.AllowGet);
+            }
         }
 	}
 }

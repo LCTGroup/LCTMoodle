@@ -40,11 +40,24 @@ namespace DAOLayer
             );
         }
         
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMa(string phamVi, int ma)
         {
             return layDong<ChuDeViewDTO>
             (
                 "layChuDeTheoMa",
+                new object[] 
+                { 
+                    phamVi,
+                    ma
+                }
+            );
+        }
+
+        public static KetQua xoaTheoMa(int ma)
+        {
+            return khongTruyVan
+            (
+                "xoaChuDeTheoMa",
                 new object[] 
                 { 
                     ma

@@ -1434,7 +1434,7 @@
             position: relative;
         }
 
-        .lct-cay .khung-danh-sach.rong ~ a {
+        .lct-cay .khung-danh-sach:empty + a {
             display: block;
         }
 
@@ -1466,7 +1466,7 @@
     .lct-cay .khung-danh-sach {
         display: flex;
         flex-wrap: wrap;
-            justify-content: space-between;
+        justify-content: space-around;
     }
 
     .lct-cay .khung-danh-sach > li {
@@ -1624,7 +1624,7 @@
         background-color: #fff;
     }
 
-        .lct-cay[data-pham-vi=""] .khung-chuc-nang {
+        .lct-cay[data-pham-vi="PhamVi"] .khung-chuc-nang {
             display: none;
         }
 

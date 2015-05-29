@@ -9,10 +9,14 @@ $(function () {
     $_Cay = $('#khung_cay');
     $_DanhSach = $('#khung_danh_sach');
 
-    khoiTao_MoNut($_Khung.find('[data-chuc-nang="mo-nut"]'));
+    khoiTaoCay_Item($_Cay.find('[data-doi-tuong="muc"]'));
+    khoiTaoDanhSach_Item($_DanhSach.find('[data-doi-tuong="muc"]'));
+    khoiTaoNutTao($_Khung.find('[data-chuc-nang="tao"]'));
 })
 
 //#region Xử lý nút nhấn
+
+//#region Xử lý mở nút
 
 /*
     Danh sách loại
@@ -31,14 +35,14 @@ $(function () {
         ds-nut
 */
 
-function khoiTao_MoNut($nutMo) {
+function khoiTaoMoNut($nutMo) {
     $nutMo.on('click', function () {
-        moNut(this);
+        moNut($(this));
     });
 }
 
 var a = b = 0;
-function moNut(obj) {
+function moNut($obj) {
     //Kiểm tra xem có đang mở nút khác ko
     if ('dangMoNut' in mangTam && mangTam['dangMoNut']) {
         return;
@@ -46,7 +50,7 @@ function moNut(obj) {
     mangTam['dangMoNut'] = true;
 
     var
-        $muc = $(obj).closest('[data-doi-tuong="muc"]'),
+        $muc = $obj.closest('[data-doi-tuong="muc"]'),
         loai = $muc.attr('data-loai'),
         ma = $muc.attr('data-ma');
         
@@ -120,8 +124,8 @@ function moNut(obj) {
         $cay = $(duLieuNutCon.cay),
         $danhSach = $(duLieuNutCon.danhSach);
 
-    khoiTao_MoNut($cay.find('[data-chuc-nang="mo-nut"]'));
-    khoiTao_MoNut($danhSach.find('[data-chuc-nang="mo-nut"]'));
+    khoiTaoCay_Item($cay);
+    khoiTaoDanhSach_Item($danhSach);
     //#endregion
 
     //#region Hiển thị
@@ -151,15 +155,7 @@ function moNut(obj) {
     $danhSachMuc.prepend($danhSachMuc.children('[data-ma="' + ma + '"]'));
 
     //Hiển thị danh sách
-    if ($danhSach.length) {
-        $_DanhSach.removeClass('rong');
-
-        $_DanhSach.html($danhSach);
-    }
-    else {
-        $_DanhSach.addClass('rong');
-        $_DanhSach.html('');
-    }
+    $_DanhSach.html($danhSach);
 
     //#endregion
 
@@ -192,5 +188,174 @@ function moNut(obj) {
 
     mangTam['dangMoNut'] = false;
 };
+
+//#endregion
+
+//#region Xử lý nút tạo
+
+function khoiTaoNutTao($nutTao) {
+    $nutTao.on('click', function () {
+        moKhungTao();
+    })
+}
+
+function moKhungTao() {
+    moPopupFull({
+        url: '/ChuDe/_Form',
+        data: function () {
+            return {
+                phamVi: $_Khung.attr('data-pham-vi'),
+                maChuDeCha: $_Khung.attr('data-ma')
+            };
+        },
+        width: '450px',
+        thanhCong: function ($khung) {
+            var $form = $khung.find('#tao_chu_de_form');
+
+            khoiTaoLCTForm($form, {
+                submit: function () {
+                    $.ajax({
+                        url: '/ChuDe/XuLyThem',
+                        type: 'POST',
+                        data: $form.serialize(),
+                        dataType: 'JSON'
+                    }).done(function (data) {
+                        if (data.trangThai == 0) {
+                            var ma = $_Khung.attr('data-ma');
+                            if (ma === '0') {
+                                ma = $_Khung.attr('data-pham-vi');
+                            }
+
+                            mangNut[ma].cay += data.ketQua.cayCon_Item;
+                            mangNut[ma].danhSach += data.ketQua.danhSach_Item;
+
+                            var $cayCon_Item = $(data.ketQua.cayCon_Item),
+                                $danhSach_Item = $(data.ketQua.danhSach_Item);
+
+                            khoiTaoCayCon_Item($cayCon_Item);
+                            khoiTaoDanhSach_Item($danhSach_Item);
+
+                            $_Cay.find(':last-child [data-doi-tuong="danh-sach-muc"]').append($cayCon_Item);
+                            $_DanhSach.prepend($danhSach_Item);
+                        }
+                        else {
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: 'Tạo chủ đề thất bại',
+                                bieuTuong: 'nguy-hiem'
+                            })
+                        }
+
+
+
+                    }).fail(function () {
+                        moPopup({
+                            tieuDe: 'Thông báo',
+                            thongBao: 'Tạo chủ đề thất bại',
+                            bieuTuong: 'nguy-hiem'
+                        })
+                    });
+                }
+            });
+        }
+    })
+}
+
+//#endregion
+
+//#region Xử lý nút xóa
+
+function khoiTaoNutXoa($nutXoa) {
+    $nutXoa.on('click', function () {
+        var $muc = $(this).closest('[data-doi-tuong="muc"]');
+
+        moPopup({
+            tieuDe: 'Xác nhận',
+            thongBao: 'Bạn có chắc muốn xóa chủ đề này?',
+            bieuTuong: 'hoi',
+            nut: [
+                {
+                    ten: 'Có',
+                    xuLy: function () {
+                        var ma = $muc.attr('data-ma');
+
+                        $.ajax({
+                            url: '/ChuDe/XuLyXoa/' + ma,
+                            type: 'POST',
+                            dataType: 'JSON'
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                //Xóa hiển thị hiện tại
+                                $muc.remove();
+                                $_Cay.find(':last-child [data-ma="' + ma + '"]').remove();
+
+                                //Xóa dữ liệu đã lưu trữ 
+                                var maCha = $_Khung.attr('data-ma');
+                                if (maCha === '0') {
+                                    maCha = $_Khung.attr('data-pham-vi');
+                                }
+
+                                var duLieuChuDe = mangNut[maCha],
+                                    $cay_fake = $('<fake></fake>').html(duLieuChuDe.cay),
+                                    $danhSach_fake = $('<fake></fake>').html(duLieuChuDe.danhSach);
+
+                                $cay_fake.find('[data-ma="' + ma + '"]').remove();
+                                $danhSach_fake.find('[data-ma="' + ma + '"]').remove();
+
+                                duLieuChuDe.cay = $cay_fake.html();
+                                duLieuChuDe.danhSach = $danhSach_fake.html();
+                            }
+                            else {
+                                moPopup({
+                                    tieuDe: 'Thông báo',
+                                    thongBao: 'Xóa chủ đề thất bại',
+                                    bieuTuong: 'nguy-hiem'
+                                });
+                                return false;
+                            }
+                        }).fail(function () {
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: 'Xóa chủ đề thất bại',
+                                bieuTuong: 'nguy-hiem'
+                            });
+                            return false;
+                        });
+                    }
+                },
+                {
+                    ten: 'Không'
+                }
+            ]
+        })
+    })
+}
+
+//#endregion
+
+//#endregion
+
+//#region Khởi tạo
+
+function khoiTaoCay_Item($danhSachItem) {
+    //Khởi tạo mở nút
+    khoiTaoMoNut($danhSachItem.find('[data-chuc-nang="mo-nut"]'));
+}
+
+function khoiTaoCayCon_Item($danhSachItem) {
+    //Khởi tạo mở nút
+    khoiTaoMoNut($danhSachItem.find('[data-chuc-nang="mo-nut"]'));
+}
+
+function khoiTaoDanhSach_Item($danhSachItem) {
+    //Khởi tạo mở nút
+    khoiTaoMoNut($danhSachItem.find('[data-chuc-nang="mo-nut"]'));
+
+    //Khởi tạo nút tắt mở đối tương
+    khoiTaoTatMoDoiTuong($danhSachItem.find('[data-chuc-nang="tat-mo"]'));
+    
+    //Khởi tạo nút xóa
+    khoiTaoNutXoa($danhSachItem.find('[data-chuc-nang="xoa"]'));
+}
 
 //#endregion

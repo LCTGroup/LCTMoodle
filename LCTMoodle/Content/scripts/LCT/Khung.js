@@ -81,27 +81,8 @@ function layPopupFull(thamSo) {
 
         $popupFull.find('.khung-tat').on('click', function () {
             if ($popupFull.is('[data-esc]')) {
-                $popupFull.trigger('Tat');
+                $popupFull.tat();
             }
-        });
-
-        $popupFull.on('Mo', function () {
-            $popupFull.show();
-            $(document).on('keydown.tat_popup', function (e) {
-                if ($popupFull.is('[data-esc]')) {
-                    e = e || window.event;
-                    if (e.keyCode == 27) {
-                        $popupFull.trigger('Tat');
-                    }
-                }
-            });
-            $body.addClass('khong-scroll');
-        });
-
-        $popupFull.on('Tat', function () {
-            $popupFull.hide();
-            $(document).off('keydown.tat_popup');
-            $body.removeClass('khong-scroll');
         });
 
         $body.prepend($popupFull);
@@ -113,6 +94,25 @@ function layPopupFull(thamSo) {
     else {
         $popupFull.attr('data-esc', '');
     }
+
+    $popupFull.mo = function () {
+        $popupFull.show();
+        $(document).on('keydown.tat_popup', function (e) {
+            if ($popupFull.is('[data-esc]')) {
+                e = e || window.event;
+                if (e.keyCode == 27) {
+                    $popupFull.tat();
+                }
+            }
+        });
+        $body.addClass('khong-scroll');
+    }
+
+    $popupFull.tat = function () {
+        $popupFull.hide();
+        $(document).off('keydown.tat_popup');
+        $body.removeClass('khong-scroll');
+    };
 
     return $popupFull;
 }
@@ -141,6 +141,8 @@ function layPopupFull(thamSo) {
                 Hàm thực hiện lúc lấy nội dung hoàn tất
 
     Một số thiết lập bổ sung
+        iframe: Mặc định: false
+            Cho nội dung nằm trong 1 iframe
         width: Mặc định: 90% màn hình
             Chiều ngang của nội dung popup
         height: Mặc định: auto
@@ -181,16 +183,39 @@ function moPopupFull(thamSo) {
 
                 $noiDungPopup = $popup.find('#noi_dung_popup');
 
-                $noiDungPopup.css('width', 'width' in thamSo ? thamSo.width : '90vw');
-                $noiDungPopup.css('height', 'height' in thamSo ? thamSo.height : 'auto');
+                if ('iframe' in thamSo && thamSo.iframe === true) {
+                    $noiDungPopup.css({
+                        width: 'auto',
+                        height: 'auto'
+                    });
 
-                $noiDungPopup.html(data.ketQua);
+                    var $iFrame = $('<iframe></iframe>').css({
+                        width: 'width' in thamSo ? thamSo.width : '90vw',
+                        height: 'height' in thamSo ? thamSo.height : 'auto'
+                    });
 
+                    $noiDungPopup.html($iFrame);
+
+                    $noiDungPopup = $noiDungPopup.children().contents();
+
+                    var doc = $iFrame[0].contentWindow.document;
+                    doc.open();
+                    doc.write(data.ketQua);
+                    doc.close();
+                }
+                else {
+                    $noiDungPopup.css({
+                        width: 'width' in thamSo ? thamSo.width : '90vw',
+                        height: 'height' in thamSo ? thamSo.height : 'auto'
+                    });
+                    $noiDungPopup.html(data.ketQua);
+                }
+                
                 if ('thanhCong' in thamSo) {
                     thamSo.thanhCong($noiDungPopup);
                 }
 
-                $popup.trigger('Mo');
+                $popup.mo();
             }
             else {
                 if ('thatBai' in thamSo) {
@@ -244,6 +269,11 @@ function moPopup(thamSo) {
     });
 
     $noiDungPopup = $popup.find('#noi_dung_popup');
+
+    $noiDungPopup.css({
+        width: 'auto',
+        height: 'auto'
+    })
 
     $noiDungPopup.html('\
         <article class="hop hop-1-vien">\
@@ -308,7 +338,7 @@ function moPopup(thamSo) {
                             return;
                         }
                     }
-                    $popup.trigger('Tat');
+                    $popup.tat();
                 });
             }
 
@@ -320,7 +350,7 @@ function moPopup(thamSo) {
         var $nut = $('<button class="chap-nhan">Tắt</button>');
 
         $nut.on('click', function () {
-            $popup.trigger('Tat');
+            $popup.tat();
         });
 
         $danhSachNut.append($nut);

@@ -66,8 +66,9 @@ END
 
 GO
 --Lấy chủ đề theo mã chủ đề
-CREATE PROC dbo.layChuDeTheoMa (
-	@0 INT --Ma
+ALTER PROC dbo.layChuDeTheoMa (
+	@0 NVARCHAR(MAX), --PhamVi
+	@1 INT --Ma
 )
 AS
 BEGIN
@@ -82,5 +83,17 @@ BEGIN
 		MaHinhDaiDien
 		FROM dbo.ChuDe
 		WHERE 
-			Ma = @0
+			PhamVi = @0 AND
+			Ma = @1
+END
+
+GO
+--Xóa chủ đề theo mã chủ đề
+CREATE PROC dbo.xoaChuDeTheoMa (
+	@0 INT --Ma
+)
+AS
+BEGIN
+	DELETE FROM dbo.ChuDe
+		WHERE Ma = @0
 END

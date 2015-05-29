@@ -40,5 +40,50 @@ namespace BUSLayer
 
             return ChuDeDAO.them(chuDe);
         }
+
+        public static KetQua layTheoMa(string phamVi, int ma)
+        {
+            //Lấy chủ đề
+            KetQua ketQua = ChuDeDAO.layTheoMa(phamVi, ma);
+
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            ChuDeViewDTO chuDe = ketQua.ketQua as ChuDeViewDTO;
+
+            layLienKet(ref chuDe);
+
+            return new KetQua()
+            {
+                trangThai = 0,
+                ketQua = chuDe
+            };
+        }
+
+        private static void layLienKet(ref ChuDeViewDTO chuDe)
+        {
+            KetQua ketQua;
+            //Lấy cha
+            if (chuDe.chuDeCha != null)
+            {
+                ketQua = ChuDeDAO.layTheoMa(chuDe.phamVi, chuDe.chuDeCha.ma);
+                if (ketQua.trangThai == 0)
+                {
+                    ChuDeViewDTO chuDeCha = ketQua.ketQua as ChuDeViewDTO;
+                    layLienKet(ref chuDeCha);
+
+                    chuDe.chuDeCha = chuDeCha;
+                }
+            }
+
+            //Lấy con
+            ketQua = ChuDeDAO.layTheoMaChuDeCha(chuDe.phamVi, chuDe.ma);
+            if (ketQua.trangThai == 0)
+            {
+                chuDe.danhSachChuDeCon = ketQua.ketQua as List<ChuDeViewDTO>;
+            }
+        }
     }
 }

@@ -8,9 +8,19 @@
 @section Scripts {
     <script>
         khoiTaoLCTForm($('#form_mau'));
+        $(function () {
+            $('[data-chuc-nang="chon"]').on('click', function () {
+                moPopupFull({
+                    url: '/ChuDe/_Chon',
+                    data: { phamVi: 'KhoaHoc', maChuDeCha: 1 },
+                    iframe: true
+                });
+            });
+        })
     </script>
 }
 
+<a data-chuc-nang="chon">a</a>
 <article class="hop hop-2-vien">
     <section class="tieu-de">
         Tên form

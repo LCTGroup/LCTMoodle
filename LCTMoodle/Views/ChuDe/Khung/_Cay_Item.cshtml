@@ -10,9 +10,12 @@
         @ViewData["Ten"]
     </a>
     <ul data-doi-tuong="danh-sach-muc" class="nut-con">
-        @foreach (DTOLayer.ChuDeViewDTO chuDe in Model)
+        @if (Model != null)
         {
-            @Html.Partial("~/Views/ChuDe/Khung/_Cay_Con_Item.cshtml", chuDe)
+            foreach (DTOLayer.ChuDeViewDTO chuDe in Model)
+            {
+                @Html.Partial("~/Views/ChuDe/Khung/_Cay_Con_Item.cshtml", chuDe)
+            }
         }
     </ul>
 </li>
