@@ -16,7 +16,11 @@ namespace LCTMoodle.Controllers
         // GET: /NguoiDung/
         public ActionResult Index()
         {
-            return View(NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]));
+            if (Session["NguoiDung"] != null)
+            {
+                return View(NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]));
+            }
+            return RedirectToAction("Index", "TrangChu");
         }
 
         /// <summary>
