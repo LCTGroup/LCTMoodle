@@ -7,6 +7,7 @@
 }
 
 @section Scripts {
+    <script src="/Khung.js/ChuDe/"></script>
     <script src="/Tao.js/KhoaHoc/"></script>
 }
 
@@ -14,7 +15,7 @@
     <section class="tieu-de">
         Tạo khóa học
     </section>
-    <form id="tao_khoa_hoc_form" class="noi-dung lct-form" data-validate-auto>
+    <form id="tao_khoa_hoc_form" class="noi-dung lct-form" data-nut-mac-dinh data-validate-auto>
         <article>
             <ul>
                 <li>
@@ -25,7 +26,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Hãy nhập tên khóa học" />
+                            <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Tên khóa học của bạn là gì?" />
                         </article>
                     </section>
                 </li>
@@ -49,7 +50,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input type="text" name="ChuDe" placeholder="Để tạm" />
+                            <input data-validate="bat-buoc" data-input-type="chu-de" name="ChuDe" data-pham-vi="KhoaHoc" placeholder="Khóa học của bạn thuộc chủ đề nào?" />
                         </article>
                     </section>
                 </li>
@@ -124,7 +125,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input type="text" name="PhiThamGia" placeholder="Hãy nhập" />
+                            <input data-validate="so-nguyen" type="text" name="PhiThamGia" placeholder="Phí tham gia khóa học (bỏ qua nếu không có phí)" />
                         </article>
                     </section>
                 </li>
@@ -137,7 +138,7 @@
                     <section class="noi-dung">
                         <section class="input">
                             <select name="CheDoRiengTu">
-                                @foreach (var cheDoRiengTu in DTOLayer.CheDoRiengTu.layDanhSach())
+                                @foreach (var cheDoRiengTu in Data.CheDoRiengTu.layDanhSach())
                                 {
                                     <option value="@cheDoRiengTu.ma" @(cheDoRiengTu.macDinh ? "data-mac-dinh" : null) >@cheDoRiengTu.ten</option>
                                 }

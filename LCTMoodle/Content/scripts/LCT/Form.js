@@ -1,5 +1,5 @@
 ﻿// Lưu đối tượng vừa focus
-$inputVuaFocus = [];
+$inputVuaFocus = {};
 
 
 $(function () {
@@ -1104,7 +1104,7 @@ function khoiTaoForm_Lich(id) {
             thang = $lich.attr('data-thang-ht'),
             nam = $lich.attr('data-nam-ht');
 
-        $inputVuaFocus.val(ngay + '.' + thang + '.' + nam);
+        $inputVuaFocus.val(ngay + '/' + thang + '/' + nam);
         $lich.attr('data-ngay', ngay);
         $lich.attr('data-thang', thang);
         $lich.attr('data-nam', nam);
@@ -1131,11 +1131,11 @@ function layGiaTriMacDinh_Lich($lich, $lichInput) {
 
     capNhatLich($lich);
 
-    $inputVuaFocus.val(ngay + '.' + thang + '.' + nam);
+    $inputVuaFocus.val(ngay + '/' + thang + '/' + nam);
 }
 
 function layGiaTri_Lich($lich, $lichInput) {
-    var lich = $lichInput.val().split('.');
+    var lich = $lichInput.val().split('/');
         
     $lich.attr('data-ngay', lich[0]);
     $lich.attr('data-thang', lich[1]);
