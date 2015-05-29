@@ -1,8 +1,6 @@
-﻿@{
+﻿@{                                 
     bool CotTrai = ViewData["CotTrai"] == null ? true : (bool)ViewData["CotTrai"];
     bool CotPhai = ViewData["CotPhai"] == null ? true : (bool)ViewData["CotPhai"];
-
-    BUSLayer.NguoiDungBUS.kiemTraCookie();       
 }
 <!DOCTYPE html>
 
@@ -32,7 +30,7 @@
             <section class="top-header">
                 <article class="hop-nguoi-dung">
                 @if (Session["NguoiDung"] == null)
-                {
+                {                    
                     <ul class="chua-dang-nhap">
                         <li><a href="/NguoiDung/DangNhap">Đăng nhập</a></li>
                         <li><a href="/NguoiDung/DangKy">Đăng ký</a></li>
@@ -40,13 +38,15 @@
                 }
                 else
                 {                    
+                    DTOLayer.NguoiDungViewDTO nguoiDung = BUSLayer.NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]);
+                        
                     <ul class="da-dang-nhap">
                         <li><a href="#"><i class="pe-7s-chat"></i></a></li>
                         <li><a href="#"><i class="pe-7s-global"></i></a></li>
                         <li>
                             <a href="javascript:void(0)" data-mo-doi-tuong="HopDieuKhien">
                                 <img src="/Content/images/user-avatar.jpg" />
-                                <span>@Session["NguoiDung"]</span>
+                                <span>@nguoiDung.tenTaiKhoan</span>
                             </a>
                             <div class="hop-dieu-khien" data-doi-tuong="HopDieuKhien">
                                 <ul>

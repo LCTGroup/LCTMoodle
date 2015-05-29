@@ -164,7 +164,6 @@
     <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
     <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\HoiDap\CauHoi.css" />
-    <Content Include="Content\styles\HoiDap\DatCauhoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
     <Content Include="Content\styles\KhoaHoc\Xem.css" />
     <Content Include="Content\styles\LCT\bootstrap.css" />
@@ -385,6 +384,7 @@
     <Content Include="Views\BaiVietBaiTap\_Form.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Item.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Khung.cshtml" />
+    <Content Include="Views\HoiDap\_itemTraLoi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">
