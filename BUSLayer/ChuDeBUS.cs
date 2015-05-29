@@ -43,6 +43,14 @@ namespace BUSLayer
 
         public static KetQua layTheoMa(string phamVi, int ma)
         {
+            if (ma == 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = null
+                };
+            }
             //Lấy chủ đề
             KetQua ketQua = ChuDeDAO.layTheoMa(phamVi, ma);
 

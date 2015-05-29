@@ -1,41 +1,66 @@
 ﻿@model DTOLayer.ChuDeViewDTO
 
 @{
-    Layout = "~/Views/LCT/Khung.cshtml";
-}
-@section Styles {
-}
-@section Scripts {
 }
 
 <article class="hop">
     <section class="tieu-de">
         Chọn chủ đề
     </section>
-    <section id="khung_quan_ly" class="noi-dung lct-cay" data-ma>
+    <section id="khung_quan_ly" class="noi-dung lct-cay" data-ma="@(Model != null ? Model.ma : 0)" data-pham-vi="@ViewData["PhamVi"]">
         <section class="cay">
             <ul id="khung_cay" class="nut">
                 @helper hienThiCay(DTOLayer.ChuDeViewDTO chuDe)
                 {
-                    if (chuDe.chuDeCha != null)
+                    if (chuDe == null)
+                    {
+                        Data.PhamVi phamVi = Data.PhamVi.lay(ViewData["PhamVi"].ToString());
+
+                        var ketQua = DAOLayer.ChuDeDAO.layTheoMaChuDeCha(phamVi.ma, 0);
+                        var danhSachChuDeCon = ketQua.trangThai == 0 ? ketQua.ketQua : null; 
+                        
+                        @Html.Partial("~/Views/ChuDe/Khung/_Cay_PhamVi_Item.cshtml", danhSachChuDeCon, new ViewDataDictionary()
+                        {
+                            { "Ma", phamVi.ma },
+                            { "Ten", phamVi.ten }
+                        })
+                    }
+                    else
                     {
                         @hienThiCay(chuDe.chuDeCha);
+                    
+                        @Html.Partial("~/Views/ChuDe/Khung/_Cay_Item.cshtml", chuDe.danhSachChuDeCon, new ViewDataDictionary()
+                        {
+                            { "Ma", chuDe.ma },
+                            { "Ten", chuDe.ten }
+                        })
                     }
-                    @Html.Partial("~/Views/ChuDe/Khung/_Cay_Item.cshtml", chuDe.danhSachChuDeCon, new ViewDataDictionary()
-                    {
-                        { "Ma", chuDe.ma },
-                        { "Ten", chuDe.ten }
-                    })
                 }
                 @hienThiCay(Model)
             </ul>
         </section>
         <section class="con">
             <ul id="khung_danh_sach" class="khung-danh-sach">
-                @foreach (DTOLayer.ChuDeViewDTO chuDe in Model.danhSachChuDeCon)
+                @if(Model == null)
                 {
-                    @Html.Partial("~/Views/ChuDe/Khung/_DanhSach_Item.cshtml", chuDe)
+                    Data.PhamVi phamVi = Data.PhamVi.lay(ViewData["PhamVi"].ToString());
+
+                    var ketQua = DAOLayer.ChuDeDAO.layTheoMaChuDeCha(phamVi.ma, 0);
+                    List<DTOLayer.ChuDeViewDTO> danhSachChuDeCon = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.ChuDeViewDTO> : new List<DTOLayer.ChuDeViewDTO>(); 
+                    
+                    foreach (DTOLayer.ChuDeViewDTO chuDe in danhSachChuDeCon)
+                    {
+                        @Html.Partial("~/Views/ChuDe/Khung/_DanhSach_Item.cshtml", chuDe)
+                    }   
                 }
+                else
+                {
+                    foreach (DTOLayer.ChuDeViewDTO chuDe in Model.danhSachChuDeCon)
+                    {
+                        @Html.Partial("~/Views/ChuDe/Khung/_DanhSach_Item.cshtml", chuDe)
+                    }        
+                }
+                
             </ul>
             <a href="javascript:void(0)" data-chuc-nang="tao">
                 <i class="pe-7s-plus"></i>

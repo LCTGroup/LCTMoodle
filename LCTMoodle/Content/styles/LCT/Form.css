@@ -217,10 +217,6 @@
         border-left-color: #08c;
     }
 
-    .lct-form input[type="text"]:disabled,
-    .lct-form input[type="password"]:disabled {
-    }
-
 /*#endregion */
 
 /*#region Textarea */
@@ -442,6 +438,33 @@
 .lct-form .lct-file-label input[type="file"].dang ~ u {
     background-color: #08c !important;
 }
+
+/*#endregion */
+
+/*#region Chọn chủ đề */
+
+.lct-form input[data-input-type="chu-de"] {
+    border: none;
+    line-height: 20px;
+    padding: 5px 8px;
+    width: calc(100% - 19px);
+    height: 20px;
+    outline: none;
+    border-left: 3px solid #eee;
+    transition: 0.5s;
+    color: #555;
+    background-color: #fff;
+}
+
+    .lct-form input[data-input-type="chu-de"][class^="loi-"],
+    .lct-form input[data-input-type="chu-de"][class*=" loi-"] {
+        border-left-color: #e00;
+    }
+    
+    .lct-form input[data-input-type="chu-de"]:hover,
+    .lct-form input[data-input-type="chu-de"]:focus {
+        border-left-color: #08c;
+    }
 
 /*#endregion */
 
@@ -1430,6 +1453,7 @@
             text-align: center;
             padding: 20px 5px;
             color: #888;
+            background-color: #fff;
             transition: 0.5s;
             position: relative;
         }
@@ -1610,6 +1634,39 @@
         display: block;
         padding: 5px 10px;
     }
+    
+    .lct-cay .khung-danh-sach .nut-chon {
+        display: block;
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        bottom: -20px;
+        right: -20px;
+        z-index: 1;
+        border: 20px solid transparent;
+        transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        border-left-color: #eee;
+        transition: border-left-color 0.5s;
+        cursor: pointer;
+    }
+
+        .lct-cay .khung-danh-sach li:hover .nut-chon {
+            border-left-color: #08c;
+        }
+
+        .lct-cay .khung-danh-sach .nut-chon:before {
+            content: '';
+            display: block;
+            width: 16px;
+            height: 16px;
+            background: url('/ChuDe.png/ChuDe') 0px 0px;
+            transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            position: absolute;
+            top: -8px;
+            left: -21px;
+        }
 
     /*#endregion */
 

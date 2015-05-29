@@ -369,6 +369,7 @@ body.khong-scroll {
             border: 1px solid #ddd;
             position: relative;
             overflow-y: auto;
+            overflow-x: hidden;
         }
 
 /*#endregion */

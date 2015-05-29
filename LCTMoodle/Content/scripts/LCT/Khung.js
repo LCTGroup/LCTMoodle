@@ -141,8 +141,6 @@ function layPopupFull(thamSo) {
                 Hàm thực hiện lúc lấy nội dung hoàn tất
 
     Một số thiết lập bổ sung
-        iframe: Mặc định: false
-            Cho nội dung nằm trong 1 iframe
         width: Mặc định: 90% màn hình
             Chiều ngang của nội dung popup
         height: Mặc định: auto
@@ -183,33 +181,14 @@ function moPopupFull(thamSo) {
 
                 $noiDungPopup = $popup.find('#noi_dung_popup');
 
-                if ('iframe' in thamSo && thamSo.iframe === true) {
-                    $noiDungPopup.css({
-                        width: 'auto',
-                        height: 'auto'
-                    });
+                $noiDungPopup.css({
+                    width: 'width' in thamSo ? thamSo.width : '90vw',
+                    height: 'height' in thamSo ? thamSo.height : 'auto'
+                });
+                $noiDungPopup.html(data.ketQua);
 
-                    var $iFrame = $('<iframe></iframe>').css({
-                        width: 'width' in thamSo ? thamSo.width : '90vw',
-                        height: 'height' in thamSo ? thamSo.height : 'auto'
-                    });
-
-                    $noiDungPopup.html($iFrame);
-
-                    $noiDungPopup = $noiDungPopup.children().contents();
-
-                    var doc = $iFrame[0].contentWindow.document;
-                    doc.open();
-                    doc.write(data.ketQua);
-                    doc.close();
-                }
-                else {
-                    $noiDungPopup.css({
-                        width: 'width' in thamSo ? thamSo.width : '90vw',
-                        height: 'height' in thamSo ? thamSo.height : 'auto'
-                    });
-                    $noiDungPopup.html(data.ketQua);
-                }
+                $noiDungPopup.tat = $popup.tat;
+                $noiDungPopup.mo = $popup.mo;
                 
                 if ('thanhCong' in thamSo) {
                     thamSo.thanhCong($noiDungPopup);
