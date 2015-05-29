@@ -1,13 +1,15 @@
-﻿//Global: maKhoaHoc
-var $khungHienThi, $danhSach;
+﻿//Global: maKhoaHoc, tieuDe
+var $_KhungHienThi, $_DanhSach, $_KhungChua;
 
 //#region Khởi tạo
 
 $(function () {
-    $khungHienThi = $('#khung_hien_thi');
+    $_KhungHienThi = $('#khung_hien_thi');
+    $_KhungChua = $_KhungHienThi.parent();
 
     hienThi(layQueryString('hienthi').toLowerCase());
 
+    khoiTaoNutHienThi($_KhungChua.find('[data-chuc-nang="hien-thi"]'));
     khoiTaoQuayLai();
 });
 
@@ -44,6 +46,15 @@ function khoiTaoQuayLai() {
     }
 }
 
+function khoiTaoNutHienThi($nut) {
+    $nut.on('click', function () {
+        var nhom = $(this).attr('data-value');
+        hienThi(nhom);
+
+        history.pushState({ hienThi: nhom }, '', '?hienthi=' + nhom);
+    });
+}
+
 //#endregion
 
 //#region Khung
@@ -51,8 +62,8 @@ function khoiTaoQuayLai() {
 function hienThi_Khung() {
     var $khung = layKhung_Khung();
 
-    $khungHienThi.html($khung);
-    $khungHienThi.attr('data-hien-thi', 'khung');
+    $_KhungHienThi.html($khung);
+    $_KhungChua.attr('data-hien-thi', 'khung');
 }
 
 function layKhung_Khung() {
@@ -88,12 +99,7 @@ function layKhung_Khung() {
 }
 
 function khoiTaoKhung($khung) {
-    $khung.find('[data-chuc-nang="hien-thi"]').on('click', function () {
-        var nhom = $(this).attr('data-value');
-        hienThi(nhom);
-
-        history.pushState({ hienThi: nhom }, '', '?hienthi=' + nhom);
-    });
+    khoiTaoNutHienThi($khung.find('[data-chuc-nang="hien-thi"]'));
 }
 
 //#endregion
@@ -103,15 +109,15 @@ function khoiTaoKhung($khung) {
 function hienThi_DienDan() {
     var $khung = layKhung_DienDan();
 
-    $khungHienThi.html($khung);
-    $khungHienThi.attr('data-hien-thi', 'dien-dan');
+    $_KhungHienThi.html($khung);
+    $_KhungChua.attr('data-hien-thi', 'dien-dan');
     document.title = 'Diễn đàn - ' + tieuDe;
 
-    $danhSach = $khungHienThi.find('#danh_sach_bai_viet');
+    $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
 
-    khoiTaoForm_DienDan($khungHienThi.find('#tao_bai_viet_form'));
-    khoiTaoKhungBinhLuan($khungHienThi.find('[data-doi-tuong="khung-binh-luan"]'));
-    khoiTaoItem_DienDan($khungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
+    khoiTaoForm_DienDan($_KhungHienThi.find('#tao_bai_viet_form'));
+    khoiTaoKhungBinhLuan($_KhungHienThi.find('[data-doi-tuong="khung-binh-luan"]'));
+    khoiTaoItem_DienDan($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
 }
 
 function layKhung_DienDan() {
@@ -175,7 +181,7 @@ function khoiTaoForm_DienDan($form) {
 
                     khoiTaoKhungBinhLuan($htmlBaiViet.find('[data-doi-tuong="khung-binh-luan"]'));
 
-                    $danhSach.prepend($htmlBaiViet);
+                    $_DanhSach.prepend($htmlBaiViet);
 
                     khoiTaoLCTFormMacDinh($form);
                     $doiTuongAn.hide();
@@ -249,14 +255,14 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
 function hienThi_BaiGiang() {
     var $khung = layKhung_BaiGiang();
 
-    $khungHienThi.html($khung);
-    $khungHienThi.attr('data-hien-thi', 'bai-giang');
+    $_KhungHienThi.html($khung);
+    $_KhungChua.attr('data-hien-thi', 'bai-giang');
     document.title = 'Bài giảng - ' + tieuDe;
 
-    $danhSach = $khungHienThi.find('#danh_sach_bai_viet');
+    $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
 
-    khoiTaoForm_BaiGiang($khungHienThi.find('#tao_bai_viet_form'));
-    khoiTaoItem_BaiGiang($khungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
+    khoiTaoForm_BaiGiang($_KhungHienThi.find('#tao_bai_viet_form'));
+    khoiTaoItem_BaiGiang($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
 }
 
 function layKhung_BaiGiang() {
@@ -319,7 +325,7 @@ function khoiTaoForm_BaiGiang($form) {
                     var $mucBaiViet = $(data.ketQua);
 
                     khoiTaoItem_BaiGiang($mucBaiViet);
-                    $danhSach.append($mucBaiViet);
+                    $_DanhSach.append($mucBaiViet);
 
                     khoiTaoLCTFormMacDinh($form);
                     $doiTuongAn.hide();
@@ -349,7 +355,7 @@ function khoiTaoItem_BaiGiang($danhSachBaiGiang) {
                 $baiGiang.removeClass('mo');
             }
             else {
-                $danhSach.find('.mo[data-doi-tuong="muc-bai-viet"]').removeClass('mo');
+                $_DanhSach.find('.mo[data-doi-tuong="muc-bai-viet"]').removeClass('mo');
                 $baiGiang.addClass('mo');
             }
         })
@@ -407,14 +413,14 @@ function khoiTaoItem_BaiGiang($danhSachBaiGiang) {
 function hienThi_BaiTap() {
     var $khung = layKhung_BaiTap();
 
-    $khungHienThi.html($khung);
-    $khungHienThi.attr('data-hien-thi', 'bai-tap');
+    $_KhungHienThi.html($khung);
+    $_KhungChua.attr('data-hien-thi', 'bai-tap');
     document.title = 'Bài tập - ' + tieuDe;
 
-    $danhSach = $khungHienThi.find('#danh_sach_bai_viet');
+    $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
 
-    khoiTaoForm_BaiTap($khungHienThi.find('#tao_bai_viet_form'));
-    khoiTaoItem_BaiTap($danhSach.find('[data-doi-tuong="muc-bai-viet"]'));
+    khoiTaoForm_BaiTap($_KhungHienThi.find('#tao_bai_viet_form'));
+    khoiTaoItem_BaiTap($_DanhSach.find('[data-doi-tuong="muc-bai-viet"]'));
 }
 
 function layKhung_BaiTap() {
@@ -476,7 +482,7 @@ function khoiTaoForm_BaiTap($form) {
                 if (data.trangThai == 0) {
                     var $htmlBaiViet = $(data.ketQua);
 
-                    $danhSach.prepend($htmlBaiViet);
+                    $_DanhSach.prepend($htmlBaiViet);
 
                     khoiTaoLCTFormMacDinh($form);
                     $doiTuongAn.hide();
