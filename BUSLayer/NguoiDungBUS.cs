@@ -34,35 +34,20 @@ namespace BUSLayer
             };
             ketQua = nguoiDung.kiemTra();            
 
-            return ketQua.trangThai == 3 ?
-                ketQua :
-                NguoiDungDAO.them(nguoiDung);
+            return ketQua.trangThai == 3 ? ketQua : NguoiDungDAO.them(nguoiDung);
         }
-        public static NguoiDungViewDTO lay(string tenTaiKhoan)
+        public static NguoiDungViewDTO layTheoTenTaiKhoan(string tenTaiKhoan)
         {
-            NguoiDungViewDTO nguoiDung = new NguoiDungViewDTO()
-            {
-                tenTaiKhoan=tenTaiKhoan
-            };
-            
-            KetQua ketQua = NguoiDungDAO.lay(nguoiDung);
-            
-            if (ketQua.trangThai == 0)
-            {
-                return (ketQua.ketQua as NguoiDungViewDTO);
-            }
-            return nguoiDung;
+            return (NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan)).ketQua as NguoiDungViewDTO;
         }
-        public static KetQua kiemTraDangNhap(Dictionary<string, string> form)
+        public static NguoiDungViewDTO layTheoMa(int ma)
         {
-            NguoiDungViewDTO nguoiDungDangNhap = new NguoiDungViewDTO()
-            {
-                tenTaiKhoan = layString(form, "TenTaiKhoan"),
-                matKhau = layString(form, "MatKhau")
-            };
-            
-            KetQua ketQua = NguoiDungDAO.lay(nguoiDungDangNhap);
-            if (ketQua.trangThai == 1)
+            return (NguoiDungDAO.layTheoMa(ma)).ketQua as NguoiDungViewDTO;
+        }
+        public static KetQua kiemTraDangNhap(Dictionary<string,string> form)
+        {
+            KetQua ketQua = NguoiDungDAO.layTheoTenTaiKhoan(layString(form, "TenTaiKhoan"));
+            if (ketQua.trangThai != 0)
             {
                 ketQua.ketQua = "Tên tài khoản không tồn tại";
                 return ketQua;
@@ -70,7 +55,7 @@ namespace BUSLayer
 
             NguoiDungViewDTO nguoiDung = ketQua.ketQua as NguoiDungViewDTO;
             
-            if (Helpers.NguoiDungHelper.soSanhChuoiMaHoa(nguoiDungDangNhap.matKhau, nguoiDung.matKhau))
+            if (Helpers.NguoiDungHelper.soSanhChuoiMaHoa(layString(form, "MatKhau"), nguoiDung.matKhau))
             {
                 if (layBool(form, "GhiNho"))
                 {
@@ -82,14 +67,15 @@ namespace BUSLayer
 
                     HttpContext.Current.Response.Cookies.Add(cookieNguoiDung);
                 }                
+                
                 //Lưu mã người dùng vào Session
-                HttpContext.Current.Session["NguoiDung"] = nguoiDung.tenTaiKhoan;
+                HttpContext.Current.Session["NguoiDung"] = nguoiDung.ma;
 
                 ketQua.ketQua = "Đăng nhập thành công";
             }
             else
             {
-                ketQua.trangThai = 1;
+                ketQua.trangThai = 1; //Mặc dù lấy được người dùng nhưng sai password nên phải cập nhật trạng thái về 1 để ajax thông báo.
                 ketQua.ketQua = "Mật khẩu không đúng";
             }
             return ketQua;            
@@ -97,42 +83,21 @@ namespace BUSLayer
         public static void xuLyDangXuat()
         {
             //Xóa Cookie
-            if (HttpContext.Current.Request.Cookies["NguoiDung"] != null)
+            HttpCookie cookie = HttpContext.Current.Request.Cookies["NguoiDung"];
+
+            if (cookie != null)
             {
-                HttpCookie cookie = HttpContext.Current.Request.Cookies["NguoiDung"];
                 cookie.Value = null;
                 cookie.Expires = DateTime.Now.AddDays(-1);
-                HttpContext.Current.Response.Cookies.Add(cookie); 
+                HttpContext.Current.Response.Cookies.Add(cookie);                
             }
                        
             //Xóa session            
             HttpContext.Current.Session.Abandon();
         }
-        public static void kiemTraCookie()
-        {
-            if (HttpContext.Current.Request.Cookies["NguoiDung"] != null && HttpContext.Current.Session["NguoiDung"] == null)
-            {               
-                Dictionary<string, string> formDangNhap = new Dictionary<string, string>();
-
-                formDangNhap.Add("TenTaiKhoan", HttpContext.Current.Request.Cookies["NguoiDung"]["TenTaiKhoan"]);
-                formDangNhap.Add("MatKhau", HttpContext.Current.Request.Cookies["NguoiDung"]["MatKhau"]);
-
-                KetQua ketQua = NguoiDungBUS.kiemTraDangNhap(formDangNhap);
-
-                if (ketQua.trangThai == 0)
-                {
-                    HttpContext.Current.Session["NguoiDung"] = formDangNhap["TenTaiKhoan"];
-                }
-            }
-        }
         public static KetQua kiemTraTenTaiKhoan(string tenTaiKhoan)
         {
-            NguoiDungViewDTO nguoiDung = new NguoiDungViewDTO()
-            {
-                tenTaiKhoan = tenTaiKhoan
-            };
-            
-            return NguoiDungDAO.lay(nguoiDung);
+            return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
         }
     }
 }

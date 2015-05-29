@@ -7,6 +7,9 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.IO;
 using Helpers;
+using Data;
+using BUSLayer;
+using DTOLayer;
 
 namespace LCTMoodle
 {
@@ -36,7 +39,28 @@ namespace LCTMoodle
         }
         protected void Session_Start()
         {
+            HttpCookie ckNguoiDung = HttpContext.Current.Request.Cookies["NguoiDung"];
+            
+            if (ckNguoiDung != null && Session["NguoiDung"] == null)
+            {
+                Dictionary<string, string> formCookie = new Dictionary<string, string>()
+                {
+                    { "TenTaiKhoan", ckNguoiDung["TenTaiKhoan"] },
+                    { "MatKhau", ckNguoiDung["MatKhau"] },
+                    { "GhiNho", "" }
+                };                
+                
+                KetQua ketQua = NguoiDungBUS.kiemTraDangNhap(formCookie);
 
+                if (ketQua.trangThai == 0)
+                {
+                    Session["NguoiDung"] = (ketQua.ketQua as NguoiDungViewDTO).ma;
+                }
+                else
+                {
+                    Session["NguoiDung"] = null;
+                }
+            }
         }
     }
 }

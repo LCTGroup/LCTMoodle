@@ -16,7 +16,11 @@ namespace LCTMoodle.Controllers
         // GET: /NguoiDung/
         public ActionResult Index()
         {
-            return View(NguoiDungBUS.lay(Session["NguoiDung"] as string));
+            if (Session["NguoiDung"] != null)
+            {
+                return View(NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]));
+            }
+            return RedirectToAction("Index", "TrangChu");
         }
 
         /// <summary>
@@ -47,8 +51,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]        
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            Dictionary<string, string> form = formCollection.AllKeys.ToDictionary(k => k, v => formCollection[v]);
-            KetQua ketQua = NguoiDungBUS.them(form);
+            KetQua ketQua = NguoiDungBUS.them(chuyenDuLieuForm(formCollection));
 
             return Json(ketQua);
         }
@@ -56,8 +59,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyKiemTraDangNhap(FormCollection formCollection)
         {
-            Dictionary<string,string> form = formCollection.AllKeys.ToDictionary(k => k, v => formCollection[v]);
-            KetQua ketQua = NguoiDungBUS.kiemTraDangNhap(form);
+            KetQua ketQua = NguoiDungBUS.kiemTraDangNhap(chuyenDuLieuForm(formCollection));
 
             return Json(ketQua);
         }
@@ -72,9 +74,7 @@ namespace LCTMoodle.Controllers
         [HttpGet]
         public ActionResult KiemTraTenTaiKhoan(string tenTaiKhoan)
         {
-            KetQua ketQua = NguoiDungBUS.kiemTraTenTaiKhoan(tenTaiKhoan);
-            
-            return Json(ketQua, JsonRequestBehavior.AllowGet);
+            return Json(NguoiDungBUS.kiemTraTenTaiKhoan(tenTaiKhoan), JsonRequestBehavior.AllowGet);
         }        
 	}
 }

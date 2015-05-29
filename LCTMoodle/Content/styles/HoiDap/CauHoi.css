@@ -93,16 +93,16 @@
     background-color: #fff;
     margin-bottom: 10px;
 }
-    .tra-loi > .chi-tiet {
+    .tra-loi .chi-tiet {
         padding: 10px;
     }
-    .tra-loi > .thong-tin {
+    .tra-loi .thong-tin {
         display: flex;
         flex-direction: row;
         border-top: 1px solid #f5f5f5;
         background-color: #f8f8f8;
     }
-        .tra-loi > .thong-tin > .diem {
+        .tra-loi .thong-tin .diem {
             display: flex;
             flex-direction: column;
             padding: 0;
@@ -110,12 +110,12 @@
             max-width: 80px;
             padding: 10px;
         }
-            .tra-loi > .thong-tin > .diem > span {
+            .tra-loi .thong-tin .diem span {
                 text-align: center;
                 font-size: 25px;
                 font-weight: bold;
             }
-            .tra-loi > .thong-tin > .diem > i {
+            .tra-loi .thong-tin .diem i {
                 text-align: center;
                 font-size: 50px;
                 cursor: pointer;
@@ -123,24 +123,25 @@
                 height: 20px;
                 line-height: 20px;
             }
-        .tra-loi > .thong-tin > .thong-tin-them {
+        .tra-loi .thong-tin .thong-tin-them {
             text-align: left;
             color: #bbb;
             padding: 10px;
         }
-            .tra-loi > .thong-tin > .thong-tin-them > .thoi-gian {
+            .tra-loi .thong-tin .thong-tin-them .thoi-gian {
 
             }
-                .tra-loi > .thong-tin > .thong-tin-them > .thoi-gian > span {
+                .tra-loi .thong-tin .thong-tin-them .thoi-gian span {
                     color: #333;
                 }
-            .tra-loi > .thong-tin > .thong-tin-them > .nguoi-dang {
+            .tra-loi .thong-tin .thong-tin-them .nguoi-dang {
 
             }
-                .tra-loi > .thong-tin > .thong-tin-them > .nguoi-dang > a {
+                .tra-loi .thong-tin .thong-tin-them .nguoi-dang a {
                     color: #333;
                     font-weight: bold;
                 }
+
 /*#endregion */
 
 /*#region Custom */

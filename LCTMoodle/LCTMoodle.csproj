@@ -169,7 +169,6 @@
     <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
     <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\HoiDap\CauHoi.css" />
-    <Content Include="Content\styles\HoiDap\DatCauhoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
     <Content Include="Content\styles\KhoaHoc\Xem.css" />
     <Content Include="Content\styles\LCT\bootstrap.css" />
@@ -387,6 +386,7 @@
     <Content Include="Views\HoiDap\CauHoi.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Item.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Khung.cshtml" />
+    <Content Include="Views\HoiDap\_itemTraLoi.cshtml" />
     <Content Include="Views\KhoaHoc\_Khung.cshtml" />
     <Content Include="Views\BaiTapNop\_DanhSachNop.cshtml" />
     <Content Include="Views\ChuDe\Khung\_DanhSach_Item.cshtml" />

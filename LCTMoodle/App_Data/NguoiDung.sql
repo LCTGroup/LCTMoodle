@@ -46,3 +46,15 @@ BEGIN
 END
 
 select * from dbo.NguoiDung
+
+GO
+--Lấy người dùng theo mã
+CREATE PROC dbo.layNguoiDungTheoMa (
+	@0 INT --Mã người dùng
+)
+AS
+BEGIN
+	SELECT *
+	FROM dbo.NguoiDung
+	WHERE Ma = @0
+END
