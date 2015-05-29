@@ -832,12 +832,10 @@ function khoiTaoSubmit_LCT($form, thamSo) {
                 }
             }
             else {
-                $input.on('focusout', function () {
-                    if (!this.value) {
-                        baoLoi($input, 'bat-buoc');
-                        coLoi = true;
-                    }
-                });
+                if (!this.value) {
+                    baoLoi($input, 'bat-buoc');
+                    coLoi = true;
+                }
             }
         });
         $form.find('[data-validate~="so-nguyen"]:not(:disabled)').each(function () {
