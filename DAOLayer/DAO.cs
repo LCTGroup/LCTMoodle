@@ -210,7 +210,7 @@ namespace DAOLayer
                 return new KetQua()
                     {
                         trangThai = 0,
-                        ketQua = (T)ketQua
+                        ketQua = Convert.ChangeType(ketQua, typeof(T))
                     };
             }
             catch (SqlException e)

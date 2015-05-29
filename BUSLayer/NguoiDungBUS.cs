@@ -32,9 +32,24 @@ namespace BUSLayer
                 soDienThoai = layString(form, "SoDienThoai"),
                 maHinhDaiDien = (ketQua.ketQua as TapTinViewDTO).ma
             };
-            ketQua = nguoiDung.kiemTra();            
+            ketQua = nguoiDung.kiemTra();
 
-            return ketQua.trangThai == 3 ? ketQua : NguoiDungDAO.them(nguoiDung);
+            //Kiểm tra Tên tài khoản có trùng hay ko, nếu trùng thì thêm thất bại
+            
+
+            if (ketQua.trangThai != 3)
+            {
+                ketQua = NguoiDungBUS.kiemTraTenTaiKhoan(nguoiDung.tenTaiKhoan);
+                if (ketQua.trangThai == 1)
+                {
+                    ketQua = NguoiDungDAO.them(nguoiDung);
+                    if (ketQua.trangThai == 0)
+                    {
+                        HttpContext.Current.Session["NguoiDung"] = (int)ketQua.ketQua;
+                    }
+                }
+            }
+            return ketQua;
         }
         public static NguoiDungViewDTO layTheoTenTaiKhoan(string tenTaiKhoan)
         {

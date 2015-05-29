@@ -51,9 +51,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]        
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            KetQua ketQua = NguoiDungBUS.them(chuyenDuLieuForm(formCollection));
-
-            return Json(ketQua);
+            return Json(NguoiDungBUS.them(chuyenDuLieuForm(formCollection)));
         }
 
         [HttpPost]

@@ -904,6 +904,7 @@ function khoiTaoSubmit_LCT($form, thamSo) {
 
                     if (this.validate() === false) {
                         baoLoi($input, loai, thongBao);
+                        coLoi = true;
                     }
                     else {
                         tatLoi($input, loai);
