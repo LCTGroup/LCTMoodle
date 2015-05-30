@@ -12,6 +12,58 @@ namespace BUSLayer
 {
     public class KhoaHocBUS : BUS
     {
+        public static KetQua kiemTra(KhoaHocDataDTO khoaHoc)
+        {
+            List<string> loi = new List<string>();
+
+            #region Bắt lỗi
+            if (string.IsNullOrEmpty(khoaHoc.ten))
+            {
+                loi.Add("Tên không được bỏ trống");
+            }
+            if (string.IsNullOrEmpty(khoaHoc.moTa))
+            {
+                loi.Add("Mô tả không được bỏ trống");
+            }
+            if (khoaHoc.maChuDe == 0)
+            {
+                loi.Add("Chủ đề không được bỏ trống");
+            }
+            if (khoaHoc.maHinhDaiDien == 0)
+            {
+                loi.Add("Hình đại diện không được bỏ trống");
+            }
+            if (khoaHoc.maNguoiTao == 0)
+            {
+                loi.Add("Người tạo không được bỏ trống");
+            }
+            if (khoaHoc.cheDoRiengTu.Length == 0)
+            {
+                loi.Add("Chế độ riêng tư không được bỏ trống");
+            }
+            else if (CheDoRiengTu.lay(khoaHoc.cheDoRiengTu) == null)
+            {
+                loi.Add("Chế độ riêng tư không hợp lệ");
+            }
+            #endregion
+
+            if (loi.Count > 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = loi
+                };
+            }
+            else
+            {
+                return new KetQua()
+                {
+                    trangThai = 0
+                };
+            }
+        }
+
         public static KetQua them(Dictionary<string, string> form)
         {
             KhoaHocDataDTO khoaHoc  = new KhoaHocDataDTO()
@@ -36,7 +88,7 @@ namespace BUSLayer
                 khoaHoc.hanDangKy = layDateTime_Full(form, "HanDangKy_Ngay", "HanDangKy_Gio");
             }
 
-            KetQua ketQua = khoaHoc.kiemTra();
+            KetQua ketQua = kiemTra(khoaHoc);
 
             if (ketQua.trangThai != 0)
             {

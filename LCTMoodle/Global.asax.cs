@@ -27,9 +27,9 @@ namespace LCTMoodle
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/KhoaHoc_HinhDaiDien"));
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BaiVietDienDan_TapTin"));
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BaiVietBaiTap_TapTin"));
+            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BaiVietBaiGiang_TapTin"));
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/NguoiDung_HinhDaiDien"));
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BinhLuan_BaiVietDienDan_TapTin"));
-            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BinhLuan_BaiVietBaiGiang_TapTin"));
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BaiTapNop_TapTin"));
         }
 

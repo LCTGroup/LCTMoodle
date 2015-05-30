@@ -8,11 +8,55 @@ using Data;
 
 namespace DAOLayer
 {
-    public class ChuDeDAO : DAO
+    public class ChuDeDAO : DAO<ChuDeDAO, ChuDeViewDTO>
     {
+        public static ChuDeViewDTO gan(System.Data.SqlClient.SqlDataReader dong)
+        {
+            ChuDeViewDTO chuDe = new ChuDeViewDTO();
+
+            for (int i = 0; i < dong.FieldCount; i++)
+            {
+                switch (dong.GetName(i))
+                {
+                    case "Ma":
+                        chuDe.ma = layInt(dong, i); break;
+                    case "Ten":
+                        chuDe.ten = layString(dong, i); break;
+                    case "MoTa":
+                        chuDe.moTa = layString(dong, i); break;
+                    case "ThoiDiemTao":
+                        chuDe.thoiDiemTao = layDateTime(dong, i); break;
+                    case "MaNguoiTao":
+                        chuDe.maNguoiTao = layInt(dong, i); break;
+                    case "PhamVi":
+                        chuDe.phamVi = layString(dong, i); break;
+                    case "MaChuDeCha":
+                        int maChuDeCha = layInt(dong, i);
+                        if (maChuDeCha != 0)
+                        {
+                            chuDe.chuDeCha = new ChuDeViewDTO()
+                            {
+                                ma = maChuDeCha
+                            };
+                        }
+                        break;
+                    case "MaHinhDaiDien":
+                        chuDe.hinhDaiDien = new TapTinViewDTO()
+                        {
+                            ma = layInt(dong, i)
+                        };
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return chuDe;
+        }
+
         public static KetQua them(ChuDeDataDTO chuDe)
         {
-            return layDong<ChuDeViewDTO>
+            return layDong
             (
                 "themChuDe",
                 new object[] 
@@ -29,7 +73,7 @@ namespace DAOLayer
 
         public static KetQua layTheoMaChuDeCha(string phamVi, int maChuDeCha)
         {
-            return layDanhSachDong<ChuDeViewDTO>
+            return layDanhSachDong
             (
                 "layChuDeTheoMaChuDeCha",
                 new object[] 
@@ -42,7 +86,7 @@ namespace DAOLayer
         
         public static KetQua layTheoMa(string phamVi, int ma)
         {
-            return layDong<ChuDeViewDTO>
+            return layDong
             (
                 "layChuDeTheoMa",
                 new object[] 

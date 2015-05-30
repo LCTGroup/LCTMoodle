@@ -46,7 +46,6 @@
     <Compile Include="BaiVietDienDanDAO.cs" />
     <Compile Include="BinhLuanDAO.cs" />
     <Compile Include="KhoaHocDAO.cs" />
-    <Compile Include="HoiDapDAO.cs" />
     <Compile Include="NguoiDungDAO.cs" />
     <Compile Include="TapTinDAO.cs" />
     <Compile Include="ChuDeDAO.cs" />

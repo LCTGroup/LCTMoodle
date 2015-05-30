@@ -8,11 +8,50 @@ using DAOLayer;
 using DTOLayer;
 using System.IO;
 using Data;
+using Helpers;
 
 namespace BUSLayer
 {
     public class NguoiDungBUS : BUS
     {
+        public static KetQua kiemTra(NguoiDungDataDTO nguoiDung)
+        {
+            List<string> thongBao = new List<string>();
+
+            #region Kiểm tra Valid
+
+            if (string.IsNullOrEmpty(nguoiDung.tenTaiKhoan))
+            {
+                thongBao.Add("Tên tài khoản không được bỏ trống");
+            }
+
+            if (string.IsNullOrEmpty(nguoiDung.matKhau))
+            {
+                thongBao.Add("Mật khẩu không được bỏ trống");
+            }
+
+            if (string.IsNullOrEmpty(nguoiDung.email))
+            {
+                thongBao.Add("Email không được bỏ trống");
+            }
+            else if (!LCTHelper.laEmail(nguoiDung.email))
+            {
+                thongBao.Add("Email không hợp lệ");
+            }
+
+            if (string.IsNullOrEmpty(nguoiDung.hoTen))
+            {
+                thongBao.Add("Họ tên không được bỏ trống");
+            }
+
+            #endregion
+
+            KetQua ketQua = new KetQua();
+            ketQua.trangThai = (thongBao.Count > 0) ? 3 : 0;
+            ketQua.ketQua = thongBao;
+            return ketQua;
+        }
+
         public static KetQua them(Dictionary<string, string> form)
         {
             KetQua ketQua = TapTinBUS.chuyen("NguoiDung_HinhDaiDien", layInt(form, "HinhDaiDien"));
@@ -32,7 +71,7 @@ namespace BUSLayer
                 soDienThoai = layString(form, "SoDienThoai"),
                 maHinhDaiDien = (ketQua.ketQua as TapTinViewDTO).ma
             };
-            ketQua = nguoiDung.kiemTra();            
+            ketQua = kiemTra(nguoiDung);            
 
             return ketQua.trangThai == 3 ? ketQua : NguoiDungDAO.them(nguoiDung);
         }
