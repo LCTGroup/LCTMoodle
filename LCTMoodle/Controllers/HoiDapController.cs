@@ -21,9 +21,5 @@ namespace LCTMoodle.Controllers
         {
             return View();
         }
-        public PartialViewResult _itemTraLoi()
-        {
-            return PartialView();
-        }
 	}
 }
