@@ -123,7 +123,7 @@ namespace BUSLayer
             {
                 if (baiViet.tapTin != null)
                 {
-                    ketQua = TapTinDAO.lay("BaiVietBaiTap_TapTin", baiViet.tapTin.ma);
+                    ketQua = TapTinDAO.layTheoMa("BaiVietBaiTap_TapTin", baiViet.tapTin.ma);
 
                     if (ketQua.trangThai == 0)
                     {

@@ -63,11 +63,11 @@ namespace DAOLayer
                 );
         }
        
-        public static KetQua lay(string loai, int ma)
+        public static KetQua layTheoMa(string loai, int ma)
         {
             return layDong
                 (
-                    "layTapTin",
+                    "layTapTinTheoMa",
                     new object[] 
                     { 
                         loai,

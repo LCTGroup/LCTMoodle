@@ -15,7 +15,7 @@ namespace BUSLayer
     {
         public static KetQua lay(string loai, int ma)
         {
-            return TapTinDAO.lay(loai, ma);
+            return TapTinDAO.layTheoMa(loai, ma);
         }
 
         public static KetQua them(System.Web.HttpPostedFileBase tapTinLuu)
