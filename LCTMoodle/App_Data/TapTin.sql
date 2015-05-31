@@ -71,7 +71,7 @@ END
 
 GO
 --Lấy tập tin
-ALTER PROC dbo.layTapTin (
+ALTER PROC dbo.layTapTinTheoMa (
 	@0 NVARCHAR(MAX), --Loại
 	@1 INT --Mã
 )

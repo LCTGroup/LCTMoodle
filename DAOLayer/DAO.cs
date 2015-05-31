@@ -14,6 +14,17 @@ namespace DAOLayer
     public class DAO<DAOClass, ViewDTOClass>
         where ViewDTOClass : DTO
     {
+        #region Lấy liên kết
+
+        public static string[] lienKet;
+
+        protected static bool coLienKet(string tenLienKet)
+        {
+            return tenLienKet != null && Array.IndexOf(lienKet, tenLienKet) != -1;
+        }
+
+        #endregion
+
         #region Xử lý truy vấn dữ liệu
         static SqlConnection ketNoi = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["chuoiKetNoi_LCTMoodle"].ConnectionString);
 
@@ -38,7 +49,7 @@ namespace DAOLayer
 
                 MethodInfo method = typeof(DAOClass).GetMethod("gan");
 
-                DTO dto;
+                ViewDTOClass dto;
 
                 if (dong.Read())
                 {
