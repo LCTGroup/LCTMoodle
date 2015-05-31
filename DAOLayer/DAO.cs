@@ -22,7 +22,6 @@ namespace DAOLayer
         {
             return tenLienKet != null && Array.IndexOf(lienKet, tenLienKet) != -1;
         }
-
         #endregion
 
         #region Xử lý truy vấn dữ liệu
