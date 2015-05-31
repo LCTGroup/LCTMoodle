@@ -383,7 +383,7 @@
     <Content Include="Views\BaiVietBaiGiang\_Khung.cshtml" />
     <Content Include="Views\BaiVietBaiGiang\_Item.cshtml" />
     <Content Include="Views\TrangChu\TrangMau.cshtml" />
-    <Content Include="Views\HoiDap\CauHoi.cshtml" />
+    <Content Include="Views\HoiDap\XemCauHoi.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Item.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Khung.cshtml" />
     <Content Include="Views\HoiDap\_itemTraLoi.cshtml" />

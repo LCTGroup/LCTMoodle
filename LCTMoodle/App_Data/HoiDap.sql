@@ -32,3 +32,32 @@ CREATE TABLE dbo.HoiDap_Diem
 	Diem BIT NOT NULL,
 	PRIMARY KEY(Ma, MaNguoiTao)
 )
+
+GO
+--Thêm Câu hỏi
+CREATE PROC dbo.themCauHoi
+(
+	@0 NVARCHAR(MAX), --Tiêu đề
+	@1 NVARCHAR(MAX), --Nội dung
+	@2 DATETIME, --Thời điểm tạo
+	@3 INT --Mã người tạo
+)
+AS
+BEGIN
+	INSERT INTO dbo.CauHoi(TieuDe, NoiDung, ThoiDiemTao, MaNguoiTao) VALUES (@0, @1, @2, @3)
+
+	SELECT @@IDENTITY Ma
+END
+
+GO
+--Lấy Câu hỏi
+CREATE PROC dbo.layCauHoiTheoMa
+(
+	@0 INT --Mã câu hỏi
+)
+AS
+BEGIN
+	SELECT *
+	FROM dbo.CauHoi
+	WHERE Ma=@0
+END

@@ -1,6 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Hỏi đáp";
+﻿@model DTOLayer.CauHoiViewDTO
+@{
+    ViewData["Title"] = Model.tieuDe;
     Layout = "~/Views/LCT/Khung.cshtml";
+
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Hỏi đáp", "/HoiDap",
+        Model.tieuDe, "/HoiDap/" + Model.ma
+    };
+
+    ViewData["ChucNang"] = new List<string>()
+    {
+        "Bài giảng", "href=?hienthi=baigiang",
+        "Bài tập", "href='?hienthi=baitap'",
+        "Diễn đàn", "href='?hienthi=diendan'",
+        "Đăng ký vào khóa học", "href=javascript:void(0) data-chuc-nang=xoa-khoa-hoc data-value=" + Model.ma
+    };
 }
 
 @section Styles {

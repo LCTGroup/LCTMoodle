@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BUSLayer;
 using DTOLayer;
 using DAOLayer;
+using Data;
 
 namespace LCTMoodle.Controllers
 {
@@ -17,8 +18,9 @@ namespace LCTMoodle.Controllers
         {
             return View();
         }
-        public ActionResult CauHoi(string maCauHoi)
+        public ActionResult XemCauHoi(string ma)
         {
+            
             return View();
         }
 	}

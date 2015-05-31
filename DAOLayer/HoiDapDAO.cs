@@ -10,32 +10,28 @@ namespace DAOLayer
 {
     public class HoiDapDAO : DAO
     {       
-        public static KetQua them(NguoiDungDataDTO nguoiDung)
+        public static KetQua them(CauHoiDataDTO cauHoi)
         {
             return layGiaTri<int>
             (
-                "themNguoiDung",
+                "themCauHoi",
                 new object[] 
                 {
-                    nguoiDung.tenTaiKhoan,
-                    nguoiDung.matKhau,
-                    nguoiDung.email,
-                    nguoiDung.hoTen,
-                    nguoiDung.ngaySinh,
-                    nguoiDung.diaChi,
-                    nguoiDung.soDienThoai,
-                    nguoiDung.maHinhDaiDien
+                    cauHoi.tieuDe,
+                    cauHoi.noiDung,
+                    cauHoi.thoiDiemTao,
+                    cauHoi.maNguoiTao
                 }
             );
         }
-        public static KetQua lay(NguoiDungViewDTO nguoiDung)
+        public static KetQua lay(int maCauHoi)
         {
-            return layDong<NguoiDungViewDTO>
+            return layDong<CauHoiViewDTO>
             (
-                "layNguoiDungTheoTenTaiKhoan",
+                "layCauHoiTheoMa",
                 new object[]
                 {
-                    nguoiDung.tenTaiKhoan
+                    maCauHoi
                 }
             );
         }        
