@@ -12,6 +12,46 @@ namespace BUSLayer
 {
     public class BaiVietBaiTapBUS : BUS
     {
+        public static KetQua kiemTra(BaiVietBaiTapDataDTO baiViet)
+        {
+            List<string> loi = new List<string>();
+
+            #region Bắt lỗi
+            if (string.IsNullOrEmpty(baiViet.tieuDe))
+            {
+                loi.Add("Tiêu đề không được bỏ trống");
+            }
+            if (string.IsNullOrEmpty(baiViet.noiDung))
+            {
+                loi.Add("Nội dung không được bỏ trống");
+            }
+            if (baiViet.maNguoiTao == 0)
+            {
+                loi.Add("Người tạo không được bỏ trống");
+            }
+            if (baiViet.maKhoaHoc == 0)
+            {
+                loi.Add("Khóa học không được bỏ trống");
+            }
+            #endregion
+
+            if (loi.Count > 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = loi
+                };
+            }
+            else
+            {
+                return new KetQua()
+                {
+                    trangThai = 0
+                };
+            }
+        }
+
         public static KetQua them(Dictionary<string, string> form)
         {
             //Chuyển tập tin
@@ -33,7 +73,7 @@ namespace BUSLayer
                 maKhoaHoc = layInt(form, "KhoaHoc")
             };
             
-            ketQua = baiViet.kiemTra();
+            ketQua = kiemTra(baiViet);
 
             if (ketQua.trangThai != 0)
             {

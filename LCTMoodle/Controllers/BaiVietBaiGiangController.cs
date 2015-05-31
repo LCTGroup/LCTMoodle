@@ -19,7 +19,7 @@ namespace LCTMoodle.Controllers
             KetQua ketQua = BaiVietBaiGiangDAO.layTheoMaKhoaHoc(maKhoaHoc);
             List<BaiVietBaiGiangViewDTO> danhSachBaiViet = 
                 ketQua.trangThai == 0 ?
-                ketQua.ketQua as List<BaiVietBaiGiangViewDTO> :
+                (List<BaiVietBaiGiangViewDTO>)ketQua.ketQua :
                 new List<BaiVietBaiGiangViewDTO>();
 
             try

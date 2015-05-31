@@ -12,6 +12,46 @@ namespace BUSLayer
 {
     public class ChuDeBUS : BUS
     {
+        public static KetQua kiemTra(ChuDeDataDTO chuDe)
+        {
+            List<string> loi = new List<string>();
+
+            #region Bắt lỗi
+            if (string.IsNullOrEmpty(chuDe.ten))
+            {
+                loi.Add("Tên không được bỏ trống");
+            }
+            if (string.IsNullOrEmpty(chuDe.moTa))
+            {
+                loi.Add("Mô tả không được bỏ trống");
+            }
+            if (chuDe.maNguoiTao == 0)
+            {
+                loi.Add("Người tạo không được bỏ trống");
+            }
+            if (chuDe.maHinhDaiDien == 0)
+            {
+                loi.Add("Hình đại diện không được bỏ trống");
+            }
+            #endregion
+
+            if (loi.Count > 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = loi
+                };
+            }
+            else
+            {
+                return new KetQua()
+                {
+                    trangThai = 0
+                };
+            }
+        }
+
         public static KetQua them(Dictionary<string, string> form)
         {
             KetQua ketQua = TapTinBUS.chuyen("ChuDe_HinhDaiDien", layInt(form, "HinhDaiDien"));
@@ -31,7 +71,7 @@ namespace BUSLayer
                 maNguoiTao = 1 //Để tạm
             };
 
-            ketQua = chuDe.kiemTra();
+            ketQua = kiemTra(chuDe);
 
             if (ketQua.trangThai != 0)
             {

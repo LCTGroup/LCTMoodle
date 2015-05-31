@@ -7,23 +7,23 @@ using System.Text;
 using System.Threading.Tasks;
 using DTOLayer;
 using Data;
+using System.Reflection;
 
 namespace DAOLayer
 {
-    public class DAO
+    public class DAO<DAOClass, ViewDTOClass>
+        where ViewDTOClass : DTO
     {
-        static string chuoiKetNoi = System.Configuration.ConfigurationManager.ConnectionStrings["chuoiKetNoi_LCTMoodle"].ConnectionString;
+        #region Xử lý truy vấn dữ liệu
+        static SqlConnection ketNoi = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["chuoiKetNoi_LCTMoodle"].ConnectionString);
 
         /// <summary>
         /// Thực thi stored procedure lấy về dòng đầu tiên
         /// </summary>
-        /// <typeparam name="T">Đối tượng DTO</typeparam>
         /// <param name="tenStoredProcedure">Tên stored procedure</param>
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
-        protected static KetQua layDong<T>(string tenStoredProcedure, object[] danhSachThamSo)
-            where T : DTO, new()
+        protected static KetQua layDong(string tenStoredProcedure, object[] danhSachThamSo)
         {
-            SqlConnection ketNoi = new SqlConnection(chuoiKetNoi);
             try
             {
                 ketNoi.Open();
@@ -36,16 +36,20 @@ namespace DAOLayer
                 }
                 SqlDataReader dong = lenh.ExecuteReader();
 
-                T DTO = new T();
+                MethodInfo method = typeof(DAOClass).GetMethod("gan");
+
+                DTO dto;
+
                 if (dong.Read())
                 {
-                    DTO.gan(dong);
+                    dto = method.Invoke(null, new object[] { dong }) as ViewDTOClass;
+
                     dong.Close();
 
                     return new KetQua()
                         {
                             trangThai = 0,
-                            ketQua = DTO
+                            ketQua = dto
                         };
                 }
                 else
@@ -53,8 +57,7 @@ namespace DAOLayer
                     dong.Close();
                     return new KetQua()
                         {
-                            trangThai = 1,
-                            ketQua = DTO
+                            trangThai = 1
                         };
                 }
             }
@@ -75,13 +78,10 @@ namespace DAOLayer
         /// <summary>
         /// Thực thi stored procedure lầy về danh sách dòng
         /// </summary>
-        /// <typeparam name="T">Đối tượng DTO</typeparam>
         /// <param name="tenStoredProcedure">Tên stored procedure</param>
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
-        protected static KetQua layDanhSachDong<T>(string tenStoredProcedure, object[] danhSachThamSo)
-            where T : DTO, new()
+        protected static KetQua layDanhSachDong(string tenStoredProcedure, object[] danhSachThamSo)
         {
-            SqlConnection ketNoi = new SqlConnection(chuoiKetNoi);
             try
             {
                 ketNoi.Open();
@@ -92,35 +92,34 @@ namespace DAOLayer
                 {
                     lenh.Parameters.AddWithValue("@" + i, danhSachThamSo[i] == null ? DBNull.Value : danhSachThamSo[i]);
                 }
-                SqlDataReader dr = lenh.ExecuteReader();
+                SqlDataReader dong = lenh.ExecuteReader();
 
-                List<T> DTOs = new List<T>();
-                                
-                if (dr.Read())
+                MethodInfo method = typeof(DAOClass).GetMethod("gan");
+
+                List<ViewDTOClass> dtos = new List<ViewDTOClass>();
+
+                if (dong.Read())
                 {
-                    int i = 0;
                     do
                     {
-                        DTOs.Add(new T());
-                        DTOs[i++].gan(dr);
+                        dtos.Add(method.Invoke(null, new object[] { dong }) as ViewDTOClass);
                     }
-                    while (dr.Read());
+                    while (dong.Read());
 
-                    dr.Close();
+                    dong.Close();
 
                     return new KetQua()
                         {
                             trangThai = 0,
-                            ketQua = DTOs
+                            ketQua = dtos
                         };
                 }
                 else
                 {
-                    dr.Close();
+                    dong.Close();
                     return new KetQua()
                     {
-                        trangThai = 1,
-                        ketQua = DTOs
+                        trangThai = 1
                     };
                 }
             }
@@ -145,7 +144,6 @@ namespace DAOLayer
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
         protected static KetQua khongTruyVan(string tenStoredProcedure, object[] danhSachThamSo)
         {
-            SqlConnection ketNoi = new SqlConnection(chuoiKetNoi);
             try
             {
                 ketNoi.Open();
@@ -188,12 +186,10 @@ namespace DAOLayer
         /// <summary>
         /// Thực hiện stored procedure lấy về 1 giá trị
         /// </summary>
-        /// <typeparam name="T">Kiểu dữ liệu</typeparam>
         /// <param name="tenStoredProcedure">Tên stored procedure</param>
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
-        protected static KetQua layGiaTri<T>(string tenStoredProcedure, object[] danhSachThamSo)
+        protected static KetQua layGiaTri(string tenStoredProcedure, object[] danhSachThamSo)
         {
-            SqlConnection ketNoi = new SqlConnection(chuoiKetNoi);
             try
             {
                 ketNoi.Open();
@@ -210,7 +206,7 @@ namespace DAOLayer
                 return new KetQua()
                     {
                         trangThai = 0,
-                        ketQua = Convert.ChangeType(ketQua, typeof(T))
+                        ketQua = ketQua
                     };
             }
             catch (SqlException e)
@@ -226,6 +222,30 @@ namespace DAOLayer
             {
                 ketNoi.Close();
             }
+        } 
+        #endregion
+
+        #region Lấy giá trị
+        protected static string layString(System.Data.SqlClient.SqlDataReader dong, int index, string macDinh = null)
+        {
+            return dong.IsDBNull(index) ? macDinh : dong.GetString(index);
         }
+
+        protected static int layInt(System.Data.SqlClient.SqlDataReader dong, int index, int macDinh = 0)
+        {
+            return dong.IsDBNull(index) ? macDinh : dong.GetInt32(index);
+        }
+
+        protected static DateTime? layDateTime(System.Data.SqlClient.SqlDataReader dong, int index, DateTime? macDinh = null)
+        {
+            return dong.IsDBNull(index) ? macDinh : dong.GetDateTime(index);
+        }
+
+        protected static bool layBool(System.Data.SqlClient.SqlDataReader dong, int index, bool macDinh = false)
+        {
+            return dong.IsDBNull(index) ? macDinh : dong.GetBoolean(index);
+        }
+
+        #endregion
     }
 }

@@ -5,13 +5,13 @@ GO
 	--Tam
 	--ChuDe_HinhDaiDien	
 	--BaiVietDienDan_TapTin
+	--BaiVietBaiGiang_TapTin
 	--BaiVietBaiTap_TapTin
 	--NguoiDung_HinhDaiDien
 	--BinhLuan_BaiVietDienDan_TapTin
-	--BinhLuan_BaiVietBaiGiang_TapTin
 	--BaiTapNop_TapTin
 
-CREATE TABLE dbo.TapTin_BaiTapNop_TapTin (
+CREATE TABLE dbo.TapTin_BaiVietBaiGiang_TapTin (
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	Ten NVARCHAR(MAX) NOT NULL,
 	Loai NVARCHAR(MAX) NOT NULL,

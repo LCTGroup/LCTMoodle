@@ -11,26 +11,26 @@ namespace DTOLayer
         public NguoiDungViewDTO maNguoiTao;
         public bool diem;
  
-        public override void gan(System.Data.SqlClient.SqlDataReader dong)
-        {
-            for (int i = 0; i < dong.FieldCount; i++)
-            {
-                switch (dong.GetName(i))
-                {
-                    case "Ma":
-                        ma = layInt(dong, i); break;
-                    case "MaNguoiTao":
-                        maNguoiTao = new NguoiDungViewDTO()
-                        {
-                            ma = layInt(dong, i)
-                        };
-                        break;
-                    case "Diem":
-                        diem = layBool(dong, i); break;                        
-                    default:
-                        break;
-                }
-            }
-        }        
+        //public override void gan(System.Data.SqlClient.SqlDataReader dong)
+        //{
+        //    for (int i = 0; i < dong.FieldCount; i++)
+        //    {
+        //        switch (dong.GetName(i))
+        //        {
+        //            case "Ma":
+        //                ma = layInt(dong, i); break;
+        //            case "MaNguoiTao":
+        //                maNguoiTao = new NguoiDungViewDTO()
+        //                {
+        //                    ma = layInt(dong, i)
+        //                };
+        //                break;
+        //            case "Diem":
+        //                diem = layBool(dong, i); break;                        
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //}        
     }
 }
