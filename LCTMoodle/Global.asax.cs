@@ -50,16 +50,12 @@ namespace LCTMoodle
                     { "GhiNho", "" }
                 };                
                 
-                KetQua ketQua = NguoiDungBUS.kiemTraDangNhap(formCookie);
+                KetQua ketQua = NguoiDungBUS.xuLyDangNhap(formCookie);
 
                 if (ketQua.trangThai == 0)
                 {
                     Session["NguoiDung"] = (ketQua.ketQua as NguoiDungViewDTO).ma;
-                }
-                else
-                {
-                    Session["NguoiDung"] = null;
-                }
+                }               
             }
         }
     }

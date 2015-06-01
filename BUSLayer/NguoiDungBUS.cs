@@ -100,7 +100,7 @@ namespace BUSLayer
         {
             return (NguoiDungDAO.layTheoMa(ma)).ketQua as NguoiDungViewDTO;
         }
-        public static KetQua kiemTraDangNhap(Dictionary<string,string> form)
+        public static KetQua xuLyDangNhap(Dictionary<string,string> form)
         {
             KetQua ketQua = NguoiDungDAO.layTheoTenTaiKhoan(layString(form, "TenTaiKhoan"));
             if (ketQua.trangThai != 0)

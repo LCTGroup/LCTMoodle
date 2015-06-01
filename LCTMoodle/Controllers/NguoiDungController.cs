@@ -57,7 +57,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyKiemTraDangNhap(FormCollection formCollection)
         {
-            KetQua ketQua = NguoiDungBUS.kiemTraDangNhap(chuyenDuLieuForm(formCollection));
+            KetQua ketQua = NguoiDungBUS.xuLyDangNhap(chuyenDuLieuForm(formCollection));
 
             return Json(ketQua);
         }
