@@ -28,14 +28,14 @@ BEGIN
 		INSERT INTO dbo.BinhLuan_' + @4 + ' (NoiDung, MaTapTin, MaDoiTuong, MaNguoiTao)
 			VALUES (N''' + @0 + ''', ' + @1 + ', ' + @2 + ', ' + @3 + ')
 
-		SELECT 
+		SELECT
 			Ma,
+			''' + @4 + ''' AS LoaiDoiTuong,
 			NoiDung,
 			MaTapTin,
 			MaDoiTuong,
 			MaNguoiTao,
-			ThoiDiemTao,
-			''' + @4 + ''' AS LoaiDoiTuong
+			ThoiDiemTao
 			FROM dbo.BinhLuan_' + @4 + '
 			WHERE Ma = @@IDENTITY
 	')
@@ -52,12 +52,12 @@ BEGIN
 	EXEC('
 		SELECT 
 			Ma,
+			''' + @0 + ''' AS LoaiDoiTuong,
 			NoiDung,
 			MaTapTin,
 			MaDoiTuong,
 			MaNguoiTao,
-			ThoiDiemTao,
-			''' + @0 + ''' AS LoaiDoiTuong
+			ThoiDiemTao
 			FROM dbo.BinhLuan_' + @0 + '
 			WHERE MaDoiTuong = ' + @1 + '
 	')

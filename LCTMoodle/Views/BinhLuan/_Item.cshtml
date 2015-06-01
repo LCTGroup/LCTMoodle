@@ -3,18 +3,20 @@
 <li data-doi-tuong="muc-binh-luan" class="muc-binh-luan" data-loai-doi-tuong="@Model.loaiDoiTuong">
     <section class="trai">
         <article class="hinh-dai-dien">
-            <img src="#" />
+            <img src="/boy.png/" />
         </article>
     </section>
     <section class="phai">
         <section class="nguoi-dung">
-            <a href="#">Lê Bình Chiêu</a>
+            <a href="#">@Model.nguoiTao.hoTen</a>
         </section>
         <section class="noi-dung">
             @Model.noiDung
         </section>
         <section class="thong-tin">
-            <span class="thoi-gian">18 giờ trước</span>
+            <span class="thoi-gian">                
+                @Model.thoiDiemTao.Value.ToString("M/yyyy HH:mm")
+            </span>
         </section>
     </section>
     <section class="khung-chuc-nang-lct" style="top: 0; right: 0;">

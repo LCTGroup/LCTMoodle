@@ -84,9 +84,26 @@
         display: inline-block;
         width: 24px;
         height: 24px;
-        background-color: #fff;
         vertical-align: bottom;
+        background-image: url('/KhoaHoc.png/KhoaHoc');
+        background-position-x: -48px;
     }
+
+        .khung-chon-hien-thi .khung i {
+            background-position-y: 0px;
+        }
+
+        .khung-chon-hien-thi .bai-giang i {
+            background-position-y: -96px;
+        }
+
+        .khung-chon-hien-thi .bai-tap i {
+            background-position-y: -24px;
+        }
+
+        .khung-chon-hien-thi .dien-dan i {
+            background-position-y: -72px;
+        }
 
     .khung-chon-hien-thi span {
         font-size: 15px;

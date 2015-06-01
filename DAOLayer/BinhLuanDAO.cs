@@ -14,6 +14,7 @@ namespace DAOLayer
         {
             BinhLuanViewDTO binhLuan = new BinhLuanViewDTO();
 
+            int maTam;
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
@@ -21,32 +22,71 @@ namespace DAOLayer
                     case "Ma":
                         binhLuan.ma = layInt(dong, i);
                         break;
+                    case "LoaiDoiTuong":
+                        binhLuan.loaiDoiTuong = layString(dong, i);
+                        break;
                     case "NoiDung":
                         binhLuan.noiDung = layString(dong, i);
                         break;
                     case "MaNguoiTao":
-                        binhLuan.nguoiTao = new NguoiDungViewDTO()
+                        maTam = layInt(dong, i);
+
+                        if (maTam != 0)
                         {
-                            ma = layInt(dong, i)
-                        };
+                            if (coLienKet("NguoiTao"))
+                            {
+                                KetQua ketQua = NguoiDungDAO.layTheoMa(maTam);
+                                
+                                if (ketQua.trangThai == 0)
+                                {
+                                    binhLuan.nguoiTao = ketQua.ketQua as NguoiDungViewDTO;
+                                }
+                            }
+                            else
+                            {
+                                binhLuan.nguoiTao = new NguoiDungViewDTO()
+                                {
+                                    ma = maTam
+                                };
+                            }
+                        }
                         break;
                     case "MaDoiTuong":
-                        binhLuan.doiTuong = new DTO()
+                        maTam = layInt(dong, i);
+
+                        if (maTam != 0)
                         {
-                            ma = layInt(dong, i)
-                        };
+                            binhLuan.doiTuong = new DTO()
+                            {
+                                ma = layInt(dong, i)
+                            };
+                        }
                         break;
                     case "MaTapTin":
-                        binhLuan.tapTin = new TapTinViewDTO()
+                        maTam = layInt(dong, i);
+
+                        if (maTam != 0)
                         {
-                            ma = layInt(dong, i)
-                        };
+                            if (coLienKet("TapTin"))
+                            {
+                                KetQua ketQua = TapTinDAO.layTheoMa(binhLuan.loaiDoiTuong, maTam);
+
+                                if (ketQua.trangThai == 0)
+                                {
+                                    binhLuan.tapTin = ketQua.ketQua as TapTinViewDTO;
+                                }
+                            }
+                            else
+                            {
+                                binhLuan.tapTin = new TapTinViewDTO()
+                                {
+                                    ma = layInt(dong, i)
+                                };
+                            }
+                        }
                         break;
                     case "ThoiDiemTao":
                         binhLuan.thoiDiemTao = layDateTime(dong, i);
-                        break;
-                    case "LoaiDoiTuong":
-                        binhLuan.loaiDoiTuong = layString(dong, i);
                         break;
                     default:
                         break;

@@ -72,5 +72,14 @@ namespace BUSLayer
 
             return BinhLuanDAO.them(binhLuan);
         }
+
+        public static KetQua layTheoDoiTuong(string loaiDoiTuong, int maDoiTuong)
+        {
+            BinhLuanDAO.lienKet = new string[]
+            {
+                "NguoiTao"
+            };
+            return BinhLuanDAO.layTheoDoiTuong(loaiDoiTuong, maDoiTuong);
+        }
     }
 }
