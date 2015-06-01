@@ -1,7 +1,7 @@
 ﻿/*#region Chung */
 
 .lct-form {
-    color: #555;
+    color: #333;
 }
 
     .lct-form:after {
@@ -89,10 +89,7 @@
                 .lct-form li > .noi-dung {
                     width: 100%;
                 }
-                
-    .lct-form .tieu-de {
-        border-right: 3px solid transparent;
-    }
+
     .lct-form .tieu-de label {
         text-align: right;
         display: block;
@@ -292,7 +289,7 @@
     .lct-form input[type="checkbox"] + u,
     .lct-form input[type="radio"] + u {
         display: inline-block;
-        vertical-align: middle;
+        vertical-align: top;
         width: 14px;
         height: 14px;
         padding: 1px;
@@ -469,6 +466,94 @@
     .lct-form input[data-input-type="chu-de"]:focus {
         border-left-color: #08c;
     }
+
+/*#endregion */
+
+/*#region Nhập & chọn */
+
+.lct-form input[data-input-type="goi-y"] {
+    border: none;
+    line-height: 20px;
+    padding: 5px 8px;
+    width: calc(100% - 19px);
+    height: 20px;
+    outline: none;
+    border-left: 3px solid #eee;
+    transition: 0.5s;
+    color: #555;
+    background-color: #fff;
+}
+
+    .lct-form input[data-input-type="goi-y"][class^="loi-"],
+    .lct-form input[data-input-type="goi-y"][class*=" loi-"] {
+        border-left-color: #e00;
+    }
+    
+    .lct-form input[data-input-type="goi-y"]:hover,
+    .lct-form input[data-input-type="goi-y"]:focus {
+        border-left-color: #08c;
+    }
+
+.lct-form .lct-khung-input-goi-y {
+    width: 100%;
+    position: relative;
+}
+
+.lct-form .khung-danh-sach-goi-y {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top: 0;
+    left: -1px;
+    display: none;
+}
+
+    .lct-form input[data-input-type="goi-y"] ~ .khung-danh-sach-goi-y {
+        display: block;
+    }
+
+.lct-form .danh-sach-goi-y {
+    padding: 0;
+}
+
+    .lct-form .danh-sach-goi-y li {
+        margin: 0;
+        display: block;
+        border-top: 1px solid #eee;
+    }
+
+    .lct-form .danh-sach-goi-y span {
+        display: block;
+        padding: 5px 10px;
+        position: relative;
+        cursor: pointer;
+    }
+
+        .lct-form .danh-sach-goi-y span:hover {
+            text-decoration: none;
+        }
+
+        .lct-form .danh-sach-goi-y li:nth-child(odd) span {
+            background-color: #fcfcfc;
+        }
+
+        .lct-form .danh-sach-goi-y span:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            transition: 0.5s;
+        }
+
+        .lct-form .danh-sach-goi-y li.chon span:after {
+            background-color: #08c;
+        }
 
 /*#endregion */
 

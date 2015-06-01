@@ -106,7 +106,7 @@ function khoiTaoHienThiInput_LCT($form) {
     });
 
     $form.find('input[type="file"]').each(function () {
-        $phanTu = $(this);
+        var $phanTu = $(this);
         $phanTu.wrap('<label class="lct-file-label"></label>');
         var name = $phanTu.attr('name');
         $phanTu.removeAttr('name');
@@ -121,6 +121,14 @@ function khoiTaoHienThiInput_LCT($form) {
         }));
 
         $phanTu.removeAttr('name');
+    })
+
+    $form.find('input[data-input-type="goi-y"]').each(function () {
+        var $phanTu = $(this);
+        $phanTu.wrap('<article class="lct-khung-input-goi-y"></article>');
+        var name = $phanTu.attr('name');
+        $phanTu.removeAttr('name');
+        $phanTu.after('<input type="hidden" name="' + name + '"><section class="khung-danh-sach-goi-y"><ul class="danh-sach-goi-y"></ul></section>');
     })
 
     //Trường hợp đặc biệt, xử lý validate riêng cho editor
@@ -221,6 +229,18 @@ function khoiTaoChuDeInput_LCT($form) {
             }
         });
     });
+}
+
+function khoiTaoChuDeInput_LCT($form) {
+    $form.find('input[data-input-type="goi-y"]').on('change', function () {
+        var $phanTu = $(this);
+        var maChoMangTam = 'goi-y_' + $phanTu.next().attr('name');
+
+        clearTimeout(mangTam[maChoMangTam]);
+        mangTam[maChoMangTam] = setTimeout(function () {
+
+        }, 500)
+    })
 }
 
 // loai Loại input (lct-thoi-gian, lct-lich)

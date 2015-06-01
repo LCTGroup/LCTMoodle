@@ -87,7 +87,6 @@ namespace DAOLayer
                 }
             }
 
-            lienKet = null;
             return baiTapNop;
         }
 
@@ -104,6 +103,18 @@ namespace DAOLayer
                     baiTapNop.maBaiVietBaiTap
                 }
             );
+        }
+
+        public static KetQua layTheoMa(int ma)
+        {
+            return layDong
+                (
+                    "layBaiTapNopTheoMa",
+                    new object[]
+                    {
+                        ma
+                    }
+                );
         }
     }
 }

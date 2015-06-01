@@ -20,7 +20,7 @@ namespace DAOLayer
 
         protected static bool coLienKet(string tenLienKet)
         {
-            return tenLienKet != null && Array.IndexOf(lienKet, tenLienKet) != -1;
+            return lienKet != null && lienKet.Contains(tenLienKet);
         }
         #endregion
 
@@ -81,6 +81,7 @@ namespace DAOLayer
             }
             finally
             {
+                lienKet = null;
                 ketNoi.Close();
             }
         }
@@ -143,6 +144,7 @@ namespace DAOLayer
             }
             finally
             {
+                lienKet = null;
                 ketNoi.Close();
             }
         }
