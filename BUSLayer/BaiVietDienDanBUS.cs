@@ -82,6 +82,7 @@ namespace BUSLayer
             {
                 "NguoiTao"
             };
+
             return BaiVietDienDanDAO.them(baiViet);
         }
 

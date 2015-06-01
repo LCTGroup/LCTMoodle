@@ -17,6 +17,7 @@ function khoiTaoThemNguoiDung($form) {
                 url: $form.attr('action'),
                 method: $form.attr('method'),            
                 data: $form.serialize(),
+                dataType: 'JSON',
                 async: false
             }).done(function (data) {                
                 switch(data.trangThai) {

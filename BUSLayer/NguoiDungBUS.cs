@@ -72,12 +72,13 @@ namespace BUSLayer
                 soDienThoai = layString(form, "SoDienThoai"),
                 maHinhDaiDien = (ketQua.ketQua as TapTinViewDTO).ma
             };
+            
             ketQua = kiemTra(nguoiDung);           
 
             //Kiểm tra Tên tài khoản có trùng hay ko, nếu trùng thì thêm thất bại
             
 
-            if (ketQua.trangThai != 3)
+            if (ketQua.trangThai == 0)
             {
                 ketQua = NguoiDungBUS.kiemTraTenTaiKhoan(nguoiDung.tenTaiKhoan);
                 if (ketQua.trangThai == 1)
