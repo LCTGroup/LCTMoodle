@@ -114,18 +114,7 @@ function khoiTaoDangNhap($form) {
                 asyne: false
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        thongBao: data.ketQua,
-                        nut: [{
-                            ten: 'Về trang chủ',                            
-                            xuLy: function () {
-                                window.location = '/TrangChu/';
-                            }
-                        }],
-                        esc: false,
-                        bieuTuong: 'thanh-cong'
-                    });
+                    window.location = '/TrangChu/';
                 }
                 if (data.trangThai == 1) {
                     moPopup({

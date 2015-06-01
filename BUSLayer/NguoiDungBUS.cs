@@ -102,7 +102,11 @@ namespace BUSLayer
         }
         public static KetQua xuLyDangNhap(Dictionary<string,string> form)
         {
-            KetQua ketQua = NguoiDungDAO.layTheoTenTaiKhoan(layString(form, "TenTaiKhoan"));
+            string tenTaiKhoan = layString(form, "TenTaiKhoan");
+            string matKhau = layString(form, "MatKhau");
+            bool ghiNho = layBool(form, "GhiNho");
+
+            KetQua ketQua = NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
             if (ketQua.trangThai != 0)
             {
                 ketQua.ketQua = "Tên tài khoản không tồn tại";
@@ -111,9 +115,9 @@ namespace BUSLayer
 
             NguoiDungViewDTO nguoiDung = ketQua.ketQua as NguoiDungViewDTO;
             
-            if (Helpers.NguoiDungHelper.soSanhChuoiMaHoa(layString(form, "MatKhau"), nguoiDung.matKhau))
+            if ((matKhau == nguoiDung.matKhau) || (NguoiDungHelper.layMaMD5(matKhau) == nguoiDung.matKhau))
             {
-                if (layBool(form, "GhiNho"))
+                if (ghiNho)
                 {
                     //Lưu Cookie
                     HttpCookie cookieNguoiDung = new HttpCookie("NguoiDung");                    
@@ -121,13 +125,13 @@ namespace BUSLayer
                     cookieNguoiDung.Values.Add("MatKhau", nguoiDung.matKhau);
                     cookieNguoiDung.Expires = DateTime.Now.AddDays(7);
 
-                    HttpContext.Current.Response.Cookies.Add(cookieNguoiDung);
+                    HttpContext.Current.Response.Cookies.Add(cookieNguoiDung);                    
                 }                
                 
                 //Lưu mã người dùng vào Session
                 HttpContext.Current.Session["NguoiDung"] = nguoiDung.ma;
 
-                ketQua.ketQua = "Đăng nhập thành công";
+                ketQua.ketQua = nguoiDung;
             }
             else
             {

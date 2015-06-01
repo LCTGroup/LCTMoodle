@@ -31,19 +31,5 @@ namespace Helpers
 
             return giaTriTraVe.ToString();
         }
-        /// <summary>
-        /// So sánh chuỗi với một chuỗi đã được mã hóa
-        /// </summary>
-        /// <param name="chuoiCanSoSanh"></param>
-        /// <param name="chuoiDaMaHoa"></param>
-        /// <returns>true: 2 chuỗi trùng nhau, false: ngược lại</returns>
-        public static bool soSanhChuoiMaHoa(string chuoiCanSoSanh, string chuoiDaMaHoa)
-        {
-            if (string.Compare(layMaMD5(chuoiCanSoSanh), chuoiDaMaHoa) == 0)
-            {
-                return true;
-            }
-            return false;
-        }
     }
 }

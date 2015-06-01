@@ -39,8 +39,8 @@ namespace LCTMoodle
         }
         protected void Session_Start()
         {
-            HttpCookie ckNguoiDung = HttpContext.Current.Request.Cookies["NguoiDung"];
-            
+            HttpCookie ckNguoiDung = Request.Cookies.Get("NguoiDung");
+
             if (ckNguoiDung != null)
             {
                 Dictionary<string, string> formCookie = new Dictionary<string, string>()
@@ -48,14 +48,14 @@ namespace LCTMoodle
                     { "TenTaiKhoan", ckNguoiDung["TenTaiKhoan"] },
                     { "MatKhau", ckNguoiDung["MatKhau"] },
                     { "GhiNho", "" }
-                };                
-                
+                };
+
                 KetQua ketQua = NguoiDungBUS.xuLyDangNhap(formCookie);
 
                 if (ketQua.trangThai == 0)
                 {
                     Session["NguoiDung"] = (ketQua.ketQua as NguoiDungViewDTO).ma;
-                }               
+                }
             }
         }
     }

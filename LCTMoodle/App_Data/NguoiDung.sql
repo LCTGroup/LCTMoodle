@@ -42,7 +42,7 @@ AS
 BEGIN
 	SELECT *
 	FROM dbo.NguoiDung
-	WHERE TenTaiKhoan like @0
+	WHERE TenTaiKhoan = @0
 END
 
 select * from dbo.NguoiDung
