@@ -73,6 +73,27 @@ namespace LCTMoodle.Controllers
         public ActionResult KiemTraTenTaiKhoan(string tenTaiKhoan)
         {
             return Json(NguoiDungBUS.kiemTraTenTaiKhoan(tenTaiKhoan), JsonRequestBehavior.AllowGet);
-        }        
+        }
+
+        public ActionResult _GoiY_QuanLyKhoaHoc(string input)
+        {
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = new object[]
+            { 
+                new 
+                {
+                    ma = 1,
+                    ten = "Nguyễn Minh Chiến"
+                },
+                new 
+                {
+                    ma = 21,
+                    ten = "Lê Bình Chiêu"
+                }
+            }
+            }, JsonRequestBehavior.AllowGet);
+        }
 	}
 }

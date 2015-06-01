@@ -31,6 +31,9 @@ function khoiTaoLCTForm($form, thamSo) {
     //Xử lý chọn chủ đề
     khoiTaoChuDeInput_LCT($form);
 
+    //Xử lý gợi ý input
+    khoiTaoGoiYInput_LCT($form);
+
     //Khởi tạo thời gian
     khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="lct-thoi-gian"]'), 'lct-thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
     khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="lct-lich"]'), 'lct-lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
@@ -89,7 +92,7 @@ function khoiTaoNutMacDinh_LCT($form) {
         });
 
         // Chủ đề
-        $chua.find('input[data-input-type="chu-de"]').each(function () {
+        $chua.find('input[data-input-type="chu-de"], input[data-input-type="goi-y"]').each(function () {
             var $phanTu = $(this);
 
             $phanTu.val($phanTu.attr('data-ten-mac-dinh'));
@@ -123,13 +126,13 @@ function khoiTaoHienThiInput_LCT($form) {
         $phanTu.removeAttr('name');
     })
 
-    //$form.find('input[data-input-type="goi-y"]').each(function () {
-    //    var $phanTu = $(this);
-    //    $phanTu.wrap('<article class="lct-khung-input-goi-y"></article>');
-    //    var name = $phanTu.attr('name');
-    //    $phanTu.removeAttr('name');
-    //    $phanTu.after('<input type="hidden" name="' + name + '"><section class="khung-danh-sach-goi-y"><ul class="danh-sach-goi-y"></ul></section>');
-    //})
+    $form.find('input[data-input-type="goi-y"]').each(function () {
+        var $phanTu = $(this);
+        $phanTu.wrap('<article class="lct-khung-input-goi-y"></article>');
+        var name = $phanTu.attr('name');
+        $phanTu.removeAttr('name');
+        $phanTu.after('<input type="hidden" name="' + name + '"><section class="khung-danh-sach-goi-y"><ul class="danh-sach-goi-y"></ul><span>Không có giá trị trùng khớp từ khóa</span></section>');
+    })
 
     //Trường hợp đặc biệt, xử lý validate riêng cho editor
     $form.find('textarea[data-input-type="editor"]').each(function () {
@@ -231,20 +234,59 @@ function khoiTaoChuDeInput_LCT($form) {
     });
 }
 
-function khoiTaoChuDeInput_LCT($form) {
+function khoiTaoGoiYInput_LCT($form) {
+    var maTam = 'lct-goi-y_';
+
     $form.find('input[data-input-type="goi-y"]').each(function () {
-        var $inputGoiY = $form.find('input[data-input-type="goi-y"]');
-        var $danhSachGoiY = $inputGoiY.find('~ .khung-danh-sach-goi-y .danh-sach-goi-y');
+        var $inputGoiY = $(this);
+        var $khungDanhSachGoiY = $inputGoiY.find('~ .khung-danh-sach-goi-y');
+        var $danhSachGoiY = $khungDanhSachGoiY.children('ul');
 
         $inputGoiY.on({
-            change: function () {
-                var $phanTu = $(this);
-                var maChoMangTam = 'goi-y_' + $phanTu.next().attr('name');
+            focusout: function () {
+                if (mangTam[maTam + 'td'] === false) {
+                    return;
+                }
 
-                clearTimeout(mangTam[maChoMangTam]);
-                mangTam[maChoMangTam] = setTimeout(function () {
+                var $giaTriChon = $danhSachGoiY.children('.chon');
 
-                }, 500)
+                if ($giaTriChon.length != 0) {
+                    layGoiY_LCT($danhSachGoiY.children('.chon'));
+                }
+                else {
+                    $inputGoiY.next().val('');
+                    $danhSachGoiY.removeClass('rong').html('');
+                }
+            },
+            keyup: function () {
+                if (mangTam[maTam + 'gt'] == $inputGoiY.val()) {
+                    return;
+                }
+
+                mangTam[maTam + 'td'] = true;
+                clearTimeout(mangTam[maTam + 'to']);
+                mangTam[maTam + 'to'] = setTimeout(function () {
+                    mangTam[maTam + 'gt'] = $inputGoiY.val();
+                    var data = $.parseJSON($inputGoiY.attr('data-data') || '{}');
+                    data.input = $inputGoiY.val();
+
+                    $.ajax({
+                        url: $inputGoiY.attr('data-url'),
+                        data: data,
+                        dataType: 'JSON'
+                    }).done(function (data) {
+                        if (data.trangThai != 0 || data.ketQua.length == 0) {
+                            $danhSachGoiY.addClass('rong').html('');
+                        }
+                        else {
+                            var html = taoGoiY_LCT(data.ketQua);
+                            $danhSachGoiY.removeClass('rong').html(html);
+                            $danhSachGoiY.find(':first-child').addClass('chon');
+                        }
+                    }).fail(function () {
+                        $danhSachGoiY.addClass('rong').html('');
+                    });
+                }, 200)
             },
             keydown: function (e) {
                 switch (e.which) {
@@ -284,6 +326,7 @@ function khoiTaoChuDeInput_LCT($form) {
                         break;
                     case 13:
                         e.preventDefault();
+                        layGoiY_LCT($danhSachGoiY.children('.chon'));
                     case 27:
                         e.preventDefault();
                     default:
@@ -296,28 +339,49 @@ function khoiTaoChuDeInput_LCT($form) {
         //Tạm
         khoiTaoDanhSachGoiY_LCT($inputGoiY.find('~ .khung-danh-sach-goi-y .danh-sach-goi-y'));
     })
-}
 
-function khoiTaoDanhSachGoiY_LCT($danhSach) {
-    var $items = $danhSach.find('li');
-    $items.on({
-        mouseenter: function () {
-            chonGoiY_LCT($(this));
+    function khoiTaoDanhSachGoiY_LCT($danhSach) {
+        var $items = $danhSach.find('li');
+        $items.on({
+            mouseenter: function () {
+                chonGoiY_LCT($(this));
+            },
+            click: function () {
+                layGoiY_LCT($(this));
+            }
+        })
+    }
+
+    function chonGoiY_LCT($item) {
+        $item.siblings('.chon').removeClass('chon');
+        $item.addClass('chon');
+    }
+
+    function layGoiY_LCT($item) {
+        var $chua = $item.closest('.lct-khung-input-goi-y'),
+            $giaTriChon = $item.children(),
+            $input = $chua.children(':first-child'),
+            ten = $giaTriChon.text() || '',
+            ma = $giaTriChon.attr('data-value') || '';
+        $input.val(ten);
+        $input.next().val(ma);
+
+        $chua.find('.danh-sach-goi-y').removeClass('rong').html('');
+
+        mangTam[maTam + 'td'] = false;
+        mangTam[maTam + 'gt'] = $input.val();
+        clearTimeout(mangTam[maTam + 'to']);
+    }
+
+    function taoGoiY_LCT(data) {
+        var html = '', soLuong = data.length;
+
+        for (var i = 0; i < soLuong; i++) {
+            html += '<li><span data-value="' + data[i].ma + '">' + data[i].ten + '</span></li>';
         }
-    })
-}
 
-function chonGoiY_LCT($item) {
-    $item.siblings('.chon').removeClass('chon');
-    $item.addClass('chon');
-}
-
-function layGoiY_LCT($item) {
-    var $giaTriChon = $item.children();
-    $inputGoiY.val($giaTriChon.text());
-    $inputGoiY.next().val($giaTriChon.attr('data-value'));
-
-    $danhSachGoiY.html('');
+        return html;
+    }
 }
 
 // loai Loại input (lct-thoi-gian, lct-lich)
@@ -444,7 +508,7 @@ function khoiTaoLCTFormMacDinh($form) {
         $phanTu.removeClass('co');
         $phanTu.find('~ input[type="hidden"]').val('');
     });
-    $form.find('input[data-input-type="chu-de"]').each(function () {
+    $form.find('input[data-input-type="chu-de"], input[data-input-type="goi-y"]').each(function () {
         var $phanTu = $(this);
 
         $phanTu.val($phanTu.attr('data-ten-mac-dinh'));
@@ -654,7 +718,7 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
                 }
             });
         }
-        else if ($input.is('[data-input-type="chu-de"]')) {
+        else if ($input.is('[data-input-type="chu-de"], [data-input-type="goi-y"]')) {
             $input.on('focusout', function () {
                 if ($input.next().val()) {
                     tatLoi($input, 'bat-buoc');
@@ -922,7 +986,7 @@ function khoiTaoSubmit_LCT($form, thamSo) {
                     coLoi = true;
                 }
             }
-            else if ($input.is('[data-input-type="chu-de"]')) {
+            else if ($input.is('[data-input-type="chu-de"], [data-input-type="goi-y"]')) {
                 if (!$input.next().val()) {
                     baoLoi($input, 'bat-buoc');
                     coLoi = true;

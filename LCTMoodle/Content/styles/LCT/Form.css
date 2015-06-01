@@ -554,6 +554,17 @@
         .lct-form .danh-sach-goi-y li.chon span:after {
             background-color: #08c;
         }
+        
+.lct-form .danh-sach-goi-y + span {
+    display: none;
+    padding: 10px;
+    background-color: #fcfcfc;
+    border-top: 1px solid #eee;
+}
+
+    .lct-form .danh-sach-goi-y.rong + span {
+        display: block;
+    }
 
 /*#endregion */
 
