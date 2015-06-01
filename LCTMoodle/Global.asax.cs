@@ -41,7 +41,7 @@ namespace LCTMoodle
         {
             HttpCookie ckNguoiDung = HttpContext.Current.Request.Cookies["NguoiDung"];
             
-            if (ckNguoiDung != null && Session["NguoiDung"] == null)
+            if (ckNguoiDung != null)
             {
                 Dictionary<string, string> formCookie = new Dictionary<string, string>()
                 {

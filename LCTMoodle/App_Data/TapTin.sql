@@ -10,8 +10,9 @@ GO
 	--NguoiDung_HinhDaiDien
 	--BinhLuan_BaiVietDienDan_TapTin
 	--BaiTapNop_TapTin
+--Ghi chú cách đặt tên bảng: TapTin_[tên bảng]
 
-CREATE TABLE dbo.TapTin_BaiVietBaiGiang_TapTin (
+CREATE TABLE dbo.TapTin_NguoiDung_HinhDaiDien (
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	Ten NVARCHAR(MAX) NOT NULL,
 	Loai NVARCHAR(MAX) NOT NULL,

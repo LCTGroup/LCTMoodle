@@ -9,12 +9,14 @@
         max-height: 100px;    
         min-height: 100px;
         max-width: 100px;
-        min-width: 100px;        
+        min-width: 100px;    
+        position: relative;    
     }
     
         .khung-tren .hinh-dai-dien img {
             height: 100%;
             width: 100%;
+            position: absolute;
         }
 
     .khung-tren .thong-tin-nguoi-dung {
