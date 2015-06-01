@@ -22,7 +22,7 @@ CREATE TABLE dbo.KhoaHoc(
 
 GO
 --Thêm khóa học
-CREATE PROC dbo.themKhoaHoc(
+ALTER PROC dbo.themKhoaHoc(
 	@0 NVARCHAR(MAX), --Ten
 	@1 NVARCHAR(MAX), --MoTa
 	@2 INT, --MaHinhDaiDien
@@ -39,9 +39,8 @@ BEGIN
 	INSERT INTO dbo.KhoaHoc (Ten, MoTa, MaHinhDaiDien, MaChuDe, MaNguoiTao, Han, CanDangKy, HanDangKy, PhiThamGia, CheDoRiengTu)
 		VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9)
 		
-	SELECT @@IDENTITY
+	SELECT @@IDENTITY AS Ma
 END
-SELECT * FROM dbo.KhoaHoc
 
 GO
 --Lấy khóa học theo mã

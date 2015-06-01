@@ -13,14 +13,21 @@ function khoiTaoSubmit($form) {
                 data: $form.serialize(),
                 dataType: 'JSON'
             }).done(function (data) {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Thêm khóa học thành công'
-                });
+                if (data.trangThai == 0) {
+                    //window.location = '/KhoaHoc/' + data.ketQua.ma;
+                }
+                else {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Thêm khóa học thất bại',
+                        bieuTuong: 'nguy-hiem'
+                    });
+                }
             }).fail(function () {
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: 'Thêm khóa học thất bại'
+                    thongBao: 'Thêm khóa học thất bại',
+                    bieuTuong: 'nguy-hiem'
                 });
             });
         }

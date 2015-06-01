@@ -36,7 +36,10 @@ namespace DAOLayer
         {
             try
             {
-                ketNoi.Open();
+                if (ketNoi.State == ConnectionState.Closed)
+                {
+                    ketNoi.Open();
+                }
 
                 SqlCommand lenh = new SqlCommand(tenStoredProcedure, ketNoi);
                 lenh.CommandType = CommandType.StoredProcedure;
@@ -95,7 +98,10 @@ namespace DAOLayer
         {
             try
             {
-                ketNoi.Open();
+                if (ketNoi.State == ConnectionState.Closed)
+                {
+                    ketNoi.Open();
+                }
 
                 SqlCommand lenh = new SqlCommand(tenStoredProcedure, ketNoi);
                 lenh.CommandType = CommandType.StoredProcedure;
@@ -158,7 +164,10 @@ namespace DAOLayer
         {
             try
             {
-                ketNoi.Open();
+                if (ketNoi.State == ConnectionState.Closed)
+                {
+                    ketNoi.Open();
+                }
 
                 SqlCommand lenh = new SqlCommand(tenStoredProcedure, ketNoi);
                 lenh.CommandType = CommandType.StoredProcedure;
@@ -205,7 +214,10 @@ namespace DAOLayer
         {
             try
             {
-                ketNoi.Open();
+                if (ketNoi.State == ConnectionState.Closed)
+                {
+                    ketNoi.Open();
+                }
 
                 SqlCommand lenh = new SqlCommand(tenStoredProcedure, ketNoi);
                 lenh.CommandType = CommandType.StoredProcedure;
