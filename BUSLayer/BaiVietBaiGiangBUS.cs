@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DAOLayer;
 using DTOLayer;
 using System.IO;
+using System.Web;
 using Data;
 
 namespace BUSLayer
@@ -66,7 +67,7 @@ namespace BUSLayer
                 tieuDe = layString(form, "TieuDe"),
                 noiDung = layString(form, "NoiDung"),
                 maTapTin = (ketQua.ketQua as TapTinViewDTO).ma,
-                maNguoiTao = 1, //Tạm
+                maNguoiTao = (int)HttpContext.Current.Session["NguoiDung"],
                 maKhoaHoc = layInt(form, "KhoaHoc")
             };
             
@@ -77,7 +78,20 @@ namespace BUSLayer
                 return ketQua;
             }
 
+            BaiVietBaiGiangDAO.lienKet = new string[]
+            {
+                "TapTin"
+            };
             return BaiVietBaiGiangDAO.them(baiVietBaiGiang);
+        }
+
+        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
+        {
+            BaiVietBaiGiangDAO.lienKet = new string[]
+            {
+                "TapTin"
+            };
+            return BaiVietBaiGiangDAO.layTheoMaKhoaHoc(maKhoaHoc);
         }
     }
 }

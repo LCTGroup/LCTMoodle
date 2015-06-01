@@ -299,6 +299,26 @@
             margin-bottom: 5px;
         }
 
+        [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung .tap-tin {
+            padding: 5px;
+            border-top: 1px dashed #eee;
+        }
+
+            [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung .tap-tin a {
+                display: flex;
+            }
+
+            [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung .tap-tin img {
+                width: 25px;
+                height: 25px;
+                margin-right: 5px;
+            }
+
+            [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung .tap-tin span {
+                align-self: center;
+                color: #555;
+            }
+
 /*#endregion */
 
 /*#endregion */
@@ -351,6 +371,27 @@
             margin-top: 0;
             display: block;
         }
+        
+        [data-hien-thi="bai-giang"] .muc-bai-viet .khung-noi-dung .tap-tin {
+            margin-top: 10px;
+            padding: 5px;
+            border-top: 1px dashed #eee;
+        }
+        
+            [data-hien-thi="bai-giang"] .muc-bai-viet .khung-noi-dung .tap-tin a {
+                display: flex;
+            }
+        
+            [data-hien-thi="bai-giang"] .muc-bai-viet .khung-noi-dung .tap-tin img {
+                width: 25px;
+                height: 25px;
+                margin-right: 5px;
+            }
+        
+            [data-hien-thi="bai-giang"] .muc-bai-viet .khung-noi-dung .tap-tin span {
+                align-self: center;
+                color: #555;
+            }
 
 /*#endregion */
 

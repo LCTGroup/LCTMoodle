@@ -8,10 +8,16 @@
     <section class="khung-noi-dung">
         <section class="noi-dung">
             @Html.Raw(Model.noiDung)
-        </section>
-        <section class="khung-thong-tin">
-
-        </section>
+        </section>        
+        @if (@Model.tapTin != null)
+        {
+            <section class="tap-tin">
+                <a href="/LayTapTin/BaiVietBaiGiang_TapTin/@Model.tapTin.ma">
+                    <img src="/LayTapTin/BaiVietBaiGiang_TapTin/@Model.tapTin.ma" />
+                    <span>@Model.tapTin.ten</span>
+                </a>
+            </section>
+        }
     </section>
     <section class="khung-chuc-nang-lct">
         <ul data-doi-tuong="cnbg-@Model.ma">

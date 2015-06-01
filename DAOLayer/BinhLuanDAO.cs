@@ -69,7 +69,7 @@ namespace DAOLayer
                         {
                             if (coLienKet("TapTin"))
                             {
-                                KetQua ketQua = TapTinDAO.layTheoMa(binhLuan.loaiDoiTuong, maTam);
+                                KetQua ketQua = TapTinDAO.layTheoMa("BinhLuan_" + binhLuan.loaiDoiTuong + "_TapTin", maTam);
 
                                 if (ketQua.trangThai == 0)
                                 {

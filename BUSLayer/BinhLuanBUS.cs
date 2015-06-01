@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DAOLayer;
 using DTOLayer;
 using System.IO;
+using System.Web;
 using Data;
 
 namespace BUSLayer
@@ -54,22 +55,34 @@ namespace BUSLayer
 
         public static KetQua them(Dictionary<string, string> form)
         {
-            var binhLuan = new BinhLuanDataDTO()
-            {
-                noiDung = layString(form, "NoiDung"),
-                maTapTin = 0,
-                maNguoiTao = 1,
-                maDoiTuong = layInt(form, "DoiTuong"),
-                loaiDoiTuong = layString(form, "Loai")
-            };
-
-            KetQua ketQua = kiemTra(binhLuan);
+            KetQua ketQua = TapTinBUS.chuyen("BinhLuan_" + layString(form, "Loai") + "_TapTin", layInt(form, "TapTin"));
 
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
+            var binhLuan = new BinhLuanDataDTO()
+            {
+                noiDung = layString(form, "NoiDung"),
+                maTapTin = (ketQua.ketQua as TapTinViewDTO).ma,
+                maNguoiTao = (int)HttpContext.Current.Session["NguoiDung"],
+                maDoiTuong = layInt(form, "DoiTuong"),
+                loaiDoiTuong = layString(form, "Loai")
+            };
+
+            ketQua = kiemTra(binhLuan);
+
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            BinhLuanDAO.lienKet = new string[]
+            {
+                "NguoiTao",
+                "TapTin"
+            };
             return BinhLuanDAO.them(binhLuan);
         }
 
@@ -77,7 +90,8 @@ namespace BUSLayer
         {
             BinhLuanDAO.lienKet = new string[]
             {
-                "NguoiTao"
+                "NguoiTao",
+                "TapTin"
             };
             return BinhLuanDAO.layTheoDoiTuong(loaiDoiTuong, maDoiTuong);
         }

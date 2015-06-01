@@ -1,16 +1,5 @@
 ﻿@model List<DTOLayer.BaiVietBaiTapViewDTO>
 
-<section class="hop">
-    <section class="tieu-de">
-        Danh sách bài viết
-    </section>
-    <ul id="danh_sach_bai_viet" class="noi-dung">
-        @foreach (var baiViet in Model)
-        {
-            @Html.Partial("~/Views/BaiVietBaiTap/_Item.cshtml", baiViet);
-        }
-    </ul>
-</section>
 <section class="hop hop-2-vien">
     <section class="tieu-de">
         Đăng bài viết
@@ -57,4 +46,16 @@
             </section>
         </article>
     </form>
+</section>
+
+<section class="hop">
+    <section class="tieu-de">
+        Danh sách bài viết
+    </section>
+    <ul id="danh_sach_bai_viet" class="noi-dung">
+        @foreach (var baiViet in Model)
+        {
+            @Html.Partial("~/Views/BaiVietBaiTap/_Item.cshtml", baiViet);
+        }
+    </ul>
 </section>

@@ -12,12 +12,21 @@
         </section>
         <section class="noi-dung">
             @Model.noiDung
-        </section>
+        </section>        
+        @if (@Model.tapTin != null)
+        {
+            <section class="tap-tin">
+                <a href="/LayTapTin/BinhLuan_@(Model.loaiDoiTuong)_TapTin/@Model.tapTin.ma">
+                    <img src="/LayTapTin/BinhLuan_@(Model.loaiDoiTuong)_TapTin/@Model.tapTin.ma" />
+                    <span>@Model.tapTin.ten</span>
+                </a>
+            </section>
+        }
         <section class="thong-tin">
             <span class="thoi-gian">                
                 @Model.thoiDiemTao.Value.ToString("M/yyyy HH:mm")
             </span>
-        </section>
+        </section>        
     </section>
     <section class="khung-chuc-nang-lct" style="top: 0; right: 0;">
         <ul data-doi-tuong="cnbl-@Model.ma">
