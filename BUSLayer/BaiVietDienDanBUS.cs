@@ -67,7 +67,7 @@ namespace BUSLayer
                 tieuDe = layString(form, "TieuDe"),
                 noiDung = layString(form, "NoiDung"),
                 maTapTin = (ketQua.ketQua as TapTinViewDTO).ma,
-                maNguoiTao = (int)HttpContext.Current.Session["NguoiDung"],
+                maNguoiTao = (int)Session["NguoiDung"],
                 maKhoaHoc = layInt(form, "KhoaHoc")
             };
             

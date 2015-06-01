@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DAOLayer;
 using DTOLayer;
 using System.IO;
+using System.Web;
 using Data;
 
 namespace BUSLayer
@@ -68,7 +69,7 @@ namespace BUSLayer
                 noiDung = layString(form, "NoiDung"),
                 maTapTin = (ketQua.ketQua as TapTinViewDTO).ma,
                 thoiDiemHetHan = layDateTime_Full(form, "ThoiDiemHetHan_Ngay", "ThoiDiemHetHan_Gio"),
-                maNguoiTao = 1, //Tạm
+                maNguoiTao = (int)Session["NguoiDung"],
                 maKhoaHoc = layInt(form, "KhoaHoc")
             };
             
