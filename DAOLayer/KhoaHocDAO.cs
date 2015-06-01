@@ -91,7 +91,7 @@ namespace DAOLayer
 
         public static KetQua them(KhoaHocDataDTO khoaHoc)
         {
-            return layDong
+            return layGiaTri<int>
                 (
                     "themKhoaHoc",
                     new object[] 

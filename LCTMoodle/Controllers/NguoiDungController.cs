@@ -81,18 +81,18 @@ namespace LCTMoodle.Controllers
             {
                 trangThai = 0,
                 ketQua = new object[]
-            { 
-                new 
-                {
-                    ma = 1,
-                    ten = "Nguyễn Minh Chiến"
-                },
-                new 
-                {
-                    ma = 21,
-                    ten = "Lê Bình Chiêu"
+                { 
+                    new 
+                    {
+                        ma = 1,
+                        ten = "Nguyễn Minh Chiến"
+                    },
+                    new 
+                    {
+                        ma = 21,
+                        ten = "Lê Bình Chiêu"
+                    }
                 }
-            }
             }, JsonRequestBehavior.AllowGet);
         }
 	}

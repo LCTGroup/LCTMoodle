@@ -18,6 +18,7 @@
 
         .khung-binh-luan .khung-danh-sach .muc-binh-luan .trai {
             min-width: 35px;
+            max-width: 35px;
             padding-right: 5px;
         }
 
@@ -26,6 +27,10 @@
                 height: 35px;
                 width: 35px;
             }
+
+        .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai {
+            width: 100%;
+        }
 
             .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .nguoi-dung {
                 font-weight: bold;
@@ -40,6 +45,28 @@
                 display: inline;
                 color: #333;
             }
+                
+            .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .tap-tin {
+                padding: 5px;
+                border: 1px dashed #eee;
+                background-color: #fff;
+                margin: 5px 0;
+            }
+            
+                .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .tap-tin a {
+                    display: flex;
+                }
+            
+                .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .tap-tin img {
+                    width: 25px;
+                    height: 25px;
+                    margin-right: 5px;
+                }
+            
+                .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .tap-tin span {
+                    align-self: center;
+                    color: #555;
+                }
 
             .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .thong-tin {
                 display: block;
@@ -49,6 +76,7 @@
                     color: #888;
                     font-size: 11px;
                 }
+
     .khung-binh-luan .khung-form {
         margin: 10px 0;
     }

@@ -15,10 +15,10 @@
                 </section>
                 <section class="bai-viet">
                     <section class="thoi-gian">
-                        @Model.thoiDiemTao.Value.ToString("M/yyyy HH:mm")
+                        @Model.thoiDiemTao.Value.ToString("dd/M/yyyy HH:mm")
                     </section>
                 </section>
-            </section>
+            </section>            
         </section>
         <section class="khung-noi-dung">
             <h2 class="tieu-de">
@@ -26,7 +26,16 @@
             </h2>
             <section class="noi-dung noi-dung-ckeditor">
                 @Html.Raw(Model.noiDung)
-            </section>
+            </section>            
+            @if (@Model.tapTin != null)
+            {
+                <section class="tap-tin">
+                    <a href="/LayTapTin/BaiVietDienDan_TapTin/@Model.tapTin.ma">
+                        <img src="/LayTapTin/BaiVietDienDan_TapTin/@Model.tapTin.ma" />
+                        <span>@Model.tapTin.ten</span>
+                    </a>
+                </section>
+            }
         </section>
         <section class="khung-chuc-nang-lct">
             <ul data-doi-tuong="cndd-@Model.ma">

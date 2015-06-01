@@ -13,11 +13,7 @@ GO
 	--BaiTapNop_TapTin
 --Ghi chú cách đặt tên bảng: TapTin_[tên bảng]
 
-<<<<<<< HEAD
 CREATE TABLE dbo.TapTin_NguoiDung_HinhDaiDien (
-=======
-CREATE TABLE dbo.TapTin_KhoaHoc_HinhDaiDien (
->>>>>>> 17005797b70217d0a3dd1894c4ffe32437829668
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	Ten NVARCHAR(MAX) NOT NULL,
 	Loai NVARCHAR(MAX) NOT NULL,

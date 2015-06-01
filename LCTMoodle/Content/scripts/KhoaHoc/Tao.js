@@ -14,7 +14,7 @@ function khoiTaoSubmit($form) {
                 dataType: 'JSON'
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    //window.location = '/KhoaHoc/' + data.ketQua.ma;
+                    window.location = '/KhoaHoc/' + data.ketQua;
                 }
                 else {
                     moPopup({

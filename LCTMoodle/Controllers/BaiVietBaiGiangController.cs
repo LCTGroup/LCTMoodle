@@ -16,7 +16,7 @@ namespace LCTMoodle.Controllers
         {
             ViewData["MaKhoaHoc"] = maKhoaHoc;
 
-            KetQua ketQua = BaiVietBaiGiangDAO.layTheoMaKhoaHoc(maKhoaHoc);
+            KetQua ketQua = BaiVietBaiGiangBUS.layTheoMaKhoaHoc(maKhoaHoc);
             List<BaiVietBaiGiangViewDTO> danhSachBaiViet = 
                 ketQua.trangThai == 0 ?
                 (List<BaiVietBaiGiangViewDTO>)ketQua.ketQua :

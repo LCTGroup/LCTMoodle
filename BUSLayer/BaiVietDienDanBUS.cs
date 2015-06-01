@@ -80,9 +80,9 @@ namespace BUSLayer
 
             BaiVietDienDanDAO.lienKet = new string[] 
             {
-                "NguoiTao"
+                "NguoiTao",
+                "TapTin"
             };
-
             return BaiVietDienDanDAO.them(baiViet);
         }
 
@@ -90,7 +90,8 @@ namespace BUSLayer
         {
             BaiVietDienDanDAO.lienKet = new string[] 
             {
-                "NguoiTao"
+                "NguoiTao",
+                "TapTin"
             };
             return BaiVietDienDanDAO.layTheoMaKhoaHoc(maKhoaHoc);
         }
