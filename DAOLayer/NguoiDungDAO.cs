@@ -50,7 +50,7 @@ namespace DAOLayer
 
         public static KetQua them(NguoiDungDataDTO nguoiDung)
         {
-            return layGiaTri
+            return layGiaTri<int>
             (
                 "themNguoiDung",
                 new object[] 
