@@ -511,7 +511,7 @@
     display: none;
 }
 
-    .lct-form input[data-input-type="goi-y"] ~ .khung-danh-sach-goi-y {
+    .lct-form input[data-input-type="goi-y"]:focus ~ .khung-danh-sach-goi-y {
         display: block;
     }
 

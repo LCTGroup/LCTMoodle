@@ -198,9 +198,10 @@ namespace DAOLayer
         /// <summary>
         /// Thực hiện stored procedure lấy về 1 giá trị
         /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <param name="tenStoredProcedure">Tên stored procedure</param>
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
-        protected static KetQua layGiaTri(string tenStoredProcedure, object[] danhSachThamSo)
+        protected static KetQua layGiaTri<T>(string tenStoredProcedure, object[] danhSachThamSo)
         {
             try
             {
@@ -218,7 +219,7 @@ namespace DAOLayer
                 return new KetQua()
                     {
                         trangThai = 0,
-                        ketQua = ketQua
+                        ketQua = Convert.ChangeType(ketQua, typeof(T))
                     };
             }
             catch (SqlException e)

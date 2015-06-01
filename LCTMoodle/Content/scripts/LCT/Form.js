@@ -123,13 +123,13 @@ function khoiTaoHienThiInput_LCT($form) {
         $phanTu.removeAttr('name');
     })
 
-    $form.find('input[data-input-type="goi-y"]').each(function () {
-        var $phanTu = $(this);
-        $phanTu.wrap('<article class="lct-khung-input-goi-y"></article>');
-        var name = $phanTu.attr('name');
-        $phanTu.removeAttr('name');
-        $phanTu.after('<input type="hidden" name="' + name + '"><section class="khung-danh-sach-goi-y"><ul class="danh-sach-goi-y"></ul></section>');
-    })
+    //$form.find('input[data-input-type="goi-y"]').each(function () {
+    //    var $phanTu = $(this);
+    //    $phanTu.wrap('<article class="lct-khung-input-goi-y"></article>');
+    //    var name = $phanTu.attr('name');
+    //    $phanTu.removeAttr('name');
+    //    $phanTu.after('<input type="hidden" name="' + name + '"><section class="khung-danh-sach-goi-y"><ul class="danh-sach-goi-y"></ul></section>');
+    //})
 
     //Trường hợp đặc biệt, xử lý validate riêng cho editor
     $form.find('textarea[data-input-type="editor"]').each(function () {
@@ -232,15 +232,92 @@ function khoiTaoChuDeInput_LCT($form) {
 }
 
 function khoiTaoChuDeInput_LCT($form) {
-    $form.find('input[data-input-type="goi-y"]').on('change', function () {
-        var $phanTu = $(this);
-        var maChoMangTam = 'goi-y_' + $phanTu.next().attr('name');
+    $form.find('input[data-input-type="goi-y"]').each(function () {
+        var $inputGoiY = $form.find('input[data-input-type="goi-y"]');
+        var $danhSachGoiY = $inputGoiY.find('~ .khung-danh-sach-goi-y .danh-sach-goi-y');
 
-        clearTimeout(mangTam[maChoMangTam]);
-        mangTam[maChoMangTam] = setTimeout(function () {
+        $inputGoiY.on({
+            change: function () {
+                var $phanTu = $(this);
+                var maChoMangTam = 'goi-y_' + $phanTu.next().attr('name');
 
-        }, 500)
+                clearTimeout(mangTam[maChoMangTam]);
+                mangTam[maChoMangTam] = setTimeout(function () {
+
+                }, 500)
+            },
+            keydown: function (e) {
+                switch (e.which) {
+                    case 38:
+                        e.preventDefault();
+
+                        var $goiYChon = $danhSachGoiY.children('.chon');
+                        if ($goiYChon.length == 0) {
+                            chonGoiY_LCT($danhSachGoiY.children(':last-child'));
+                        }
+                        else {
+                            var $goiYTren = $goiYChon.prev();
+                            if ($goiYTren.length == 0) {
+                                chonGoiY_LCT($danhSachGoiY.children(':last-child'));
+                            }
+                            else {
+                                chonGoiY_LCT($goiYTren);
+                            }
+                        }
+                        break;
+                    case 40:
+                        e.preventDefault();
+
+                        var $goiYChon = $danhSachGoiY.children('.chon');
+                        if ($goiYChon.length == 0) {
+                            chonGoiY_LCT($danhSachGoiY.children(':first-child'));
+                        }
+                        else {
+                            var $goiYDuoi = $goiYChon.next();
+                            if ($goiYDuoi.length == 0) {
+                                chonGoiY_LCT($danhSachGoiY.children(':first-child'));
+                            }
+                            else {
+                                chonGoiY_LCT($goiYDuoi);
+                            }
+                        }
+                        break;
+                    case 13:
+                        e.preventDefault();
+                    case 27:
+                        e.preventDefault();
+                    default:
+                        break;
+                }
+            }
+        });
+
+
+        //Tạm
+        khoiTaoDanhSachGoiY_LCT($inputGoiY.find('~ .khung-danh-sach-goi-y .danh-sach-goi-y'));
     })
+}
+
+function khoiTaoDanhSachGoiY_LCT($danhSach) {
+    var $items = $danhSach.find('li');
+    $items.on({
+        mouseenter: function () {
+            chonGoiY_LCT($(this));
+        }
+    })
+}
+
+function chonGoiY_LCT($item) {
+    $item.siblings('.chon').removeClass('chon');
+    $item.addClass('chon');
+}
+
+function layGoiY_LCT($item) {
+    var $giaTriChon = $item.children();
+    $inputGoiY.val($giaTriChon.text());
+    $inputGoiY.next().val($giaTriChon.attr('data-value'));
+
+    $danhSachGoiY.html('');
 }
 
 // loai Loại input (lct-thoi-gian, lct-lich)
