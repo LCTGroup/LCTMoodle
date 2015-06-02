@@ -78,22 +78,20 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            BinhLuanDAO.lienKet = new string[]
+            return BinhLuanDAO.them(binhLuan, new LienKet()
             {
                 "NguoiTao",
                 "TapTin"
-            };
-            return BinhLuanDAO.them(binhLuan);
+            });
         }
 
         public static KetQua layTheoDoiTuong(string loaiDoiTuong, int maDoiTuong)
         {
-            BinhLuanDAO.lienKet = new string[]
+            return BinhLuanDAO.layTheoDoiTuong(loaiDoiTuong, maDoiTuong, new LienKet()
             {
                 "NguoiTao",
                 "TapTin"
-            };
-            return BinhLuanDAO.layTheoDoiTuong(loaiDoiTuong, maDoiTuong);
+            });
         }
     }
 }

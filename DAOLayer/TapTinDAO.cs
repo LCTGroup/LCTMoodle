@@ -10,7 +10,7 @@ namespace DAOLayer
 {
     public class TapTinDAO : DAO<TapTinDAO, TapTinViewDTO>
     {
-        public static TapTinViewDTO gan(System.Data.SqlClient.SqlDataReader dong)
+        public static TapTinViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
             TapTinViewDTO tapTin = new TapTinViewDTO();
 

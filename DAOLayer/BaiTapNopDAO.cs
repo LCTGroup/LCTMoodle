@@ -28,7 +28,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (lienKet.co("TapTin"))
+                            if (LienKet.co(lienKet, "TapTin"))
                             {
                                 KetQua ketQua = TapTinDAO.layTheoMa("BaiTapNop_TapTin", maTam);
                                 
@@ -57,7 +57,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (lienKet.co("NguoiTao"))
+                            if (LienKet.co(lienKet, "NguoiTao"))
                             {
                                 KetQua ketQua = NguoiDungDAO.layTheoMa(maTam);
 
@@ -104,7 +104,7 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap)
+        public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap, LienKet lienKet = null)
         {
             return layDanhSachDong
             (
@@ -112,7 +112,8 @@ namespace DAOLayer
                 new object[]
                 {
                     maBaiVietBaiTap
-                }
+                },
+                lienKet
             );
         }
     }

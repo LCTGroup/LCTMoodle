@@ -1,6 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Hỏi đáp";
     Layout = "~/Views/LCT/Khung.cshtml";
+
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Hỏi đáp", "/HoiDap",
+    };
+
+    ViewData["ChucNang"] = new List<string>()
+    {
+        "Tạo câu hỏi", "href='/HoiDap/TaoCauHoi'"
+    };
 }
 
 @section Styles {
@@ -27,7 +37,7 @@
                     </div>
                     <div class="chi-tiet">
                         <div class="tieu-de">
-                            <a href="/HoiDap/CauHoi/1">
+                            <a href="/HoiDap/XemCauHoi/1">
                                 Cách kết nối CSDL trong MVC5
                             </a>
                         </div>

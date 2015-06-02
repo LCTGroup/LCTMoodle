@@ -10,7 +10,7 @@ namespace DAOLayer
 {
     public class ChuDeDAO : DAO<ChuDeDAO, ChuDeViewDTO>
     {
-        public static ChuDeViewDTO gan(System.Data.SqlClient.SqlDataReader dong)
+        public static ChuDeViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
             ChuDeViewDTO chuDe = new ChuDeViewDTO();
 

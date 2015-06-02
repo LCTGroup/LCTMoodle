@@ -33,7 +33,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (lienKet.co("TapTin"))
+                            if (LienKet.co(lienKet, "TapTin"))
                             {
                                 KetQua ketQua = TapTinDAO.layTheoMa("BaiVietDienDan_TapTin", maTam);
 
@@ -62,7 +62,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (lienKet.co("NguoiTao"))
+                            if (LienKet.co(lienKet, "NguoiTao"))
                             {
                                 KetQua ketQua = NguoiDungDAO.layTheoMa(maTam);
 
@@ -85,7 +85,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (lienKet.co("KhoaHoc"))
+                            if (LienKet.co(lienKet, "KhoaHoc"))
                             {
                                 KetQua ketQua = KhoaHocDAO.layTheoMa(maTam);
 
@@ -108,7 +108,7 @@ namespace DAOLayer
                 }
             }
 
-            if (lienKet.co("BaiTapNop"))
+            if (LienKet.co(lienKet, "BaiTapNop"))
             {
                 KetQua ketQua = BaiTapNopDAO.layTheoMaBaiVietBaiTap(baiViet.ma);
                 
@@ -121,7 +121,7 @@ namespace DAOLayer
             return baiViet;
         }
 
-        public static KetQua them(BaiVietBaiTapDataDTO baiVietBaiTap)
+        public static KetQua them(BaiVietBaiTapDataDTO baiVietBaiTap, LienKet lienKet = null)
         {
             return layDong
             (
@@ -134,11 +134,12 @@ namespace DAOLayer
                     baiVietBaiTap.thoiDiemHetHan,
                     baiVietBaiTap.maNguoiTao,
                     baiVietBaiTap.maKhoaHoc
-                }
+                },
+                lienKet
             );
         }
 
-        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
+        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc, LienKet lienKet = null)
         {
             return layDanhSachDong
             (
@@ -146,7 +147,8 @@ namespace DAOLayer
                 new object[] 
                 { 
                     maKhoaHoc
-                }
+                },
+                lienKet
             );
         }
 

@@ -79,23 +79,21 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            BaiVietBaiTapDAO.lienKet = new string[]
-            {
-                "NguoiTao",
-                "TapTin"
-            };
-            return BaiVietBaiTapDAO.them(baiViet);
+            return BaiVietBaiTapDAO.them(baiViet, new LienKet()
+                {
+                    "NguoiTao",
+                    "TapTin"
+                });
         }
 
         public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
         {
-            BaiVietBaiTapDAO.lienKet = new string[]
+            return BaiVietBaiTapDAO.layTheoMaKhoaHoc(maKhoaHoc, new LienKet()
             {
                 "NguoiTao",
                 "TapTin",
                 "BaiTapNop"
-            };
-            return BaiVietBaiTapDAO.layTheoMaKhoaHoc(maKhoaHoc);
+            });
         }
     }
 }

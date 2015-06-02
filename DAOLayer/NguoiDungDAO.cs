@@ -10,7 +10,7 @@ namespace DAOLayer
 {
     public class NguoiDungDAO : DAO<NguoiDungDAO, NguoiDungViewDTO>
     {
-        public static NguoiDungViewDTO gan(System.Data.SqlClient.SqlDataReader dong)
+        public static NguoiDungViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
             NguoiDungViewDTO nguoiDung = new NguoiDungViewDTO();
 

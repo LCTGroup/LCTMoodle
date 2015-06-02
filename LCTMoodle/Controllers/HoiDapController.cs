@@ -18,10 +18,20 @@ namespace LCTMoodle.Controllers
         {
             return View();
         }
-        public ActionResult XemCauHoi(string ma)
+        public ActionResult TaoCauHoi()
         {
-            
             return View();
+        }
+        public ActionResult XemCauHoi(int ma)
+        {            
+            return View(CauHoiBUS.layCauHoi(ma).ketQua as CauHoiViewDTO);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult XuLyThem(FormCollection form)
+        {
+            return Json(CauHoiBUS.them(chuyenDuLieuForm(form)));
         }
 	}
 }

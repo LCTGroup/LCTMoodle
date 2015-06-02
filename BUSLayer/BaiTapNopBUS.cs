@@ -77,12 +77,11 @@ namespace BUSLayer
 
         public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap)
         {
-            BaiTapNopDAO.lienKet = new string[]
+            return BaiTapNopDAO.layTheoMaBaiVietBaiTap(maBaiVietBaiTap, new LienKet()
             {
                 "NguoiTao",
                 "TapTin"
-            };
-            return BaiTapNopDAO.layTheoMaBaiVietBaiTap(maBaiVietBaiTap);
+            });
         }
     }
 }

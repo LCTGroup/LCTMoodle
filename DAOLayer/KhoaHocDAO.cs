@@ -10,7 +10,7 @@ namespace DAOLayer
 {
     public class KhoaHocDAO : DAO<KhoaHocDAO, KhoaHocViewDTO>
     {
-        public static KhoaHocViewDTO gan(System.Data.SqlClient.SqlDataReader dong)
+        public static KhoaHocViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
             KhoaHocViewDTO khoaHoc = new KhoaHocViewDTO();
 

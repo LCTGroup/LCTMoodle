@@ -33,7 +33,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (lienKet.co("TapTin"))
+                            if (LienKet.co(lienKet, "TapTin"))
                             {
                                 KetQua ketQua = TapTinDAO.layTheoMa("BaiVietDienDan_TapTin", maTam);
 
@@ -59,7 +59,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (lienKet.co("NguoiTao"))
+                            if (LienKet.co(lienKet, "NguoiTao"))
                             {
                                 KetQua ketQua = NguoiDungDAO.layTheoMa(maTam);
 
@@ -82,7 +82,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (lienKet.co("KhoaHoc"))
+                            if (LienKet.co(lienKet, "KhoaHoc"))
                             {
                                 KetQua ketQua = KhoaHocDAO.layTheoMa(maTam);
 
@@ -108,7 +108,7 @@ namespace DAOLayer
             return baiViet;
         }
 
-        public static KetQua them(BaiVietBaiGiangDataDTO baiVietBaiGiang)
+        public static KetQua them(BaiVietBaiGiangDataDTO baiVietBaiGiang, LienKet lienKet = null)
         {
             return layDong
                 (
@@ -120,11 +120,12 @@ namespace DAOLayer
                         baiVietBaiGiang.maTapTin,
                         baiVietBaiGiang.maNguoiTao,
                         baiVietBaiGiang.maKhoaHoc
-                    }
+                    },
+                    lienKet
                 );
         }
 
-        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
+        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc, LienKet lienKet = null)
         {
             return layDanhSachDong
                 (
@@ -132,7 +133,8 @@ namespace DAOLayer
                     new object[] 
                     { 
                         maKhoaHoc
-                    }
+                    },
+                    lienKet
                 );
         }
 

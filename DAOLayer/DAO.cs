@@ -11,11 +11,16 @@ using System.Reflection;
 
 namespace DAOLayer
 {
-    internal class LienKet : Dictionary<string, object>
+    public class LienKet : Dictionary<string, object>
     {
-        public bool co(string lienKet)
+        public static bool co(LienKet lienKet, string tenLienKet)
         {
-            return this != null && ContainsKey(lienKet);
+            return lienKet != null && lienKet.ContainsKey(tenLienKet);
+        }
+
+        public void Add(string key)
+        {
+            Add(key, null);
         }
     }
 
