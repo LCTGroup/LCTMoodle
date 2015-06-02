@@ -78,25 +78,19 @@ function khoiTaoThemNguoiDung($form) {
                 thongBao: 'Tài khoản đã tồn tại',
                 validate: function () {
                     var ketQua;
-
                     $.ajax({
                         url: '/NguoiDung/KiemTraTenTaiKhoan',
-                        data: { tenTaiKhoan: $('#TenTaiKhoan').val() },
-                        dataType: 'JSON',
+                        data: { tenTaiKhoan: $('#TenTaiKhoan').val() },                        
                         async: false
                     }).done(function (data) {
-                        if (data.trangThai == 0) {
-                            ketQua = false;
-                        }
-                        else {
-                            ketQua = true;
-                        }
+                        ketQua = !data;
                     }).fail(function () {
                         moPopup({
                             tieuDe: 'Thông báo',
                             noiDung: 'Lỗi ajax'
                         })
                     });
+                    console.log(ketQua);
                     return ketQua;
                 }
             }]

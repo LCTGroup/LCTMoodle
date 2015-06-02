@@ -160,7 +160,7 @@
     <Content Include="Content\scripts\ChuDe\Khung.js" />
     <Content Include="Content\images\user-avatar.jpg" />
     <Content Include="Content\scripts\HoiDap\CauHoi.js" />
-    <Content Include="Content\scripts\HoiDap\DatCauHoi.js" />
+    <Content Include="Content\scripts\HoiDap\TaoCauHoi.js" />
     <Content Include="Content\scripts\KhoaHoc\Xem.js" />
     <Content Include="Content\scripts\KhoaHoc\Tao.js" />
     <Content Include="Content\scripts\LCT\Form.js" />
@@ -400,6 +400,7 @@
     <Content Include="Views\ChuDe\Khung\_Cay_HeThong_Item.cshtml" />
     <Content Include="Views\ChuDe\Khung\_Cay_Con_HeThong_Item.cshtml" />
     <Content Include="Views\ChuDe\_Chon.cshtml" />
+    <Content Include="Views\HoiDap\TaoCauHoi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

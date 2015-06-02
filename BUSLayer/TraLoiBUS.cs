@@ -11,7 +11,7 @@ using Data;
 
 namespace BUSLayer
 {
-    public class HoiDapBUS : BUS
+    public class TraLoiBUS : BUS
     {
         
     }

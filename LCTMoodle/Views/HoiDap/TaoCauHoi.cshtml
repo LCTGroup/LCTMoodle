@@ -1,0 +1,54 @@
+﻿@{    
+    ViewData["Title"] = "Thêm câu hỏi";
+    Layout = "~/Views/LCT/Khung.cshtml";
+
+    ViewData["DieuHuong"] = new List<string>() 
+    {
+        "Hỏi đáp", "/HoiDap/Index",
+        "Thêm câu hỏi", "/HoiDap/TaoCauHoi"
+    };        
+    
+}
+
+@section Styles {
+    
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/TaoCauHoi.js/HoiDap"></script>
+}
+
+<article class="hop hop-2-vien" >
+    <section class="tieu-de">Thêm câu hỏi</section>
+    <section class="noi-dung">
+        <form class="lct-form" id="tao_cau_hoi_form" action="/HoiDap/XuLyThem" method="POST">
+            <article>
+                <ul>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Tiêu đề</label>
+                        </section>
+                        <section class="noi-dung">
+                            <section class="input">
+                                <input type="text" name="TieuDe" data-validate="bat-buoc" />
+                            </section>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Nội dung câu hỏi</label>
+                        </section>
+                        <section class="noi-dung">
+                            <section class="input">
+                                <textarea name="NoiDung" data-input-type="editor" data-validate="bat-buoc"></textarea>
+                            </section>
+                        </section>
+                    </li>
+                </ul>
+                <section class="lct-khung-button">
+                    <button type="submit" class="chap-nhan">Tạo câu hỏi</button>
+                </section>
+            </article>
+        </form>
+    </section>
+</article>

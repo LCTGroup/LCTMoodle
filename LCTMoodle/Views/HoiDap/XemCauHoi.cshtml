@@ -6,15 +6,12 @@
     ViewData["DieuHuong"] = new List<string>()
     {
         "Hỏi đáp", "/HoiDap",
-        Model.tieuDe, "/HoiDap/" + Model.ma
+        Model.tieuDe, "/HoiDap/XemCauHoi/" + Model.ma
     };
 
     ViewData["ChucNang"] = new List<string>()
     {
-        "Bài giảng", "href=?hienthi=baigiang",
-        "Bài tập", "href='?hienthi=baitap'",
-        "Diễn đàn", "href='?hienthi=diendan'",
-        "Đăng ký vào khóa học", "href=javascript:void(0) data-chuc-nang=xoa-khoa-hoc data-value=" + Model.ma
+        "Tạo câu hỏi", "href='/HoiDap/TaoCauHoi'"
     };
 }
 
@@ -33,32 +30,26 @@
             <section class="thong-tin">
                 <div class="nguoi-dung">
                     <div class="hinh-dai-dien">
-                        <img />
+                        <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.nguoiTao.hinhDaiDien.ma" />
                     </div>
-                    <span>Tên người dùng</span>
+                    <span>@Model.nguoiTao.tenTaiKhoan</span>
                 </div>
                 <div class="cau-hoi">
                     <i class="pe-7s-angle-up"></i>
                     <span class="diem-so">5</span>
                     <i class="pe-7s-angle-down"></i>
                 </div>
-                <div class="thoi-gian">Đăng lúc 24/5/2015</div>
+                <div class="thoi-gian">@Model.thoiDiemTao</div>
             </section>
             <section class="chi-tiet">
-                <div class="tieu-de">Cách kết nối Connect string trong MVC5</div>
+                <div class="tieu-de">@Model.tieuDe</div>
                 <div class="noi-dung">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    @Html.Raw(Model.noiDung)
                 </div>
                 <div class="nut-tra-loi">
                     <a href="#tra_loi_cau_hoi">Trả lời câu hỏi này</a>
                 </div>
             </section>
-
         </article>
     </section>
 </article>

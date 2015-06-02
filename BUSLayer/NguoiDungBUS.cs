@@ -20,6 +20,10 @@ namespace BUSLayer
 
             #region Kiểm tra Valid
 
+            if (NguoiDungBUS.tenTaiKhoanTonTai(nguoiDung.tenTaiKhoan))
+            {
+                thongBao.Add("Tên tài khoản bị trùng");
+            }
             if (string.IsNullOrEmpty(nguoiDung.tenTaiKhoan))
             {
                 thongBao.Add("Tên tài khoản không được bỏ trống");
@@ -75,19 +79,12 @@ namespace BUSLayer
             
             ketQua = kiemTra(nguoiDung);           
 
-            //Kiểm tra Tên tài khoản có trùng hay ko, nếu trùng thì thêm thất bại
-            
-
             if (ketQua.trangThai == 0)
             {
-                ketQua = NguoiDungBUS.kiemTraTenTaiKhoan(nguoiDung.tenTaiKhoan);
-                if (ketQua.trangThai == 1)
+                ketQua = NguoiDungDAO.them(nguoiDung);
+                if (ketQua.trangThai == 0)
                 {
-                    ketQua = NguoiDungDAO.them(nguoiDung);
-                    if (ketQua.trangThai == 0)
-                    {
-                        HttpContext.Current.Session["NguoiDung"] = (int)ketQua.ketQua;
-                    }
+                    HttpContext.Current.Session["NguoiDung"] = (int)ketQua.ketQua;
                 }
             }
             return ketQua;
@@ -155,9 +152,9 @@ namespace BUSLayer
             //Xóa session            
             HttpContext.Current.Session.Abandon();
         }
-        public static KetQua kiemTraTenTaiKhoan(string tenTaiKhoan)
+        public static bool tenTaiKhoanTonTai(string tenTaiKhoan)
         {
-            return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
+            return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan).trangThai == 0 ? true : false;
         }
     }
 }

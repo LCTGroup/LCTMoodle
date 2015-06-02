@@ -44,8 +44,9 @@
     <Compile Include="BaiVietDienDanBUS.cs" />
     <Compile Include="BinhLuanBUS.cs" />
     <Compile Include="BUS.cs" />
+    <Compile Include="TraLoiBUS.cs" />
     <Compile Include="KhoaHocBUS.cs" />
-    <Compile Include="HoiDapBUS .cs" />
+    <Compile Include="CauHoiBUS.cs" />
     <Compile Include="NguoiDungBUS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
