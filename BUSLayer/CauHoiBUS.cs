@@ -52,7 +52,7 @@ namespace BUSLayer
                 tieuDe = layString(formCauHoi, "TieuDe"),
                 noiDung = layString(formCauHoi, "NoiDung"),
                 thoiDiemTao = DateTime.Now,
-                maNguoiTao = 2
+                maNguoiTao = (int)Session["NguoiDung"]
             };
             
             KetQua ketQua = kiemTra(cauHoi);

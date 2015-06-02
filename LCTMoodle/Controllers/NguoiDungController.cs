@@ -72,7 +72,7 @@ namespace LCTMoodle.Controllers
         [HttpGet]
         public ActionResult KiemTraTenTaiKhoan(string tenTaiKhoan)
         {
-            return Json(NguoiDungBUS.tenTaiKhoanTonTai(tenTaiKhoan), JsonRequestBehavior.AllowGet);
+            return Json(NguoiDungBUS.tonTaiTenTaiKhoan(tenTaiKhoan), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _GoiY_QuanLyKhoaHoc(string input)
