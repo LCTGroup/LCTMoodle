@@ -10,7 +10,7 @@ namespace DAOLayer
 {
     public class BinhLuanDAO : DAO<BinhLuanDAO, BinhLuanViewDTO>
     {
-        public static BinhLuanViewDTO gan(System.Data.SqlClient.SqlDataReader dong)
+        public static BinhLuanViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
             BinhLuanViewDTO binhLuan = new BinhLuanViewDTO();
 
@@ -33,7 +33,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (coLienKet("NguoiTao"))
+                            if (lienKet.co("NguoiTao"))
                             {
                                 KetQua ketQua = NguoiDungDAO.layTheoMa(maTam);
                                 
@@ -67,7 +67,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (coLienKet("TapTin"))
+                            if (lienKet.co("TapTin"))
                             {
                                 KetQua ketQua = TapTinDAO.layTheoMa("BinhLuan_" + binhLuan.loaiDoiTuong + "_TapTin", maTam);
 

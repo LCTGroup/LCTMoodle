@@ -400,6 +400,7 @@
     <Content Include="Views\ChuDe\Khung\_Cay_HeThong_Item.cshtml" />
     <Content Include="Views\ChuDe\Khung\_Cay_Con_HeThong_Item.cshtml" />
     <Content Include="Views\ChuDe\_Chon.cshtml" />
+    <Content Include="Views\BaiTapNop\_Khung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

@@ -11,19 +11,17 @@ using System.Reflection;
 
 namespace DAOLayer
 {
+    internal class LienKet : Dictionary<string, object>
+    {
+        public bool co(string lienKet)
+        {
+            return this != null && ContainsKey(lienKet);
+        }
+    }
+
     public class DAO<DAOClass, ViewDTOClass>
         where ViewDTOClass : DTO
     {
-        #region Lấy liên kết
-
-        public static string[] lienKet;
-
-        protected static bool coLienKet(string tenLienKet)
-        {
-            return lienKet != null && lienKet.Contains(tenLienKet);
-        }
-        #endregion
-
         #region Xử lý truy vấn dữ liệu
         static SqlConnection ketNoi = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["chuoiKetNoi_LCTMoodle"].ConnectionString);
 
@@ -32,7 +30,7 @@ namespace DAOLayer
         /// </summary>
         /// <param name="tenStoredProcedure">Tên stored procedure</param>
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
-        protected static KetQua layDong(string tenStoredProcedure, object[] danhSachThamSo)
+        protected static KetQua layDong(string tenStoredProcedure, object[] danhSachThamSo, LienKet lienKet = null)
         {
             try
             {
@@ -55,7 +53,7 @@ namespace DAOLayer
 
                 if (dong.Read())
                 {
-                    dto = method.Invoke(null, new object[] { dong }) as ViewDTOClass;
+                    dto = method.Invoke(null, new object[] { dong, lienKet }) as ViewDTOClass;
 
                     dong.Close();
 
@@ -69,18 +67,18 @@ namespace DAOLayer
                 {
                     dong.Close();
                     return new KetQua()
-                        {
-                            trangThai = 1
-                        };
+                    {
+                        trangThai = 1
+                    };
                 }
             }
             catch (SqlException e)
             {
                 return new KetQua()
-                    {
-                        trangThai = 2,
-                        ketQua = "Lỗi truy vấn\r\n" + e.Message
-                    };
+                {
+                    trangThai = 2,
+                    ketQua = "Lỗi truy vấn\r\n" + e.Message
+                };
             }
             finally
             {
@@ -94,7 +92,7 @@ namespace DAOLayer
         /// </summary>
         /// <param name="tenStoredProcedure">Tên stored procedure</param>
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
-        protected static KetQua layDanhSachDong(string tenStoredProcedure, object[] danhSachThamSo)
+        protected static KetQua layDanhSachDong(string tenStoredProcedure, object[] danhSachThamSo, LienKet lienKet = null)
         {
             try
             {
@@ -119,7 +117,7 @@ namespace DAOLayer
                 {
                     do
                     {
-                        dtos.Add(method.Invoke(null, new object[] { dong }) as ViewDTOClass);
+                        dtos.Add(method.Invoke(null, new object[] { dong, lienKet }) as ViewDTOClass);
                     }
                     while (dong.Read());
 

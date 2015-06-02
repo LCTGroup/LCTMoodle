@@ -1,53 +1,63 @@
-﻿<article class="hop hop-1-vien">
+﻿@model List<DTOLayer.BaiTapNopViewDTO>
+
+<article class="hop hop-1-vien">
     <section class="tieu-de">
         Danh sách bài đã nộp
     </section>
     <section class="noi-dung khung-danh-sach-nop">
         <section class="so-luong">
             <span>
-                Đã có 41 người nộp bài
+                @if (Model == null)
+                {
+                    @:Chưa có ai nộp
+                }
+                else 
+                {
+                    @:Đã có @Model.Count người nộp bài
+                }
             </span>
         </section>
         <section class="khung-danh-sach">
             <ul>
-                <li>
-                    <section class="trai">
-                        <article class="hinh-dai-dien">
-                            <img src="#" />
-                        </article>
-                    </section>
-                    <section class="phai">
-                        <section class="thong-tin">
-                            <a class="nguoi-nop" href="#">Lê Bình Chiêu</a>
-                            <span class="thoi-gian">30 phút trước</span>
-                        </section>
-                        <section class="bai-nop">
-                            <a href="#">
-                                <img src="#" />
-                                <span>asdf.asdf</span>
-                            </a>
-                        </section>
-                    </section>
-                </li>
-                <li>
-                    <section class="trai">
-                        <article class="hinh-dai-dien">
-                            <img src="#" />
-                        </article>
-                    </section>
-                    <section class="phai">
-                        <section class="thong-tin">
-                            <a class="nguoi-nop" href="#">Lê Bình Chiêu</a>
-                            <span class="thoi-gian">30 phút trước</span>
-                        </section>
-                        <section class="bai-nop">
-                            <a href="#">
-                                <img src="#" />
-                                <span>asdf.asdf</span>
-                            </a>
-                        </section>
-                    </section>
-                </li>
+                @if (Model != null)
+                {
+                    foreach (var baiNop in Model)
+                    {
+                        <li>
+                            <section class="trai">
+                                <article class="hinh-dai-dien">
+                                    <img src="/boy.png/" />
+                                </article>
+                            </section>
+                            <section class="phai">
+                                <section class="thong-tin">
+                                    <a class="nguoi-nop" href="#">
+                                        @baiNop.nguoiTao.hoTen
+                                    </a>
+                                    <span class="thoi-gian">
+                                        @baiNop.thoiDiemTao.Value.ToString("dd/M/yyyy HH:mm")
+                                    </span>
+                                </section>
+                                <section class="bai-nop">
+                                    @if (baiNop.tapTin == null)
+                                    {
+                                        <a href="#">
+                                            <img src="#" />
+                                            <span>asdf.asdf</span>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma">
+                                            <img src="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma" />
+                                            <span>@baiNop.tapTin.ten</span>
+                                        </a>
+                                    }
+                                </section>
+                            </section>
+                        </li>
+                    }
+                }
             </ul>
         </section>
     </section>

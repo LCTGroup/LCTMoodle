@@ -412,218 +412,231 @@ function moItem_BaiGiang($baiGiang) {
 
 //#endregion
 
-    //#region Bài tập
+//#region Bài tập
 
-    function hienThi_BaiTap() {
-        var $khung = layKhung_BaiTap();
+function hienThi_BaiTap() {
+    var $khung = layKhung_BaiTap();
 
-        $_KhungHienThi.html($khung);
-        $_KhungChua.attr('data-hien-thi', 'bai-tap');
-        document.title = 'Bài tập - ' + tieuDe;
+    $_KhungHienThi.html($khung);
+    $_KhungChua.attr('data-hien-thi', 'bai-tap');
+    document.title = 'Bài tập - ' + tieuDe;
 
-        $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
+    $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
 
-        khoiTaoForm_BaiTap($_KhungHienThi.find('#tao_bai_viet_form'));
-        khoiTaoItem_BaiTap($_DanhSach.find('[data-doi-tuong="muc-bai-viet"]'));
-    }
+    khoiTaoForm_BaiTap($_KhungHienThi.find('#tao_bai_viet_form'));
+    khoiTaoItem_BaiTap($_DanhSach.find('[data-doi-tuong="muc-bai-viet"]'));
+}
 
-    function layKhung_BaiTap() {
-        var $khung;
+function layKhung_BaiTap() {
+    var $khung;
 
-        $.ajax({
-            url: '/BaiVietBaiTap/_Khung',
-            data: { maKhoaHoc: maKhoaHoc },
-            dataType: 'JSON',
-            async: false
-        }).done(function (data) {
-            if (data.trangThai == 0) {
-                $khung = $(data.ketQua);
-            }
-            else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Lấy bài tập thất bại',
-                    bieuTuong: 'nguy-hiem'
-                })
-            }
-        }).fail(function () {
+    $.ajax({
+        url: '/BaiVietBaiTap/_Khung',
+        data: { maKhoaHoc: maKhoaHoc },
+        dataType: 'JSON',
+        async: false
+    }).done(function (data) {
+        if (data.trangThai == 0) {
+            $khung = $(data.ketQua);
+        }
+        else {
             moPopup({
                 tieuDe: 'Thông báo',
-                thongBao: 'Lấy diễn đàn thất bại',
+                thongBao: 'Lấy bài tập thất bại',
                 bieuTuong: 'nguy-hiem'
             })
-        });
+        }
+    }).fail(function () {
+        moPopup({
+            tieuDe: 'Thông báo',
+            thongBao: 'Lấy bài tập thất bại',
+            bieuTuong: 'nguy-hiem'
+        })
+    });
 
-        return $khung;
-    }
+    return $khung;
+}
 
-    function khoiTaoForm_BaiTap($form) {
-        var $doiTuongAn = $form.find('[data-an]');
-        var $doiTuongBatDauBaiViet = $form.find('[data-chuc-nang="bat-dau-tao-bai-viet"]');
+function khoiTaoForm_BaiTap($form) {
+    var $doiTuongAn = $form.find('[data-an]');
+    var $doiTuongBatDauBaiViet = $form.find('[data-chuc-nang="bat-dau-tao-bai-viet"]');
 
-        khoiTaoLCTForm($form, {
-            khoiTao: function () {
-                $doiTuongAn.hide();
-            },
-            validates: [
-                {
-                    input: $doiTuongBatDauBaiViet,
-                    customEvent: {
-                        focus: function () {
-                            $doiTuongAn.show();
-                        }
+    khoiTaoLCTForm($form, {
+        khoiTao: function () {
+            $doiTuongAn.hide();
+        },
+        validates: [
+            {
+                input: $doiTuongBatDauBaiViet,
+                customEvent: {
+                    focus: function () {
+                        $doiTuongAn.show();
                     }
                 }
-            ],
-            submit: function () {
-                $.ajax({
-                    url: '/BaiVietBaiTap/XuLyThem',
-                    type: 'POST',
-                    data: $form.serialize(),
-                    dataType: 'JSON',
-                    processData: false
-                }).done(function (data) {
-                    if (data.trangThai == 0) {
-                        var $htmlBaiViet = $(data.ketQua);
+            }
+        ],
+        submit: function () {
+            $.ajax({
+                url: '/BaiVietBaiTap/XuLyThem',
+                type: 'POST',
+                data: $form.serialize(),
+                dataType: 'JSON',
+                processData: false
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    var $htmlBaiViet = $(data.ketQua);
 
-                        $_DanhSach.prepend($htmlBaiViet);
+                    khoiTaoItem_BaiTap($htmlBaiViet);
+                    $_DanhSach.prepend($htmlBaiViet);
 
-                        khoiTaoLCTFormMacDinh($form);
-                        $doiTuongAn.hide();
-                    }
-                    else {
-                        moPopup({
-                            tieuDe: 'Thông báo',
-                            thongBao: 'Thêm bài viết thất bại'
-                        });
-                    }
-                }).fail(function () {
+                    khoiTaoLCTFormMacDinh($form);
+                    $doiTuongAn.hide();
+                }
+                else {
                     moPopup({
                         tieuDe: 'Thông báo',
                         thongBao: 'Thêm bài viết thất bại'
                     });
+                }
+            }).fail(function () {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Thêm bài viết thất bại'
                 });
-            }
-        });
-    }
+            });
+        }
+    });
+}
 
-    function khoiTaoItem_BaiTap($danhSachBaiTap) {
-        $danhSachBaiTap.each(function () {
-            var $baiTap = $(this);
+function khoiTaoItem_BaiTap($danhSachBaiTap) {
+    $danhSachBaiTap.each(function () {
+        var $baiTap = $(this);
 
-            var $form = $baiTap.find('[data-doi-tuong="nop-bai-form"]');
+        var $form = $baiTap.find('[data-doi-tuong="nop-bai-form"]');
 
-            khoiTaoLCTForm($form, {
-                validates: [{
-                    input: $form.find('[data-chuc-nang="thay-doi-input"]'),
-                    customEvent: {
-                        click: function () {
-                            var $doiTuong = $(this);
+        khoiTaoLCTForm($form, {
+            validates: [{
+                input: $form.find('[data-chuc-nang="thay-doi-input"]'),
+                customEvent: {
+                    click: function () {
+                        var $doiTuong = $(this);
 
-                            if ($doiTuong.attr('data-value') == 'duong-dan') {
-                                $form.find('[data-doi-tuong="duong-dan"]').show().find('input').prop('disabled', false);
-                                $form.find('[data-doi-tuong="tap-tin"]').hide().find('input').prop('disabled', true);
-                                $doiTuong.attr({
-                                    'data-value': 'tap-tin',
-                                    'class': 'pe-7s-cloud-upload',
-                                    'title': 'Nộp bằng tập tin'
-                                });
-                            }
-                            else {
-                                $form.find('[data-doi-tuong="tap-tin"]').show().find('input').prop('disabled', false);;
-                                $form.find('[data-doi-tuong="duong-dan"]').hide().find('input').prop('disabled', true);;
-                                $doiTuong.attr({
-                                    'data-value': 'duong-dan',
-                                    'class': 'pe-7s-cloud',
-                                    'title': 'Nộp bằng đường dẫn'
-                                });
-                            }
-                        }
-                    }
-                }],
-                submit: function () {
-                    $.ajax({
-                        url: '/BaiTapNop/XuLyThem',
-                        type: 'POST',
-                        data: $form.serialize(),
-                        dataType: 'JSON'
-                    }).done(function (data) {
-                        if (data.trangThai == 0) {
-                            moPopup({
-                                tieuDe: 'Thông báo',
-                                thongBao: 'Nộp bài thành công',
-                                bieuTuong: 'thanh-cong'
+                        if ($doiTuong.attr('data-value') == 'duong-dan') {
+                            $form.find('[data-doi-tuong="duong-dan"]').show().find('input').prop('disabled', false);
+                            $form.find('[data-doi-tuong="tap-tin"]').hide().find('input').prop('disabled', true);
+                            $doiTuong.attr({
+                                'data-value': 'tap-tin',
+                                'class': 'pe-7s-cloud-upload',
+                                'title': 'Nộp bằng tập tin'
                             });
                         }
                         else {
-                            moPopup({
-                                tieuDe: 'Thông báo',
-                                thongBao: 'Nộp bài thất bại',
-                                bieuTuong: 'nguy-hiem'
+                            $form.find('[data-doi-tuong="tap-tin"]').show().find('input').prop('disabled', false);;
+                            $form.find('[data-doi-tuong="duong-dan"]').hide().find('input').prop('disabled', true);;
+                            $doiTuong.attr({
+                                'data-value': 'duong-dan',
+                                'class': 'pe-7s-cloud',
+                                'title': 'Nộp bằng đường dẫn'
                             });
                         }
-                    }).fail(function () {
+                    }
+                }
+            }],
+            submit: function () {
+                $.ajax({
+                    url: '/BaiTapNop/XuLyThem',
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'JSON'
+                }).done(function (data) {
+                    if (data.trangThai == 0) {
+                        var $hienThi = $form.prev().children();
+                        
+                        switch($hienThi.attr('data-type')) {
+                            case '1':
+                                $hienThi.html('<span><b>Bạn</b></span> <span>đã nộp</span>').attr('data-type', '2');
+                                break;
+                            case '3':
+                                $hienThi.html('<span><b>Bạn</b></span>' + $hienThi.html()).attr('data-type', '4');
+                                break;
+                            default:
+                                break;
+                        }
+
+                        $nut = $form.find('button');
+                        $nut.text('Cập nhật');
+                        $nut.parent().addClass('nop-lai')
+                        khoiTaoLCTFormMacDinh($form);
+                    }
+                    else {
                         moPopup({
                             tieuDe: 'Thông báo',
                             thongBao: 'Nộp bài thất bại',
                             bieuTuong: 'nguy-hiem'
                         });
+                    }
+                }).fail(function () {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Nộp bài thất bại',
+                        bieuTuong: 'nguy-hiem'
                     });
-                }
-            });
+                });
+            }
         });
+    });
 
-        khoiTaoTatMoDoiTuong($danhSachBaiTap.find('[data-chuc-nang="tat-mo"]'));
+    khoiTaoTatMoDoiTuong($danhSachBaiTap.find('[data-chuc-nang="tat-mo"]'));
 
-        $danhSachBaiTap.find('[data-chuc-nang="xoa-bai-viet"]').on('click', function () {
-            var $nut = $(this);
+    $danhSachBaiTap.find('[data-chuc-nang="xoa-bai-viet"]').on('click', function () {
+        var $nut = $(this);
 
-            moPopup({
-                tieuDe: 'Xác nhận',
-                thongBao: 'Bạn có chắc muốn xóa bài viết này?',
-                bieuTuong: 'hoi',
-                nut: [
-                    {
-                        ten: 'Có',
-                        xuLy: function () {
-                            $.ajax({
-                                url: '/BaiVietBaiTap/Xoa/' + $nut.attr('data-value'),
-                                type: 'POST',
-                                dataType: 'JSON'
-                            }).done(function (data) {
-                                if (data.trangThai == 0) {
-                                    $nut.closest('[data-doi-tuong="muc-bai-viet"]').remove();
-                                }
-                                else {
-                                    moPopup({
-                                        tieuDe: 'Thông báo',
-                                        thongBao: 'Xóa bài viết thất bại',
-                                        bieuTuong: 'nguy-hiem'
-                                    })
-                                }
-                            }).fail(function () {
+        moPopup({
+            tieuDe: 'Xác nhận',
+            thongBao: 'Bạn có chắc muốn xóa bài viết này?',
+            bieuTuong: 'hoi',
+            nut: [
+                {
+                    ten: 'Có',
+                    xuLy: function () {
+                        $.ajax({
+                            url: '/BaiVietBaiTap/Xoa/' + $nut.attr('data-value'),
+                            type: 'POST',
+                            dataType: 'JSON'
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $nut.closest('[data-doi-tuong="muc-bai-viet"]').remove();
+                            }
+                            else {
                                 moPopup({
                                     tieuDe: 'Thông báo',
                                     thongBao: 'Xóa bài viết thất bại',
                                     bieuTuong: 'nguy-hiem'
                                 })
-                            });
-                        }
-                    },
-                    {
-                        ten: 'Không',
+                            }
+                        }).fail(function () {
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: 'Xóa bài viết thất bại',
+                                bieuTuong: 'nguy-hiem'
+                            })
+                        });
                     }
-                ]
-            });
+                },
+                {
+                    ten: 'Không',
+                }
+            ]
         });
+    });
 
-        $danhSachBaiTap.find('[data-chuc-nang="xem-danh-sach-nop"]').on('click', function () {
-            moPopupFull({
-                url: '/BaiTapNop/_DanhSachNop',
-                data: { maBaiTap: $(this).closest('[data-doi-tuong="muc-bai-viet"]').attr('data-ma') },
-                width: '400px'
-            });
-        })
-    }
+    $danhSachBaiTap.find('[data-chuc-nang="xem-danh-sach-nop"]').on('click', function () {
+        moPopupFull({
+            url: '/BaiTapNop/_DanhSachNop',
+            data: { maBaiTap: $(this).closest('[data-doi-tuong="muc-bai-viet"]').attr('data-ma') },
+            width: '400px'
+        });
+    })
+}
 
-    //#endregion
+//#endregion

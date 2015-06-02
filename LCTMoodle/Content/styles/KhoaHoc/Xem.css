@@ -590,6 +590,18 @@
     font-size: 12px;
 }
 
+.khung-nop li.nut {
+    margin: 0; 
+    margin-left: 4px;
+    min-width: 50px; 
+    max-width: 50px
+}
+
+    .khung-nop li.nut.nop-lai {
+        min-width: 80px; 
+        max-width: 80px
+    }
+
 /*#endregion */
 
 /*#endregion */

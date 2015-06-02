@@ -62,7 +62,6 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            //Tạo bài viết
             BaiVietBaiTapDataDTO baiViet = new BaiVietBaiTapDataDTO()
             {
                 tieuDe = layString(form, "TieuDe"),
@@ -80,63 +79,23 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            //Thêm bài viết
-            ketQua = BaiVietBaiTapDAO.them(baiViet);
-
-            if (ketQua.trangThai != 0)
+            BaiVietBaiTapDAO.lienKet = new string[]
             {
-                return ketQua;
-            }
-
-            BaiVietBaiTapViewDTO baiVietMoi = ketQua.ketQua as BaiVietBaiTapViewDTO;
-
-            //Lấy tập tin
-            if (baiVietMoi.tapTin != null)
-            {
-                ketQua = TapTinBUS.lay("BaiVietBaiTap_TapTin", baiVietMoi.tapTin.ma);
-
-                if (ketQua.trangThai == 0)
-                {
-                    baiVietMoi.tapTin = ketQua.ketQua as TapTinViewDTO;
-                }
-            }
-
-            return new KetQua()
-            {
-                trangThai = 0,
-                ketQua = baiVietMoi
+                "NguoiTao",
+                "TapTin"
             };
+            return BaiVietBaiTapDAO.them(baiViet);
         }
 
         public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
         {
-            KetQua ketQua = BaiVietBaiTapDAO.layTheoMaKhoaHoc(maKhoaHoc);
-            
-            if (ketQua.trangThai != 0)
+            BaiVietBaiTapDAO.lienKet = new string[]
             {
-                return ketQua;
-            }
-
-            List<BaiVietBaiTapViewDTO> danhSachBaiViet = ketQua.ketQua as List<BaiVietBaiTapViewDTO>;
-
-            foreach (BaiVietBaiTapViewDTO baiViet in danhSachBaiViet)
-            {
-                if (baiViet.tapTin != null)
-                {
-                    ketQua = TapTinDAO.layTheoMa("BaiVietBaiTap_TapTin", baiViet.tapTin.ma);
-
-                    if (ketQua.trangThai == 0)
-                    {
-                        baiViet.tapTin = ketQua.ketQua as TapTinViewDTO;
-                    }
-                }
-            }
-
-            return new KetQua()
-            {
-                trangThai = 0,
-                ketQua = danhSachBaiViet
+                "NguoiTao",
+                "TapTin",
+                "BaiTapNop"
             };
+            return BaiVietBaiTapDAO.layTheoMaKhoaHoc(maKhoaHoc);
         }
     }
 }

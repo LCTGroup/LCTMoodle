@@ -48,7 +48,7 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua them(Dictionary<string, string> form)
+        public static KetQua themHoacCapNhat(Dictionary<string, string> form)
         {
             KetQua ketQua = TapTinBUS.chuyen("BaiTapNop_TapTin", layInt(form, "TapTin"));
 
@@ -61,7 +61,7 @@ namespace BUSLayer
             {
                 maTapTin = (ketQua.ketQua as TapTinViewDTO).ma,
                 duongDan = layString(form, "DuongDan"),
-                maNguoiTao = 1,
+                maNguoiTao = (int)Session["NguoiDung"],
                 maBaiVietBaiTap = layInt(form, "BaiVietBaiTap")
             };
 
@@ -72,7 +72,17 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return BaiTapNopDAO.them(baiTapNop);
+            return BaiTapNopDAO.themHoacCapNhat(baiTapNop);
+        }
+
+        public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap)
+        {
+            BaiTapNopDAO.lienKet = new string[]
+            {
+                "NguoiTao",
+                "TapTin"
+            };
+            return BaiTapNopDAO.layTheoMaBaiVietBaiTap(maBaiVietBaiTap);
         }
     }
 }

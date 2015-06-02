@@ -13,7 +13,8 @@ CREATE TABLE dbo.BaiTapNop (
 
 GO
 --Thêm bài tập nộp
-CREATE PROC dbo.themBaiTapNop (
+--Hoặc cập nhật nếu đã có
+ALTER PROC dbo.themHoacCapNhatBaiTapNop (
 	@0 INT, --MaTapTin
 	@1 NVARCHAR(MAX), --DuongDan
 	@2 INT, --MaNguoiTao
@@ -21,9 +22,54 @@ CREATE PROC dbo.themBaiTapNop (
 )
 AS
 BEGIN
-	INSERT INTO dbo.BaiTapNop (MaTapTin, DuongDan, MaNguoiTao, MaBaiVietBaiTap)
-		VALUES (@0, @1, @2, @3)
+	UPDATE dbo.BaiTapNop
+		SET 
+			MaTapTin = @0,
+			DuongDan = @1,
+			MaNguoiTao = @2,
+			MaBaiVietBaiTap = @3
+		WHERE 
+			MaNguoiTao = @2 AND
+			MaBaiVietBaiTap = @3
 
+	IF (@@ROWCOUNT = 0)
+	BEGIN
+		INSERT INTO dbo.BaiTapNop (MaTapTin, DuongDan, MaNguoiTao, MaBaiVietBaiTap)
+			VALUES (@0, @1, @2, @3)
+
+		SELECT
+			Ma,
+			MaTapTin,
+			DuongDan,
+			ThoiDiemTao,
+			MaNguoiTao,
+			MaBaiVietBaiTap
+			FROM dbo.BaiTapNop
+			WHERE Ma = @@IDENTITY
+	END
+	ELSE
+	BEGIN
+		SELECT
+			Ma,
+			MaTapTin,
+			DuongDan,
+			ThoiDiemTao,
+			MaNguoiTao,
+			MaBaiVietBaiTap
+			FROM dbo.BaiTapNop
+			WHERE 
+				MaNguoiTao = @2 AND
+				MaBaiVietBaiTap = @3
+	END
+END
+
+GO
+--Lấy bài tập nộp theo mã bài tập
+CREATE PROC dbo.layBaiTapNopTheoMaBaiVietBaiTap (
+	@0 INT --MaBaiVietBaiTap
+)
+AS
+BEGIN
 	SELECT
 		Ma,
 		MaTapTin,
@@ -32,5 +78,5 @@ BEGIN
 		MaNguoiTao,
 		MaBaiVietBaiTap
 		FROM dbo.BaiTapNop
-		WHERE Ma = @@IDENTITY
+		WHERE MaBaiVietBaiTap = @0
 END

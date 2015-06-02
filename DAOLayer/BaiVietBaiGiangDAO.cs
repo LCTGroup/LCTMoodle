@@ -10,7 +10,7 @@ namespace DAOLayer
 {
     public class BaiVietBaiGiangDAO : DAO<BaiVietBaiGiangDAO, BaiVietBaiGiangViewDTO>
     {
-        public static BaiVietBaiGiangViewDTO gan(System.Data.SqlClient.SqlDataReader dong)
+        public static BaiVietBaiGiangViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
             BaiVietBaiGiangViewDTO baiViet = new BaiVietBaiGiangViewDTO();
 
@@ -33,7 +33,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (coLienKet("TapTin"))
+                            if (lienKet.co("TapTin"))
                             {
                                 KetQua ketQua = TapTinDAO.layTheoMa("BaiVietDienDan_TapTin", maTam);
 
@@ -59,7 +59,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (coLienKet("NguoiTao"))
+                            if (lienKet.co("NguoiTao"))
                             {
                                 KetQua ketQua = NguoiDungDAO.layTheoMa(maTam);
 
@@ -82,7 +82,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (coLienKet("KhoaHoc"))
+                            if (lienKet.co("KhoaHoc"))
                             {
                                 KetQua ketQua = KhoaHocDAO.layTheoMa(maTam);
 

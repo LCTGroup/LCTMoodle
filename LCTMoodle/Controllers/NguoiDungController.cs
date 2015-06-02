@@ -85,11 +85,11 @@ namespace LCTMoodle.Controllers
                     new 
                     {
                         ma = 1,
-                        ten = "Nguyễn Minh Chiến"
+                        ten = "Lê Bình Chiêu"
                     },
                     new 
                     {
-                        ma = 21,
+                        ma = 1,
                         ten = "Lê Bình Chiêu"
                     }
                 }

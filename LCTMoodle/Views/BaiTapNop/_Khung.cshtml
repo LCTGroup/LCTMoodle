@@ -1,0 +1,78 @@
+﻿@model List<DTOLayer.BaiTapNopViewDTO>
+@{
+    bool daNop = false;
+}
+
+<section class="danh-sach-nop">
+    @if (Model != null)
+    {
+
+        if (Session["NguoiDung"] != null)
+        {
+            int maNguoiDung = (int)Session["NguoiDung"];
+            daNop = Model.Exists(x => x.nguoiTao.ma == maNguoiDung);
+        }
+
+        if (daNop)
+        {
+            if (Model.Count != 1)
+            {
+                <a data-doi-tuong="hien-thi" data-chuc-nang="xem-danh-sach-nop" data-type="4">
+                    <span><b>Bạn</b></span><span>và <b>@(Model.Count - 1)</b> người khác đã nộp</span>
+                </a>
+            }
+            else
+            {
+                <a data-doi-tuong="hien-thi" data-chuc-nang="xem-danh-sach-nop" data-type="2">
+                    <span><b>Bạn</b> đã nộp</span>
+                </a>
+            }
+        }
+        else
+        {
+            <a data-doi-tuong="hien-thi" data-chuc-nang="xem-danh-sach-nop" data-type="3">
+                <span><b>@Model.Count</b> người đã nộp</span>
+            </a>
+        }
+    }
+    else
+    {
+        <a data-chuc-nang="xem-danh-sach-nop" data-type="1">                      
+            <span>Chưa ai nộp</span>
+        </a>
+    }
+</section>
+<form data-doi-tuong="nop-bai-form" class="lct-form khung-nop">
+    <input type="hidden" name="BaiVietBaiTap" value="@ViewData["MaBaiVietBaiTap"]" />
+    <ul style="flex-wrap: nowrap; padding: 5px 10px 10px;">
+        <li style="margin: 0; min-width: 32px; max-width: 32px;">
+            <i data-chuc-nang="thay-doi-input" title="Nộp bằng đường dẫn" data-value="duong-dan" style="line-height: 32px; width: 32px; font-size: 20px; color: #888; cursor: pointer;" class="pe-7s-cloud"></i>
+        </li>
+        <li data-doi-tuong="tap-tin" style="width: 100%; margin: 0;">
+            <section class="noi-dung">
+                <article class="input">
+                    <input name="TapTin" data-validate="bat-buoc" type="file" />
+                </article>
+            </section>
+        </li>
+        <li data-doi-tuong="duong-dan" style="width: 100%; margin: 0; display: none;">
+            <section class="noi-dung">
+                <article class="input">
+                    <input disabled="disabled" name="DuongDan" data-validate="bat-buoc" type="text" placeholder="Nhập đường dẫn" />
+                </article>
+            </section>
+        </li>
+        @if (daNop)
+        {
+            <li class="nut nop-lai">
+                <button style="padding: 0; margin: 0; width: 100%; height: 32px;" class="chap-nhan" type="submit">Cập nhật</button>
+            </li>
+        }
+        else
+        {
+            <li class="nut">
+                <button style="padding: 0; margin: 0; width: 100%; height: 32px;" class="chap-nhan" type="submit">Nộp</button>
+            </li>   
+        }
+    </ul>
+</form>

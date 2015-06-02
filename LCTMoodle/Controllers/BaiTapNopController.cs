@@ -13,18 +13,22 @@ namespace LCTMoodle.Controllers
     public class BaiTapNopController : LCTController
     {
         public ActionResult XuLyThem(FormCollection form)
-        {
-            KetQua ketQua = BaiTapNopBUS.them(chuyenDuLieuForm(form));
-            
-            return Json(ketQua);
+        {            
+            return Json(BaiTapNopBUS.themHoacCapNhat(chuyenDuLieuForm(form)));
         }
 
         public ActionResult _DanhSachNop(int maBaiTap)
         {
+            KetQua ketQua = BaiTapNopBUS.layTheoMaBaiVietBaiTap(maBaiTap);
+            List<BaiTapNopViewDTO> danhSachBaiTapNop =
+                ketQua.trangThai == 0 ?
+                    ketQua.ketQua as List<BaiTapNopViewDTO> :
+                    null;
+
             return Json(new KetQua()
             {
                 trangThai = 0,
-                ketQua = renderPartialViewToString(ControllerContext, "BaiTapNop/_DanhSachNop.cshtml")
+                ketQua = renderPartialViewToString(ControllerContext, "BaiTapNop/_DanhSachNop.cshtml", danhSachBaiTapNop)
             }, JsonRequestBehavior.AllowGet);
         }
 	}

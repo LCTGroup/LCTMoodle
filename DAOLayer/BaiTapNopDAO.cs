@@ -11,7 +11,7 @@ namespace DAOLayer
 {
     public class BaiTapNopDAO : DAO<BaiTapNopDAO, BaiTapNopViewDTO>
     {
-        public static BaiTapNopViewDTO gan(System.Data.SqlClient.SqlDataReader dong)
+        public static BaiTapNopViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
             BaiTapNopViewDTO baiTapNop = new BaiTapNopViewDTO();
 
@@ -28,7 +28,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (coLienKet("TapTin"))
+                            if (lienKet.co("TapTin"))
                             {
                                 KetQua ketQua = TapTinDAO.layTheoMa("BaiTapNop_TapTin", maTam);
                                 
@@ -57,7 +57,7 @@ namespace DAOLayer
 
                         if (maTam != 0)
                         {
-                            if (coLienKet("NguoiTao"))
+                            if (lienKet.co("NguoiTao"))
                             {
                                 KetQua ketQua = NguoiDungDAO.layTheoMa(maTam);
 
@@ -76,7 +76,6 @@ namespace DAOLayer
                         }
                         break;
                     case "MaBaiVietBaiTap":
-                        
                         baiTapNop.baiVietBaiTap = new BaiVietBaiTapViewDTO()
                         {
                             ma = layInt(dong, i)
@@ -90,11 +89,11 @@ namespace DAOLayer
             return baiTapNop;
         }
 
-        public static KetQua them(BaiTapNopDataDTO baiTapNop)
+        public static KetQua themHoacCapNhat(BaiTapNopDataDTO baiTapNop)
         {
             return layDong
             (
-                "themBaiTapNop",
+                "themHoacCapNhatBaiTapNop",
                 new object[] 
                 { 
                     baiTapNop.maTapTin,
@@ -105,16 +104,16 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap)
         {
-            return layDong
-                (
-                    "layBaiTapNopTheoMa",
-                    new object[]
-                    {
-                        ma
-                    }
-                );
+            return layDanhSachDong
+            (
+                "layBaiTapNopTheoMaBaiVietBaiTap",
+                new object[]
+                {
+                    maBaiVietBaiTap
+                }
+            );
         }
     }
 }
