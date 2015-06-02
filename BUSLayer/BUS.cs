@@ -8,6 +8,8 @@ namespace BUSLayer
 {
     public class BUS
     {
+        protected static System.Web.SessionState.HttpSessionState Session = System.Web.HttpContext.Current.Session;
+
         #region Lấy giá trị
         protected static string layString(Dictionary<string, string> form, string key, string macDinh = null)
         {
