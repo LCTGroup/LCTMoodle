@@ -17,7 +17,7 @@ $(function () {
 	Bật tắt đối tượng Target
 */
 function khoiTaoTatMoDoiTuong($danhSachNut) {
-    $danhSachNut.on('click', function (e) {
+    $danhSachNut.off('click.tat_mo').on('click.tat_mo', function (e) {
         e.stopPropagation();
 
         //Lấy đối tượng 

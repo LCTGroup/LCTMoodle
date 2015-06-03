@@ -14,7 +14,7 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult Xem(int ma)
         {
-            KetQua ketQua = KhoaHocDAO.layTheoMa(ma);
+            KetQua ketQua = KhoaHocBUS.layTheoMa(ma);
 
             if (ketQua.trangThai == 0)
             {
@@ -38,7 +38,7 @@ namespace LCTMoodle.Controllers
 
         public ActionResult _Khung(int ma)
         {
-            KetQua ketQua = KhoaHocDAO.layTheoMa(ma);
+            KetQua ketQua = KhoaHocBUS.layTheoMa(ma);
 
             if (ketQua.trangThai == 0)
             {

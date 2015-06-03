@@ -5,7 +5,7 @@
         khoiTaoForm($khung.find('[data-doi-tuong="binh-luan-form"]'));
     });
 
-    khoiTaoXoa($danhSachKhung.find('[data-chuc-nang="xoa-binh-luan"]'));
+    khoiTaoItem($danhSachKhung.find('[data-doi-tuong="muc-binh-luan"]'));
 }
 
 function khoiTaoForm($form) {
@@ -18,7 +18,10 @@ function khoiTaoForm($form) {
                 dataType: 'JSON'
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    $form.closest('[data-doi-tuong="khung-binh-luan"]').find('[data-doi-tuong="danh-sach"]').append(data.ketQua);
+                    var $binhLuan = $(data.ketQua);
+                    khoiTaoItem($binhLuan);
+
+                    $form.closest('[data-doi-tuong="khung-binh-luan"]').find('[data-doi-tuong="danh-sach"]').append($binhLuan);
 
                     khoiTaoLCTFormMacDinh($form);
                 }
@@ -38,6 +41,11 @@ function khoiTaoForm($form) {
             });
         }
     });
+}
+
+function khoiTaoItem($item) {
+    khoiTaoTatMoDoiTuong($item.find('[data-chuc-nang="tat-mo"]'));
+    khoiTaoXoa($item.find('[data-chuc-nang="xoa-binh-luan"]'));
 }
 
 function khoiTaoXoa($danhSachNut) {
