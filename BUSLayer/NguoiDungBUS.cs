@@ -20,7 +20,7 @@ namespace BUSLayer
 
             #region Kiểm tra Valid
 
-            if (NguoiDungBUS.tenTaiKhoanTonTai(nguoiDung.tenTaiKhoan))
+            if (NguoiDungBUS.tonTaiTenTaiKhoan(nguoiDung.tenTaiKhoan))
             {
                 thongBao.Add("Tên tài khoản bị trùng");
             }
@@ -152,7 +152,7 @@ namespace BUSLayer
             //Xóa session            
             HttpContext.Current.Session.Abandon();
         }
-        public static bool tenTaiKhoanTonTai(string tenTaiKhoan)
+        public static bool tonTaiTenTaiKhoan(string tenTaiKhoan)
         {
             return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan).trangThai == 0 ? true : false;
         }
