@@ -1975,3 +1975,63 @@
 
 /*#endregion */
 
+/*#region Table */
+
+.lct-bang {
+    display: table;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.lct-bang > .nhom-cot {
+    display: table-column-group;
+}
+
+    .lct-bang > .nhom-cot > .cot {
+        display: table-column;
+    }
+
+.lct-bang > * {
+    display: table-row;
+}
+
+    .lct-bang > * > * {
+        padding: 5px;
+        display: table-cell;
+        border-right: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+    }
+
+    .lct-bang > * > *:last-child {
+        border-right: 0;
+    }
+
+    .lct-bang > *:last-child > * {
+        border-bottom: 0;
+    }
+
+    .lct-bang > *:nth-child(even) > * {
+        background-color: #fcfcfc;
+    }
+
+.lct-bang > *.dong-tieu-de > * {
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    padding: 10px;
+}
+
+    .lct-bang > *.dong-tieu-de > *:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        bottom: 0;
+        left: 0;
+        background-color: #08c;
+    }
+
+/*#endregion */

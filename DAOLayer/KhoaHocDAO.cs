@@ -92,22 +92,22 @@ namespace DAOLayer
         public static KetQua them(KhoaHocDataDTO khoaHoc)
         {
             return layGiaTri<int>
-                (
-                    "themKhoaHoc",
-                    new object[] 
-                    {
-                        khoaHoc.ten,
-                        khoaHoc.moTa,
-                        khoaHoc.maHinhDaiDien,
-                        khoaHoc.maChuDe,
-                        khoaHoc.maNguoiTao,
-                        khoaHoc.han,
-                        khoaHoc.canDangKy,
-                        khoaHoc.hanDangKy,
-                        khoaHoc.phiThamGia,
-                        khoaHoc.cheDoRiengTu
-                    }
-                );
+            (
+                "themKhoaHoc",
+                new object[] 
+                {
+                    khoaHoc.ten,
+                    khoaHoc.moTa,
+                    khoaHoc.maHinhDaiDien,
+                    khoaHoc.maChuDe,
+                    khoaHoc.maNguoiTao,
+                    khoaHoc.han,
+                    khoaHoc.canDangKy,
+                    khoaHoc.hanDangKy,
+                    khoaHoc.phiThamGia,
+                    khoaHoc.cheDoRiengTu
+                }
+            );
         }
     }
 }

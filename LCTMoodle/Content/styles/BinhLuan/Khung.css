@@ -35,6 +35,7 @@
             .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .nguoi-dung {
                 font-weight: bold;
                 display: inline;
+                font-size: 12px;
             }
 
             .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .nguoi-dung a {
@@ -44,6 +45,7 @@
             .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .noi-dung {
                 display: inline;
                 color: #333;
+                font-size: 12px;
             }
                 
             .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .tap-tin {

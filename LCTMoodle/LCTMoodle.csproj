@@ -121,6 +121,7 @@
     <Folder Include="Plugin\ckeditor\samples\plugins\toolbar\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\wysiwygarea\" />
     <Folder Include="Views\TapTin\" />
+    <Folder Include="WebServices\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Controllers\BaiVietDienDanController.cs" />
     <Compile Include="Controllers\BinhLuanController.cs" />
     <Compile Include="Controllers\ChuDeController.cs" />
+    <Compile Include="Controllers\GiaoTrinhController.cs" />
     <Compile Include="Controllers\HoiDapController.cs" />
     <Compile Include="Controllers\KhoaHocController.cs" />
     <Compile Include="Controllers\LCTController.cs" />
@@ -142,7 +144,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebServices\WindowsPhone\ClassTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
@@ -160,6 +161,7 @@
     <Content Include="Content\scripts\BinhLuan\Khung.js" />
     <Content Include="Content\scripts\ChuDe\Khung.js" />
     <Content Include="Content\images\user-avatar.jpg" />
+    <Content Include="Content\scripts\GiaoTrinh\Tao.js" />
     <Content Include="Content\scripts\HoiDap\CauHoi.js" />
     <Content Include="Content\scripts\HoiDap\TaoCauHoi.js" />
     <Content Include="Content\scripts\KhoaHoc\Xem.js" />
@@ -169,6 +171,7 @@
     <Content Include="Content\scripts\LCT\Khung.js" />
     <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
     <Content Include="Content\styles\BinhLuan\Khung.css" />
+    <Content Include="Content\styles\GiaoTrinh\Tao.css" />
     <Content Include="Content\styles\HoiDap\CauHoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
     <Content Include="Content\styles\KhoaHoc\Xem.css" />
@@ -404,6 +407,8 @@
     <Content Include="Views\ChuDe\_Chon.cshtml" />
     <Content Include="Views\BaiTapNop\_Khung.cshtml" />
     <Content Include="Views\HoiDap\TaoCauHoi.cshtml" />
+    <Content Include="Views\GiaoTrinh\Tao.cshtml" />
+    <Content Include="Views\GiaoTrinh\_Item_Tao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

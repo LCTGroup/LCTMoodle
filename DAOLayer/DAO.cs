@@ -87,7 +87,6 @@ namespace DAOLayer
             }
             finally
             {
-                lienKet = null;
                 ketNoi.Close();
             }
         }
@@ -153,7 +152,6 @@ namespace DAOLayer
             }
             finally
             {
-                lienKet = null;
                 ketNoi.Close();
             }
         }

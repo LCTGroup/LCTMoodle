@@ -70,14 +70,13 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            var Session = HttpContext.Current.Session;
             //Chưa xử lý quản lý
             KhoaHocDataDTO khoaHoc  = new KhoaHocDataDTO()
             {
                 ten = layString(form, "Ten"),
                 moTa = layString(form, "MoTa"),
                 maChuDe = layInt(form, "ChuDe"),
-                maNguoiTao = Session["NguoiDung"] == null ? 0 : (int)Session["NguoiDung"],
+                maNguoiTao = (int)Session["NguoiDung"],
                 maHinhDaiDien = (ketQua.ketQua as TapTinViewDTO).ma,
                 canDangKy = layBool(form, "CanDangKy"),
                 phiThamGia = layInt(form, "PhiThamGia"),
@@ -102,6 +101,11 @@ namespace BUSLayer
             }
 
             return KhoaHocDAO.them(khoaHoc);
+        }
+
+        public static KetQua layTheoMa(int ma)
+        {
+            return KhoaHocDAO.layTheoMa(ma);
         }
     }
 }

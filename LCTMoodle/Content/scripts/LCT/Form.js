@@ -967,6 +967,17 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
 
 function khoiTaoSubmit_LCT($form, thamSo) {
     $form.on('submit', function (e) {
+        if (mangTam.dangSubmit || false)
+        {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Đang xử lý, vui lòng đợi vài giây',
+                bieuTuong: 'can-than'
+            })
+            return;
+        }
+        mangTam.dangSubmit = true;
+
         e = e || window.event;
         e.preventDefault();
 
@@ -1076,7 +1087,9 @@ function khoiTaoSubmit_LCT($form, thamSo) {
 
         if (!coLoi) {
             if ('submit' in thamSo) {
-                thamSo.submit();
+                $.when(thamSo.submit()).then(function () {
+                    mangTam.dangSubmit = false;
+                });
             }
         }
     });
