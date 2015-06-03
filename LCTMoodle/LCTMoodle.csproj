@@ -150,6 +150,7 @@
     <Content Include="Content\images\ChuDe\MacDinh\he-thong.png" />
     <Content Include="Content\images\ChuDe\MacDinh\khoa-hoc.png" />
     <Content Include="Content\images\HeThong\HeThong.png" />
+    <Content Include="Content\images\HoiDap\HoiDap.png" />
     <Content Include="Content\images\KhoaHoc\KhoaHoc.png" />
     <Content Include="Content\images\LCT\AllSiteImages.png" />
     <Content Include="Content\images\LCT\AllSiteImages_temp.png" />
@@ -364,6 +365,7 @@
     <Content Include="Content\images\ChuDe\ChuDe.psd" />
     <Content Include="Content\images\HeThong\HeThong.psd" />
     <Content Include="Content\images\KhoaHoc\KhoaHoc.psd" />
+    <Content Include="Content\images\HoiDap\HoiDap.psd" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\LCT\Khung.cshtml" />
     <Content Include="Views\TrangChu\Index.cshtml" />

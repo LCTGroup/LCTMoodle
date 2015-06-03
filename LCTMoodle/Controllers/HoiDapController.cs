@@ -16,7 +16,7 @@ namespace LCTMoodle.Controllers
         // GET: /HoiDap/
         public ActionResult Index()
         {
-            return View();
+            return View(CauHoiBUS.layToanBoCauHoi().ketQua);
         }
         public ActionResult TaoCauHoi()
         {
@@ -29,9 +29,15 @@ namespace LCTMoodle.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult XuLyThem(FormCollection form)
+        public ActionResult XuLyThemCauHoi(FormCollection form)
         {
             return Json(CauHoiBUS.them(chuyenDuLieuForm(form)));
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult XuLyThemTraLoi(FormCollection form)
+        {
+            return Json(TraLoiBUS.them(chuyenDuLieuForm(form)).ketQua);
         }
 	}
 }

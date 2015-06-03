@@ -82,5 +82,16 @@ namespace DAOLayer
                 lienKet
             );
         }        
+        public static KetQua layDanhSachCauHoi(LienKet lienKet = null)
+        {
+            return layDanhSachDong
+            (
+                "layToanBoCauHoi",
+                new object[] 
+                {
+                },
+                lienKet
+            );
+        }
     }
 }
