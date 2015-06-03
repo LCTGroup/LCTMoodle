@@ -121,6 +121,7 @@
     <Folder Include="Plugin\ckeditor\samples\plugins\toolbar\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\wysiwygarea\" />
     <Folder Include="Views\TapTin\" />
+    <Folder Include="WebServices\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -143,7 +144,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebServices\WindowsPhone\ClassTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
@@ -406,6 +406,7 @@
     <Content Include="Views\BaiTapNop\_Khung.cshtml" />
     <Content Include="Views\HoiDap\TaoCauHoi.cshtml" />
     <Content Include="Views\GiaoTrinh\Tao.cshtml" />
+    <Content Include="Views\GiaoTrinh\_Item_Tao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

@@ -165,7 +165,7 @@ function moPopupFull(thamSo) {
 
         $noiDungPopup.html(thamSo.html);
 
-        $popup.trigger('Mo');
+        $popup.mo();
     }
     else if ('url' in thamSo) {
         $.ajax({
@@ -335,7 +335,7 @@ function moPopup(thamSo) {
         $danhSachNut.append($nut);
     }
     
-    $popup.trigger('Mo');
+    $popup.mo();
 }
 
 /*

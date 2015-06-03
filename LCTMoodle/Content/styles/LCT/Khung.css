@@ -74,12 +74,13 @@ body:not(.tai) > .bieu-tuong-tai {
             display: block;
             font-size: 15px;
             transition: 0.5s;
-            color: transparent;
+            color: #ddd;
+            opacity: 0.3;
         }
             
             :hover > .khung-chuc-nang-lct button i,
             .khung-chuc-nang-lct ul.mo + button i {
-                color: #ddd;
+                opacity: 1;
             }
                 
             .khung-chuc-nang-lct button:hover i {
