@@ -68,3 +68,51 @@ BEGIN
 	DELETE FROM dbo.BaiVietDienDan
 		WHERE Ma = @0
 END
+
+GO
+--Lấy bài viết diễn đàn theo mã
+CREATE PROC dbo.layBaiVietDienDanTheoMa (
+	@0 INT --Ma
+)
+AS
+BEGIN
+	SELECT 
+		Ma,
+		TieuDe,
+		NoiDung,
+		MaTapTin,
+		ThoiDiemTao,
+		MaNguoiTao,
+		MaKhoaHoc
+		FROM dbo.BaiVietDienDan
+		WHERE Ma = @0
+END
+
+GO
+--Cập nhật bài viết bài giảng theo mã
+ALTER PROC dbo.capNhatBaiVietDienDanTheoMa (
+	@0 INT, --Mã
+	@1 dbo.BangCapNhat READONLY
+)
+AS
+BEGIN
+	--Tạo chuỗi gán
+	DECLARE @query NVARCHAR(MAX) = dbo.taoChuoiCapNhat(@1)
+
+	EXEC('
+		UPDATE dbo.BaiVietDienDan
+			SET ' + @query + '
+			WHERE Ma = ' + @0 + '
+	')
+	
+	SELECT 
+		Ma,
+		TieuDe,
+		NoiDung,
+		MaTapTin,
+		ThoiDiemTao,
+		MaNguoiTao,
+		MaKhoaHoc
+		FROM dbo.BaiVietDienDan
+		WHERE Ma = @0
+END

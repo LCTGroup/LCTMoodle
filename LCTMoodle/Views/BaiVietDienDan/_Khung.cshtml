@@ -4,39 +4,7 @@
     <section class="tieu-de">
         Đăng bài viết
     </section>
-    <form class="noi-dung lct-form" id="tao_bai_viet_form">
-        <input type="hidden" name="KhoaHoc" value="@ViewData["MaKhoaHoc"]" />
-        <article>
-            <ul>
-                <li>
-                    <section class="noi-dung">
-                        <article class="input">
-                            <input data-validate="bat-buoc" data-chuc-nang="bat-dau-tao-bai-viet" type="text" name="TieuDe" placeholder="Tiêu đề" />
-                        </article>
-                    </section>
-                </li>
-                <li data-an>
-                    <section class="noi-dung">
-                        <section class="input">
-                            <textarea data-validate="bat-buoc" name="NoiDung" data-input-type="editor" placeholder="Nội dung"></textarea>
-                        </section>
-                    </section>
-                </li>
-                <li data-an>
-                    <section class="noi-dung">
-                        <article class="input">
-                            <input type="file" name="TapTin" />
-                        </article>
-                    </section>
-                </li>
-            </ul>
-            <section data-an class="lct-khung-button">
-                <button type="submit" class="chap-nhan">
-                    Đăng
-                </button>
-            </section>
-        </article>
-    </form>
+    @Html.Partial("~/Views/BaiVietDienDan/_Form.cshtml", null, new ViewDataDictionary() { { "MaKhoaHoc", ViewData["MaKhoaHoc"].ToString() } })
 </section>
 
 <section class="hop">

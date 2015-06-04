@@ -18,7 +18,7 @@ namespace LCTMoodle.Controllers
 
             KetQua ketQua = BaiVietDienDanBUS.layTheoMaKhoaHoc(maKhoaHoc);
 
-            List<BaiVietDienDanViewDTO> danhSachBaiViet = 
+            List<BaiVietDienDanViewDTO> danhSachBaiViet =
                 ketQua.trangThai == 0 ?
                 ketQua.ketQua as List<BaiVietDienDanViewDTO> :
                 new List<BaiVietDienDanViewDTO>();
@@ -26,18 +26,39 @@ namespace LCTMoodle.Controllers
             try
             {
                 return Json(new KetQua()
-                    {
-                        trangThai = 0,
-                        ketQua =
-                            renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Khung.cshtml", danhSachBaiViet, ViewData)
-                    }, JsonRequestBehavior.AllowGet);
+                {
+                    trangThai = 0,
+                    ketQua =
+                        renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Khung.cshtml", danhSachBaiViet, ViewData)
+                }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
                 return Json(new KetQua()
-                    {
-                        trangThai = 2
-                    }, JsonRequestBehavior.AllowGet);
+                {
+                    trangThai = 2
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult _Form(int ma = 0)
+        {
+            KetQua ketQua = BaiVietDienDanBUS.layTheoMa(ma);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                ViewData["MaKhoaHoc"] = (ketQua.ketQua as BaiVietDienDanViewDTO).khoaHoc.ma;
+
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua =
+                        renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Form.cshtml", ketQua.ketQua, ViewData)
+                }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -67,6 +88,11 @@ namespace LCTMoodle.Controllers
                 BaiVietDienDanDAO.xoaTheoMa(ma), 
                 JsonRequestBehavior.AllowGet
             );
+        }
+
+        public ActionResult XuLyCapNhat(FormCollection formCollection)
+        {
+
         }
 	}
 }

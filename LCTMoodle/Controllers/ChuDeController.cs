@@ -174,13 +174,13 @@ namespace LCTMoodle.Controllers
             {
                 ViewData["PhamVi"] = phamVi;
                 return Json(new KetQua()
-                    {
-                        trangThai = 0,
-                        ketQua = renderPartialViewToString(ControllerContext,
-                        "ChuDe/_Chon.cshtml",
-                        ketQua.ketQua,
-                        ViewData)
-                    }, JsonRequestBehavior.AllowGet);
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext,
+                    "ChuDe/_Chon.cshtml",
+                    ketQua.ketQua,
+                    ViewData)
+                }, JsonRequestBehavior.AllowGet);
             }
         }
 	}

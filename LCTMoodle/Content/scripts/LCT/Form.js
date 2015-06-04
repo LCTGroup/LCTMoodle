@@ -87,8 +87,17 @@ function khoiTaoNutMacDinh_LCT($form) {
         $chua.find('input[type="file"]').each(function () {
             $phanTu = $(this);
 
-            $phanTu.removeClass('co');
-            $phanTu.find('~ input[type="hidden"]').val('');
+            var maMacDinh = $phanTu.attr('data-ma-mac-dinh');
+            var loaiMacDinh = $phanTu.attr('data-loai-mac-dinh');
+            if (maMacDinh) {
+                $phanTu.addClass('co');
+                $phanTu.find('~ img').attr('src', '/LayTapTin/' + loaiMacDinh + '/' + maMacDinh);
+            }
+            else {
+                $phanTu.removeClass('co');
+                $phanTu.find('~ img').removeAttr('src');
+            }
+            $phanTu.find('~ input[type="hidden"]').val(maMacDinh);
         });
 
         // Chủ đề
@@ -112,8 +121,17 @@ function khoiTaoHienThiInput_LCT($form) {
         var $phanTu = $(this);
         $phanTu.wrap('<label class="lct-file-label"></label>');
         var name = $phanTu.attr('name');
+        var maMacDinh = $phanTu.attr('data-ma-mac-dinh');
+        var loaiMacDinh = $phanTu.attr('data-loai-mac-dinh');
         $phanTu.removeAttr('name');
-        $phanTu.after('<input type="hidden" name="' + name + '"><img /><i></i><u></u>');
+
+        $phanTu.after('<input type="hidden" name="' + name + '" value="' + maMacDinh + '"><img src="' + (maMacDinh ? '/LayTapTin/' + loaiMacDinh + '/' + maMacDinh : '') + '" /><i></i><u></u>');
+        if (maMacDinh) {
+            $phanTu.addClass('co');
+        }
+        else {
+            $phanTu.removeClass('co');
+        }
     });
 
     $form.find('input[data-input-type="chu-de"]').each(function () {
@@ -505,8 +523,17 @@ function khoiTaoLCTFormMacDinh($form) {
     $form.find('input[type="file"]').each(function () {
         $phanTu = $(this);
 
-        $phanTu.removeClass('co');
-        $phanTu.find('~ input[type="hidden"]').val('');
+        var maMacDinh = $phanTu.attr('data-ma-mac-dinh');
+        var loaiMacDinh = $phanTu.attr('data-loai-mac-dinh');
+        if (maMacDinh) {
+            $phanTu.addClass('co');
+            $phanTu.find('~ img').attr('src', '/LayTapTin/' + loaiMacDinh + '/' + maMacDinh);
+        }
+        else {
+            $phanTu.removeClass('co');
+            $phanTu.find('~ img').removeAttr('src');
+        }
+        $phanTu.find('~ input[type="hidden"]').val(maMacDinh);
     });
     $form.find('input[data-input-type="chu-de"], input[data-input-type="goi-y"]').each(function () {
         var $phanTu = $(this);

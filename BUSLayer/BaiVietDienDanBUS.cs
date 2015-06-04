@@ -93,5 +93,10 @@ namespace BUSLayer
                 "TapTin"
             });
         }
+
+        public static KetQua layTheoMa(int ma)
+        {
+            return BaiVietDienDanDAO.layTheoMa(ma);
+        }
     }
 }

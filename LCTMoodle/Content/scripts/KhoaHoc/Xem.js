@@ -217,7 +217,7 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
                     ten: 'Có',
                     xuLy: function () {
                         $.ajax({
-                            url: '/BaiVietDienDan/Xoa/' + $nut.attr('data-value'),
+                            url: '/BaiVietDienDan/Xoa/' + $nut.closest('[data-doi-tuong="muc-bai-viet"]').attr('data-value'),
                             type: 'POST',
                             dataType: 'JSON'
                         }).done(function (data) {
@@ -245,7 +245,46 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
                 }
             ]
         });
-    })
+    });
+
+    $danhSachBaiViet.find('[data-chuc-nang="sua-bai-viet"]').on('click', function () {
+        var $baiViet = $(this).closest('[data-doi-tuong="muc-bai-viet"]');
+
+        $.ajax({
+            url: '/BaiVietDienDan/_Form/' + $baiViet.attr('data-ma'),
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                var $khungNoiDung = $baiViet.find('[data-doi-tuong="khung-noi-dung"]');
+
+                var $form = $(data.ketQua);
+                khoiTaoLCTForm($form, {
+                    submit: function () {
+                        $.ajax()
+                    }
+                });
+
+                $form.css({
+                    border: '1px solid #ddd'
+                });
+
+                $khungNoiDung.html($form);
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Sửa bài viết thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
+            }
+        }).fail(function () {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Sửa bài viết thất bại',
+                bieuTuong: 'nguy-hiem'
+            });
+        });
+    });
 }
 
 //#endregion

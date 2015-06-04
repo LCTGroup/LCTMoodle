@@ -19,7 +19,7 @@
                 </section>
             </section>            
         </section>
-        <section class="khung-noi-dung">
+        <section data-doi-tuong="khung-noi-dung" class="khung-noi-dung">
             <h2 class="tieu-de">
                 @Model.tieuDe
             </h2>
@@ -39,7 +39,10 @@
         <section class="khung-chuc-nang-lct">
             <ul data-doi-tuong="cndd-@Model.ma">
                 <li>
-                    <a data-chuc-nang="xoa-bai-viet" data-value="@Model.ma">Xóa bài viết</a>
+                    <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
+                </li>
+                <li>
+                    <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
                 </li>
             </ul>
             <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cndd-@Model.ma">
