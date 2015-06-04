@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<DTOLayer.CauHoiViewDTO>
+@{
     ViewData["Title"] = "Hỏi đáp";
     Layout = "~/Views/LCT/Khung.cshtml";
 
@@ -19,72 +20,41 @@
 @section Scripts {
 }
 
-<article class="hop hop-1-vien">
+<article class="hop">
     <section class="tieu-de">Danh sách câu hỏi</section>
     <section class="noi-dung">
-        <article class="cau-hoi">
-            <ul>
-                <li>
-                    <div class="thong-tin">
-                        <div class="diem">
-                            <div class="so-diem">5</div>
-                            <div class="tieu-de">Điểm</div>
-                        </div>
-                        <div class="tra-loi">
-                            <div class="so-cau-tra-loi">2</div>
-                            <div class="tieu-de">Trả lời</div>
-                        </div>
+        
+        @for (int i = Model.Count-1; i >= 0; i--)
+        {
+            <article class="cau-hoi">
+                <div class="thong-tin">
+                    <div class="diem">
+                        <span>0</span>
                     </div>
-                    <div class="chi-tiet">
-                        <div class="tieu-de">
-                            <a href="/HoiDap/XemCauHoi/1">
-                                Cách kết nối CSDL trong MVC5
+                    <div class="tra-loi">
+                        <span>0</span>
+                    </div>
+                </div>
+                <div class="chi-tiet">
+                    <div class="tieu-de">
+                        <a href="/HoiDap/XemCauHoi/@Model[i].ma">
+                            @Model[i].tieuDe
+                        </a>
+                    </div>
+                    <div class="thong-tin-dang">
+                        <div class="nguoi-dang">
+                            <a href="/NguoiDung/@Model[i].nguoiTao.ma">
+                                <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model[i].nguoiTao.hinhDaiDien.ma" />
+                                <span>@Model[i].nguoiTao.tenTaiKhoan</span>
                             </a>
                         </div>
-                        <div class="thong-tin-dang">đăng lúc 24/5/2015 bởi <a href="#">NMC</a></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="thong-tin">
-                        <div class="diem">
-                            <div class="so-diem">5</div>
-                            <div class="tieu-de">Điểm</div>
-                        </div>
-                        <div class="tra-loi">
-                            <div class="so-cau-tra-loi">2</div>
-                            <div class="tieu-de">Trả lời</div>
+                        <div class="thoi-gian-dang">
+                            <span>@Model[i].thoiDiemTao</span>
                         </div>
                     </div>
-                    <div class="chi-tiet">
-                        <div class="tieu-de">
-                            <a href="#">
-                                Cách cài đặt Esclipse để lập trình Android
-                            </a>
-                        </div>
-                        <div class="thong-tin-dang">đăng lúc 24/5/2015 bởi <a href="#">NMC</a></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="thong-tin">
-                        <div class="diem">
-                            <div class="so-diem">5</div>
-                            <div class="tieu-de">Điểm</div>
-                        </div>
-                        <div class="tra-loi">
-                            <div class="so-cau-tra-loi">2</div>
-                            <div class="tieu-de">Trả lời</div>
-                        </div>
-                    </div>
-                    <div class="chi-tiet">
-                        <div class="tieu-de">
-                            <a href="#">
-                                Cách lập trình swift trên Windows
-                            </a>
-                        </div>
-                        <div class="thong-tin-dang">đăng lúc 24/5/2015 bởi <a href="#">NMC</a></div>
-                    </div>
-                </li>
-            </ul>
-        </article>
+                </div>
+            </article>
+        }
+
     </section>
 </article>

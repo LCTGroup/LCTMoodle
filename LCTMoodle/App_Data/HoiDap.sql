@@ -12,28 +12,6 @@ CREATE TABLE dbo.CauHoi
 )
 
 GO
---Tạo Trả Lời
-CREATE TABLE dbo.TraLoi
-(
-	Ma INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	NoiDung NVARCHAR(MAX) NOT NULL,
-	ThoiDiemTao DATETIME DEFAULT GETDATE(),
-	Duyet BIT DEFAULT NULL,
-	MaNguoiTao INT NOT NULL,
-	MaCauHoi INT NOT NULL,
-)
-
-GO
---Tạo Hỏi Đáp - Điểm
-CREATE TABLE dbo.HoiDap_Diem
-(
-	Ma INT NOT NULL,
-	MaNguoiTao INT NOT NULL,
-	Diem BIT NOT NULL,
-	PRIMARY KEY(Ma, MaNguoiTao)
-)
-
-GO
 --Thêm Câu hỏi
 CREATE PROC dbo.themCauHoi
 (
@@ -61,3 +39,51 @@ BEGIN
 	FROM dbo.CauHoi
 	WHERE Ma=@0
 END
+
+GO
+--Lấy toàn bộ Câu hỏi
+CREATE PROC dbo.layToanBoCauHoi
+AS
+BEGIN
+	SELECT *
+	FROM dbo.CauHoi
+END
+
+GO
+--Tạo Trả Lời
+CREATE TABLE dbo.TraLoi
+(
+	Ma INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	NoiDung NVARCHAR(MAX) NOT NULL,
+	ThoiDiemTao DATETIME DEFAULT GETDATE(),
+	Duyet BIT DEFAULT NULL,
+	MaNguoiTao INT NOT NULL,
+	MaCauHoi INT NOT NULL,
+)	
+
+GO
+--Thêm Trả Lời
+CREATE PROC dbo.themTraLoi
+(
+	@0 NVARCHAR(MAX), --Nội dung
+	@1 DATETIME, --Thời điểm tạo
+	@2 BIT, --Duyệt
+	@3 INT, --Mã người tạo
+	@4 INT --Mã câu hỏi
+)
+AS
+BEGIN
+	INSERT INTO dbo.TraLoi(NoiDung, ThoiDiemTao, Duyet, MaNguoiTao, MaCauHoi) VALUES (@0, @1, @2, @3, @4)
+
+	SELECT @@IDENTITY Ma
+END
+
+GO
+--Tạo Hỏi Đáp - Điểm
+CREATE TABLE dbo.HoiDap_Diem
+(
+	Ma INT NOT NULL,
+	MaNguoiTao INT NOT NULL,
+	Diem BIT NOT NULL,
+	PRIMARY KEY(Ma, MaNguoiTao)
+)

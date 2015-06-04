@@ -1,56 +1,91 @@
 ﻿.cau-hoi {
-    padding: 10px;
+    background-color: #fff;   
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    display: flex;
 }
-    .cau-hoi > ul {
-
-    }
-        .cau-hoi > ul > li {            
-            margin-bottom: 10px;
-            height: 40px;
+        /*Thông tin*/
+        .cau-hoi .thong-tin {
             display: flex;
-            flex-direction: row;
+            padding: 10px;
+            border-right: 1px solid #f5f5f5;
+            border-left: 3px solid #ddd;
+            background-color: #f8f8f8;            
         }
-        .cau-hoi > ul > li:last-child {
-            margin-bottom: 0;
+        .thong-tin.duyet {
+            border-left: 3px solid #08c;
         }
-        .cau-hoi > ul > li:nth-child(2n+1) {
-            background-color: #f4f4f4;
-        }
-            .cau-hoi > ul > li > .thong-tin {
-                border: 1px solid #ddd;
-                width: 200px;
+        .thong-tin.da-tra-loi {
+            border-left: 3px solid #f90;
+        }                    
+            .thong-tin .diem,
+            .thong-tin .tra-loi {
+                width: 70px;
+                position: relative;
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
+                color: #888;
             }
-                .cau-hoi > ul > li > .thong-tin > .diem,
-                .cau-hoi > ul > li > .thong-tin > .tra-loi
-                {
-                    width: 50%;
-                    text-align: center;
-                    display: flex;
-                    flex-direction: column;
-                    color: #555;
+                .thong-tin .diem:before,
+                .thong-tin .tra-loi:before {
+                    content: '';
+                    width: 24px;
+                    height: 24px;
+                    background: url('/HoiDap.png/HoiDap') no-repeat;
+                    margin: 0 auto;
                 }
-                    .cau-hoi > ul > li > .thong-tin > .diem > .so-diem,
-                    .cau-hoi > ul > li > .thong-tin > .tra-loi > .so-diem {
-
+                .thong-tin .tra-loi:before {
+                    background-position: 0 -24px;
+                }
+                    .thong-tin span {
+                        text-align: center;
+                        margin-top: 5px;
                     }
-                    .cau-hoi > ul > li > .thong-tin > .diem > .tieu-de,
-                    .cau-hoi > ul > li > .thong-tin > .tra-loi > .tieu-de {
-
-                    }                                  
-            .cau-hoi > ul > li > .chi-tiet {
-                width: 100%;
-                padding: 0 10px;                
+        /*Chi tiết*/
+        .chi-tiet {
+            width: 100%;
+            padding: 10px;
+                            
+        }
+            .chi-tiet .tieu-de {                
+                font-size: 15px;
+                font-weight: bold;
             }
-                .cau-hoi > ul > li > .chi-tiet > .tieu-de {
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;                    
+                .chi-tiet .tieu-de a {                
+                    color: #333;
                 }
-                .cau-hoi > ul > li > .chi-tiet > .thong-tin-dang {
-                    font-size: 11px;
-                    color: #999;
-                    text-align: right;
-                    font-style: italic;
+            .chi-tiet .thong-tin-dang {
+                font-size: 12px;
+                color: #999;
+                text-align: left;
+                margin-top: 10px;
+                display: flex;                
+            }
+                .thong-tin-dang .nguoi-dang a {
+                    display: block;
+                    color: #888;
                 }
+                    .thong-tin-dang .nguoi-dang a:hover,
+                    .thong-tin-dang .nguoi-dang a:focus {
+                        text-decoration: none;
+                    }
+                        .thong-tin-dang .nguoi-dang a img {
+                            width: 20px;
+                            height: 20px;
+                            vertical-align: middle;
+                        }
+                        .thong-tin-dang .nguoi-dang a span {
+                            margin-left: 5px;
+                        }
+                .thong-tin-dang .thoi-gian-dang {
+
+                }
+                    .thong-tin-dang .thoi-gian-dang:before {
+                        content: '-';
+                        display: inline-block;
+                        left: 0;
+                        margin: 0 5px;
+                    }
+                    .thong-tin-dang .thoi-gian-dang span {
+                        line-height: 100%;
+                    }

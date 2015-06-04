@@ -69,5 +69,13 @@ namespace BUSLayer
                 "NguoiDung"
             });
         }
+
+        public static KetQua layToanBoCauHoi()
+        {
+            return CauHoiDAO.layDanhSachCauHoi(new LienKet() 
+            { 
+                "NguoiDung"
+            });
+        }
     }
 }
