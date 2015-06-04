@@ -1,0 +1,23 @@
+﻿@model DTOLayer.GiaoTrinhViewDTO
+
+<section class="item-giao-trinh" data-doi-tuong="item-giao-trinh" data-ma="@Model.ma">
+    <section>
+        @Model.congViec
+    </section>
+    <section>
+        @Model.moTa
+    </section>
+    <section style="position: relative">
+        @Model.thoiGian
+        <section class="khung-chuc-nang-lct" style="top: 1px; right: 1px;">
+            <ul data-doi-tuong="cngt-@Model.ma">
+                <li>
+                    <a data-chuc-nang="xoa">Xóa giáo trình</a>
+                </li>
+            </ul>
+            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cngt-@Model.ma">
+                <i class="pe-7f-config"></i>
+            </button>
+        </section>
+    </section>
+</section>

@@ -1,0 +1,12 @@
+﻿use rtcmfraf_Moodle;
+
+GO
+--Tạo giáo trình
+CREATE TABLE dbo.BangDiemKH (
+	Ma INT PRIMARY KEY IDENTITY(1, 1),
+	MaKhoaHoc INT NOT NULL,
+	Ten NVARCHAR(MAX) NOT NULL,
+	MoTa NVARCHAR(MAX),
+	HeSo INT NOT NULL DEFAULT 1,
+	ThoiDiem DATETIME NOT NULL DEFAULT GETDATE(),
+)

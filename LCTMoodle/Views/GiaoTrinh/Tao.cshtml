@@ -1,0 +1,73 @@
+﻿@model List<DTOLayer.GiaoTrinhViewDTO>
+
+@{
+    var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocViewDTO;
+    ViewData["TieuDe"] = "Soạn giáo trình - " + khoaHoc.ten;
+    Layout = "~/Views/LCT/Khung.cshtml";
+
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Khóa học của tôi", "/KhoaHoc",
+        khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
+        "Soạn giáo trình", "/GiaoTrinh/" + khoaHoc.ma
+    };
+}
+@section Styles {
+    <link href="/Tao.css/GiaoTrinh" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="/Tao.js/GiaoTrinh"></script>
+    <script>
+        maKhoaHoc = '@khoaHoc.ma';
+    </script>
+}
+
+<article class="hop">
+    <section class="tieu-de">
+        Soạn giáo trình
+    </section>
+    <section class="noi-dung">
+        <article id="khung_giao_trinh" class="lct-bang doc khung-giao-trinh">
+            <section class="nhom-cot">
+                <section class="cot cong-viec"></section>
+                <section class="cot mo-ta"></section>
+                <section class="cot thoi-gian"></section>
+            </section>
+            <section class="dong-tieu-de">
+                <section>Công việc</section>
+                <section>Mô tả</section>
+                <section>Thời gian</section>
+            </section>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    @Html.Partial("~/Views/GiaoTrinh/_Item_Tao.cshtml", item)
+                }
+            }
+            <form id="tao_giao_trinh_form" class="lct-form tao-giao-trinh-form">
+                <section>
+                    <input type="hidden" name="KhoaHoc" value="@khoaHoc.ma" />
+                    <article class="input">
+                        <input data-validate="bat-buoc" type="text" name="CongViec" placeholder="Công việc" />
+                    </article>
+                </section>
+                <section>
+                    <article class="input">
+                        <input data-validate="bat-buoc" type="text" name="MoTa" placeholder="Mô tả" />
+                    </article>
+                </section>
+                <section style="border-right: 0;">
+                    <article class="input">
+                        <input type="text" name="ThoiGian" placeholder="Thời gian" />
+                    </article>
+                </section>
+                <section class="lct-khung-button">
+                    <button type="submit" class="chap-nhan">
+                        Thêm
+                    </button>
+                </section>
+            </form>
+        </article>
+    </section>
+</article>

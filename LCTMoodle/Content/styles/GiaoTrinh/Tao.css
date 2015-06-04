@@ -1,0 +1,26 @@
+﻿.khung-giao-trinh {
+    position: relative;
+}
+
+.khung-giao-trinh .cot.cong-viec,
+.khung-giao-trinh .cot.thoi-gian {
+    width: 25%;
+}
+
+.khung-giao-trinh .cot.mo-ta {
+    width: 50%;
+}
+
+.khung-giao-trinh.keo .item-giao-trinh:not(.keo) {
+    color: #eee;
+}
+
+    .khung-giao-trinh .tao-giao-trinh-form .lct-khung-button {
+        position: absolute;
+        left: -1px;
+        top: 100%;
+        width: 100%;
+        border: 1px solid #ddd;
+        border-top-color: #eee;
+        padding: 0;
+    }
