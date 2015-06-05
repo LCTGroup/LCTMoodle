@@ -89,10 +89,5 @@ namespace LCTMoodle.Controllers
                 JsonRequestBehavior.AllowGet
             );
         }
-
-        public ActionResult XuLyCapNhat(FormCollection formCollection)
-        {
-
-        }
 	}
 }

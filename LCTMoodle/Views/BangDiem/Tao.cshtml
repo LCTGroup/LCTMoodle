@@ -1,0 +1,50 @@
+﻿@model List<DTOLayer.GiaoTrinhViewDTO>
+
+@{
+    //var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocViewDTO;
+    //ViewData["TieuDe"] = "Soạn giáo trình - " + khoaHoc.ten;
+    Layout = "~/Views/LCT/Khung.cshtml";
+
+    //ViewData["DieuHuong"] = new List<string>()
+    //{
+    //    "Khóa học của tôi", "/KhoaHoc",
+    //    khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
+    //    "Soạn giáo trình", "/GiaoTrinh/" + khoaHoc.ma
+    //};
+}
+@section Styles {
+    <link href="/Tao.css/BangDiem" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="/Tao.js/BangDiem"></script>
+    <script>
+        @*maKhoaHoc = '@khoaHoc.ma';*@
+    </script>
+}
+
+<article class="hop">
+    <section class="tieu-de">
+        Quản lý cột điểm
+    </section>
+    <section class="noi-dung">
+        <article class="lct-bang khung-cot-diem">
+            <section class="thead">
+                <section class="th">
+                    
+                </section>
+                <section class="th">
+                    Tên
+                </section>
+                <section class="th">
+                    Hệ số
+                </section>
+                <section class="th">
+                    Mô tả
+                </section>
+                <section class="th">
+                    Ngày
+                </section>
+            </section>
+        </article>
+    </section>
+</article>

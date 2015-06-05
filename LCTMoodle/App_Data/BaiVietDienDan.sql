@@ -116,3 +116,12 @@ BEGIN
 		FROM dbo.BaiVietDienDan
 		WHERE Ma = @0
 END
+
+DECLARE @a dbo.BangCapNhat
+
+INSERT INTO @a (TenTruong, GiaTri, LaChuoi)
+	VALUES ('TieuDe', 'ab''c', 1)
+
+EXEC dbo.capNhatBaiVietDienDanTheoMa 1, @a
+
+SELECT * FROM dbo.BaiVietBaiGiang

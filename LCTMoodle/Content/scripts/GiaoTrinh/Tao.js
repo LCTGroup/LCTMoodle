@@ -22,7 +22,7 @@ function khoiTaoForm($form) {
                     var $item = $(data.ketQua);
                     khoiTaoItem($item);
 
-                    $form.before($item);
+                    $_Khung.find('.tbody').append($item);
 
                     khoiTaoLCTFormMacDinh($form);
                 }
@@ -128,13 +128,13 @@ function khoiTaoKeoThuTu($items) {
                     },
                     'dragend.keo-thu-tu': function () {
                         $_Khung.add($itemKeo).removeClass('keo');
-                        $_Khung.children('[data-doi-tuong="item-giao-trinh"]').off('.keo-thu-tu');
+                        $_Khung.find('[data-doi-tuong="item-giao-trinh"]').off('.keo-thu-tu');
 
                         if (mangTam.keo === true) {
                             $.ajax({
                                 url: '/GiaoTrinh/XuLyCapNhatThuTu/',
                                 type: 'POST',
-                                data: { ma: $itemKeo.attr('data-ma'), thuTu: $itemKeo.index() - 1, maKhoaHoc: maKhoaHoc },
+                                data: { ma: $itemKeo.attr('data-ma'), thuTu: $itemKeo.index() + 1, maKhoaHoc: maKhoaHoc },
                                 dataType: 'JSON'
                             }).done(function (data) {
                                 if (data.trangThai != 0) {
@@ -147,10 +147,10 @@ function khoiTaoKeoThuTu($items) {
                                     var viTriBatDau = mangTam.viTriBatDau;
 
                                     if (viTriHienTai < viTriBatDau) {
-                                        $_Khung.children(':nth-child(' + (viTriBatDau + 1) + ')').after($itemKeo);
+                                        $_Khung.find('[data-doi-tuong="item-giao-trinh"]:nth-child(' + (viTriBatDau + 1) + ')').after($itemKeo);
                                     }
                                     else if (viTriHienTai > viTriBatDau) {
-                                        $_Khung.children(':nth-child(' + (viTriBatDau + 1) + ')').before($itemKeo);
+                                        $_Khung.find('[data-doi-tuong="item-giao-trinh"]:nth-child(' + (viTriBatDau + 1) + ')').before($itemKeo);
                                     }
                                 }
                             }).fail(function () {
@@ -163,10 +163,10 @@ function khoiTaoKeoThuTu($items) {
                                 var viTriBatDau = mangTam.viTriBatDau;
 
                                 if (viTriHienTai < viTriBatDau) {
-                                    $_Khung.children(':nth-child(' + (viTriBatDau + 1) + ')').after($itemKeo);
+                                    $_Khung.find('[data-doi-tuong="item-giao-trinh"]:nth-child(' + (viTriBatDau + 1) + ')').after($itemKeo);
                                 }
                                 else if (viTriHienTai > viTriBatDau) {
-                                    $_Khung.children(':nth-child(' + (viTriBatDau + 1) + ')').before($itemKeo);
+                                    $_Khung.find('[data-doi-tuong="item-giao-trinh"]:nth-child(' + (viTriBatDau + 1) + ')').before($itemKeo);
                                 }
                             });
                         }
@@ -175,10 +175,10 @@ function khoiTaoKeoThuTu($items) {
                             var viTriBatDau = mangTam.viTriBatDau;
 
                             if (viTriHienTai < viTriBatDau) {
-                                $_Khung.children(':nth-child(' + (viTriBatDau + 1) + ')').after($itemKeo);
+                                $_Khung.find('[data-doi-tuong="item-giao-trinh"]:nth-child(' + (viTriBatDau + 1) + ')').after($itemKeo);
                             }
                             else if (viTriHienTai > viTriBatDau) {
-                                $_Khung.children(':nth-child(' + (viTriBatDau + 1) + ')').before($itemKeo);
+                                $_Khung.find('[data-doi-tuong="item-giao-trinh"]:nth-child(' + (viTriBatDau + 1) + ')').before($itemKeo);
                             }
                         }
                     }

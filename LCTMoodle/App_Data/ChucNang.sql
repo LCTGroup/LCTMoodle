@@ -8,6 +8,8 @@ TABLE (
 	LaChuoi BIT NOT NULL
 )
 
+GO
+
 CREATE FUNCTION dbo.taoChuoiCapNhat (
 	@0 dbo.BangCapNhat READONLY
 )

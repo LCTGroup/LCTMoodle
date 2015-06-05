@@ -2,12 +2,12 @@
     position: relative;
 }
 
-.khung-giao-trinh .cot.cong-viec,
-.khung-giao-trinh .cot.thoi-gian {
+.khung-giao-trinh .td:nth-child(1),
+.khung-giao-trinh .td:nth-child(3) {
     width: 25%;
 }
 
-.khung-giao-trinh .cot.mo-ta {
+.khung-giao-trinh .td:nth-child(2) {
     width: 50%;
 }
 
@@ -15,12 +15,16 @@
     color: #eee;
 }
 
+    .khung-giao-trinh .tao-giao-trinh-form .tao-giao-trinh-form {
+        display: table-footer-group;
+    }
+
     .khung-giao-trinh .tao-giao-trinh-form .lct-khung-button {
-        position: absolute;
-        left: -1px;
-        top: 100%;
-        width: 100%;
-        border: 1px solid #ddd;
-        border-top-color: #eee;
         padding: 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: calc(100% - 1.989px);
+        background-color: transparent;
+        border: 0;
     }

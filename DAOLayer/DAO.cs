@@ -11,54 +11,6 @@ using System.Reflection;
 
 namespace DAOLayer
 {
-    public class LienKet : Dictionary<string, object>
-    {
-        public static bool co(LienKet lienKet, string tenLienKet)
-        {
-            return lienKet != null && lienKet.ContainsKey(tenLienKet);
-        }
-
-        public void Add(string key)
-        {
-            Add(key, null);
-        }
-    }
-
-    public class BangCapNhat : DataTable
-    {
-        public BangCapNhat()
-        {
-            Columns.AddRange(new DataColumn[] {
-                new DataColumn("TenTruong", typeof(string)),
-                new DataColumn("GiaTri", typeof(string)),
-                new DataColumn("LaChuoi", typeof(bool)),
-            });
-        }
-        public BangCapNhat(Dictionary<string, string> form, Dictionary<string, bool> danhSachTruong)
-        {
-            Columns.AddRange(new DataColumn[] {
-                new DataColumn("TenTruong", typeof(string)),
-                new DataColumn("GiaTri", typeof(string)),
-                new DataColumn("LaChuoi", typeof(bool)),
-            });
-
-            foreach(KeyValuePair<string, bool> truong in danhSachTruong)
-            {
-                Add(truong.Key, form[truong.Key], truong.Value);
-            }
-        }
-
-        public void Add(string tenTruong, string giaTri, bool laChuoi)
-        {
-            Rows.Add(new object[]
-            {
-                tenTruong,
-                giaTri,
-                laChuoi
-            });
-        }
-    }
-
     public class DAO<DAOClass, ViewDTOClass>
         where ViewDTOClass : DTO
     {
@@ -308,5 +260,53 @@ namespace DAOLayer
         }
 
         #endregion
+    }
+
+    public class LienKet : Dictionary<string, object>
+    {
+        public static bool co(LienKet lienKet, string tenLienKet)
+        {
+            return lienKet != null && lienKet.ContainsKey(tenLienKet);
+        }
+
+        public void Add(string key)
+        {
+            Add(key, null);
+        }
+    }
+
+    public class BangCapNhat : DataTable
+    {
+        public BangCapNhat()
+        {
+            Columns.AddRange(new DataColumn[] {
+                new DataColumn("TenTruong", typeof(string)),
+                new DataColumn("GiaTri", typeof(string)),
+                new DataColumn("LaChuoi", typeof(bool)),
+            });
+        }
+        public BangCapNhat(Dictionary<string, string> form, Dictionary<string, bool> danhSachTruong)
+        {
+            Columns.AddRange(new DataColumn[] {
+                new DataColumn("TenTruong", typeof(string)),
+                new DataColumn("GiaTri", typeof(string)),
+                new DataColumn("LaChuoi", typeof(bool)),
+            });
+
+            foreach (KeyValuePair<string, bool> truong in danhSachTruong)
+            {
+                Add(truong.Key, form[truong.Key], truong.Value);
+            }
+        }
+
+        public void Add(string tenTruong, string giaTri, bool laChuoi)
+        {
+            Rows.Add(new object[]
+            {
+                tenTruong,
+                giaTri,
+                laChuoi
+            });
+        }
     }
 }

@@ -4,12 +4,6 @@
     color: #333;
 }
 
-    .lct-form:after {
-        content: '';
-        display: block;
-        clear: both;
-    }
-
         .lct-form ul {
             display: flex;
             flex-wrap: wrap;
@@ -1978,52 +1972,49 @@
 /*#region Table */
 
 .lct-bang {
-    display: table;
     width: 100%;
     background-color: #fff;
-    border: 1px solid #ddd;
     color: #333;
+    border-collapse: collapse;
+    display: table;
 }
 
-.lct-bang > .nhom-cot {
-    display: table-column-group;
+.lct-bang .thead {
+    display: table-header-group;
 }
 
-    .lct-bang > .nhom-cot > .cot {
-        display: table-column;
-    }
+.lct-bang .tbody {
+    display: table-row-group;
+}
 
-.lct-bang > * {
+.lct-bang .tfoot {
+    display: table-footer-group;
+}
+
+.lct-bang .tr {
     display: table-row;
 }
 
-    .lct-bang > * > * {
-        padding: 5px;
-        display: table-cell;
-        border-right: 1px solid #eee;
-        border-bottom: 1px solid #eee;
-    }
+.lct-bang .td,
+.lct-bang .th {
+    border: 1px solid #eee;
+    display: table-cell;
+}
 
-    .lct-bang > * > *:last-child {
-        border-right: 0;
-    }
+.lct-bang .td {
+    padding: 5px;
+}
 
-    .lct-bang > *:last-child > * {
-        border-bottom: 0;
-    }
-
-    .lct-bang > *:nth-child(even) > * {
-        background-color: #fcfcfc;
-    }
-
-.lct-bang > *.dong-tieu-de > * {
+.lct-bang .th {
     text-align: center;
     font-weight: bold;
     position: relative;
     padding: 10px;
+    vertical-align: middle;
+    background-color: #fcfcfc;
 }
 
-    .lct-bang > *.dong-tieu-de > *:after {
+    .lct-bang .th:after {
         content: '';
         display: block;
         position: absolute;
@@ -2033,5 +2024,9 @@
         left: 0;
         background-color: #08c;
     }
+
+.lct-bang .tr:nth-child(odd) {
+    background-color: #fcfcfc;
+}
 
 /*#endregion */

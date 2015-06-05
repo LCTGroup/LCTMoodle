@@ -25,7 +25,7 @@ namespace BUSLayer
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (baiNop. maBaiVietBaiTap == 0)
+            if (baiNop.maBaiVietBaiTap == 0)
             {
                 loi.Add("Bài tập được nộp không được bỏ trống");
             }

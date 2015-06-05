@@ -1,13 +1,13 @@
 ﻿@model DTOLayer.GiaoTrinhViewDTO
 
-<section class="item-giao-trinh" data-doi-tuong="item-giao-trinh" data-ma="@Model.ma">
-    <section>
+<section class="tr item-giao-trinh" data-doi-tuong="item-giao-trinh" data-ma="@Model.ma">
+    <section class="td">
         @Model.congViec
     </section>
-    <section>
+    <section class="td">
         @Model.moTa
     </section>
-    <section style="position: relative">
+    <section class="td" style="position: relative">
         @Model.thoiGian
         <section class="khung-chuc-nang-lct" style="top: 1px; right: 1px;">
             <ul data-doi-tuong="cngt-@Model.ma">

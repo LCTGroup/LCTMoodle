@@ -1,8 +1,8 @@
 ﻿use rtcmfraf_Moodle;
 
 GO
---Tạo giáo trình
-CREATE TABLE dbo.BangDiemKH (
+--Tạo cột điểm
+CREATE TABLE dbo.CotDiem (
 	Ma INT PRIMARY KEY IDENTITY(1, 1),
 	MaKhoaHoc INT NOT NULL,
 	Ten NVARCHAR(MAX) NOT NULL,
