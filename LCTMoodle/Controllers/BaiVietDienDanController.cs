@@ -88,11 +88,6 @@ namespace LCTMoodle.Controllers
                 BaiVietDienDanDAO.xoaTheoMa(ma), 
                 JsonRequestBehavior.AllowGet
             );
-        }
-
-        public ActionResult XuLyCapNhat(FormCollection formCollection)
-        {
-
-        }
+        }        
 	}
 }

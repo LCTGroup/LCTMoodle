@@ -60,5 +60,29 @@ namespace DAOLayer
                 }
             );
         }
+        public static KetQua layDanhSachTraLoiTheoCauHoi (int maCauHoi, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+            (
+                "layDanhSachTraLoiTheoCauHoi",
+                new object[] 
+                {
+                    maCauHoi
+                },
+                lienKet
+            );
+        }
+        public static KetQua layTraLoiTheoMa(int ma, LienKet lienKet = null)
+        {
+            return layDong
+            (
+                "layTraLoiTheoMa",
+                new object[]
+                {
+                    ma
+                },
+                lienKet
+            );
+        }
     }
 }

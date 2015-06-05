@@ -14,14 +14,5 @@ namespace DTOLayer
         public bool duyet;
         public int maNguoiTao;
         public int maCauHoi;
-
-        /// <summary>
-        /// Kiểm tra
-        /// </summary>
-        /// <returns>ketQua.TrangThai != 3 : dữ liệu hợp lệ</returns>
-        //public override KetQua kiemTra()
-        //{            
-            
-        //}
     }
 }

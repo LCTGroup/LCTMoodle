@@ -79,6 +79,28 @@ BEGIN
 END
 
 GO
+--Lấy toàn bộ trả lời của câu hỏi
+CREATE PROC dbo.layDanhSachTraLoiTheoCauHoi
+(
+	@0 INT --Mã câu hỏi	
+)
+AS
+BEGIN
+	SELECT * FROM dbo.TraLoi WHERE MaCauHoi=@0
+END
+
+GO
+--Lấy trả lời theo mã
+CREATE PROC dbo.layTraLoiTheoMa
+(
+	@0 INT --Mã trả lời
+)
+AS
+BEGIN
+	SELECT * FROM dbo.TraLoi WHERE Ma=@0
+END
+
+GO
 --Tạo Hỏi Đáp - Điểm
 CREATE TABLE dbo.HoiDap_Diem
 (

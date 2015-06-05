@@ -16,7 +16,7 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="/CauHoi.css/HoiDap/" />
+    <link rel="stylesheet" href="/XemCauHoi.css/HoiDap/" />
 }
 @section Scripts {
     <script src="/CauHoi.js/HoiDap/"></script>
@@ -62,6 +62,8 @@
     <section class="tieu-de">Danh sách trả lời</section>
     <section class="noi-dung">
         @Html.Partial("~/Views/HoiDap/_itemTraLoi.cshtml")
+        @Html.Partial("~/Views/HoiDap/_itemTraLoi.cshtml")
+        @Html.Partial("~/Views/HoiDap/_itemTraLoi.cshtml")
     </section>
 </article>
 
@@ -72,7 +74,7 @@
 <article class="hop hop-2-vien">
     <section class="tieu-de">Trả lời câu hỏi</section>
     <section class="noi-dung">
-        <article class="hop-form">
+        <article class="hop-form form-tra-loi">
             <section class="noi-dung">
                 <form class="lct-form" id="tra_loi_cau_hoi">
                     <input type="hidden" name="CauHoi" value="@ViewData["CauHoi"]" />
