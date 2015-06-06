@@ -11,8 +11,8 @@ using System.Reflection;
 
 namespace DAOLayer
 {
-    public class DAO<DAOClass, ViewDTOClass>
-        where ViewDTOClass : DTO
+    public class DAO<DAOClass, DTOClass>
+        where DTOClass : DTO
     {
         #region Xử lý truy vấn dữ liệu
         static SqlConnection ketNoi = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["chuoiKetNoi_LCTMoodle"].ConnectionString);
@@ -41,11 +41,11 @@ namespace DAOLayer
 
                 MethodInfo method = typeof(DAOClass).GetMethod("gan");
 
-                ViewDTOClass dto;
+                DTOClass dto;
 
                 if (dong.Read())
                 {
-                    dto = method.Invoke(null, new object[] { dong, lienKet }) as ViewDTOClass;
+                    dto = method.Invoke(null, new object[] { dong, lienKet }) as DTOClass;
 
                     dong.Close();
 
@@ -102,13 +102,13 @@ namespace DAOLayer
 
                 MethodInfo method = typeof(DAOClass).GetMethod("gan");
 
-                List<ViewDTOClass> dtos = new List<ViewDTOClass>();
+                List<DTOClass> dtos = new List<DTOClass>();
 
                 if (dong.Read())
                 {
                     do
                     {
-                        dtos.Add(method.Invoke(null, new object[] { dong, lienKet }) as ViewDTOClass);
+                        dtos.Add(method.Invoke(null, new object[] { dong, lienKet }) as DTOClass);
                     }
                     while (dong.Read());
 

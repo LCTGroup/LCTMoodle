@@ -85,7 +85,7 @@ namespace BUSLayer
 
             if (layBool(form, "CoHan"))
             {
-                khoaHoc.thoiDiemHetHan = layDateTime_Full(form, "Han_Ngay", "Han_Gio");
+                khoaHoc.thoiDiemHetHan = layDateTime_Full(form, "ThoiDiemHetHan_Ngay", "Han_Gio");
             }
 
             if (khoaHoc.canDangKy && layBool(form, "CoHanDangKy"))

@@ -20,7 +20,7 @@ namespace DTOLayer
         //            case "Ma":
         //                ma = layInt(dong, i); break;
         //            case "MaNguoiTao":
-        //                maNguoiTao = new NguoiDungViewDTO()
+        //                maNguoiTao = new NguoiDungDTO()
         //                {
         //                    ma = layInt(dong, i)
         //                };

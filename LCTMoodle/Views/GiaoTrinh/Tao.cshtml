@@ -1,7 +1,7 @@
-﻿@model List<DTOLayer.GiaoTrinhViewDTO>
+﻿@model List<DTOLayer.GiaoTrinhDTO>
 
 @{
-    var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocViewDTO;
+    var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocDTO;
     ViewData["TieuDe"] = "Soạn giáo trình - " + khoaHoc.ten;
     Layout = "~/Views/LCT/Khung.cshtml";
 

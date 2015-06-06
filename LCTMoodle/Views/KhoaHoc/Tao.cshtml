@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["TieuDe"] = "TaoKhoaHoc";
+    ViewData["TieuDe"] = "Tạo khóa học";
     Layout = "~/Views/LCT/Khung.cshtml";
 }
 
@@ -15,7 +15,7 @@
     <section class="tieu-de">
         Tạo khóa học
     </section>
-    <form id="tao_khoa_hoc_form" class="noi-dung lct-form" data-nut-mac-dinh data-validate-auto>
+    <form id="tao_khoa_hoc_form" class="noi-dung lct-form" data-validate-auto>
         <article>
             <ul>
                 <li>
@@ -62,7 +62,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" type="file" name="HinhDaiDien" data-thu-muc="HinhDaiDien_KhoaHoc" />
+                            <input data-validate="bat-buoc" type="file" name="HinhDaiDien" />
                         </article>
                     </section>
                 </li>
@@ -98,8 +98,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" data-input-type="lct-thoi-gian" name="Han_Gio" placeholder="Chọn giờ" />
-                            <input data-validate="bat-buoc" data-input-type="lct-lich" name="Han_Ngay" value="" placeholder="Chọn ngày" />
+                            <input data-validate="bat-buoc" data-input-type="lct-thoi-gian-lich" name="ThoiDiemHetHan" data-thoi-gian-placeholder="Giờ" data-lich-placeholder="Ngày" />
                         </article>
                     </section>
                 </li>
@@ -124,8 +123,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" data-input-type="lct-thoi-gian" name="HanDangKy_Gio" placeholder="Chọn giờ" />
-                            <input data-validate="bat-buoc" data-input-type="lct-lich" name="HanDangKy_Ngay" placeholder="Chọn ngày" />
+                            <input data-validate="bat-buoc" data-input-type="lct-thoi-gian-lich" name="HanDangKy" data-thoi-gian-placeholder="Giờ" data-lich-placeholder="Ngày" />
                         </article>
                     </section>
                 </li>

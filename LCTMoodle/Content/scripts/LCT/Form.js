@@ -134,6 +134,22 @@ function khoiTaoHienThiInput_LCT($form) {
         }
     });
 
+    $form.find('input[data-input-type="lct-thoi-gian-lich"]').each(function () {
+        var $phanTu = $(this);
+
+        var validate = $phanTu.attr('data-validate') || '',
+            thoiGianMacDinh = $phanTu.attr('data-thoi-gian-mac-dinh') || '',
+            lichMacDinh = $phanTu.attr('data-lich-mac-dinh') || '',
+            thoiGianPlaceholder = $phanTu.attr('data-thoi-gian-placeholder') || '',
+            lichPlaceholder = $phanTu.attr('data-lich-placeholder') || '';
+
+        $phanTu.removeAttr('data-validate data-thoi-gian-mac-dinh data-lich-mac-dinh data-thoi-gian-placeholder data-lich-placeholder');
+
+        $phanTu.attr('type', 'hidden');
+        $phanTu.after('<input data-validate="' + validate + '" data-input-type="lct-thoi-gian" data-mac-dinh="' + thoiGianMacDinh + '" placeholder="' + thoiGianPlaceholder + '" style="width: calc(50% - 19px)" />' +
+            '<input data-validate="' + validate + '" data-input-type="lct-lich" data-mac-dinh="' + lichMacDinh + '" placeholder="' + lichPlaceholder + '" style="width: calc(50% - 19px)" />')
+    })
+
     $form.find('input[data-input-type="chu-de"]').each(function () {
         $phanTu = $(this);
 
@@ -1011,6 +1027,13 @@ function khoiTaoSubmit_LCT($form, thamSo) {
         $form.find('textarea[data-input-type="editor"]').each(function () {
             CKEDITOR.instances[this.getAttribute('name')].updateElement();
         });
+
+        $form.find('input[data-input-type="lct-thoi-gian-lich"]').each(function () {
+            var $phanTu = $(this),
+                $thoiGian = $phanTu.next(),
+                $lich = $thoiGian.next();
+            $phanTu.val($thoiGian.val() + ' ' + $lich.val());
+        })
 
         //Validate
         var coLoi = false;
