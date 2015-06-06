@@ -80,11 +80,11 @@ namespace BUSLayer
             }
         }
 
-        protected static DateTime? layDateTime(Dictionary<string, string> form, string key, DateTime? macDinh = null)
+        protected static DateTime? layDate(Dictionary<string, string> form, string key, DateTime? macDinh = null)
         {
             try
             {
-                return DateTime.Parse(form[key]);
+                return DateTime.ParseExact(form[key], "d/M/yyyy", null);
             }
             catch
             {
@@ -92,20 +92,23 @@ namespace BUSLayer
             }
         }
 
-        protected static DateTime? layDateTime_Full(Dictionary<string, string> form, string key_ngay, string key_gio, DateTime? macDinh = null)
+        protected static DateTime? layTime(Dictionary<string, string> form, string key, DateTime? macDinh = null)
         {
             try
             {
-                DateTime?
-                    ngay = layDateTime(form, key_ngay),
-                    gio = layDateTime(form, key_gio);
+                return DateTime.ParseExact(form[key], "HH:mm", null);
+            }
+            catch
+            {
+                return macDinh;
+            }
+        }
 
-                return DateTime.Parse
-                (
-                    (ngay.HasValue ? ngay.Value.ToShortDateString() : null) +
-                    " " +
-                    (gio.HasValue ? gio.Value.ToShortTimeString() : null)
-                );
+        protected static DateTime? layDateTime(Dictionary<string, string> form, string key, DateTime? macDinh = null)
+        {
+            try
+            {
+                return DateTime.ParseExact(form[key], "HH:mm d/M/yyyy", null);
             }
             catch
             {

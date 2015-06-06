@@ -267,7 +267,7 @@
 
 /*#region Checkbox, Radio */
 
-.lct-form .lct-checkbox-radio-label {
+.lct-form .checkbox-radio-label {
     display: block;
     padding: 5px;
     width: 100%;
@@ -359,7 +359,7 @@
 
 /*#region Fileupload */
 
-.lct-form .lct-file-label {
+.lct-form .file-label {
     display: flex;
     padding: 5px;
     height: 20px;
@@ -375,43 +375,43 @@
     left: -9999px;
 }
 
-.lct-form .lct-file-label input[type="file"].co ~ img {
+.lct-form .file-label input[type="file"].co ~ img {
     display: inline-block;
 }
 
-.lct-form .lct-file-label input[type="file"].co ~ i {
+.lct-form .file-label input[type="file"].co ~ i {
     display: none;
 }
 
-.lct-form .lct-file-label img {
+.lct-form .file-label img {
     display: none;
     width: 20px;
     height: 20px;
     align-self: center;
 }
 
-.lct-form .lct-file-label i {
+.lct-form .file-label i {
     font: normal 20px 'Stroke Icon';
     color: #ddd;
     transition: 0.5s;
     align-self: center;
 }
-    .lct-form .lct-file-label i:before {
+    .lct-form .file-label i:before {
         content: '\e68a';
     }
 
-    .lct-form .lct-file-label input[type="file"][class^="loi-"] ~ i,
-    .lct-form .lct-file-label input[type="file"][class*=" loi-"] ~ i {
+    .lct-form .file-label input[type="file"][class^="loi-"] ~ i,
+    .lct-form .file-label input[type="file"][class*=" loi-"] ~ i {
         color: #e00;
     }
 
-.lct-form li .lct-file-label:hover i,
-.lct-form li .lct-file-label input[type="file"]:focus ~ i,
-.lct-form li .lct-file-label input[type="file"].dang ~ i {
+.lct-form li .file-label:hover i,
+.lct-form li .file-label input[type="file"]:focus ~ i,
+.lct-form li .file-label input[type="file"].dang ~ i {
     color: #08c !important;
 }
 
-.lct-form .lct-file-label u {
+.lct-form .file-label u {
     display: block;
     height: 100%;
     width: 3px;
@@ -422,14 +422,14 @@
     left: -3px;
 }
 
-    .lct-form .lct-file-label input[type="file"][class^="loi-"] ~ u,
-    .lct-form .lct-file-label input[type="file"][class*=" loi-"] ~ u {
+    .lct-form .file-label input[type="file"][class^="loi-"] ~ u,
+    .lct-form .file-label input[type="file"][class*=" loi-"] ~ u {
         background-color: #e00;
     }
 
-.lct-form .lct-file-label:hover u,
-.lct-form .lct-file-label input[type="file"]:focus ~ u,
-.lct-form .lct-file-label input[type="file"].dang ~ u {
+.lct-form .file-label:hover u,
+.lct-form .file-label input[type="file"]:focus ~ u,
+.lct-form .file-label input[type="file"].dang ~ u {
     background-color: #08c !important;
 }
 
@@ -488,7 +488,7 @@
         border-left-color: #08c;
     }
 
-.lct-form .lct-khung-input-goi-y {
+.lct-form .khung-input-goi-y {
     width: 100%;
     position: relative;
 }
@@ -564,8 +564,8 @@
 
 /*#region Thời gian */
 
-.lct-form input[data-input-type="lct-thoi-gian"],
-.lct-form input[data-input-type="lct-lich"] {
+.lct-form input[data-input-type="thoi-gian"],
+.lct-form input[data-input-type="lich"] {
     border: none;
     line-height: 20px;
     padding: 5px 8px;
@@ -578,17 +578,17 @@
     cursor: pointer;
 }
 
-    .lct-form input[data-input-type="lct-thoi-gian"][class^="loi-"],
-    .lct-form input[data-input-type="lct-thoi-gian"][class*=" loi-"],
-    .lct-form input[data-input-type="lct-lich"][class^="loi-"],
-    .lct-form input[data-input-type="lct-lich"][class*=" loi-"] {
+    .lct-form input[data-input-type="thoi-gian"][class^="loi-"],
+    .lct-form input[data-input-type="thoi-gian"][class*=" loi-"],
+    .lct-form input[data-input-type="lich"][class^="loi-"],
+    .lct-form input[data-input-type="lich"][class*=" loi-"] {
         border-left-color: #e00;
     }
 
-    .lct-form input[data-input-type="lct-thoi-gian"]:hover,
-    .lct-form input[data-input-type="lct-lich"]:hover,
-    .lct-form input[data-input-type="lct-thoi-gian"]:focus,
-    .lct-form input[data-input-type="lct-lich"]:focus {
+    .lct-form input[data-input-type="thoi-gian"]:hover,
+    .lct-form input[data-input-type="lich"]:hover,
+    .lct-form input[data-input-type="thoi-gian"]:focus,
+    .lct-form input[data-input-type="lich"]:focus {
         border-left-color: #08c;
     }
 
@@ -1192,7 +1192,7 @@
 
 /*#region Lịch */
 
-.lct-lich {
+.lich {
     width: 212px;
     background-image: linear-gradient(top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
     background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
@@ -1204,20 +1204,20 @@
     z-index: 20;
 }
 
-    .lct-lich[data-trang-thai="an"] {
+    .lich[data-trang-thai="an"] {
         left: -9999px !important;
         opacity: 0;
         transform: scale(0.7, 0.7);
         transition: transform 0.5s, opacity 0.5s, left 0s 0.5s;
     }
 
-    .lct-lich[data-trang-thai="hien"] {
+    .lich[data-trang-thai="hien"] {
         transform: none;
         opacity: 1;
         transition: transform 0.5s, opacity 0.5s;
     }
 
-    .lct-lich .thang-nam {
+    .lich .thang-nam {
         font-size: 30px;
         text-align: center;
         color: #555;
@@ -1229,7 +1229,7 @@
         overflow: hidden;
     }
 
-        .lct-lich .thang-nam a {
+        .lich .thang-nam a {
             display: block;
             background-color: #aaa;
             height: 20px;
@@ -1239,12 +1239,12 @@
             transition: 0.5s;
         }
 
-            .lct-lich .thang-nam a:hover {
+            .lich .thang-nam a:hover {
                 background-color: #08c;
             }
 
-            .lct-lich .thang-nam a:before,
-            .lct-lich .thang-nam a:after {
+            .lich .thang-nam a:before,
+            .lich .thang-nam a:after {
                 content: '';
                 display: block;
                 width: 0px;
@@ -1254,46 +1254,46 @@
                 transition: 0.5s;
             }
 
-            .lct-lich .thang-nam a:before {
+            .lich .thang-nam a:before {
                 border-right-color: #aaa;
                 right: 100%;
             }
 
-            .lct-lich .thang-nam a:hover:before {
+            .lich .thang-nam a:hover:before {
                 border-right-color: #08c;
             }
 
-            .lct-lich .thang-nam a:after {
+            .lich .thang-nam a:after {
                 border-right-color: #fafafa;
                 right: 0px;
             }
 
-            .lct-lich .thang-nam a.thang-truoc {
+            .lich .thang-nam a.thang-truoc {
                 left: 15px;
             }
 
-            .lct-lich .thang-nam a.thang-sau {
+            .lich .thang-nam a.thang-sau {
                 right: 15px;
                 transform: rotate(180deg);
             }
 
-        .lct-lich .thang-nam span {
+        .lich .thang-nam span {
             height: 35px;
             line-height: 35px;
             cursor: default;
         }
 
-        .lct-lich .thang-nam .thang,
-        .lct-lich .thang-nam .nam {
+        .lich .thang-nam .thang,
+        .lich .thang-nam .nam {
             position: relative;
         }
 
-            .lct-lich .thang-nam .thang:before,
-            .lct-lich .thang-nam .nam:before {
+            .lich .thang-nam .thang:before,
+            .lich .thang-nam .nam:before {
                 content: attr(data-value);
             }
 
-        .lct-lich .thang-nam i {
+        .lich .thang-nam i {
             display: block;
             opacity: 0;
             width: 1px;
@@ -1305,58 +1305,58 @@
             cursor: pointer;
         }
 
-        .lct-lich .thang-nam .thang:hover i,
-        .lct-lich .thang-nam .nam:hover i {
+        .lich .thang-nam .thang:hover i,
+        .lich .thang-nam .nam:hover i {
             opacity: 1;
         }
 
-        .lct-lich .thang-nam .truoc {
+        .lich .thang-nam .truoc {
             border-top-color: #555;
             bottom: -7px;
         }
 
-            .lct-lich .thang-nam .truoc:hover {
+            .lich .thang-nam .truoc:hover {
                 border-top-color: #08c;
             }
 
-        .lct-lich .thang-nam .sau {
+        .lich .thang-nam .sau {
             border-bottom-color: #555;
             top: -4px;
         }
 
-            .lct-lich .thang-nam .sau:hover {
+            .lich .thang-nam .sau:hover {
                 border-bottom-color: #08c;
             }
 
-    .lct-lich .lich {
+    .lich .lich {
         border: 1px solid #eee;
         border-top: none;
         width: 210px;
         background-color: #fcfcfc;
     }
 
-        .lct-lich .lich table {
+        .lich .lich table {
             width: 100%;
         }
 
-        .lct-lich .lich td,
-        .lct-lich .lich th {
+        .lich .lich td,
+        .lich .lich th {
             width: 14.285%;
             text-align: center;
         }
 
-        .lct-lich .lich th {
+        .lich .lich th {
             font-size: 18px;
             color: #555;
             cursor: default;
         }
 
-        .lct-lich .lich td {
+        .lich .lich td {
             padding: 1px 2px;
             color: #777;
         }
 
-            .lct-lich .lich td i {
+            .lich .lich td i {
                 display: none;
                 font-style: normal;
                 border: 1px solid #fafafa;
@@ -1366,20 +1366,20 @@
                 transition: 0.5s;
             }
 
-                .lct-lich .lich td i[data-value] {
+                .lich .lich td i[data-value] {
                     display: block;
                 }
 
-                .lct-lich .lich td i.chon {
+                .lich .lich td i.chon {
                     background-color: #08c;
                     color: #fff !important;
                 }
 
-                .lct-lich .lich td i:before {
+                .lich .lich td i:before {
                     content: attr(data-value);
                 }
 
-                .lct-lich .lich td i:after {
+                .lich .lich td i:after {
                     content: '';
                     display: block;
                     width: 100%;
@@ -1389,11 +1389,11 @@
                     left: 0px;
                 }
 
-                .lct-lich .lich td i:hover {
+                .lich .lich td i:hover {
                     color: #000;
                 }
 
-                    .lct-lich .lich td i:hover:after {
+                    .lich .lich td i:hover:after {
                         background-color: #08c;
                         transition: 0.5s;
                     }
@@ -1862,7 +1862,7 @@
 
 /*#region Khung button */
 
-.lct-form .lct-khung-button {
+.lct-form .khung-button {
     border-top: 1px solid #eee;
     padding: 20px;
     background-color: #f8f8f8;

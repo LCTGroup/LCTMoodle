@@ -34,7 +34,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             khoaHoc.chuDe = LienKet.co(lienKet, "ChuDe") ?
-                                null :
+                                null : //layChuDeTheoMaChuDe
                                 new ChuDeDTO()
                                 {
                                     ma = maTam
@@ -130,7 +130,7 @@ namespace DAOLayer
                     khoaHoc.canDangKy,
                     khoaHoc.hanDangKy,
                     khoaHoc.phiThamGia,
-                    khoaHoc.cheDoRiengTu
+                    khoaHoc.cheDoRiengTu.ma
                 }
             );
         }

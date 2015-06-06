@@ -67,7 +67,7 @@ namespace BUSLayer
                 tieuDe = layString(form, "TieuDe"),
                 noiDung = layString(form, "NoiDung"),
                 tapTin = ketQua.ketQua as TapTinDTO,
-                thoiDiemHetHan = layDateTime_Full(form, "ThoiDiemHetHan_Ngay", "ThoiDiemHetHan_Gio"),
+                thoiDiemHetHan = layDateTime(form, "ThoiDiemHetHan"),
                 nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
                 khoaHoc = layDTO<KhoaHocDTO>(form, "KhoaHoc")
             };

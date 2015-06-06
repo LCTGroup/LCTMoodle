@@ -85,12 +85,12 @@ namespace BUSLayer
 
             if (layBool(form, "CoHan"))
             {
-                khoaHoc.thoiDiemHetHan = layDateTime_Full(form, "ThoiDiemHetHan_Ngay", "Han_Gio");
+                khoaHoc.thoiDiemHetHan = layDateTime(form, "ThoiDiemHetHan");
             }
 
             if (khoaHoc.canDangKy && layBool(form, "CoHanDangKy"))
             {
-                khoaHoc.hanDangKy = layDateTime_Full(form, "HanDangKy_Ngay", "HanDangKy_Gio");
+                khoaHoc.hanDangKy = layDateTime(form, "HanDangKy");
             }
 
             ketQua = kiemTra(khoaHoc);

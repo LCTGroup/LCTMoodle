@@ -261,7 +261,7 @@ function moPopup(thamSo) {
             <article class="noi-dung lct-form">\
                 <ul class="danh-sach-hien-thi">\
                 </ul>\
-                <section class="danh-sach-nut lct-khung-button">\
+                <section class="danh-sach-nut khung-button">\
                 </section>\
             </article>\
         </article>\
