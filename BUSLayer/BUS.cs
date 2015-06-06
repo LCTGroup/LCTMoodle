@@ -11,6 +11,13 @@ namespace BUSLayer
         protected static System.Web.SessionState.HttpSessionState Session = System.Web.HttpContext.Current.Session;
 
         #region Lấy giá trị
+        protected static bool coKiemTra(string ten, string[] truong, bool kiemTra)
+        {
+            return 
+                truong == null ? kiemTra :
+                Array.Exists(truong, x => x == ten) == kiemTra;
+        }
+
         protected static T layDTO<T>(Dictionary<string, string> form, string key, T macDinh = null)
             where T : DTOLayer.DTO, new()
         {

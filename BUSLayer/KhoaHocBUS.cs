@@ -13,32 +13,32 @@ namespace BUSLayer
 {
     public class KhoaHocBUS : BUS
     {
-        public static KetQua kiemTra(KhoaHocDTO khoaHoc)
+        public static KetQua kiemTra(KhoaHocDTO khoaHoc, string[] truong = null, bool kiemTra = true)
         {
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (string.IsNullOrEmpty(khoaHoc.ten))
+            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrEmpty(khoaHoc.ten))
             {
                 loi.Add("Tên không được bỏ trống");
             }
-            if (string.IsNullOrEmpty(khoaHoc.moTa))
+            if (coKiemTra("MoTa", truong, kiemTra) && string.IsNullOrEmpty(khoaHoc.moTa))
             {
                 loi.Add("Mô tả không được bỏ trống");
             }
-            if (khoaHoc.chuDe == null)
+            if (coKiemTra("ChuDe", truong, kiemTra) && khoaHoc.chuDe == null)
             {
                 loi.Add("Chủ đề không được bỏ trống");
             }
-            if (khoaHoc.hinhDaiDien == null)
+            if (coKiemTra("HinhDaiDien", truong, kiemTra) && khoaHoc.hinhDaiDien == null)
             {
                 loi.Add("Hình đại diện không được bỏ trống");
             }
-            if (khoaHoc.nguoiTao == null)
+            if (coKiemTra("NguoiTao", truong, kiemTra) && khoaHoc.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (khoaHoc.cheDoRiengTu == null)
+            if (coKiemTra("CheDoRiengTu", truong, kiemTra) && khoaHoc.cheDoRiengTu == null)
             {
                 loi.Add("Chế độ riêng tư không được bỏ trống");
             }
