@@ -11,9 +11,9 @@ using Data;
 
 namespace BUSLayer
 {
-    public class BinhLuanBUS : BUS
+    public class BinhLuanBUS : BUS //Nhớ bổ sung T
     {
-        public static KetQua kiemTra(BinhLuanDataDTO binhLuan)
+        public static KetQua kiemTra(BinhLuanDTO binhLuan)
         {
             List<string> loi = new List<string>();
 
@@ -22,17 +22,13 @@ namespace BUSLayer
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
-            if (binhLuan.maNguoiTao == 0)
+            if (binhLuan.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (binhLuan.maDoiTuong == 0)
+            if (binhLuan.doiTuong == null)
             {
                 loi.Add("Đối tượng bình luận không được bỏ trống");
-            }
-            if (!new string[] { "BaiVietDienDan" }.Contains(binhLuan.loaiDoiTuong))
-            {
-                loi.Add("Loại đối tượng không hợp lệ");
             }
             #endregion
 
@@ -62,12 +58,12 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            var binhLuan = new BinhLuanDataDTO()
+            var binhLuan = new BinhLuanDTO()
             {
                 noiDung = layString(form, "NoiDung"),
-                maTapTin = (ketQua.ketQua as TapTinViewDTO).ma,
-                maNguoiTao = (int)Session["NguoiDung"],
-                maDoiTuong = layInt(form, "DoiTuong"),
+                tapTin = ketQua.ketQua as TapTinDTO,
+                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
+                doiTuong = layDTO<DTO>(form, "DoiTuong"),
                 loaiDoiTuong = layString(form, "Loai")
             };
 

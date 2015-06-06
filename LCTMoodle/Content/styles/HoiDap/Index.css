@@ -61,31 +61,41 @@
                 margin-top: 10px;
                 display: flex;                
             }
+        /*Thông tin đăng*/
+        .thong-tin-dang {
+            display: flex;
+            height: 20px;
+            position: relative;
+        }
+            .thong-tin-dang .nguoi-dang {
+            }
                 .thong-tin-dang .nguoi-dang a {
-                    display: block;
-                    color: #888;
+                    color: #999;                    
+                    display:block;
                 }
-                    .thong-tin-dang .nguoi-dang a:hover,
-                    .thong-tin-dang .nguoi-dang a:focus {
-                        text-decoration: none;
+                .thong-tin-dang .nguoi-dang a:hover,
+                .thong-tin-dang .nguoi-dang a:focus {
+                    text-decoration: none;
+                }
+                    .thong-tin-dang .nguoi-dang img {
+                        height: 20px;
+                        vertical-align: middle;
                     }
-                        .thong-tin-dang .nguoi-dang a img {
-                            width: 20px;
-                            height: 20px;
-                            vertical-align: middle;
-                        }
-                        .thong-tin-dang .nguoi-dang a span {
-                            margin-left: 5px;
-                        }
+                    
+                    .thong-tin-dang .nguoi-dang span {
+                        margin-left: 2px;
+                    }
+            .thong-tin-dang .thoi-gian-dang {
+            }
                 .thong-tin-dang .thoi-gian-dang {
 
                 }
-                    .thong-tin-dang .thoi-gian-dang:before {
-                        content: '-';
-                        display: inline-block;
-                        left: 0;
+                    .thong-tin-dang .thoi-gian-dang span:before {
+                        content: '.';
+                        height: 20px;
+                        width: 5px;
                         margin: 0 5px;
-                    }
-                    .thong-tin-dang .thoi-gian-dang span {
-                        line-height: 100%;
+                        display: inline-block;
+                        vertical-align: middle;
+                        line-height: 12px;
                     }

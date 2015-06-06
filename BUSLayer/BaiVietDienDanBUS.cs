@@ -13,7 +13,7 @@ namespace BUSLayer
 {
     public class BaiVietDienDanBUS : BUS
     {
-        public static KetQua kiemTra(BaiVietDienDanDataDTO baiViet)
+        public static KetQua kiemTra(BaiVietDienDanDTO baiViet)
         {
             List<string> loi = new List<string>();
 
@@ -26,11 +26,11 @@ namespace BUSLayer
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
-            if (baiViet.maNguoiTao == 0)
+            if (baiViet.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (baiViet.maKhoaHoc == 0)
+            if (baiViet.khoaHoc == null)
             {
                 loi.Add("Khóa học không được bỏ trống");
             }
@@ -62,13 +62,13 @@ namespace BUSLayer
                 return ketQua;
             }
             
-            BaiVietDienDanDataDTO baiViet = new BaiVietDienDanDataDTO()
+            BaiVietDienDanDTO baiViet = new BaiVietDienDanDTO()
             {
                 tieuDe = layString(form, "TieuDe"),
                 noiDung = layString(form, "NoiDung"),
-                maTapTin = (ketQua.ketQua as TapTinViewDTO).ma,
-                maNguoiTao = (int)Session["NguoiDung"],
-                maKhoaHoc = layInt(form, "KhoaHoc")
+                tapTin = ketQua.ketQua as TapTinDTO,
+                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
+                khoaHoc = layDTO<KhoaHocDTO>(form, "KhoaHoc")
             };
             
             ketQua = kiemTra(baiViet);

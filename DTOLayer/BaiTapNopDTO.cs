@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data;
 
 namespace DTOLayer
 {
-    public class BaiTapNopDataDTO : DTO
+    public class BaiTapNopDTO : DTO
     {
-        public int maTapTin;
+        public TapTinDTO tapTin;
         public string duongDan;
         public DateTime? thoiDiemTao;
-        public int maNguoiTao;
-        public int maBaiVietBaiTap;
+        public NguoiDungDTO nguoiTao;
+        public BaiVietBaiTapDTO baiVietBaiTap;
     }
 }

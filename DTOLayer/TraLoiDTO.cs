@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data;
 
 namespace DTOLayer
 {
-    public class BaiVietBaiGiangDataDTO : DTO
+    public class TraLoiDTO : DTO
     {
-        public string tieuDe;
         public string noiDung;
-        public int maTapTin;
         public DateTime? thoiDiemTao;
-        public int maNguoiTao;
-        public int maKhoaHoc;
+        public bool duyet;
+        public NguoiDungDTO nguoiTao;
+        public CauHoiDTO cauHoi;
     }
 }

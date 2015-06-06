@@ -13,7 +13,7 @@ namespace BUSLayer
 {
     public class BaiVietBaiTapBUS : BUS
     {
-        public static KetQua kiemTra(BaiVietBaiTapDataDTO baiViet)
+        public static KetQua kiemTra(BaiVietBaiTapDTO baiViet)
         {
             List<string> loi = new List<string>();
 
@@ -26,11 +26,11 @@ namespace BUSLayer
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
-            if (baiViet.maNguoiTao == 0)
+            if (baiViet.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (baiViet.maKhoaHoc == 0)
+            if (baiViet.khoaHoc == null)
             {
                 loi.Add("Khóa học không được bỏ trống");
             }
@@ -62,14 +62,14 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            BaiVietBaiTapDataDTO baiViet = new BaiVietBaiTapDataDTO()
+            BaiVietBaiTapDTO baiViet = new BaiVietBaiTapDTO()
             {
                 tieuDe = layString(form, "TieuDe"),
                 noiDung = layString(form, "NoiDung"),
-                maTapTin = (ketQua.ketQua as TapTinViewDTO).ma,
+                tapTin = ketQua.ketQua as TapTinDTO,
                 thoiDiemHetHan = layDateTime_Full(form, "ThoiDiemHetHan_Ngay", "ThoiDiemHetHan_Gio"),
-                maNguoiTao = (int)Session["NguoiDung"],
-                maKhoaHoc = layInt(form, "KhoaHoc")
+                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
+                khoaHoc = layDTO<KhoaHocDTO>(form, "KhoaHoc")
             };
             
             ketQua = kiemTra(baiViet);

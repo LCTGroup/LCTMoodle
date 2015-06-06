@@ -9,13 +9,13 @@ using System.Reflection;
 
 namespace DAOLayer
 {
-    public class GiaoTrinhDAO : DAO<GiaoTrinhDAO, GiaoTrinhViewDTO>
+    public class GiaoTrinhDAO : DAO<GiaoTrinhDAO, GiaoTrinhDTO>
     {
-        public static GiaoTrinhViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
+        public static GiaoTrinhDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
-            GiaoTrinhViewDTO giaoTrinh = new GiaoTrinhViewDTO();
+            GiaoTrinhDTO giaoTrinh = new GiaoTrinhDTO();
 
-            int maTam;
+            int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
@@ -26,24 +26,14 @@ namespace DAOLayer
                     case "MaKhoaHoc":
                         maTam = layInt(dong, i);
 
-                        if (maTam != 0)
+                        if (maTam.HasValue)
                         {
-                            if (LienKet.co(lienKet, "KhoaHoc"))
-                            {
-                                KetQua ketQua = KhoaHocDAO.layTheoMa(maTam);
-
-                                if (ketQua.trangThai == 0)
-                                {
-                                    giaoTrinh.khoaHoc = ketQua.ketQua as KhoaHocViewDTO;
-                                }
-                            }
-                            else
-                            {
-                                giaoTrinh.khoaHoc = new KhoaHocViewDTO()
+                            giaoTrinh.khoaHoc = LienKet.co(lienKet, "KhoaHoc") ?
+                                layDTO<KhoaHocDTO>(KhoaHocDAO.layTheoMa(maTam.Value)) :
+                                new KhoaHocDTO()
                                 {
                                     ma = maTam
                                 };
-                            }
                         }
                         break;
                     case "CongViec":
@@ -66,7 +56,7 @@ namespace DAOLayer
             return giaoTrinh;
         }
 
-        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc, LienKet lienKet = null)
+        public static KetQua layTheoMaKhoaHoc(int? maKhoaHoc, LienKet lienKet = null)
         {
             return layDanhSachDong
             (
@@ -79,14 +69,14 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua them(GiaoTrinhDataDTO giaoTrinh)
+        public static KetQua them(GiaoTrinhDTO giaoTrinh)
         {
             return layDong
             (
                 "themGiaoTrinh",
                 new object[]
                 {
-                    giaoTrinh.maKhoaHoc,
+                    layMa(giaoTrinh.khoaHoc),
                     giaoTrinh.congViec,
                     giaoTrinh.moTa,
                     giaoTrinh.thoiGian
@@ -94,7 +84,7 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua xoaTheoMa(int ma)
+        public static KetQua xoaTheoMa(int? ma)
         {
             return khongTruyVan
             (
@@ -106,7 +96,7 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua capNhatThuTu(int ma, int thuTu, int maKhoaHoc)
+        public static KetQua capNhatThuTu(int? ma, int? thuTu, int? maKhoaHoc)
         {
             return khongTruyVan
             (

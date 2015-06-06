@@ -11,6 +11,44 @@ namespace BUSLayer
         protected static System.Web.SessionState.HttpSessionState Session = System.Web.HttpContext.Current.Session;
 
         #region Lấy giá trị
+        protected static T layDTO<T>(Dictionary<string, string> form, string key, T macDinh = null)
+            where T : DTOLayer.DTO, new()
+        {
+            try
+            {
+                int? maTam = layInt(form, key);
+
+                return maTam.HasValue ?
+                    new T()
+                    {
+                        ma = maTam
+                    } :
+                    macDinh;
+            }
+            catch
+            {
+                return macDinh;
+            }
+        }
+
+        protected static T layDTO<T>(int? ma, T macDinh = null)
+            where T : DTOLayer.DTO, new()
+        {
+            try
+            {
+                return ma.HasValue ?
+                    new T()
+                    {
+                        ma = ma
+                    } :
+                    macDinh;
+            }
+            catch
+            {
+                return macDinh;
+            }
+        }
+
         protected static string layString(Dictionary<string, string> form, string key, string macDinh = null)
         {
             try
@@ -23,7 +61,7 @@ namespace BUSLayer
             }
         }
 
-        protected static int layInt(Dictionary<string, string> form, string key, int macDinh = 0)
+        protected static int? layInt(Dictionary<string, string> form, string key, int? macDinh = null)
         {
             try
             {

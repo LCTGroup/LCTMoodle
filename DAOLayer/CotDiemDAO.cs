@@ -9,13 +9,13 @@ using System.Reflection;
 
 namespace DAOLayer
 {
-    public class CotDiemDAO : DAO<CotDiemDAO, CotDiemViewDTO>
+    public class CotDiemDAO : DAO<CotDiemDAO, CotDiemDTO>
     {
-        public static CotDiemViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
+        public static CotDiemDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
-            CotDiemViewDTO cotDiem = new CotDiemViewDTO();
+            CotDiemDTO cotDiem = new CotDiemDTO();
 
-            int maTam;
+            int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
@@ -26,24 +26,14 @@ namespace DAOLayer
                     case "MaKhoaHoc":
                         maTam = layInt(dong, i);
 
-                        if (maTam != 0)
+                        if (maTam.HasValue)
                         {
-                            if (LienKet.co(lienKet, "KhoaHoc"))
-                            {
-                                KetQua ketQua = KhoaHocDAO.layTheoMa(maTam);
-
-                                if (ketQua.trangThai == 0)
-                                {
-                                    cotDiem.khoaHoc = ketQua.ketQua as KhoaHocViewDTO;
-                                }
-                            }
-                            else
-                            {
-                                cotDiem.khoaHoc = new KhoaHocViewDTO()
+                            cotDiem.khoaHoc = LienKet.co(lienKet, "KhoaHoc") ?
+                                layDTO<KhoaHocDTO>(KhoaHocDAO.layTheoMa(maTam.Value)) :
+                                new KhoaHocDTO()
                                 {
                                     ma = maTam
                                 };
-                            }
                         }
                         break;
                     case "Ten":

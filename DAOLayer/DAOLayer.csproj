@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO.cs" />
     <Compile Include="CotDiemDAO.cs" />
     <Compile Include="GiaoTrinhDAO.cs" />
     <Compile Include="BaiTapNopDAO.cs" />
@@ -53,9 +54,6 @@
     <Compile Include="NguoiDungDAO.cs" />
     <Compile Include="TapTinDAO.cs" />
     <Compile Include="ChuDeDAO.cs" />
-    <Compile Include="DAO.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

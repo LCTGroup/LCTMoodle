@@ -20,7 +20,7 @@ namespace BUSLayer
 
         public static KetQua them(System.Web.HttpPostedFileBase tapTinLuu)
         {
-            TapTinDataDTO tapTin = new TapTinDataDTO()
+            TapTinDTO tapTin = new TapTinDTO()
             {
                 ten = tapTinLuu.FileName,
                 loai = tapTinLuu.ContentType,
@@ -31,7 +31,7 @@ namespace BUSLayer
 
             if (ketQua.trangThai == 0)
             {
-                TapTinViewDTO tapTinDaLuu = ketQua.ketQua as TapTinViewDTO;
+                TapTinDTO tapTinDaLuu = ketQua.ketQua as TapTinDTO;
 
                 string duongDan = TapTinHelper.layDuongDanGoc() + "Tam/" + tapTinDaLuu.ma + tapTinDaLuu.duoi;
 
@@ -53,17 +53,13 @@ namespace BUSLayer
             return ketQua;
         }
 
-        public static KetQua chuyen(string loai, int ma)
+        public static KetQua chuyen(string loai, int? ma)
         {
-            if (ma == 0)
+            if (!ma.HasValue)
             {
                 return new KetQua()
                 {
-                    trangThai = 0,
-                    ketQua = new TapTinViewDTO()
-                    {
-                        ma = 0
-                    }
+                    trangThai = 0
                 };
             }
 
@@ -72,7 +68,7 @@ namespace BUSLayer
             if (ketQua.trangThai == 0)
             {
                 string duongDanGoc = TapTinHelper.layDuongDanGoc();
-                TapTinViewDTO tapTin = ketQua.ketQua as TapTinViewDTO;
+                TapTinDTO tapTin = ketQua.ketQua as TapTinDTO;
 
                 try
                 {

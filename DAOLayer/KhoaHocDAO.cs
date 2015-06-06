@@ -8,12 +8,13 @@ using Data;
 
 namespace DAOLayer
 {
-    public class KhoaHocDAO : DAO<KhoaHocDAO, KhoaHocViewDTO>
+    public class KhoaHocDAO : DAO<KhoaHocDAO, KhoaHocDTO>
     {
-        public static KhoaHocViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
+        public static KhoaHocDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
-            KhoaHocViewDTO khoaHoc = new KhoaHocViewDTO();
+            KhoaHocDTO khoaHoc = new KhoaHocDTO();
 
+            int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
@@ -28,25 +29,49 @@ namespace DAOLayer
                         khoaHoc.moTa = layString(dong, i);
                         break;
                     case "MaChuDe":
-                        khoaHoc.chuDe = new ChuDeViewDTO()
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
                         {
-                            ma = layInt(dong, i)
-                        };
+                            khoaHoc.chuDe = LienKet.co(lienKet, "ChuDe") ?
+                                null :
+                                new ChuDeDTO()
+                                {
+                                    ma = maTam
+                                };
+                        }
                         break;
                     case "MaHinhDaiDien":
-                        khoaHoc.hinhDaiDien = new TapTinViewDTO()
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
                         {
-                            ma = layInt(dong, i)
-                        };
+                            khoaHoc.hinhDaiDien = LienKet.co(lienKet, "TapTin") ?
+                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("KhoaHoc_HinhDaiDien", maTam.Value)) :
+                                new TapTinDTO()
+                                {
+                                    ma = maTam
+                                };
+                        }
                         break;
                     case "MaNguoiTao":
-                        khoaHoc.nguoiTao = new NguoiDungViewDTO()
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
                         {
-                            ma = layInt(dong, i)
-                        };
+                            khoaHoc.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam.Value)) :
+                                new NguoiDungDTO()
+                                {
+                                    ma = maTam
+                                };
+                        }
                         break;
                     case "ThoiDiemTao":
                         khoaHoc.thoiDiemTao = layDateTime(dong, i);
+                        break;
+                    case "ThoiDiemHetHan":
+                        khoaHoc.thoiDiemHetHan = layDateTime(dong, i);
                         break;
                     case "CanDangKy":
                         khoaHoc.canDangKy = layBool(dong, i, false);
@@ -77,7 +102,7 @@ namespace DAOLayer
             return khoaHoc;
         }
 
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMa(int? ma)
         {
             return layDong
                 (
@@ -89,7 +114,7 @@ namespace DAOLayer
                 );
         }
 
-        public static KetQua them(KhoaHocDataDTO khoaHoc)
+        public static KetQua them(KhoaHocDTO khoaHoc)
         {
             return layGiaTri<int>
             (
@@ -98,10 +123,10 @@ namespace DAOLayer
                 {
                     khoaHoc.ten,
                     khoaHoc.moTa,
-                    khoaHoc.maHinhDaiDien,
-                    khoaHoc.maChuDe,
-                    khoaHoc.maNguoiTao,
-                    khoaHoc.han,
+                    layMa(khoaHoc.hinhDaiDien),
+                    layMa(khoaHoc.chuDe),
+                    layMa(khoaHoc.nguoiTao),
+                    khoaHoc.thoiDiemHetHan,
                     khoaHoc.canDangKy,
                     khoaHoc.hanDangKy,
                     khoaHoc.phiThamGia,

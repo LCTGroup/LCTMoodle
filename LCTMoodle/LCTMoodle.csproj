@@ -175,7 +175,7 @@
     <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\BangDiem\Tao.css" />
     <Content Include="Content\styles\GiaoTrinh\Tao.css" />
-    <Content Include="Content\styles\HoiDap\CauHoi.css" />
+    <Content Include="Content\styles\HoiDap\XemCauHoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
     <Content Include="Content\styles\KhoaHoc\Xem.css" />
     <Content Include="Content\styles\LCT\bootstrap.css" />

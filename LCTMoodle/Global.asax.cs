@@ -54,7 +54,7 @@ namespace LCTMoodle
 
                 if (ketQua.trangThai == 0)
                 {
-                    Session["NguoiDung"] = (ketQua.ketQua as NguoiDungViewDTO).ma;
+                    Session["NguoiDung"] = (ketQua.ketQua as NguoiDungDTO).ma;
                 }
             }
         }

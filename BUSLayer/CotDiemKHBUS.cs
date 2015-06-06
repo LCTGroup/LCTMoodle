@@ -12,12 +12,12 @@ namespace BUSLayer
 {
     public class CotDiemKHBUS : BUS
     {
-        public static KetQua kiemTra(CotDiemDataDTO cotDiem)
+        public static KetQua kiemTra(CotDiemDTO cotDiem)
         {
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (cotDiem.maKhoaHoc == 0)
+            if (cotDiem.khoaHoc == null)
             {
                 loi.Add("Khóa học không được bỏ trống");
             }

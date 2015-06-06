@@ -24,9 +24,9 @@ namespace LCTMoodle.Controllers
         }
         public ActionResult XemCauHoi(int ma)
         {            
-            return View(CauHoiBUS.layCauHoi(ma).ketQua as CauHoiViewDTO);
-        }
-
+            return View(CauHoiBUS.layCauHoi(ma).ketQua as CauHoiDTO);
+        }        
+        
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult XuLyThemCauHoi(FormCollection form)

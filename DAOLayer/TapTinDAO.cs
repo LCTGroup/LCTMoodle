@@ -8,18 +8,18 @@ using Data;
 
 namespace DAOLayer
 {
-    public class TapTinDAO : DAO<TapTinDAO, TapTinViewDTO>
+    public class TapTinDAO : DAO<TapTinDAO, TapTinDTO>
     {
-        public static TapTinViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
+        public static TapTinDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
-            TapTinViewDTO tapTin = new TapTinViewDTO();
+            TapTinDTO tapTin = new TapTinDTO();
 
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
                 {
                     case "Ma":
-                        tapTin.ma = (dong.IsDBNull(i)) ? 0 : dong.GetInt32(i); break;
+                        tapTin.ma = layInt(dong, i); break;
                     case "Ten":
                         tapTin.ten = layString(dong, i); break;
                     case "Loai":
@@ -36,7 +36,7 @@ namespace DAOLayer
             return tapTin;
         }
 
-        public static KetQua them(TapTinDataDTO tapTin)
+        public static KetQua them(TapTinDTO tapTin)
         {
             return layDong
                 (
@@ -50,7 +50,7 @@ namespace DAOLayer
                 );
         }
 
-        public static KetQua chuyen(string loai, int ma)
+        public static KetQua chuyen(string loai, int? ma)
         {
             return layDong
                 (
@@ -63,7 +63,7 @@ namespace DAOLayer
                 );
         }
        
-        public static KetQua layTheoMa(string loai, int ma)
+        public static KetQua layTheoMa(string loai, int? ma)
         {
             return layDong
                 (

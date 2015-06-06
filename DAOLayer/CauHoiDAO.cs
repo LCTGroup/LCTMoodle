@@ -8,12 +8,13 @@ using Data;
 
 namespace DAOLayer
 {
-    public class CauHoiDAO : DAO<CauHoiDAO, CauHoiViewDTO>
+    public class CauHoiDAO : DAO<CauHoiDAO, CauHoiDTO>
     {
-        public static CauHoiViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
+        public static CauHoiDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
-            CauHoiViewDTO cauHoi = new CauHoiViewDTO();
+            CauHoiDTO cauHoi = new CauHoiDTO();
 
+            int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
@@ -27,26 +28,16 @@ namespace DAOLayer
                     case "ThoiDiemTao":
                         cauHoi.thoiDiemTao = layDateTime(dong, i); break;
                     case "MaNguoiTao":
-                        int maTam = layInt(dong, i);
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
                         {
-                            if (maTam != 0)
-                            {
-                                if (LienKet.co(lienKet, "NguoiDung"))
+                            cauHoi.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam.Value)) :
+                                new NguoiDungDTO()
                                 {
-                                    KetQua ketQua = NguoiDungDAO.layTheoMa(maTam);
-                                    if (ketQua.trangThai == 0)
-                                    {
-                                        cauHoi.nguoiTao = ketQua.ketQua as NguoiDungViewDTO;
-                                    }                                    
-                                }
-                                else
-                                {
-                                    cauHoi.nguoiTao = new NguoiDungViewDTO()
-                                    {
-                                        ma = maTam
-                                    };
-                                }
-                            }
+                                    ma = maTam
+                                };
                         }
                         break;
                     default:
@@ -56,7 +47,7 @@ namespace DAOLayer
 
             return cauHoi;
         }  
-        public static KetQua them(CauHoiDataDTO cauHoi)
+        public static KetQua them(CauHoiDTO cauHoi)
         {
             return layGiaTri<int>
             (
@@ -66,11 +57,11 @@ namespace DAOLayer
                     cauHoi.tieuDe,
                     cauHoi.noiDung,
                     cauHoi.thoiDiemTao,
-                    cauHoi.maNguoiTao
+                    layMa(cauHoi.nguoiTao)
                 }
             );
         }
-        public static KetQua lay(int maCauHoi, LienKet lienKet = null)
+        public static KetQua lay(int? maCauHoi, LienKet lienKet = null)
         {
             return layDong
             (

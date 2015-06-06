@@ -50,10 +50,10 @@ namespace DAOLayer
                     dong.Close();
 
                     return new KetQua()
-                        {
-                            trangThai = 0,
-                            ketQua = dto
-                        };
+                    {
+                        trangThai = 0,
+                        ketQua = dto
+                    };
                 }
                 else
                 {
@@ -115,10 +115,10 @@ namespace DAOLayer
                     dong.Close();
 
                     return new KetQua()
-                        {
-                            trangThai = 0,
-                            ketQua = dtos
-                        };
+                    {
+                        trangThai = 0,
+                        ketQua = dtos
+                    };
                 }
                 else
                 {
@@ -217,34 +217,51 @@ namespace DAOLayer
                 object ketQua = lenh.ExecuteScalar();
 
                 return new KetQua()
-                    {
-                        trangThai = 0,
-                        ketQua = Convert.ChangeType(ketQua, typeof(T))
-                    };
+                {
+                    trangThai = 0,
+                    ketQua = Convert.ChangeType(ketQua, typeof(T))
+                };
             }
             catch (SqlException e)
             {
 
                 return new KetQua()
-                    {
-                        trangThai = 2,
-                        ketQua = "Lỗi truy vấn\r\n" + e.Message
-                    };
+                {
+                    trangThai = 2,
+                    ketQua = "Lỗi truy vấn\r\n" + e.Message
+                };
             }
             finally
             {
                 ketNoi.Close();
             }
-        } 
+        }
         #endregion
 
         #region Lấy giá trị
+        protected static object layMa(DTO dto)
+        {
+            return dto != null ? dto.ma : null;
+        }
+
+        protected static T layDTO<T>(KetQua ketQua)
+            where T : DTO
+        {
+            return ketQua.trangThai == 0 ? (T)ketQua.ketQua : null;
+        }
+
+        protected static List<T> layDanhSachDTO<T>(KetQua ketQua)
+            where T : DTO
+        {
+            return ketQua.trangThai == 0 ? (List<T>)ketQua.ketQua : null;
+        }
+
         protected static string layString(System.Data.SqlClient.SqlDataReader dong, int index, string macDinh = null)
         {
             return dong.IsDBNull(index) ? macDinh : dong.GetString(index);
         }
 
-        protected static int layInt(System.Data.SqlClient.SqlDataReader dong, int index, int macDinh = 0)
+        protected static int? layInt(System.Data.SqlClient.SqlDataReader dong, int index, int? macDinh = null)
         {
             return dong.IsDBNull(index) ? macDinh : dong.GetInt32(index);
         }
@@ -260,53 +277,5 @@ namespace DAOLayer
         }
 
         #endregion
-    }
-
-    public class LienKet : Dictionary<string, object>
-    {
-        public static bool co(LienKet lienKet, string tenLienKet)
-        {
-            return lienKet != null && lienKet.ContainsKey(tenLienKet);
-        }
-
-        public void Add(string key)
-        {
-            Add(key, null);
-        }
-    }
-
-    public class BangCapNhat : DataTable
-    {
-        public BangCapNhat()
-        {
-            Columns.AddRange(new DataColumn[] {
-                new DataColumn("TenTruong", typeof(string)),
-                new DataColumn("GiaTri", typeof(string)),
-                new DataColumn("LaChuoi", typeof(bool)),
-            });
-        }
-        public BangCapNhat(Dictionary<string, string> form, Dictionary<string, bool> danhSachTruong)
-        {
-            Columns.AddRange(new DataColumn[] {
-                new DataColumn("TenTruong", typeof(string)),
-                new DataColumn("GiaTri", typeof(string)),
-                new DataColumn("LaChuoi", typeof(bool)),
-            });
-
-            foreach (KeyValuePair<string, bool> truong in danhSachTruong)
-            {
-                Add(truong.Key, form[truong.Key], truong.Value);
-            }
-        }
-
-        public void Add(string tenTruong, string giaTri, bool laChuoi)
-        {
-            Rows.Add(new object[]
-            {
-                tenTruong,
-                giaTri,
-                laChuoi
-            });
-        }
     }
 }

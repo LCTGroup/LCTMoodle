@@ -12,20 +12,20 @@ namespace BUSLayer
 {
     public class BaiTapNopBUS : BUS
     {
-        public static KetQua kiemTra(BaiTapNopDataDTO baiNop)
+        public static KetQua kiemTra(BaiTapNopDTO baiNop)
         {
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (baiNop.maTapTin == 0 && string.IsNullOrEmpty(baiNop.duongDan))
+            if (baiNop.tapTin == null && string.IsNullOrEmpty(baiNop.duongDan))
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
-            if (baiNop.maNguoiTao == 0)
+            if (baiNop.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (baiNop.maBaiVietBaiTap == 0)
+            if (baiNop.baiVietBaiTap == null)
             {
                 loi.Add("Bài tập được nộp không được bỏ trống");
             }
@@ -57,12 +57,12 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            BaiTapNopDataDTO baiTapNop = new BaiTapNopDataDTO()
+            BaiTapNopDTO baiTapNop = new BaiTapNopDTO()
             {
-                maTapTin = (ketQua.ketQua as TapTinViewDTO).ma,
+                tapTin = ketQua.ketQua as TapTinDTO,
                 duongDan = layString(form, "DuongDan"),
-                maNguoiTao = (int)Session["NguoiDung"],
-                maBaiVietBaiTap = layInt(form, "BaiVietBaiTap")
+                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
+                baiVietBaiTap = layDTO<BaiVietBaiTapDTO>(form, "BaiVietBaiTap")
             };
 
             ketQua = kiemTra(baiTapNop);

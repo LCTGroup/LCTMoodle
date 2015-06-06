@@ -13,7 +13,7 @@ namespace BUSLayer
 {
     public class TraLoiBUS : BUS
     {
-        public static KetQua kiemTra(TraLoiDataDTO traLoi)
+        public static KetQua kiemTra(TraLoiDTO traLoi)
         {
             List<string> loi = new List<string>();
 
@@ -43,12 +43,12 @@ namespace BUSLayer
 
         public static KetQua them(Dictionary<string, string> form)
         {
-            TraLoiDataDTO traLoi = new TraLoiDataDTO()
+            TraLoiDTO traLoi = new TraLoiDTO()
             {
-                maCauHoi = layInt(form, "KhoaHoc"),
+                cauHoi = layDTO<CauHoiDTO>(layInt(form, "KhoaHoc")),
                 noiDung = layString(form, "NoiDung"),
-                maNguoiTao = (int)Session["NguoiDung"],                
-                thoiDiemTao = DateTime.Now,       
+                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
+                thoiDiemTao = DateTime.Now,
             };
             
             KetQua ketQua = TraLoiBUS.kiemTra(traLoi);
@@ -56,6 +56,16 @@ namespace BUSLayer
             if (ketQua.trangThai != 0)
                 ketQua = TraLoiDAO.them(traLoi);
             return ketQua;
+        }
+
+        public static KetQua layDanhSachTraLoiTheoCauHoi(int maCauHoi)
+        {
+            return TraLoiDAO.layDanhSachTraLoiTheoCauHoi(maCauHoi);
+        }
+
+        public static KetQua layTraLoiTheoMa(int ma)
+        {
+            return TraLoiDAO.layTraLoiTheoMa(ma);
         }
     }
 }

@@ -10,7 +10,7 @@ CREATE TABLE dbo.KhoaHoc(
 	MaChuDe INT NOT NULL,
 	MaNguoiTao INT NOT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
-	Han DATETIME DEFAULT NULL,
+	ThoiDiemHetHan DATETIME DEFAULT NULL,
 	CanDangKy BIT DEFAULT NULL,
 	HanDangKy DATETIME DEFAULT NULL,
 	PhiThamGia INT DEFAULT NULL,
@@ -28,7 +28,7 @@ ALTER PROC dbo.themKhoaHoc(
 	@2 INT, --MaHinhDaiDien
 	@3 INT, --MaChuDe
 	@4 INT, --MaNguoiTao
-	@5 DATETIME, --Han
+	@5 DATETIME, --ThoiDiemHetHan
 	@6 BIT, --CanDangKy
 	@7 DATETIME, --HanDangKy
 	@8 INT, --PhiThamGia
@@ -36,7 +36,7 @@ ALTER PROC dbo.themKhoaHoc(
 )
 AS
 BEGIN
-	INSERT INTO dbo.KhoaHoc (Ten, MoTa, MaHinhDaiDien, MaChuDe, MaNguoiTao, Han, CanDangKy, HanDangKy, PhiThamGia, CheDoRiengTu)
+	INSERT INTO dbo.KhoaHoc (Ten, MoTa, MaHinhDaiDien, MaChuDe, MaNguoiTao, ThoiDiemHetHan, CanDangKy, HanDangKy, PhiThamGia, CheDoRiengTu)
 		VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9)
 		
 	SELECT @@IDENTITY
@@ -44,7 +44,7 @@ END
 
 GO
 --Lấy khóa học theo mã
-CREATE PROC dbo.layKhoaHocTheoMa(
+ALTER PROC dbo.layKhoaHocTheoMa(
 	@0 INT --Ma
 )
 AS
@@ -57,7 +57,7 @@ BEGIN
 		MaChuDe,
 		MaNguoiTao,
 		ThoiDiemTao,
-		Han,
+		ThoiDiemHetHan,
 		CanDangKy,
 		HanDangKy,
 		PhiThamGia,

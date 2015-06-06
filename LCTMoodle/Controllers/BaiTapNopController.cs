@@ -20,9 +20,9 @@ namespace LCTMoodle.Controllers
         public ActionResult _DanhSachNop(int maBaiTap)
         {
             KetQua ketQua = BaiTapNopBUS.layTheoMaBaiVietBaiTap(maBaiTap);
-            List<BaiTapNopViewDTO> danhSachBaiTapNop =
+            List<BaiTapNopDTO> danhSachBaiTapNop =
                 ketQua.trangThai == 0 ?
-                    ketQua.ketQua as List<BaiTapNopViewDTO> :
+                    ketQua.ketQua as List<BaiTapNopDTO> :
                     null;
 
             return Json(new KetQua()

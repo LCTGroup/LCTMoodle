@@ -19,7 +19,7 @@ namespace LCTMoodle.Controllers
 
             if (ketQua.trangThai == 0)
             {
-                TapTinViewDTO tapTin = ketQua.ketQua as TapTinViewDTO;
+                TapTinDTO tapTin = ketQua.ketQua as TapTinDTO;
 
                 string duongDan = TapTinHelper.layDuongDan(loai, tapTin.ma + tapTin.duoi);
                 if (System.IO.File.Exists(duongDan))

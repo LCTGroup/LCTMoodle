@@ -21,7 +21,7 @@ namespace LCTMoodle.Controllers
                 return RedirectToAction("Index", "TrangChu");
             }
 
-            ViewData["KhoaHoc"] = ketQua.ketQua as KhoaHocViewDTO;
+            ViewData["KhoaHoc"] = ketQua.ketQua as KhoaHocDTO;
 
             ketQua = GiaoTrinhBUS.layTheoMaKhoaHoc(ma);
 
