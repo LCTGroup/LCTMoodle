@@ -4,98 +4,97 @@
     margin-bottom: 10px;
     display: flex;
 }
-        /*Thông tin*/
-        .cau-hoi .thong-tin {
-            display: flex;
-            padding: 10px;
-            border-right: 1px solid #f5f5f5;
-            border-left: 3px solid #ddd;
-            background-color: #f8f8f8;            
-        }
-        .thong-tin.duyet {
-            border-left: 3px solid #08c;
-        }
-        .thong-tin.da-tra-loi {
-            border-left: 3px solid #f90;
-        }                    
-            .thong-tin .diem,
-            .thong-tin .tra-loi {
-                width: 70px;
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                color: #888;
-            }
-                .thong-tin .diem:before,
-                .thong-tin .tra-loi:before {
-                    content: '';
-                    width: 24px;
-                    height: 24px;
-                    background: url('/HoiDap.png/HoiDap') no-repeat;
-                    margin: 0 auto;
-                }
-                .thong-tin .tra-loi:before {
-                    background-position: 0 -24px;
-                }
-                    .thong-tin span {
-                        text-align: center;
-                        margin-top: 5px;
-                    }
-        /*Chi tiết*/
-        .chi-tiet {
-            width: 100%;
-            padding: 10px;
-                            
-        }
-            .chi-tiet .tieu-de {                
-                font-size: 15px;
-                font-weight: bold;
-            }
-                .chi-tiet .tieu-de a {                
-                    color: #333;
-                }
-            .chi-tiet .thong-tin-dang {
-                font-size: 12px;
-                color: #999;
-                text-align: left;
-                margin-top: 10px;
-                display: flex;                
-            }
-        /*Thông tin đăng*/
-        .thong-tin-dang {
-            display: flex;
-            height: 20px;
+    /*Thông tin*/
+    .cau-hoi .thong-tin {
+        display: flex;
+        padding: 10px;
+        border-right: 1px solid #f5f5f5;
+        background-color: #f8f8f8;            
+    }
+    .thong-tin.duyet {
+        border-left: 3px solid #08c;
+    }
+    .thong-tin.da-tra-loi {
+        border-left: 3px solid #f90;
+    }                    
+        .thong-tin .diem,
+        .thong-tin .tra-loi {
+            width: 70px;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            color: #888;
         }
-            .thong-tin-dang .nguoi-dang {
+            .thong-tin .diem:before,
+            .thong-tin .tra-loi:before {
+                content: '';
+                width: 24px;
+                height: 24px;
+                background: url('/HoiDap.png/HoiDap') no-repeat;
+                margin: 0 auto;
             }
-                .thong-tin-dang .nguoi-dang a {
-                    color: #999;                    
-                    display:block;
+            .thong-tin .tra-loi:before {
+                background-position: 0 -24px;
+            }
+                .thong-tin span {
+                    text-align: center;
+                    margin-top: 5px;
                 }
-                .thong-tin-dang .nguoi-dang a:hover,
-                .thong-tin-dang .nguoi-dang a:focus {
-                    text-decoration: none;
+    /*Chi tiết*/
+    .chi-tiet {
+        width: 100%;
+        padding: 10px;
+        border-left: 3px solid #ddd;
+    }
+        .chi-tiet .tieu-de {                
+            font-size: 15px;
+            font-weight: bold;
+        }
+            .chi-tiet .tieu-de a {                
+                color: #333;
+            }
+        .chi-tiet .thong-tin-dang {
+            font-size: 12px;
+            color: #999;
+            text-align: left;
+            margin-top: 10px;
+            display: flex;                
+        }
+    /*Thông tin đăng*/
+    .thong-tin-dang {
+        display: flex;
+        height: 20px;
+        position: relative;
+    }
+        .thong-tin-dang .nguoi-dang {
+        }
+            .thong-tin-dang .nguoi-dang a {
+                color: #999;                    
+                display:block;
+            }
+            .thong-tin-dang .nguoi-dang a:hover,
+            .thong-tin-dang .nguoi-dang a:focus {
+                text-decoration: none;
+            }
+                .thong-tin-dang .nguoi-dang img {
+                    height: 20px;
+                    vertical-align: middle;
                 }
-                    .thong-tin-dang .nguoi-dang img {
-                        height: 20px;
-                        vertical-align: middle;
-                    }
                     
-                    .thong-tin-dang .nguoi-dang span {
-                        margin-left: 2px;
-                    }
-            .thong-tin-dang .thoi-gian-dang {
-            }
-                .thong-tin-dang .thoi-gian-dang {
-
+                .thong-tin-dang .nguoi-dang span {
+                    margin-left: 2px;
                 }
-                    .thong-tin-dang .thoi-gian-dang span:before {
-                        content: '.';
-                        height: 20px;
-                        width: 5px;
-                        margin: 0 5px;
-                        display: inline-block;
-                        vertical-align: middle;
-                        line-height: 12px;
-                    }
+        .thong-tin-dang .thoi-gian-dang {
+        }
+            .thong-tin-dang .thoi-gian-dang {
+
+            }
+                .thong-tin-dang .thoi-gian-dang span:before {
+                    content: '.';
+                    height: 20px;
+                    width: 5px;
+                    margin: 0 5px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    line-height: 12px;
+                }
