@@ -1,6 +1,6 @@
 ﻿@{
     var ketQua = BUSLayer.BinhLuanBUS.layTheoDoiTuong((string)ViewData["LoaiDoiTuong"], (int)ViewData["MaDoiTuong"]);
-    var danhSachBinhLuan = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BinhLuanViewDTO> : new List<DTOLayer.BinhLuanViewDTO>();
+    var danhSachBinhLuan = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BinhLuanDTO> : new List<DTOLayer.BinhLuanDTO>();
 }
 
 <section data-doi-tuong="khung-binh-luan" class="khung-binh-luan">

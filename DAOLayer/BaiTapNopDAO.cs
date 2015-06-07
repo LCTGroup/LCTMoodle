@@ -9,13 +9,13 @@ using System.Reflection;
 
 namespace DAOLayer
 {
-    public class BaiTapNopDAO : DAO<BaiTapNopDAO, BaiTapNopViewDTO>
+    public class BaiTapNopDAO : DAO<BaiTapNopDAO, BaiTapNopDTO>
     {
-        public static BaiTapNopViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
+        public static BaiTapNopDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
-            BaiTapNopViewDTO baiTapNop = new BaiTapNopViewDTO();
+            BaiTapNopDTO baiTapNop = new BaiTapNopDTO();
 
-            int maTam;
+            int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
@@ -26,24 +26,14 @@ namespace DAOLayer
                     case "MaTapTin":
                         maTam = layInt(dong, i);
 
-                        if (maTam != 0)
+                        if (maTam.HasValue)
                         {
-                            if (LienKet.co(lienKet, "TapTin"))
-                            {
-                                KetQua ketQua = TapTinDAO.layTheoMa("BaiTapNop_TapTin", maTam);
-                                
-                                if (ketQua.trangThai == 0)
-                                {
-                                    baiTapNop.tapTin = ketQua.ketQua as TapTinViewDTO;
-                                }
-                            }
-                            else
-                            {
-                                baiTapNop.tapTin = new TapTinViewDTO()
+                            baiTapNop.tapTin = LienKet.co(lienKet, "TapTin") ?
+                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("BaiTapNop_TapTin", maTam.Value)) :
+                                new TapTinDTO()
                                 {
                                     ma = maTam
                                 };
-                            }
                         }
                         break;
                     case "DuongDan":
@@ -55,31 +45,28 @@ namespace DAOLayer
                     case "MaNguoiTao":
                         maTam = layInt(dong, i);
 
-                        if (maTam != 0)
+                        if (maTam.HasValue)
                         {
-                            if (LienKet.co(lienKet, "NguoiTao"))
-                            {
-                                KetQua ketQua = NguoiDungDAO.layTheoMa(maTam);
-
-                                if (ketQua.trangThai == 0)
-                                {
-                                    baiTapNop.nguoiTao = ketQua.ketQua as NguoiDungViewDTO;
-                                }
-                            }
-                            else
-                            {
-                                baiTapNop.nguoiTao = new NguoiDungViewDTO()
+                            baiTapNop.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam.Value)) :
+                                new NguoiDungDTO()
                                 {
                                     ma = maTam
                                 };
-                            }
                         }
                         break;
                     case "MaBaiVietBaiTap":
-                        baiTapNop.baiVietBaiTap = new BaiVietBaiTapViewDTO()
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
                         {
-                            ma = layInt(dong, i)
-                        };
+                            baiTapNop.baiVietBaiTap = LienKet.co(lienKet, "BaiVietBaiTap") ?
+                                null : //Tạm -- Nhớ đổi ko lỗi
+                                new BaiVietBaiTapDTO()
+                                {
+                                    ma = maTam
+                                };
+                        }
                         break;
                     default:
                         break;
@@ -89,22 +76,22 @@ namespace DAOLayer
             return baiTapNop;
         }
 
-        public static KetQua themHoacCapNhat(BaiTapNopDataDTO baiTapNop)
+        public static KetQua themHoacCapNhat(BaiTapNopDTO baiTapNop)
         {
             return layDong
             (
                 "themHoacCapNhatBaiTapNop",
                 new object[] 
                 { 
-                    baiTapNop.maTapTin,
+                    layMa(baiTapNop.tapTin),
                     baiTapNop.duongDan,
-                    baiTapNop.maNguoiTao,
-                    baiTapNop.maBaiVietBaiTap
+                    layMa(baiTapNop.nguoiTao),
+                    layMa(baiTapNop.baiVietBaiTap)
                 }
             );
         }
 
-        public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap, LienKet lienKet = null)
+        public static KetQua layTheoMaBaiVietBaiTap(int? maBaiVietBaiTap, LienKet lienKet = null)
         {
             return layDanhSachDong
             (

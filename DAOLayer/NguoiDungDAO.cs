@@ -8,12 +8,13 @@ using Data;
 
 namespace DAOLayer
 {
-    public class NguoiDungDAO : DAO<NguoiDungDAO, NguoiDungViewDTO>
+    public class NguoiDungDAO : DAO<NguoiDungDAO, NguoiDungDTO>
     {
-        public static NguoiDungViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
+        public static NguoiDungDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
-            NguoiDungViewDTO nguoiDung = new NguoiDungViewDTO();
+            NguoiDungDTO nguoiDung = new NguoiDungDTO();
 
+            int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
@@ -35,10 +36,17 @@ namespace DAOLayer
                     case "SoDienThoai":
                         nguoiDung.soDienThoai = layString(dong, i); break;
                     case "MaHinhDaiDien":
-                        nguoiDung.hinhDaiDien = new TapTinViewDTO()
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
                         {
-                            ma = layInt(dong, i)
-                        };
+                            nguoiDung.hinhDaiDien = LienKet.co(lienKet, "TapTin") ?
+                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("NguoiDung_HinhDaiDien", maTam.Value)) :
+                                new TapTinDTO()
+                                {
+                                    ma = maTam
+                                };
+                        }
                         break;
                     default:
                         break;
@@ -48,7 +56,7 @@ namespace DAOLayer
             return nguoiDung;
         }  
 
-        public static KetQua them(NguoiDungDataDTO nguoiDung)
+        public static KetQua them(NguoiDungDTO nguoiDung)
         {
             return layGiaTri<int>
             (
@@ -62,7 +70,7 @@ namespace DAOLayer
                     nguoiDung.ngaySinh,
                     nguoiDung.diaChi,
                     nguoiDung.soDienThoai,
-                    nguoiDung.maHinhDaiDien
+                    layMa(nguoiDung.hinhDaiDien)
                 }
             );
         }
@@ -77,7 +85,7 @@ namespace DAOLayer
                 }
             );
         }
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMa(int? ma)
         {
             return layDong
             (

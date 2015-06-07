@@ -13,7 +13,7 @@ namespace BUSLayer
 {
     public class CauHoiBUS : BUS
     {
-        public static KetQua kiemTra(CauHoiDataDTO cauHoi)
+        public static KetQua kiemTra(CauHoiDTO cauHoi)
         {
             List<string> loi = new List<string>();
 
@@ -47,12 +47,12 @@ namespace BUSLayer
 
         public static KetQua them(Dictionary<string,string> formCauHoi)
         {
-            CauHoiDataDTO cauHoi = new CauHoiDataDTO()
+            CauHoiDTO cauHoi = new CauHoiDTO()
             {
                 tieuDe = layString(formCauHoi, "TieuDe"),
                 noiDung = layString(formCauHoi, "NoiDung"),
                 thoiDiemTao = DateTime.Now,
-                maNguoiTao = (int)Session["NguoiDung"]
+                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?)
             };
             
             KetQua ketQua = kiemTra(cauHoi);

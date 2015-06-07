@@ -11,6 +11,51 @@ namespace BUSLayer
         protected static System.Web.SessionState.HttpSessionState Session = System.Web.HttpContext.Current.Session;
 
         #region Lấy giá trị
+        protected static bool coKiemTra(string ten, string[] truong, bool kiemTra)
+        {
+            return 
+                truong == null ? kiemTra :
+                Array.Exists(truong, x => x == ten) == kiemTra;
+        }
+
+        protected static T layDTO<T>(Dictionary<string, string> form, string key, T macDinh = null)
+            where T : DTOLayer.DTO, new()
+        {
+            try
+            {
+                int? maTam = layInt(form, key);
+
+                return maTam.HasValue ?
+                    new T()
+                    {
+                        ma = maTam
+                    } :
+                    macDinh;
+            }
+            catch
+            {
+                return macDinh;
+            }
+        }
+
+        protected static T layDTO<T>(int? ma, T macDinh = null)
+            where T : DTOLayer.DTO, new()
+        {
+            try
+            {
+                return ma.HasValue ?
+                    new T()
+                    {
+                        ma = ma
+                    } :
+                    macDinh;
+            }
+            catch
+            {
+                return macDinh;
+            }
+        }
+
         protected static string layString(Dictionary<string, string> form, string key, string macDinh = null)
         {
             try
@@ -23,7 +68,7 @@ namespace BUSLayer
             }
         }
 
-        protected static int layInt(Dictionary<string, string> form, string key, int macDinh = 0)
+        protected static int? layInt(Dictionary<string, string> form, string key, int? macDinh = null)
         {
             try
             {
@@ -35,11 +80,11 @@ namespace BUSLayer
             }
         }
 
-        protected static DateTime? layDateTime(Dictionary<string, string> form, string key, DateTime? macDinh = null)
+        protected static DateTime? layDate(Dictionary<string, string> form, string key, DateTime? macDinh = null)
         {
             try
             {
-                return DateTime.Parse(form[key]);
+                return DateTime.ParseExact(form[key], "d/M/yyyy", null);
             }
             catch
             {
@@ -47,20 +92,23 @@ namespace BUSLayer
             }
         }
 
-        protected static DateTime? layDateTime_Full(Dictionary<string, string> form, string key_ngay, string key_gio, DateTime? macDinh = null)
+        protected static DateTime? layTime(Dictionary<string, string> form, string key, DateTime? macDinh = null)
         {
             try
             {
-                DateTime?
-                    ngay = layDateTime(form, key_ngay),
-                    gio = layDateTime(form, key_gio);
+                return DateTime.ParseExact(form[key], "HH:mm", null);
+            }
+            catch
+            {
+                return macDinh;
+            }
+        }
 
-                return DateTime.Parse
-                (
-                    (ngay.HasValue ? ngay.Value.ToShortDateString() : null) +
-                    " " +
-                    (gio.HasValue ? gio.Value.ToShortTimeString() : null)
-                );
+        protected static DateTime? layDateTime(Dictionary<string, string> form, string key, DateTime? macDinh = null)
+        {
+            try
+            {
+                return DateTime.ParseExact(form[key], "HH:mm d/M/yyyy", null);
             }
             catch
             {

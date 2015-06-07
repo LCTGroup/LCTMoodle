@@ -14,7 +14,7 @@ namespace BUSLayer
 {
     public class NguoiDungBUS : BUS
     {
-        public static KetQua kiemTra(NguoiDungDataDTO nguoiDung)
+        public static KetQua kiemTra(NguoiDungDTO nguoiDung)
         {
             List<string> thongBao = new List<string>();
 
@@ -65,7 +65,7 @@ namespace BUSLayer
                 return ketQua;                
             }
 
-            NguoiDungDataDTO nguoiDung = new NguoiDungDataDTO()
+            NguoiDungDTO nguoiDung = new NguoiDungDTO()
             {
                 tenTaiKhoan = layString(form, "TenTaiKhoan"),
                 matKhau = Helpers.NguoiDungHelper.layMaMD5(layString(form, "MatKhau")),
@@ -74,7 +74,7 @@ namespace BUSLayer
                 ngaySinh = layDateTime(form, "NgaySinh"),
                 diaChi = layString(form, "DiaChi"),
                 soDienThoai = layString(form, "SoDienThoai"),
-                maHinhDaiDien = (ketQua.ketQua as TapTinViewDTO).ma
+                hinhDaiDien = ketQua.ketQua as TapTinDTO
             };
             
             ketQua = kiemTra(nguoiDung);           
@@ -89,13 +89,13 @@ namespace BUSLayer
             }
             return ketQua;
         }
-        public static NguoiDungViewDTO layTheoTenTaiKhoan(string tenTaiKhoan)
+        public static NguoiDungDTO layTheoTenTaiKhoan(string tenTaiKhoan)
         {
-            return (NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan)).ketQua as NguoiDungViewDTO;
+            return (NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan)).ketQua as NguoiDungDTO;
         }
-        public static NguoiDungViewDTO layTheoMa(int ma)
+        public static NguoiDungDTO layTheoMa(int ma)
         {
-            return (NguoiDungDAO.layTheoMa(ma)).ketQua as NguoiDungViewDTO;
+            return (NguoiDungDAO.layTheoMa(ma)).ketQua as NguoiDungDTO;
         }
         public static KetQua xuLyDangNhap(Dictionary<string,string> form)
         {
@@ -110,7 +110,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            NguoiDungViewDTO nguoiDung = ketQua.ketQua as NguoiDungViewDTO;
+            NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
             
             if ((matKhau == nguoiDung.matKhau) || (NguoiDungHelper.layMaMD5(matKhau) == nguoiDung.matKhau))
             {

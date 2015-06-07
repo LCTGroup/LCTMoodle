@@ -12,7 +12,7 @@ namespace LCTMoodle.Controllers
 {
     public class GiaoTrinhController : LCTController
     {
-        public ActionResult Tao(int ma)
+        public ActionResult Tao(int ma) //Để tạm, sau này sửa route, đổi thành mã khóa học
         {
             KetQua ketQua = KhoaHocBUS.layTheoMa(ma);
             
@@ -21,7 +21,7 @@ namespace LCTMoodle.Controllers
                 return RedirectToAction("Index", "TrangChu");
             }
 
-            ViewData["KhoaHoc"] = ketQua.ketQua as KhoaHocViewDTO;
+            ViewData["KhoaHoc"] = ketQua.ketQua as KhoaHocDTO;
 
             ketQua = GiaoTrinhBUS.layTheoMaKhoaHoc(ma);
 

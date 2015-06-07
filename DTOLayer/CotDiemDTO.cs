@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace DTOLayer
 {
-    public class GiaoTrinhViewDTO : DTO
+    public class CotDiemDTO : DTO
     {
-        public KhoaHocViewDTO khoaHoc;
-        public string congViec;
+        public KhoaHocDTO khoaHoc;
+        public string ten;
         public string moTa;
-        public string thoiGian;
-        public int thuTu;
+        public int? heSo;
+        public DateTime? thoiDiem;
     }
 }

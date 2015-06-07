@@ -12,7 +12,7 @@ namespace BUSLayer
 {
     public class ChuDeBUS : BUS
     {
-        public static KetQua kiemTra(ChuDeDataDTO chuDe)
+        public static KetQua kiemTra(ChuDeDTO chuDe)
         {
             List<string> loi = new List<string>();
 
@@ -25,11 +25,11 @@ namespace BUSLayer
             {
                 loi.Add("Mô tả không được bỏ trống");
             }
-            if (chuDe.maNguoiTao == 0)
+            if (chuDe.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (chuDe.maHinhDaiDien == 0)
+            if (chuDe.hinhDaiDien == null)
             {
                 loi.Add("Hình đại diện không được bỏ trống");
             }
@@ -61,14 +61,14 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            ChuDeDataDTO chuDe = new ChuDeDataDTO()
+            ChuDeDTO chuDe = new ChuDeDTO()
             {
                 ten = layString(form, "Ten"),
                 moTa = layString(form, "MoTa"),
-                maHinhDaiDien = (ketQua.ketQua as TapTinViewDTO).ma,
-                maChuDeCha = layInt(form, "ChuDeCha"),
+                hinhDaiDien = ketQua.ketQua as TapTinDTO,
+                chuDeCha = layDTO<ChuDeDTO>(form, "ChuDeCha"),
                 phamVi = layString(form, "PhamVi"),
-                maNguoiTao = 1 //Để tạm
+                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?)
             };
 
             ketQua = kiemTra(chuDe);
@@ -99,7 +99,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            ChuDeViewDTO chuDe = ketQua.ketQua as ChuDeViewDTO;
+            ChuDeDTO chuDe = ketQua.ketQua as ChuDeDTO;
 
             layLienKet(ref chuDe);
 
@@ -110,7 +110,7 @@ namespace BUSLayer
             };
         }
 
-        private static void layLienKet(ref ChuDeViewDTO chuDe)
+        private static void layLienKet(ref ChuDeDTO chuDe)
         {
             KetQua ketQua;
             //Lấy cha
@@ -119,7 +119,7 @@ namespace BUSLayer
                 ketQua = ChuDeDAO.layTheoMa(chuDe.phamVi, chuDe.chuDeCha.ma);
                 if (ketQua.trangThai == 0)
                 {
-                    ChuDeViewDTO chuDeCha = ketQua.ketQua as ChuDeViewDTO;
+                    ChuDeDTO chuDeCha = ketQua.ketQua as ChuDeDTO;
                     layLienKet(ref chuDeCha);
 
                     chuDe.chuDeCha = chuDeCha;
@@ -130,7 +130,7 @@ namespace BUSLayer
             ketQua = ChuDeDAO.layTheoMaChuDeCha(chuDe.phamVi, chuDe.ma);
             if (ketQua.trangThai == 0)
             {
-                chuDe.danhSachChuDeCon = ketQua.ketQua as List<ChuDeViewDTO>;
+                chuDe.danhSachChuDeCon = ketQua.ketQua as List<ChuDeDTO>;
             }
         }
     }

@@ -18,10 +18,10 @@ namespace LCTMoodle.Controllers
 
             KetQua ketQua = BaiVietDienDanBUS.layTheoMaKhoaHoc(maKhoaHoc);
 
-            List<BaiVietDienDanViewDTO> danhSachBaiViet =
+            List<BaiVietDienDanDTO> danhSachBaiViet =
                 ketQua.trangThai == 0 ?
-                ketQua.ketQua as List<BaiVietDienDanViewDTO> :
-                new List<BaiVietDienDanViewDTO>();
+                ketQua.ketQua as List<BaiVietDienDanDTO> :
+                null;
 
             try
             {
@@ -51,7 +51,7 @@ namespace LCTMoodle.Controllers
             }
             else
             {
-                ViewData["MaKhoaHoc"] = (ketQua.ketQua as BaiVietDienDanViewDTO).khoaHoc.ma;
+                ViewData["MaKhoaHoc"] = (ketQua.ketQua as BaiVietDienDanDTO).khoaHoc.ma;
 
                 return Json(new KetQua()
                 {

@@ -39,34 +39,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataDTO\GiaoTrinhDataDTO.cs" />
-    <Compile Include="DataDTO\BaiTapNopDataDTO.cs" />
-    <Compile Include="DataDTO\BaiVietBaiGiangDataDTO.cs" />
-    <Compile Include="DataDTO\BaiVietBaiTapDataDTO.cs" />
-    <Compile Include="DataDTO\BaiVietDienDanDataDTO.cs" />
-    <Compile Include="DataDTO\BinhLuanDataDTO.cs" />
-    <Compile Include="DataDTO\HoiDapDiemDataDTO.cs" />
-    <Compile Include="DataDTO\CauHoiDataDTO.cs" />
-    <Compile Include="DataDTO\KhoaHocDataDTO.cs" />
-    <Compile Include="DataDTO\TraLoiDataDTO.cs" />
-    <Compile Include="DataDTO\NguoiDungDataDTO.cs" />
-    <Compile Include="DataDTO\TapTinDataDTO.cs" />
-    <Compile Include="DataDTO\ChuDeDataDTO.cs" />
+    <Compile Include="BangCapNhat.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DTO.cs" />
+    <Compile Include="KetQua.cs" />
+    <Compile Include="LienKet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewDTO\GiaoTrinhViewDTO.cs" />
-    <Compile Include="ViewDTO\BaiTapNopViewDTO.cs" />
-    <Compile Include="ViewDTO\BaiVietBaiGiangViewDTO.cs" />
-    <Compile Include="ViewDTO\BaiVietBaiTapViewDTO.cs" />
-    <Compile Include="ViewDTO\BaiVietDienDanViewDTO.cs" />
-    <Compile Include="ViewDTO\BinhLuanViewDTO.cs" />
-    <Compile Include="ViewDTO\HoiDapDiemViewDTO.cs" />
-    <Compile Include="ViewDTO\ChuDeViewDTO.cs" />
-    <Compile Include="ViewDTO\TraLoiViewDTO.cs" />
-    <Compile Include="ViewDTO\KhoaHocViewDTO.cs" />
-    <Compile Include="ViewDTO\CauHoiViewDTO.cs" />
-    <Compile Include="ViewDTO\NguoiDungViewDTO.cs" />
-    <Compile Include="ViewDTO\TapTinViewDTO.cs" />
+    <Compile Include="CotDiemDTO.cs" />
+    <Compile Include="GiaoTrinhDTO.cs" />
+    <Compile Include="BaiTapNopDTO.cs" />
+    <Compile Include="BaiVietBaiGiangDTO.cs" />
+    <Compile Include="BaiVietBaiTapDTO.cs" />
+    <Compile Include="BaiVietDienDanDTO.cs" />
+    <Compile Include="BinhLuanDTO.cs" />
+    <Compile Include="HoiDapDiemDTO.cs" />
+    <Compile Include="ChuDeDTO.cs" />
+    <Compile Include="TraLoiDTO.cs" />
+    <Compile Include="KhoaHocDTO.cs" />
+    <Compile Include="CauHoiDTO.cs" />
+    <Compile Include="NguoiDungDTO.cs" />
+    <Compile Include="TapTinDTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">
@@ -78,6 +71,7 @@
       <Name>Helpers</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

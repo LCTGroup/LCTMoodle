@@ -12,12 +12,12 @@ namespace BUSLayer
 {
     public class GiaoTrinhBUS : BUS
     {
-        public static KetQua kiemTra(GiaoTrinhDataDTO giaoTrinh)
+        public static KetQua kiemTra(GiaoTrinhDTO giaoTrinh)
         {
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (giaoTrinh.maKhoaHoc == 0)
+            if (giaoTrinh.khoaHoc == null)
             {
                 loi.Add("Khóa học không được bỏ trống");
             }
@@ -55,9 +55,9 @@ namespace BUSLayer
 
         public static KetQua them(Dictionary<string, string> form)
         {
-            GiaoTrinhDataDTO giaoTrinh = new GiaoTrinhDataDTO()
+            GiaoTrinhDTO giaoTrinh = new GiaoTrinhDTO()
             {
-                maKhoaHoc = layInt(form, "KhoaHoc"),
+                khoaHoc = layDTO<KhoaHocDTO>(form, "KhoaHoc"),
                 congViec = layString(form, "CongViec"),
                 moTa = layString(form, "MoTa"),
                 thoiGian = layString(form, "ThoiGian")

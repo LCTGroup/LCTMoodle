@@ -1,4 +1,4 @@
-﻿@model List<DTOLayer.BaiVietBaiTapViewDTO>
+﻿@model List<DTOLayer.BaiVietBaiTapDTO>
 
 <section class="hop hop-2-vien">
     <section class="tieu-de">
@@ -33,13 +33,13 @@
                     <section class="noi-dung">
                         <article class="input">
                             <input data-chuc-nang="tat-mo" data-mo="thoi-han" name="ThoiDiemHetHan" type="checkbox" data-text="Bài tập có thời hạn" />
-                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="lct-thoi-gian" name="ThoiDiemHetHan_Gio" placeholder="Chọn thời gian" />
-                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="lct-lich" name="ThoiDiemHetHan_Ngay" placeholder="Chọn ngày" />
+                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="thoi-gian" name="ThoiDiemHetHan_Gio" placeholder="Chọn thời gian" />
+                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="lich" name="ThoiDiemHetHan_Ngay" placeholder="Chọn ngày" />
                         </article>
                     </section>
                 </li>
             </ul>
-            <section data-an class="lct-khung-button">
+            <section data-an class="khung-button">
                 <button type="submit" class="chap-nhan">
                     Đăng
                 </button>

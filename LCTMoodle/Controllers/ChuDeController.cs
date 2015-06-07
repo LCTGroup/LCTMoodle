@@ -16,7 +16,7 @@ namespace LCTMoodle.Controllers
         public ActionResult QuanLy(string phamVi = null, int ma = 0)
         {
             return View(model: phamVi == null ? null : 
-                new ChuDeViewDTO()
+                new ChuDeDTO()
                 {
                     ten = phamVi
                 });
@@ -92,7 +92,7 @@ namespace LCTMoodle.Controllers
                     return Json(ketQua, JsonRequestBehavior.AllowGet);
                 }
 
-                ChuDeViewDTO chuDe = ketQua.ketQua as ChuDeViewDTO;
+                ChuDeDTO chuDe = ketQua.ketQua as ChuDeDTO;
 
                 return Json(new KetQua()
                 {

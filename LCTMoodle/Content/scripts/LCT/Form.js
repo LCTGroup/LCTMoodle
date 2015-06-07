@@ -35,8 +35,8 @@ function khoiTaoLCTForm($form, thamSo) {
     khoiTaoGoiYInput_LCT($form);
 
     //Khởi tạo thời gian
-    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="lct-thoi-gian"]'), 'lct-thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
-    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="lct-lich"]'), 'lct-lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
+    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="thoi-gian"]'), 'thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
+    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="lich"]'), 'lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
 
     //Xử lý lấy giá trị mặc định
     khoiTaoLCTFormMacDinh($form);
@@ -60,7 +60,7 @@ function khoiTaoNutMacDinh_LCT($form) {
         $chua = $(this).parent();
 
         // Text, thời gian
-        $chua.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
+        $chua.find('input[type="text"], textarea, input[data-input-type="thoi-gian"], input[data-input-type="lich"]').each(function () {
             this.value = this.getAttribute('data-mac-dinh');
         });
         $chua.find('textarea[data-input-type="editor"]').each(function () {
@@ -113,13 +113,13 @@ function khoiTaoNutMacDinh_LCT($form) {
 function khoiTaoHienThiInput_LCT($form) {
     $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
         $element = $(this);
-        $element.wrap('<label class="lct-checkbox-radio-label"></label>');
+        $element.wrap('<label class="checkbox-radio-label"></label>');
         $element.after('<u></u>' + $element.attr('data-text'));
     });
 
     $form.find('input[type="file"]').each(function () {
         var $phanTu = $(this);
-        $phanTu.wrap('<label class="lct-file-label"></label>');
+        $phanTu.wrap('<label class="file-label"></label>');
         var name = $phanTu.attr('name');
         var maMacDinh = $phanTu.attr('data-ma-mac-dinh');
         var loaiMacDinh = $phanTu.attr('data-loai-mac-dinh');
@@ -134,6 +134,22 @@ function khoiTaoHienThiInput_LCT($form) {
         }
     });
 
+    $form.find('input[data-input-type="thoi-gian-lich"]').each(function () {
+        var $phanTu = $(this);
+
+        var validate = $phanTu.attr('data-validate') || '',
+            thoiGianMacDinh = $phanTu.attr('data-thoi-gian-mac-dinh') || '',
+            lichMacDinh = $phanTu.attr('data-lich-mac-dinh') || '',
+            thoiGianPlaceholder = $phanTu.attr('data-thoi-gian-placeholder') || '',
+            lichPlaceholder = $phanTu.attr('data-lich-placeholder') || '';
+
+        $phanTu.removeAttr('data-validate data-thoi-gian-mac-dinh data-lich-mac-dinh data-thoi-gian-placeholder data-lich-placeholder');
+
+        $phanTu.attr('type', 'hidden');
+        $phanTu.after('<input data-validate="' + validate + '" data-input-type="thoi-gian" data-mac-dinh="' + thoiGianMacDinh + '" placeholder="' + thoiGianPlaceholder + '" style="width: calc(50% - 19px)" />' +
+            '<input data-validate="' + validate + '" data-input-type="lich" data-mac-dinh="' + lichMacDinh + '" placeholder="' + lichPlaceholder + '" style="width: calc(50% - 19px)" />')
+    })
+
     $form.find('input[data-input-type="chu-de"]').each(function () {
         $phanTu = $(this);
 
@@ -146,7 +162,7 @@ function khoiTaoHienThiInput_LCT($form) {
 
     $form.find('input[data-input-type="goi-y"]').each(function () {
         var $phanTu = $(this);
-        $phanTu.wrap('<article class="lct-khung-input-goi-y"></article>');
+        $phanTu.wrap('<article class="khung-input-goi-y"></article>');
         var name = $phanTu.attr('name');
         $phanTu.removeAttr('name');
         $phanTu.after('<input type="hidden" name="' + name + '"><section class="khung-danh-sach-goi-y"><ul class="danh-sach-goi-y"></ul><span>Không có giá trị trùng khớp từ khóa</span></section>');
@@ -253,7 +269,7 @@ function khoiTaoChuDeInput_LCT($form) {
 }
 
 function khoiTaoGoiYInput_LCT($form) {
-    var maTam = 'lct-goi-y_';
+    var maTam = 'goi-y_';
 
     $form.find('input[data-input-type="goi-y"]').each(function () {
         var $inputGoiY = $(this);
@@ -376,7 +392,7 @@ function khoiTaoGoiYInput_LCT($form) {
     }
 
     function layGoiY_LCT($item) {
-        var $chua = $item.closest('.lct-khung-input-goi-y'),
+        var $chua = $item.closest('.khung-input-goi-y'),
             $giaTriChon = $item.children(),
             $input = $chua.children(':first-child'),
             ten = $giaTriChon.text() || '',
@@ -402,7 +418,7 @@ function khoiTaoGoiYInput_LCT($form) {
     }
 }
 
-// loai Loại input (lct-thoi-gian, lct-lich)
+// loai Loại input (thoi-gian, lich)
 // id của form nhập (đồng hồ hoặc lịch)
 // hàm khởi tạo form lúc chưa có
 // hàm xử lý giá trị mặc định
@@ -500,7 +516,7 @@ function khoiTaoInputThoiGian_LCT($inputs, loai, idInput, hamKhoiTao, hamXuLyMac
 }
 
 function khoiTaoLCTFormMacDinh($form) {
-    $form.find('input[type="text"], textarea, input[data-input-type="lct-thoi-gian"], input[data-input-type="lct-lich"]').each(function () {
+    $form.find('input[type="text"], textarea, input[data-input-type="thoi-gian"], input[data-input-type="lich"]').each(function () {
         this.value = this.getAttribute('data-mac-dinh');
     });
     $form.find('textarea[data-input-type="editor"]').each(function () {
@@ -1012,6 +1028,13 @@ function khoiTaoSubmit_LCT($form, thamSo) {
             CKEDITOR.instances[this.getAttribute('name')].updateElement();
         });
 
+        $form.find('input[data-input-type="thoi-gian-lich"]').each(function () {
+            var $phanTu = $(this),
+                $thoiGian = $phanTu.next(),
+                $lich = $thoiGian.next();
+            $phanTu.val($thoiGian.val() + ' ' + $lich.val());
+        })
+
         //Validate
         var coLoi = false;
 
@@ -1235,7 +1258,7 @@ function layThoiGian($dongHo) {
 
 function khoiTaoForm_Lich(id) {
     $lich = $(
-        '<article id="lich_form" class="lct-lich" data-trang-thai="an" data-ngay data-thang data-nam data-thang-ht data-nam-ht>\
+        '<article id="lich_form" class="lich" data-trang-thai="an" data-ngay data-thang data-nam data-thang-ht data-nam-ht>\
 		    <section class="thang-nam">\
 			    <a href="javascript:void(0)" class="thang-truoc"></a>\
 			    <span class="thang" data-value><i class="truoc"></i><i class="sau"></i></span>\

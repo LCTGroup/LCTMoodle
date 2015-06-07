@@ -1,13 +1,13 @@
-﻿@model DTOLayer.KhoaHocViewDTO
+﻿@model DTOLayer.KhoaHocDTO
 @{
     Data.KetQua ketQua = DAOLayer.BaiVietBaiGiangDAO.layTheoMaKhoaHoc(Model.ma);
-    var danhSachBaiGiang = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BaiVietBaiGiangViewDTO> : null;
+    var danhSachBaiGiang = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BaiVietBaiGiangDTO> : null;
 
     ketQua = DAOLayer.BaiVietBaiTapDAO.layTheoMaKhoaHoc(Model.ma);
-    var danhSachBaiTap = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BaiVietBaiTapViewDTO> : null;
+    var danhSachBaiTap = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BaiVietBaiTapDTO> : null;
 
     ketQua = DAOLayer.BaiVietDienDanDAO.layTheoMaKhoaHoc(Model.ma);
-    var danhSachDienDan = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BaiVietDienDanViewDTO> : null;
+    var danhSachDienDan = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BaiVietDienDanDTO> : null;
 }
 
 <article class="hop">

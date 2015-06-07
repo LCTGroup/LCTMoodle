@@ -13,34 +13,34 @@ namespace BUSLayer
 {
     public class KhoaHocBUS : BUS
     {
-        public static KetQua kiemTra(KhoaHocDataDTO khoaHoc)
+        public static KetQua kiemTra(KhoaHocDTO khoaHoc, string[] truong = null, bool kiemTra = true)
         {
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (string.IsNullOrEmpty(khoaHoc.ten))
+            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrEmpty(khoaHoc.ten))
             {
                 loi.Add("Tên không được bỏ trống");
             }
-            if (string.IsNullOrEmpty(khoaHoc.moTa))
+            if (coKiemTra("MoTa", truong, kiemTra) && string.IsNullOrEmpty(khoaHoc.moTa))
             {
                 loi.Add("Mô tả không được bỏ trống");
             }
-            if (khoaHoc.maChuDe == 0)
+            if (coKiemTra("ChuDe", truong, kiemTra) && khoaHoc.chuDe == null)
             {
                 loi.Add("Chủ đề không được bỏ trống");
             }
-            if (khoaHoc.maHinhDaiDien == 0)
+            if (coKiemTra("HinhDaiDien", truong, kiemTra) && khoaHoc.hinhDaiDien == null)
             {
                 loi.Add("Hình đại diện không được bỏ trống");
             }
-            if (khoaHoc.maNguoiTao == 0)
+            if (coKiemTra("NguoiTao", truong, kiemTra) && khoaHoc.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (CheDoRiengTu.lay(khoaHoc.cheDoRiengTu) == null)
+            if (coKiemTra("CheDoRiengTu", truong, kiemTra) && khoaHoc.cheDoRiengTu == null)
             {
-                loi.Add("Chế độ riêng tư không hợp lệ");
+                loi.Add("Chế độ riêng tư không được bỏ trống");
             }
             #endregion
 
@@ -71,26 +71,26 @@ namespace BUSLayer
             }
 
             //Chưa xử lý quản lý
-            KhoaHocDataDTO khoaHoc  = new KhoaHocDataDTO()
+            KhoaHocDTO khoaHoc  = new KhoaHocDTO()
             {
                 ten = layString(form, "Ten"),
                 moTa = layString(form, "MoTa"),
-                maChuDe = layInt(form, "ChuDe"),
-                maNguoiTao = (int)Session["NguoiDung"],
-                maHinhDaiDien = (ketQua.ketQua as TapTinViewDTO).ma,
+                chuDe = layDTO<ChuDeDTO>(form, "ChuDe"),
+                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
+                hinhDaiDien = ketQua.ketQua as TapTinDTO,
                 canDangKy = layBool(form, "CanDangKy"),
                 phiThamGia = layInt(form, "PhiThamGia"),
-                cheDoRiengTu = layString(form, "CheDoRiengTu")
+                cheDoRiengTu = CheDoRiengTu.lay(layString(form, "CheDoRiengTu"))
             };
 
             if (layBool(form, "CoHan"))
             {
-                khoaHoc.han = layDateTime_Full(form, "Han_Ngay", "Han_Gio");
+                khoaHoc.thoiDiemHetHan = layDateTime(form, "ThoiDiemHetHan");
             }
 
             if (khoaHoc.canDangKy && layBool(form, "CoHanDangKy"))
             {
-                khoaHoc.hanDangKy = layDateTime_Full(form, "HanDangKy_Ngay", "HanDangKy_Gio");
+                khoaHoc.hanDangKy = layDateTime(form, "HanDangKy");
             }
 
             ketQua = kiemTra(khoaHoc);

@@ -8,12 +8,13 @@ using Data;
 
 namespace DAOLayer
 {
-    public class ChuDeDAO : DAO<ChuDeDAO, ChuDeViewDTO>
+    public class ChuDeDAO : DAO<ChuDeDAO, ChuDeDTO>
     {
-        public static ChuDeViewDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
+        public static ChuDeDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
-            ChuDeViewDTO chuDe = new ChuDeViewDTO();
+            ChuDeDTO chuDe = new ChuDeDTO();
 
+            int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
@@ -27,24 +28,45 @@ namespace DAOLayer
                     case "ThoiDiemTao":
                         chuDe.thoiDiemTao = layDateTime(dong, i); break;
                     case "MaNguoiTao":
-                        chuDe.maNguoiTao = layInt(dong, i); break;
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
+                        {
+                            chuDe.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam.Value)) :
+                                new NguoiDungDTO()
+                                {
+                                    ma = maTam
+                                };
+                        }
+                        break;
                     case "PhamVi":
                         chuDe.phamVi = layString(dong, i); break;
                     case "MaChuDeCha":
-                        int maChuDeCha = layInt(dong, i);
-                        if (maChuDeCha != 0)
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
                         {
-                            chuDe.chuDeCha = new ChuDeViewDTO()
-                            {
-                                ma = maChuDeCha
-                            };
+                            chuDe.chuDeCha = LienKet.co(lienKet, "ChuDeCha") ?
+                                null :
+                                new ChuDeDTO()
+                                {
+                                    ma = maTam
+                                };
                         }
                         break;
                     case "MaHinhDaiDien":
-                        chuDe.hinhDaiDien = new TapTinViewDTO()
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
                         {
-                            ma = layInt(dong, i)
-                        };
+                            chuDe.hinhDaiDien = LienKet.co(lienKet, "TapTin") ?
+                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("ChuDe_HinhDaiDien", maTam.Value)) :
+                                new TapTinDTO()
+                                {
+                                    ma = maTam
+                                };
+                        }
                         break;
                     default:
                         break;
@@ -54,7 +76,7 @@ namespace DAOLayer
             return chuDe;
         }
 
-        public static KetQua them(ChuDeDataDTO chuDe)
+        public static KetQua them(ChuDeDTO chuDe)
         {
             return layDong
             (
@@ -63,15 +85,15 @@ namespace DAOLayer
                 {
                     chuDe.ten,
                     chuDe.moTa,
-                    chuDe.maNguoiTao,
+                    layMa(chuDe.nguoiTao),
                     chuDe.phamVi,
-                    chuDe.maChuDeCha,
-                    chuDe.maHinhDaiDien
+                    layMa(chuDe.chuDeCha),
+                    layMa(chuDe.hinhDaiDien)
                 }
             );
         }
 
-        public static KetQua layTheoMaChuDeCha(string phamVi, int maChuDeCha)
+        public static KetQua layTheoMaChuDeCha(string phamVi, int? maChuDeCha)
         {
             return layDanhSachDong
             (
@@ -84,7 +106,7 @@ namespace DAOLayer
             );
         }
         
-        public static KetQua layTheoMa(string phamVi, int ma)
+        public static KetQua layTheoMa(string phamVi, int? ma)
         {
             return layDong
             (
@@ -97,7 +119,7 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua xoaTheoMa(int ma)
+        public static KetQua xoaTheoMa(int? ma)
         {
             return khongTruyVan
             (
