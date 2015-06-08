@@ -176,11 +176,10 @@ function khoiTaoForm_DienDan($form) {
                 processData: false
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    var $htmlBaiViet = $(data.ketQua);
+                    var $item = $(data.ketQua);
 
-                    khoiTaoKhungBinhLuan($htmlBaiViet.find('[data-doi-tuong="khung-binh-luan"]'));
-
-                    $_DanhSach.prepend($htmlBaiViet);
+                    khoiTaoItem_DienDan($item)
+                    $_DanhSach.prepend($item);
 
                     khoiTaoLCTFormMacDinh($form);
                     $doiTuongAn.hide();
@@ -216,7 +215,7 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
                     ten: 'Có',
                     xuLy: function () {
                         $.ajax({
-                            url: '/BaiVietDienDan/Xoa/' + $baiViet.attr('data-ma'),
+                            url: '/BaiVietDienDan/XuLyXoa/' + $baiViet.attr('data-ma'),
                             type: 'POST',
                             dataType: 'JSON'
                         }).done(function (data) {
@@ -429,7 +428,7 @@ function khoiTaoItem_BaiGiang($danhSachBaiGiang) {
                     ten: 'Có',
                     xuLy: function () {
                         $.ajax({
-                            url: '/BaiVietBaiGiang/Xoa/' + $baiViet.attr('data-ma'),
+                            url: '/BaiVietBaiGiang/XuLyXoa/' + $baiViet.attr('data-ma'),
                             type: 'POST',
                             dataType: 'JSON'
                         }).done(function (data) {
@@ -714,7 +713,7 @@ function khoiTaoItem_BaiTap($danhSachBaiTap) {
     khoiTaoTatMoDoiTuong($danhSachBaiTap.find('[data-chuc-nang="tat-mo"]'), true);
 
     $danhSachBaiTap.find('[data-chuc-nang="xoa-bai-viet"]').on('click', function () {
-        var $nut = $(this);
+        var $baiViet = $(this).closest('[data-doi-tuong="muc-bai-viet"]');
 
         moPopup({
             tieuDe: 'Xác nhận',
@@ -725,12 +724,12 @@ function khoiTaoItem_BaiTap($danhSachBaiTap) {
                     ten: 'Có',
                     xuLy: function () {
                         $.ajax({
-                            url: '/BaiVietBaiTap/Xoa/' + $nut.attr('data-value'),
+                            url: '/BaiVietBaiTap/XuLyXoa/' + $baiViet.attr('data-ma'),
                             type: 'POST',
                             dataType: 'JSON'
                         }).done(function (data) {
                             if (data.trangThai == 0) {
-                                $nut.closest('[data-doi-tuong="muc-bai-viet"]').remove();
+                                $baiViet.remove();
                             }
                             else {
                                 moPopup({
@@ -752,6 +751,68 @@ function khoiTaoItem_BaiTap($danhSachBaiTap) {
                     ten: 'Không',
                 }
             ]
+        });
+    });
+
+    $danhSachBaiTap.find('[data-chuc-nang="sua-bai-viet"]').on('click', function () {
+        var $baiViet = $(this).closest('[data-doi-tuong="muc-bai-viet"]');
+
+        $.ajax({
+            url: '/BaiVietBaiTap/_Form/' + $baiViet.attr('data-ma'),
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                var $form = $(data.ketQua);
+                khoiTaoLCTForm($form, {
+                    submit: function () {
+                        $.ajax({
+                            url: '/BaiVietBaiTap/XuLyCapNhat',
+                            type: 'POST',
+                            data: layDataLCTForm($form),
+                            dataType: 'JSON'
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                var $item = $(data.ketQua);
+                                khoiTaoItem_BaiTap($item);
+
+                                $baiViet.replaceWith($item);
+                            }
+                            else {
+                                moPopup({
+                                    tieuDe: 'Thông báo',
+                                    thongBao: 'Cập nhật thất bại',
+                                    bieuTuong: 'nguy-hiem'
+                                });
+                            }
+                        }).fail(function () {
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: 'Cập nhật thất bại',
+                                bieuTuong: 'nguy-hiem'
+                            });
+                        });
+                    }
+                });
+
+                $form.css({
+                    border: '1px solid #ddd'
+                });
+
+                $baiViet.html($form);
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Sửa bài viết thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
+            }
+        }).fail(function () {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Sửa bài viết thất bại',
+                bieuTuong: 'nguy-hiem'
+            });
         });
     });
 

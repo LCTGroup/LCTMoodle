@@ -79,7 +79,7 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
-        public ActionResult Xoa(int ma)
+        public ActionResult XuLyXoa(int ma)
         {
             return Json(
                 BaiVietBaiGiangDAO.xoaTheoMa(ma),

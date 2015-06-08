@@ -39,6 +39,25 @@ namespace LCTMoodle.Controllers
             }
         }
 
+        public ActionResult _Form(int ma = 0)
+        {
+            KetQua ketQua = BaiVietBaiTapBUS.layTheoMa(ma);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua =
+                        renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Form.cshtml", ketQua.ketQua)
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [ValidateInput(false)]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
@@ -59,7 +78,7 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
-        public ActionResult Xoa(int ma)
+        public ActionResult XuLyXoa(int ma)
         {
             return Json(
                 BaiVietBaiTapBUS.xoaTheoMa(ma),

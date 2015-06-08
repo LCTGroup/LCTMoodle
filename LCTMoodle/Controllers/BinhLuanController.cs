@@ -13,7 +13,7 @@ namespace LCTMoodle.Controllers
 {
     public class BinhLuanController : LCTController
     {
-        public ActionResult Them(FormCollection formCollection)
+        public ActionResult XuLyThem(FormCollection formCollection)
         {
             KetQua ketQua = BinhLuanBUS.them(chuyenDuLieuForm(formCollection));
 
@@ -32,7 +32,7 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
-        public ActionResult Xoa(string loaiDoiTuong, int ma)
+        public ActionResult XuLyXoa(string loaiDoiTuong, int ma)
         {
             return Json(BinhLuanDAO.xoaTheoMa(loaiDoiTuong, ma));
         }

@@ -143,7 +143,8 @@ function khoiTaoHienThiInput_LCT($form) {
         var thoiGianMacDinh = $phanTu.attr('data-thoi-gian-mac-dinh') || '',
             lichMacDinh = $phanTu.attr('data-lich-mac-dinh') || '',
             thoiGianPlaceholder = $phanTu.attr('data-thoi-gian-placeholder') || '',
-            lichPlaceholder = $phanTu.attr('data-lich-placeholder') || '';
+            lichPlaceholder = $phanTu.attr('data-lich-placeholder') || '',
+            validate = $phanTu.attr('data-validate');
 
         $phanTu.removeAttr('data-validate data-thoi-gian-mac-dinh data-lich-mac-dinh data-thoi-gian-placeholder data-lich-placeholder');
 
@@ -151,12 +152,14 @@ function khoiTaoHienThiInput_LCT($form) {
             'name': '',
             'data-input-type': 'lich',
             'data-mac-dinh': lichMacDinh,
-            'placeholder': lichPlaceholder
+            'placeholder': lichPlaceholder,
+            'data-validate': validate
         }).css('width', 'calc(50% - 19px)')).after($phanTu.clone().attr({
             'name': '',
             'data-input-type': 'thoi-gian',
             'data-mac-dinh': thoiGianMacDinh,
-            'placeholder': thoiGianPlaceholder
+            'placeholder': thoiGianPlaceholder,
+            'data-validate': validate
         }).css('width', 'calc(50% - 19px)'));
 
         $phanTu.attr('type', 'hidden');
@@ -1032,8 +1035,9 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
 
 function khoiTaoSubmit_LCT($form, thamSo) {
     $form.on('submit', function (e) {
-        if (mangTam.dangSubmit || false)
-        {
+        e.preventDefault();
+
+        if (mangTam.dangSubmit === true) {
             moPopup({
                 tieuDe: 'Thông báo',
                 thongBao: 'Đang xử lý, vui lòng đợi vài giây',
@@ -1042,9 +1046,6 @@ function khoiTaoSubmit_LCT($form, thamSo) {
             return;
         }
         mangTam.dangSubmit = true;
-
-        e = e || window.event;
-        e.preventDefault();
 
         $form.find('textarea[data-input-type="editor"]').each(function () {
             $(this).change();
@@ -1174,12 +1175,14 @@ function khoiTaoSubmit_LCT($form, thamSo) {
 }
 
 function layDataLCTForm($form) {
-    var $inputs = $form.find(':input[name]:not(:disabled)' + $form.is(['data-cap-nhat']) ? ':not([data-cu])' : '');
+    var data;
 
-    var data = $inputs.not('[type="checkbox"]').serialize();
+    var $inputs = $form.find(':input[name]:not(:disabled)' + ($form.is('[data-cap-nhat]') ? ':not([data-cu])' : ''));
 
-    $inputs.not(':not([type="checkbox"])').each(function () {
-        data += '&' + this.name + "=" + this.checked ? '1' : '0';
+    data = $inputs.not('[type="checkbox"]').serialize();
+
+    $inputs.not('[type!="checkbox"]').each(function () {
+        data += '&' + this.name + "=" + (this.checked ? '1' : '0');
     });
 
     return data;

@@ -71,11 +71,11 @@ namespace BUSLayer
                         baiViet.noiDung = form.layString(key);
                         break;
                     case "TapTin":
-                        baiViet.tapTin = TapTinBUS.chuyen("BaiVietDienDan_TapTin", form.layInt(key)).ketQua as TapTinDTO;
+                        baiViet.tapTin = TapTinBUS.chuyen("BaiVietBaiTap_TapTin", form.layInt(key)).ketQua as TapTinDTO;
                         form[key] = baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString();
                         break;
-                    case "ThoiDiemHetHan":
-                        baiViet.thoiDiemHetHan = form.layDateTime(key);
+                    case "CoThoiDiemHetHan":
+                        baiViet.thoiDiemHetHan = form.layBool("CoThoiDiemHetHan") ? form.layDateTime("ThoiDiemHetHan") : null;
                         break;
                     case "NguoiTao":
                         baiViet.nguoiTao = form.layDTO<NguoiDungDTO>(key);
@@ -105,8 +105,8 @@ namespace BUSLayer
                     case "TapTin":
                         bangCapNhat.Add("MaTapTin", baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString(), false);
                         break;
-                    case "ThoiDiemHetHan":
-                        bangCapNhat.Add("ThoiDiemHetHan", baiViet.thoiDiemHetHan.ToString(), true);
+                    case "CoThoiDiemHetHan":
+                        bangCapNhat.Add("ThoiDiemHetHan", baiViet.thoiDiemHetHan.HasValue ? baiViet.thoiDiemHetHan.ToString() : null, true);
                         break;
                     default:
                         break;

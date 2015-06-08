@@ -26,7 +26,7 @@
             @if (Model.thoiDiemHetHan.HasValue)
             {
                 <section class="thoi-han">
-                    Thời hạn: <span>@Model.thoiDiemHetHan.Value.ToString("d/M/yyyy H:MM")</span>
+                    Thời hạn: <span>@Model.thoiDiemHetHan.Value.ToString("H:mm d/M/yyyy")</span>
                 </section>   
             }
             <section class="noi-dung noi-dung-ckeditor">
@@ -45,7 +45,10 @@
         <section class="khung-chuc-nang-lct">
             <ul data-doi-tuong="cnbt-@Model.ma">
                 <li>
-                    <a data-chuc-nang="xoa-bai-viet" data-value="@Model.ma">Xóa bài viết</a>
+                    <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
+                </li>
+                <li>
+                    <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
                 </li>
             </ul>
             <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbt-@Model.ma">

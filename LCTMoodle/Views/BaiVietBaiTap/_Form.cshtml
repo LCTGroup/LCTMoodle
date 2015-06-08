@@ -1,0 +1,62 @@
+﻿@model DTOLayer.BaiVietBaiTapDTO
+
+<form class="noi-dung lct-form" id="tao_bai_viet_form" @(Model != null ? "data-cap-nhat" : null)>
+    @if (Model == null)
+    {
+        <input type="hidden" name="KhoaHoc" value="@ViewData["MaKhoaHoc"]" />
+    }
+    else
+    {
+        <input type="hidden" name="Ma" value="@Model.ma" />
+    }
+    <article>
+        <ul>
+            <li>
+                <section class="noi-dung">
+                    <article class="input">
+                        <input data-validate="bat-buoc" data-chuc-nang="bat-dau-tao-bai-viet" type="text" name="TieuDe" placeholder="Tiêu đề" data-mac-dinh="@(Model != null ? Model.tieuDe : null)" />
+                    </article>
+                </section>
+            </li>
+            <li data-an>
+                <section class="noi-dung">
+                    <section class="input">
+                        <textarea data-validate="bat-buoc" name="NoiDung" data-input-type="editor" placeholder="Nội dung" data-mac-dinh="@(Model != null ? Model.noiDung : null)"></textarea>
+                    </section>
+                </section>
+            </li>
+            <li data-an>
+                <section class="noi-dung">
+                    <article class="input">
+                        <input type="file" name="TapTin"
+                            @if (Model != null && Model.tapTin != null) 
+                            {  
+                                @: data-ma-mac-dinh="@Model.tapTin.ma" data-loai-mac-dinh="BaiVietDienDan_TapTin"
+                            } />
+                    </article>
+                </section>
+            </li>
+            <li data-an>
+                <section class="noi-dung">
+                    <article class="input">
+                        @if (Model != null && Model.thoiDiemHetHan.HasValue)
+                        {
+                            <input data-chuc-nang="tat-mo" data-mo="thoi-han" type="checkbox" name="CoThoiDiemHetHan" data-text="Bài tập có thời hạn" data-mac-dinh />
+                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="thoi-gian-lich" name="ThoiDiemHetHan" data-thoi-gian-placeholder="Chọn giờ" data-lich-placeholder="Chọn ngày" data-lich-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("d/M/yyyy")" data-thoi-gian-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("H:mm")" />
+                        }
+                        else
+                        {
+                            <input data-chuc-nang="tat-mo" data-mo="thoi-han" type="checkbox" name="CoThoiDiemHetHan" data-text="Bài tập có thời hạn" />
+                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="thoi-gian-lich" name="ThoiDiemHetHan" data-thoi-gian-placeholder="Chọn giờ" data-lich-placeholder="Chọn ngày" />
+                        }
+                    </article>
+                </section>
+            </li>
+        </ul>
+        <section data-an class="khung-button">
+            <button type="submit" class="chap-nhan">                
+                @(Model == null ? "Đăng" : "Cập nhật")
+            </button>
+        </section>
+    </article>
+</form>
