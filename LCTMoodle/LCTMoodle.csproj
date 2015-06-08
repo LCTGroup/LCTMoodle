@@ -416,6 +416,7 @@
     <Content Include="Views\BangDiem\Tao.cshtml" />
     <Content Include="Views\BangDiem\CotDiem\_Item_Tao.cshtml" />
     <Content Include="Views\BaiVietBaiGiang\_Form.cshtml" />
+    <Content Include="Views\BaiVietBaiTap\_Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

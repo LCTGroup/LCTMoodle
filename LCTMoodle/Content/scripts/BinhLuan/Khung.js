@@ -12,7 +12,7 @@ function khoiTaoForm($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
             $.ajax({
-                url: '/BinhLuan/Them',
+                url: '/BinhLuan/XuLyThem',
                 type: 'POST',
                 data: $form.serialize(),
                 dataType: 'JSON'
@@ -63,7 +63,7 @@ function khoiTaoXoa($danhSachNut) {
                         var $mucBinhLuan = $nut.closest('[data-doi-tuong="muc-binh-luan"]');
 
                         $.ajax({
-                            url: '/BinhLuan/Xoa/' + $nut.attr('data-value'),
+                            url: '/BinhLuan/XuLyXoa/' + $nut.attr('data-value'),
                             data: { loaiDoiTuong: $mucBinhLuan.attr('data-loai-doi-tuong') },
                             type: 'POST',
                             dataType: 'JSON'
