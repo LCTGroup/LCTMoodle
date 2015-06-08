@@ -1,13 +1,13 @@
-﻿/*#region Câu hỏi */
+﻿/*#region khung item Hỏi đáp */
 
-.cau-hoi {    
+.item-hoi-dap {    
     display: flex;
     flex-direction: row;
 }
 
     /*#region Thông tin người đăng */
 
-    .cau-hoi > .thong-tin {
+    .item-hoi-dap > .thong-tin {
         display: flex;
         flex-direction: column;   
         min-width: 80px;
@@ -16,34 +16,34 @@
         border-right: 1px solid #f5f5f5;
         background-color: #f8f8f8;
     }
-        .cau-hoi > .thong-tin > .nguoi-dung {            
+        .item-hoi-dap > .thong-tin > .nguoi-dung {            
             display: flex;
             flex-direction: column;     
             margin-bottom: 10px;       
         }
-            .cau-hoi > .thong-tin > .nguoi-dung > .hinh-dai-dien {                
+            .item-hoi-dap > .thong-tin > .nguoi-dung > .hinh-dai-dien {                
                 width: 80px;
                 height: 80px;
                 background-color: #ff6a00; 
             }
-                .cau-hoi > .thong-tin > .nguoi-dung > .hinh-dai-dien > img {                
+                .item-hoi-dap > .thong-tin > .nguoi-dung > .hinh-dai-dien > img {                
                     width: 100%;
                 }
-            .cau-hoi > .thong-tin > .nguoi-dung > span {
+            .item-hoi-dap > .thong-tin > .nguoi-dung > span {
                 width: 100%;
                 text-align: center;
             }
-        .cau-hoi > .thong-tin > .cau-hoi {
+        .item-hoi-dap > .thong-tin > .diem-so {
             display: flex;
             flex-direction: column;
             padding: 0;
         }
-            .cau-hoi > .thong-tin > .cau-hoi > .diem-so {
+            .item-hoi-dap > .thong-tin > .diem-so > .so {
                 text-align: center;
                 font-size: 25px;
                 font-weight: bold;
             }
-            .cau-hoi > .thong-tin > .cau-hoi > i {
+            .item-hoi-dap > .thong-tin > .diem-so > i {
                 text-align: center;
                 font-size: 50px;
                 cursor: pointer;
@@ -51,7 +51,7 @@
                 height: 20px;
                 line-height: 20px;
             }
-        .cau-hoi > .thong-tin > .thoi-gian {
+        .item-hoi-dap > .thong-tin > .thoi-gian {
             margin-top: 10px;
             font-size: 11px;
             text-align: center;
@@ -62,72 +62,41 @@
     
     /*#region Nội dung câu hỏi */
     
-    .cau-hoi > .chi-tiet {
+    .item-hoi-dap > .chi-tiet {
         width: 100%;  
         padding: 10px;
     }
-        .cau-hoi > .chi-tiet > .noi-dung {
+        .item-hoi-dap > .chi-tiet > .noi-dung {
 
         }
-            .cau-hoi > .chi-tiet > .tieu-de {            
+            .item-hoi-dap > .chi-tiet > .tieu-de {            
                 font-size: 18px;
             }
-            .cau-hoi > .chi-tiet > .noi-dung {
+            .item-hoi-dap > .chi-tiet > .noi-dung {
                 padding-top: 5px;
-            }
-            .cau-hoi > .chi-tiet > .nut-tra-loi {
-                margin-top: 10px;                
-            }
-                .cau-hoi > .chi-tiet > .nut-tra-loi > a {
-                    color: #08c;
-                }
+            }            
 
     /*#endregion */
                 
 /*#endregion */
 
+/*#region Câu hỏi */
+
+
+
+/*#endregion */
+
 /*#region Trả lời */
 
 .tra-loi {
-    border: 1px solid #eee;
-    background-color: #fff;
-    margin-bottom: 10px;
+    border-color: #e5e5e5 !important;
 }
-    .tra-loi .chi-tiet {
-        padding: 10px;
+    .binh-thuong {
+        border-left: 3px solid #ccc;
     }
-    .tra-loi .thong-tin {
-        display: flex;
-        flex-direction: row;
-        border-top: 1px solid #f5f5f5;
-        background-color: #f8f8f8;
+    .duyet {
+        border-left: 3px solid #08c;
     }
-        /* Điểm */
-        .tra-loi .thong-tin .diem {
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            min-width: 80px;
-            max-width: 80px;
-            padding: 10px;
-        }
-            .tra-loi .thong-tin .diem span {
-                text-align: center;
-                font-size: 25px;
-                font-weight: bold;
-            }
-            .tra-loi .thong-tin .diem i {
-                text-align: center;
-                font-size: 50px;
-                cursor: pointer;
-                font-weight: bold;
-                height: 20px;
-                line-height: 20px;
-            }
-        .tra-loi .thong-tin .tac-gia {
-            display:flex;
-            align-self: center;
-        }       
 
 /*#endregion */
 

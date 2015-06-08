@@ -24,37 +24,41 @@
     <section class="tieu-de">Danh sách câu hỏi</section>
     <section class="noi-dung">
         
-        @for (int i = Model.Count-1; i >= 0; i--)
+        @if (Model != null)
         {
-            <article class="cau-hoi">
-                <div class="thong-tin">
-                    <div class="diem">
-                        <span>0</span>
-                    </div>
-                    <div class="tra-loi">
-                        <span>0</span>
-                    </div>
-                </div>
-                <div class="chi-tiet">
-                    <div class="tieu-de">
-                        <a href="/HoiDap/XemCauHoi/@Model[i].ma">
-                            @Model[i].tieuDe
-                        </a>
-                    </div>
-                    <div class="thong-tin-dang">
-                        <div class="nguoi-dang">
-                            <a href="/NguoiDung/@Model[i].nguoiTao.ma">
-                                <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model[i].nguoiTao.hinhDaiDien.ma" />
-                                <span>@Model[i].nguoiTao.tenTaiKhoan</span>
-
+            for (int i = (Model.Count-1); i >= 0; i--)
+            {
+                <article class="cau-hoi">
+                    <div class="chi-tiet">
+                        <div class="tieu-de">
+                            <a href="/HoiDap/XemCauHoi/@Model[i].ma">
+                                @Model[i].tieuDe
                             </a>
                         </div>
-                        <div class="thoi-gian-dang">
-                            <span>@Model[i].thoiDiemTao</span>
+                        <div class="thong-tin-dang">
+                            <div class="nguoi-dang">
+                                <a href="/NguoiDung/@Model[i].nguoiTao.ma">
+                                    <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model[i].nguoiTao.hinhDaiDien.ma" />
+                                    <span>@Model[i].nguoiTao.tenTaiKhoan</span>
+
+                                </a>
+                            </div>
+                            <div class="thoi-gian-dang">
+                                <span>@Model[i].thoiDiemTao</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </article>
+                    <div class="thong-tin">
+                        <div class="diem">
+                            <span>0</span>
+                        </div>
+                        <div class="tra-loi">
+                            <span>0</span>
+                        </div>
+                    </div>
+
+                </article>
+            }
         }
 
     </section>
