@@ -16,8 +16,7 @@ namespace LCTMoodle.Controllers
         // GET: /HoiDap/
         public ActionResult Index()
         {
-            List<CauHoiDTO> cauHoi = (CauHoiBUS.layToanBoCauHoi().ketQua) as List<CauHoiDTO>;
-            return View(cauHoi);
+            return View((CauHoiBUS.layToanBoCauHoi().ketQua) as List<CauHoiDTO>);
         }
         public ActionResult TaoCauHoi()
         {

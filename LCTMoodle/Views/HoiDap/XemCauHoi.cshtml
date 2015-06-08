@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/XemCauHoi.css/HoiDap/" />
 }
 @section Scripts {
-    <script src="/CauHoi.js/HoiDap/"></script>
+    <script src="/XemCauHoi.js/HoiDap/"></script>
 }
 
 <!-- region Câu hỏi -->
@@ -30,7 +30,7 @@
             <section class="thong-tin">
                 <div class="nguoi-dung">
                     <div class="hinh-dai-dien">
-                        <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.nguoiTao.hinhDaiDien.ma" />
+                        <img src="/Content/images/user-avatar.jpg" />
                     </div>
                     <span>@Model.nguoiTao.tenTaiKhoan</span>
                 </div>
@@ -58,9 +58,18 @@
 <article class="hop">
     <section class="tieu-de">Danh sách trả lời</section>
     <section class="noi-dung">
-        @Html.Partial("~/Views/HoiDap/_itemTraLoi.cshtml")
-        @Html.Partial("~/Views/HoiDap/_itemTraLoi.cshtml")
-        @Html.Partial("~/Views/HoiDap/_itemTraLoi.cshtml")
+        @{
+            DTOLayer.KetQua ketQuaTraLoi = BUSLayer.TraLoiBUS.layDanhSachTraLoiTheoCauHoi(Model.ma.Value);
+            if (ketQuaTraLoi.trangThai == 0)
+            {
+                @Html.Partial("~/Views/HoiDap/_itemTraLoi.cshtml", ketQuaTraLoi.ketQua as List<DTOLayer.TraLoiDTO>)
+            }
+            else
+            {
+                @Html.Raw("<p align=\"center\">Chưa có trả lời</p>")
+            }
+        }
+                   
     </section>
 </article>
 
@@ -74,7 +83,7 @@
         <article class="hop-form form-tra-loi">
             <section class="noi-dung">
                 <form class="lct-form" id="tra_loi_cau_hoi">
-                    <input type="hidden" name="CauHoi" value="@ViewData["CauHoi"]" />
+                    <input type="hidden" name="CauHoi" value="@Model.ma" />
                     <article>
                         <ul>
                             <li>

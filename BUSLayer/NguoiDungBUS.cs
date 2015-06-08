@@ -89,13 +89,13 @@ namespace BUSLayer
             }
             return ketQua;
         }
-        public static NguoiDungDTO layTheoTenTaiKhoan(string tenTaiKhoan)
+        public static KetQua layTheoTenTaiKhoan(string tenTaiKhoan)
         {
-            return (NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan)).ketQua as NguoiDungDTO;
+            return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
         }
-        public static NguoiDungDTO layTheoMa(int ma)
+        public static KetQua layTheoMa(int ma)
         {
-            return (NguoiDungDAO.layTheoMa(ma)).ketQua as NguoiDungDTO;
+            return NguoiDungDAO.layTheoMa(ma, new LienKet() { "TapTin" });
         }
         public static KetQua xuLyDangNhap(Dictionary<string,string> form)
         {

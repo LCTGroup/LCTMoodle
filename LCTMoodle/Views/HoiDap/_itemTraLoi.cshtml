@@ -1,4 +1,5 @@
-﻿
+﻿@model List<DTOLayer.TraLoiDTO>
+           
 <!-- region item Trả lời -->
 
 <!--
@@ -25,31 +26,36 @@
 </article>
 -->
 
-<article class="hop hop-1-vien">
-    <section class="noi-dung tra-loi">
-        <article class="item-hoi-dap binh-thuong">
-            <section class="thong-tin">
-                <div class="nguoi-dung">
-                    <div class="hinh-dai-dien">
-                        <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.nguoiTao.hinhDaiDien.ma" />
-                    </div>
-                    <span>@Model.nguoiTao.tenTaiKhoan</span>
-                </div>
-                <div class="diem-so">
-                    <i class="pe-7s-angle-up"></i>
-                    <span class="so">5</span>
-                    <i class="pe-7s-angle-down"></i>
-                </div>
-                <div class="thoi-gian">@Model.thoiDiemTao</div>
+@if (Model != null)
+{
+    for(int i = (Model.Count - 1); i >= 0; i--)
+    {
+        <article class="hop hop-1-vien">
+            <section class="noi-dung tra-loi">
+                <article class="item-hoi-dap binh-thuong">
+                    <section class="thong-tin">
+                        <div class="nguoi-dung">
+                            <div class="hinh-dai-dien">
+                                <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model[i].nguoiTao.hinhDaiDien.ma" />
+                            </div>
+                            <span>@Model[i].nguoiTao.tenTaiKhoan</span>
+                        </div>
+                        <div class="diem-so">
+                            <i class="pe-7s-angle-up"></i>
+                            <span class="so">5</span>
+                            <i class="pe-7s-angle-down"></i>
+                        </div>
+                        <div class="thoi-gian">@Model[i].thoiDiemTao</div>
+                    </section>
+                    <section class="chi-tiet">
+                        <div class="noi-dung">
+                            @Html.Raw(Model[i].noiDung)
+                        </div>
+                    </section>
+                </article>
             </section>
-            <section class="chi-tiet">
-                <div class="noi-dung">
-                    @Html.Raw(Model.noiDung)
-                </div>
-            </section>
-            
         </article>
-    </section>
-</article>
+    }
+}
 
 <!-- endregion Trả lời -->

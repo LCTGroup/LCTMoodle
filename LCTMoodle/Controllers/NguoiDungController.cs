@@ -18,7 +18,7 @@ namespace LCTMoodle.Controllers
         {
             if (Session["NguoiDung"] != null)
             {
-                return View(NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]));
+                return View(NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]).ketQua as NguoiDungDTO);
             }
             return RedirectToAction("Index", "TrangChu");
         }

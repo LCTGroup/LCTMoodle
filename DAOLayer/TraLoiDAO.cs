@@ -46,7 +46,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             traLoi.cauHoi = LienKet.co(lienKet, "CauHoi") ?
-                                layDTO<CauHoiDTO>(CauHoiDAO.lay(maTam.Value)) :
+                                layDTO<CauHoiDTO>(CauHoiDAO.layTheoMa(maTam.Value)) :
                                 new CauHoiDTO()
                                 {
                                     ma = maTam
@@ -79,7 +79,7 @@ namespace DAOLayer
         {
             return layDanhSachDong
             (
-                "layDanhSachTrLoiTheoCauHoi",
+                "layDanhSachTraLoiTheoCauHoi",
                 new object[] 
                 {
                     maCauHoi

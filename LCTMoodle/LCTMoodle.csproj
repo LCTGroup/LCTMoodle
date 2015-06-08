@@ -164,7 +164,7 @@
     <Content Include="Content\images\user-avatar.jpg" />
     <Content Include="Content\scripts\BangDiem\Tao.js" />
     <Content Include="Content\scripts\GiaoTrinh\Tao.js" />
-    <Content Include="Content\scripts\HoiDap\CauHoi.js" />
+    <Content Include="Content\scripts\HoiDap\XemCauHoi.js" />
     <Content Include="Content\scripts\HoiDap\TaoCauHoi.js" />
     <Content Include="Content\scripts\KhoaHoc\Xem.js" />
     <Content Include="Content\scripts\KhoaHoc\Tao.js" />

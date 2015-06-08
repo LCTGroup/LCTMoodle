@@ -40,7 +40,7 @@
                 }
                 else
                 {                    
-                    DTOLayer.NguoiDungDTO nguoiDung = BUSLayer.NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]);
+                    DTOLayer.NguoiDungDTO nguoiDung = (BUSLayer.NguoiDungBUS.layTheoMa((int)Session["NguoiDung"])).ketQua as DTOLayer.NguoiDungDTO;
                         
                     <ul class="da-dang-nhap">
                         <li><a href="#"><i class="pe-7s-chat"></i></a></li>

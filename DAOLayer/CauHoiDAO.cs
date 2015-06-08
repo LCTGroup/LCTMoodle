@@ -61,7 +61,7 @@ namespace DAOLayer
                 }
             );
         }
-        public static KetQua lay(int? maCauHoi, LienKet lienKet = null)
+        public static KetQua layTheoMa(int? maCauHoi, LienKet lienKet = null)
         {
             return layDong
             (

@@ -47,8 +47,7 @@ namespace BUSLayer
             {
                 cauHoi = layDTO<CauHoiDTO>(layInt(form, "KhoaHoc")),
                 noiDung = layString(form, "NoiDung"),
-                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
-                thoiDiemTao = DateTime.Now,
+                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?)
             };
             
             KetQua ketQua = TraLoiBUS.kiemTra(traLoi);
@@ -58,9 +57,9 @@ namespace BUSLayer
             return ketQua;
         }
 
-        public static KetQua layDanhSachTraLoiTheoCauHoi(int maCauHoi)
+        public static KetQua layDanhSachTraLoiTheoCauHoi(int? maCauHoi)
         {
-            return TraLoiDAO.layDanhSachTraLoiTheoCauHoi(maCauHoi);
+            return TraLoiDAO.layDanhSachTraLoiTheoCauHoi(maCauHoi, new LienKet() { "CauHoi", "NguoiTao" });
         }
 
         public static KetQua layTraLoiTheoMa(int ma)
