@@ -35,15 +35,15 @@
                                         @baiNop.nguoiTao.hoTen
                                     </a>
                                     <span class="thoi-gian">
-                                        @baiNop.thoiDiemTao.Value.ToString("dd/M/yyyy HH:mm")
+                                        @baiNop.thoiDiemTao.Value.ToString("H:mm d/M/yyyy")
                                     </span>
                                 </section>
                                 <section class="bai-nop">
                                     @if (baiNop.tapTin == null)
                                     {
-                                        <a href="#">
+                                        <a href="@baiNop.duongDan">
                                             <img src="#" />
-                                            <span>asdf.asdf</span>
+                                            <span>@baiNop.duongDan</span>
                                         </a>
                                     }
                                     else

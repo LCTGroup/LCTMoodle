@@ -12,9 +12,12 @@
         Danh sách bài viết
     </section>
     <ul id="danh_sach_bai_viet" class="noi-dung">
-        @foreach (var baiViet in Model)
+        @if (Model != null)
         {
-            @Html.Partial("~/Views/BaiVietDienDan/_Item.cshtml", baiViet);
-        }
+            foreach (var baiViet in Model)
+            {
+                @Html.Partial("~/Views/BaiVietDienDan/_Item.cshtml", baiViet);
+            }  
+        } 
     </ul>
 </section>

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAOLayer
+namespace DTOLayer
 {
-    public class LienKet : Dictionary<string, object>
+    public class LienKet : Dictionary<string, LienKet>
     {
         public static bool co(LienKet lienKet, string tenLienKet)
         {

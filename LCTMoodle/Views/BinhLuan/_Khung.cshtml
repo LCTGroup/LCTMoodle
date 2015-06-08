@@ -1,14 +1,17 @@
 ﻿@{
     var ketQua = BUSLayer.BinhLuanBUS.layTheoDoiTuong((string)ViewData["LoaiDoiTuong"], (int)ViewData["MaDoiTuong"]);
-    var danhSachBinhLuan = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BinhLuanDTO> : new List<DTOLayer.BinhLuanDTO>();
+    var danhSachBinhLuan = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BinhLuanDTO> : null;
 }
 
 <section data-doi-tuong="khung-binh-luan" class="khung-binh-luan">
     <section class="khung-danh-sach">
         <ul data-doi-tuong="danh-sach">
-            @foreach (var binhLuan in danhSachBinhLuan)
+            @if (danhSachBinhLuan != null)
             {
-                @Html.Partial("~/Views/BinhLuan/_Item.cshtml", binhLuan);
+                foreach (var binhLuan in danhSachBinhLuan)
+                {
+                    @Html.Partial("~/Views/BinhLuan/_Item.cshtml", binhLuan);
+                }
             }
         </ul>
     </section>

@@ -89,7 +89,7 @@ BEGIN
 END
 
 GO
---Cập nhật bài viết bài giảng theo mã
+--Cập nhật theo mã
 ALTER PROC dbo.capNhatBaiVietDienDanTheoMa (
 	@0 INT, --Mã
 	@1 dbo.BangCapNhat READONLY
@@ -98,14 +98,16 @@ AS
 BEGIN
 	--Tạo chuỗi gán
 	DECLARE @query NVARCHAR(MAX) = dbo.taoChuoiCapNhat(@1)
-
-	EXEC('
+	IF (@query <> '')
+	BEGIN
+		EXEC('
 		UPDATE dbo.BaiVietDienDan
 			SET ' + @query + '
 			WHERE Ma = ' + @0 + '
-	')
+		')
+	END	
 	
-	SELECT 
+	SELECT TOP 1
 		Ma,
 		TieuDe,
 		NoiDung,
@@ -116,12 +118,3 @@ BEGIN
 		FROM dbo.BaiVietDienDan
 		WHERE Ma = @0
 END
-
-DECLARE @a dbo.BangCapNhat
-
-INSERT INTO @a (TenTruong, GiaTri, LaChuoi)
-	VALUES ('TieuDe', 'ab''c', 1)
-
-EXEC dbo.capNhatBaiVietDienDanTheoMa 1, @a
-
-SELECT * FROM dbo.BaiVietBaiGiang

@@ -1,16 +1,16 @@
-﻿@model List<DTOLayer.GiaoTrinhDTO>
+﻿@model List<DTOLayer.CotDiemDTO>
 
 @{
-    //var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocDTO;
-    //ViewData["TieuDe"] = "Soạn giáo trình - " + khoaHoc.ten;
+    var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocDTO;
+    ViewData["TieuDe"] = "Quản lý cột điểm - " + khoaHoc.ten;
     Layout = "~/Views/LCT/Khung.cshtml";
 
-    //ViewData["DieuHuong"] = new List<string>()
-    //{
-    //    "Khóa học của tôi", "/KhoaHoc",
-    //    khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
-    //    "Soạn giáo trình", "/GiaoTrinh/" + khoaHoc.ma
-    //};
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Khóa học của tôi", "/KhoaHoc",
+        khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
+        "Quản lý cột điểm", "/BangDiem/Tao/" + khoaHoc.ma
+    };
 }
 @section Styles {
     <link href="/Tao.css/BangDiem" rel="stylesheet" />
@@ -18,33 +18,73 @@
 @section Scripts {
     <script src="/Tao.js/BangDiem"></script>
     <script>
-        @*maKhoaHoc = '@khoaHoc.ma';*@
+        maKhoaHoc = '@khoaHoc.ma';
     </script>
 }
 
-<article class="hop">
+<article class="hop hop-2-vien">
     <section class="tieu-de">
         Quản lý cột điểm
     </section>
     <section class="noi-dung">
-        <article class="lct-bang khung-cot-diem">
-            <section class="thead">
-                <section class="th">
-                    
+        <article style="border: none;">
+            <article id="khung_cot_diem" class="lct-bang khung-cot-diem">
+                <section class="thead">
+                    <section class="tr">
+                        <section class="th">
+                            Tên
+                        </section>
+                        <section class="th">
+                            Hệ số
+                        </section>
+                        <section class="th">
+                            Mô tả
+                        </section>
+                        <section class="th">
+                            Ngày
+                        </section>
+                    </section>
                 </section>
-                <section class="th">
-                    Tên
+                <section class="tbody">
+                    @if (Model != null)
+                    {
+                        foreach (var cotDiem in Model)
+                        {
+                            @Html.Partial("~/Views/BangDiem/CotDiem/_Item_Tao.cshtml", cotDiem);
+                        }
+                    }
                 </section>
-                <section class="th">
-                    Hệ số
-                </section>
-                <section class="th">
-                    Mô tả
-                </section>
-                <section class="th">
-                    Ngày
-                </section>
-            </section>
+                <form id="tao_cot_diem_form" class="lct-form tao-cot-diem-form tfoot">
+                    <section class="tr">
+                        <section class="td">
+                            <input type="hidden" name="KhoaHoc" value="@khoaHoc.ma" />
+                            <article class="input">
+                                <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Tên cột điểm" />
+                            </article>
+                        </section>
+                        <section class="td">
+                            <article class="input">
+                                <input data-doi-tuong="he-so" data-validate="bat-buoc" type="text" name="HeSo" data-mac-dinh="1" style="text-align: center" placeholder="Hệ số" />
+                            </article>
+                        </section>
+                        <section class="td">
+                            <article class="input">
+                                <input type="text" name="MoTa" placeholder="Mô tả" />
+                            </article>
+                        </section>
+                        <section class="td">
+                            <article class="input">
+                                <input data-input-type="lich" name="Ngay" placeholder="Ngày" style="text-align: center" />
+                            </article>
+                            <section class="khung-button">
+                                <button type="submit" class="chap-nhan">
+                                    Thêm
+                                </button>
+                            </section>
+                        </section>
+                    </section>
+                </form>
+            </article>
         </article>
     </section>
 </article>

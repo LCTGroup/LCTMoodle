@@ -8,6 +8,7 @@
             display: flex;
             flex-wrap: wrap;
             padding: 5px;
+            background-color: #fcfcfc;
         }
 
             .lct-form ul > li {
@@ -1328,35 +1329,35 @@
                 border-bottom-color: #08c;
             }
 
-    .lich .lich {
+    .lich .khung-thang {
         border: 1px solid #eee;
         border-top: none;
         width: 210px;
         background-color: #fcfcfc;
     }
 
-        .lich .lich table {
+        .lich .khung-thang table {
             width: 100%;
         }
 
-        .lich .lich td,
-        .lich .lich th {
+        .lich .khung-thang td,
+        .lich .khung-thang th {
             width: 14.285%;
             text-align: center;
         }
 
-        .lich .lich th {
+        .lich .khung-thang th {
             font-size: 18px;
             color: #555;
             cursor: default;
         }
 
-        .lich .lich td {
+        .lich .khung-thang td {
             padding: 1px 2px;
             color: #777;
         }
 
-            .lich .lich td i {
+            .lich .khung-thang td i {
                 display: none;
                 font-style: normal;
                 border: 1px solid #fafafa;
@@ -1366,20 +1367,20 @@
                 transition: 0.5s;
             }
 
-                .lich .lich td i[data-value] {
+                .lich .khung-thang td i[data-value] {
                     display: block;
                 }
 
-                .lich .lich td i.chon {
+                .lich .khung-thang td i.chon {
                     background-color: #08c;
                     color: #fff !important;
                 }
 
-                .lich .lich td i:before {
+                .lich .khung-thang td i:before {
                     content: attr(data-value);
                 }
 
-                .lich .lich td i:after {
+                .lich .khung-thang td i:after {
                     content: '';
                     display: block;
                     width: 100%;
@@ -1389,11 +1390,11 @@
                     left: 0px;
                 }
 
-                .lich .lich td i:hover {
+                .lich .khung-thang td i:hover {
                     color: #000;
                 }
 
-                    .lich .lich td i:hover:after {
+                    .lich .khung-thang td i:hover:after {
                         background-color: #08c;
                         transition: 0.5s;
                     }

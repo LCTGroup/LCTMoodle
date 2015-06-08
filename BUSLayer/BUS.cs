@@ -96,7 +96,7 @@ namespace BUSLayer
         {
             try
             {
-                return DateTime.ParseExact(form[key], "HH:mm", null);
+                return DateTime.ParseExact(form[key], "H:mm", null);
             }
             catch
             {
@@ -108,7 +108,7 @@ namespace BUSLayer
         {
             try
             {
-                return DateTime.ParseExact(form[key], "HH:mm d/M/yyyy", null);
+                return DateTime.ParseExact(form[key], "H:mm d/M/yyyy", null);
             }
             catch
             {

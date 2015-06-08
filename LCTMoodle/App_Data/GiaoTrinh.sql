@@ -63,8 +63,7 @@ BEGIN
 		MaKhoaHoc,
 		CongViec,
 		MoTa,
-		ThoiGian,
-		ThuTu
+		ThoiGian
 		FROM dbo.GiaoTrinh
 		WHERE Ma = @@IDENTITY
 END
@@ -81,31 +80,63 @@ BEGIN
 END
 
 GO
---Thay đổi thứ tự
-ALTER PROC dbo.capNhatGiaoTrinh_ThuTu (
-	@0 INT, --Ma
-	@1 INT, --ThuTu
-	@2 INT --MaKhoaHoc
-)
+--[Trigger] Xóa giáo trinh
+CREATE TRIGGER dbo.xoaGiaoTrinh_TRIGGER
+	ON dbo.GiaoTrinh
+	AFTER DELETE
 AS
 BEGIN
 	UPDATE GT
 		SET
-			GT.ThuTu =
-				CASE
-					WHEN Dong >= @1
-						THEN Dong + 1
-					ELSE
-						Dong
-				END				
-		FROM 
-			(SELECT Ma, ThuTu, ROW_NUMBER() OVER (ORDER BY ThuTu) AS Dong
-				FROM dbo.GiaoTrinh
-				WHERE 
-					MaKhoaHoc = @2 AND
-					Ma <> @0) AS GT
+			GT.ThuTu = GT.ThuTu - 1
+		FROM
+			dbo.GiaoTrinh GT
+				INNER JOIN deleted d
+				ON 
+					GT.MaKhoaHoc = d.MaKhoaHoc AND
+					GT.ThuTu > d.ThuTu
+END
 
-	UPDATE dbo.GiaoTrinh
-		SET ThuTu = @1
-		WHERE Ma = @0
+GO
+--Thay đổi thứ tự
+ALTER PROC dbo.capNhatGiaoTrinh_ThuTu (
+	@0 INT, --ThuTu cũ
+	@1 INT, --ThuTu mới
+	@2 INT --MaKhoaHoc
+)
+AS
+BEGIN
+	IF (@0 = @1)
+	BEGIN
+		RETURN
+	END
+
+	--Biến để xác định giá trị thứ tự sẽ thay đổi như thế nào
+	DECLARE @thayDoi INT, @gioiHanTren INT, @gioiHanDuoi INT
+	
+	IF (@0 < @1)
+	BEGIN
+		SET @thayDoi = -1
+		SET @gioiHanTren = @1
+		SET @gioiHanDuoi = @0
+	END
+	ELSE
+	BEGIN
+		SET @thayDoi = 1
+		SET @gioiHanTren = @0
+		SET @gioiHanDuoi = @1
+	END
+
+	UPDATE GT
+		SET
+			GT.ThuTu = CASE
+				WHEN GT.ThuTu <> @0 THEN
+					GT.ThuTu + @thayDoi
+				ELSE
+					@1
+				END
+		FROM dbo.GiaoTrinh GT
+		WHERE 
+			GT.MaKhoaHoc = @2 AND
+			GT.ThuTu BETWEEN @gioiHanDuoi AND @gioiHanTren
 END

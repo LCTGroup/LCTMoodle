@@ -241,6 +241,7 @@ function moKhungTao() {
                         dataType: 'JSON'
                     }).done(function (data) {
                         if (data.trangThai == 0) {
+                            $khung.tat();
                             var ma = $_Khung.attr('data-ma');
                             if (ma === '0') {
                                 ma = $_Khung.attr('data-pham-vi');
@@ -265,9 +266,6 @@ function moKhungTao() {
                                 bieuTuong: 'nguy-hiem'
                             })
                         }
-
-
-
                     }).fail(function () {
                         moPopup({
                             tieuDe: 'Thông báo',

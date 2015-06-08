@@ -10,24 +10,28 @@ using Data;
 
 namespace BUSLayer
 {
-    public class GiaoTrinhBUS : BUS
+    public class CotDiemBUS : BUS
     {
-        public static KetQua kiemTra(GiaoTrinhDTO giaoTrinh)
+        public static KetQua kiemTra(CotDiemDTO cotDiem)
         {
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (giaoTrinh.khoaHoc == null)
+            if (cotDiem.khoaHoc == null)
             {
                 loi.Add("Khóa học không được bỏ trống");
             }
-            if (string.IsNullOrEmpty(giaoTrinh.congViec))
+            if (string.IsNullOrEmpty(cotDiem.ten))
             {
-                loi.Add("Công việc không được bỏ trống");
+                loi.Add("Tên không được bỏ trống");
             }
-            if (string.IsNullOrEmpty(giaoTrinh.moTa))
+            if (cotDiem.heSo == 0)
             {
-                loi.Add("Mô tả không được bỏ trống");
+                loi.Add("Hệ số không được bỏ trống");
+            }
+            if (cotDiem.ngay == null)
+            {
+                loi.Add("Ngày không được bỏ trống");
             }
             #endregion
 
@@ -48,39 +52,40 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
-        {
-            return GiaoTrinhDAO.layTheoMaKhoaHoc(maKhoaHoc);
-        }
-
         public static KetQua them(Dictionary<string, string> form)
         {
-            GiaoTrinhDTO giaoTrinh = new GiaoTrinhDTO()
+            CotDiemDTO cotDiem = new CotDiemDTO()
             {
-                khoaHoc = layDTO<KhoaHocDTO>(form, "KhoaHoc"),
-                congViec = layString(form, "CongViec"),
+                ten = layString(form, "Ten"),
                 moTa = layString(form, "MoTa"),
-                thoiGian = layString(form, "ThoiGian")
+                heSo = layInt(form, "HeSo"),
+                ngay = layDate(form, "Ngay"),
+                khoaHoc = layDTO<KhoaHocDTO>(form, "KhoaHoc")
             };
 
-            KetQua ketQua = kiemTra(giaoTrinh);
-
+            KetQua ketQua = kiemTra(cotDiem);
+            
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
+            
+            return CotDiemDAO.them(cotDiem);
+        }
 
-            return GiaoTrinhDAO.them(giaoTrinh);
+        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
+        {
+            return CotDiemDAO.layTheoMaKhoaHoc(maKhoaHoc);
         }
 
         public static KetQua xoaTheoMa(int ma)
         {
-            return GiaoTrinhDAO.xoaTheoMa(ma);
+            return CotDiemDAO.xoaTheoMa(ma);
         }
 
         public static KetQua capNhatThuTu(int thuTuCu, int thuTuMoi, int maKhoaHoc)
         {
-            return GiaoTrinhDAO.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc);
+            return CotDiemDAO.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc);
         }
     }
 }

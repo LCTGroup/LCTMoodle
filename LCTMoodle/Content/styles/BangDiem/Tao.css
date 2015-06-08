@@ -1,23 +1,47 @@
 ﻿.khung-cot-diem {
-
+    position: relative;
+    margin-bottom: 38px;
 }
 
-.khung-cot-diem > * > *:nth-child(1) {
-    width: 30px;
-}
-
-.khung-cot-diem > * > *:nth-child(2) {
+.khung-cot-diem .td:nth-child(1),
+.khung-cot-diem .th:nth-child(1) {
     width: 150px;
 }
 
-.khung-cot-diem > * > *:nth-child(3) {
+.khung-cot-diem .td:nth-child(2),
+.khung-cot-diem .th:nth-child(2) {
     width: 40px;
 }
 
-.khung-cot-diem > * > *:nth-child(4) {
+.khung-cot-diem .td:nth-child(3),
+.khung-cot-diem .th:nth-child(3) {
     width: auto;
 }
 
-.khung-cot-diem > * > *:nth-child(5) {
+.khung-cot-diem .td:nth-child(4),
+.khung-cot-diem .th:nth-child(5) {
     width: 100px;
 }
+
+.khung-cot-diem .td:nth-child(2),
+.khung-cot-diem .td:nth-child(4) {
+    text-align: center;
+}
+
+    .khung-cot-diem.keo .item-cot-diem:not(.keo) {
+        color: #eee;
+    }
+
+    .khung-cot-diem .tao-cot-diem-form .khung-button {
+        padding: 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: transparent;
+        border: 0;
+    }
+    
+        .khung-cot-diem .tao-cot-diem-form .khung-button button {
+            background-color: #fafafa;
+        }

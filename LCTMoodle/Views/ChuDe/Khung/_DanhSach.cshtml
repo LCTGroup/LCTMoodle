@@ -1,6 +1,9 @@
 ﻿@model List<DTOLayer.ChuDeDTO>
 
-@foreach (DTOLayer.ChuDeDTO chuDe in Model)
+@if (Model != null)
 {
-    @Html.Partial("~/Views/ChuDe/Khung/_DanhSach_Item.cshtml", chuDe)
+    foreach (DTOLayer.ChuDeDTO chuDe in Model)
+    {
+        @Html.Partial("~/Views/ChuDe/Khung/_DanhSach_Item.cshtml", chuDe)
+    }
 }

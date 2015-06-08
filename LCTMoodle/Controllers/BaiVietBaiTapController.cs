@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using BUSLayer;
 using DTOLayer;
-using DAOLayer;
 using Data;
 
 namespace LCTMoodle.Controllers
@@ -20,7 +19,7 @@ namespace LCTMoodle.Controllers
             List<BaiVietBaiTapDTO> danhSachBaiViet = 
                 ketQua.trangThai == 0 ?
                 ketQua.ketQua as List<BaiVietBaiTapDTO> :
-                new List<BaiVietBaiTapDTO>();
+                null;
 
             try
             {
@@ -63,9 +62,32 @@ namespace LCTMoodle.Controllers
         public ActionResult Xoa(int ma)
         {
             return Json(
-                BaiVietBaiTapDAO.xoaTheoMa(ma),
+                BaiVietBaiTapBUS.xoaTheoMa(ma),
                 JsonRequestBehavior.AllowGet
             );
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult XuLyCapNhat(FormCollection form)
+        {
+            KetQua ketQua = BaiVietBaiTapBUS.capNhatTheoMa(chuyenForm(form));
+
+            if (ketQua.trangThai == 0)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Item.cshtml", ketQua.ketQua)
+                });
+            }
+            else
+            {
+                return Json
+                (
+                    ketQua
+                );
+            }
         }
 	}
 }

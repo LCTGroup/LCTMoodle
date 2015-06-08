@@ -12,6 +12,6 @@ namespace DTOLayer
         public string ten;
         public string moTa;
         public int? heSo;
-        public DateTime? thoiDiem;
+        public DateTime? ngay;
     }
 }

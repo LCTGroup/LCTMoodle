@@ -39,10 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BangCapNhat.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="BangCapNhat.cs" />
     <Compile Include="DTO.cs" />
+    <Compile Include="Form.cs" />
     <Compile Include="KetQua.cs" />
     <Compile Include="LienKet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

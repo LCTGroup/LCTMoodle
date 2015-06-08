@@ -54,9 +54,9 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
-        public ActionResult XuLyCapNhatThuTu(int ma, int thuTu, int maKhoaHoc)
+        public ActionResult XuLyCapNhatThuTu(int thuTuCu, int thuTuMoi, int maKhoaHoc)
         {
-            return Json(GiaoTrinhBUS.capNhatThuTu(ma, thuTu, maKhoaHoc));
+            return Json(GiaoTrinhBUS.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc));
         }
 	}
 }

@@ -16,7 +16,7 @@ $(function () {
 /*
 	Bật tắt đối tượng Target
 */
-function khoiTaoTatMoDoiTuong($danhSachNut) {
+function khoiTaoTatMoDoiTuong($danhSachNut, laChucNang) {
     $danhSachNut.off('click.tat_mo').on('click.tat_mo', function (e) {
         e.stopPropagation();
 
@@ -27,15 +27,17 @@ function khoiTaoTatMoDoiTuong($danhSachNut) {
         var $doiTuong = $('[data-doi-tuong="' + $nut.attr('data-mo-doi-tuong') + '"]');
         
         //Xử lý sự kiện click của nút nhấn
-        if ($doiTuong.is(':visible')) {            
+        if ($doiTuong.is(':visible')) {
             $doiTuong.hide().removeClass('mo');
         } else {            
             $doiTuong.show().addClass('mo');
         }
 
-        $doiTuong.on('click', function (e) {
-            e.stopPropagation();
-        });
+        if (laChucNang !== true) {
+            $doiTuong.on('click', function (e) {
+                e.stopPropagation();
+            });
+        }
 
         //Xử lý sự kiện nhấn chuột ra ngoài đối tượng
         $(document).on('click.tat_mo', function (e) {

@@ -20,7 +20,7 @@ namespace LCTMoodle.Controllers
             List<BaiVietBaiGiangDTO> danhSachBaiViet = 
                 ketQua.trangThai == 0 ?
                 (List<BaiVietBaiGiangDTO>)ketQua.ketQua :
-                new List<BaiVietBaiGiangDTO>();
+                null;
 
             try
             {
@@ -37,6 +37,25 @@ namespace LCTMoodle.Controllers
                     {
                         trangThai = 2
                     }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult _Form(int ma = 0)
+        {
+            KetQua ketQua = BaiVietBaiGiangBUS.layTheoMa(ma);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua =
+                        renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Form.cshtml", ketQua.ketQua)
+                }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -66,6 +85,29 @@ namespace LCTMoodle.Controllers
                 BaiVietBaiGiangDAO.xoaTheoMa(ma),
                 JsonRequestBehavior.AllowGet
             );
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult XuLyCapNhat(FormCollection form)
+        {
+            KetQua ketQua = BaiVietBaiGiangBUS.capNhatTheoMa(chuyenForm(form));
+
+            if (ketQua.trangThai == 0)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Item.cshtml", ketQua.ketQua)
+                });
+            }
+            else
+            {
+                return Json
+                (
+                    ketQua
+                );
+            }
         }
 	}
 }

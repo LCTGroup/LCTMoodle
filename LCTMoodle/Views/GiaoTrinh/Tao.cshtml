@@ -22,53 +22,55 @@
     </script>
 }
 
-<article class="hop">
+<article class="hop hop-2-vien">
     <section class="tieu-de">
         Soạn giáo trình
     </section>
     <section class="noi-dung">
-        <article id="khung_giao_trinh" class="lct-bang khung-giao-trinh">
-            <section class="thead">
-                <article class="tr">
-                    <section class="th">Công việc</section>
-                    <section class="th">Mô tả</section>
-                    <section class="th">Thời gian</section>
-                </article>
-            </section>
-            <section class="tbody">                
-                @if (Model != null)
-                {
-                    foreach (var item in Model)
+        <article style="border: none;">
+            <article id="khung_giao_trinh" class="lct-bang khung-giao-trinh">
+                <section class="thead">
+                    <article class="tr">
+                        <section class="th">Công việc</section>
+                        <section class="th">Mô tả</section>
+                        <section class="th">Thời gian</section>
+                    </article>
+                </section>
+                <section class="tbody">
+                    @if (Model != null)
                     {
-                        @Html.Partial("~/Views/GiaoTrinh/_Item_Tao.cshtml", item)
+                        foreach (var item in Model)
+                        {
+                            @Html.Partial("~/Views/GiaoTrinh/_Item_Tao.cshtml", item)
+                        }
                     }
-                }
-            </section>
-            <form id="tao_giao_trinh_form" class="lct-form tao-giao-trinh-form tfoot">
-                <section class="tr">
-                    <section class="td">
-                        <input type="hidden" name="KhoaHoc" value="@khoaHoc.ma" />
-                        <article class="input">
-                            <input data-validate="bat-buoc" type="text" name="CongViec" placeholder="Công việc" />
-                        </article>
-                    </section>
-                    <section class="td">
-                        <article class="input">
-                            <input data-validate="bat-buoc" type="text" name="MoTa" placeholder="Mô tả" />
-                        </article>
-                    </section>
-                    <section class="td">
-                        <article class="input">
-                            <input type="text" name="ThoiGian" placeholder="Thời gian" />
-                        </article>
-                        <section class="khung-button">
-                            <button type="submit" class="chap-nhan">
-                                Thêm
-                            </button>
+                </section>
+                <form id="tao_giao_trinh_form" class="lct-form tao-giao-trinh-form tfoot">
+                    <section class="tr">
+                        <section class="td">
+                            <input type="hidden" name="KhoaHoc" value="@khoaHoc.ma" />
+                            <article class="input">
+                                <input data-validate="bat-buoc" type="text" name="CongViec" placeholder="Công việc" />
+                            </article>
+                        </section>
+                        <section class="td">
+                            <article class="input">
+                                <input data-validate="bat-buoc" type="text" name="MoTa" placeholder="Mô tả" />
+                            </article>
+                        </section>
+                        <section class="td">
+                            <article class="input">
+                                <input type="text" name="ThoiGian" placeholder="Thời gian" />
+                            </article>
+                            <section class="khung-button">
+                                <button type="submit" class="chap-nhan">
+                                    Thêm
+                                </button>
+                            </section>
                         </section>
                     </section>
-                </section>
-            </form>
+                </form>
+            </article>
         </article>
     </section>
 </article>

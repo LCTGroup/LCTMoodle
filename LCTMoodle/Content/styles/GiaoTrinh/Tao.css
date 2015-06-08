@@ -1,5 +1,6 @@
 ﻿.khung-giao-trinh {
     position: relative;
+    margin-bottom: 38px;
 }
 
 .khung-giao-trinh .td:nth-child(1),
@@ -15,16 +16,16 @@
     color: #eee;
 }
 
-    .khung-giao-trinh .tao-giao-trinh-form .tao-giao-trinh-form {
-        display: table-footer-group;
-    }
-
     .khung-giao-trinh .tao-giao-trinh-form .khung-button {
         padding: 0;
         position: absolute;
         top: 100%;
         left: 0;
-        width: calc(100% - 1.989px);
+        width: 100%;
         background-color: transparent;
         border: 0;
     }
+
+        .khung-giao-trinh .tao-giao-trinh-form .khung-button button {
+            background-color: #fafafa;
+        }

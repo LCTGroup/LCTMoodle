@@ -51,13 +51,11 @@ namespace LCTMoodle.Controllers
             }
             else
             {
-                ViewData["MaKhoaHoc"] = (ketQua.ketQua as BaiVietDienDanDTO).khoaHoc.ma;
-
                 return Json(new KetQua()
                 {
                     trangThai = 0,
                     ketQua =
-                        renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Form.cshtml", ketQua.ketQua, ViewData)
+                        renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Form.cshtml", ketQua.ketQua)
                 }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -65,7 +63,7 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            KetQua ketQua = BaiVietDienDanBUS.them(chuyenDuLieuForm(formCollection));
+            KetQua ketQua = BaiVietDienDanBUS.them(chuyenForm(formCollection));
 
             if (ketQua.trangThai == 0)
             {
@@ -84,10 +82,34 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult Xoa(int ma)
         {
-            return Json(
-                BaiVietDienDanDAO.xoaTheoMa(ma), 
+            return Json
+            (
+                BaiVietDienDanBUS.xoaTheoMa(ma), 
                 JsonRequestBehavior.AllowGet
             );
-        }        
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult XuLyCapNhat(FormCollection form)
+        {
+            KetQua ketQua = BaiVietDienDanBUS.capNhatTheoMa(chuyenForm(form));
+
+            if (ketQua.trangThai == 0)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Item.cshtml", ketQua.ketQua)
+                });
+            }
+            else
+            {
+                return Json
+                (
+                    ketQua
+                );
+            }
+        }
 	}
 }

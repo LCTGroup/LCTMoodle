@@ -45,8 +45,8 @@ namespace DAOLayer
                     case "HeSo":
                         cotDiem.heSo = layInt(dong, i);
                         break;
-                    case "ThoiDiem":
-                        cotDiem.thoiDiem = layDateTime(dong, i);
+                    case "Ngay":
+                        cotDiem.ngay = layDateTime(dong, i);
                         break;
                     default:
                         break;
@@ -54,6 +54,61 @@ namespace DAOLayer
             }
 
             return cotDiem;
+        }
+
+        public static KetQua them(CotDiemDTO cotDiem, LienKet lienKet = null)
+        {
+            return layDong
+            (
+                "themCotDiem",
+                new object[] 
+                {
+                    cotDiem.ten,
+                    cotDiem.moTa,
+                    cotDiem.heSo,
+                    cotDiem.ngay,
+                    layMa(cotDiem.khoaHoc)
+                }
+            );
+        }
+
+        public static KetQua layTheoMaKhoaHoc(int? maKhoaHoc, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+            (
+                "layCotDiemTheoMaKhoaHoc",
+                new object[] 
+                { 
+                    maKhoaHoc
+                },
+                lienKet
+            );
+        }
+
+        public static KetQua xoaTheoMa(int? ma)
+        {
+            return khongTruyVan
+            (
+                "xoaCotDiemTheoMa",
+                new object[] 
+                {
+                    ma
+                }
+            );
+        }
+
+        public static KetQua capNhatThuTu(int? thuTuCu, int? thuTuMoi, int? maKhoaHoc)
+        {
+            return khongTruyVan
+            (
+                "capNhatCotDiem_ThuTu",
+                new object[]
+                {
+                    thuTuCu,
+                    thuTuMoi,
+                    maKhoaHoc
+                }
+            );
         }
     }
 }

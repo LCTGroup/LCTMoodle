@@ -5,7 +5,7 @@
         <i class="pe-7s-notebook"></i>
         @Model.tieuDe
     </h2>
-    <section class="khung-noi-dung">
+    <section data-doi-tuong="khung-noi-dung" class="khung-noi-dung">
         <section class="noi-dung">
             @Html.Raw(Model.noiDung)
         </section>        
@@ -22,7 +22,10 @@
     <section class="khung-chuc-nang-lct">
         <ul data-doi-tuong="cnbg-@Model.ma">
             <li>
-                <a data-chuc-nang="xoa-bai-viet" data-value="@Model.ma">Xóa bài viết</a>
+                <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
+            </li>
+            <li>
+                <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
             </li>
         </ul>
         <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbg-@Model.ma">

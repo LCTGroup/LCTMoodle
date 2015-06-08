@@ -1,11 +1,6 @@
 ﻿// Lưu đối tượng vừa focus
 $inputVuaFocus = {};
 
-
-$(function () {
-
-})
-
 /*
     Khởi tạo input
 */
@@ -107,6 +102,14 @@ function khoiTaoNutMacDinh_LCT($form) {
             $phanTu.val($phanTu.attr('data-ten-mac-dinh'));
             $phanTu.next().val($phanTu.attr('data-ma-mac-dinh'));
         })
+
+        $chua.find('[data-chuc-nang="tat-mo"]').each(function () {
+            xuLyTatMo($form, $(this));
+        });
+
+        if ($chua.is('[data-cap-nhat]')) {
+            $chua.find('.input :input').attr('data-cu', '');
+        }
     }));
 }
 
@@ -137,17 +140,26 @@ function khoiTaoHienThiInput_LCT($form) {
     $form.find('input[data-input-type="thoi-gian-lich"]').each(function () {
         var $phanTu = $(this);
 
-        var validate = $phanTu.attr('data-validate') || '',
-            thoiGianMacDinh = $phanTu.attr('data-thoi-gian-mac-dinh') || '',
+        var thoiGianMacDinh = $phanTu.attr('data-thoi-gian-mac-dinh') || '',
             lichMacDinh = $phanTu.attr('data-lich-mac-dinh') || '',
             thoiGianPlaceholder = $phanTu.attr('data-thoi-gian-placeholder') || '',
             lichPlaceholder = $phanTu.attr('data-lich-placeholder') || '';
 
         $phanTu.removeAttr('data-validate data-thoi-gian-mac-dinh data-lich-mac-dinh data-thoi-gian-placeholder data-lich-placeholder');
 
+        $phanTu.after($phanTu.clone().attr({
+            'name': '',
+            'data-input-type': 'lich',
+            'data-mac-dinh': lichMacDinh,
+            'placeholder': lichPlaceholder
+        }).css('width', 'calc(50% - 19px)')).after($phanTu.clone().attr({
+            'name': '',
+            'data-input-type': 'thoi-gian',
+            'data-mac-dinh': thoiGianMacDinh,
+            'placeholder': thoiGianPlaceholder
+        }).css('width', 'calc(50% - 19px)'));
+
         $phanTu.attr('type', 'hidden');
-        $phanTu.after('<input data-validate="' + validate + '" data-input-type="thoi-gian" data-mac-dinh="' + thoiGianMacDinh + '" placeholder="' + thoiGianPlaceholder + '" style="width: calc(50% - 19px)" />' +
-            '<input data-validate="' + validate + '" data-input-type="lich" data-mac-dinh="' + lichMacDinh + '" placeholder="' + lichPlaceholder + '" style="width: calc(50% - 19px)" />')
     })
 
     $form.find('input[data-input-type="chu-de"]').each(function () {
@@ -188,6 +200,12 @@ function khoiTaoHienThiInput_LCT($form) {
             });
         });
     });
+
+    if ($form.is('[data-cap-nhat]')) {
+        $form.find('.input :input').on('change', function () {
+            $(this).removeAttr('data-cu');
+        })
+    }
 }
 
 function khoiTaoTapTinInput_LCT($form) {
@@ -231,7 +249,7 @@ function khoiTaoTapTinInput_LCT($form) {
             if (data.trangThai == 0) {
                 $phanTu.addClass('co');
                 $phanTu.find('~ img').attr('src', '/LayTapTin/Tam/' + data.ketQua.ma);
-                $phanTu.find('~ input[type="hidden"]').val(data.ketQua.ma);
+                $phanTu.find('~ input[type="hidden"]').val(data.ketQua.ma).change();
             }
             else {
                 alert('Thêm file thất bại');
@@ -259,9 +277,8 @@ function khoiTaoChuDeInput_LCT($form) {
 
                 $khung.on('chon', function (e, data) {
                     $popup.tat();
-                    $phanTu.val(data.ten);
-                    $phanTu.next().val(data.ma);
-                    $phanTu.focusout();
+                    $phanTu.val(data.ten).focusout();
+                    $phanTu.next().val(data.ma).change();
                 });
             }
         });
@@ -398,7 +415,7 @@ function khoiTaoGoiYInput_LCT($form) {
             ten = $giaTriChon.text() || '',
             ma = $giaTriChon.attr('data-value') || '';
         $input.val(ten);
-        $input.next().val(ma);
+        $input.next().val(ma).change();
 
         $chua.find('.danh-sach-goi-y').removeClass('rong').html('');
 
@@ -556,7 +573,14 @@ function khoiTaoLCTFormMacDinh($form) {
 
         $phanTu.val($phanTu.attr('data-ten-mac-dinh'));
         $phanTu.next().val($phanTu.attr('data-ma-mac-dinh'));
-    })
+    });
+    $form.find('[data-chuc-nang="tat-mo"]').each(function () {
+        xuLyTatMo($form, $(this), true);
+    });
+    
+    if ($form.is('[data-cap-nhat]')) {
+        $form.find('.input :input').attr('data-cu', '');
+    }
 }
 
 function xuLyTatMoDoiTuong($doiTuong, tat, dangKhoiTao) {
@@ -667,8 +691,6 @@ function xuLyTatMo($form, $input, dangKhoiTao, tatHet) {
 function khoiTaoTatMo_LCT($form) {
     $form.find('[data-chuc-nang="tat-mo"]').on('change', function () {
         xuLyTatMo($form, $(this));
-    }).each(function () {
-        xuLyTatMo($form, $(this), true);
     });
 }
 
@@ -1025,6 +1047,7 @@ function khoiTaoSubmit_LCT($form, thamSo) {
         e.preventDefault();
 
         $form.find('textarea[data-input-type="editor"]').each(function () {
+            $(this).change();
             CKEDITOR.instances[this.getAttribute('name')].updateElement();
         });
 
@@ -1032,8 +1055,13 @@ function khoiTaoSubmit_LCT($form, thamSo) {
             var $phanTu = $(this),
                 $thoiGian = $phanTu.next(),
                 $lich = $thoiGian.next();
-            $phanTu.val($thoiGian.val() + ' ' + $lich.val());
-        })
+
+            if ($thoiGian.is('[data-cu]') && $lich.is('[data-cu]')) {
+                return;
+            }
+
+            $phanTu.val($thoiGian.val() + ' ' + $lich.val()).change();
+        });
 
         //Validate
         var coLoi = false;
@@ -1145,6 +1173,18 @@ function khoiTaoSubmit_LCT($form, thamSo) {
     });
 }
 
+function layDataLCTForm($form) {
+    var $inputs = $form.find(':input[name]:not(:disabled)' + $form.is(['data-cap-nhat']) ? ':not([data-cu])' : '');
+
+    var data = $inputs.not('[type="checkbox"]').serialize();
+
+    $inputs.not(':not([type="checkbox"])').each(function () {
+        data += '&' + this.name + "=" + this.checked ? '1' : '0';
+    });
+
+    return data;
+}
+
 /*
     Hàm của đồng hồ
 */
@@ -1176,15 +1216,15 @@ function khoiTaoForm_DongHo(id) {
             $dongHo.attr('data-buoi', 'toi');
             $dongHo.find('.buoi i').attr('title', 'Sáng');
         }
-        $inputVuaFocus.val(layThoiGian($dongHo));
+        $inputVuaFocus.val(layThoiGian($dongHo)).change();
     });
     $dongHo.find('.gio i').on('click', function () {
         $dongHo.attr('data-gio', $(this).attr('data-value'));
-        $inputVuaFocus.val(layThoiGian($dongHo));
+        $inputVuaFocus.val(layThoiGian($dongHo)).change();
     });
     $dongHo.find('.phut i').on('click', function () {
         $dongHo.attr('data-phut', $(this).attr('data-value'));
-        $inputVuaFocus.val(layThoiGian($dongHo));
+        $inputVuaFocus.val(layThoiGian($dongHo)).change();
     });
     return $dongHo;
 }
@@ -1202,7 +1242,7 @@ function layGiaTriMacDinh_DongHo($dongHo, $thoiGianInput) {
         $dongHo.attr('data-gio', gio - 12);
     }
     $dongHo.attr('data-phut', hienTai.getMinutes());
-    $thoiGianInput.val(layThoiGian($dongHo));
+    $thoiGianInput.val(layThoiGian($dongHo)).change();
 
 }
 
@@ -1243,13 +1283,13 @@ function layThoiGian($dongHo) {
     var phut = parseInt($dongHo.attr('data-phut'));
 
     //Nếu giờ là 24, phút là 60 thì trả về 0
-    if (gio == 24) {
+    if (gio >= 24) {
         gio = 0;
     }
-    if (phut == 60) {
+    if (phut >= 60) {
         phut = 0;
     }
-    return gio + ':' + phut;
+    return gio + ':' + (phut < 10 ? '0' + phut : phut);
 }
 
 /*
@@ -1266,7 +1306,7 @@ function khoiTaoForm_Lich(id) {
 			    <span class="nam" data-value><i class="truoc"></i><i class="sau"></i></span>\
 			    <a href="javascript:void(0)" class="thang-sau"></a>\
 		    </section>\
-		    <section class="lich">\
+		    <section class="khung-thang">\
 			    <table>\
 				    <thead>\
 					    <tr>\
@@ -1321,13 +1361,13 @@ function khoiTaoForm_Lich(id) {
         $lich.attr('data-nam-ht', parseInt($lich.attr('data-nam-ht')) + 1);
         capNhatLich($lich);
     });
-    $lich.find('.lich i').on('click', function () {
+    $lich.find('.khung-thang i').on('click', function () {
         var
             ngay = $(this).attr('data-value'),
             thang = $lich.attr('data-thang-ht'),
             nam = $lich.attr('data-nam-ht');
 
-        $inputVuaFocus.val(ngay + '/' + thang + '/' + nam);
+        $inputVuaFocus.val(ngay + '/' + thang + '/' + nam).change();
         $lich.attr('data-ngay', ngay);
         $lich.attr('data-thang', thang);
         $lich.attr('data-nam', nam);
@@ -1354,7 +1394,7 @@ function layGiaTriMacDinh_Lich($lich, $lichInput) {
 
     capNhatLich($lich);
 
-    $inputVuaFocus.val(ngay + '/' + thang + '/' + nam);
+    $inputVuaFocus.val(ngay + '/' + thang + '/' + nam).change();
 }
 
 function layGiaTri_Lich($lich, $lichInput) {

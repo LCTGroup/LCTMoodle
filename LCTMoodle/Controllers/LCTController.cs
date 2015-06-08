@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using DTOLayer;
 
 namespace LCTMoodle.Controllers
 {
@@ -79,7 +80,18 @@ namespace LCTMoodle.Controllers
         }
 
         [NonAction]
-        public string renderPartialViewToString(ControllerContext controllerContextontrollerContext,
+        public Form chuyenForm(FormCollection formCollection)
+        {
+            Form form = new Form();
+            foreach(string key in formCollection.AllKeys)
+            {
+                form.Add(key, formCollection[key]);
+            }
+            return form;
+        }
+
+        [NonAction]
+        public string renderPartialViewToString(ControllerContext context,
             string partialViewName, object model = null, ViewDataDictionary viewData = null, TempDataDictionary tempData = null)
         {
             partialViewName = "~/Views/" + partialViewName;
@@ -96,8 +108,8 @@ namespace LCTMoodle.Controllers
             viewData.Model = model;
 
             var sw = new StringWriter();
-            var viewResult = ViewEngines.Engines.FindPartialView(controllerContextontrollerContext, partialViewName);
-            var viewContext = new ViewContext(controllerContextontrollerContext, viewResult.View, viewData, tempData, sw);
+            var viewResult = ViewEngines.Engines.FindPartialView(context, partialViewName);
+            var viewContext = new ViewContext(context, viewResult.View, viewData, tempData, sw);
             viewResult.View.Render(viewContext, sw);
 
             var s = sw.GetStringBuilder().ToString();

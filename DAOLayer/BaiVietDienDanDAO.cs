@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 using System.Threading.Tasks;
 using DTOLayer;
 using Data;
@@ -133,7 +134,7 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua capNhat(int? ma, BangCapNhat bangCapNhat)
+        public static KetQua capNhatTheoMa(int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)
         {
             return layDong
             (
@@ -141,8 +142,9 @@ namespace DAOLayer
                 new object[]
                 {
                     ma,
-                    bangCapNhat
-                }
+                    bangCapNhat.bang
+                },
+                lienKet
             );
         }
     }

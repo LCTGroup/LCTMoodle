@@ -6,38 +6,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAOLayer
+namespace DTOLayer
 {
-    public class BangCapNhat : DataTable
+    public class BangCapNhat
     {
+        public DataTable bang;
+
         public BangCapNhat()
         {
-            Columns.AddRange(new DataColumn[] {
-                new DataColumn("TenTruong", typeof(string)),
-                new DataColumn("GiaTri", typeof(string)),
-                new DataColumn("LaChuoi", typeof(bool)),
+            bang = new DataTable();
+            bang.Columns.AddRange(new DataColumn[] {
+                new DataColumn("TenTruong"),
+                new DataColumn("GiaTri"),
+                new DataColumn("LaChuoi"),
             });
-        }
-        public BangCapNhat(Dictionary<string, string> form, Dictionary<string, bool> danhSachTruong)
-        {
-            Columns.AddRange(new DataColumn[] {
-                new DataColumn("TenTruong", typeof(string)),
-                new DataColumn("GiaTri", typeof(string)),
-                new DataColumn("LaChuoi", typeof(bool)),
-            });
-
-            foreach (KeyValuePair<string, bool> truong in danhSachTruong)
-            {
-                Add(truong.Key, form[truong.Key], truong.Value);
-            }
         }
 
         public void Add(string tenTruong, string giaTri, bool laChuoi)
         {
-            Rows.Add(new object[]
+            bang.Rows.Add(new object[]
             {
                 tenTruong,
-                giaTri,
+                string.IsNullOrEmpty(giaTri) ? null : giaTri,
                 laChuoi
             });
         }

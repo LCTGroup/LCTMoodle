@@ -42,10 +42,21 @@ namespace LCTMoodle.Controllers
 
             if (ketQua.trangThai == 0)
             {
+                var khoaHoc = ketQua.ketQua;
+
+                ketQua = DAOLayer.BaiVietBaiGiangDAO.layTheoMaKhoaHoc(ma);
+                ViewData["BaiGiang"] = ketQua.trangThai == 0 ? ketQua.ketQua : null;
+
+                ketQua = DAOLayer.BaiVietBaiTapDAO.layTheoMaKhoaHoc(ma);
+                ViewData["BaiTap"] = ketQua.trangThai == 0 ? ketQua.ketQua : null;
+
+                ketQua = DAOLayer.BaiVietDienDanDAO.layTheoMaKhoaHoc(ma);
+                ViewData["DienDan"] = ketQua.trangThai == 0 ? ketQua.ketQua : null;
+
                 return Json(new KetQua()
                 {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "KhoaHoc/_Khung.cshtml", ketQua.ketQua)
+                    ketQua = renderPartialViewToString(ControllerContext, "KhoaHoc/_Khung.cshtml", khoaHoc, ViewData)
                 }, JsonRequestBehavior.AllowGet);
             }
             else

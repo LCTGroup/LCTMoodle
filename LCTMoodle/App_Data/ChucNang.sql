@@ -4,13 +4,11 @@ CREATE TYPE dbo.BangCapNhat
 AS
 TABLE (
 	TenTruong NVARCHAR(MAX) NOT NULL,
-	GiaTri NVARCHAR(MAX) NOT NULL,
+	GiaTri NVARCHAR(MAX),
 	LaChuoi BIT NOT NULL
 )
 
-GO
-
-CREATE FUNCTION dbo.taoChuoiCapNhat (
+ALTER FUNCTION dbo.taoChuoiCapNhat (
 	@0 dbo.BangCapNhat READONLY
 )
 RETURNS NVARCHAR(MAX)
@@ -22,14 +20,16 @@ BEGIN
 		@query + ' ' +
 		TenTruong + ' = ' + 
 		CASE
+			WHEN GiaTri IS NULL THEN
+				'NULL'
 			WHEN LaChuoi = 1 THEN 
-				'N''' + GiaTri + ''''
+				'N''' + REPLACE(GiaTri, '''', '''''') + ''''
 			ELSE
 				GiaTri
-		END		
+		END + ','
 		FROM @0
 
-	RETURN @query
+	RETURN LEFT(@query, LEN(@query) - 1)
 END
 
 --Reset bảng
@@ -38,4 +38,8 @@ DBCC CHECKIDENT('dbo.BaiTapNop', RESEED, 1)
 
 --Tiếng việt
 ALTER DATABASE rtcmfraf_Moodle
-	COLLATE Vietnamese_CI_AS
+	COLLATE Vietnamese_CI_A
+
+
+DECLARE @a BIT = 1
+SELECT CAST(@a as NVARCHAR(MAX))

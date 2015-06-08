@@ -96,15 +96,15 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua capNhatThuTu(int? ma, int? thuTu, int? maKhoaHoc)
+        public static KetQua capNhatThuTu(int? thuTuCu, int? thuTuMoi, int? maKhoaHoc)
         {
             return khongTruyVan
             (
                 "capNhatGiaoTrinh_ThuTu",
                 new object[]
                 {
-                    ma,
-                    thuTu,
+                    thuTuCu,
+                    thuTuMoi,
                     maKhoaHoc
                 }
             );
