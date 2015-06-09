@@ -82,8 +82,8 @@
     <section class="noi-dung">
         <article class="hop-form form-tra-loi">
             <section class="noi-dung">
-                <form class="lct-form" id="tra_loi_cau_hoi">
-                    <input type="hidden" name="CauHoi" value="@Model.ma" />
+                <form class="lct-form" action="/HoiDap/XuLyThemTraLoi" method="post" id="tra_loi_cau_hoi">
+                    <input type="hidden" name="CauHoi" value="@Model.ma.Value" />
                     <article>
                         <ul>
                             <li>

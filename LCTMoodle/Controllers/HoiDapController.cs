@@ -33,6 +33,7 @@ namespace LCTMoodle.Controllers
         {
             return Json(CauHoiBUS.them(chuyenDuLieuForm(form)));
         }
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult XuLyThemTraLoi(FormCollection form)

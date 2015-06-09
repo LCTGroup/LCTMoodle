@@ -45,14 +45,14 @@ namespace BUSLayer
         {
             TraLoiDTO traLoi = new TraLoiDTO()
             {
-                cauHoi = layDTO<CauHoiDTO>(layInt(form, "KhoaHoc")),
+                cauHoi = layDTO<CauHoiDTO>(layInt(form, "CauHoi")),
                 noiDung = layString(form, "NoiDung"),
                 nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?)
             };
             
             KetQua ketQua = TraLoiBUS.kiemTra(traLoi);
 
-            if (ketQua.trangThai != 0)
+            if (ketQua.trangThai != 3)
                 ketQua = TraLoiDAO.them(traLoi);
             return ketQua;
         }
