@@ -2,7 +2,7 @@
 
 <li data-doi-tuong="muc" data-loai="ds-nut" data-ma="@Model.ma">
     <section class="mo-ta">
-        <img src="/LayTapTin/chude_hinhdaidien/@Model.hinhDaiDien.ma">
+        <img src="@(Model.hinhDaiDien != null ? "/LayTapTin/chude_hinhdaidien/" + Model.hinhDaiDien.ma : "#")">
         <p>
             @Model.moTa
         </p>

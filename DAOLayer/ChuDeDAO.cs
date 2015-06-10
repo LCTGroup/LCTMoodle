@@ -40,14 +40,12 @@ namespace DAOLayer
                                 };
                         }
                         break;
-                    case "PhamVi":
-                        chuDe.phamVi = layString(dong, i); break;
-                    case "MaChuDeCha":
+                    case "MaCha":
                         maTam = layInt(dong, i);
 
                         if (maTam.HasValue)
                         {
-                            chuDe.chuDeCha = LienKet.co(lienKet, "ChuDeCha") ?
+                            chuDe.cha = LienKet.co(lienKet, "Cha") ?
                                 null :
                                 new ChuDeDTO()
                                 {
@@ -73,6 +71,11 @@ namespace DAOLayer
                 }
             }
 
+            if (LienKet.co(lienKet, "Con"))
+            {
+                chuDe.con = layDanhSachDTO<ChuDeDTO>(ChuDeDAO.layTheoMaCha(chuDe.ma));
+            }
+
             return chuDe;
         }
 
@@ -86,36 +89,35 @@ namespace DAOLayer
                     chuDe.ten,
                     chuDe.moTa,
                     layMa(chuDe.nguoiTao),
-                    chuDe.phamVi,
-                    layMa(chuDe.chuDeCha),
+                    layMa(chuDe.cha),
                     layMa(chuDe.hinhDaiDien)
                 }
             );
         }
 
-        public static KetQua layTheoMaChuDeCha(string phamVi, int? maChuDeCha)
+        public static KetQua layTheoMaCha(int? maCha, LienKet lienKet = null)
         {
             return layDanhSachDong
             (
-                "layChuDeTheoMaChuDeCha",
+                "layChuDeTheoMaCha",
                 new object[] 
-                { 
-                    phamVi,
-                    maChuDeCha
-                }
+                {
+                    maCha
+                },
+                lienKet
             );
         }
         
-        public static KetQua layTheoMa(string phamVi, int? ma)
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
             return layDong
             (
                 "layChuDeTheoMa",
                 new object[] 
                 { 
-                    phamVi,
                     ma
-                }
+                },
+                lienKet
             );
         }
 

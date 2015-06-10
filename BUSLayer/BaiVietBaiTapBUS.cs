@@ -53,7 +53,7 @@ namespace BUSLayer
             }
         }
 
-        public static void gan(ref BaiVietBaiTapDTO baiViet, ref Form form)
+        public static void gan(ref BaiVietBaiTapDTO baiViet, Form form)
         {
             if (baiViet == null)
             {
@@ -89,7 +89,7 @@ namespace BUSLayer
             }
         }
 
-        public static BangCapNhat layBangCapNhat(string[] keys, BaiVietBaiTapDTO baiViet)
+        public static BangCapNhat layBangCapNhat(BaiVietBaiTapDTO baiViet, string[] keys)
         {
             BangCapNhat bangCapNhat = new BangCapNhat();
             foreach (string key in keys)
@@ -187,7 +187,7 @@ namespace BUSLayer
 
             BaiVietBaiTapDTO baiViet = ketQua.ketQua as BaiVietBaiTapDTO;
 
-            gan(ref baiViet, ref form);
+            gan(ref baiViet, form);
 
             ketQua = kiemTra(baiViet, form.Keys.ToArray());
 
@@ -196,7 +196,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return BaiVietBaiTapDAO.capNhatTheoMa(maBaiViet, layBangCapNhat(form.Keys.ToArray(), baiViet), new LienKet()
+            return BaiVietBaiTapDAO.capNhatTheoMa(maBaiViet, layBangCapNhat(baiViet, form.Keys.ToArray()), new LienKet()
             {
                 "NguoiTao",
                 "TapTin"

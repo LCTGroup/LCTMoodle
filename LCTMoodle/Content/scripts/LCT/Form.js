@@ -272,7 +272,6 @@ function khoiTaoChuDeInput_LCT($form) {
 
         moPopupFull({
             url: '/ChuDe/_Chon',
-            data: { phamVi: $phanTu.attr('data-pham-vi') },
             thanhCong: function ($popup) {
                 var $khung = $popup.find('#khung_quan_ly');
 

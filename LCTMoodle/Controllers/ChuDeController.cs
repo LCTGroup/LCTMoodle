@@ -13,126 +13,89 @@ namespace LCTMoodle.Controllers
 {
     public class ChuDeController : LCTController
     {
-        public ActionResult QuanLy(string phamVi = null, int ma = 0)
+        public ActionResult QuanLy(int ma = 0)//Mã cha
         {
-            return View(model: phamVi == null ? null : 
-                new ChuDeDTO()
-                {
-                    ten = phamVi
-                });
+            KetQua ketQua = ChuDeBUS.layTheoMaCha(ma);
+
+            if (ketQua.trangThai > 1)
+            {
+                return RedirectToAction("Index", "TrangChu");
+            }
+
+            return View(model: ketQua.ketQua);
         }
 
         /// <returns>
         ///     Mảng gồm
-        ///         cay: html của nút ở cay
+        ///         cay: html của nút ở cây
         ///         danhSach: html của danh sách nút con của nút
         /// </returns>
-        public ActionResult _Khung(string phamVi, int maChuDeCha = 0)
+        public ActionResult _Khung(int ma)
         {
-            if (phamVi == "PhamVi")
+            ChuDeDTO chuDe;
+            if (ma != 0)
             {
-                List<PhamVi> danhSachPhamVi = PhamVi.layDanhSach();
-
-                return Json(new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua = new
-                    {
-                        cay = renderPartialViewToString(ControllerContext, "ChuDe/Khung/_Cay_HeThong_Item.cshtml", danhSachPhamVi),
-                        danhSach = renderPartialViewToString(ControllerContext, "ChuDe/Khung/_DanhSach_PhamVi.cshtml", danhSachPhamVi)
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                PhamVi pv = PhamVi.lay(phamVi);
-
-                if (pv == null)
-                {
-                    return Json(new KetQua()
-                    {
-                        trangThai = 1,
-                    }, JsonRequestBehavior.AllowGet);
-                }
-
-                KetQua ketQua = ChuDeDAO.layTheoMaChuDeCha(phamVi, maChuDeCha);
-
-                if (ketQua.trangThai != 0 && ketQua.trangThai != 1)
-                {
-                    return Json(ketQua, JsonRequestBehavior.AllowGet);
-                }
-
-                object danhSachChuDeCon = ketQua.ketQua;
-
-                if (maChuDeCha == 0)
-                {
-                    return Json(new KetQua()
-                    {
-                        trangThai = 0,
-                        ketQua = new
-                        {
-                            cay = renderPartialViewToString(ControllerContext, 
-                                "ChuDe/Khung/_Cay_PhamVi_Item.cshtml", 
-                                danhSachChuDeCon, 
-                                new ViewDataDictionary()
-                                {
-                                    { "Ma", pv.ma },
-                                    { "Ten", pv.ten }
-                                }
-                            ),
-                            danhSach = renderPartialViewToString(ControllerContext, "ChuDe/Khung/_DanhSach.cshtml", danhSachChuDeCon)
-                        }
-                    }, JsonRequestBehavior.AllowGet);
-                }
-
-                ketQua = ChuDeDAO.layTheoMa(phamVi, maChuDeCha);
+                KetQua ketQua = ChuDeBUS.layTheoMa(ma);
 
                 if (ketQua.trangThai != 0)
                 {
                     return Json(ketQua, JsonRequestBehavior.AllowGet);
                 }
 
-                ChuDeDTO chuDe = ketQua.ketQua as ChuDeDTO;
+                chuDe = ketQua.ketQua as ChuDeDTO;
+            }
+            else
+            {
+                KetQua ketQua = ChuDeBUS.layTheoMaCha(ma);
 
-                return Json(new KetQua()
+                if (ketQua.trangThai > 1)
                 {
-                    trangThai = 0,
-                    ketQua = new
-                    {
-                        cay = renderPartialViewToString(ControllerContext,
-                            "ChuDe/Khung/_Cay_Item.cshtml",
-                            danhSachChuDeCon,
-                            new ViewDataDictionary()
-                            {
-                                { "Ma", chuDe.ma },
-                                { "Ten", chuDe.ten }
-                            }
-                        ),
-                        danhSach = renderPartialViewToString(ControllerContext,
-                            "ChuDe/khung/_DanhSach.cshtml",
-                            danhSachChuDeCon
-                        )
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            } 
-        }
+                    return Json(ketQua, JsonRequestBehavior.AllowGet);
+                }
 
-        public ActionResult _Form(string phamVi, int maChuDeCha)
-        {
-            ViewData["PhamVi"] = phamVi;
-            ViewData["MaChuDeCha"] = maChuDeCha;
+                chuDe = new ChuDeDTO()
+                {
+                    ma = 0,
+                    ten = "Danh sách",
+                    con = ketQua.ketQua as List<ChuDeDTO>
+                };
+            }
 
             return Json(new KetQua()
             {
                 trangThai = 0,
-                ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", null, ViewData)
+                ketQua = new
+                {
+                    cay = renderPartialViewToString(ControllerContext,
+                        "ChuDe/_Cay_Item.cshtml",
+                        chuDe.con,
+                        new ViewDataDictionary()
+                        {
+                            { "Ma", chuDe.ma },
+                            { "Ten", chuDe.ten }
+                        }
+                    ),
+                    danhSach = renderPartialViewToString(ControllerContext,
+                        "ChuDe/_DanhSach.cshtml",
+                        chuDe.con
+                    )
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult _Form(int ma)
+        {
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", ma)
             }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            KetQua ketQua = ChuDeBUS.them(chuyenDuLieuForm(formCollection));
+            KetQua ketQua = ChuDeBUS.them(chuyenForm(formCollection));
 
             if (ketQua.trangThai != 0)
             {
@@ -144,12 +107,12 @@ namespace LCTMoodle.Controllers
                 trangThai = 0,
                 ketQua = new
                 {
-                    cayCon_Item = renderPartialViewToString(ControllerContext,
-                        "ChuDe/Khung/_Cay_Con_Item.cshtml",
+                    cayCon = renderPartialViewToString(ControllerContext,
+                        "ChuDe/_Cay_Con_Item.cshtml",
                         ketQua.ketQua
                     ),
                     danhSach_Item = renderPartialViewToString(ControllerContext,
-                        "ChuDe/Khung/_DanhSach_Item.cshtml",
+                        "ChuDe/_DanhSach_Item.cshtml",
                         ketQua.ketQua
                     )
                 }
@@ -162,9 +125,9 @@ namespace LCTMoodle.Controllers
             return Json(ChuDeDAO.xoaTheoMa(ma));
         }
 
-        public ActionResult _Chon(string phamVi, int maChuDeCha = 0)
+        public ActionResult _Chon(int ma = 0)
         {
-            KetQua ketQua = ChuDeBUS.layTheoMa(phamVi, maChuDeCha);
+            KetQua ketQua = ChuDeBUS.layTheoMaCha(ma);
 
             if (ketQua.trangThai != 0)
             {
@@ -172,14 +135,10 @@ namespace LCTMoodle.Controllers
             }
             else
             {
-                ViewData["PhamVi"] = phamVi;
                 return Json(new KetQua()
                 {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext,
-                    "ChuDe/_Chon.cshtml",
-                    ketQua.ketQua,
-                    ViewData)
+                    ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Chon.cshtml", ketQua.ketQua)
                 }, JsonRequestBehavior.AllowGet);
             }
         }

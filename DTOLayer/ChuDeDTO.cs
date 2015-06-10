@@ -12,9 +12,8 @@ namespace DTOLayer
         public string moTa;
         public NguoiDungDTO nguoiTao;
         public DateTime? thoiDiemTao;
-        public string phamVi;
-        public ChuDeDTO chuDeCha;
+        public ChuDeDTO cha;
         public TapTinDTO hinhDaiDien;
-        public List<ChuDeDTO> danhSachChuDeCon;
+        public List<ChuDeDTO> con;
     }
 }

@@ -1777,10 +1777,6 @@
         background-color: #fff;
     }
 
-        .lct-cay[data-pham-vi="PhamVi"] .khung-chuc-nang {
-            display: none;
-        }
-
         .lct-cay .khung-chuc-nang li {
             opacity: 0;
         }

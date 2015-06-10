@@ -1,7 +1,7 @@
 ﻿var $_Khung,
     $_Cay,
     $_DanhSach,
-    mangNut = {}; //Xác định bằng PhamVi, <Mã phạm vi> (KhoaHoc, HoiDap, ...), <Mã chủ đề>
+    mangNut = {}; //Xác định bằng mã chủ đề
 
 //Khởi tạo
 function khoiTaoKhungChuDe($khung) {
@@ -42,171 +42,114 @@ function chonNut($muc) {
 */
 /*
     Các loại nút ở cây
-        cay-he-thong
-        cay-pham-vi
         cay-nut
-
-        cay-con-pham-vi
         cay-con-nut
 
     Các loại nút ở danh sách
-        ds-pham-vi
         ds-nut
 */
 
 function khoiTaoMoNut($nutMo) {
     $nutMo.on('click', function () {
-        moNut($(this));
-    });
-}
-
-var a = b = 0;
-function moNut($obj) {
-    //Kiểm tra xem có đang mở nút khác ko
-    if ('dangMoNut' in mangTam && mangTam['dangMoNut']) {
-        return;
-    }
-    mangTam['dangMoNut'] = true;
-
-    var
-        $muc = $obj.closest('[data-doi-tuong="muc"]'),
-        loai = $muc.attr('data-loai'),
-        ma = $muc.attr('data-ma');
-
-    //#region Lấy dữ liệu
-    if (!(ma in mangNut)) {
-        //#region Ajax lấy dữ liệu
-        //Lấy tham số gửi đi
-        data = null;
-        switch (loai) {
-            case 'cay-he-thong':
-            case 'cay-pham-vi':
-            case 'cay-con-pham-vi':
-            case 'ds-pham-vi':
-                data = {
-                    phamVi: ma
-                };
-                break;
-            case 'cay-nut':
-            case 'cay-con-nut':
-            case 'ds-nut':
-                data = {
-                    maChuDeCha: ma,
-                    phamVi: $_Khung.attr('data-pham-vi')
-                }
-                break;
-            default:
-                return;
+        //Kiểm tra xem có đang mở nút khác ko
+        if ('dangMoNut' in mangTam && mangTam.dangMoNut) {
+            return;
         }
+        mangTam.dangMoNut = true;
 
-        //Lấy dữ liệu
-        //Để xác định lấy dữ liệu thành công hay thất bại
-        var thanhCong;
+        var
+            $muc = $(this).closest('[data-doi-tuong="muc"]'),
+            loai = $muc.attr('data-loai'),
+            ma = $muc.attr('data-ma');
 
-        $.ajax({
-            url: '/ChuDe/_Khung',
-            data: data,
-            contentType: 'JSON',
-            async: false
-        }).done(function (data) {
-            if (data.trangThai == 0 || data.trangThai == 1) {
-                //Lưu lại kết quả lấy được
-                mangNut[ma] = data.ketQua;
+        //#region Lấy dữ liệu
+        if (!(ma in mangNut)) {
+            //#region Ajax lấy dữ liệu
+            //Lấy dữ liệu
+            //Để xác định lấy dữ liệu thành công hay thất bại
+            var thanhCong;
 
-                thanhCong = true;
-            }
-            else {
+            $.ajax({
+                url: '/ChuDe/_Khung',
+                data: { ma: ma },
+                contentType: 'JSON',
+                async: false
+            }).done(function (data) {
+                if (data.trangThai <= 1) {
+                    //Lưu lại kết quả lấy được
+                    mangNut[ma] = data.ketQua;
+
+                    thanhCong = true;
+                }
+                else {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Mở nút thất bại',
+                        bieuTuong: 'nguy-hiem'
+                    });
+
+                    thanhCong = false;
+                }
+            }).fail(function () {
                 moPopup({
                     tieuDe: 'Thông báo',
                     thongBao: 'Mở nút thất bại',
                     bieuTuong: 'nguy-hiem'
                 });
-
                 thanhCong = false;
+            });
+
+            if (!thanhCong) {
+                return;
             }
-        }).fail(function () {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Mở nút thất bại',
-                bieuTuong: 'nguy-hiem'
-            });
-            thanhCong = false;
-        });
-
-        if (!thanhCong) {
-            return;
+            //#endregion
         }
+
+        var duLieuNutCon = mangNut[ma],
+            $cay = $(duLieuNutCon.cay),
+            $danhSach = $(duLieuNutCon.danhSach);
+
+        khoiTaoCay_Item($cay);
+        khoiTaoDanhSach_Item($danhSach);
+        khoiTaoNutChon($danhSach.find('[data-chuc-nang="chon"]'));
         //#endregion
-    }
 
-    var duLieuNutCon = mangNut[ma],
-        $cay = $(duLieuNutCon.cay),
-        $danhSach = $(duLieuNutCon.danhSach);
+        //#region Hiển thị
+        //Hiển thị cây
+        switch (loai) {
+            case 'cay-nut':
+                $muc.find('~ *').remove();
+                break;
+            case 'cay-con-nut':
+                var $mucCha = $muc.parent().closest('[data-doi-tuong="muc"]');
+                $mucCha.find('~ *').remove();
+                $mucCha.after($cay)
+                break;
+            case 'ds-nut':
+                $_Cay.append($cay);
+                break;
+            default:
+                return;
+        }
 
-    khoiTaoCay_Item($cay);
-    khoiTaoDanhSach_Item($danhSach);
-    khoiTaoNutChon($danhSach.find('[data-chuc-nang="chon"]'));
-    //#endregion
+        //Điều chỉnh hiển thị cây con
+        var $danhSachMuc = $_Cay.find(':nth-last-child(2) [data-doi-tuong="danh-sach-muc"]');
+        $danhSachMuc.prepend($danhSachMuc.children('[data-ma="' + ma + '"]'));
 
-    //#region Hiển thị
-    //Hiển thị cây
-    switch (loai) {
-        case 'cay-he-thong':
-        case 'cay-pham-vi':
-        case 'cay-nut':
-            $muc.find('~ *').remove();
-            break;
-        case 'cay-con-pham-vi':
-        case 'cay-con-nut':
-            var $mucCha = $muc.parent().closest('[data-doi-tuong="muc"]');
-            $mucCha.find('~ *').remove();
-            $mucCha.after($cay)
-            break;
-        case 'ds-pham-vi':
-        case 'ds-nut':
-            $_Cay.append($cay);
-            break;
-        default:
-            return;
-    }
+        //Hiển thị danh sách
+        $_DanhSach.html($danhSach);
 
-    //Điều chỉnh hiển thị cây con
-    var $danhSachMuc = $_Cay.find(':nth-last-child(2) [data-doi-tuong="danh-sach-muc"]');
-    $danhSachMuc.prepend($danhSachMuc.children('[data-ma="' + ma + '"]'));
+        //#endregion
 
-    //Hiển thị danh sách
-    $_DanhSach.html($danhSach);
+        //#region Cập nhật giá trị cây
+        $_Khung.attr('data-ma', ma);
+        //#endregion
 
-    //#endregion
+        mangTam.dangMoNut = false;
+    });
+}
 
-    //#region Cập nhật giá trị cây
-    switch (loai) {
-        //Các loại nút ở trên cây
-        case 'cay-he-thong':
-            $_Khung.attr({
-                'data-ma': '',
-                'data-pham-vi': 'PhamVi'
-            });
-            break;
-        case 'cay-pham-vi':
-        case 'cay-con-pham-vi':
-        case 'ds-pham-vi':
-            $_Khung.attr({
-                'data-ma': '0',
-                'data-pham-vi': ma
-            });
-            break;
-        case 'cay-nut':
-        case 'cay-con-nut':
-        case 'ds-nut':
-            $_Khung.attr('data-ma', ma);
-            break;
-        default:
-            return;
-    }
-    //#endregion
-
-    mangTam['dangMoNut'] = false;
+function moNut($obj) {
 };
 
 //#endregion
@@ -215,70 +158,70 @@ function moNut($obj) {
 
 function khoiTaoNutTao($nutTao) {
     $nutTao.on('click', function () {
-        moKhungTao();
-    })
-}
+        moPopupFull({
+            url: '/ChuDe/_Form',
+            data: function () {
+                return {
+                    ma: $_Khung.attr('data-ma')
+                };
+            },
+            width: '450px',
+            thanhCong: function ($khung) {
+                var $form = $khung.find('#tao_chu_de_form');
 
-function moKhungTao() {
-    moPopupFull({
-        url: '/ChuDe/_Form',
-        data: function () {
-            return {
-                phamVi: $_Khung.attr('data-pham-vi'),
-                maChuDeCha: $_Khung.attr('data-ma')
-            };
-        },
-        width: '450px',
-        thanhCong: function ($khung) {
-            var $form = $khung.find('#tao_chu_de_form');
+                khoiTaoLCTForm($form, {
+                    submit: function () {
+                        $.ajax({
+                            url: '/ChuDe/XuLyThem',
+                            type: 'POST',
+                            data: $form.serialize(),
+                            dataType: 'JSON'
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $khung.tat();
+                                var ma = $_Khung.attr('data-ma');
+                                
+                                if (ma in mangNut)
+                                {
+                                    mangNut[ma].cay += data.ketQua.cayCon;
+                                    mangNut[ma].danhSach += data.ketQua.danhSach_Item;
+                                }
+                                else {
+                                    mangNut[ma] = {
+                                        cay: data.ketQua.cayCon,
+                                        danhSach: data.ketQua.danhSach_Item
+                                    };
+                                }
 
-            khoiTaoLCTForm($form, {
-                submit: function () {
-                    $.ajax({
-                        url: '/ChuDe/XuLyThem',
-                        type: 'POST',
-                        data: $form.serialize(),
-                        dataType: 'JSON'
-                    }).done(function (data) {
-                        if (data.trangThai == 0) {
-                            $khung.tat();
-                            var ma = $_Khung.attr('data-ma');
-                            if (ma === '0') {
-                                ma = $_Khung.attr('data-pham-vi');
+                                var $cayCon_Item = $(data.ketQua.cayCon),
+                                    $danhSach_Item = $(data.ketQua.danhSach_Item);
+
+                                khoiTaoCayCon_Item($cayCon_Item);
+                                khoiTaoDanhSach_Item($danhSach_Item);
+
+                                $_Cay.find(':last-child [data-doi-tuong="danh-sach-muc"]').append($cayCon_Item);
+                                $_DanhSach.prepend($danhSach_Item);
                             }
-
-                            mangNut[ma].cay += data.ketQua.cayCon_Item;
-                            mangNut[ma].danhSach += data.ketQua.danhSach_Item;
-
-                            var $cayCon_Item = $(data.ketQua.cayCon_Item),
-                                $danhSach_Item = $(data.ketQua.danhSach_Item);
-
-                            khoiTaoCayCon_Item($cayCon_Item);
-                            khoiTaoDanhSach_Item($danhSach_Item);
-
-                            $_Cay.find(':last-child [data-doi-tuong="danh-sach-muc"]').append($cayCon_Item);
-                            $_DanhSach.prepend($danhSach_Item);
-                        }
-                        else {
+                            else {
+                                moPopup({
+                                    tieuDe: 'Thông báo',
+                                    thongBao: 'Tạo chủ đề thất bại',
+                                    bieuTuong: 'nguy-hiem'
+                                })
+                            }
+                        }).fail(function () {
                             moPopup({
                                 tieuDe: 'Thông báo',
                                 thongBao: 'Tạo chủ đề thất bại',
                                 bieuTuong: 'nguy-hiem'
                             })
-                        }
-                    }).fail(function () {
-                        moPopup({
-                            tieuDe: 'Thông báo',
-                            thongBao: 'Tạo chủ đề thất bại',
-                            bieuTuong: 'nguy-hiem'
-                        })
-                    });
-                }
-            });
-        }
+                        });
+                    }
+                });
+            }
+        })
     })
 }
-
 //#endregion
 
 //#region Xử lý nút xóa

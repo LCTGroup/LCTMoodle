@@ -29,10 +29,6 @@ namespace BUSLayer
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (chuDe.hinhDaiDien == null)
-            {
-                loi.Add("Hình đại diện không được bỏ trống");
-            }
             #endregion
 
             if (loi.Count > 0)
@@ -52,26 +48,50 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua them(Dictionary<string, string> form)
+        public static void gan(ref ChuDeDTO chuDe, Form form)
         {
-            KetQua ketQua = TapTinBUS.chuyen("ChuDe_HinhDaiDien", layInt(form, "HinhDaiDien"));
-
-            if (ketQua.trangThai != 0)
+            if (chuDe == null)
             {
-                return ketQua;
+                chuDe = new ChuDeDTO();
             }
 
-            ChuDeDTO chuDe = new ChuDeDTO()
+            foreach (string key in form.Keys.ToArray())
             {
-                ten = layString(form, "Ten"),
-                moTa = layString(form, "MoTa"),
-                hinhDaiDien = ketQua.ketQua as TapTinDTO,
-                chuDeCha = layDTO<ChuDeDTO>(form, "ChuDeCha"),
-                phamVi = layString(form, "PhamVi"),
-                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?)
-            };
+                switch (key)
+                {
+                    case "Ten":
+                        chuDe.ten = form.layString(key);
+                        break;
+                    case "MoTa":
+                        chuDe.moTa = form.layString(key);
+                        break;
+                    case "HinhDaiDien":
+                        chuDe.hinhDaiDien = TapTinBUS.chuyen("ChuDe_HinhDaiDien", form.layInt(key)).ketQua as TapTinDTO;
+                        break;
+                    case "NguoiTao":
+                        chuDe.nguoiTao = form.layDTO<NguoiDungDTO>(key);
+                        break;
+                    case "Cha":
+                        chuDe.cha = form.layDTO<ChuDeDTO>(key);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
-            ketQua = kiemTra(chuDe);
+        public static KetQua them(Form form)
+        {
+            ChuDeDTO chuDe = new ChuDeDTO();
+
+            if (Session["NguoiDung"] != null)
+            {
+                form.Add("NguoiTao", Session["NguoiDung"].ToString());
+            }
+
+            gan(ref chuDe, form);
+
+            KetQua ketQua = kiemTra(chuDe);
 
             if (ketQua.trangThai != 0)
             {
@@ -81,57 +101,17 @@ namespace BUSLayer
             return ChuDeDAO.them(chuDe);
         }
 
-        public static KetQua layTheoMa(string phamVi, int ma)
+        public static KetQua layTheoMa(int ma)
         {
-            if (ma == 0)
+            return ChuDeDAO.layTheoMa(ma, new LienKet()
             {
-                return new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua = null
-                };
-            }
-            //Lấy chủ đề
-            KetQua ketQua = ChuDeDAO.layTheoMa(phamVi, ma);
-
-            if (ketQua.trangThai != 0)
-            {
-                return ketQua;
-            }
-
-            ChuDeDTO chuDe = ketQua.ketQua as ChuDeDTO;
-
-            layLienKet(ref chuDe);
-
-            return new KetQua()
-            {
-                trangThai = 0,
-                ketQua = chuDe
-            };
+                "Con"
+            });
         }
 
-        private static void layLienKet(ref ChuDeDTO chuDe)
+        public static KetQua layTheoMaCha(int maCha)
         {
-            KetQua ketQua;
-            //Lấy cha
-            if (chuDe.chuDeCha != null)
-            {
-                ketQua = ChuDeDAO.layTheoMa(chuDe.phamVi, chuDe.chuDeCha.ma);
-                if (ketQua.trangThai == 0)
-                {
-                    ChuDeDTO chuDeCha = ketQua.ketQua as ChuDeDTO;
-                    layLienKet(ref chuDeCha);
-
-                    chuDe.chuDeCha = chuDeCha;
-                }
-            }
-
-            //Lấy con
-            ketQua = ChuDeDAO.layTheoMaChuDeCha(chuDe.phamVi, chuDe.ma);
-            if (ketQua.trangThai == 0)
-            {
-                chuDe.danhSachChuDeCon = ketQua.ketQua as List<ChuDeDTO>;
-            }
+            return ChuDeDAO.layTheoMaCha(maCha);
         }
     }
 }

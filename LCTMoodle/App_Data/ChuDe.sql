@@ -8,9 +8,8 @@ CREATE TABLE dbo.ChuDe (
 	MoTa NVARCHAR(MAX) NOT NULL,
 	MaNguoiTao INT NOT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
-	PhamVi NVARCHAR(MAX) DEFAULT 'HeThong' NOT NULL,
-	MaChuDeCha INT DEFAULT 0 NOT NULL,
-	MaHinhDaiDien INT DEFAULT NULL
+	MaCha INT DEFAULT 0 NOT NULL,
+	MaHinhDaiDien INT
 );
 
 GO
@@ -19,14 +18,13 @@ ALTER PROC dbo.themChuDe (
 	@0 NVARCHAR(MAX), --Tên chủ đề
 	@1 NVARCHAR(MAX), --Mô tả chủ đề
 	@2 INT, --Mã người tạo
-	@3 NVARCHAR(MAX), --Phạm vi
-	@4 INT, --Mã chủ đề cha
-	@5 INT --Mã hình đại diện
+	@3 INT, --Mã chủ đề cha
+	@4 INT --Mã hình đại diện
 )
 AS
 BEGIN
-	INSERT INTO dbo.ChuDe (Ten, MoTa, MaNguoiTao, PhamVi, MaChuDeCha, MaHinhDaiDien)
-		VALUES (@0, @1, @2, @3, @4, @5);
+	INSERT INTO dbo.ChuDe (Ten, MoTa, MaNguoiTao, MaCha, MaHinhDaiDien)
+		VALUES (@0, @1, @2, @3, @4);
 
 	SELECT
 		Ma,
@@ -34,8 +32,7 @@ BEGIN
 		MoTa,
 		MaNguoiTao,
 		ThoiDiemTao,
-		PhamVi,
-		MaChuDeCha,
+		MaCha,
 		MaHinhDaiDien
 		FROM dbo.ChuDe
 		WHERE Ma = @@IDENTITY;
@@ -43,9 +40,8 @@ END
 
 GO
 --Lấy chủ đề theo mã chủ đề cha và phạm vi
-ALTER PROC dbo.layChuDeTheoMaChuDeCha (
-	@0 NVARCHAR(MAX), --Phạm vi
-	@1 INT --MaChuDeCha
+CREATE PROC dbo.layChuDeTheoMaCha (
+	@0 INT --MaCha
 )
 AS
 BEGIN
@@ -55,20 +51,17 @@ BEGIN
 		MoTa,
 		MaNguoiTao,
 		ThoiDiemTao,
-		PhamVi,
-		MaChuDeCha,
+		MaCha,
 		MaHinhDaiDien
 		FROM dbo.ChuDe
 		WHERE 
-			MaChuDeCha = @1 AND
-			PhamVi = @0
+			MaCha = @0
 END
 
 GO
 --Lấy chủ đề theo mã chủ đề
 ALTER PROC dbo.layChuDeTheoMa (
-	@0 NVARCHAR(MAX), --PhamVi
-	@1 INT --Ma
+	@0 INT --Ma
 )
 AS
 BEGIN
@@ -78,13 +71,10 @@ BEGIN
 		MoTa,
 		MaNguoiTao,
 		ThoiDiemTao,
-		PhamVi,
-		MaChuDeCha,
+		MaCha,
 		MaHinhDaiDien
 		FROM dbo.ChuDe
-		WHERE 
-			PhamVi = @0 AND
-			Ma = @1
+		WHERE Ma = @0
 END
 
 GO

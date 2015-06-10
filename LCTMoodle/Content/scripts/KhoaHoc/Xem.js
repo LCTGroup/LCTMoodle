@@ -239,7 +239,7 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
                     }
                 },
                 {
-                    ten: 'Không',
+                    ten: 'Không'
                 }
             ]
         });

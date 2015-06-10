@@ -1,9 +1,0 @@
-﻿@model List<Data.PhamVi>
-
-@if (Model != null)
-{
-    foreach (Data.PhamVi phamVi in Model)
-    {
-        @Html.Partial("~/Views/ChuDe/Khung/_DanhSach_PhamVi_Item.cshtml", phamVi)
-    }
-}

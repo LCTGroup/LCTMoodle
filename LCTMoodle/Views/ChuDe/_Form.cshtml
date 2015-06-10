@@ -1,10 +1,10 @@
-﻿<article class="hop hop-1-vien">
+﻿@model int
+<article class="hop hop-1-vien">
     <section class="tieu-de">
         Tạo chủ đề
     </section>
     <form id="tao_chu_de_form" class="noi-dung lct-form">
-        <input type="hidden" name="PhamVi" value="@ViewData["PhamVi"]" />
-        <input type="hidden" name="ChuDeCha" value="@ViewData["MaChuDeCha"]" />
+        <input type="hidden" name="Cha" value="@Model" />
         <ul>
             <li>
                 <section class="tieu-de">
@@ -38,7 +38,7 @@
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <input data-validate="bat-buoc" type="file" name="HinhDaiDien" />
+                        <input type="file" name="HinhDaiDien" />
                     </article>
                 </section>
             </li>

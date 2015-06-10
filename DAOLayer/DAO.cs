@@ -15,7 +15,7 @@ namespace DAOLayer
         where DTOClass : DTO
     {
         #region Xử lý truy vấn dữ liệu
-        static SqlConnection ketNoi = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["chuoiKetNoi_LCTMoodle"].ConnectionString);
+        static string chuoiKetNoi = System.Configuration.ConfigurationManager.ConnectionStrings["chuoiKetNoi_LCTMoodle"].ConnectionString;
 
         /// <summary>
         /// Thực thi stored procedure lấy về dòng đầu tiên
@@ -24,12 +24,10 @@ namespace DAOLayer
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
         protected static KetQua layDong(string tenStoredProcedure, object[] danhSachThamSo, LienKet lienKet = null)
         {
+            SqlConnection ketNoi = new SqlConnection(chuoiKetNoi);
             try
             {
-                if (ketNoi.State == ConnectionState.Closed)
-                {
-                    ketNoi.Open();
-                }
+                ketNoi.Open();
 
                 SqlCommand lenh = new SqlCommand(tenStoredProcedure, ketNoi);
                 lenh.CommandType = CommandType.StoredProcedure;
@@ -85,12 +83,10 @@ namespace DAOLayer
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
         protected static KetQua layDanhSachDong(string tenStoredProcedure, object[] danhSachThamSo, LienKet lienKet = null)
         {
+            SqlConnection ketNoi = new SqlConnection(chuoiKetNoi);
             try
             {
-                if (ketNoi.State == ConnectionState.Closed)
-                {
-                    ketNoi.Open();
-                }
+                ketNoi.Open();
 
                 SqlCommand lenh = new SqlCommand(tenStoredProcedure, ketNoi);
                 lenh.CommandType = CommandType.StoredProcedure;
@@ -150,12 +146,10 @@ namespace DAOLayer
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
         protected static KetQua khongTruyVan(string tenStoredProcedure, object[] danhSachThamSo)
         {
+            SqlConnection ketNoi = new SqlConnection(chuoiKetNoi);
             try
             {
-                if (ketNoi.State == ConnectionState.Closed)
-                {
-                    ketNoi.Open();
-                }
+                ketNoi.Open();
 
                 SqlCommand lenh = new SqlCommand(tenStoredProcedure, ketNoi);
                 lenh.CommandType = CommandType.StoredProcedure;
@@ -200,12 +194,10 @@ namespace DAOLayer
         /// <param name="danhSachThamSo">Danh sách tham số (Cần truyền theo đúng thự tự của storedProcedure)</param>
         protected static KetQua layGiaTri<T>(string tenStoredProcedure, object[] danhSachThamSo)
         {
+            SqlConnection ketNoi = new SqlConnection(chuoiKetNoi);
             try
             {
-                if (ketNoi.State == ConnectionState.Closed)
-                {
-                    ketNoi.Open();
-                }
+                ketNoi.Open();
 
                 SqlCommand lenh = new SqlCommand(tenStoredProcedure, ketNoi);
                 lenh.CommandType = CommandType.StoredProcedure;
