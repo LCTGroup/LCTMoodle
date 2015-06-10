@@ -47,7 +47,7 @@ namespace LCTMoodle
                 {
                     { "TenTaiKhoan", ckNguoiDung["TenTaiKhoan"] },
                     { "MatKhau", ckNguoiDung["MatKhau"] },
-                    { "GhiNho", "" }
+                    { "GhiNho", "1" }
                 };
 
                 KetQua ketQua = NguoiDungBUS.xuLyDangNhap(formCookie);

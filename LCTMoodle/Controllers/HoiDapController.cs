@@ -23,8 +23,15 @@ namespace LCTMoodle.Controllers
             return View();
         }
         public ActionResult XemCauHoi(int ma)
-        {            
-            return View(CauHoiBUS.layCauHoi(ma).ketQua as CauHoiDTO);
+        {
+            KetQua ketQua = CauHoiBUS.layCauHoi(ma);
+
+            if (ketQua.trangThai != 0)
+            {
+                return RedirectToAction("Index", "TrangChu");
+            }
+
+            return View(ketQua.ketQua);
         }        
         
         [HttpPost]
@@ -38,7 +45,16 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyThemTraLoi(FormCollection form)
         {
-            return Json(TraLoiBUS.them(chuyenDuLieuForm(form)).ketQua);
+            KetQua ketQua = TraLoiBUS.them(chuyenDuLieuForm(form));
+            if (ketQua.trangThai == 0) 
+            {
+                return Json(new KetQua() 
+                { 
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Item_TraLoi.cshtml", ketQua.ketQua)
+                });
+            }
+            return Json(ketQua);
         }
 	}
 }

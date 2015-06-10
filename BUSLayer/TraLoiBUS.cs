@@ -22,6 +22,10 @@ namespace BUSLayer
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
+            if (traLoi.nguoiTao == null)
+            {
+                loi.Add("Người dùng không được bỏ trống");
+            }
             #endregion
 
             if (loi.Count > 0)
@@ -52,14 +56,16 @@ namespace BUSLayer
             
             KetQua ketQua = TraLoiBUS.kiemTra(traLoi);
 
-            if (ketQua.trangThai != 3)
-                ketQua = TraLoiDAO.them(traLoi);
-            return ketQua;
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+            return TraLoiDAO.them(traLoi, new LienKet() { "NguoiTao" });
         }
 
-        public static KetQua layDanhSachTraLoiTheoCauHoi(int? maCauHoi)
+        public static KetQua layTheoMaCauHoi(int maCauHoi)
         {
-            return TraLoiDAO.layDanhSachTraLoiTheoCauHoi(maCauHoi, new LienKet() { "CauHoi", "NguoiTao" });
+            return TraLoiDAO.layTheoMaCauHoi(maCauHoi, new LienKet() { "NguoiTao" });
         }
 
         public static KetQua layTraLoiTheoMa(int ma)

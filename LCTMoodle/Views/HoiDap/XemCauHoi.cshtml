@@ -57,16 +57,18 @@
 
 <article class="hop">
     <section class="tieu-de">Danh sách trả lời</section>
-    <section class="noi-dung">
-        @{
-            DTOLayer.KetQua ketQuaTraLoi = BUSLayer.TraLoiBUS.layDanhSachTraLoiTheoCauHoi(Model.ma.Value);
-            if (ketQuaTraLoi.trangThai == 0)
+    <section class="noi-dung" id="danh_sach_tra_loi">
+        @{            
+            if (Model.danhSachTraLoi != null)
             {
-                @Html.Partial("~/Views/HoiDap/_itemTraLoi.cshtml", ketQuaTraLoi.ketQua as List<DTOLayer.TraLoiDTO>)
+                foreach(var traLoi in Model.danhSachTraLoi)
+                {                                      
+                    @Html.Partial("~/Views/HoiDap/_Item_TraLoi.cshtml", traLoi);
+                }
             }
             else
             {
-                @Html.Raw("<p align=\"center\">Chưa có trả lời</p>")
+                @:<p align="center">Chưa có trả lời</p>
             }
         }
                    

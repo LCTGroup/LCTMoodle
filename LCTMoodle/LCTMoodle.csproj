@@ -394,7 +394,7 @@
     <Content Include="Views\HoiDap\XemCauHoi.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Item.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Khung.cshtml" />
-    <Content Include="Views\HoiDap\_itemTraLoi.cshtml" />
+    <Content Include="Views\HoiDap\_Item_TraLoi.cshtml" />
     <Content Include="Views\KhoaHoc\_Khung.cshtml" />
     <Content Include="Views\BaiTapNop\_DanhSachNop.cshtml" />
     <Content Include="Views\ChuDe\Khung\_DanhSach_Item.cshtml" />

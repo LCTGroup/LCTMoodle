@@ -42,7 +42,12 @@ namespace DAOLayer
                         break;
                     default:
                         break;
-                }
+                }                
+            }
+
+            if (LienKet.co(lienKet, "TraLoi"))
+            {
+                cauHoi.danhSachTraLoi = layDanhSachDTO<TraLoiDTO>(TraLoiDAO.layTheoMaCauHoi(cauHoi.ma, lienKet["TraLoi"]));
             }
 
             return cauHoi;

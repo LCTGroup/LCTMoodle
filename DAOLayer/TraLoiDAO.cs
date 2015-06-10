@@ -60,26 +60,25 @@ namespace DAOLayer
 
             return traLoi;
         }  
-        public static KetQua them(TraLoiDTO traLoi)
+        public static KetQua them(TraLoiDTO traLoi, LienKet lienKet = null)
         {
-            return layGiaTri<int>
+            return layDong
             (
                 "themTraLoi",
                 new object[] 
                 {
                     traLoi.noiDung,
-                    traLoi.thoiDiemTao,
-                    traLoi.duyet,
                     layMa(traLoi.nguoiTao),
                     layMa(traLoi.cauHoi)
-                }
+                },
+                lienKet
             );
         }
-        public static KetQua layDanhSachTraLoiTheoCauHoi (int? maCauHoi, LienKet lienKet = null)
+        public static KetQua layTheoMaCauHoi (int? maCauHoi, LienKet lienKet = null)
         {
             return layDanhSachDong
             (
-                "layDanhSachTraLoiTheoCauHoi",
+                "layDanhSachTraLoiTheoMaCauHoi",
                 new object[] 
                 {
                     maCauHoi

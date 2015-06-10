@@ -19,9 +19,22 @@ function XuLyTraLoiCauHoi($form) {
                 data: $form.serialize(),
                 asyne: false
             }).done(function (data) {
-                alert('asd');
+                if (data.trangThai == 0) {
+                    $('#danh_sach_tra_loi').append(data.ketQua);
+                }
+                else {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Thêm trả lời thất bại',
+                        bieuTuong: 'nguy-hiem'
+                    });
+                }
             }).fail(function () {
-                alert('fail');
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Thêm trả lời thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
             })
         }
     });
