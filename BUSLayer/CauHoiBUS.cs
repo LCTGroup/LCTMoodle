@@ -65,7 +65,14 @@ namespace BUSLayer
         {            
             return CauHoiDAO.layTheoMa(ma, new LienKet()
             {
-                "NguoiTao"
+                "NguoiTao", 
+                { 
+                    "TraLoi", 
+                    new LienKet()
+                    {
+                        "NguoiTao"
+                    }
+                }
             });
         }
 

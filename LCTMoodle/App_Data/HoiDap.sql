@@ -66,21 +66,27 @@ GO
 CREATE PROC dbo.themTraLoi
 (
 	@0 NVARCHAR(MAX), --Nội dung
-	@1 DATETIME, --Thời điểm tạo
-	@2 BIT, --Duyệt
-	@3 INT, --Mã người tạo
-	@4 INT --Mã câu hỏi
+	@1 INT, --Mã người tạo
+	@2 INT --Mã câu hỏi
 )
 AS
 BEGIN
-	INSERT INTO dbo.TraLoi(NoiDung, ThoiDiemTao, Duyet, MaNguoiTao, MaCauHoi) VALUES (@0, @1, @2, @3, @4)
+	INSERT INTO dbo.TraLoi(NoiDung, MaNguoiTao, MaCauHoi) VALUES (@0, @1, @2)
 
-	SELECT @@IDENTITY Ma
+	SELECT
+		Ma,
+		NoiDung,
+		ThoiDiemTao,
+		Duyet,
+		MaNguoiTao,
+		MaCauHoi
+	FROM dbo.TraLoi
+	WHERE Ma = @@Identity
 END
 
 GO
 --Lấy toàn bộ trả lời của câu hỏi
-CREATE PROC dbo.layDanhSachTraLoiTheoCauHoi
+CREATE PROC dbo.layDanhSachTraLoiTheoMaCauHoi
 (
 	@0 INT --Mã câu hỏi	
 )

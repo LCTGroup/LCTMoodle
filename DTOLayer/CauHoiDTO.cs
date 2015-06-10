@@ -11,6 +11,7 @@ namespace DTOLayer
         public string tieuDe;
         public string noiDung;
         public DateTime? thoiDiemTao;
-        public NguoiDungDTO nguoiTao; 
+        public NguoiDungDTO nguoiTao;
+        public List<TraLoiDTO> danhSachTraLoi;
     }
 }
