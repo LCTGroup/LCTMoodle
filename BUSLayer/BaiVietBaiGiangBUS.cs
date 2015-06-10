@@ -72,7 +72,6 @@ namespace BUSLayer
                         break;
                     case "TapTin":
                         baiViet.tapTin = TapTinBUS.chuyen("BaiVietBaiGiang_TapTin", form.layInt(key)).ketQua as TapTinDTO;
-                        form[key] = baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString();
                         break;
                     case "ThoiDiemTao":
                         baiViet.thoiDiemTao = form.layDateTime(key);
@@ -163,7 +162,7 @@ namespace BUSLayer
 
         public static KetQua capNhatTheoMa(Form form)
         {
-            int? maBaiViet = layInt(form, "Ma");
+            int? maBaiViet = form.layInt("Ma");
             if (!maBaiViet.HasValue)
             {
                 return new KetQua()

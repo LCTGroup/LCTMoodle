@@ -42,12 +42,12 @@
                         @if (Model != null && Model.thoiDiemHetHan.HasValue)
                         {
                             <input data-chuc-nang="tat-mo" data-mo="thoi-han" type="checkbox" name="CoThoiDiemHetHan" data-text="Bài tập có thời hạn" data-mac-dinh />
-                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="thoi-gian-lich" name="ThoiDiemHetHan" data-thoi-gian-placeholder="Chọn giờ" data-lich-placeholder="Chọn ngày" data-lich-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("d/M/yyyy")" data-thoi-gian-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("H:mm")" />
+                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="ngay-gio" name="ThoiDiemHetHan" data-thoi-gian-placeholder="Chọn giờ" data-lich-placeholder="Chọn ngày" data-lich-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("d/M/yyyy")" data-thoi-gian-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("H:mm")" />
                         }
                         else
                         {
                             <input data-chuc-nang="tat-mo" data-mo="thoi-han" type="checkbox" name="CoThoiDiemHetHan" data-text="Bài tập có thời hạn" />
-                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="thoi-gian-lich" name="ThoiDiemHetHan" data-thoi-gian-placeholder="Chọn giờ" data-lich-placeholder="Chọn ngày" />
+                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="ngay-gio" name="ThoiDiemHetHan" data-thoi-gian-placeholder="Chọn giờ" data-lich-placeholder="Chọn ngày" />
                         }
                     </article>
                 </section>

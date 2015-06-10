@@ -565,8 +565,8 @@
 
 /*#region Thời gian */
 
-.lct-form input[data-input-type="thoi-gian"],
-.lct-form input[data-input-type="lich"] {
+.lct-form input[data-input-type="gio"],
+.lct-form input[data-input-type="ngay"] {
     border: none;
     line-height: 20px;
     padding: 5px 8px;
@@ -579,17 +579,17 @@
     cursor: pointer;
 }
 
-    .lct-form input[data-input-type="thoi-gian"][class^="loi-"],
-    .lct-form input[data-input-type="thoi-gian"][class*=" loi-"],
-    .lct-form input[data-input-type="lich"][class^="loi-"],
-    .lct-form input[data-input-type="lich"][class*=" loi-"] {
+    .lct-form input[data-input-type="gio"][class^="loi-"],
+    .lct-form input[data-input-type="gio"][class*=" loi-"],
+    .lct-form input[data-input-type="ngay"][class^="loi-"],
+    .lct-form input[data-input-type="ngay"][class*=" loi-"] {
         border-left-color: #e00;
     }
 
-    .lct-form input[data-input-type="thoi-gian"]:hover,
-    .lct-form input[data-input-type="lich"]:hover,
-    .lct-form input[data-input-type="thoi-gian"]:focus,
-    .lct-form input[data-input-type="lich"]:focus {
+    .lct-form input[data-input-type="gio"]:hover,
+    .lct-form input[data-input-type="ngay"]:hover,
+    .lct-form input[data-input-type="gio"]:focus,
+    .lct-form input[data-input-type="ngay"]:focus {
         border-left-color: #08c;
     }
 

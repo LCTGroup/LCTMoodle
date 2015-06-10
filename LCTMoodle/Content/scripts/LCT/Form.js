@@ -30,8 +30,8 @@ function khoiTaoLCTForm($form, thamSo) {
     khoiTaoGoiYInput_LCT($form);
 
     //Khởi tạo thời gian
-    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="thoi-gian"]'), 'thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
-    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="lich"]'), 'lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
+    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="gio"]'), 'thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
+    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="ngay"]'), 'lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
 
     //Xử lý lấy giá trị mặc định
     khoiTaoLCTFormMacDinh($form);
@@ -55,7 +55,7 @@ function khoiTaoNutMacDinh_LCT($form) {
         $chua = $(this).parent();
 
         // Text, thời gian
-        $chua.find('input[type="text"], textarea, input[data-input-type="thoi-gian"], input[data-input-type="lich"]').each(function () {
+        $chua.find('input[type="text"], textarea, input[data-input-type="gio"], input[data-input-type="ngay"]').each(function () {
             this.value = this.getAttribute('data-mac-dinh');
         });
         $chua.find('textarea[data-input-type="editor"]').each(function () {
@@ -137,7 +137,7 @@ function khoiTaoHienThiInput_LCT($form) {
         }
     });
 
-    $form.find('input[data-input-type="thoi-gian-lich"]').each(function () {
+    $form.find('input[data-input-type="ngay-gio"]').each(function () {
         var $phanTu = $(this);
 
         var thoiGianMacDinh = $phanTu.attr('data-thoi-gian-mac-dinh') || '',
@@ -535,7 +535,7 @@ function khoiTaoInputThoiGian_LCT($inputs, loai, idInput, hamKhoiTao, hamXuLyMac
 }
 
 function khoiTaoLCTFormMacDinh($form) {
-    $form.find('input[type="text"], textarea, input[data-input-type="thoi-gian"], input[data-input-type="lich"]').each(function () {
+    $form.find('input[type="text"], textarea, input[data-input-type="gio"], input[data-input-type="ngay"]').each(function () {
         this.value = this.getAttribute('data-mac-dinh');
     });
     $form.find('textarea[data-input-type="editor"]').each(function () {
@@ -1051,7 +1051,7 @@ function khoiTaoSubmit_LCT($form, thamSo) {
             CKEDITOR.instances[this.getAttribute('name')].updateElement();
         });
 
-        $form.find('input[data-input-type="thoi-gian-lich"]').each(function () {
+        $form.find('input[data-input-type="ngay-gio"]').each(function () {
             var $phanTu = $(this),
                 $thoiGian = $phanTu.next(),
                 $lich = $thoiGian.next();
