@@ -8,21 +8,22 @@ using DAOLayer;
 using DTOLayer;
 using System.IO;
 using Data;
+using Helpers;
 
 namespace BUSLayer
 {
     public class TraLoiBUS : BUS
     {
-        public static KetQua kiemTra(TraLoiDTO traLoi)
+        public static KetQua kiemTra(TraLoiDTO traLoi, string[] truong = null, bool kiemTra = true)
         {
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (string.IsNullOrEmpty(traLoi.noiDung))
+            if (coKiemTra("NoiDung", truong, kiemTra) && string.IsNullOrEmpty(traLoi.noiDung))
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
-            if (traLoi.nguoiTao == null)
+            if (coKiemTra("MaNguoiTao", truong, kiemTra) && traLoi.nguoiTao == null)
             {
                 loi.Add("Người dùng không được bỏ trống");
             }
@@ -44,16 +45,61 @@ namespace BUSLayer
                 };
             }
         }
-
-        public static KetQua them(Dictionary<string, string> form)
+        
+        public static void gan(ref TraLoiDTO traLoi, Form form)
         {
-            TraLoiDTO traLoi = new TraLoiDTO()
+            if (traLoi == null)
             {
-                cauHoi = layDTO<CauHoiDTO>(layInt(form, "CauHoi")),
-                noiDung = layString(form, "NoiDung"),
-                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?)
-            };
+                traLoi = new TraLoiDTO();
+            }
+
+            foreach (string key in form.Keys.ToArray())
+            {
+                switch (key)
+                {                    
+                    case "NoiDung":
+                        traLoi.noiDung = form.layString(key);
+                        break;
+                    case "MaNguoiTao":
+                        traLoi.nguoiTao = form.layDTO<NguoiDungDTO>(key);
+                        break;
+                    case "MaCauHoi":
+                        traLoi.cauHoi = form.layDTO<CauHoiDTO>(key);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public static BangCapNhat layBangCapNhat(TraLoiDTO traLoi, string[] keys)
+        {
+            BangCapNhat bangCapNhat = new BangCapNhat();
+            foreach (string key in keys)
+            {
+                switch (key)
+                {
+                    case "NoiDung":
+                        bangCapNhat.Add("NoiDung", traLoi.noiDung, true);
+                        break;                    
+                    default:
+                        break;
+                }
+            }
+            return bangCapNhat;
+        }
+        
+        public static KetQua them(Form formTraLoi)
+        {
+            TraLoiDTO traLoi = new TraLoiDTO();
+
+            if (Session["NguoiDung"] != null)
+            {
+                formTraLoi.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+            }
             
+            gan(ref traLoi, formTraLoi);
+
             KetQua ketQua = TraLoiBUS.kiemTra(traLoi);
 
             if (ketQua.trangThai != 0)
