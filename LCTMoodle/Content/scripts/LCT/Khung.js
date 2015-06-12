@@ -114,6 +114,7 @@ function layPopupFull(thamSo) {
         $popupFull.hide();
         $(document).off('keydown.tat_popup');
         $body.removeClass('khong-scroll');
+        $(this).trigger('tat');
     };
 
     return $popupFull;

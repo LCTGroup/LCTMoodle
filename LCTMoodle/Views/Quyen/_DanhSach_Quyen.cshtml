@@ -1,0 +1,11 @@
+﻿@model List<DTOLayer.QuyenDTO>
+
+@if (Model != null)
+{
+    foreach(var quyen in Model)
+    {
+        <li data-doi-tuong="item-quyen" class="item input">
+            <input type="checkbox" value="@quyen.ma" data-text="@quyen.ten" />
+        </li>
+    }
+}

@@ -1,0 +1,233 @@
+﻿.khung-chua {
+
+}
+
+/*#region Khung trên */
+
+.khung-chua .khung-tren {
+    display: flex;
+}
+
+/*#region Khung nhóm */
+
+.khung-chua .khung-tren .khung-nhom {
+    min-width: 250px;
+    max-width: 250px;
+    margin-right: 5px;
+}
+
+    .khung-chua .khung-tren .khung-nhom .khung-tim-them {
+        margin-bottom: 5px;
+        display: flex;
+    }
+
+        .khung-chua .khung-tren .khung-nhom .khung-tim-them .tim {
+            width: 100%;
+        }
+
+        .khung-chua .khung-tren .khung-nhom .khung-tim-them .them {
+            min-width: 32px;
+            max-width: 32px;
+            margin-left: 5px;
+        }
+
+            .khung-chua .khung-tren .khung-nhom .khung-tim-them .them a {
+                display: flex;
+                width: 30px;
+                height: 30px;
+                margin: 0;
+                padding: 0;
+                align-items: center;
+            }
+
+                .khung-chua .khung-tren .khung-nhom .khung-tim-them .them i {
+                    display: block;
+                    width: 24px;
+                    height: 24px;
+                    margin: 0 auto;
+                    background: url('/Quyen.png/Quyen') 0px -24px;
+                    opacity: 0.5;
+                    transition: 0.5s;
+                }
+
+                .khung-chua .khung-tren .khung-nhom .khung-tim-them .them a:hover i {
+                    opacity: 0.7;
+                }
+
+    .khung-chua .khung-tren .khung-nhom .khung-danh-sach {
+        height: 250px;
+        background-color: #fafafa;
+        border: 1px solid #ddd;
+        overflow-y: auto;
+    }
+
+        .khung-chua .khung-tren .khung-nhom .danh-sach {
+
+        }
+        
+        .khung-chua .khung-tren .khung-nhom .item {
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.5s;
+            position: relative;
+        }
+
+            .khung-chua .khung-tren .khung-nhom .item:nth-last-child(odd) {
+                background-color: #fff;
+            }
+
+            .khung-chua .khung-tren .khung-nhom .item > a {
+                display: block;
+                padding: 5px;
+                border-left: 3px solid #eee;
+                transition: border-left-color 0.5s;
+                color: #333;
+            }
+
+                .khung-chua .khung-tren .khung-nhom .item > a:hover {
+                    text-decoration: none;
+                    border-left-color: #08c;
+                }
+                
+                .khung-chua .khung-tren .khung-nhom .item.chon > a {
+                    border-left-color: #08c;
+                    font-weight: bold;
+                }
+
+/*#endregion */
+
+/*#region Khung người */
+
+.khung-chua .khung-tren .khung-nguoi {
+    width: 100%;
+}
+
+    .khung-chua .khung-tren .khung-nguoi .khung-tim {
+        margin-bottom: 5px;
+    }
+
+    .khung-chua .khung-tren .khung-nguoi .khung-danh-sach {
+        height: 250px;
+        background-color: #fafafa;
+        border: 1px solid #ddd;
+        overflow-y: auto;
+    }
+
+        .khung-chua .khung-tren .khung-nguoi .danh-sach {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .khung-chua .khung-tren .khung-nguoi .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100px;
+            margin: 5px;
+            padding: 5px;
+            border: 1px solid #eee;
+            background-color: #fff;
+        }
+
+            .khung-chua .khung-tren .khung-nguoi .item img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .khung-chua .khung-tren .khung-nguoi .item a {
+                font-weight: bold;
+                font-size: 11px;
+                color: #333;
+            }
+
+/*#endregion */
+
+/*#endregion */
+
+/*#region Khung dưới */
+
+.khung-chua .khung-duoi {
+    margin-top: 5px;
+}
+
+    .khung-chua .khung-duoi .khung-pham-vi {
+        margin-bottom: -1px;
+    }
+
+        .khung-chua .khung-duoi .khung-pham-vi .danh-sach {
+            display: flex;
+        }
+
+        .khung-chua .khung-duoi .khung-pham-vi .item {
+            margin-right: 4px;
+            border: 1px solid #eee;
+            border-bottom: 0;
+            transition: 0.5s;
+            background-color: #fafafa;
+        }
+        
+            .khung-chua .khung-duoi .khung-pham-vi .item.chon,
+            .khung-chua .khung-duoi .khung-pham-vi .item:hover {
+                border-color: #ddd;
+                background-color: #fff;
+            }
+
+            .khung-chua .khung-duoi .khung-pham-vi .item a {
+                padding: 5px 10px;
+                display: block;
+                color: #555;
+                transition: 0.5s;
+                border-bottom: 1px solid #ddd;
+            }
+
+                .khung-chua .khung-duoi .khung-pham-vi .item a:hover {
+                    text-decoration: none;
+                    color: #333;
+                }
+
+                .khung-chua .khung-duoi .khung-pham-vi .item.chon a {
+                    border-bottom-color: #fff;
+                    color: #333;
+                }
+
+    .khung-chua .khung-duoi .khung-quyen {
+        background-color: #fff;
+        width: calc(100% - 2px);
+        border: 1px solid #ddd;
+    }
+
+        .khung-chua .khung-duoi .khung-quyen .mo-ta {
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .khung-chua .khung-duoi .khung-quyen .danh-sach {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #fcfcfc;
+        }
+
+        .khung-chua .khung-duoi .khung-quyen .item {
+            border: 0;
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #eee;
+            width: calc(50% - 1px);
+            transition: background-color 0.5s;
+            background-color: #fcfcfc;.
+        }
+
+            .khung-chua .khung-duoi .khung-quyen .item:hover {
+                background-color: #fafafa;
+            }
+
+            .khung-chua .khung-duoi .khung-quyen .item:nth-child(2n) {
+                border-right: 0;
+                width: 50%;
+            }
+        
+            .khung-chua .khung-duoi .khung-quyen .item:nth-last-child(1),
+            .khung-chua .khung-duoi .khung-quyen .item:nth-last-child(2) {
+                border-bottom: 0;
+            }
+
+/*#endregion */
