@@ -115,10 +115,5 @@ namespace BUSLayer
         {
             return NhomNguoiDungDAO.xoaTheoMa(phamVi, ma);
         }
-
-        public static KetQua capNhatQuyenTheoMaNhomNguoiDungVaMaQuyen(string phamVi, int maNhomNguoiDung, int maQuyen, bool co)
-        {
-            return NhomNguoiDungDAO.capNhatQuyenTheoMaNhomNguoiDungVaMaQuyen(phamVi, maNhomNguoiDung, maQuyen, co);
-        }
     }
 }

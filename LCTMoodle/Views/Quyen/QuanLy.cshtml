@@ -44,16 +44,17 @@
                 <section class="khung-nguoi">
                     <section class="khung-tim lct-form">
                         <article class="input">
-                            <input type="text" placeholder="Tìm người dùng" />
+                            <input id="tim_nguoi_input" type="text" placeholder="Tìm người dùng" />
                         </article>
                     </section>
                     <section class="khung-danh-sach">
-                        <ul class="danh-sach">
+                        <ul id="danh_sach_nguoi" class="danh-sach">
                             <li class="item">
                                 <img src="/boy.png/" alt="Alternate Text" />
                                 <a href="#">Lê Bình Chiêu</a>
                             </li>
                         </ul>
+                        <section>Không có người dùng</section>
                     </section>
                 </section>
             </section>
@@ -79,6 +80,7 @@
                 </section>
                 <section class="khung-quyen">
                     <section id="mo_ta_pham_vi" class="mo-ta">
+                        Tùy chỉnh quyền cho nhóm
                     </section>
                     <ul id="danh_sach_quyen" class="danh-sach lct-form">                        
                         @Html.Partial("~/Views/Quyen/_DanhSach_Quyen.cshtml", danhSachQuyen)

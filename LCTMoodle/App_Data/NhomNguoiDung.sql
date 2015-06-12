@@ -99,8 +99,29 @@ CREATE PROC dbo.xoaNhomNguoiDungTheoMa (
 )
 AS
 BEGIN
-	EXEC ('
+	EXEC('
 		DELETE FROM dbo.NhomNguoiDung_' + @0 + '
+			WHERE Ma = ' + @1 + '
+	')
+END
+
+GO
+--Lấy theo mã
+CREATE PROC dbo.layNhomNguoiDungTheoMa (
+	@0 NVARCHAR(MAX), --PhamVi
+	@1 INT --Ma
+)
+AS
+BEGIN
+	EXEC('
+		SELECT TOP 1
+			Ma,
+			Ten,
+			MoTa,
+			N''' + @0 + ''' PhamVi,
+			MaDoiTuong,
+			MaNguoiTao
+			FROM dbo.NhomNguoiDung_' + @0 + '
 			WHERE Ma = ' + @1 + '
 	')
 END

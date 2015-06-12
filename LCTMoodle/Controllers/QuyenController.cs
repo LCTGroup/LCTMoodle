@@ -91,16 +91,16 @@ namespace LCTMoodle.Controllers
             {
                 var danhSachQuyenNhom = new Dictionary<string, string>();
 
-                foreach (var quyen in ketQua.ketQua as List<NhomNguoiDung_QuyenDTO>)
+                foreach (var quyenNhom in ketQua.ketQua as List<NhomNguoiDung_QuyenDTO>)
                 {
-                    string key = quyen.phamViQuyen + quyen.doiTuong.ma.Value.ToString();
+                    string key = quyenNhom.quyen.phamVi + quyenNhom.doiTuong.ma.Value.ToString();
 
                     if (!danhSachQuyenNhom.ContainsKey(key))
                     {
                         danhSachQuyenNhom.Add(key, "|");
                     }
 
-                    danhSachQuyenNhom[key] += quyen.maQuyen.Value.ToString() + "|";
+                    danhSachQuyenNhom[key] += quyenNhom.quyen.ma.Value.ToString() + "|";
                 }
 
                 return Json(new KetQua()
@@ -113,6 +113,68 @@ namespace LCTMoodle.Controllers
             {
                 return Json(ketQua, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public ActionResult _DanhSachNguoiDung_Tim(string tuKhoa, string phamVi, int maNhom)
+        {
+            KetQua ketQua = NhomNguoiDung_NguoiDungBUS.layTheoTuKhoa(tuKhoa, phamVi, maNhom);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "Quyen/_DanhSach_NguoiDung_Tim.cshtml", ketQua.ketQua)
+                }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyThemNguoiDung(string phamVi, int maNhom, int maNguoiDung)
+        {
+            KetQua ketQua = NhomNguoiDung_NguoiDungBUS.them(phamVi, maNhom, maNguoiDung);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua);
+            }
+
+            ketQua = NguoiDungBUS.layTheoMa(maNguoiDung);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua);
+            }
+
+            return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "Quyen/_Item_NguoiDung.cshtml", ketQua.ketQua)
+                });
+        }
+
+        [HttpPost]
+        public ActionResult XuLyXoaNguoiDung(string phamVi, int maNhom, int maNguoiDung)
+        {
+            return Json(NhomNguoiDung_NguoiDungBUS.xoaTheoMaNhomNguoiDungVaMaNguoiDung(phamVi, maNhom, maNguoiDung));
+        }
+
+        public ActionResult _DanhSachNguoiDung(string phamVi, int maNhom)
+        {
+            KetQua ketQua = NguoiDungBUS.layTheoMaNhomNguoiDung(phamVi, maNhom);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "Quyen/_DanhSach_NguoiDung.cshtml", ketQua.ketQua)
+                }, JsonRequestBehavior.AllowGet);
         }
 	}
 }

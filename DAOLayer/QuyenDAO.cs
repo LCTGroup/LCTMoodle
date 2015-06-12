@@ -50,5 +50,17 @@ namespace DAOLayer
                     }
                 );
         }
+
+        public static KetQua layTheoMa(int? ma)
+        {
+            return layDong
+                (
+                    "layQuyenTheoMa",
+                    new object[]
+                    {
+                        ma
+                    }
+                );
+        }
     }
 }

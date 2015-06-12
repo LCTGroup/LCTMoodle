@@ -53,10 +53,8 @@ BEGIN
 		SELECT 
 			MaQuyen,
 			MaDoiTuong,
-			PhamVi PhamViQuyen
+			''' + @0 + ''' PhamViNhomNguoiDung
 			FROM dbo.NhomNguoiDung_' + @0 + '_Quyen NNQ_Q
-				INNER JOIN dbo.Quyen Q
-					ON NNQ_Q.MaQuyen = Q.Ma
 			WHERE MaNhomNguoiDung = ' + @1 + '
 	')
 END

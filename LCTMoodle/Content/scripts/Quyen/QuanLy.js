@@ -1,20 +1,32 @@
 ﻿var
+    _PhamViQuanLy = 'HT',
     $_DanhSachQuyen,
     $_DanhSachNhom,
     $_MoTaPhamVi,
-    _MangHtmlQuyen = {}, //Xác định = Mã phạm vi (HT, CD, ...)
-    _PhamViHienTai, //HT, CD,...
-    _NhomHienTai, //Mã nhóm hiện tại
-    _MangQuyenNhom = {}, //Mảng chứa danh sách quyền của nhóm { "MaNhom", { "PhamViMa", "ChuoiMaQuyen |1|2|3|" } }
-    _DoiTuongHienTai; //Quyền hiện tại (Ma, Global = 0)
+    $_DanhSachNguoi,
+    //Xác định = Mã phạm vi (HT, CD, ...)
+    _MangHtmlQuyen = {},
+    //Xác định = Mã nhóm (1, 2, 5, ...)
+    _MangHtmlNguoi = {},
+    //HT, CD,...
+    _PhamViHienTai, 
+    //Mã nhóm hiện tại
+    _NhomHienTai, 
+    //Mảng chứa danh sách quyền của nhóm { "MaNhom", { "PhamViMa", "ChuoiMaQuyen |1|2|3|" } }
+    _MangQuyenNhom = {}, 
+    //Quyền hiện tại (Ma, Global = 0)
+    _DoiTuongHienTai;
 
 $(function () {
     $_DanhSachQuyen = $('#danh_sach_quyen');
     $_DanhSachNhom = $('#danh_sach_nhom');
     $_MoTaPhamVi = $('#mo_ta_pham_vi');
+    $_DanhSachNguoi = $('#danh_sach_nguoi');
     _PhamViHienTai = 'HT';
     _DoiTuongHienTai = '0';
     _MangHtmlQuyen[_PhamViHienTai] = $_DanhSachQuyen.html();
+
+    khoiTaoTimKiemNguoiDung($('#tim_nguoi_input'));
 
     khoiTaoNutChonPhamVi($('[data-chuc-nang="chon-pham-vi"]'));
     khoiTaoNutThemNhom($('[data-chuc-nang="them-nhom"]'));
@@ -22,6 +34,46 @@ $(function () {
     khoiTaoItem_Nhom($_DanhSachNhom.find('[data-doi-tuong="item-nhom"]'));
     khoiTaoItem_Quyen($_DanhSachQuyen.find('[data-doi-tuong="item-quyen"]'));
 });
+
+//#region Khởi tạo chức năng
+
+function khoiTaoTimKiemNguoiDung($inputs) {
+    $inputs.on('keyup', function () {
+        var $input = $(this);
+
+        var maTam = 'tim_nguoi_';
+
+        if (mangTam[maTam + 'gt'] == $input.val()) {
+            return;
+        }
+
+        mangTam[maTam + 'td'] = true;
+        clearTimeout(mangTam[$input + 'to']);
+        mangTam[$input + 'to'] = setTimeout(function () {
+            mangTam[$input + 'gt'] = $input.val();
+
+            $.ajax({
+                url: '/Quyen/_DanhSachNguoiDung_Tim',
+                data: { tuKhoa: $input.val(), phamVi: _PhamViHienTai, maNhom: _NhomHienTai },
+                dataType: 'JSON'
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    var $items = $(data.ketQua);
+
+                    khoiTaoItem_NguoiDung($items)
+                    $_DanhSachNguoi.html($items);
+                }
+                else {
+                    $_DanhSachNguoi.html('');
+                }
+            }).fail(function () {
+                $_DanhSachNguoi.html('');
+            });
+        }, 200)
+    })
+}
+
+//#endregion
 
 //#region Khởi tạo nút
 
@@ -232,7 +284,6 @@ function khoiTaoItem_Quyen($items) {
 function khoiTaoItem_Nhom($items) {
     khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'), true);
 
-    //Xóa nhóm
     $items.find('[data-chuc-nang="xoa-nhom"]').on('click', function () {
         $item = $(this).closest('[data-doi-tuong="item-nhom"]');
 
@@ -285,7 +336,7 @@ function khoiTaoItem_Nhom($items) {
         if (!(_NhomHienTai in _MangQuyenNhom)) {
             $.ajax({
                 url: '/Quyen/XulyLayQuyenNhom',
-                data: { phamVi: 'HT', maNhom: _NhomHienTai },
+                data: { phamVi: _PhamViQuanLy, maNhom: _NhomHienTai },
                 dataType: 'JSON',
                 async: false
             }).done(function (data) {
@@ -311,7 +362,123 @@ function khoiTaoItem_Nhom($items) {
             });
         }
 
+        if (!(_NhomHienTai in _MangHtmlNguoi)) {
+            $.ajax({
+                url: '/Quyen/_DanhSachNguoiDung',
+                data: { phamVi: _PhamViQuanLy, maNhom: _NhomHienTai },
+                dataType: 'JSON',
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    var $items = $(data.ketQua);
+
+                    khoiTaoItem_NguoiDung($items);
+
+                    _MangHtmlNguoi[_NhomHienTai] = data.ketQua;
+                    $_DanhSachNguoi.html($items);
+                }
+                else if (data.trangThai == 1) {
+                    _MangHtmlNguoi[_NhomHienTai] = '';
+                    $_DanhSachNguoi.html('');
+                }
+                else {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Lấy danh sách người dùng thất bại',
+                        bieuTuong: 'nguy-hiem'
+                    });
+                }
+            }).fail(function () {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Lấy danh sách người dùng thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
+            })
+        }
+        else {
+            var $items = $(_MangHtmlNguoi[_NhomHienTai]);
+            khoiTaoItem_NguoiDung($items);
+            $_DanhSachNguoi.html($items);
+        }
+
         capNhatDanhSachQuyen();
+    });
+}
+
+function khoiTaoItem_NguoiDung($items) {
+    khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'));
+
+    $items.find('[data-chuc-nang="them-vao-nhom"]').on('click', function () {
+        var $item = $(this).closest('[data-doi-tuong="item-nguoi-dung"]');
+
+        $.ajax({
+            url: '/Quyen/XuLyThemNguoiDung',
+            type: 'POST',
+            data: {
+                phamVi: _PhamViQuanLy,
+                maNhom: _NhomHienTai,
+                maNguoiDung: $item.attr('data-ma')
+            },
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                var $newItem = $(data.ketQua);
+
+                khoiTaoItem_NguoiDung($newItem);
+                $item.replaceWith($newItem);
+
+                _MangHtmlNguoi[_NhomHienTai] += data.ketQua;
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Thêm người dùng vào nhóm thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
+            }
+        }).fail(function () {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Thêm người dùng vào nhóm thất bại',
+                bieuTuong: 'nguy-hiem'
+            });
+        })
+    });
+
+    $items.find('[data-chuc-nang="xoa-khoi-nhom"]').on('click', function () {
+        var $item = $(this).closest('[data-doi-tuong="item-nguoi-dung"]');
+        var ma = $item.attr('data-ma');
+        $.ajax({
+            url: '/Quyen/XuLyXoaNguoiDung',
+            type: 'POST',
+            data: {
+                phamVi: _PhamViQuanLy,
+                maNhom: _NhomHienTai,
+                maNguoiDung: ma
+            },
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                $item.remove();
+
+                var $tam = $('<fake></fake>').html(_MangHtmlNguoi[_NhomHienTai]);
+                $tam.children('[data-ma="' + ma + '"]').remove();
+                _MangHtmlNguoi[_NhomHienTai] = $tam.html();
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Xóa người dùng khỏi nhóm thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
+            }
+        }).fail(function () {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Xóa người dùng khỏi nhóm thất bại',
+                bieuTuong: 'nguy-hiem'
+            });
+        })
     });
 }
 

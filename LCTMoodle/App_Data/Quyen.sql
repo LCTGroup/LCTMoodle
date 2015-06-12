@@ -26,3 +26,20 @@ BEGIN
 		FROM dbo.Quyen
 		WHERE PhamVi = @0
 END
+
+GO
+--Lấy theo mã
+CREATE PROC dbo.layQuyenTheoMa (
+	@0 INT --Mã
+)
+AS
+BEGIN
+	SELECT TOP 1
+		Ma,
+		Ten,
+		MoTa,
+		GiaTri,
+		PhamVi
+		FROM dbo.Quyen
+		WHERE Ma = @0
+END

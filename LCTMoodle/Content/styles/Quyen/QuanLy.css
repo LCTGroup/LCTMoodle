@@ -118,6 +118,21 @@
             justify-content: space-around;
         }
 
+            .khung-chua .khung-tren .khung-nguoi .danh-sach + * {
+                display: none;
+                margin: 10px;
+                text-align: center;
+                background-color: #fff;
+                border: 1px dashed #eee;
+                padding: 10px;
+                font-weight: bold;
+                color: #555;
+            }
+
+            .khung-chua .khung-tren .khung-nguoi .danh-sach:empty + * {
+                display: block;
+            }
+
         .khung-chua .khung-tren .khung-nguoi .item {
             display: flex;
             flex-direction: column;
@@ -127,14 +142,40 @@
             padding: 5px;
             border: 1px solid #eee;
             background-color: #fff;
+            position: relative;
         }
+
+            .khung-chua .khung-tren .khung-nguoi .item.ngoai-nhom {
+                opacity: 0.8;
+                transition: 0.5s;
+            }
+
+                .khung-chua .khung-tren .khung-nguoi .item.ngoai-nhom:hover {
+                    opacity: 1;
+                }
+
+            .khung-chua .khung-tren .khung-nguoi .item:after {
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 3px;
+                width: 100%;
+                background-color: #eee;
+                transition: 0.5s;
+            }
+
+                .khung-chua .khung-tren .khung-nguoi .item:hover:after {
+                    background-color: #08c;
+                }
 
             .khung-chua .khung-tren .khung-nguoi .item img {
                 width: 40px;
                 height: 40px;
             }
 
-            .khung-chua .khung-tren .khung-nguoi .item a {
+            .khung-chua .khung-tren .khung-nguoi .item > a {
                 font-weight: bold;
                 font-size: 11px;
                 color: #333;
@@ -210,23 +251,22 @@
         .khung-chua .khung-duoi .khung-quyen .item {
             border: 0;
             border-bottom: 1px solid #eee;
-            border-right: 1px solid #eee;
-            width: calc(50% - 1px);
+            width: 50%;
             transition: background-color 0.5s;
-            background-color: #fcfcfc;.
+            background-color: #fcfcfc;
         }
 
             .khung-chua .khung-duoi .khung-quyen .item:hover {
                 background-color: #fafafa;
             }
 
-            .khung-chua .khung-duoi .khung-quyen .item:nth-child(2n) {
-                border-right: 0;
-                width: 50%;
+            .khung-chua .khung-duoi .khung-quyen .item:nth-child(odd) {
+                border-right: 1px solid #eee;
+                width: calc(50% - 1px);
             }
         
             .khung-chua .khung-duoi .khung-quyen .item:nth-last-child(1),
-            .khung-chua .khung-duoi .khung-quyen .item:nth-last-child(2) {
+            .khung-chua .khung-duoi .khung-quyen .item:nth-last-child(2):nth-child(odd) {
                 border-bottom: 0;
             }
 

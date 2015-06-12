@@ -156,5 +156,10 @@ namespace BUSLayer
         {
             return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan).trangThai == 0 ? true : false;
         }
+
+        public static KetQua layTheoMaNhomNguoiDung(string phamVi, int maNhomNguoiDung)
+        {
+            return NguoiDungDAO.layTheoMaNhomNguoiDung(phamVi, maNhomNguoiDung);
+        }
     }
 }

@@ -1,0 +1,24 @@
+﻿@model List<DTOLayer.NguoiDungDTO>[]
+
+@foreach (var nguoiDung in Model[0])
+{
+    @Html.Partial("~/Views/Quyen/_Item_NguoiDung.cshtml", nguoiDung);
+}
+
+@foreach (var nguoiDung in Model[1])
+{
+    <li data-doi-tuong="item-nguoi-dung" class="item ngoai-nhom" data-ma="@nguoiDung.ma">
+        <img src="/boy.png/" alt="Alternate Text" />
+        <a href="#">@nguoiDung.hoTen</a>
+        <section class="khung-chuc-nang-lct">
+            <ul data-doi-tuong="cnnd-@nguoiDung.ma">
+                <li>
+                    <a data-chuc-nang="them-vao-nhom">Thêm vào nhóm</a>
+                </li>
+            </ul>
+            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnnd-@nguoiDung.ma">
+                <i class="pe-7f-config"></i>
+            </button>
+        </section>
+    </li>
+}

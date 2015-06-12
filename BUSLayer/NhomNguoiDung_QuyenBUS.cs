@@ -20,7 +20,10 @@ namespace BUSLayer
 
         public static KetQua layTheoMaNhomNguoiDung(string phamVi, int maNhomNguoiDung)
         {
-            return NhomNguoiDung_QuyenDAO.layTheoMaNhomNguoiDung(phamVi, maNhomNguoiDung);
+            return NhomNguoiDung_QuyenDAO.layTheoMaNhomNguoiDung(phamVi, maNhomNguoiDung, new LienKet()
+                {
+                    "Quyen"
+                });
         }
     }
 }
