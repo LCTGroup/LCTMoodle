@@ -34,7 +34,7 @@ namespace BUSLayer
             }
             catch
             {
-                return macDinh;
+                return macDinh;                
             }
         }
 

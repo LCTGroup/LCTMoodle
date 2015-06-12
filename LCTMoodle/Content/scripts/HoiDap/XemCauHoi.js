@@ -21,6 +21,14 @@ function XuLyTraLoiCauHoi($form) {
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     $('#danh_sach_tra_loi').append(data.ketQua);
+                    $('#thong_bao_chua_co_tra_loi').remove();
+                }
+                else if (data.trangThai == 3) {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Vui lòng đăng nhập để trả lời',
+                        bieuTuong: 'thong-tin'
+                    });
                 }
                 else {
                     moPopup({

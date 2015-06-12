@@ -25,6 +25,8 @@ namespace DAOLayer
                         traLoi.noiDung = layString(dong, i); break;
                     case "ThoiDiemTao":
                         traLoi.thoiDiemTao = layDateTime(dong, i); break;
+                    case "ThoiDiemCapNhat":
+                        traLoi.thoiDiemCapNhat = layDateTime(dong, i); break;
                     case "Duyet":
                         traLoi.duyet = layBool(dong, i); break;
                     case "MaNguoiTao":

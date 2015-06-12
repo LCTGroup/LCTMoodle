@@ -10,6 +10,7 @@ namespace DTOLayer
     {
         public string noiDung;
         public DateTime? thoiDiemTao;
+        public DateTime? thoiDiemCapNhat;
         public bool duyet;
         public NguoiDungDTO nguoiTao;
         public CauHoiDTO cauHoi;

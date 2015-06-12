@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.Web;
 
 namespace Helpers
 {
@@ -30,6 +31,14 @@ namespace Helpers
             }
 
             return giaTriTraVe.ToString();
+        }
+        public static bool chuaDangNhap()
+        {
+            if (HttpContext.Current.Session["NguoiDung"] == null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

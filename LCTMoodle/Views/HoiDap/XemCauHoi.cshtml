@@ -25,8 +25,21 @@
 <!-- region Câu hỏi -->
 
 <article class="hop hop-1-vien">
-    <section class="noi-dung">
+    <section class="noi-dung cau-hoi">
         <article class="item-hoi-dap">
+            <section class="khung-chuc-nang-lct">
+                <ul data-doi-tuong="cauhoi-@Model.ma">
+                    <li>
+                        <a data-chuc-nang="sua-cau-hoi">Sửa bài viết</a>
+                    </li>
+                    <li>
+                        <a data-chuc-nang="xoa-cau-hoi">Xóa bài viết</a>
+                    </li>
+                </ul>
+                <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cauhoi-@Model.ma">
+                    <i class="pe-7f-config"></i>
+                </button>
+            </section>
             <section class="thong-tin">
                 <div class="nguoi-dung">
                     <div class="hinh-dai-dien">
@@ -68,7 +81,7 @@
             }
             else
             {
-                @:<p align="center">Chưa có trả lời</p>
+                @:<p id="thong_bao_chua_co_tra_loi" align="center">Chưa có trả lời</p>
             }
         }
                    
@@ -85,7 +98,7 @@
         <article class="hop-form form-tra-loi">
             <section class="noi-dung">
                 <form class="lct-form" action="/HoiDap/XuLyThemTraLoi" method="post" id="tra_loi_cau_hoi">
-                    <input type="hidden" name="CauHoi" value="@Model.ma.Value" />
+                    <input type="hidden" name="MaCauHoi" value="@Model.ma.Value" />
                     <article>
                         <ul>
                             <li>

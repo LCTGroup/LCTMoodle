@@ -172,7 +172,7 @@
             {
                 <aside class="cot-phai">
                     <article class="khung-chuc-nang">
-                        @if (ViewData.ContainsKey("ChucNang"))
+                        @if (ViewData.ContainsKey("ChucNang") && Session["NguoiDung"] != null)
                         {
                             <article class="hop-chuc-nang">
                                 <section class="ten-chuc-nang">

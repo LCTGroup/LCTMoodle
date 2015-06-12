@@ -66,7 +66,7 @@ namespace LCTMoodle.Controllers
         {
             NguoiDungBUS.xuLyDangXuat();
 
-            return RedirectToAction("Index", "TrangChu");
+            return RedirectToAction("DangNhap", "NguoiDung");
         }
         
         [HttpGet]

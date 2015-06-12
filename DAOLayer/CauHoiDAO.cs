@@ -27,6 +27,8 @@ namespace DAOLayer
                         cauHoi.noiDung = layString(dong, i); break;
                     case "ThoiDiemTao":
                         cauHoi.thoiDiemTao = layDateTime(dong, i); break;
+                    case "ThoiDiemCapNhat":
+                        cauHoi.thoiDiemCapNhat = layDateTime(dong, i); break;
                     case "MaNguoiTao":
                         maTam = layInt(dong, i);
 
@@ -61,7 +63,6 @@ namespace DAOLayer
                 {
                     cauHoi.tieuDe,
                     cauHoi.noiDung,
-                    cauHoi.thoiDiemTao,
                     layMa(cauHoi.nguoiTao)
                 }
             );
@@ -77,7 +78,7 @@ namespace DAOLayer
                 },
                 lienKet
             );
-        }        
+        }
         public static KetQua layDanhSachCauHoi(LienKet lienKet = null)
         {
             return layDanhSachDong
@@ -85,6 +86,18 @@ namespace DAOLayer
                 "layToanBoCauHoi",
                 new object[] 
                 {
+                },
+                lienKet
+            );
+        }
+        public static KetQua capNhatTheoMa(int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)
+        {
+            return layDong(
+                "capNhatCauHoiTheoMa",
+                new object[] 
+                {
+                    ma,
+                    bangCapNhat.bang
                 },
                 lienKet
             );
