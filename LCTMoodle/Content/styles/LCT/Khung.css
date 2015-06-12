@@ -15,7 +15,7 @@ body, textarea, select, input {
 }
 a {
     cursor: pointer;
-    color: #000;
+    color: #333;
     text-decoration: none;  
 }
 a:hover {

@@ -1,0 +1,15 @@
+﻿@model DTOLayer.NhomNguoiDungDTO
+
+<li class="item" data-doi-tuong="item-nhom" data-ma="@Model.ma">
+    <a data-chuc-nang="chon-nhom">@Model.ten</a>
+    <section class="khung-chuc-nang-lct" style="right: 3px; top: 3px;">
+        <ul data-doi-tuong="cnn-@Model.ma">
+            <li>
+                <a data-chuc-nang="xoa-nhom">Xóa nhóm</a>
+            </li>
+        </ul>
+        <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnn-@Model.ma">
+            <i class="pe-7f-config"></i>
+        </button>
+    </section>
+</li>

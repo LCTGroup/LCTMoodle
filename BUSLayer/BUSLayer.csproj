@@ -39,6 +39,9 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NhomNguoiDung_QuyenBUS.cs" />
+    <Compile Include="NhomNguoiDungBUS.cs" />
+    <Compile Include="QuyenBUS.cs" />
     <Compile Include="CotDiemBUS.cs" />
     <Compile Include="GiaoTrinhBUS.cs" />
     <Compile Include="BaiTapNopBUS.cs" />

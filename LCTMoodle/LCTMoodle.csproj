@@ -139,6 +139,7 @@
     <Compile Include="Controllers\KhoaHocController.cs" />
     <Compile Include="Controllers\LCTController.cs" />
     <Compile Include="Controllers\NguoiDungController.cs" />
+    <Compile Include="Controllers\QuyenController.cs" />
     <Compile Include="Controllers\TapTinController.cs" />
     <Compile Include="Controllers\TrangChuController.cs" />
     <Compile Include="Global.asax.cs">
@@ -159,6 +160,7 @@
     <Content Include="Content\images\LCT\ChuDe\he-thong.png" />
     <Content Include="Content\images\LCT\ChuDe\khoa-hoc.png" />
     <Content Include="Content\images\LCT\mini_logo.png" />
+    <Content Include="Content\images\Quyen\Quyen.png" />
     <Content Include="Content\scripts\BinhLuan\Khung.js" />
     <Content Include="Content\scripts\ChuDe\Khung.js" />
     <Content Include="Content\images\user-avatar.jpg" />
@@ -172,6 +174,7 @@
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
     <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
+    <Content Include="Content\scripts\Quyen\QuanLy.js" />
     <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\BangDiem\Tao.css" />
     <Content Include="Content\styles\GiaoTrinh\Tao.css" />
@@ -184,6 +187,7 @@
     <Content Include="Content\styles\LCT\Khung.css" />
     <Content Include="Content\styles\LCT\stroke-icons.css" />
     <Content Include="Content\styles\NguoiDung\Index.css" />
+    <Content Include="Content\styles\Quyen\QuanLy.css" />
     <Content Include="Content\styles\TrangChu\TrangMau.css" />
     <Content Include="Global.asax" />
     <Content Include="Plugin\ckeditor\build-config.js" />
@@ -372,6 +376,7 @@
     <Content Include="Content\images\HeThong\HeThong.psd" />
     <Content Include="Content\images\KhoaHoc\KhoaHoc.psd" />
     <Content Include="Content\images\HoiDap\HoiDap.psd" />
+    <Content Include="Content\images\Quyen\Quyen.psd" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\LCT\Khung.cshtml" />
     <Content Include="Views\TrangChu\Index.cshtml" />
@@ -411,6 +416,10 @@
     <Content Include="Views\BangDiem\CotDiem\_Item_Tao.cshtml" />
     <Content Include="Views\BaiVietBaiGiang\_Form.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Form.cshtml" />
+    <Content Include="Views\Quyen\QuanLy.cshtml" />
+    <Content Include="Views\Quyen\_DanhSach_Quyen.cshtml" />
+    <Content Include="Views\Quyen\_Form_Nhom.cshtml" />
+    <Content Include="Views\Quyen\_Item_Nhom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

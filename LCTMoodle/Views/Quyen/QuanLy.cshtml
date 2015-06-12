@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "QuanLy";
+    Layout = "~/Views/LCT/Khung.cshtml";
+
+    var danhSachNhom = ViewData["DanhSachNhom"] as List<DTOLayer.NhomNguoiDungDTO>;
+    var danhSachQuyen = ViewData["DanhSachQuyen"] as List<DTOLayer.QuyenDTO>;
+}
+@section Styles {
+    <link href="/QuanLy.css/Quyen" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="/QuanLy.js/Quyen"></script>    
+    <script src="/Khung.js/ChuDe/"></script>
+}
+
+<article class="hop">
+    <section class="tieu-de">
+        Quản lý quyền
+    </section>
+    <section class="noi-dung">
+        <article class="khung-chua">
+            <section class="khung-tren">
+                <section class="khung-nhom">
+                    <section class="khung-tim-them lct-form">
+                        <section class="input tim">
+                            <input type="text" placeholder="Tìm nhóm" />
+                        </section>
+                        <section class="them">
+                            <a data-chuc-nang="them-nhom" class="button chap-nhan"><i></i></a>
+                        </section>
+                    </section>
+                    <section class="khung-danh-sach">
+                        <ul id="danh_sach_nhom" class="danh-sach">
+                            @if (danhSachNhom != null)
+                            {
+                                foreach(var nhom in danhSachNhom)
+                                {
+                                    @Html.Partial("~/Views/Quyen/_Item_Nhom.cshtml", nhom)
+                                }
+                            }
+                        </ul>
+                    </section>
+                </section>
+                <section class="khung-nguoi">
+                    <section class="khung-tim lct-form">
+                        <article class="input">
+                            <input type="text" placeholder="Tìm người dùng" />
+                        </article>
+                    </section>
+                    <section class="khung-danh-sach">
+                        <ul class="danh-sach">
+                            <li class="item">
+                                <img src="/boy.png/" alt="Alternate Text" />
+                                <a href="#">Lê Bình Chiêu</a>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+            </section>
+            <section class="khung-duoi">
+                <section class="khung-pham-vi">
+                    <ul class="danh-sach">
+                        <li class="item chon">
+                            <a data-chuc-nang="chon-pham-vi" data-ma="HT">Hệ thống</a>
+                        </li>
+                        <li class="item">
+                            <a data-chuc-nang="chon-pham-vi" data-ma="ND">Người dùng</a>
+                        </li>
+                        <li class="item">
+                            <a data-chuc-nang="chon-pham-vi" data-ma="CD">Chủ đề</a>
+                        </li>
+                        <li class="item">
+                            <a data-chuc-nang="chon-pham-vi" data-ma="KH">Khóa học</a>
+                        </li>
+                        <li class="item">
+                            <a data-chuc-nang="chon-pham-vi" data-ma="HD">Hỏi đáp</a>
+                        </li>
+                    </ul>
+                </section>
+                <section class="khung-quyen">
+                    <section id="mo_ta_pham_vi" class="mo-ta">
+                    </section>
+                    <ul id="danh_sach_quyen" class="danh-sach lct-form">                        
+                        @Html.Partial("~/Views/Quyen/_DanhSach_Quyen.cshtml", danhSachQuyen)
+                    </ul>
+                </section>
+            </section>
+        </article>
+    </section>
+</article>
