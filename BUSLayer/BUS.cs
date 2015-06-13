@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTOLayer;
 
 namespace BUSLayer
 {
@@ -54,6 +55,18 @@ namespace BUSLayer
             {
                 return macDinh;
             }
+        }
+
+        protected static T layDTO<T>(KetQua ketQua)
+            where T : DTO
+        {
+            return ketQua.trangThai == 0 ? (T)ketQua.ketQua : null;
+        }
+
+        protected static List<T> layDanhSachDTO<T>(KetQua ketQua)
+            where T : DTO
+        {
+            return ketQua.trangThai == 0 ? (List<T>)ketQua.ketQua : null;
         }
 
         protected static string layString(Dictionary<string, string> form, string key, string macDinh = null)

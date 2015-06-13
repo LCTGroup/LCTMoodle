@@ -75,7 +75,7 @@ namespace DAOLayer
 
             return nhomNguoiDung_Quyen;
         }
-        public static KetQua themHoacXoaTheoMaNhomNguoiDungVaMaQuyen(string phamVi, int? maNhomNguoiDung, int? maQuyen, int? maDoiTuong, bool them)
+        public static KetQua themHoacXoaTheoMaNhomNguoiDungVaMaQuyen(string phamVi, int? maNhomNguoiDung, int? maQuyen, int? maDoiTuong, bool them, bool la)
         {
             return khongTruyVan
                 (
@@ -86,20 +86,22 @@ namespace DAOLayer
                         maNhomNguoiDung,
                         maQuyen,
                         maDoiTuong,
-                        them
+                        them,
+                        la
                     }
                 );
         }
 
-        public static KetQua layTheoMaNhomNguoiDung(string phamVi, int? maNhomNguoiDung, LienKet lienKet = null)
+        public static KetQua layTheoMaNhomNguoiDungVaMaDoiTuong(string phamVi, int? maNhomNguoiDung, int? maDoiTuong, LienKet lienKet = null)
         {
             return layDanhSachDong
                 (
-                    "layNhomNguoiDung_QuyenTheoMaNhomNguoiDung",
+                    "layNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaDoiTuong",
                     new object[]
                     {
                         phamVi,
-                        maNhomNguoiDung
+                        maNhomNguoiDung,
+                        maDoiTuong
                     },
                     lienKet
                 );

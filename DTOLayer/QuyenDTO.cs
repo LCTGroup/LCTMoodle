@@ -12,5 +12,7 @@ namespace DTOLayer
         public string moTa;
         public string giaTri;
         public string phamVi;
+        public QuyenDTO cha;
+        public List<QuyenDTO> con;
     }
 }

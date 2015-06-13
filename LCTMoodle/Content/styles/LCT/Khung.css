@@ -22,8 +22,11 @@ a:hover {
     text-decoration: underline;
 }
 .tat {
-    opacity: 0.5;
-    pointer-events: none;
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+}
+.an {
+    display: none !important;
 }
 @font-face {
     font-family: Freeway;

@@ -4,6 +4,8 @@
 
     var danhSachNhom = ViewData["DanhSachNhom"] as List<DTOLayer.NhomNguoiDungDTO>;
     var danhSachQuyen = ViewData["DanhSachQuyen"] as List<DTOLayer.QuyenDTO>;
+
+    string phamVi = @ViewData["PhamVi"].ToString();
 }
 @section Styles {
     <link href="/QuanLy.css/Quyen" rel="stylesheet" />
@@ -11,6 +13,10 @@
 @section Scripts {
     <script src="/QuanLy.js/Quyen"></script>    
     <script src="/Khung.js/ChuDe/"></script>
+    <script>
+        _PhamViQuanLy = _PhamViHienTai = '@phamVi';
+        _DoiTuongHienTai = _DoiTuongQuanLy = '@ViewData["DoiTuong"]';
+    </script>
 }
 
 <article class="hop">
@@ -56,21 +62,30 @@
             <section id="khung_quyen" class="khung-duoi tat">
                 <section class="khung-pham-vi">
                     <ul class="danh-sach">
-                        <li class="item chon">
-                            <a data-chuc-nang="chon-pham-vi" data-ma="HT">Hệ thống</a>
-                        </li>
-                        <li class="item">
-                            <a data-chuc-nang="chon-pham-vi" data-ma="ND">Người dùng</a>
-                        </li>
-                        <li class="item">
-                            <a data-chuc-nang="chon-pham-vi" data-ma="CD">Chủ đề</a>
-                        </li>
-                        <li class="item">
-                            <a data-chuc-nang="chon-pham-vi" data-ma="KH">Khóa học</a>
-                        </li>
-                        <li class="item">
-                            <a data-chuc-nang="chon-pham-vi" data-ma="HD">Hỏi đáp</a>
-                        </li>
+                        @switch (phamVi)
+                        {
+                            case "KH":
+                                <li class="item chon">
+                                    <a data-chuc-nang="chon-pham-vi" data-ma="KH">Khóa học</a>
+                                </li>
+                                break;
+                            case "HT":
+                                <li class="item @(phamVi == "HT" ? "chon" : null)">
+                                    <a data-chuc-nang="chon-pham-vi" data-ma="HT">Hệ thống</a>
+                                </li>
+                                <li class="item">
+                                    <a data-chuc-nang="chon-pham-vi" data-ma="ND">Người dùng</a>
+                                </li>
+                                <li class="item">
+                                    <a data-chuc-nang="chon-pham-vi" data-ma="CD">Chủ đề</a>
+                                </li>
+                                <li class="item">
+                                    <a data-chuc-nang="chon-pham-vi" data-ma="HD">Hỏi đáp</a>
+                                </li>
+                                break;
+                            default:
+                                break;
+                        }
                     </ul>
                 </section>
                 <section class="khung-quyen">
@@ -80,6 +95,9 @@
                     <ul id="danh_sach_quyen" class="danh-sach lct-form">                        
                         @Html.Partial("~/Views/Quyen/_DanhSach_Quyen.cshtml", danhSachQuyen)
                     </ul>
+                    <section class="mo-ta-duoi">
+                        Quyền được cập nhật ngay lập tức
+                    </section>
                 </section>
             </section>
         </article>

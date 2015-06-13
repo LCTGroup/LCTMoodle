@@ -15,6 +15,7 @@ namespace DAOLayer
         {
             QuyenDTO quyen = new QuyenDTO();
 
+            int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
@@ -28,8 +29,19 @@ namespace DAOLayer
                     case "MoTa":
                         quyen.moTa = layString(dong, i);
                         break;
+                    case "GiaTri":
+                        quyen.giaTri = layString(dong, i);
+                        break;
                     case "PhamVi":
                         quyen.phamVi = layString(dong, i);
+                        break;
+                    case "MaCha":
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
+                        {
+                            quyen.cha = layDTO<QuyenDTO>(QuyenDAO.layTheoMa(maTam));
+                        }
                         break;
                     default:
                         break;
@@ -39,14 +51,15 @@ namespace DAOLayer
             return quyen;
         }
 
-        public static KetQua layTheoPhamVi(string phamVi)
+        public static KetQua layTheoPhamViVaMaCha(string phamVi, int? maCha)
         {
             return layDanhSachDong
                 (
-                    "layQuyenTheoPhamVi",
+                    "layQuyenTheoPhamViVaMaCha",
                     new object[]
                     {
-                        phamVi
+                        phamVi,
+                        maCha
                     }
                 );
         }
