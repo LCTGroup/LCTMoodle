@@ -42,15 +42,24 @@ function khoiTaoTimKiemNguoiDung($inputs) {
         var $input = $(this);
 
         var maTam = 'tim_nguoi_';
+        var giaTriTam = $input.val();
 
-        if (mangTam[maTam + 'gt'] == $input.val()) {
+        if (giaTriTam.length == 0) {
+            mangTam[$input + 'gt'] = giaTriTam;
+            var $items = $(_MangHtmlNguoi[_NhomHienTai]);
+            khoiTaoItem_NguoiDung($items);
+            $_DanhSachNguoi.html($items);
+            return;
+        }
+
+        if (mangTam[maTam + 'gt'] == giaTriTam) {
             return;
         }
 
         mangTam[maTam + 'td'] = true;
         clearTimeout(mangTam[$input + 'to']);
         mangTam[$input + 'to'] = setTimeout(function () {
-            mangTam[$input + 'gt'] = $input.val();
+            mangTam[$input + 'gt'] = giaTriTam;
 
             $.ajax({
                 url: '/Quyen/_DanhSachNguoiDung_Tim',
@@ -69,7 +78,7 @@ function khoiTaoTimKiemNguoiDung($inputs) {
             }).fail(function () {
                 $_DanhSachNguoi.html('');
             });
-        }, 200)
+        }, 500)
     })
 }
 
@@ -83,19 +92,17 @@ function khoiTaoNutChonPhamVi($nuts) {
         var phamVi = $nut.attr('data-ma');
 
         if (phamVi != 'CD') {
-            $nut.parent().addClass('chon').siblings().removeClass('chon');
-        
-            _PhamViHienTai = phamVi;
+            thanhCong = true;
 
-            if (!(_PhamViHienTai in _MangHtmlQuyen)) {
+            if (!(phamVi in _MangHtmlQuyen)) {
                 $.ajax({
                     url: '/Quyen/_DanhSachQuyen',
-                    data: { phamVi: _PhamViHienTai },
+                    data: { phamVi: phamVi },
                     dataType: 'JSON',
                     async: false
                 }).done(function (data) {
                     if (data.trangThai == 0) {
-                        _MangHtmlQuyen[_PhamViHienTai] = data.ketQua;
+                        _MangHtmlQuyen[phamVi] = data.ketQua;
                     }
                     else {
                         moPopup({
@@ -103,6 +110,7 @@ function khoiTaoNutChonPhamVi($nuts) {
                             thongBao: 'Lấy danh sách quyền thất bại',
                             bieuTuong: 'nguy-hiem'
                         });
+                        thanhCong = false;
                     }
                 }).fail(function () {
                     moPopup({
@@ -110,16 +118,22 @@ function khoiTaoNutChonPhamVi($nuts) {
                         thongBao: 'Lấy danh sách quyền thất bại',
                         bieuTuong: 'nguy-hiem'
                     });
+                    thanhCong = false;
                 });
             }
 
-            $_DanhSachQuyen.html(_MangHtmlQuyen[_PhamViHienTai]);
-            khoiTaoItem_Quyen($_DanhSachQuyen.find('[data-doi-tuong="item-quyen"]'));
+            if (thanhCong) {
+                $nut.parent().addClass('chon').siblings().removeClass('chon');
+                _PhamViHienTai = phamVi;
 
-            $_MoTaPhamVi.text('Tùy chỉnh quyền cho nhóm');
-            _DoiTuongHienTai = '0';
+                $_DanhSachQuyen.html(_MangHtmlQuyen[_PhamViHienTai]);
+                khoiTaoItem_Quyen($_DanhSachQuyen.find('[data-doi-tuong="item-quyen"]'));
 
-            capNhatDanhSachQuyen();
+                $_MoTaPhamVi.text('Tùy chỉnh quyền cho nhóm');
+                _DoiTuongHienTai = '0';
+
+                capNhatDanhSachQuyen();
+            }
         }
         else {
             moPopupFull({
@@ -132,19 +146,17 @@ function khoiTaoNutChonPhamVi($nuts) {
                     $khung.on('chon', function (e, data) {
                         $popup.tat();
 
-                        $nut.parent().addClass('chon').siblings().removeClass('chon');
+                        thanhCong = true;
 
-                        _PhamViHienTai = phamVi;
-
-                        if (!(_PhamViHienTai in _MangHtmlQuyen)) {
+                        if (!(phamVi in _MangHtmlQuyen)) {
                             $.ajax({
                                 url: '/Quyen/_DanhSachQuyen',
-                                data: { phamVi: _PhamViHienTai },
+                                data: { phamVi: phamVi },
                                 dataType: 'JSON',
                                 async: false
                             }).done(function (data) {
                                 if (data.trangThai == 0) {
-                                    _MangHtmlQuyen[_PhamViHienTai] = data.ketQua;
+                                    _MangHtmlQuyen[phamVi] = data.ketQua;
                                 }
                                 else {
                                     moPopup({
@@ -152,6 +164,7 @@ function khoiTaoNutChonPhamVi($nuts) {
                                         thongBao: 'Lấy danh sách quyền thất bại',
                                         bieuTuong: 'nguy-hiem'
                                     });
+                                    thanhCong = false;
                                 }
                             }).fail(function () {
                                 moPopup({
@@ -159,16 +172,22 @@ function khoiTaoNutChonPhamVi($nuts) {
                                     thongBao: 'Lấy danh sách quyền thất bại',
                                     bieuTuong: 'nguy-hiem'
                                 });
+                                thanhCong = false;
                             });
                         }
 
-                        $_DanhSachQuyen.html(_MangHtmlQuyen[_PhamViHienTai]);
-                        khoiTaoItem_Quyen($_DanhSachQuyen.find('[data-doi-tuong="item-quyen"]'));
+                        if (thanhCong) {
+                            $nut.parent().addClass('chon').siblings().removeClass('chon');
+                            _PhamViHienTai = phamVi;
 
-                        $_MoTaPhamVi.text('Tùy chỉnh quyền cho nhóm - ' + data.ten);
-                        _DoiTuongHienTai = data.ma;
+                            $_DanhSachQuyen.html(_MangHtmlQuyen[_PhamViHienTai]);
+                            khoiTaoItem_Quyen($_DanhSachQuyen.find('[data-doi-tuong="item-quyen"]'));
 
-                        capNhatDanhSachQuyen();
+                            $_MoTaPhamVi.text('Tùy chỉnh quyền cho nhóm - ' + data.ten);
+                            _DoiTuongHienTai = data.ma;
+
+                            capNhatDanhSachQuyen();
+                        }
                     });
                 }
             });
@@ -304,6 +323,7 @@ function khoiTaoItem_Nhom($items) {
                         }).done(function (data) {
                             if (data.trangThai == 0) {
                                 $item.remove();
+                                capNhatTatMoKhung(false);
                             }
                             else {
                                 moPopup({
@@ -402,6 +422,7 @@ function khoiTaoItem_Nhom($items) {
         }
 
         capNhatDanhSachQuyen();
+        capNhatTatMoKhung(true);
     });
 }
 
@@ -496,6 +517,15 @@ function capNhatDanhSachQuyen() {
     $_DanhSachQuyen.find('[type="checkbox"]').each(function () {
         this.checked = mangQuyen && mangQuyen.indexOf("|" + this.value + "|") != -1;
     });
+}
+
+function capNhatTatMoKhung(mo) {
+    if (mo) {
+        $('#khung_nguoi, #khung_quyen').removeClass('tat')
+    }
+    else {
+        $('#khung_nguoi, #khung_quyen').addClass('tat')
+    }
 }
 
 //#endregion

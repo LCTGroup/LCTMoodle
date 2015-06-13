@@ -21,6 +21,10 @@ a {
 a:hover {
     text-decoration: underline;
 }
+.tat {
+    opacity: 0.5;
+    pointer-events: none;
+}
 @font-face {
     font-family: Freeway;
     src: url('/Freeway.ttf/');
