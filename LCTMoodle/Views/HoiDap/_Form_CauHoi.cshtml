@@ -1,0 +1,27 @@
+﻿@model DTOLayer.CauHoiDTO
+
+<form class="lct-form" action="/HoiDap/CapNhatCauHoi" method="post" id="">
+    <input type="hidden" name="MaCauHoi" value="@ViewData["MaCauHoi"]" />
+    <article>
+        <ul>
+            <li>
+                <section class="noi-dung">
+                    <article class="input">
+                        <input type="text" name="TieuDe" placeholder="Tiêu đề" value="@Model.tieuDe"/>
+                    </article>
+                </section>
+            </li>
+            <li>
+                <section class="noi-dung">
+                    <article class="input">
+                        <textarea data-validate="bat-buoc" name="NoiDung" data-input-type="editor" placeholder="Nội dung" data-mac-dinh="@(Model != null ? Html.Raw(Model.noiDung) : null)"></textarea>
+                    </article>
+                </section>
+            </li>
+        </ul>
+        <section class="khung-button">
+            <button class="chap-nhan">Cập nhật</button>
+            <button class="canh-bao">Hủy</button>
+        </section>
+    </article>
+</form>

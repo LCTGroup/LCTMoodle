@@ -1,0 +1,28 @@
+﻿@model DTOLayer.TraLoiDTO
+
+<form class="lct-form" action="/HoiDap/XuLyThemTraLoi" method="post" id="tra_loi_cau_hoi">
+    
+    @if(Model == null)
+    {
+        <input type="hidden" name="MaCauHoi" value="@ViewData["MaCauHoi"]" />        
+    }
+    else
+    {
+        <input type="hidden" name="Ma" value="@Model.ma" />        
+    }
+    
+    <article>
+        <ul>
+            <li>
+                <section class="noi-dung">
+                    <article class="input">
+                        <textarea data-validate="bat-buoc" name="NoiDung" data-input-type="editor" placeholder="Nội dung" data-mac-dinh="@(Model != null ? Model.noiDung : null)"></textarea>
+                    </article>
+                </section>
+            </li>
+        </ul>
+        <section class="khung-button">
+            <button class="chap-nhan">Trả lời</button>
+        </section>
+    </article>
+</form>

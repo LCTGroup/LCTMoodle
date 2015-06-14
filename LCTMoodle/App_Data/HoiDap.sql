@@ -13,7 +13,7 @@ CREATE TABLE dbo.CauHoi
 )
 
 GO
---Thêm Câu hỏi
+--Thêm Câu Hỏi
 CREATE PROC dbo.themCauHoi
 (
 	@0 NVARCHAR(MAX), --Tiêu đề
@@ -25,6 +25,16 @@ BEGIN
 	INSERT INTO dbo.CauHoi(TieuDe, NoiDung, MaNguoiTao) VALUES (@0, @1, @2)
 
 	SELECT @@IDENTITY Ma
+END
+
+GO
+--Xóa Câu Hỏi
+CREATE PROC dbo.xoaCauHoi(
+	@0 INT --Mã câu hỏi
+)
+AS
+BEGIN
+	DELETE FROM dbo.CauHoi WHERE Ma = @0
 END
 
 GO
@@ -112,6 +122,16 @@ BEGIN
 		MaCauHoi
 	FROM dbo.TraLoi
 	WHERE Ma = @@Identity
+END
+
+GO
+--Xóa Trả Lời
+CREATE PROC dbo.xoaTraLoi(
+	@0 INT --Mã trả lời
+)
+AS
+BEGIN
+	DELETE FROM dbo.TraLoi WHERE Ma = @0
 END
 
 GO

@@ -19,12 +19,15 @@ namespace LCTMoodle.Controllers
         {
             return View((CauHoiBUS.layToanBoCauHoi().ketQua) as List<CauHoiDTO>);
         }
+        
         public ActionResult TaoCauHoi()
         {            
             return View();
         }
+        
         public ActionResult XemCauHoi(int ma)
         {
+            ViewData["MaCauHoi"] = ma;
             KetQua ketQua = CauHoiBUS.layCauHoiTheoMa(ma);
 
             if (ketQua.trangThai != 0)
@@ -33,8 +36,27 @@ namespace LCTMoodle.Controllers
             }
 
             return View(ketQua.ketQua);
-        }        
-        
+        }
+
+        public ActionResult _Form_TraLoi(int ma = 0)
+        {
+            KetQua ketQua = TraLoiBUS.layTheoMa(ma);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua =
+                        renderPartialViewToString(ControllerContext, "HoiDap/_Form_TraLoi.cshtml", ketQua.ketQua)
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult XuLyThemCauHoi(FormCollection form)
@@ -67,6 +89,14 @@ namespace LCTMoodle.Controllers
                 });
             }
             return Json(ketQua);
+        }
+
+        public ActionResult XuLyXoaTraLoi(int ma)
+        {
+            return Json(
+                TraLoiBUS.xoaTheoMa(ma), 
+                JsonRequestBehavior.AllowGet    
+            );
         }
 	}
 }

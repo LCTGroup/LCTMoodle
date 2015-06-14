@@ -1,6 +1,6 @@
-﻿/*#region khung item Hỏi đáp */
+﻿/*#region khung muc Hỏi đáp */
 
-.item-hoi-dap {    
+.muc-hoi-dap {    
     display: flex;
     flex-direction: row;
     position: relative;
@@ -8,7 +8,7 @@
 
     /*#region Thông tin người đăng */
 
-    .item-hoi-dap .thong-tin {
+    .muc-hoi-dap .thong-tin {
         display: flex;
         flex-direction: column;   
         min-width: 80px;
@@ -17,34 +17,34 @@
         border-right: 1px solid #f5f5f5;
         background-color: #f8f8f8;
     }
-        .item-hoi-dap .thong-tin .nguoi-dung {            
+        .muc-hoi-dap .thong-tin .nguoi-dung {            
             display: flex;
             flex-direction: column;     
             margin-bottom: 10px;       
         }
-            .item-hoi-dap .thong-tin .nguoi-dung .hinh-dai-dien {                
+            .muc-hoi-dap .thong-tin .nguoi-dung .hinh-dai-dien {                
                 width: 80px;
                 height: 80px;
                 background-color: #ff6a00; 
             }
-                .item-hoi-dap .thong-tin .nguoi-dung .hinh-dai-dien img {                
+                .muc-hoi-dap .thong-tin .nguoi-dung .hinh-dai-dien img {                
                     width: 100%;
                 }
-            .item-hoi-dap .thong-tin .nguoi-dung span {
+            .muc-hoi-dap .thong-tin .nguoi-dung span {
                 width: 100%;
                 text-align: center;
             }
-        .item-hoi-dap .thong-tin .diem-so {
+        .muc-hoi-dap .thong-tin .diem-so {
             display: flex;
             flex-direction: column;
             padding: 0;
         }
-            .item-hoi-dap .thong-tin .diem-so .so {
+            .muc-hoi-dap .thong-tin .diem-so .so {
                 text-align: center;
                 font-size: 25px;
                 font-weight: bold;
             }
-            .item-hoi-dap .thong-tin .diem-so i {
+            .muc-hoi-dap .thong-tin .diem-so i {
                 text-align: center;
                 font-size: 50px;
                 cursor: pointer;
@@ -52,7 +52,7 @@
                 height: 20px;
                 line-height: 20px;
             }
-        .item-hoi-dap .thong-tin .thoi-gian {
+        .muc-hoi-dap .thong-tin .thoi-gian {
             margin-top: 10px;
             font-size: 11px;
             text-align: center;
@@ -63,17 +63,17 @@
     
     /*#region Nội dung câu hỏi */
     
-    .item-hoi-dap .chi-tiet {
+    .muc-hoi-dap .chi-tiet {
         width: 100%;  
         padding: 10px;
     }
-        .item-hoi-dap .chi-tiet .noi-dung {
+        .muc-hoi-dap .chi-tiet .noi-dung {
 
         }
-            .item-hoi-dap .chi-tiet .tieu-de {            
+            .muc-hoi-dap .chi-tiet .tieu-de {            
                 font-size: 18px;
             }
-            .item-hoi-dap .chi-tiet .noi-dung {
+            .muc-hoi-dap .chi-tiet .noi-dung {
                 padding-top: 5px;
             }            
 

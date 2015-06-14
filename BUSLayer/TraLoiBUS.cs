@@ -109,14 +109,19 @@ namespace BUSLayer
             return TraLoiDAO.them(traLoi, new LienKet() { "NguoiTao" });
         }
 
+        public static KetQua xoaTheoMa(int? ma)
+        {
+            return TraLoiDAO.xoaTheoMa(ma);
+        }
+
         public static KetQua layTheoMaCauHoi(int maCauHoi)
         {
             return TraLoiDAO.layTheoMaCauHoi(maCauHoi, new LienKet() { "NguoiTao" });
         }
 
-        public static KetQua layTraLoiTheoMa(int ma)
+        public static KetQua layTheoMa(int ma)
         {
-            return TraLoiDAO.layTraLoiTheoMa(ma);
+            return TraLoiDAO.layTheoMa(ma);
         }
     }
 }

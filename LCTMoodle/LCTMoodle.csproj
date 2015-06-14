@@ -420,6 +420,8 @@
     <Content Include="Views\Quyen\_DanhSach_Quyen.cshtml" />
     <Content Include="Views\Quyen\_Form_Nhom.cshtml" />
     <Content Include="Views\Quyen\_Item_Nhom.cshtml" />
+    <Content Include="Views\HoiDap\_Form_TraLoi.cshtml" />
+    <Content Include="Views\HoiDap\_Form_CauHoi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

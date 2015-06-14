@@ -62,6 +62,7 @@ namespace DAOLayer
 
             return traLoi;
         }  
+        
         public static KetQua them(TraLoiDTO traLoi, LienKet lienKet = null)
         {
             return layDong
@@ -76,6 +77,19 @@ namespace DAOLayer
                 lienKet
             );
         }
+        
+        public static KetQua xoaTheoMa(int? ma, LienKet lienKet = null)
+        {
+            return khongTruyVan
+            (
+                "xoaTraLoi",
+                new object[]
+                {
+                    ma
+                }
+            );
+        }
+        
         public static KetQua layTheoMaCauHoi (int? maCauHoi, LienKet lienKet = null)
         {
             return layDanhSachDong
@@ -88,7 +102,8 @@ namespace DAOLayer
                 lienKet
             );
         }
-        public static KetQua layTraLoiTheoMa(int? ma, LienKet lienKet = null)
+        
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
             return layDong
             (

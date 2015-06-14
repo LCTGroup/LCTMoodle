@@ -26,14 +26,14 @@
 
 <article class="hop hop-1-vien">
     <section class="noi-dung cau-hoi">
-        <article class="item-hoi-dap">
+        <article class="muc-hoi-dap">
             <section class="khung-chuc-nang-lct">
                 <ul data-doi-tuong="cauhoi-@Model.ma">
                     <li>
-                        <a data-chuc-nang="sua-cau-hoi">Sửa bài viết</a>
+                        <a data-chuc-nang="sua-cau-hoi">Sửa câu hỏi</a>
                     </li>
                     <li>
-                        <a data-chuc-nang="xoa-cau-hoi">Xóa bài viết</a>
+                        <a data-chuc-nang="xoa-cau-hoi">Xóa câu hỏi</a>
                     </li>
                 </ul>
                 <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cauhoi-@Model.ma">
@@ -70,13 +70,13 @@
 
 <article class="hop">
     <section class="tieu-de">Danh sách trả lời</section>
-    <section class="noi-dung" id="danh_sach_tra_loi">
-        @{            
+    <ul class="noi-dung" id="danh_sach_tra_loi">
+        @{
             if (Model.danhSachTraLoi != null)
             {
-                foreach(var traLoi in Model.danhSachTraLoi)
-                {                                      
-                    @Html.Partial("~/Views/HoiDap/_Item_TraLoi.cshtml", traLoi);
+                foreach (var traLoi in Model.danhSachTraLoi)
+                {
+                    @Html.Partial("~/Views/HoiDap/_item_TraLoi.cshtml", traLoi);
                 }
             }
             else
@@ -84,8 +84,8 @@
                 @:<p id="thong_bao_chua_co_tra_loi" align="center">Chưa có trả lời</p>
             }
         }
-                   
-    </section>
+
+    </ul>
 </article>
 
 <!-- endregion Trả lời -->
@@ -95,27 +95,7 @@
 <article class="hop hop-2-vien">
     <section class="tieu-de">Trả lời câu hỏi</section>
     <section class="noi-dung">
-        <article class="hop-form form-tra-loi">
-            <section class="noi-dung">
-                <form class="lct-form" action="/HoiDap/XuLyThemTraLoi" method="post" id="tra_loi_cau_hoi">
-                    <input type="hidden" name="MaCauHoi" value="@Model.ma.Value" />
-                    <article>
-                        <ul>
-                            <li>
-                                <section class="noi-dung">
-                                    <article class="input">
-                                        <textarea data-validate="bat-buoc" name="NoiDung" data-input-type="editor" placeholder="Nội dung"></textarea>
-                                    </article>
-                                </section>
-                            </li>
-                        </ul>
-                        <section class="khung-button">
-                            <button class="chap-nhan">Trả lời</button>
-                        </section>
-                    </article>
-                </form>
-            </section>
-        </article>
+        @Html.Partial("~/Views/HoiDap/_Form_TraLoi.cshtml", null, new ViewDataDictionary() { { "MaCauHoi", ViewData["MaCauHoi"].ToString() } })
     </section>
 </article>
 
