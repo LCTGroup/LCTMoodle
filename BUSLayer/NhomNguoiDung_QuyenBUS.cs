@@ -13,14 +13,17 @@ namespace BUSLayer
 {
     public class NhomNguoiDung_QuyenBUS : BUS
     {
-        public static KetQua themHoacXoaTheoMaNhomNguoiDungVaMaQuyen(string phamVi, int maNhomNguoiDung, int maQuyen, int maDoiTuong, bool them)
+        public static KetQua themHoacXoaTheoMaNhomNguoiDungVaMaQuyen(string phamVi, int maNhomNguoiDung, int maQuyen, int maDoiTuong, bool them, bool la)
         {
-            return NhomNguoiDung_QuyenDAO.themHoacXoaTheoMaNhomNguoiDungVaMaQuyen(phamVi, maNhomNguoiDung, maQuyen, maDoiTuong, them);
+            return NhomNguoiDung_QuyenDAO.themHoacXoaTheoMaNhomNguoiDungVaMaQuyen(phamVi, maNhomNguoiDung, maQuyen, maDoiTuong, them, la);
         }
 
-        public static KetQua layTheoMaNhomNguoiDung(string phamVi, int maNhomNguoiDung)
+        public static KetQua layTheoMaNhomNguoiDungVaMaDoiTuong(string phamVi, int maNhomNguoiDung, int maDoiTuong)
         {
-            return NhomNguoiDung_QuyenDAO.layTheoMaNhomNguoiDung(phamVi, maNhomNguoiDung);
+            return NhomNguoiDung_QuyenDAO.layTheoMaNhomNguoiDungVaMaDoiTuong(phamVi, maNhomNguoiDung, maDoiTuong, new LienKet()
+                {
+                    "Quyen"
+                });
         }
     }
 }

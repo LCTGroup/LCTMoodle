@@ -15,13 +15,15 @@ namespace LCTMoodle.Controllers
         public ActionResult _Khung(int maKhoaHoc)
         {
             ViewData["MaKhoaHoc"] = maKhoaHoc;
-
+            
             KetQua ketQua = BaiVietDienDanBUS.layTheoMaKhoaHoc(maKhoaHoc);
 
             List<BaiVietDienDanDTO> danhSachBaiViet =
                 ketQua.trangThai == 0 ?
                 ketQua.ketQua as List<BaiVietDienDanDTO> :
                 null;
+
+            ViewData["Quyen"] = QuyenBUS.layTheoMaDoiTuongVaMaNguoiDung_MangGiaTri("KH", maKhoaHoc);
 
             try
             {

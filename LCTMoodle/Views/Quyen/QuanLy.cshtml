@@ -4,6 +4,8 @@
 
     var danhSachNhom = ViewData["DanhSachNhom"] as List<DTOLayer.NhomNguoiDungDTO>;
     var danhSachQuyen = ViewData["DanhSachQuyen"] as List<DTOLayer.QuyenDTO>;
+
+    string phamVi = @ViewData["PhamVi"].ToString();
 }
 @section Styles {
     <link href="/QuanLy.css/Quyen" rel="stylesheet" />
@@ -11,6 +13,10 @@
 @section Scripts {
     <script src="/QuanLy.js/Quyen"></script>    
     <script src="/Khung.js/ChuDe/"></script>
+    <script>
+        _PhamViQuanLy = _PhamViHienTai = '@phamVi';
+        _DoiTuongHienTai = _DoiTuongQuanLy = '@ViewData["DoiTuong"]';
+    </script>
 }
 
 <article class="hop">
@@ -41,48 +47,57 @@
                         </ul>
                     </section>
                 </section>
-                <section class="khung-nguoi">
+                <section id="khung_nguoi" class="khung-nguoi tat">
                     <section class="khung-tim lct-form">
                         <article class="input">
-                            <input type="text" placeholder="Tìm người dùng" />
+                            <input id="tim_nguoi_input" type="text" placeholder="Tìm người dùng" />
                         </article>
                     </section>
                     <section class="khung-danh-sach">
-                        <ul class="danh-sach">
-                            <li class="item">
-                                <img src="/boy.png/" alt="Alternate Text" />
-                                <a href="#">Lê Bình Chiêu</a>
-                            </li>
-                        </ul>
+                        <ul id="danh_sach_nguoi" class="danh-sach"></ul>
+                        <section>Không có người dùng</section>
                     </section>
                 </section>
             </section>
-            <section class="khung-duoi">
+            <section id="khung_quyen" class="khung-duoi tat">
                 <section class="khung-pham-vi">
                     <ul class="danh-sach">
-                        <li class="item chon">
-                            <a data-chuc-nang="chon-pham-vi" data-ma="HT">Hệ thống</a>
-                        </li>
-                        <li class="item">
-                            <a data-chuc-nang="chon-pham-vi" data-ma="ND">Người dùng</a>
-                        </li>
-                        <li class="item">
-                            <a data-chuc-nang="chon-pham-vi" data-ma="CD">Chủ đề</a>
-                        </li>
-                        <li class="item">
-                            <a data-chuc-nang="chon-pham-vi" data-ma="KH">Khóa học</a>
-                        </li>
-                        <li class="item">
-                            <a data-chuc-nang="chon-pham-vi" data-ma="HD">Hỏi đáp</a>
-                        </li>
+                        @switch (phamVi)
+                        {
+                            case "KH":
+                                <li class="item chon">
+                                    <a data-chuc-nang="chon-pham-vi" data-ma="KH">Khóa học</a>
+                                </li>
+                                break;
+                            case "HT":
+                                <li class="item @(phamVi == "HT" ? "chon" : null)">
+                                    <a data-chuc-nang="chon-pham-vi" data-ma="HT">Hệ thống</a>
+                                </li>
+                                <li class="item">
+                                    <a data-chuc-nang="chon-pham-vi" data-ma="ND">Người dùng</a>
+                                </li>
+                                <li class="item">
+                                    <a data-chuc-nang="chon-pham-vi" data-ma="CD">Chủ đề</a>
+                                </li>
+                                <li class="item">
+                                    <a data-chuc-nang="chon-pham-vi" data-ma="HD">Hỏi đáp</a>
+                                </li>
+                                break;
+                            default:
+                                break;
+                        }
                     </ul>
                 </section>
                 <section class="khung-quyen">
                     <section id="mo_ta_pham_vi" class="mo-ta">
+                        Tùy chỉnh quyền cho nhóm
                     </section>
                     <ul id="danh_sach_quyen" class="danh-sach lct-form">                        
                         @Html.Partial("~/Views/Quyen/_DanhSach_Quyen.cshtml", danhSachQuyen)
                     </ul>
+                    <section class="mo-ta-duoi">
+                        Quyền được cập nhật ngay lập tức
+                    </section>
                 </section>
             </section>
         </article>

@@ -1,0 +1,6 @@
+﻿@model List<DTOLayer.NguoiDungDTO>
+
+@foreach (var nguoiDung in Model)
+{
+    @Html.Partial("~/Views/Quyen/_Item_NguoiDung.cshtml", nguoiDung);
+}

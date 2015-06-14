@@ -1,5 +1,6 @@
 ﻿use rtcmfraf_Moodle;
 
+GO
 CREATE TYPE dbo.BangCapNhat
 AS
 TABLE (
@@ -8,7 +9,8 @@ TABLE (
 	LaChuoi BIT NOT NULL
 )
 
-ALTER FUNCTION dbo.taoChuoiCapNhat (
+GO
+CREATE FUNCTION dbo.taoChuoiCapNhat (
 	@0 dbo.BangCapNhat READONLY
 )
 RETURNS NVARCHAR(MAX)
@@ -39,7 +41,3 @@ DBCC CHECKIDENT('dbo.BaiTapNop', RESEED, 1)
 --Tiếng việt
 ALTER DATABASE rtcmfraf_Moodle
 	COLLATE Vietnamese_CI_A
-
-
-DECLARE @a BIT = 1
-SELECT CAST(@a as NVARCHAR(MAX))

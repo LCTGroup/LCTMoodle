@@ -1,4 +1,14 @@
 ﻿@model DTOLayer.BaiVietDienDanDTO
+@using Helpers
+
+@{
+    var quyen = (string[])ViewData["Quyen"];
+    int maNguoiDung = Session["NguoiDung"] == null ? 0 : (int)Session["NguoiDung"];
+
+    bool
+        coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(quyen, "DienDan_Xoa"),
+        coQuyenSua = maNguoiDung == Model.nguoiTao.ma;
+}
 
 <li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma=@Model.ma>
     <section class="khung-bai-viet">
@@ -36,14 +46,20 @@
                 </section>
             }
         </section>
-        <section class="khung-chuc-nang-lct">
+        <section class="khung-chuc-nang-lct" style="top: 10px; right: 10px;">
             <ul data-doi-tuong="cndd-@Model.ma">
-                <li>
-                    <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
-                </li>
-                <li>
-                    <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
-                </li>
+                @if (coQuyenSua)
+                {
+                    <li>
+                        <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
+                    </li>   
+                }
+                @if (coQuyenXoa)
+                {
+                    <li>
+                        <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
+                    </li>   
+                }
             </ul>
             <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cndd-@Model.ma">
                 <i class="pe-7f-config"></i>

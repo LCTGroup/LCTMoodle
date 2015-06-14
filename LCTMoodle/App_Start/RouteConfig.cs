@@ -38,6 +38,12 @@ namespace LCTMoodle
                 defaults: new { controller = "KhoaHoc", action = "Xem" },
                 constraints: new { ma = @"\d+" }
             );
+
+            routes.MapRoute(
+                name: "QuanLyQuyen",
+                url: "QuanLyQuyen/{phamVi}/{maDoiTuong}",
+                defaults: new { controller = "Quyen", action = "QuanLy", phamVi = UrlParameter.Optional, maDoiTuong = UrlParameter.Optional }
+            );
             
 
             routes.MapRoute(

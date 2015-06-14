@@ -11,7 +11,8 @@ CREATE TABLE dbo.NguoiDung (
 	NgaySinh DATETIME,
 	DiaChi NVARCHAR(MAX),
 	SoDienThoai NVARCHAR(MAX),
-	MaHinhDaiDien INT
+	MaHinhDaiDien INT,
+	CoQuyenHT BIT DEFAULT 0
 );
 
 GO
@@ -57,4 +58,40 @@ BEGIN
 	SELECT *
 	FROM dbo.NguoiDung
 	WHERE Ma = @0
+END
+
+GO
+--Lấy người dùng theo từ khóa
+ALTER PROC dbo.layNguoiDungTheoTuKhoa (
+	@0 NVARCHAR(MAX) --Từ khóa
+)
+AS
+BEGIN
+	SELECT 
+		Ma,
+		HoTen
+		FROM dbo.nguoiDung
+		WHERE 
+			HoTen LIKE '%' + REPLACE(@0, ' ', '%') + '%'
+END
+
+GO
+--Lấy người dùng theo mã nhóm người dùng
+ALTER PROC dbo.layNguoiDungTheoMaNhomNguoiDung (
+	@0 NVARCHAR(MAX), --PhamVi
+	@1 INT --MaNhomNguoiDung
+)
+AS
+BEGIN
+	EXEC('
+		SELECT
+			ND.Ma,
+			ND.HoTen
+			FROM
+				dbo.NguoiDung ND 
+					INNER JOIN dbo.NhomNguoiDung_' + @0 + '_NguoiDung NND_ND
+						ON 
+							NND_ND.MaNhomNguoiDung = ' + @1 + ' AND
+							ND.Ma = NND_ND.MaNguoiDung
+	')
 END

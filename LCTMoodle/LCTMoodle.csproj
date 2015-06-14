@@ -420,8 +420,14 @@
     <Content Include="Views\Quyen\_DanhSach_Quyen.cshtml" />
     <Content Include="Views\Quyen\_Form_Nhom.cshtml" />
     <Content Include="Views\Quyen\_Item_Nhom.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\HoiDap\_Form_TraLoi.cshtml" />
     <Content Include="Views\HoiDap\_Form_CauHoi.cshtml" />
+=======
+    <Content Include="Views\Quyen\_DanhSach_NguoiDung_Tim.cshtml" />
+    <Content Include="Views\Quyen\_Item_NguoiDung.cshtml" />
+    <Content Include="Views\Quyen\_DanhSach_NguoiDung.cshtml" />
+>>>>>>> 34daa2172b772238480facd068380917bfd2031d
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

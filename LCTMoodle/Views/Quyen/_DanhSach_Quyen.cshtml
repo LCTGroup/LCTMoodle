@@ -1,11 +1,32 @@
 ﻿@model List<DTOLayer.QuyenDTO>
 
+@{
+    int cap = ViewData["Cap"] == null ? 1 : (int)ViewData["Cap"];
+    int cha = ViewData["Cha"] == null ? 0 : (int)ViewData["Cha"];
+}
+
 @if (Model != null)
 {
     foreach(var quyen in Model)
     {
-        <li data-doi-tuong="item-quyen" class="item input">
+        <li data-doi-tuong="item-quyen" class="item input @(cap != 1 ? "an" : null)" data-cap="@cap" @(quyen.con == null ? "data-la" : null) data-ma="@quyen.ma" data-cha="@cha">
+            @for (int i = 0; i < cap; i++)
+            {
+                <u></u>
+            }
             <input type="checkbox" value="@quyen.ma" data-text="@quyen.ten" />
+            @if (quyen.con != null)
+            {
+                <a data-chuc-nang="an-hien-con"><i></i></a>
+            }            
         </li>
+        if (quyen.con != null)
+        {
+            @Html.Partial("~/Views/Quyen/_DanhSach_Quyen.cshtml", quyen.con, new ViewDataDictionary()
+            {
+                { "Cap", cap + 1 },
+                { "Cha", quyen.ma }
+            })
+        }
     }
 }

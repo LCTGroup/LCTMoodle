@@ -97,5 +97,32 @@ namespace DAOLayer
                 lienKet
             );
         }        
+
+        public static KetQua layTheoTuKhoa(string tuKhoa, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layNguoiDungTheoTuKhoa",
+                    new object[]
+                    {
+                        tuKhoa
+                    },
+                    lienKet
+                );
+        }
+
+        public static KetQua layTheoMaNhomNguoiDung(string phamVi, int? maNhomNguoiDung, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layNguoiDungTheoMaNhomNguoiDung",
+                    new object[]
+                    {
+                        phamVi,
+                        maNhomNguoiDung
+                    },
+                    lienKet
+                );
+        }
     }
 }
