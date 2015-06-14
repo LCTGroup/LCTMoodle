@@ -11,7 +11,8 @@ CREATE TABLE dbo.NguoiDung (
 	NgaySinh DATETIME,
 	DiaChi NVARCHAR(MAX),
 	SoDienThoai NVARCHAR(MAX),
-	MaHinhDaiDien INT
+	MaHinhDaiDien INT,
+	CoQuyenHT BIT DEFAULT 0
 );
 
 GO

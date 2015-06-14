@@ -60,5 +60,22 @@ namespace BUSLayer
 
             return danhSachCon;
         }
+
+        public static string[] layTheoMaDoiTuongVaMaNguoiDung_MangGiaTri(string phamVi, int maDoiTuong, int? maNguoiDung = null)
+        {
+            if (Session["NguoiDung"] != null || maNguoiDung.HasValue)
+            {
+                KetQua ketQua = QuyenDAO.layTheoMaDoiTuongVaMaNguoiDung_ChuoiGiaTri(phamVi, maDoiTuong, maNguoiDung.HasValue ? maNguoiDung.Value : (int)Session["NguoiDung"]);
+
+                if (ketQua.trangThai != 0)
+                {
+                    return new string[0];
+                }
+
+                return ketQua.ketQua.ToString().Split(',');
+            }
+
+            return new string[0];
+        }
     }
 }

@@ -34,7 +34,7 @@ END
 
 GO
 --Thêm
-CREATE PROC dbo.themNhomNguoiDung_NguoiDung (
+ALTER PROC dbo.themNhomNguoiDung_NguoiDung (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT, --MaNhomNguoiDung
 	@2 INT --MaNguoiDung
@@ -45,11 +45,17 @@ BEGIN
 		INSERT INTO dbo.NhomNguoiDung_' + @0 + '_NguoiDung (MaNhomNguoiDung, MaNguoiDung)
 			VALUES (' + @1 + ', ' + @2 + ')
 	')
+	IF (@0 = 'HT')
+	BEGIN
+		UPDATE dbo.NguoiDung
+			SET CoQuyenHT = 1
+			WHERE Ma = @2
+	END
 END
 
 GO
 --Xóa theo mã nhóm người dùng, người dùng
-CREATE PROC dbo.xoaNhomNguoiDung_NguoiDungTheoMaNhomNguoiDungVaMaNguoiDung (
+ALTER PROC dbo.xoaNhomNguoiDung_NguoiDungTheoMaNhomNguoiDungVaMaNguoiDung (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT, --MaNhomNguoiDung
 	@2 INT --MaNguoiDung
