@@ -18,17 +18,23 @@ namespace DTOLayer
             bang.Columns.AddRange(new DataColumn[] {
                 new DataColumn("TenTruong"),
                 new DataColumn("GiaTri"),
-                new DataColumn("LaChuoi"),
+                new DataColumn("Loai"),
             });
         }
 
-        public void Add(string tenTruong, string giaTri, bool laChuoi)
+        /// <summary>
+        /// 1: Không có dấu nháy (số) ---
+        /// 2: Có dấu nháy (chuỗi) ---
+        /// 3: Datetime
+        /// </summary>
+        /// <param name="loai">1, 2, 3</param>
+        public void Add(string tenTruong, string giaTri, int loai)
         {
             bang.Rows.Add(new object[]
             {
                 tenTruong,
                 string.IsNullOrEmpty(giaTri) ? null : giaTri,
-                laChuoi
+                loai
             });
         }
     }

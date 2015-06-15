@@ -122,17 +122,13 @@ function khoiTaoCauHoi($cauHoi) {
                 khoiTaoLCTForm($formSuaCauHoi, {
                     submit: function () {
                         $.ajax({
-                            url: '/HoiDap/capNhatCauHoi/',
+                            url: '/HoiDap/CapNhatCauHoi/',
                             method: 'POST',
                             dataType: 'JSON',
                             data: layDataLCTForm($formSuaCauHoi)
-                        }).done(function (data) {
+                        }).done(function (data) {                            
                             if (data.trangThai == 0) {
-                                moPopup({
-                                    tieuDe: 'Thông báo',
-                                    noiDung: 'Cập nhật thành công',
-                                    bieuTuong: 'chap-nhan'
-                                });
+                                $cauHoi.html(data.ketQua);
                             }
                             else {
                                 moPopup({

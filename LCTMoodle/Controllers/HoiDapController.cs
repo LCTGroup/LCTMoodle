@@ -124,9 +124,20 @@ namespace LCTMoodle.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult capNhatCauHoi(FormCollection form)
+        public ActionResult CapNhatCauHoi(FormCollection form)
         {
-            return Json(CauHoiBUS.capNhatTheoMa(chuyenForm(form)));
+            KetQua ketQua = CauHoiBUS.capNhatTheoMa(chuyenForm(form));
+            if (ketQua.trangThai == 0)
+            {
+                return Json(new KetQua() { 
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Item_CauHoi.cshtml", ketQua.ketQua)
+                });
+            }
+            else
+            {
+                return Json(ketQua);
+            }
         }
 	}
 }

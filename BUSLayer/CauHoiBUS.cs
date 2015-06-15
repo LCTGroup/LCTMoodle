@@ -83,15 +83,10 @@ namespace BUSLayer
                 switch (key)
                 {
                     case "TieuDe":
-                        bangCapNhat.Add("TieuDe", cauHoi.tieuDe, true);
+                        bangCapNhat.Add("TieuDe", cauHoi.tieuDe, 2);
                         break;
                     case "NoiDung":
-                        bangCapNhat.Add("NoiDung", cauHoi.noiDung, true);
-                        break;
-                    case "ThoiDiemCapNhat":
-                        string a = cauHoi.thoiDiemCapNhat.ToString();
-                        string b = cauHoi.thoiDiemCapNhat.Value.ToString();
-                        bangCapNhat.Add("ThoiDiemCapNhat", cauHoi.thoiDiemCapNhat.ToString(), true);
+                        bangCapNhat.Add("NoiDung", cauHoi.noiDung, 2);
                         break;
                     default:
                         break;
@@ -167,7 +162,6 @@ namespace BUSLayer
 
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
 
-            form.Add("ThoiDiemCapNhat", DateTime.Now.ToString());
             gan(ref cauHoi, form);
 
             ketQua = kiemTra(cauHoi, form.Keys.ToArray());

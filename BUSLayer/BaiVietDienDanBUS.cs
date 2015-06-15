@@ -94,13 +94,13 @@ namespace BUSLayer
                 switch (key)
                 {
                     case "TieuDe":
-                        bangCapNhat.Add("TieuDe", baiViet.tieuDe, true);
+                        bangCapNhat.Add("TieuDe", baiViet.tieuDe, 2);
                         break;
                     case "NoiDung":
-                        bangCapNhat.Add("NoiDung", baiViet.noiDung, true);
+                        bangCapNhat.Add("NoiDung", baiViet.noiDung, 2);
                         break;
                     case "TapTin":
-                        bangCapNhat.Add("MaTapTin", baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString(), false);
+                        bangCapNhat.Add("MaTapTin", baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString(), 1);
                         break;
                     default:
                         break;

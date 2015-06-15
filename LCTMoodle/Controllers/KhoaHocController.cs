@@ -64,5 +64,21 @@ namespace LCTMoodle.Controllers
                 return Json(ketQua);
             }
         }
+
+        [HttpPost]
+        public ActionResult XuLyDangKyThamGia(int ma)
+        {
+            return Json(null);
+        }
+
+        public ActionResult XuLyMoi(int ma, int maNguoiDung)
+        {
+            return null;
+        }
+
+        public ActionResult XuLyChan(int ma, int maNguoiDung)
+        {
+            return null;
+        }
 	}
 }

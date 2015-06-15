@@ -80,7 +80,7 @@ namespace BUSLayer
                 switch (key)
                 {
                     case "NoiDung":
-                        bangCapNhat.Add("NoiDung", traLoi.noiDung, true);
+                        bangCapNhat.Add("NoiDung", traLoi.noiDung, 2);
                         break;                    
                     default:
                         break;

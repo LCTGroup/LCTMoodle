@@ -6,7 +6,7 @@ AS
 TABLE (
 	TenTruong NVARCHAR(MAX) NOT NULL,
 	GiaTri NVARCHAR(MAX),
-	LaChuoi BIT NOT NULL
+	Loai TINYINT NOT NULL
 )
 
 GO
@@ -24,10 +24,14 @@ BEGIN
 		CASE
 			WHEN GiaTri IS NULL THEN
 				'NULL'
-			WHEN LaChuoi = 1 THEN 
-				'N''' + REPLACE(GiaTri, '''', '''''') + ''''
-			ELSE
+			WHEN Loai = 1 THEN 
 				GiaTri
+			WHEN Loai = 2 THEN 
+				'N''' + REPLACE(GiaTri, '''', '''''') + ''''
+			WHEN Loai = 3 THEN 
+				'CONVERT(DATETIME, ''' + GiaTri + ''', 103)'
+			ELSE
+				'NULL'
 		END + ','
 		FROM @0
 
