@@ -1,9 +1,8 @@
-﻿
-//#region Khởi tạo
+﻿//#region Khởi tạo
 
 $(function () {
     //Khởi tạo chức năng trả lời câu hỏi
-    $formTraLoi = $('#tra_loi_cau_hoi');
+    $formTraLoi = $('[data-doi-tuong="form-tra-loi"]');
     khoiTaoChucNangTraLoi($formTraLoi);
 
     //Khởi tạo Câu Hỏi
@@ -23,10 +22,9 @@ function khoiTaoChucNangTraLoi($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
             $.ajax({
-                url: $form.attr('action'),
-                method: $form.attr('method'),
-                data: $form.serialize(),
-                asyne: false
+                url: '/HoiDap/XuLyThemTraLoi',
+                method: 'POST',
+                data: layDataLCTForm($form)
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     $traLoiMoi = $(data.ketQua);
@@ -108,14 +106,18 @@ function khoiTaoCauHoi($cauHoi) {
     });
 
     $cauHoi.find('[data-chuc-nang="sua-cau-hoi"]').on('click', function () {
+        var ma = $cauHoi.attr('data-ma');
         $.ajax({
-            url: '/HoiDap/_Form_CauHoi/' + $cauHoi.attr('data-ma'),
+            url: '/HoiDap/_Form_CauHoi/' + ma,
             method: 'POST',
             dataType: 'JSON'
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $formSuaCauHoi = $(data.ketQua);
-                    
+
+                //Lưu câu hỏi trước khi sửa
+                mangTam['CauHoi' + ma] = $cauHoi.html();
+
                 $cauHoi.html($formSuaCauHoi);
                 khoiTaoLCTForm($formSuaCauHoi, {
                     submit: function () {
@@ -140,7 +142,16 @@ function khoiTaoCauHoi($cauHoi) {
                                 })
                             }
                         });
-                    }
+                    },
+                    validates: [{
+                        input: $formSuaCauHoi.find('[data-chuc-nang="huy"]'),
+                        customEvent: {
+                            'click': function () {                                
+                                $cauHoi.html(mangTam['CauHoi' + ma]);
+                                khoiTaoCauHoi($cauHoi);
+                            }
+                        }
+                    }]
                 });
             }
             else {

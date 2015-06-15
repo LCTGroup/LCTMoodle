@@ -89,6 +89,8 @@ namespace BUSLayer
                         bangCapNhat.Add("NoiDung", cauHoi.noiDung, true);
                         break;
                     case "ThoiDiemCapNhat":
+                        string a = cauHoi.thoiDiemCapNhat.ToString();
+                        string b = cauHoi.thoiDiemCapNhat.Value.ToString();
                         bangCapNhat.Add("ThoiDiemCapNhat", cauHoi.thoiDiemCapNhat.ToString(), true);
                         break;
                     default:
