@@ -68,3 +68,27 @@ BEGIN
 		FROM dbo.KhoaHoc
 		WHERE Ma = @0
 END
+
+GO
+--Lấy toàn bộ khóa học
+CREATE PROC dbo.layKhoaHoc
+AS
+BEGIN
+	SELECT 
+		Ma,
+		Ten,
+		MoTa,
+		MaHinhDaiDien,
+		MaChuDe,
+		MaNguoiTao,
+		ThoiDiemTao,
+		ThoiDiemHetHan,
+		CanDangKy,
+		HanDangKy,
+		PhiThamGia,
+		CheDoRiengTu,
+		CoBangDiem,
+		CoBangDiemDanh,
+		CanDuyetBaiViet
+		FROM dbo.KhoaHoc
+END

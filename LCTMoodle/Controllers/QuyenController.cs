@@ -12,18 +12,38 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult QuanLy(string phamVi = "HT", int maDoiTuong = 0)
         {
+            //Kiểm tra phạm vi hợp lệ
             if (Array.IndexOf(new string[] { "HT", "KH" }, phamVi) == -1)
             {
                 RedirectToAction("Index", "TrangChu");
-            }            
+            }
 
-            KetQua ketQua = NhomNguoiDungBUS.layTheoMaDoiTuong(phamVi, maDoiTuong);
+            KetQua ketQua;
 
+            //Kiểm tra đối tượng hợp lệ
+            switch(phamVi)
+            {
+                case "KH":
+                    ketQua = KhoaHocBUS.layTheoMa(maDoiTuong);
+                    if (ketQua.trangThai != 0)
+                    {
+                        return RedirectToAction("Index", "TrangChu");
+                    }
+
+                    ViewData["KhoaHoc"] = ketQua.ketQua;
+                    break;
+                default:
+                    break;
+            }
+
+            //Lấy danh sách nhóm người dùng
+            ketQua = NhomNguoiDungBUS.layTheoMaDoiTuong(phamVi, maDoiTuong);
             if (ketQua.trangThai == 0)
             {
                 ViewData["DanhSachNhom"] = ketQua.ketQua;
             }
 
+            //Lấy danh sách quyền hiển thị mặc định
             switch (phamVi)
             {
                 case "HT":
@@ -43,9 +63,15 @@ namespace LCTMoodle.Controllers
             }
 
             ViewData["PhamVi"] = phamVi;
-            ViewData["DoiTuong"] = maDoiTuong;
 
-            return View();
+            //Render view
+            switch (phamVi)
+            {
+                case "KH":
+                    return View("~/Views/KhoaHoc/QuanLyQuyen.cshtml");
+                default:
+                    return View();
+            }
         }
 
         public ActionResult _DanhSachQuyen(string phamVi)

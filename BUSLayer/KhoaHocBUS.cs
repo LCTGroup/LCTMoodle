@@ -107,5 +107,10 @@ namespace BUSLayer
         {
             return KhoaHocDAO.layTheoMa(ma);
         }
+
+        public static KetQua lay()
+        {
+            return KhoaHocDAO.lay();
+        }
     }
 }

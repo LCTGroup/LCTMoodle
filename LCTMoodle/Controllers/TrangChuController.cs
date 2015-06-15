@@ -14,7 +14,9 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            KetQua ketQua = KhoaHocBUS.lay();
+
+            return View(ketQua.trangThai == 0 ? ketQua.ketQua : null);
         }
 
         public ActionResult FormMau()

@@ -5,10 +5,11 @@
 
     ViewData["DieuHuong"] = new List<string>()
     {
-        "Khóa học của tôi", "/KhoaHoc",
         Model.ten, "/KhoaHoc/" + Model.ma
     };
 
+    List<string> chucNang = new List<string>();
+    
     ViewData["ChucNang"] = new List<string>()
     {
         "Quản lý quyền", "href=\"/QuanlyQuyen/KH/" + Model.ma + "\""
