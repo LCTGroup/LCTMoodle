@@ -72,5 +72,20 @@ namespace DAOLayer
 
             return thanhVien;
         }
+
+        public static KetQua them(KhoaHoc_NguoiDungDTO thanhVien)
+        {
+            return khongTruyVan
+                (
+                    "themKhoaHoc_NguoiDung",
+                    new object[]
+                    {
+                        layMa(thanhVien.khoaHoc),
+                        layMa(thanhVien.nguoiDung),
+                        thanhVien.trangThai,
+                        layMa(thanhVien.nguoiThem)
+                    }
+                );
+        }
     }
 }
