@@ -93,13 +93,40 @@
         padding-top: 10px;
     }
 
+
 /*#endregion */
 
 /*#region Trả lời */
 
-.tra-loi {
-    border-color: #e5e5e5 !important;
-}
+    /*#region Danh sách trả lời*/
+
+    .danh-sach-tra-loi {
+
+    }
+        .danh-sach-tra-loi + * {
+            display: none;
+            text-align:center;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            color: #555;
+            padding: 10px;
+        }
+        .danh-sach-tra-loi:empty + * {
+            display: block;
+        }
+
+    /*#endregion*/
+
+    /*#region Item Trả Lời*/
+
+    .tra-loi {
+        border-color: #e5e5e5 !important;
+    }
+
+    /*#endregion*/
+
+    /*#region Trạng thái*/
+
     .binh-thuong {
         border-left: 3px solid #ccc;
     }
@@ -107,12 +134,11 @@
         border-left: 3px solid #08c;
     }
 
+    /*#endregion*/
+
 /*#endregion */
 
 /*#region Form trả lời */
 
-.form-tra-loi .noi-dung {
-    width: 100%;
-}
 
 /*#endregion */

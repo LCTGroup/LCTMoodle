@@ -1,18 +1,21 @@
 ﻿@model DTOLayer.CauHoiDTO
 
-<form class="lct-form" action="/HoiDap/CapNhatCauHoi" method="post" id="">
-    <input type="hidden" name="MaCauHoi" value="@ViewData["MaCauHoi"]" />
+<form class="lct-form" data-doi-tuong="form-cau-hoi" @(Model != null ? "data-cap-nhat" : null)>
+    @if (Model != null)
+    {
+        <input type="hidden" name="Ma" value="@Model.ma" />   
+    }    
     <article>
         <ul>
             <li>
                 <section class="noi-dung">
                     <article class="input">
-                        <input type="text" name="TieuDe" placeholder="Tiêu đề" value="@Model.tieuDe"/>
+                        <input type="text" name="TieuDe" placeholder="Tiêu đề" data-mac-dinh="@(Model != null ? Model.tieuDe : null)" />
                     </article>
                 </section>
             </li>
             <li>
-                <section class="noi-dung">
+                <section class="noi-dung noi-dung-ckeditor">
                     <article class="input">
                         <textarea data-validate="bat-buoc" name="NoiDung" data-input-type="editor" placeholder="Nội dung" data-mac-dinh="@(Model != null ? Html.Raw(Model.noiDung) : null)"></textarea>
                     </article>
@@ -20,8 +23,15 @@
             </li>
         </ul>
         <section class="khung-button">
-            <button class="chap-nhan">Cập nhật</button>
-            <button class="canh-bao">Hủy</button>
+            @if (Model != null)
+            {
+                <button type="submit" class="chap-nhan">Cập nhật</button>
+                <button class="canh-bao">Hủy</button>
+            }
+            else
+            {
+                <button type="submit" class="chap-nhan">Thêm câu hỏi</button>
+            }      
         </section>
     </article>
 </form>

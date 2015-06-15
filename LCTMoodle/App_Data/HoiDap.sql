@@ -29,7 +29,7 @@ END
 
 GO
 --Xóa Câu Hỏi
-CREATE PROC dbo.xoaCauHoi(
+CREATE PROC dbo.xoaCauHoiTheoMa(
 	@0 INT --Mã câu hỏi
 )
 AS
@@ -126,7 +126,7 @@ END
 
 GO
 --Xóa Trả Lời
-CREATE PROC dbo.xoaTraLoi(
+CREATE PROC dbo.xoaTraLoiTheoMa(
 	@0 INT --Mã trả lời
 )
 AS

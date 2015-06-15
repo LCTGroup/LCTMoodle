@@ -1,14 +1,22 @@
-﻿$(function () {    
-    khoiTaoThemCauHoi($('#tao_cau_hoi_form'));
+﻿//#region Khởi tạo
+
+$(function () {
+    $form = $('[data-doi-tuong="form-cau-hoi"]');
+
+    khoiTaoThemCauHoi($form);
 });
+
+//#endregion
+
+//#region Tạo câu hỏi
 
 function khoiTaoThemCauHoi($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
             $.ajax({
-                url: $form.attr('action'),
-                method: $form.attr('method'),
-                data: $form.serialize(),
+                url: '/HoiDap/XuLyThemCauHoi',
+                method: 'POST',
+                data: layDataLCTForm($form),
                 dataType: 'JSON',
                 async: false
             }).done(function (data) {
@@ -26,7 +34,7 @@ function khoiTaoThemCauHoi($form) {
                 } else {
                     moPopup({
                         tieuDe: 'Thông báo',
-                        thongBao: 'Tạo câu hỏi thất bại',                        
+                        thongBao: 'Tạo câu hỏi thất bại',
                         bieuTuong: 'nguy-hiem'
                     });
                 }
@@ -40,3 +48,5 @@ function khoiTaoThemCauHoi($form) {
         }
     });
 }
+
+//#endregion

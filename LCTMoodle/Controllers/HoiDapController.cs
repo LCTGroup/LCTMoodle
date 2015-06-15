@@ -28,7 +28,7 @@ namespace LCTMoodle.Controllers
         public ActionResult XemCauHoi(int ma)
         {
             ViewData["MaCauHoi"] = ma;
-            KetQua ketQua = CauHoiBUS.layCauHoiTheoMa(ma);
+            KetQua ketQua = CauHoiBUS.layTheoMa(ma);
 
             if (ketQua.trangThai != 0)
             {
@@ -36,6 +36,31 @@ namespace LCTMoodle.Controllers
             }
 
             return View(ketQua.ketQua);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyXoaCauHoi(int ma)
+        {
+            return Json(CauHoiBUS.xoaTheoMa(ma));
+        }
+
+        public ActionResult _Form_CauHoi(int ma = 0)
+        {
+            KetQua ketQua = CauHoiBUS.layTheoMa(ma);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+
+                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Form_CauHoi.cshtml", ketQua.ketQua)
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult _Form_TraLoi(int ma = 0)
@@ -73,7 +98,7 @@ namespace LCTMoodle.Controllers
             {
                 return Json(new KetQua()
                 {
-                    trangThai = 3,
+                    trangThai = 4,
                     ketQua = "Bạn chưa đăng nhập"
                 });
             }
@@ -91,12 +116,17 @@ namespace LCTMoodle.Controllers
             return Json(ketQua);
         }
 
+        [HttpPost]
         public ActionResult XuLyXoaTraLoi(int ma)
         {
-            return Json(
-                TraLoiBUS.xoaTheoMa(ma), 
-                JsonRequestBehavior.AllowGet    
-            );
+            return Json(TraLoiBUS.xoaTheoMa(ma));
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult capNhatCauHoi(FormCollection form)
+        {
+            return Json(CauHoiBUS.capNhatTheoMa(chuyenForm(form)));
         }
 	}
 }

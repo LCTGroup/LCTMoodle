@@ -117,8 +117,13 @@ namespace BUSLayer
             
             return CauHoiDAO.them(cauHoi);
         }
+
+        public static KetQua xoaTheoMa(int? ma)
+        {
+            return CauHoiDAO.xoaTheoMa(ma);
+        }
         
-        public static KetQua layCauHoiTheoMa(int ma)
+        public static KetQua layTheoMa(int? ma)
         {            
             return CauHoiDAO.layTheoMa(ma, new LienKet()
             {
@@ -152,7 +157,7 @@ namespace BUSLayer
                 };
             }
 
-            KetQua ketQua = layCauHoiTheoMa(maCauHoi.Value);
+            KetQua ketQua = CauHoiBUS.layTheoMa(maCauHoi.Value);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;

@@ -1,12 +1,9 @@
-﻿@model DTOLayer.TraLoiDTO
-           
-<!-- region muc Trả lời -->
-
+﻿@model DTOLayer.TraLoiDTO           
 @if (Model != null)
 {
-    <li class="hop hop-1-vien" data-doi-tuong="muc_tra_loi" data-ma="@Model.ma">
-        <section class="noi-dung tra-loi">
-            <article class="muc-hoi-dap binh-thuong">
+    <li class="hop hop-1-vien" data-doi-tuong="tra-loi" data-ma="@Model.ma">
+        <section class="noi-dung">
+            <article class="muc-hoi-dap tra-loi binh-thuong">
                 <section class="khung-chuc-nang-lct">
                     <ul data-doi-tuong="traloi-@Model.ma">
                         <li>
@@ -35,7 +32,7 @@
                     <div class="thoi-gian">@Model.thoiDiemTao</div>
                 </section>
                 <section class="chi-tiet">
-                    <div class="noi-dung">
+                    <div class="noi-dung noi-dung-ckeditor">
                         @Html.Raw(Model.noiDung)
                     </div>
                 </section>
@@ -43,5 +40,3 @@
         </section>
     </li>
 }
-
-<!-- endregion Trả lời -->
