@@ -25,8 +25,8 @@
 <!-- region Câu hỏi -->
 
 <article class="hop hop-1-vien">
-    <section class="noi-dung cau-hoi">
-        <article class="muc-hoi-dap">
+    <section class="noi-dung">
+        <article class="muc-hoi-dap cau-hoi" data-doi-tuong="cau-hoi" data-ma="@Model.ma">
             <section class="khung-chuc-nang-lct">
                 <ul data-doi-tuong="cauhoi-@Model.ma">
                     <li>
@@ -56,7 +56,7 @@
             </section>
             <section class="chi-tiet">
                 <div class="tieu-de">@Model.tieuDe</div>
-                <div class="noi-dung">
+                <div class="noi-dung noi-dung-ckeditor">
                     @Html.Raw(Model.noiDung)
                 </div>
             </section>
@@ -70,22 +70,16 @@
 
 <article class="hop">
     <section class="tieu-de">Danh sách trả lời</section>
-    <ul class="noi-dung" id="danh_sach_tra_loi">
-        @{
-            if (Model.danhSachTraLoi != null)
+    <ul class="noi-dung danh-sach-tra-loi" id="danh_sach_tra_loi">@{
+        if (Model.danhSachTraLoi != null)
+        {
+            foreach (var traLoi in Model.danhSachTraLoi)
             {
-                foreach (var traLoi in Model.danhSachTraLoi)
-                {
-                    @Html.Partial("~/Views/HoiDap/_item_TraLoi.cshtml", traLoi);
-                }
-            }
-            else
-            {
-                @:<p id="thong_bao_chua_co_tra_loi" align="center">Chưa có trả lời</p>
+                @Html.Partial("~/Views/HoiDap/_Item_TraLoi.cshtml", traLoi);
             }
         }
-
-    </ul>
+    }</ul>
+    <section>Chưa có trả lời</section>
 </article>
 
 <!-- endregion Trả lời -->

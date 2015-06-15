@@ -1,6 +1,14 @@
-﻿$(function () {    
-    khoiTaoThemCauHoi($('#tao_cau_hoi_form'));
+﻿//#region Khởi tạo
+
+$(function () {
+    $form = $('#them_cau_hoi');
+
+    khoiTaoThemCauHoi($form);
 });
+
+//#endregion
+
+//#region Tạo câu hỏi
 
 function khoiTaoThemCauHoi($form) {
     khoiTaoLCTForm($form, {
@@ -26,7 +34,7 @@ function khoiTaoThemCauHoi($form) {
                 } else {
                     moPopup({
                         tieuDe: 'Thông báo',
-                        thongBao: 'Tạo câu hỏi thất bại',                        
+                        thongBao: 'Tạo câu hỏi thất bại',
                         bieuTuong: 'nguy-hiem'
                     });
                 }
@@ -40,3 +48,5 @@ function khoiTaoThemCauHoi($form) {
         }
     });
 }
+
+//#endregion

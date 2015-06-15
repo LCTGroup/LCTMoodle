@@ -82,7 +82,7 @@ namespace DAOLayer
         {
             return khongTruyVan
             (
-                "xoaTraLoi",
+                "xoaTraLoiTheoMa",
                 new object[]
                 {
                     ma

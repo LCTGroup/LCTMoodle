@@ -54,6 +54,7 @@ namespace DAOLayer
 
             return cauHoi;
         }  
+        
         public static KetQua them(CauHoiDTO cauHoi)
         {
             return layGiaTri<int>
@@ -67,6 +68,7 @@ namespace DAOLayer
                 }
             );
         }
+        
         public static KetQua layTheoMa(int? maCauHoi, LienKet lienKet = null)
         {
             return layDong
@@ -79,6 +81,19 @@ namespace DAOLayer
                 lienKet
             );
         }
+
+        public static KetQua xoaTheoMa(int? ma)
+        {
+            return khongTruyVan
+            (
+                "xoaCauHoiTheoMa",
+                new object[] 
+                {
+                    ma
+                }
+            );
+        }
+        
         public static KetQua layDanhSachCauHoi(LienKet lienKet = null)
         {
             return layDanhSachDong
@@ -90,6 +105,7 @@ namespace DAOLayer
                 lienKet
             );
         }
+        
         public static KetQua capNhatTheoMa(int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)
         {
             return layDong(

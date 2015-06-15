@@ -117,6 +117,11 @@ namespace BUSLayer
             
             return CauHoiDAO.them(cauHoi);
         }
+
+        public static KetQua xoaTheoMa(int? ma)
+        {
+            return CauHoiDAO.xoaTheoMa(ma);
+        }
         
         public static KetQua layCauHoiTheoMa(int ma)
         {            

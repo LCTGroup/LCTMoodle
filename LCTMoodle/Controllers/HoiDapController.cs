@@ -38,6 +38,12 @@ namespace LCTMoodle.Controllers
             return View(ketQua.ketQua);
         }
 
+        [HttpPost]
+        public ActionResult XuLyXoaCauHoi(int ma)
+        {
+            return Json(CauHoiBUS.xoaTheoMa(ma));
+        }
+
         public ActionResult _Form_TraLoi(int ma = 0)
         {
             KetQua ketQua = TraLoiBUS.layTheoMa(ma);
@@ -73,7 +79,7 @@ namespace LCTMoodle.Controllers
             {
                 return Json(new KetQua()
                 {
-                    trangThai = 3,
+                    trangThai = 4,
                     ketQua = "Bạn chưa đăng nhập"
                 });
             }
@@ -91,12 +97,10 @@ namespace LCTMoodle.Controllers
             return Json(ketQua);
         }
 
+        [HttpPost]
         public ActionResult XuLyXoaTraLoi(int ma)
         {
-            return Json(
-                TraLoiBUS.xoaTheoMa(ma), 
-                JsonRequestBehavior.AllowGet    
-            );
+            return Json(TraLoiBUS.xoaTheoMa(ma));
         }
 	}
 }
