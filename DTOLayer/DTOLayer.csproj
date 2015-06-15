@@ -44,6 +44,7 @@
     <Compile Include="Form.cs" />
     <Compile Include="GiaoTrinhDTO.cs" />
     <Compile Include="KetQua.cs" />
+    <Compile Include="KhoaHoc_NguoiDungDTO.cs" />
     <Compile Include="LienKet.cs" />
     <Compile Include="NhomNguoiDung_NguoiDungDTO.cs" />
     <Compile Include="NhomNguoiDung_QuyenDTO.cs" />

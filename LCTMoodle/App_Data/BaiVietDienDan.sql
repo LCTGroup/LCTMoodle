@@ -90,7 +90,7 @@ END
 
 GO
 --Cập nhật theo mã
-ALTER PROC dbo.capNhatBaiVietDienDanTheoMa (
+CREATE PROC dbo.capNhatBaiVietDienDanTheoMa (
 	@0 INT, --Mã
 	@1 dbo.BangCapNhat READONLY
 )

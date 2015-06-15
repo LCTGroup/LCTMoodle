@@ -83,13 +83,13 @@ namespace BUSLayer
                 switch (key)
                 {
                     case "TieuDe":
-                        bangCapNhat.Add("TieuDe", cauHoi.tieuDe, true);
+                        bangCapNhat.Add("TieuDe", cauHoi.tieuDe, 2);
                         break;
                     case "NoiDung":
-                        bangCapNhat.Add("NoiDung", cauHoi.noiDung, true);
+                        bangCapNhat.Add("NoiDung", cauHoi.noiDung, 2);
                         break;
                     case "ThoiDiemCapNhat":
-                        bangCapNhat.Add("ThoiDiemCapNhat", cauHoi.thoiDiemCapNhat.ToString(), true);
+                        bangCapNhat.Add("ThoiDiemCapNhat", cauHoi.thoiDiemCapNhat.HasValue ? cauHoi.thoiDiemCapNhat.Value.ToString("d/M/yyyy H:mm") : null, 1);
                         break;
                     default:
                         break;
