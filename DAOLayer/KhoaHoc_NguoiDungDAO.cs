@@ -87,5 +87,18 @@ namespace DAOLayer
                     }
                 );
         }
+
+        public static KetQua layTheoMaKhoaHocVaMaNguoiDung(int? maKhoaHoc, int? maNguoiDung, LienKet lienKet = null)
+        {
+            return layDong
+                (
+                    "layKhoaHoc_NguoiDungTheoMaKhoaHocVaMaNguoiDung",
+                    new object[] 
+                    { 
+                        maKhoaHoc, maNguoiDung
+                    },
+                    lienKet
+                );
+        }
     }
 }

@@ -74,7 +74,7 @@ namespace DAOLayer
                         khoaHoc.thoiDiemHetHan = layDateTime(dong, i);
                         break;
                     case "CanDangKy":
-                        khoaHoc.canDangKy = layBool(dong, i, false);
+                        khoaHoc.canDangKy = layBool(dong, i);
                         break;
                     case "HanDangKy":
                         khoaHoc.hanDangKy = layDateTime(dong, i);
@@ -83,16 +83,16 @@ namespace DAOLayer
                         khoaHoc.phiThamGia = layInt(dong, i);
                         break;
                     case "CheDoRiengTu":
-                        khoaHoc.cheDoRiengTu = CheDoRiengTu.lay(layString(dong, i));
+                        khoaHoc.cheDoRiengTu = layString(dong, i);
                         break;
                     case "CoBangDiem":
-                        khoaHoc.coBangDiem = layBool(dong, i, false);
+                        khoaHoc.coBangDiem = layBool(dong, i);
                         break;
                     case "CoBangDiemDanh":
-                        khoaHoc.coBangDiemDanh = layBool(dong, i, false);
+                        khoaHoc.coBangDiemDanh = layBool(dong, i);
                         break;
                     case "CanDuyetBaiViet":
-                        khoaHoc.canDuyetBaiViet = layBool(dong, i, false);
+                        khoaHoc.canDuyetBaiViet = layBool(dong, i);
                         break;
                     default:
                         break;
@@ -130,7 +130,7 @@ namespace DAOLayer
                     khoaHoc.canDangKy,
                     khoaHoc.hanDangKy,
                     khoaHoc.phiThamGia,
-                    khoaHoc.cheDoRiengTu.ma
+                    khoaHoc.cheDoRiengTu
                 }
             );
         }

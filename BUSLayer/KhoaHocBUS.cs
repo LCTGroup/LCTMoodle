@@ -38,7 +38,7 @@ namespace BUSLayer
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (coKiemTra("CheDoRiengTu", truong, kiemTra) && khoaHoc.cheDoRiengTu == null)
+            if (coKiemTra("CheDoRiengTu", truong, kiemTra) && string.IsNullOrEmpty(khoaHoc.cheDoRiengTu))
             {
                 loi.Add("Chế độ riêng tư không được bỏ trống");
             }
@@ -80,7 +80,7 @@ namespace BUSLayer
                 hinhDaiDien = ketQua.ketQua as TapTinDTO,
                 canDangKy = layBool(form, "CanDangKy"),
                 phiThamGia = layInt(form, "PhiThamGia"),
-                cheDoRiengTu = CheDoRiengTu.lay(layString(form, "CheDoRiengTu"))
+                cheDoRiengTu = layString(form, "CheDoRiengTu")
             };
 
             if (layBool(form, "CoHan"))

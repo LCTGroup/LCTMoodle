@@ -20,7 +20,7 @@ ALTER PROC dbo.themKhoaHoc_NguoiDung (
 )
 AS
 BEGIN
-	IF (@2 = 4)
+	IF (@2 = 3 OR @2 = 4)
 	BEGIN
 		DELETE FROM dbo.KhoaHoc_NguoiDung
 			WHERE 
@@ -30,4 +30,23 @@ BEGIN
 
 	INSERT INTO dbo.KhoaHoc_NguoiDung (MaKhoaHoc, MaNguoiDung, TrangThai, MaNguoiThem)
 		VALUES (@0, @1, @2, @3)
+END
+
+GO
+--Lấy theo mã khóa học và mã người dùng
+ALTER PROC dbo.layKhoaHoc_NguoiDungTheoMaKhoaHocVaMaNguoiDung (
+	@0 INT, --MaKhoaHoc
+	@1 INT --MaNguoiDung
+)
+AS
+BEGIN
+	SELECT TOP 1
+		MaKhoaHoc,
+		MaNguoiDung,
+		TrangThai,
+		MaNguoiThem
+		FROM dbo.KhoaHoc_NguoiDung
+		WHERE
+			MaNguoiDung = 1 AND
+			MaKhoaHoc = @0
 END
