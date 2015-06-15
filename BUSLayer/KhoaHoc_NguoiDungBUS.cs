@@ -56,19 +56,20 @@ namespace BUSLayer
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="trangThai">
-        /// Nếu trạng thái = 0 => Sẽ là đăng ký hoặc tham gia tùy theo khóa học thiết lập
+        /// <param name="loai">
+        /// Nếu loại = 0 => Sẽ là đăng ký hoặc tham gia tùy theo khóa học thiết lập
+        /// 1: Tham gia --- 2: Đăng ký --- 3: Mời --- 4: Chặn
         /// </param>
         /// <param name="maNguoiDung">
         /// Trường hợp trạng thái = 1, 2 (tham gia, đăng ký) => không cần truyền
         /// Trường hợp trạng thái = 3, 4 (mời, chặn) => bắt buộc truyền
         /// </param>
         /// <returns></returns>
-        public static KetQua them(int maKhoaHoc, int trangThai = 0, int? maNguoiDung = null)
+        public static KetQua them(int maKhoaHoc, int loai = 0, int? maNguoiDung = null)
         {
             KhoaHoc_NguoiDungDTO thanhVien;
 
-            if (trangThai == 0 || trangThai == 1 || trangThai == 2)
+            if (loai == 0 || loai == 1 || loai == 2)
             {
                 //Lấy khóa học để kiểm tra hạn đăng ký nếu có
                 //và thiết lập trạng thái nếu cần
@@ -80,13 +81,13 @@ namespace BUSLayer
                 KhoaHocDTO khoaHoc = ketQua.ketQua as KhoaHocDTO;
 
                 //Thiết lập trạng thái nếu cần
-                if (trangThai == 0)
+                if (loai == 0)
                 {
-                    trangThai = khoaHoc.canDangKy ? 2 : 1;
+                    loai = khoaHoc.canDangKy ? 2 : 1;
                 }
 
                 //Kiểm tra thời hạn
-                if (trangThai == 2 && DateTime.Now > khoaHoc.hanDangKy)
+                if (loai == 2 && DateTime.Now > khoaHoc.hanDangKy)
                 {
                     return new KetQua()
                     {
@@ -103,7 +104,7 @@ namespace BUSLayer
                 {
                     khoaHoc = layDTO<KhoaHocDTO>(maKhoaHoc),
                     nguoiDung = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
-                    trangThai = trangThai
+                    trangThai = loai
                 };
 
                 ketQua = kiemTra(thanhVien, new string[] { "NguoiThem" }, false);
@@ -115,11 +116,24 @@ namespace BUSLayer
             }
             else
             {
+                //Nếu đã trong nhóm thì ko thể mời
+                if (loai == 3 && KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung).trangThai == 0)
+                {
+                    return new KetQua()
+                    {
+                        trangThai = 3,
+                        ketQua = new List<string>()
+                        {
+                            "Thành viên hiện đang trong nhóm"
+                        }
+                    };
+                }
+
                 thanhVien = new KhoaHoc_NguoiDungDTO()
                 {
                     khoaHoc = layDTO<KhoaHocDTO>(maKhoaHoc),
                     nguoiDung = layDTO<NguoiDungDTO>(maNguoiDung),
-                    trangThai = trangThai,
+                    trangThai = loai,
                     nguoiThem = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?)
                 };
 
@@ -132,6 +146,11 @@ namespace BUSLayer
             }
 
             return KhoaHoc_NguoiDungDAO.them(thanhVien);
+        }
+
+        public static KetQua layTheoMaKhoaHocVaMaNguoiDung(int maKhoaHoc, int maNguoiDung)
+        {
+            return KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
         }
     }
 }

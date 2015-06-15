@@ -479,6 +479,7 @@
         [data-hien-thi="bai-tap"] .khung-bai-viet .khung-noi-dung .tap-tin {
             padding: 5px;
             border-top: 1px dashed #eee;
+            margin-top: 5px;
         }
 
             [data-hien-thi="bai-tap"] .khung-bai-viet .khung-noi-dung .tap-tin a {

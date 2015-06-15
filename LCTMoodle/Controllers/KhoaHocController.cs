@@ -14,16 +14,30 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult Xem(int ma)
         {
+            //Lấy khóa học
             KetQua ketQua = KhoaHocBUS.layTheoMa(ma);
-
-            if (ketQua.trangThai == 0)
-            {
-                return View(ketQua.ketQua);
-            }
-            else
+            if (ketQua.trangThai != 0)
             {
                 return RedirectToAction("Index", "TrangChu");
             }
+            KhoaHocDTO khoaHoc = ketQua.ketQua as KhoaHocDTO;
+
+            //Lấy thành viên
+            KhoaHoc_NguoiDungDTO thanhVien = null;
+            if (Session["NguoiDung"] != null)
+            {
+                ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(khoaHoc.ma.Value, (int)Session["NguoiDung"]);
+                thanhVien = ketQua.trangThai == 0 ? ketQua.ketQua as KhoaHoc_NguoiDungDTO : null;
+            }
+
+            if ((thanhVien == null && khoaHoc.cheDoRiengTu == "NoiBo") ||
+                (thanhVien != null && thanhVien.trangThai == 4))
+            {
+                return RedirectToAction("Index", "TrangChu");
+            }
+
+            ViewData["ThanhVien"] = thanhVien;
+            return View(khoaHoc);
         }
 
         public ActionResult Tao()
@@ -68,17 +82,17 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyDangKyThamGia(int ma)
         {
-            return Json(null);
+            return Json(KhoaHoc_NguoiDungBUS.them(ma));
         }
 
         public ActionResult XuLyMoi(int ma, int maNguoiDung)
         {
-            return null;
+            return Json(KhoaHoc_NguoiDungBUS.them(ma, 3, maNguoiDung));
         }
 
         public ActionResult XuLyChan(int ma, int maNguoiDung)
         {
-            return null;
+            return Json(KhoaHoc_NguoiDungBUS.them(ma, 4, maNguoiDung));
         }
 	}
 }

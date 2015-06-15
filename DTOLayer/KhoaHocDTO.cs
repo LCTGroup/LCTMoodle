@@ -19,7 +19,7 @@ namespace DTOLayer
         public bool canDangKy;
         public DateTime? hanDangKy;
         public int? phiThamGia;
-        public CheDoRiengTu cheDoRiengTu;
+        public string cheDoRiengTu;
         public bool coBangDiem;
         public bool coBangDiemDanh;
         public bool canDuyetBaiViet;
