@@ -188,7 +188,7 @@
     <Content Include="Content\styles\LCT\stroke-icons.css" />
     <Content Include="Content\styles\NguoiDung\Index.css" />
     <Content Include="Content\styles\Quyen\QuanLy.css" />
-    <Content Include="Content\styles\TrangChu\TrangMau.css" />
+    <Content Include="Content\styles\TrangChu\Index.css" />
     <Content Include="Global.asax" />
     <Content Include="Plugin\ckeditor\build-config.js" />
     <Content Include="Plugin\ckeditor\ckeditor.js" />
@@ -333,6 +333,7 @@
     <Content Include="Plugin\ckeditor\plugins\wsc\dialogs\wsc.css" />
     <Content Include="Plugin\ckeditor\plugins\wsc\dialogs\wsc.js" />
     <Content Include="Plugin\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="Plugin\ckeditor\plugins\youtube\images\icon.png" />
     <Content Include="Plugin\ckeditor\skins\office2013\dialog.css" />
     <Content Include="Plugin\ckeditor\skins\office2013\editor.css" />
     <Content Include="Plugin\ckeditor\skins\office2013\icons.png" />
@@ -420,14 +421,12 @@
     <Content Include="Views\Quyen\_DanhSach_Quyen.cshtml" />
     <Content Include="Views\Quyen\_Form_Nhom.cshtml" />
     <Content Include="Views\Quyen\_Item_Nhom.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\HoiDap\_Form_TraLoi.cshtml" />
     <Content Include="Views\HoiDap\_Form_CauHoi.cshtml" />
-=======
     <Content Include="Views\Quyen\_DanhSach_NguoiDung_Tim.cshtml" />
     <Content Include="Views\Quyen\_Item_NguoiDung.cshtml" />
     <Content Include="Views\Quyen\_DanhSach_NguoiDung.cshtml" />
->>>>>>> 34daa2172b772238480facd068380917bfd2031d
+    <Content Include="Views\KhoaHoc\QuanLyQuyen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

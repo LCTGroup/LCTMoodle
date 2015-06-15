@@ -134,5 +134,15 @@ namespace DAOLayer
                 }
             );
         }
+
+        public static KetQua lay(LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layKhoaHoc",
+                    new object[0],
+                    lienKet
+                );
+        }
     }
 }

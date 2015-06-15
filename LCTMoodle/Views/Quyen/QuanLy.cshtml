@@ -15,7 +15,7 @@
     <script src="/Khung.js/ChuDe/"></script>
     <script>
         _PhamViQuanLy = _PhamViHienTai = '@phamVi';
-        _DoiTuongHienTai = _DoiTuongQuanLy = '@ViewData["DoiTuong"]';
+        _DoiTuongHienTai = _DoiTuongQuanLy = 0;
     </script>
 }
 
@@ -62,30 +62,18 @@
             <section id="khung_quyen" class="khung-duoi tat">
                 <section class="khung-pham-vi">
                     <ul class="danh-sach">
-                        @switch (phamVi)
-                        {
-                            case "KH":
-                                <li class="item chon">
-                                    <a data-chuc-nang="chon-pham-vi" data-ma="KH">Khóa học</a>
-                                </li>
-                                break;
-                            case "HT":
-                                <li class="item @(phamVi == "HT" ? "chon" : null)">
-                                    <a data-chuc-nang="chon-pham-vi" data-ma="HT">Hệ thống</a>
-                                </li>
-                                <li class="item">
-                                    <a data-chuc-nang="chon-pham-vi" data-ma="ND">Người dùng</a>
-                                </li>
-                                <li class="item">
-                                    <a data-chuc-nang="chon-pham-vi" data-ma="CD">Chủ đề</a>
-                                </li>
-                                <li class="item">
-                                    <a data-chuc-nang="chon-pham-vi" data-ma="HD">Hỏi đáp</a>
-                                </li>
-                                break;
-                            default:
-                                break;
-                        }
+                        <li class="item @(phamVi == "HT" ? "chon" : null)">
+                            <a data-chuc-nang="chon-pham-vi" data-ma="HT">Hệ thống</a>
+                        </li>
+                        <li class="item">
+                            <a data-chuc-nang="chon-pham-vi" data-ma="ND">Người dùng</a>
+                        </li>
+                        <li class="item">
+                            <a data-chuc-nang="chon-pham-vi" data-ma="CD">Chủ đề</a>
+                        </li>
+                        <li class="item">
+                            <a data-chuc-nang="chon-pham-vi" data-ma="HD">Hỏi đáp</a>
+                        </li>
                     </ul>
                 </section>
                 <section class="khung-quyen">

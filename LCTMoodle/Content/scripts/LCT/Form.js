@@ -150,13 +150,13 @@ function khoiTaoHienThiInput_LCT($form) {
 
         $phanTu.after($phanTu.clone().attr({
             'name': '',
-            'data-input-type': 'lich',
+            'data-input-type': 'ngay',
             'data-mac-dinh': lichMacDinh,
             'placeholder': lichPlaceholder,
             'data-validate': validate
         }).css('width', 'calc(50% - 19px)')).after($phanTu.clone().attr({
             'name': '',
-            'data-input-type': 'thoi-gian',
+            'data-input-type': 'gio',
             'data-mac-dinh': thoiGianMacDinh,
             'placeholder': thoiGianPlaceholder,
             'data-validate': validate
