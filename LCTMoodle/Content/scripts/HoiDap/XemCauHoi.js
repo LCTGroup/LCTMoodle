@@ -1,9 +1,10 @@
-﻿//#region Khởi tạo
+﻿
+//#region Khởi tạo
 
 $(function () {
     //Khởi tạo chức năng trả lời câu hỏi
-    $form = $('.lct-form');
-    khoiTaoChucNangTraLoi($form);
+    $formTraLoi = $('#tra_loi_cau_hoi');
+    khoiTaoChucNangTraLoi($formTraLoi);
 
     //Khởi tạo Câu Hỏi
     $cauHoi = $('[data-doi-tuong="cau-hoi"]');
@@ -31,6 +32,7 @@ function khoiTaoChucNangTraLoi($form) {
                     $traLoiMoi = $(data.ketQua);
                     $('#danh_sach_tra_loi').append($traLoiMoi);
 
+                    khoiTaoLCTFormMacDinh($formTraLoi);
                     khoiTaoTraLoi($traLoiMoi);
                 }
                 else if (data.trangThai == 3) {
@@ -105,6 +107,51 @@ function khoiTaoCauHoi($cauHoi) {
         })
     });
 
+    $cauHoi.find('[data-chuc-nang="sua-cau-hoi"]').on('click', function () {
+        $.ajax({
+            url: '/HoiDap/_Form_CauHoi/' + $cauHoi.attr('data-ma'),
+            method: 'POST',
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                $formSuaCauHoi = $(data.ketQua);
+                    
+                $cauHoi.html($formSuaCauHoi);
+                khoiTaoLCTForm($formSuaCauHoi, {
+                    submit: function () {
+                        $.ajax({
+                            url: '/HoiDap/capNhatCauHoi/',
+                            method: 'POST',
+                            dataType: 'JSON',
+                            data: layDataLCTForm($formSuaCauHoi)
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                moPopup({
+                                    tieuDe: 'Thông báo',
+                                    noiDung: 'Cập nhật thành công',
+                                    bieuTuong: 'chap-nhan'
+                                });
+                            }
+                            else {
+                                moPopup({
+                                    tieuDe: 'Thông báo',
+                                    noiDung: 'Cập nhật không thành công',
+                                    bieuTuong: 'nguy-hiem'
+                                })
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Lỗi lấy câu hỏi',
+                    bieuTuong: 'nguy-hiem'
+                });
+            }
+        });
+    });
 }
 
 //#endregion

@@ -1,7 +1,7 @@
 ﻿//#region Khởi tạo
 
 $(function () {
-    $form = $('#them_cau_hoi');
+    $form = $('[data-doi-tuong="form-cau-hoi"]');
 
     khoiTaoThemCauHoi($form);
 });
@@ -14,9 +14,9 @@ function khoiTaoThemCauHoi($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
             $.ajax({
-                url: $form.attr('action'),
-                method: $form.attr('method'),
-                data: $form.serialize(),
+                url: '/HoiDap/XuLyThemCauHoi',
+                method: 'POST',
+                data: layDataLCTForm($form),
                 dataType: 'JSON',
                 async: false
             }).done(function (data) {
