@@ -171,7 +171,7 @@ function khoiTaoForm_DienDan($form) {
             $.ajax({
                 url: '/BaiVietDienDan/XuLyThem',
                 type: 'POST',
-                data: $form.serialize(),
+                data: layDataLCTForm($form),
                 dataType: 'JSON',
                 processData: false
             }).done(function (data) {
@@ -379,7 +379,7 @@ function khoiTaoForm_BaiGiang($form) {
             $.ajax({
                 url: '/BaiVietBaiGiang/XuLyThem',
                 type: 'POST',
-                data: $form.serialize(),
+                data: layDataLCTForm($form),
                 dataType: 'JSON',
                 processData: false
             }).done(function (data) {
@@ -603,7 +603,7 @@ function khoiTaoForm_BaiTap($form) {
             $.ajax({
                 url: '/BaiVietBaiTap/XuLyThem',
                 type: 'POST',
-                data: $form.serialize(),
+                data: layDataLCTForm($form),
                 dataType: 'JSON',
                 processData: false
             }).done(function (data) {
@@ -670,7 +670,7 @@ function khoiTaoItem_BaiTap($danhSachBaiTap) {
                 $.ajax({
                     url: '/BaiTapNop/XuLyThem',
                     type: 'POST',
-                    data: $form.serialize(),
+                    data: layDataLCTForm($form),
                     dataType: 'JSON'
                 }).done(function (data) {
                     if (data.trangThai == 0) {

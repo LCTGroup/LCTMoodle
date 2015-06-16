@@ -1,5 +1,6 @@
 ﻿// Lưu đối tượng vừa focus
-$inputVuaFocus = {};
+var $inputVuaFocus = {};
+var soLuongEditor = 0;
 
 /*
     Khởi tạo input
@@ -185,8 +186,16 @@ function khoiTaoHienThiInput_LCT($form) {
 
     //Trường hợp đặc biệt, xử lý validate riêng cho editor
     $form.find('textarea[data-input-type="editor"]').each(function () {
-        CKEDITOR.replace(this);
         var $phanTu = $(this);
+        var name = $phanTu.attr('name');
+
+        $phanTu.attr({
+            'data-real-name': name,
+            'data-fake-name': name + soLuongEditor,
+            'name': name + soLuongEditor++
+        });
+
+        CKEDITOR.replace(this);
 
         CKEDITOR.on('instanceReady', function (e) {
             e.removeListener();
@@ -1047,7 +1056,9 @@ function khoiTaoSubmit_LCT($form, thamSo) {
         mangTam.dangSubmit = true;
 
         $form.find('textarea[data-input-type="editor"]').each(function () {
-            $(this).change();
+            var $phanTu = $(this);
+            $phanTu.change();
+
             CKEDITOR.instances[this.getAttribute('name')].updateElement();
         });
 
@@ -1170,15 +1181,27 @@ function khoiTaoSubmit_LCT($form, thamSo) {
                 });
             }
         }
+        else {
+            mangTam.dangSubmit = false;
+        }
     });
 }
 
 function layDataLCTForm($form) {
     var data;
 
+    var $editor = $form.find('[data-input-type="editor"]')
+    $editor.each(function () {
+        this.name = $(this).attr('data-real-name');
+    });
+
     var $inputs = $form.find(':input[name]:not(:disabled)' + ($form.is('[data-cap-nhat]') ? ':not([data-cu])' : ''));
 
     data = $inputs.not('[type="checkbox"]').serialize();
+
+    $editor.each(function () {
+        this.name = $(this).attr('data-fake-name');
+    });
 
     $inputs.not('[type!="checkbox"]').each(function () {
         data += '&' + this.name + "=" + (this.checked ? '1' : '0');

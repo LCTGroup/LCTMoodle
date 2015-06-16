@@ -1,9 +1,8 @@
-﻿
-//#region Khởi tạo
+﻿//#region Khởi tạo
 
 $(function () {
     //Khởi tạo chức năng trả lời câu hỏi
-    $formTraLoi = $('#tra_loi_cau_hoi');
+    $formTraLoi = $('[data-doi-tuong="form-tra-loi"]');
     khoiTaoChucNangTraLoi($formTraLoi);
 
     //Khởi tạo Câu Hỏi
@@ -23,16 +22,15 @@ function khoiTaoChucNangTraLoi($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
             $.ajax({
-                url: $form.attr('action'),
-                method: $form.attr('method'),
-                data: $form.serialize(),
-                asyne: false
+                url: '/HoiDap/XuLyThemTraLoi',
+                method: 'POST',
+                data: layDataLCTForm($form)
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    $traLoiMoi = $(data.ketQua);
+                    var $traLoiMoi = $(data.ketQua);
                     $('#danh_sach_tra_loi').append($traLoiMoi);
 
-                    khoiTaoLCTFormMacDinh($formTraLoi);
+                    khoiTaoLCTFormMacDinh($form);
                     khoiTaoTraLoi($traLoiMoi);
                 }
                 else if (data.trangThai == 3) {
@@ -108,29 +106,30 @@ function khoiTaoCauHoi($cauHoi) {
     });
 
     $cauHoi.find('[data-chuc-nang="sua-cau-hoi"]').on('click', function () {
+        var ma = $cauHoi.attr('data-ma');
         $.ajax({
-            url: '/HoiDap/_Form_CauHoi/' + $cauHoi.attr('data-ma'),
+            url: '/HoiDap/_Form_CauHoi/' + ma,
             method: 'POST',
             dataType: 'JSON'
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $formSuaCauHoi = $(data.ketQua);
-                    
+
+                //Lưu câu hỏi trước khi sửa
+                mangTam['CauHoi' + ma] = $cauHoi.html();
+
                 $cauHoi.html($formSuaCauHoi);
                 khoiTaoLCTForm($formSuaCauHoi, {
                     submit: function () {
                         $.ajax({
-                            url: '/HoiDap/capNhatCauHoi/',
+                            url: '/HoiDap/XuLyCapNhatCauHoi/',
                             method: 'POST',
                             dataType: 'JSON',
                             data: layDataLCTForm($formSuaCauHoi)
-                        }).done(function (data) {
+                        }).done(function (data) {                            
                             if (data.trangThai == 0) {
-                                moPopup({
-                                    tieuDe: 'Thông báo',
-                                    noiDung: 'Cập nhật thành công',
-                                    bieuTuong: 'chap-nhan'
-                                });
+                                $cauHoi.html(data.ketQua);
+                                khoiTaoCauHoi($cauHoi);
                             }
                             else {
                                 moPopup({
@@ -140,7 +139,16 @@ function khoiTaoCauHoi($cauHoi) {
                                 })
                             }
                         });
-                    }
+                    },
+                    validates: [{
+                        input: $formSuaCauHoi.find('[data-chuc-nang="huy"]'),
+                        customEvent: {
+                            'click': function () {                                
+                                $cauHoi.html(mangTam['CauHoi' + ma]);
+                                khoiTaoCauHoi($cauHoi);
+                            }
+                        }
+                    }]
                 });
             }
             else {
@@ -203,9 +211,64 @@ function khoiTaoTraLoi($danhSachTraLoi) {
     });
 
     $danhSachTraLoi.find('[data-chuc-nang="sua-tra-loi"]').on('click', function () {
-        $traLoi = $(this).closest('[data-doi-tuong="muc_tra_loi"]');
+        var $traLoi = $(this).closest('[data-doi-tuong="tra-loi"]');
+        var ma = $traLoi.attr('data-ma');
 
-        console.log($traLoi.attr('data-ma'));
+        $.ajax({
+            url: '/HoiDap/_Form_TraLoi/' + ma,
+            method: 'POST',
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                var $formSuaTraLoi = $(data.ketQua);
+
+                mangTam['TraLoi' + ma] = $traLoi.html();
+
+                $traLoi.html($formSuaTraLoi);
+                
+                khoiTaoLCTForm($formSuaTraLoi, {
+                    submit: function () {
+                        $.ajax({
+                            url: '/HoiDap/XuLyCapNhatTraLoi',
+                            method: 'POST',
+                            dataType: 'JSON',
+                            data: layDataLCTForm($formSuaTraLoi)
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $mucTraLoi = $(data.ketQua).find('[data-doi-tuong="muc-tra-loi"]');
+                                $traLoi.html($mucTraLoi);
+                                khoiTaoTraLoi($traLoi);
+                            }
+                            else {
+                                moPopup({
+                                    tieuDe: 'Thông báo',
+                                    thongBao: 'Cập nhật trả lời thất bại',
+                                    bieuTuong: 'nguy-hiem'
+                                })
+                            }
+                        });
+                    },
+                    validates: [
+                        {
+                            input: $traLoi.find('[data-chuc-nang="huy"]'),
+                            customEvent: {
+                                'click': function () {
+                                    $traLoi.html(mangTam['TraLoi' + ma]);
+                                    khoiTaoTraLoi($traLoi);
+                                }
+                            }
+                        }
+                    ]
+                });
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Lấy trả lời lỗi',
+                    bieuTuong: 'nguy-hiem'
+                })
+            }
+        });
     });
 }
 

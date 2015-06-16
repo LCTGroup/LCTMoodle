@@ -89,16 +89,16 @@ namespace BUSLayer
             return bangCapNhat;
         }
         
-        public static KetQua them(Form formTraLoi)
+        public static KetQua them(Form form)
         {
             TraLoiDTO traLoi = new TraLoiDTO();
 
             if (Session["NguoiDung"] != null)
             {
-                formTraLoi.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+                form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
             }
             
-            gan(ref traLoi, formTraLoi);
+            gan(ref traLoi, form);
 
             KetQua ketQua = TraLoiBUS.kiemTra(traLoi);
 
@@ -119,9 +119,41 @@ namespace BUSLayer
             return TraLoiDAO.layTheoMaCauHoi(maCauHoi, new LienKet() { "NguoiTao" });
         }
 
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMa(int? ma)
         {
             return TraLoiDAO.layTheoMa(ma);
+        }
+
+        public static KetQua capNhat(Form form)
+        {
+            int? maTraLoi = form.layInt("Ma");
+            if (!maTraLoi.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 1
+                };
+            }
+
+            KetQua ketQua = TraLoiBUS.layTheoMa(maTraLoi.Value);
+            if (ketQua.trangThai != 0) 
+            {
+                return ketQua;
+            }
+
+            TraLoiDTO traLoi = ketQua.ketQua as TraLoiDTO;
+            gan(ref traLoi, form);
+
+            ketQua = TraLoiBUS.kiemTra(traLoi, form.Keys.ToArray());
+            if (ketQua.trangThai != 0) 
+            {
+                return ketQua;
+            }
+
+            return TraLoiDAO.capNhatTheoMa(maTraLoi, layBangCapNhat(traLoi, form.Keys.ToArray()), new LienKet() { 
+                "NguoiTao",
+                "CauHoi"
+            });
         }
     }
 }

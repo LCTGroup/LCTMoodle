@@ -1,0 +1,37 @@
+﻿@model DTOLayer.CauHoiDTO
+
+<article class="muc-hoi-dap cau-hoi">
+    <section class="khung-chuc-nang-lct">
+        <ul data-doi-tuong="cauhoi-@Model.ma">
+            <li>
+                <a data-chuc-nang="sua-cau-hoi">Sửa câu hỏi</a>
+            </li>
+            <li>
+                <a data-chuc-nang="xoa-cau-hoi">Xóa câu hỏi</a>
+            </li>
+        </ul>
+        <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cauhoi-@Model.ma">
+            <i class="pe-7f-config"></i>
+        </button>
+    </section>
+    <section class="thong-tin">
+        <div class="nguoi-dung">
+            <div class="hinh-dai-dien">
+                <img src="/Content/images/user-avatar.jpg" />
+            </div>
+            <span>@Model.nguoiTao.tenTaiKhoan</span>
+        </div>
+        <div class="diem-so">
+            <i class="pe-7s-angle-up"></i>
+            <span class="so">5</span>
+            <i class="pe-7s-angle-down"></i>
+        </div>
+        <div class="thoi-gian">@Model.thoiDiemTao</div>
+    </section>
+    <section class="chi-tiet">
+        <div class="tieu-de">@Model.tieuDe</div>
+        <div class="noi-dung noi-dung-ckeditor">
+            @Html.Raw(Model.noiDung)
+        </div>
+    </section>
+</article>

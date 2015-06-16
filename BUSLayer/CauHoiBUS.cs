@@ -88,9 +88,6 @@ namespace BUSLayer
                     case "NoiDung":
                         bangCapNhat.Add("NoiDung", cauHoi.noiDung, 2);
                         break;
-                    case "ThoiDiemCapNhat":
-                        bangCapNhat.Add("ThoiDiemCapNhat", cauHoi.thoiDiemCapNhat.HasValue ? cauHoi.thoiDiemCapNhat.Value.ToString("d/M/yyyy H:mm") : null, 1);
-                        break;
                     default:
                         break;
                 }
@@ -146,7 +143,7 @@ namespace BUSLayer
             });
         }
 
-        public static KetQua capNhatTheoMa(Form form)
+        public static KetQua capNhat(Form form)
         {
             int? maCauHoi = form.layInt("Ma");
             if (!maCauHoi.HasValue)
@@ -165,7 +162,6 @@ namespace BUSLayer
 
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
 
-            form.Add("ThoiDiemCapNhat", DateTime.Now.ToString());
             gan(ref cauHoi, form);
 
             ketQua = kiemTra(cauHoi, form.Keys.ToArray());
