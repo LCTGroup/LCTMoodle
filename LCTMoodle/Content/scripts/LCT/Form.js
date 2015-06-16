@@ -5,6 +5,7 @@ $inputVuaFocus = {};
     Khởi tạo input
 */
 function khoiTaoLCTForm($form, thamSo) {
+    console.log($form);
     thamSo = thamSo || {};
 
     //Khởi tạo
@@ -1169,6 +1170,9 @@ function khoiTaoSubmit_LCT($form, thamSo) {
                     mangTam.dangSubmit = false;
                 });
             }
+        }
+        else {
+            mangTam.dangSubmit = false;
         }
     });
 }

@@ -143,7 +143,7 @@ namespace BUSLayer
             });
         }
 
-        public static KetQua capNhatTheoMa(Form form)
+        public static KetQua capNhat(Form form)
         {
             int? maCauHoi = form.layInt("Ma");
             if (!maCauHoi.HasValue)

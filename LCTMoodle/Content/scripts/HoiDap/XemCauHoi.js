@@ -27,10 +27,10 @@ function khoiTaoChucNangTraLoi($form) {
                 data: layDataLCTForm($form)
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    $traLoiMoi = $(data.ketQua);
+                    var $traLoiMoi = $(data.ketQua);
                     $('#danh_sach_tra_loi').append($traLoiMoi);
 
-                    khoiTaoLCTFormMacDinh($formTraLoi);
+                    khoiTaoLCTFormMacDinh($form);
                     khoiTaoTraLoi($traLoiMoi);
                 }
                 else if (data.trangThai == 3) {
@@ -122,13 +122,14 @@ function khoiTaoCauHoi($cauHoi) {
                 khoiTaoLCTForm($formSuaCauHoi, {
                     submit: function () {
                         $.ajax({
-                            url: '/HoiDap/CapNhatCauHoi/',
+                            url: '/HoiDap/XuLyCapNhatCauHoi/',
                             method: 'POST',
                             dataType: 'JSON',
                             data: layDataLCTForm($formSuaCauHoi)
                         }).done(function (data) {                            
                             if (data.trangThai == 0) {
                                 $cauHoi.html(data.ketQua);
+                                khoiTaoCauHoi($cauHoi);
                             }
                             else {
                                 moPopup({
@@ -210,9 +211,64 @@ function khoiTaoTraLoi($danhSachTraLoi) {
     });
 
     $danhSachTraLoi.find('[data-chuc-nang="sua-tra-loi"]').on('click', function () {
-        $traLoi = $(this).closest('[data-doi-tuong="muc_tra_loi"]');
+        var $traLoi = $(this).closest('[data-doi-tuong="tra-loi"]');
+        var ma = $traLoi.attr('data-ma');
 
-        console.log($traLoi.attr('data-ma'));
+        $.ajax({
+            url: '/HoiDap/_Form_TraLoi/' + ma,
+            method: 'POST',
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                var $formSuaTraLoi = $(data.ketQua);
+
+                mangTam['TraLoi' + ma] = $traLoi.html();
+
+                $traLoi.html($formSuaTraLoi);
+                
+                khoiTaoLCTForm($formSuaTraLoi, {
+                    submit: function () {
+                        $.ajax({
+                            url: '/HoiDap/XuLyCapNhatTraLoi',
+                            method: 'POST',
+                            dataType: 'JSON',
+                            data: layDataLCTForm($formSuaTraLoi)
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $mucTraLoi = $(data.ketQua).find('[data-doi-tuong="muc-tra-loi"]');
+                                $traLoi.html($mucTraLoi);
+                                khoiTaoTraLoi($traLoi);
+                            }
+                            else {
+                                moPopup({
+                                    tieuDe: 'Thông báo',
+                                    thongBao: 'Cập nhật trả lời thất bại',
+                                    bieuTuong: 'nguy-hiem'
+                                })
+                            }
+                        });
+                    },
+                    validates: [
+                        {
+                            input: $traLoi.find('[data-chuc-nang="huy"]'),
+                            customEvent: {
+                                'click': function () {
+                                    $traLoi.html(mangTam['TraLoi' + ma]);
+                                    khoiTaoTraLoi($traLoi);
+                                }
+                            }
+                        }
+                    ]
+                });
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Lấy trả lời lỗi',
+                    bieuTuong: 'nguy-hiem'
+                })
+            }
+        });
     });
 }
 

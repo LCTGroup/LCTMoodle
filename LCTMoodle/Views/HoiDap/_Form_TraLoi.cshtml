@@ -1,28 +1,38 @@
 ﻿@model DTOLayer.TraLoiDTO
 
-<form class="lct-form" id="form_tra_loi" data-doi-tuong="form-tra-loi">
-    
-    @if(Model == null)
+<form class="lct-form" data-doi-tuong="form-tra-loi" @(Model == null ? "data-cap-nhat" : null)>
+    @if (Model == null)
     {
-        <input type="hidden" name="MaCauHoi" value="@ViewData["MaCauHoi"]" />        
+        <input type="hidden" name="MaCauHoi" value="@ViewData["MaCauHoi"]" />
     }
     else
     {
-        <input type="hidden" name="Ma" value="@Model.ma" />        
+        <input type="hidden" name="Ma" value="@Model.ma" />
     }
-    
+
     <article>
         <ul>
             <li>
-                <section class="noi-dung">
+                <section class="noi-dung noi-dung-ckeditor">
                     <article class="input">
                         <textarea data-validate="bat-buoc" name="NoiDung" data-input-type="editor" placeholder="Nội dung" data-mac-dinh="@(Model != null ? Model.noiDung : null)"></textarea>
                     </article>
                 </section>
             </li>
         </ul>
-        <section class="khung-button">
-            <button class="chap-nhan">Trả lời</button>
-        </section>
+        @if (Model == null)
+        {
+            <section class="khung-button">
+                <button type="submit" class="chap-nhan">Trả lời</button>
+            </section>
+        }
+        else
+        {
+            <section class="khung-button">
+                <button type="submit" class="chap-nhan">Cập nhật</button>
+                <button type="button" class="chap-nhan" data-chuc-nang="huy">Hủy</button>
+            </section>
+        }
+
     </article>
 </form>

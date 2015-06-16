@@ -36,15 +36,17 @@
 
 <article class="hop">
     <section class="tieu-de">Danh sách trả lời</section>
-    <ul class="noi-dung danh-sach-tra-loi" id="danh_sach_tra_loi">@{
-        if (Model.danhSachTraLoi != null)
-        {
-            foreach (var traLoi in Model.danhSachTraLoi)
+    <ul class="noi-dung danh-sach-tra-loi" id="danh_sach_tra_loi">
+        @{
+            if (Model.danhSachTraLoi != null)
             {
-                @Html.Partial("~/Views/HoiDap/_Item_TraLoi.cshtml", traLoi);
+                foreach (var traLoi in Model.danhSachTraLoi)
+                {
+                    @Html.Partial("~/Views/HoiDap/_Item_TraLoi.cshtml", traLoi);
+                }
             }
         }
-    }</ul>
+    </ul>
     <section>Chưa có trả lời</section>
 </article>
 

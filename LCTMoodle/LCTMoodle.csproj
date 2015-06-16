@@ -386,8 +386,8 @@
     <Content Include="Views\NguoiDung\DangNhap.cshtml" />
     <Content Include="Views\NguoiDung\DangKy.cshtml" />
     <Content Include="Views\TrangChu\CayMau.cshtml" />
-    <Content Include="Views\ChuDe\QuanLy.cshtml" />
-    <Content Include="Views\ChuDe\_Form.cshtml" />
+    <Content Include="Views\GiaoTrinh\ChuDe\QuanLy.cshtml" />
+    <Content Include="Views\GiaoTrinh\ChuDe\_Form.cshtml" />
     <Content Include="Views\KhoaHoc\Xem.cshtml" />
     <Content Include="Views\HoiDap\Index.cshtml" />
     <Content Include="Views\BaiVietDienDan\_Item.cshtml" />
@@ -403,11 +403,11 @@
     <Content Include="Views\HoiDap\_Item_TraLoi.cshtml" />
     <Content Include="Views\KhoaHoc\_Khung.cshtml" />
     <Content Include="Views\BaiTapNop\_DanhSachNop.cshtml" />
-    <Content Include="Views\ChuDe\_DanhSach_Item.cshtml" />
-    <Content Include="Views\ChuDe\_Cay_Item.cshtml" />
-    <Content Include="Views\ChuDe\_Cay_Con_Item.cshtml" />
-    <Content Include="Views\ChuDe\_DanhSach.cshtml" />
-    <Content Include="Views\ChuDe\_Chon.cshtml" />
+    <Content Include="Views\GiaoTrinh\ChuDe\_DanhSach_Item.cshtml" />
+    <Content Include="Views\GiaoTrinh\ChuDe\_Cay_Item.cshtml" />
+    <Content Include="Views\GiaoTrinh\ChuDe\_Cay_Con_Item.cshtml" />
+    <Content Include="Views\GiaoTrinh\ChuDe\_DanhSach.cshtml" />
+    <Content Include="Views\GiaoTrinh\ChuDe\_Chon.cshtml" />
     <Content Include="Views\BaiTapNop\_Khung.cshtml" />
     <Content Include="Views\HoiDap\TaoCauHoi.cshtml" />
     <Content Include="Views\GiaoTrinh\Tao.cshtml" />

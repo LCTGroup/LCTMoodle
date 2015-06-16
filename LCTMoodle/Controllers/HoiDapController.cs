@@ -19,12 +19,14 @@ namespace LCTMoodle.Controllers
         {
             return View((CauHoiBUS.layToanBoCauHoi().ketQua) as List<CauHoiDTO>);
         }
-        
+
+        #region Câu Hỏi
+
         public ActionResult TaoCauHoi()
-        {            
+        {
             return View();
         }
-        
+
         public ActionResult XemCauHoi(int ma)
         {
             ViewData["MaCauHoi"] = ma;
@@ -38,19 +40,38 @@ namespace LCTMoodle.Controllers
             return View(ketQua.ketQua);
         }
 
-        [HttpPost]
         public ActionResult XuLyXoaCauHoi(int ma)
         {
             return Json(CauHoiBUS.xoaTheoMa(ma));
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult XuLyCapNhatCauHoi(FormCollection form)
+        {
+            KetQua ketQua = CauHoiBUS.capNhat(chuyenForm(form));
+            if (ketQua.trangThai == 0)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Item_CauHoi.cshtml", ketQua.ketQua)
+                });
+            }
+            else
+            {
+                return Json(ketQua);
+            }
+        }
+
+        [HttpPost]
         public ActionResult _Form_CauHoi(int ma = 0)
         {
             KetQua ketQua = CauHoiBUS.layTheoMa(ma);
 
             if (ketQua.trangThai != 0)
             {
-                return Json(ketQua, JsonRequestBehavior.AllowGet);
+                return Json(ketQua);
             }
             else
             {
@@ -59,26 +80,7 @@ namespace LCTMoodle.Controllers
                     trangThai = 0,
 
                     ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Form_CauHoi.cshtml", ketQua.ketQua)
-                }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        public ActionResult _Form_TraLoi(int ma = 0)
-        {
-            KetQua ketQua = TraLoiBUS.layTheoMa(ma);
-
-            if (ketQua.trangThai != 0)
-            {
-                return Json(ketQua, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua =
-                        renderPartialViewToString(ControllerContext, "HoiDap/_Form_TraLoi.cshtml", ketQua.ketQua)
-                }, JsonRequestBehavior.AllowGet);
+                });
             }
         }
 
@@ -89,6 +91,29 @@ namespace LCTMoodle.Controllers
             return Json(CauHoiBUS.them(chuyenForm(form)));
         }
 
+        #endregion
+
+        #region Trả Lời
+        
+        [HttpPost]
+        public ActionResult _Form_TraLoi(int ma = 0)
+        {
+            KetQua ketQua = TraLoiBUS.layTheoMa(ma);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua);
+            }
+            else
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Form_TraLoi.cshtml", ketQua.ketQua)
+                });
+            }
+        }
+        
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult XuLyThemTraLoi(FormCollection form)
@@ -102,13 +127,13 @@ namespace LCTMoodle.Controllers
                     ketQua = "Bạn chưa đăng nhập"
                 });
             }
-            
+
             KetQua ketQua = TraLoiBUS.them(chuyenForm(form));
-            
-            if (ketQua.trangThai == 0) 
+
+            if (ketQua.trangThai == 0)
             {
-                return Json(new KetQua() 
-                { 
+                return Json(new KetQua()
+                {
                     trangThai = 0,
                     ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Item_TraLoi.cshtml", ketQua.ketQua)
                 });
@@ -124,14 +149,15 @@ namespace LCTMoodle.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult CapNhatCauHoi(FormCollection form)
+        public ActionResult XuLyCapNhatTraLoi(FormCollection form)
         {
-            KetQua ketQua = CauHoiBUS.capNhatTheoMa(chuyenForm(form));
+            KetQua ketQua = TraLoiBUS.capNhat(chuyenForm(form));
             if (ketQua.trangThai == 0)
             {
-                return Json(new KetQua() { 
+                return Json(new KetQua()
+                {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Item_CauHoi.cshtml", ketQua.ketQua)
+                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Item_TraLoi.cshtml", ketQua.ketQua)
                 });
             }
             else
@@ -139,5 +165,8 @@ namespace LCTMoodle.Controllers
                 return Json(ketQua);
             }
         }
+
+        #endregion
+        
 	}
 }
