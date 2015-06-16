@@ -465,7 +465,7 @@
 
 /*#endregion */
 
-/*#region Nhập & chọn */
+/*#region Gợi ý */
 
 .lct-form input[data-input-type="goi-y"] {
     border: none;
@@ -507,19 +507,29 @@
     display: none;
 }
 
-    .lct-form input[data-input-type="goi-y"]:focus ~ .khung-danh-sach-goi-y {
+    .lct-form input[data-input-type="goi-y"].focus ~ .khung-danh-sach-goi-y {
         display: block;
     }
 
 .lct-form .danh-sach-goi-y {
     padding: 0;
+    max-height: 120px;
+    overflow-y: auto;
 }
+
+    .lct-form .danh-sach-goi-y:not(:empty) {
+        border-top: 1px solid #eee;
+    }
 
     .lct-form .danh-sach-goi-y li {
         margin: 0;
         display: block;
         border-top: 1px solid #eee;
     }
+
+        .lct-form .danh-sach-goi-y li:first-child {
+            border-top: 0;
+        }
 
     .lct-form .danh-sach-goi-y span {
         display: block;
@@ -558,7 +568,7 @@
     border-top: 1px solid #eee;
 }
 
-    .lct-form .danh-sach-goi-y.rong + span {
+    .lct-form .danh-sach-goi-y:empty + span {
         display: block;
     }
 

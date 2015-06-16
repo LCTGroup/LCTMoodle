@@ -132,5 +132,18 @@ namespace DAOLayer
                 }
             );
         }
+
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet)
+        {
+            return layDanhSachDong
+                (
+                    "layChuDe_TimKiem",
+                    new object[]
+                    {
+                        tuKhoa
+                    },
+                    lienKet
+                );
+        }
     }
 }

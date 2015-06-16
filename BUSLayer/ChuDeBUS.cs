@@ -113,5 +113,10 @@ namespace BUSLayer
         {
             return ChuDeDAO.layTheoMaCha(maCha, lienKet);
         }
+
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
+        {
+            return ChuDeDAO.lay_TimKiem(tuKhoa, lienKet);
+        }
     }
 }
