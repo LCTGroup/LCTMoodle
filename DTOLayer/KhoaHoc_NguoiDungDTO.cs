@@ -12,10 +12,10 @@ namespace DTOLayer
         public KhoaHocDTO khoaHoc;
         public NguoiDungDTO nguoiDung;
         /// <summary>
-        /// 1: Thành viên ---
-        /// 2: Chờ xác nhận đăng ký ---
-        /// 3: Được mời, chờ xác nhận lời mời ---
-        /// 4: Bị chặn
+        /// 0: Thành viên ---
+        /// 1: Chờ xác nhận đăng ký ---
+        /// 2: Được mời, chờ xác nhận lời mời ---
+        /// 3: Bị chặn
         /// </summary>
         public int? trangThai;
         public DateTime? thoiDiemThamGia;

@@ -26,7 +26,7 @@ namespace BUSLayer
             {
                 loi.Add("Người dùng không được bỏ trống");
             }
-            if (coKiemTra("TrangThai", truong, kiemTra) && 1 <= thanhVien.trangThai && thanhVien.trangThai <= 4)
+            if (coKiemTra("TrangThai", truong, kiemTra) && (0 > thanhVien.trangThai || thanhVien.trangThai > 3))
             {
                 loi.Add("Trạng thái không hợp lệ");
             }
@@ -53,100 +53,82 @@ namespace BUSLayer
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="loai">
-        /// Nếu loại = 0 => Sẽ là đăng ký hoặc tham gia tùy theo khóa học thiết lập
-        /// 1: Tham gia --- 2: Đăng ký --- 3: Mời --- 4: Chặn
-        /// </param>
-        /// <param name="maNguoiDung">
-        /// Trường hợp trạng thái = 1, 2 (tham gia, đăng ký) => không cần truyền
-        /// Trường hợp trạng thái = 3, 4 (mời, chặn) => bắt buộc truyền
-        /// </param>
-        /// <returns></returns>
-        public static KetQua them(int maKhoaHoc, int loai = 0, int? maNguoiDung = null)
+        public static KetQua dangKyThamGia(int maKhoaHoc)
         {
-            KhoaHoc_NguoiDungDTO thanhVien;
-
-            if (loai == 0 || loai == 1 || loai == 2)
+            //Lấy khóa học để kiểm tra hạn đăng ký nếu có
+            //và thiết lập trạng thái nếu cần
+            KetQua ketQua = KhoaHocDAO.layTheoMa(maKhoaHoc);
+            if (ketQua.trangThai != 0)
             {
-                //Lấy khóa học để kiểm tra hạn đăng ký nếu có
-                //và thiết lập trạng thái nếu cần
-                KetQua ketQua = KhoaHocDAO.layTheoMa(maKhoaHoc);
-                if (ketQua.trangThai != 0)
-                {
-                    return ketQua;
-                }
-                KhoaHocDTO khoaHoc = ketQua.ketQua as KhoaHocDTO;
+                return ketQua;
+            }
+            KhoaHocDTO khoaHoc = ketQua.ketQua as KhoaHocDTO;
 
-                //Thiết lập trạng thái nếu cần
-                if (loai == 0)
-                {
-                    loai = khoaHoc.canDangKy ? 2 : 1;
-                }
+            //Thiết lập trạng thái là đăng ký hay tham gia
+            int loai = khoaHoc.canDangKy ? 1 : 0;
 
-                //Kiểm tra thời hạn
-                if (loai == 2 && DateTime.Now > khoaHoc.hanDangKy)
+            //Kiểm tra thời hạn
+            if (loai == 1 && DateTime.Now > khoaHoc.hanDangKy)
+            {
+                return new KetQua()
                 {
-                    return new KetQua()
-                    {
-                        trangThai = 3,
-                        ketQua = new List<string>()
+                    trangThai = 3,
+                    ketQua = new List<string>()
                         {
                             "Khóa học đã hết hạn đăng ký"
                         }
-                    };
-                }
-
-                //Tạo đối tượng thành viên
-                thanhVien = new KhoaHoc_NguoiDungDTO()
-                {
-                    khoaHoc = layDTO<KhoaHocDTO>(maKhoaHoc),
-                    nguoiDung = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
-                    trangThai = loai
                 };
-
-                ketQua = kiemTra(thanhVien, new string[] { "NguoiThem" }, false);
-
-                if (ketQua.trangThai != 0)
-                {
-                    return ketQua;
-                }
             }
-            else
+
+            //Tạo đối tượng thành viên
+            KhoaHoc_NguoiDungDTO thanhVien = new KhoaHoc_NguoiDungDTO()
             {
-                //Nếu đã trong nhóm thì ko thể mời
-                if (loai == 3 && KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung).trangThai == 0)
-                {
-                    return new KetQua()
-                    {
-                        trangThai = 3,
-                        ketQua = new List<string>()
-                        {
-                            "Thành viên hiện đang trong nhóm"
-                        }
-                    };
-                }
+                khoaHoc = layDTO<KhoaHocDTO>(maKhoaHoc),
+                nguoiDung = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
+                trangThai = loai
+            };
 
-                thanhVien = new KhoaHoc_NguoiDungDTO()
-                {
-                    khoaHoc = layDTO<KhoaHocDTO>(maKhoaHoc),
-                    nguoiDung = layDTO<NguoiDungDTO>(maNguoiDung),
-                    trangThai = loai,
-                    nguoiThem = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?)
-                };
+            ketQua = kiemTra(thanhVien, new string[] { "NguoiThem" }, false);
 
-                KetQua ketQua = kiemTra(thanhVien);
-
-                if (ketQua.trangThai != 0)
-                {
-                    return ketQua;
-                }
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
             }
 
             return KhoaHoc_NguoiDungDAO.them(thanhVien);
         }
+
+        //public static KetQua them(int maKhoaHoc, int loai = 0, int? maNguoiDung = null)
+        //{
+        //    //Nếu đã trong nhóm thì ko thể mời
+        //    if (loai == 3 && KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung).trangThai == 0)
+        //    {
+        //        return new KetQua()
+        //        {
+        //            trangThai = 3,
+        //            ketQua = new List<string>()
+        //            {
+        //                "Thành viên hiện đang trong nhóm"
+        //            }
+        //        };
+        //    }
+
+        //    KhoaHoc_NguoiDungDTO thanhVien = new KhoaHoc_NguoiDungDTO()
+        //    {
+        //        khoaHoc = layDTO<KhoaHocDTO>(maKhoaHoc),
+        //        nguoiDung = layDTO<NguoiDungDTO>(maNguoiDung),
+        //        trangThai = loai,
+        //        nguoiThem = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?)
+        //    };
+
+        //    KetQua ketQua = kiemTra(thanhVien);
+
+        //    if (ketQua.trangThai != 0)
+        //    {
+        //        return ketQua;
+        //    }
+        //    return KhoaHoc_NguoiDungDAO.them(thanhVien);
+        //}
 
         public static KetQua layTheoMaKhoaHocVaMaNguoiDung(int maKhoaHoc, int maNguoiDung)
         {

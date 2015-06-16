@@ -1,0 +1,137 @@
+﻿@model DTOLayer.KhoaHocDTO
+@{
+    Layout = "~/Views/LCT/Khung.cshtml";
+
+    var thanhVien = ViewData["ThanhVien"] as DTOLayer.KhoaHoc_NguoiDungDTO;
+
+    ViewData["TieuDe"] = Model.ten;
+
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        Model.ten, "/KhoaHoc/" + Model.ma
+    };
+
+}
+
+@section Scripts {
+    <script>
+        var _MaKhoaHoc = '@Model.ma';
+
+        $(function () {
+            $('[data-chuc-nang="tham-gia"]').on('click', function () {
+                $.ajax({
+                    url: '/KhoaHoc/XuLyDangKyThamGia/' + _MaKhoaHoc,
+                    method: 'POST',
+                    dataType: 'JSON'
+                }).done(function (data) {
+                    if (data.trangThai == 0) {
+                        window.location = '/KhoaHoc/' + _MaKhoaHoc;
+                    }
+                    else {
+                        moPopup({
+                            tieuDe: 'Thông báo',
+                            thongBao: 'Tham gia thất bại',
+                            bieuTuong: 'nguy-hiem'
+                        });
+                    }
+                }).fail(function () {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Tham gia thất bại',
+                        bieuTuong: 'nguy-hiem'
+                    });
+                });
+            });
+
+            $('[data-chuc-nang="dang-ky"]').on('click', function () {
+                $.ajax({
+                    url: '/KhoaHoc/XuLyDangKyThamGia/' + _MaKhoaHoc,
+                    method: 'POST',
+                    dataType: 'JSON'
+                }).done(function (data) {
+                    if (data.trangThai == 0) {
+                        moPopup({
+                            tieuDe: 'Thành công',
+                            thongBao: 'Đăng ký thành công, bạn có thể tìm kiếm một khóa học khác trong khi chờ đợi sự chấp nhận từ quản lý khóa học',
+                            bieuTuong: 'thanh-cong',
+                            nut: [{
+                                ten: 'Quay lại',
+                                xuLy: function () {
+                                    window.location = "/";
+                                }
+                            }]
+                        });
+                    }
+                    else {
+                        moPopup({
+                            tieuDe: 'Thông báo',
+                            thongBao: 'Đăng ký thất bại',
+                            bieuTuong: 'nguy-hiem'
+                        });
+                    }
+                }).fail(function () {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Đăng ký thất bại',
+                        bieuTuong: 'nguy-hiem'
+                    });
+                });
+            });
+        })
+    </script>
+}
+
+<article style="text-align: center; padding:20px;">
+    <article style="text-align: center; display: inline-block; padding: 10px; border: 1px solid #eee; background-color: #fafafa;">
+        @if (Model.canDangKy)
+        {
+            if (thanhVien != null)
+            {
+                switch (thanhVien.trangThai)
+                {
+                    case 1:
+                        <p style="color: #555;">Bạn đã đăng ký vào khóa học, bạn có thể <a href="~/"><b>quay lại</b></a> sau khi được quản lý xác nhận</p>
+                        <section class="lct-form">
+                            <a class="button chap-nhan" href="~/">Quay lại</a>
+                        </section>
+                        break;
+                    case 2:
+                        <p style="color: #555;">Bạn đã được mời vào nhóm, bạn cần <a href="javascript:void(0)" data-chuc-nang="xac-nhan"><b>xác nhận</b></a> để vào khóa học</p>
+                        <section class="lct-form">
+                            <a class="button chap-nhan" data-chuc-nang="xac-nhan">Xác nhận</a>
+                        </section>
+                        break;
+                    case 3:
+                        <p style="color: #555;">Bạn không thể tham gia khóa học này vì đã bị chặn bởi quản lý, bạn có thể <a href="~/"><b>quay lại</b></a> để tìm một khóa học khác</p>
+                        <section class="lct-form">
+                            <a class="button chap-nhan" href="~/">Quay lại</a>
+                        </section>
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (Model.hanDangKy < DateTime.Now)
+            {
+                <p style="color: #555;">Khóa học đã hết hạn đăng ký, bạn có thể <a href="~/"><b>quay lại</b></a> để tìm kiếm một khóa học khác</p>
+                <section class="lct-form">
+                    <a class="button chap-nhan" href="~/">Quay lại</a>
+                </section>
+            }
+            else
+            {
+                <p style="color: #555;">Đây là khóa học nội bộ, để xem nội dung, bạn cần <a href="javascript:void(0)" data-chuc-nang="tham-gia"><b>đăng ký</b></a> vào khóa học</p>
+                <section class="lct-form">
+                    <a class="button chap-nhan" data-chuc-nang="dang-ky">Đăng ký</a>
+                </section>
+            }
+        }
+        else
+        {
+            <p style="color: #555;">Đây là khóa học nội bộ, để xem nội dung, bạn cần <a href="javascript:void(0)" data-chuc-nang="tham-gia"><b>tham gia</b></a> vào khóa học</p>
+            <section class="lct-form">
+                <a class="button chap-nhan" data-chuc-nang="tham-gia">Tham gia</a>
+            </section>
+        }
+    </article>
+</article>
