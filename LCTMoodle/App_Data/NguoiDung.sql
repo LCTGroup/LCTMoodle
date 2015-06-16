@@ -62,7 +62,7 @@ END
 
 GO
 --Lấy người dùng theo từ khóa
-ALTER PROC dbo.layNguoiDungTheoTuKhoa (
+CREATE PROC dbo.layNguoiDung_TimKiem (
 	@0 NVARCHAR(MAX) --Từ khóa
 )
 AS

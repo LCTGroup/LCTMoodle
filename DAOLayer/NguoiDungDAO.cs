@@ -98,11 +98,11 @@ namespace DAOLayer
             );
         }        
 
-        public static KetQua layTheoTuKhoa(string tuKhoa, LienKet lienKet = null)
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
         {
             return layDanhSachDong
                 (
-                    "layNguoiDungTheoTuKhoa",
+                    "layNguoiDung_TimKiem",
                     new object[]
                     {
                         tuKhoa

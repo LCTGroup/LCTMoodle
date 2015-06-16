@@ -144,5 +144,31 @@ namespace DAOLayer
                     lienKet
                 );
         }
+
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layKhoaHoc_TimKiem",
+                    new object[] 
+                    { 
+                        tuKhoa
+                    },
+                    lienKet
+                );
+        }
+
+        public static KetQua layTheoMaChuDe(int? maChuDe, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layKhoaHocTheoMaChuDe",
+                    new object[]
+                    {
+                        maChuDe
+                    },
+                    lienKet
+                );
+        }
     }
 }

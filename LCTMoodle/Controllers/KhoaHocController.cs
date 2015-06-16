@@ -39,11 +39,10 @@ namespace LCTMoodle.Controllers
             ViewData["ThanhVien"] = thanhVien;
 
             //Khóa học nội bộ & người dùng không phải là thành viên
-            if ((thanhVien == null && 
-                khoaHoc.cheDoRiengTu == "NoiBo") ||
-                (thanhVien != null &&
-                thanhVien.trangThai != 0)
-            )
+            if (
+                (khoaHoc.cheDoRiengTu == "NoiBo" && 
+                (thanhVien == null || thanhVien.trangThai != 0)) ||
+                thanhVien != null && thanhVien.trangThai == 3)
             {
                 return View("DangKyThamGia", khoaHoc);
             }
@@ -96,14 +95,10 @@ namespace LCTMoodle.Controllers
             return Json(KhoaHoc_NguoiDungBUS.dangKyThamGia(ma));
         }
 
-        //public ActionResult XuLyMoi(int ma, int maNguoiDung)
-        //{
-        //    return Json(KhoaHoc_NguoiDungBUS.them(ma, 2, maNguoiDung));
-        //}
-
-        //public ActionResult XuLyChan(int ma, int maNguoiDung)
-        //{
-        //    return Json(KhoaHoc_NguoiDungBUS.them(ma, 3, maNguoiDung));
-        //}
+        [HttpPost]
+        public ActionResult XuLyHuyDangKy(int ma)
+        {
+            return Json(KhoaHoc_NguoiDungBUS.huyDangKy(ma));
+        }
 	}
 }
