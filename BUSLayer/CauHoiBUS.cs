@@ -33,6 +33,9 @@ namespace BUSLayer
                     case "MaNguoiTao":
                         cauHoi.nguoiTao = form.layDTO<NguoiDungDTO>(key);
                         break;
+                    case "MaChuDe":
+                        cauHoi.chuDe = form.layDTO<ChuDeDTO>(key);
+                        break;
                     default:
                         break;
                 }
@@ -55,6 +58,10 @@ namespace BUSLayer
             if (coKiemTra("MaNguoiTao", truong, kiemTra) && cauHoi.nguoiTao == null)
             {
                 loi.Add("Chưa đăng nhập");
+            }
+            if (coKiemTra("MaChuDe", truong, kiemTra) && cauHoi.chuDe == null)
+            {
+                loi.Add("Chủ đề không bỏ trống");
             }
             #endregion
 
@@ -87,6 +94,9 @@ namespace BUSLayer
                         break;
                     case "NoiDung":
                         bangCapNhat.Add("NoiDung", cauHoi.noiDung, 2);
+                        break;
+                    case "MaChuDe":
+                        bangCapNhat.Add("MaChuDe", cauHoi.chuDe.ma.ToString(), 1);
                         break;
                     default:
                         break;
@@ -135,7 +145,7 @@ namespace BUSLayer
             });
         }
 
-        public static KetQua layToanBoCauHoi()
+        public static KetQua layDanhSachCauHoi()
         {
             return CauHoiDAO.layDanhSachCauHoi(new LienKet() 
             { 

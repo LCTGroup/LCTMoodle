@@ -104,7 +104,7 @@ function khoiTaoDangNhap($form) {
             $.ajax({
                 url: $form.attr('action'),
                 method: $form.attr('method'),
-                data: $form.serialize(),
+                data: layDataLCTForm($form),
                 asyne: false
             }).done(function (data) {
                 if (data.trangThai == 0) {

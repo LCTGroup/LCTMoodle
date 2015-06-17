@@ -17,7 +17,7 @@ namespace LCTMoodle.Controllers
         // GET: /HoiDap/
         public ActionResult Index()
         {
-            return View((CauHoiBUS.layToanBoCauHoi().ketQua) as List<CauHoiDTO>);
+            return View((CauHoiBUS.layDanhSachCauHoi().ketQua) as List<CauHoiDTO>);
         }
 
         #region Câu Hỏi

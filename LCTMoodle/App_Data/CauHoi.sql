@@ -9,28 +9,31 @@ CREATE TABLE dbo.CauHoi
 	NoiDung NVARCHAR(MAX) NOT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE(),
 	ThoiDiemCapNhat DATETIME DEFAULT GETDATE(),
-	MaNguoiTao INT NOT NULL
+	MaNguoiTao INT NOT NULL,
+	MaChuDe INT,
 )
 
 GO
 --Thêm Câu Hỏi
-CREATE PROC dbo.themCauHoi
+ALTER PROC dbo.themCauHoi
 (
 	@0 NVARCHAR(MAX), --Tiêu đề
 	@1 NVARCHAR(MAX), --Nội dung
-	@2 INT --Mã người tạo
+	@2 INT, --Mã người tạo
+	@3 INT --Mã chủ đề
 )
 AS
 BEGIN
-	INSERT INTO dbo.CauHoi(TieuDe, NoiDung, MaNguoiTao) VALUES (@0, @1, @2)
+	INSERT INTO dbo.CauHoi(TieuDe, NoiDung, MaNguoiTao, MaChuDe) VALUES (@0, @1, @2, @3)
 
 	SELECT @@IDENTITY Ma
 END
 
 GO
 --Xóa Câu Hỏi
-CREATE PROC dbo.xoaCauHoiTheoMa(
-	@0 INT --Mã câu hỏi
+CREATE PROC dbo.xoaCauHoiTheoMa
+(
+	@0 INT --Mã Câu Hỏi
 )
 AS
 BEGIN
@@ -38,7 +41,7 @@ BEGIN
 END
 
 GO
---Cập nhật câu hỏi theo mã
+--Cập nhật Câu Hỏi theo mã
 ALTER PROC dbo.capNhatCauHoiTheoMa (
 	@0 INT, --Mã
 	@1 dbo.BangCapNhat READONLY
@@ -61,16 +64,17 @@ BEGIN
 		TieuDe,
 		NoiDung,
 		ThoiDiemTao,
-		MaNguoiTao
+		MaNguoiTao,
+		MaChuDe
 		FROM dbo.CauHoi
 		WHERE Ma = @0
 END
 
 GO
---Lấy Câu hỏi
+--Lấy Câu Hỏi
 CREATE PROC dbo.layCauHoiTheoMa
 (
-	@0 INT --Mã câu hỏi
+	@0 INT --Mã Câu Hỏi
 )
 AS
 BEGIN
@@ -80,10 +84,24 @@ BEGIN
 END
 
 GO
---Lấy toàn bộ Câu hỏi
+--Lấy toàn bộ Câu Hỏi
 CREATE PROC dbo.layToanBoCauHoi
 AS
 BEGIN
 	SELECT *
 	FROM dbo.CauHoi
 END
+
+GO
+--Lấy Câu Hỏi theo từ khóa
+ALTER PROC dbo.layCauHoi_TimKiem 
+(
+	@0 NVARCHAR(MAX) --Từ khóa
+)
+AS
+BEGIN
+	SET @0 = '%' + REPLACE(@0, ' ', '%') + '%'
+	SELECT *
+	FROM dbo.CauHoi
+	WHERE TieuDe LIKE @0 OR NoiDung LIKE @0
+END 

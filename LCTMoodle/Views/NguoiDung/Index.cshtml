@@ -18,7 +18,7 @@
                     <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.hinhDaiDien.ma" />
                 </div>
                 <div class="thong-tin-nguoi-dung">
-                    <div class="ten-nguoi-dung">@Model.hoTen</div>
+                    <div class="ten-nguoi-dung">@(Model.ho + " " + Model.ten)</div>
                     <div class="loai-nguoi-dung">Người dùng</div>
                 </div>
             </article>
@@ -44,8 +44,13 @@
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="Email"></a>
         </div>       
         <div class="dong-noi-dung">
-            <div class="tieu-de">Họ tên</div>
-            <div class="noi-dung" data-change="HoTen">@Model.hoTen</div>
+            <div class="tieu-de">Họ</div>
+            <div class="noi-dung" data-change="HoTen">@Model.ho</div>
+            <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="HoTen"></a>
+        </div>
+        <div class="dong-noi-dung">
+            <div class="tieu-de">Họ</div>
+            <div class="noi-dung" data-change="HoTen">@Model.ten</div>
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="HoTen"></a>
         </div>
         <div class="dong-noi-dung">
