@@ -155,5 +155,11 @@ namespace BUSLayer
                 "MaCauHoi"
             });
         }
+
+        public static KetQua capNhatDuyetTheoMa(int? ma, bool duyet)
+        {
+
+            return TraLoiDAO.capNhatDuyetTheoMa(ma, duyet);
+        }
     }
 }

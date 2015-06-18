@@ -34,7 +34,10 @@
                 margin: 0 auto;
             }
             .thong-tin .tra-loi:before {
-                background-position: 0 -24px;
+                background-position: -16px -24px;
+            }
+            .thong-tin .diem:before {
+                background-position: -16px 0;
             }
                 .thong-tin span {
                     text-align: center;

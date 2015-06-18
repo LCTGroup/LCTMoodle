@@ -1,9 +1,9 @@
 ﻿@model DTOLayer.TraLoiDTO           
 @if (Model != null)
-{   
-    <li class="hop hop-1-vien">
-        <section class="noi-dung" data-doi-tuong="tra-loi" data-ma="@Model.ma">
-            <article class="muc-hoi-dap tra-loi binh-thuong" data-doi-tuong="muc-tra-loi">
+{
+    <li class="hop hop-1-vien tra-loi @(Model.duyet == true ? "duyet" : "binh-thuong")" data-doi-tuong="tra-loi" data-ma="@Model.ma">
+        <section class="noi-dung">
+            <article class="muc-hoi-dap" data-doi-tuong="muc-tra-loi">
                 <section class="khung-chuc-nang-lct">
                     <ul data-doi-tuong="traloi-@Model.ma">
                         <li>
@@ -11,6 +11,9 @@
                         </li>
                         <li>
                             <a data-chuc-nang="xoa-tra-loi">Xóa trả lời</a>
+                        </li>
+                        <li>
+                            <a data-chuc-nang="duyet-tra-loi">Duyệt trả lời</a>
                         </li>
                     </ul>
                     <button data-chuc-nang="tat-mo" data-mo-doi-tuong="traloi-@Model.ma">

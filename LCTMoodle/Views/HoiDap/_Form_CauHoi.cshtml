@@ -20,7 +20,14 @@
                         <textarea data-validate="bat-buoc" name="NoiDung" data-input-type="editor" placeholder="Nội dung" data-mac-dinh="@(Model != null ? Html.Raw(Model.noiDung) : null)"></textarea>
                     </article>
                 </section>
-            </li>            
+            </li>    
+            <li>
+                <section class="noi-dung">
+                    <article class="input">
+                        <input name="MaChuDe" data-input-type="chu-de" data-mac-dinh="@(Model != null ? Model.chuDe.ten : null)" placeholder="Tìm và chọn chủ đề"/>
+                    </article>
+                </section>
+            </li>        
         </ul>
         <section class="khung-button">
             @if (Model != null)

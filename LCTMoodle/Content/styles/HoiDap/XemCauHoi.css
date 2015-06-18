@@ -61,20 +61,18 @@
 
     /*#endregion */
     
-    /*#region Nội dung câu hỏi */
+    /*#region Nội dung */
     
     .muc-hoi-dap .chi-tiet {
         width: 100%;  
         padding: 10px;
     }
-        .muc-hoi-dap .chi-tiet .noi-dung {
-
+        .muc-hoi-dap .chi-tiet .noi-dung {            
         }
             .muc-hoi-dap .chi-tiet .tieu-de {            
                 font-size: 18px;
             }
             .muc-hoi-dap .chi-tiet .noi-dung {
-                padding-top: 5px;
             }            
 
     /*#endregion */
@@ -86,14 +84,48 @@
 .cau-hoi {
 
 }
+
+    /*#region Tiêu đề */
+
     .cau-hoi .chi-tiet .tieu-de {
         font-weight: bold;
     }
+
+    /*#endregion */
+
+    /*#region Nội dung */
+
     .cau-hoi .chi-tiet .noi-dung {
-        padding-top: 10px;
+        margin: 5px 0;
     }
 
+    /*#endregion */
+    
+    /*#region Chủ đề */
 
+    .cau-hoi .chi-tiet ul.chu-de {
+        margin-top: 15px;
+        border-top: 1px dashed #ccc;
+        padding-top: 10px;
+    }
+        .cau-hoi .chi-tiet ul.chu-de li {
+            display: inline-block;
+            border: 1px solid #ccc;
+        }
+            .cau-hoi .chi-tiet ul.chu-de li a {
+                display: block;
+                padding: 5px;
+                color: #888;
+                text-decoration: none;
+                transition: 0.2s;
+            }
+            .cau-hoi .chi-tiet ul.chu-de li a:hover {
+                background-color: #08c;
+                color: #f1f1f1;
+            }
+
+    /*#endregion */
+            
 /*#endregion */
 
 /*#region Trả lời */
@@ -120,7 +152,6 @@
     /*#region Item Trả Lời*/
 
     .tra-loi {
-        border-color: #e5e5e5 !important;
     }
 
     /*#endregion*/
@@ -128,11 +159,35 @@
     /*#region Trạng thái*/
 
     .binh-thuong {
-        border-left: 3px solid #ccc;
+        border-left: 3px solid #ccc !important;
     }
+    
     .duyet {
-        border-left: 3px solid #08c;
+        border-left: 3px solid #08c !important;
+        position: relative;
     }
+        .duyet:before {
+            content: '';
+            position: absolute;
+            background: url('/HoiDap.png/HoiDap');
+            width: 16px;
+            height: 16px;
+            bottom: 3px;  
+            left: 1px;    
+            z-index: 1;      
+        }
+        .duyet:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-top: 25px solid transparent;
+            border-bottom: 25px solid transparent;
+            border-left: 25px solid #08c;
+            left: -4px;
+            bottom: -16px;
+            transform: rotate(135deg);
+        }
 
     /*#endregion*/
 

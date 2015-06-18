@@ -127,5 +127,24 @@ namespace DAOLayer
                 lienKet
             );
         }
+
+        /// <summary>
+        /// Cập nhật duyệt trả lời theo mã
+        /// </summary>
+        /// <param name="ma">Mã trả lời</param>
+        /// <param name="duyet">[true || false]</param>
+        /// <returns>Trạng thái = 0: Duyệt thành công-- Trạng thái !=0: Duyệt thất bại</returns>
+        public static KetQua capNhatDuyetTheoMa(int? ma, bool duyet)
+        {
+            return khongTruyVan
+                (
+                    "capNhatDuyetTraLoiTheoMa",
+                    new object[]
+                    {
+                        ma,
+                        duyet
+                    }
+                );
+        }
     }
 }

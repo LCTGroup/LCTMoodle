@@ -3,20 +3,20 @@
 */
 $(function () {
     //Khởi tạo xử lý đăng ký    
-    khoiTaoThemNguoiDung($('#dang_ky'));
+    khoiTaoDangKy($('#dang_ky'));
 
     //Khởi tạo xử lý đăng nhập
     khoiTaoDangNhap($('#dang_nhap'));
 });
 
 //Xử lý đăng ký
-function khoiTaoThemNguoiDung($form) {
+function khoiTaoDangKy($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
             $.ajax({
                 url: $form.attr('action'),
                 method: $form.attr('method'),            
-                data: $form.serialize(),
+                data: layDataLCTForm($form),
                 dataType: 'JSON',
                 async: false
             }).done(function (data) {                

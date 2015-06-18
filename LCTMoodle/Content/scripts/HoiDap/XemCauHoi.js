@@ -170,7 +170,8 @@ function khoiTaoTraLoi($danhSachTraLoi) {
     khoiTaoTatMoDoiTuong($danhSachTraLoi.find('[data-chuc-nang="tat-mo"]'), true);
 
     $danhSachTraLoi.find('[data-chuc-nang="xoa-tra-loi"]').on('click', function () {
-        $traLoi = $(this).closest('[data-doi-tuong="tra-loi"]');
+        var $traLoi = $(this).closest('[data-doi-tuong="tra-loi"]');
+
         moPopup({
             tieuDe: 'Thông báo',
             thongBao: 'Bạn có chắc xóa?',
@@ -222,6 +223,7 @@ function khoiTaoTraLoi($danhSachTraLoi) {
             if (data.trangThai == 0) {
                 var $formSuaTraLoi = $(data.ketQua);
 
+                //Lưu _item_TraLoi vào biến tạm để phục vụ chức năng Hủy
                 mangTam['TraLoi' + ma] = $traLoi.html();
 
                 $traLoi.html($formSuaTraLoi);
@@ -235,8 +237,10 @@ function khoiTaoTraLoi($danhSachTraLoi) {
                             data: layDataLCTForm($formSuaTraLoi)
                         }).done(function (data) {
                             if (data.trangThai == 0) {
-                                $mucTraLoi = $(data.ketQua).find('[data-doi-tuong="muc-tra-loi"]');
-                                $traLoi.html($mucTraLoi);
+                                $ketQua = $(data.ketQua).html();
+                                //Hiển thị kết quả
+                                $traLoi.html($ketQua);
+                                //Khởi tạo lại _item_TraLoi
                                 khoiTaoTraLoi($traLoi);
                             }
                             else {
@@ -270,6 +274,29 @@ function khoiTaoTraLoi($danhSachTraLoi) {
             }
         });
     });
+
+    $danhSachTraLoi.find('[data-chuc-nang="duyet-tra-loi"]').on('click', function () {
+        var $traLoi = $(this).closest('[data-doi-tuong="tra-loi"]');        
+        var ma = $traLoi.attr('data-ma');
+
+        $.ajax({
+            url: '/HoiDap/XuLyDuyetTraLoi/',
+            method: 'POST',
+            data: { maTraLoi: ma, trangThaiDuyet: $traLoi.hasClass('binh-thuong') ? true : false }
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                $traLoi.toggleClass('binh-thuong');
+                $traLoi.toggleClass('duyet');
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Lỗi duyệt trả lời'
+                });
+            }
+        });
+    });
+
 }
 
 //#endregion

@@ -166,6 +166,11 @@ namespace LCTMoodle.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult XuLyDuyetTraLoi(int maTraLoi, bool trangThaiDuyet)
+        {
+            return Json(TraLoiBUS.capNhatDuyetTheoMa(maTraLoi, trangThaiDuyet));
+        }
         #endregion
         
 	}

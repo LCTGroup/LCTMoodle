@@ -94,20 +94,21 @@ namespace DAOLayer
                 }
             );
         }
-
+   
         public static KetQua capNhatTheoMa(int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)
         {
-            return layDong(
-                "capNhatCauHoiTheoMa",
-                new object[] 
-                {
-                    ma,
-                    bangCapNhat.bang
-                },
-                lienKet
-            );
+            return layDong
+                (
+                    "capNhatCauHoiTheoMa",
+                    new object[] 
+                    {
+                        ma,
+                        bangCapNhat.bang
+                    },
+                    lienKet
+                );
         }
-   
+        
         public static KetQua layTheoMa(int? maCauHoi, LienKet lienKet = null)
         {
             return layDong
@@ -143,6 +144,19 @@ namespace DAOLayer
                 },
                 lienKet
             );
+        }
+
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layCauHoi_TimKiem",
+                    new object[]
+                    {
+                        tuKhoa
+                    },
+                    lienKet
+                );
         }
     }
 }

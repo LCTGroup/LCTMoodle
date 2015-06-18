@@ -38,7 +38,8 @@ END
 
 GO
 --Xóa Trả Lời
-CREATE PROC dbo.xoaTraLoiTheoMa(
+CREATE PROC dbo.xoaTraLoiTheoMa
+(
 	@0 INT --Mã trả lời
 )
 AS
@@ -48,7 +49,8 @@ END
 
 GO
 --Cập nhật trả lời theo mã
-ALTER PROC dbo.capNhatTraLoiTheoMa (
+ALTER PROC dbo.capNhatTraLoiTheoMa 
+(
 	@0 INT, --Mã
 	@1 dbo.BangCapNhat READONLY
 )
@@ -74,6 +76,20 @@ BEGIN
 		MaCauHoi
 		FROM dbo.TraLoi
 		WHERE Ma = @0
+END
+
+GO
+--Cập nhật duyệt Trả Lời
+ALTER PROC dbo.capNhatDuyetTraLoiTheoMa
+(
+	@0 INT, --Mã Trả Lời
+	@1 BIT --Trạng thái duyệt
+)
+AS
+BEGIN
+	UPDATE dbo.TraLoi		
+	SET Duyet = @1
+	WHERE Ma=@0
 END
 
 GO

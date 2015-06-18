@@ -42,7 +42,8 @@ END
 
 GO
 --Cập nhật Câu Hỏi theo mã
-ALTER PROC dbo.capNhatCauHoiTheoMa (
+ALTER PROC dbo.capNhatCauHoiTheoMa 
+(
 	@0 INT, --Mã
 	@1 dbo.BangCapNhat READONLY
 )
@@ -118,3 +119,5 @@ BEGIN
 	FROM dbo.CauHoi
 	WHERE MaChuDe = @0
 END
+
+select * from dbo.CauHoi
