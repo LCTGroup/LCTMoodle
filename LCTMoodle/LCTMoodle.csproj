@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,6 +46,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -121,7 +124,6 @@
     <Folder Include="Plugin\ckeditor\samples\plugins\toolbar\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\wysiwygarea\" />
     <Folder Include="Views\TapTin\" />
-    <Folder Include="WebServices\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -146,6 +148,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebServices\Iwcf_KhoaHoc.cs" />
+    <Compile Include="WebServices\Iwcf_NguoiDung.cs" />
+    <Compile Include="WebServices\wcf_KhoaHoc.svc.cs">
+      <DependentUpon>wcf_KhoaHoc.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\wcf_NguoiDung.svc.cs">
+      <DependentUpon>wcf_NguoiDung.svc</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
@@ -356,6 +366,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="WebServices\wcf_KhoaHoc.svc" />
+    <Content Include="WebServices\wcf_NguoiDung.svc" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
