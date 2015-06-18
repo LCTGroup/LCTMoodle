@@ -20,7 +20,7 @@ namespace DAOLayer
             {
                 switch (dong.GetName(i))
                 {
-                    case "NguoiDung":
+                    case "MaNguoiDung":
                         maTam = layInt(dong, i);
 
                         if (maTam.HasValue)
@@ -33,7 +33,7 @@ namespace DAOLayer
                                 };
                         }
                         break;
-                    case "KhoaHoc":
+                    case "MaKhoaHoc":
                         maTam = layInt(dong, i);
                         
                         if (maTam.HasValue)
@@ -52,7 +52,7 @@ namespace DAOLayer
                     case "ThoiDiemThamGia":
                         thanhVien.thoiDiemThamGia = layDateTime(dong, i);
                         break;
-                    case "NguoiThem":
+                    case "MaNguoiThem":
                         maTam = layInt(dong, i);
 
                         if (maTam.HasValue)
@@ -110,6 +110,35 @@ namespace DAOLayer
                     {
                         maKhoaHoc,
                         maNguoiDung
+                    }
+                );
+        }
+
+        public static KetQua layTheoMaKhoaHocVaTrangThai(int? maKhoaHoc, int? trangThai, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layKhoaHoc_NguoiDungTheoMaKhoaHocVaTrangThai",
+                    new object[]
+                    {
+                        maKhoaHoc,
+                        trangThai
+                    },
+                    lienKet
+                );
+        }
+
+        public static KetQua capNhatTheoMaKhoaHocVaMaNguoiDung_TrangThai(KhoaHoc_NguoiDungDTO thanhVien)
+        {
+            return khongTruyVan
+                (
+                    "capNhatKhoaHoc_NguoiDungTheoMaKhoaHocVaMaNguoiDung_TrangThai",
+                    new object[]
+                    {
+                        layMa(thanhVien.khoaHoc),
+                        layMa(thanhVien.nguoiDung),
+                        thanhVien.trangThai,
+                        layMa(thanhVien.nguoiThem)
                     }
                 );
         }

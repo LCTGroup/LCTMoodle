@@ -34,7 +34,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             khoaHoc.chuDe = LienKet.co(lienKet, "ChuDe") ?
-                                null : //layChuDeTheoMaChuDe
+                                layDTO<ChuDeDTO>(ChuDeDAO.layTheoMa(maTam)) :
                                 new ChuDeDTO()
                                 {
                                     ma = maTam
@@ -46,7 +46,7 @@ namespace DAOLayer
 
                         if (maTam.HasValue)
                         {
-                            khoaHoc.hinhDaiDien = LienKet.co(lienKet, "TapTin") ?
+                            khoaHoc.hinhDaiDien = LienKet.co(lienKet, "HinhDaiDien") ?
                                 layDTO<TapTinDTO>(TapTinDAO.layTheoMa("KhoaHoc_HinhDaiDien", maTam.Value)) :
                                 new TapTinDTO()
                                 {
@@ -102,7 +102,7 @@ namespace DAOLayer
             return khoaHoc;
         }
 
-        public static KetQua layTheoMa(int? ma)
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
             return layDong
                 (
@@ -110,7 +110,8 @@ namespace DAOLayer
                     new object[]
                     {
                         ma
-                    }
+                    },
+                    lienKet
                 );
         }
 

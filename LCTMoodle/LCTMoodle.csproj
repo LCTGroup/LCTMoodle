@@ -168,6 +168,7 @@
     <Content Include="Content\scripts\GiaoTrinh\Tao.js" />
     <Content Include="Content\scripts\HoiDap\XemCauHoi.js" />
     <Content Include="Content\scripts\HoiDap\TaoCauHoi.js" />
+    <Content Include="Content\scripts\KhoaHoc\ThanhVien.js" />
     <Content Include="Content\scripts\KhoaHoc\Xem.js" />
     <Content Include="Content\scripts\KhoaHoc\Tao.js" />
     <Content Include="Content\scripts\LCT\Form.js" />
@@ -180,6 +181,7 @@
     <Content Include="Content\styles\GiaoTrinh\Tao.css" />
     <Content Include="Content\styles\HoiDap\XemCauHoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
+    <Content Include="Content\styles\KhoaHoc\ThanhVien.css" />
     <Content Include="Content\styles\KhoaHoc\Xem.css" />
     <Content Include="Content\styles\LCT\bootstrap.css" />
     <Content Include="Content\styles\LCT\filled-icons.css" />
@@ -429,6 +431,7 @@
     <Content Include="Views\KhoaHoc\QuanLyQuyen.cshtml" />
     <Content Include="Views\KhoaHoc\DangKyThamGia.cshtml" />
     <Content Include="Views\HoiDap\_Item_CauHoi.cshtml" />
+    <Content Include="Views\KhoaHoc\ThanhVien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

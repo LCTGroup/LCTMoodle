@@ -103,9 +103,9 @@ namespace BUSLayer
             return KhoaHocDAO.them(khoaHoc);
         }
 
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
         {
-            return KhoaHocDAO.layTheoMa(ma);
+            return KhoaHocDAO.layTheoMa(ma, lienKet);
         }
 
         public static KetQua lay(LienKet lienKet = null)

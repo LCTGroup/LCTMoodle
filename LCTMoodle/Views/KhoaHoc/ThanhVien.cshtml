@@ -1,0 +1,84 @@
+﻿@model DTOLayer.KhoaHocDTO
+@{
+    Layout = "~/Views/LCT/Khung.cshtml";
+
+    var thanhVien = ViewData["ThanhVien"] as List<DTOLayer.KhoaHoc_NguoiDungDTO>;
+    var thanhVienDangKy = ViewData["ThanhVienDangKy"] as List<DTOLayer.KhoaHoc_NguoiDungDTO>;
+        
+    ViewData["TieuDe"] = "Danh sách thành viên - " + Model.ten;
+
+    ViewData["DieuHuong"] = new List<string>() {
+        Model.ten, "/KhoaHoc/" + Model.ma,
+        "Danh sách thành viên", "/KhoaHoc/ThanhVien/" + Model.ma
+    };
+
+    //List<string> chucNang = new List<string>();
+
+    //ViewData["ChucNang"] = chucNang;
+}
+
+@section Styles {
+    <link href="/ThanhVien.css/KhoaHoc/" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="/ThanhVien.js/KhoaHoc/"></script>
+    <script>
+        maKhoaHoc = '@Model.ma';
+    </script>
+}
+
+@if (thanhVienDangKy != null)
+{
+    <article class="hop">
+        <section class="tieu-de">
+            Danh sách thành viên đăng ký
+        </section>
+        <section class="noi-dung khung-dang-ky">
+            <ul class="danh-sach">
+                @foreach(var tv in thanhVienDangKy)
+                {
+                    <li class="item" data-ma="@tv.nguoiDung.ma">
+                        <img src="/boy.png/" />
+                        <a href="#">@(tv.nguoiDung.ho + " " + tv.nguoiDung.ten)</a>
+                        <section class="khung-chuc-nang">
+                            <a data-chuc-nang="dong-y" class="dong-y" title="Chấp nhận"><i></i></a>
+                            <a data-chuc-nang="tu-choi" class="tu-choi" title="Từ chối"><i></i></a>
+                            <a data-chuc-nang="chan" class="chan" title="Chặn"><i></i></a>
+                        </section>
+                    </li>
+                }
+            </ul>
+        </section>
+    </article>
+}
+
+@if (thanhVien != null)
+{
+    <article class="hop">
+        <section class="tieu-de">
+            Danh sách thành viên đăng ký
+        </section>
+        <section class="noi-dung khung-dang-ky">
+            <ul class="danh-sach">
+                @foreach(var tv in thanhVienDangKy)
+                {
+                    <li class="item" data-ma="@tv.nguoiDung.ma">
+                        <img src="/boy.png/" />
+                        <a href="#">@(tv.nguoiDung.ho + " " + tv.nguoiDung.ten)</a>
+                        <section class="khung-chuc-nang-lct">
+                            <ul data-doi-tuong="cnnd-@tv.nguoiDung.ma">
+                                <li>
+                                    <a data-chuc-nang="xoa">Loại bỏ thành viên</a>
+                                </li>
+                            </ul>
+                            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnnd-@tv.nguoiDung.ma">
+                                <i class="pe-7f-config"></i>
+                            </button>
+                        </section>
+                    </li>
+                }
+            </ul>
+        </section>
+    </article>
+}

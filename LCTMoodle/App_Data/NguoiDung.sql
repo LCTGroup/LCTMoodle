@@ -64,17 +64,18 @@ END
 
 GO
 --Lấy người dùng theo từ khóa
-CREATE PROC dbo.layNguoiDung_TimKiem (
+ALTER PROC dbo.layNguoiDung_TimKiem (
 	@0 NVARCHAR(MAX) --Từ khóa
 )
 AS
 BEGIN
 	SELECT 
 		Ma,
-		HoTen
+		Ho,
+		Ten
 		FROM dbo.nguoiDung
 		WHERE 
-			HoTen LIKE '%' + REPLACE(@0, ' ', '%') + '%'
+			Ho + ' ' + Ten LIKE '%' + REPLACE(@0, ' ', '%') + '%'
 END
 
 GO
@@ -88,7 +89,8 @@ BEGIN
 	EXEC('
 		SELECT
 			ND.Ma,
-			ND.HoTen
+			ND.Ho,
+			ND.Ten
 			FROM
 				dbo.NguoiDung ND 
 					INNER JOIN dbo.NhomNguoiDung_' + @0 + '_NguoiDung NND_ND
