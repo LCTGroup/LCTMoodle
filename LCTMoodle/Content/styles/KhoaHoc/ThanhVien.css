@@ -1,0 +1,72 @@
+﻿/*#region Khung đăng ký */
+
+.khung-dang-ky {
+
+}
+
+    .khung-dang-ky .danh-sach {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+    }
+
+    .khung-dang-ky .item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100px;
+        margin: 5px;
+        padding: 5px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+    }
+    
+        .khung-dang-ky .item img {
+            width: 50px;
+            height: 50px;
+        }
+    
+        .khung-dang-ky .item > a {
+            font-weight: bold;
+            font-size: 11px;
+            color: #333;
+        }
+    
+        .khung-dang-ky .item .khung-chuc-nang {
+            display: inline-block;
+            margin-top: 10px;
+            cursor: default;
+        }
+    
+            .khung-dang-ky .item .khung-chuc-nang a {
+                display: inline-block;
+                padding: 5px;
+                border: 1px solid #ddd;
+                background-color: #fafafa;
+            }
+    
+            .khung-dang-ky .item .khung-chuc-nang i {
+                display: block;
+                width: 16px;
+                height: 16px;
+                background-image: url('/khoahoc.png/KhoaHoc');
+                opacity: 0.8;
+            }
+    
+                .khung-dang-ky .item .khung-chuc-nang a:hover i {
+                    opacity: 1;
+                }
+    
+                .khung-dang-ky .item .khung-chuc-nang .dong-y i {
+                    background-position: -72px -0px;
+                }
+    
+                .khung-dang-ky .item .khung-chuc-nang .tu-choi i {
+                    background-position: -72px -16px;
+                }
+    
+                .khung-dang-ky .item .khung-chuc-nang .chan i {
+                    background-position: -72px -32px;
+                }
+
+/*#endregion */

@@ -15,20 +15,11 @@ GO
 ALTER PROC dbo.themKhoaHoc_NguoiDung (
 	@0 INT, --MaKhoaHoc
 	@1 INT, --MaNguoiDung
-	@2 TINYINT, --TrangThai
+	@2 INT, --TrangThai
 	@3 INT --MaNguoiThem
 )
 AS
 BEGIN
-	--Xóa nếu mời hoặc chặn
-	IF (@2 = 2 OR @2 = 3)
-	BEGIN
-		DELETE FROM dbo.KhoaHoc_NguoiDung
-			WHERE 
-				MaKhoaHoc = @0 AND
-				MaNguoiDung = @1
-	END
-
 	INSERT INTO dbo.KhoaHoc_NguoiDung (MaKhoaHoc, MaNguoiDung, TrangThai, MaNguoiThem)
 		VALUES (@0, @1, @2, @3)
 END
@@ -68,9 +59,9 @@ END
 
 GO
 --Lấy theo mã khóa hoc, trạng thái
-CREATE PROC dbo.layKhoaHoc_NguoiDungTheoMaKhoaHocVaTrangThai (
+ALTER PROC dbo.layKhoaHoc_NguoiDungTheoMaKhoaHocVaTrangThai (
 	@0 INT, --MaKhoaHoc
-	@1 TINYINT --TrangThai
+	@1 INT --TrangThai
 )
 AS
 BEGIN
@@ -83,4 +74,23 @@ BEGIN
 		WHERE
 			MaKhoaHoc = @0 AND
 			TrangThai = @1
+END
+
+GO
+--Cập nhật trạng thái theo mã khóa học và mã người dùng
+ALTER PROC dbo.capNhatKhoaHoc_NguoiDungTheoMaKhoaHocVaMaNguoiDung_TrangThai (
+	@0 INT, --MaKhoaHoc
+	@1 INT, --MaNguoiDung
+	@2 INT, --TrangThai
+	@3 INT --MaNguoiThem
+)
+AS
+BEGIN
+	UPDATE KhoaHoc_NguoiDung
+		SET 
+			TrangThai = @2,
+			MaNguoiThem = @3
+		WHERE 
+			MaKhoaHoc = @0 AND
+			MaNguoiDung = @1
 END

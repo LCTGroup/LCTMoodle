@@ -214,12 +214,6 @@ function khoiTaoHienThiInput_LCT($form) {
             });
         });
     });
-
-    if ($form.is('[data-cap-nhat]')) {
-        $form.find('.input :input').on('change', function () {
-            $(this).removeAttr('data-cu');
-        })
-    }
 }
 
 function khoiTaoTapTinInput_LCT($form) {
@@ -280,14 +274,14 @@ function khoiTaoTapTinInput_LCT($form) {
 //function khoiTaoChuDeInput_LCT($form) {
 //    $form.find('input[data-input-type="chu-de"]').on('focus', function (e, mo) {
 //        var $phanTu = $(this);
-
+//
 //        moPopupFull({
 //            url: '/ChuDe/_Chon',
 //            thanhCong: function ($popup) {
 //                var $khung = $popup.find('#khung_quan_ly');
-
+//
 //                khoiTaoKhungChuDe($khung);
-
+//
 //                $khung.on('chon', function (e, data) {
 //                    $popup.tat();
 //                    $phanTu.val(data.ten).focusout();
@@ -456,7 +450,7 @@ function khoiTaoGoiYInput_LCT($form) {
         var $chua = $inputHienTai.closest('.khung-input-goi-y'),
             $input = $inputHienTai;
 
-        $input.next().val('');
+        $input.next().change().val('');
         $input.removeClass('focus').val('').trigger('kiemTra');
 
         mangTam[maTam + 'td'] = false;
@@ -471,7 +465,7 @@ function khoiTaoGoiYInput_LCT($form) {
             ten = $giaTriChon.text() || '',
             ma = $giaTriChon.attr('data-ma') || '';
 
-        $input.next().val(ma);
+        $input.next().change().val(ma);
         $input.removeClass('focus').val(ten).trigger('kiemTra');
 
         mangTam[maTam + 'td'] = false;
@@ -1082,6 +1076,12 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
                 $input.on(this.customEvent);
             }
         });
+    }
+
+    if ($form.is('[data-cap-nhat]')) {
+        $form.find('.input :input').on('change', function () {
+            $(this).removeAttr('data-cu');
+        })
     }
 }
 
