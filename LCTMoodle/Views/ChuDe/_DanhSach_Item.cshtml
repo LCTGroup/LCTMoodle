@@ -1,0 +1,22 @@
+﻿@model DTOLayer.ChuDeDTO
+
+<li data-doi-tuong="muc" data-loai="ds-nut" data-ma="@Model.ma">
+    <section class="mo-ta">
+        <img src="@(Model.hinhDaiDien != null ? "/LayTapTin/chude_hinhdaidien/" + Model.hinhDaiDien.ma : "#")">
+        <p>
+            @Model.moTa
+        </p>
+    </section>
+    <a data-doi-tuong="ten" data-chuc-nang="mo-nut" class="ten">@Model.ten</a>
+    <section class="khung-chuc-nang-lct" style="top: 2px; right: 2px;">
+        <ul data-doi-tuong="cncd-@Model.ma">
+            <li>
+                <a data-chuc-nang="xoa">Xóa chủ đề</a>
+            </li>
+        </ul>
+        <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cncd-@Model.ma">
+            <i class="pe-7f-config"></i>
+        </button>
+    </section>
+    <a class="nut-chon" data-chuc-nang="chon"></a>
+</li>
