@@ -3,8 +3,9 @@
     Layout = "~/Views/LCT/Khung.cshtml";
 
     var thanhVien = ViewData["ThanhVien"] as DTOLayer.KhoaHoc_NguoiDungDTO;
+    var thanhVienDangKy = ViewData["ThanhVienDangKy"] as DTOLayer.KhoaHoc_NguoiDungDTO;
         
-    ViewData["TieuDe"] = Model.ten;
+    ViewData["TieuDe"] = "Danh sách thành viên - " + Model.ten;
 
     ViewData["DieuHuong"] = new List<string>();
 
@@ -14,15 +15,12 @@
 }
 
 @section Styles {
-    <link href="/Xem.css/KhoaHoc/" rel="stylesheet" />
-    <link href="/Khung.css/BinhLuan/" rel="stylesheet" />
+    <link href="/ThanhVien.css/KhoaHoc/" rel="stylesheet" />
 }
 
 @section Scripts {
-    <script src="/Xem.js/KhoaHoc/"></script>
-    <script src="/Khung.js/BinhLuan/"></script>
+    <script src="/ThanhVien.js/KhoaHoc/"></script>
     <script>
         maKhoaHoc = '@Model.ma';
-        tieuDe = '@Html.Raw(Model.ten)' + ' - LCTMoodle';
     </script>
 }
