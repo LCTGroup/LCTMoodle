@@ -102,7 +102,7 @@ namespace DAOLayer
             return khoaHoc;
         }
 
-        public static KetQua layTheoMa(int? ma)
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
             return layDong
                 (
@@ -110,7 +110,8 @@ namespace DAOLayer
                     new object[]
                     {
                         ma
-                    }
+                    },
+                    lienKet
                 );
         }
 

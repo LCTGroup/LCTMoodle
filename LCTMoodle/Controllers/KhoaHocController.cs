@@ -100,5 +100,41 @@ namespace LCTMoodle.Controllers
         {
             return Json(KhoaHoc_NguoiDungBUS.huyDangKy(ma));
         }
+
+        public ActionResult ThanhVien(int ma)
+        {
+            //Lấy khóa học & kiểm tra tồn tại hay không
+            #region Lấy khóa học & kiểm tra tồn tại
+            KetQua ketQua = KhoaHocBUS.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return RedirectToAction("Index", "TrangChu");
+            }
+            KhoaHocDTO khoaHoc = ketQua.ketQua as KhoaHocDTO; 
+            #endregion
+
+            //Lấy danh sách thành viên của nhóm
+            #region Lấy danh sách thành viên của nhóm
+		    ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaTrangThai(ma, 0);
+            if (ketQua.trangThai == 0)
+            {
+                ViewData["ThanhVien"] = ketQua.ketQua;
+            }
+	        #endregion
+
+            //Lấy danh sách thành viên đăng ký
+            #region Lấy danh sách thành viên đăng ký
+            if (khoaHoc.canDangKy)
+            {
+                ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaTrangThai(ma, 1);
+                if (ketQua.trangThai == 0)
+                {
+                    ViewData["ThanhVienDangKy"] = ketQua.ketQua;
+                }
+            }
+            #endregion
+
+            return View(khoaHoc);
+        }
 	}
 }

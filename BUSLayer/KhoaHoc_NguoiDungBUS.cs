@@ -197,5 +197,10 @@ namespace BUSLayer
         {
             return KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
         }
+
+        public static KetQua layTheoMaKhoaHocVaTrangThai(int maKhoahoc, int trangThai, LienKet lienKet = null)
+        {
+            return KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaTrangThai(maKhoahoc, trangThai, lienKet);
+        }
     }
 }

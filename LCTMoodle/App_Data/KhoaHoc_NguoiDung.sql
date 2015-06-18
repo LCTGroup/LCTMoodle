@@ -15,7 +15,7 @@ GO
 ALTER PROC dbo.themKhoaHoc_NguoiDung (
 	@0 INT, --MaKhoaHoc
 	@1 INT, --MaNguoiDung
-	@2 INT, --TrangThai
+	@2 TINYINT, --TrangThai
 	@3 INT --MaNguoiThem
 )
 AS
@@ -64,4 +64,23 @@ BEGIN
 		WHERE 
 			MaNguoiDung = @1 AND
 			MaKhoaHoc = @0
+END
+
+GO
+--Lấy theo mã khóa hoc, trạng thái
+CREATE PROC dbo.layKhoaHoc_NguoiDungTheoMaKhoaHocVaTrangThai (
+	@0 INT, --MaKhoaHoc
+	@1 TINYINT --TrangThai
+)
+AS
+BEGIN
+	SELECT 
+		MaKhoaHoc,
+		MaNguoiDung,
+		TrangThai,
+		MaNguoiThem
+		FROM dbo.KhoaHoc_NguoiDung
+		WHERE
+			MaKhoaHoc = @0 AND
+			TrangThai = @1
 END

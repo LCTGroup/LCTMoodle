@@ -113,5 +113,19 @@ namespace DAOLayer
                     }
                 );
         }
+
+        public static KetQua layTheoMaKhoaHocVaTrangThai(int? maKhoaHoc, int? trangThai, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layKhoaHoc_NguoiDungTheoMaKhoaHocVaTrangThai",
+                    new object[]
+                    {
+                        maKhoaHoc,
+                        trangThai
+                    },
+                    lienKet
+                );
+        }
     }
 }
