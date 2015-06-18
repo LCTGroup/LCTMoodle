@@ -1,22 +1,8 @@
 ﻿@model List<DTOLayer.ChuDeDTO>
-@{
-    ViewData["TieuDe"] = "Quản lý chủ đề";
-    Layout = "~/Views/LCT/Khung.cshtml";
-}
-@section Styles {
-}
-@section Scripts {
-    <script src="/Khung.js/ChuDe/"></script>
-    <script>
-        $(function () {
-            khoiTaoKhungChuDe($('#khung_quan_ly'));
-        })
-    </script>
-}
 
 <article class="hop">
     <section class="tieu-de">
-        Quản lý chủ đề
+        Chọn chủ đề
     </section>
     <section id="khung_quan_ly" class="noi-dung lct-cay" data-ma="0">
         <section class="cay">
@@ -29,7 +15,7 @@
             </ul>
         </section>
         <section class="con">
-            <ul id="khung_danh_sach" class="khung-danh-sach">@Html.Partial("~/Views/ChuDe/_DanhSach.cshtml", Model)</ul>   
+            <ul id="khung_danh_sach" class="khung-danh-sach">@Html.Partial("~/Views/ChuDe/_DanhSach.cshtml", Model)</ul>
             <a href="javascript:void(0)" data-chuc-nang="tao">
                 <i class="pe-7s-plus"></i>
                 Hiện chưa có nút con, hãy tạo một nút con mới

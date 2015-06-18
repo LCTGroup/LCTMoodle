@@ -33,6 +33,9 @@ namespace BUSLayer
                     case "MaNguoiTao":
                         cauHoi.nguoiTao = form.layDTO<NguoiDungDTO>(key);
                         break;
+                    case "MaChuDe":
+                        cauHoi.chuDe = form.layDTO<ChuDeDTO>(key);
+                        break;
                     default:
                         break;
                 }
@@ -55,6 +58,10 @@ namespace BUSLayer
             if (coKiemTra("MaNguoiTao", truong, kiemTra) && cauHoi.nguoiTao == null)
             {
                 loi.Add("Chưa đăng nhập");
+            }
+            if (coKiemTra("MaChuDe", truong, kiemTra) && cauHoi.chuDe == null)
+            {
+                loi.Add("Chủ đề không bỏ trống");
             }
             #endregion
 
@@ -88,8 +95,8 @@ namespace BUSLayer
                     case "NoiDung":
                         bangCapNhat.Add("NoiDung", cauHoi.noiDung, 2);
                         break;
-                    case "ThoiDiemCapNhat":
-                        bangCapNhat.Add("ThoiDiemCapNhat", cauHoi.thoiDiemCapNhat.HasValue ? cauHoi.thoiDiemCapNhat.Value.ToString("d/M/yyyy H:mm") : null, 1);
+                    case "MaChuDe":
+                        bangCapNhat.Add("MaChuDe", cauHoi.chuDe.ma.ToString(), 1);
                         break;
                     default:
                         break;
@@ -138,7 +145,7 @@ namespace BUSLayer
             });
         }
 
-        public static KetQua layToanBoCauHoi()
+        public static KetQua layDanhSachCauHoi()
         {
             return CauHoiDAO.layDanhSachCauHoi(new LienKet() 
             { 
@@ -146,7 +153,7 @@ namespace BUSLayer
             });
         }
 
-        public static KetQua capNhatTheoMa(Form form)
+        public static KetQua capNhat(Form form)
         {
             int? maCauHoi = form.layInt("Ma");
             if (!maCauHoi.HasValue)
@@ -165,7 +172,6 @@ namespace BUSLayer
 
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
 
-            form.Add("ThoiDiemCapNhat", DateTime.Now.ToString());
             gan(ref cauHoi, form);
 
             ketQua = kiemTra(cauHoi, form.Keys.ToArray());

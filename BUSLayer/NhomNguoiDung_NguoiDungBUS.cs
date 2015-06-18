@@ -15,7 +15,7 @@ namespace BUSLayer
     {
         public static KetQua layTheoTuKhoa(string tuKhoa, string phamVi, int maNhomNguoiDung)
         {
-            KetQua ketQua = NguoiDungDAO.layTheoTuKhoa(tuKhoa);
+            KetQua ketQua = NguoiDungDAO.lay_TimKiem(tuKhoa);
 
             if (ketQua.trangThai != 0)
             {

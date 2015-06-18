@@ -39,24 +39,7 @@ namespace LCTMoodle
         }
         protected void Session_Start()
         {
-            HttpCookie ckNguoiDung = Request.Cookies.Get("NguoiDung");
-
-            if (ckNguoiDung != null)
-            {
-                Dictionary<string, string> formCookie = new Dictionary<string, string>()
-                {
-                    { "TenTaiKhoan", ckNguoiDung["TenTaiKhoan"] },
-                    { "MatKhau", ckNguoiDung["MatKhau"] },
-                    { "GhiNho", "1" }
-                };
-
-                KetQua ketQua = NguoiDungBUS.xuLyDangNhap(formCookie);
-
-                if (ketQua.trangThai == 0)
-                {
-                    Session["NguoiDung"] = (ketQua.ketQua as NguoiDungDTO).ma;
-                }
-            }
+            NguoiDungBUS.kiemTraCookie();
         }
     }
 }

@@ -51,13 +51,13 @@ namespace LCTMoodle.Controllers
         [HttpPost]        
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            return Json(NguoiDungBUS.them(chuyenDuLieuForm(formCollection)));
+            return Json(NguoiDungBUS.them(chuyenForm(formCollection)));
         }
 
         [HttpPost]
         public ActionResult XuLyDangNhap(FormCollection formCollection)
         {
-            KetQua ketQua = NguoiDungBUS.xuLyDangNhap(chuyenDuLieuForm(formCollection));
+            KetQua ketQua = NguoiDungBUS.xuLyDangNhap(chuyenForm(formCollection));
 
             return Json(ketQua);
         }

@@ -142,5 +142,26 @@ namespace LCTMoodle.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public ActionResult _GoiY(string tuKhoa)
+        {
+            KetQua ketQua = ChuDeBUS.lay_TimKiem(tuKhoa);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 1
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            List<ChuDeDTO> chuDe = ketQua.ketQua as List<ChuDeDTO>;
+
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = chuDe.Select(x => new { ma = x.ma, ten = x.ten }).ToArray()
+            }, JsonRequestBehavior.AllowGet);
+        }
 	}
 }

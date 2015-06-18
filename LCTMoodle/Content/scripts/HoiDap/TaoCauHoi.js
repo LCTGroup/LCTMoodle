@@ -2,7 +2,6 @@
 
 $(function () {
     $form = $('[data-doi-tuong="form-cau-hoi"]');
-
     khoiTaoThemCauHoi($form);
 });
 

@@ -27,8 +27,10 @@ namespace DAOLayer
                         nguoiDung.matKhau = layString(dong, i); break;
                     case "Email":
                         nguoiDung.email = layString(dong, i); break;
-                    case "HoTen":
-                        nguoiDung.hoTen = layString(dong, i); break;
+                    case "Ho":
+                        nguoiDung.ho = layString(dong, i); break;
+                    case "Ten":
+                        nguoiDung.ten = layString(dong, i); break;
                     case "NgaySinh":
                         nguoiDung.ngaySinh = layDateTime(dong, i); break;
                     case "DiaChi":
@@ -40,7 +42,7 @@ namespace DAOLayer
 
                         if (maTam.HasValue)
                         {
-                            nguoiDung.hinhDaiDien = LienKet.co(lienKet, "TapTin") ?
+                            nguoiDung.hinhDaiDien = LienKet.co(lienKet, "HinhDaiDien") ?
                                 layDTO<TapTinDTO>(TapTinDAO.layTheoMa("NguoiDung_HinhDaiDien", maTam.Value)) :
                                 new TapTinDTO()
                                 {
@@ -66,7 +68,8 @@ namespace DAOLayer
                     nguoiDung.tenTaiKhoan,
                     nguoiDung.matKhau,
                     nguoiDung.email,
-                    nguoiDung.hoTen,
+                    nguoiDung.ho,
+                    nguoiDung.ten,
                     nguoiDung.ngaySinh,
                     nguoiDung.diaChi,
                     nguoiDung.soDienThoai,
@@ -74,6 +77,7 @@ namespace DAOLayer
                 }
             );
         }
+        
         public static KetQua layTheoTenTaiKhoan(string tenTaiKhoan)
         {
             return layDong
@@ -85,6 +89,7 @@ namespace DAOLayer
                 }
             );
         }
+        
         public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
             return layDong
@@ -98,11 +103,11 @@ namespace DAOLayer
             );
         }        
 
-        public static KetQua layTheoTuKhoa(string tuKhoa, LienKet lienKet = null)
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
         {
             return layDanhSachDong
                 (
-                    "layNguoiDungTheoTuKhoa",
+                    "layNguoiDung_TimKiem",
                     new object[]
                     {
                         tuKhoa

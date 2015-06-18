@@ -42,6 +42,19 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "MaChuDe":
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
+                        {
+                            cauHoi.chuDe = LienKet.co(lienKet, "ChuDe") ?
+                                layDTO<ChuDeDTO>(ChuDeDAO.layTheoMa(maTam.Value)) :
+                                new ChuDeDTO()
+                                {
+                                    ma = maTam
+                                };
+                        }
+                        break;
                     default:
                         break;
                 }                
@@ -64,7 +77,8 @@ namespace DAOLayer
                 {
                     cauHoi.tieuDe,
                     cauHoi.noiDung,
-                    layMa(cauHoi.nguoiTao)
+                    layMa(cauHoi.nguoiTao),
+                    layMa(cauHoi.chuDe)
                 }
             );
         }

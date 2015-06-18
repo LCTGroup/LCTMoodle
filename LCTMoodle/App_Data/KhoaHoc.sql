@@ -44,12 +44,12 @@ END
 
 GO
 --Lấy khóa học theo mã
-ALTER PROC dbo.layKhoaHocTheoMa(
+ALTER PROC dbo.layKhoaHocTheoMa (
 	@0 INT --Ma
 )
 AS
 BEGIN
-	SELECT 
+	SELECT TOP 1
 		Ma,
 		Ten,
 		MoTa,
@@ -71,10 +71,10 @@ END
 
 GO
 --Lấy toàn bộ khóa học
-CREATE PROC dbo.layKhoaHoc
+ALTER PROC dbo.layKhoaHoc
 AS
 BEGIN
-	SELECT 
+	SELECT
 		Ma,
 		Ten,
 		MoTa,
@@ -91,4 +91,60 @@ BEGIN
 		CoBangDiemDanh,
 		CanDuyetBaiViet
 		FROM dbo.KhoaHoc
+		ORDER BY ThoiDiemTao DESC
+END
+
+GO
+--Lấy theo từ khóa
+ALTER PROC dbo.layKhoaHoc_TimKiem (
+	@0 NVARCHAR(MAX) --Từ khóa
+)
+AS
+BEGIN
+	SELECT
+		Ma,
+		Ten,
+		MoTa,
+		MaHinhDaiDien,
+		MaChuDe,
+		MaNguoiTao,
+		ThoiDiemTao,
+		ThoiDiemHetHan,
+		CanDangKy,
+		HanDangKy,
+		PhiThamGia,
+		CheDoRiengTu,
+		CoBangDiem,
+		CoBangDiemDanh,
+		CanDuyetBaiViet
+		FROM dbo.KhoaHoc
+		WHERE Ten LIKE '%' + REPLACE(@0, ' ', '%') + '%'
+END
+
+GO
+--Lấy theo chủ đề
+ALTER PROC dbo.layKhoaHocTheoMaChuDe (
+	@0 INT --MaChuDe
+)
+AS
+BEGIN
+	SELECT
+		Ma,
+		Ten,
+		MoTa,
+		MaHinhDaiDien,
+		MaChuDe,
+		MaNguoiTao,
+		ThoiDiemTao,
+		ThoiDiemHetHan,
+		CanDangKy,
+		HanDangKy,
+		PhiThamGia,
+		CheDoRiengTu,
+		CoBangDiem,
+		CoBangDiemDanh,
+		CanDuyetBaiViet
+		FROM dbo.KhoaHoc
+		WHERE MaChuDe = @0
+		ORDER BY ThoiDiemTao DESC
 END

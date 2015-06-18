@@ -109,9 +109,14 @@ namespace BUSLayer
             });
         }
 
-        public static KetQua layTheoMaCha(int maCha)
+        public static KetQua layTheoMaCha(int maCha, LienKet lienKet = null)
         {
-            return ChuDeDAO.layTheoMaCha(maCha);
+            return ChuDeDAO.layTheoMaCha(maCha, lienKet);
+        }
+
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
+        {
+            return ChuDeDAO.lay_TimKiem(tuKhoa, lienKet);
         }
     }
 }

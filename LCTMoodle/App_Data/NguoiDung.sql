@@ -7,7 +7,8 @@ CREATE TABLE dbo.NguoiDung (
 	TenTaiKhoan NVARCHAR(MAX) NOT NULL,
 	MatKhau NVARCHAR(MAX) NOT NULL,
 	Email NVARCHAR(MAX) NOT NULL,
-	HoTen NVARCHAR(MAX) NOT NULL,
+	Ho NVARCHAR(MAX),
+	Ten NVARCHAR(MAX),
 	NgaySinh DATETIME,
 	DiaChi NVARCHAR(MAX),
 	SoDienThoai NVARCHAR(MAX),
@@ -17,19 +18,20 @@ CREATE TABLE dbo.NguoiDung (
 
 GO
 --Thêm người dùng
-CREATE PROC dbo.themNguoiDung (
+ALTER PROC dbo.themNguoiDung (
 	@0 NVARCHAR(MAX), --Tên tài khoản
 	@1 NVARCHAR(MAX), --Mật khẩu
 	@2 NVARCHAR(MAX), --Email
-	@3 NVARCHAR(MAX), --Họ và tên
-	@4 DATETIME, --Ngày Sinh
-	@5 NVARCHAR(MAX), --Địa chỉ
-	@6 NVARCHAR(MAX), --Số điện thoại
-	@7 INT --Hình đại diện
+	@3 NVARCHAR(MAX), --Họ
+	@4 NVARCHAR(MAX), --Tên
+	@5 DATETIME, --Ngày Sinh
+	@6 NVARCHAR(MAX), --Địa chỉ
+	@7 NVARCHAR(MAX), --Số điện thoại
+	@8 INT --Hình đại diện
 )
 AS
 BEGIN
-	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, HoTen, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien) VALUES (@0, @1, @2, @3, @4, @5, @6, @7);
+	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, Ho, Ten, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien) VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8);
 
 	SELECT @@IDENTITY Ma
 END
@@ -62,7 +64,7 @@ END
 
 GO
 --Lấy người dùng theo từ khóa
-ALTER PROC dbo.layNguoiDungTheoTuKhoa (
+CREATE PROC dbo.layNguoiDung_TimKiem (
 	@0 NVARCHAR(MAX) --Từ khóa
 )
 AS

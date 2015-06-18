@@ -6,9 +6,10 @@ GO
 	--CD
 	--KH
 --Mã đối tượng là mã đối tượng mà quyền này ảnh hưởng
-CREATE TABLE dbo.NhomNguoiDung_HT_Quyen (
+CREATE TABLE dbo.NhomNguoiDung_KH_Quyen (
 	MaNhomNguoiDung INT NOT NULL,
 	MaQuyen INT NOT NULL,
+	--Đối tượng mà quyền tác động
 	MaDoiTuong INT NOT NULL
 )
 

@@ -65,7 +65,7 @@ ALTER PROC dbo.layChuDeTheoMa (
 )
 AS
 BEGIN
-	SELECT 
+	SELECT TOP 1
 		Ma,
 		Ten,
 		MoTa,
@@ -86,4 +86,23 @@ AS
 BEGIN
 	DELETE FROM dbo.ChuDe
 		WHERE Ma = @0
+END
+
+GO
+--Tìm kiếm chủ đề
+CREATE PROC dbo.layChuDe_TimKiem (
+	@0 NVARCHAR(MAX) --Từ khóa
+)
+AS
+BEGIN
+	SELECT 
+		Ma,
+		Ten,
+		MoTa,
+		MaNguoiTao,
+		ThoiDiemTao,
+		MaCha,
+		MaHinhDaiDien
+		FROM dbo.ChuDe
+		WHERE Ten LIKE '%' + REPLACE(@0, ' ', '%') + '%'
 END

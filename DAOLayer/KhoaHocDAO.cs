@@ -102,7 +102,7 @@ namespace DAOLayer
             return khoaHoc;
         }
 
-        public static KetQua layTheoMa(int? ma)
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
             return layDong
                 (
@@ -110,7 +110,8 @@ namespace DAOLayer
                     new object[]
                     {
                         ma
-                    }
+                    },
+                    lienKet
                 );
         }
 
@@ -141,6 +142,32 @@ namespace DAOLayer
                 (
                     "layKhoaHoc",
                     new object[0],
+                    lienKet
+                );
+        }
+
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layKhoaHoc_TimKiem",
+                    new object[] 
+                    { 
+                        tuKhoa
+                    },
+                    lienKet
+                );
+        }
+
+        public static KetQua layTheoMaChuDe(int? maChuDe, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layKhoaHocTheoMaChuDe",
+                    new object[]
+                    {
+                        maChuDe
+                    },
                     lienKet
                 );
         }

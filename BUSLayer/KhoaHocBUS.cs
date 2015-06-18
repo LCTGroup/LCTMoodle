@@ -103,14 +103,24 @@ namespace BUSLayer
             return KhoaHocDAO.them(khoaHoc);
         }
 
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
         {
-            return KhoaHocDAO.layTheoMa(ma);
+            return KhoaHocDAO.layTheoMa(ma, lienKet);
         }
 
-        public static KetQua lay()
+        public static KetQua lay(LienKet lienKet = null)
         {
-            return KhoaHocDAO.lay();
+            return KhoaHocDAO.lay(lienKet);
+        }
+
+        public static KetQua layTheoMaChuDe(int maChuDe, LienKet lienKet = null)
+        {
+            return KhoaHocDAO.layTheoMaChuDe(maChuDe, lienKet);
+        }
+
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
+        {
+            return KhoaHocDAO.lay_TimKiem(tuKhoa, lienKet);
         }
     }
 }

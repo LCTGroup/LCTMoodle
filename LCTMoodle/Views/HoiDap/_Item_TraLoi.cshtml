@@ -1,9 +1,9 @@
 ﻿@model DTOLayer.TraLoiDTO           
 @if (Model != null)
-{
-    <li class="hop hop-1-vien" data-doi-tuong="tra-loi" data-ma="@Model.ma">
-        <section class="noi-dung">
-            <article class="muc-hoi-dap tra-loi binh-thuong">
+{   
+    <li class="hop hop-1-vien">
+        <section class="noi-dung" data-doi-tuong="tra-loi" data-ma="@Model.ma">
+            <article class="muc-hoi-dap tra-loi binh-thuong" data-doi-tuong="muc-tra-loi">
                 <section class="khung-chuc-nang-lct">
                     <ul data-doi-tuong="traloi-@Model.ma">
                         <li>

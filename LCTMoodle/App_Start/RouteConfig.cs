@@ -44,7 +44,13 @@ namespace LCTMoodle
                 url: "QuanLyQuyen/{phamVi}/{maDoiTuong}",
                 defaults: new { controller = "Quyen", action = "QuanLy", phamVi = UrlParameter.Optional, maDoiTuong = UrlParameter.Optional }
             );
-            
+
+            routes.MapRoute(
+                name: "XemCauHoi",
+                url: "HoiDap/{ma}",
+                defaults: new { controller = "HoiDap", action = "XemCauHoi", ma = UrlParameter.Optional },
+                constraints: new { ma = @"\d+" }
+            );
 
             routes.MapRoute(
                 name: "MacDinh",

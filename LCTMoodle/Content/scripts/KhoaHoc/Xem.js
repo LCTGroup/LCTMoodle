@@ -1,5 +1,14 @@
-﻿//Global: maKhoaHoc, tieuDe
-var $_KhungHienThi, $_DanhSach, $_KhungChua;
+﻿var
+    //Mã khóa học hiện tại
+    maKhoaHoc,
+    //Tiêu đề của khóa học (Lưu để lúc ajax hiển thị)
+    tieuDe,
+    //Khung hiển thị nội dung khóa học
+    $_KhungHienThi,
+    //Khung danh sách bài viết
+    $_DanhSach,
+    //Khung chưa toàn bộ
+    $_KhungChua;
 
 //#region Khởi tạo
 
@@ -11,6 +20,11 @@ $(function () {
 
     khoiTaoNutHienThi($_KhungChua.find('[data-chuc-nang="hien-thi"]'));
     khoiTaoQuayLai();
+
+    //Khởi tạo nút
+    khoiTaoNutDangKy($('[data-chuc-nang="dang-ky"]'));
+    khoiTaoNutThamGia($('[data-chuc-nang="tham-gia"]'));
+    khoiTaoNutHuyDangKy($('[data-chuc-nang="huy-dang-ky"]'));
 });
 
 function hienThi(nhom) {
@@ -53,6 +67,123 @@ function khoiTaoNutHienThi($nut) {
 
         history.pushState({ hienThi: nhom }, '', '?hienthi=' + nhom);
     });
+}
+
+//#endregion
+
+//#region Chức năng
+
+function khoiTaoNutDangKy($nuts) {
+    $nuts.on('click', function () {
+        var $nut = $(this);
+        $.ajax({
+            url: '/KhoaHoc/XuLyDangKyThamGia/' + maKhoaHoc,
+            method: 'POST',
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Đăng ký thành công',
+                    bieuTuong: 'thanh-cong'
+                });
+
+                //Thay đổi nút
+                $nut.text('Hủy đăng ký');
+                $nut.off('click');
+                khoiTaoNutHuyDangKy($nut);
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Đăng ký vào khóa học thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
+            }
+        }).fail(function () {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Đăng ký vào khóa học thất bại',
+                bieuTuong: 'nguy-hiem'
+            });
+        });
+    })
+}
+
+function khoiTaoNutThamGia($nuts) {
+    $nuts.on('click', function (e) {
+        $.ajax({
+            url: '/KhoaHoc/XuLyDangKyThamGia/' + maKhoaHoc,
+            method: 'POST',
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                location.reload();
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Tham gia khóa học thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
+            }
+        }).fail(function () {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Tham gia khóa học thất bại',
+                bieuTuong: 'nguy-hiem'
+            });
+        });
+    });
+}
+
+function khoiTaoNutRoiKhoaHoc() {
+
+}
+
+function khoiTaoNutHuyDangKy($nuts) {
+    $nuts.on('click', function (e) {
+        var $nut = $(this);
+        $.ajax({
+            url: '/KhoaHoc/XuLyHuyDangKy/' + maKhoaHoc,
+            method: 'POST',
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Hủy đăng ký thành công',
+                    bieuTuong: 'thanh-cong'
+                });
+
+                //Thay đổi nút
+                $nut.text('Đăng ký');
+                $nut.off('click');
+                khoiTaoNutDangKy($nut);
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Đăng ký vào khóa học thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
+            }
+        }).fail(function () {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Đăng ký vào khóa học thất bại',
+                bieuTuong: 'nguy-hiem'
+            });
+        });
+    })
+}
+
+function khoiTaoNutXacNhanMoi() {
+
+}
+
+function khoiTaoNutTuChoiMoi() {
+
 }
 
 //#endregion
@@ -171,7 +302,7 @@ function khoiTaoForm_DienDan($form) {
             $.ajax({
                 url: '/BaiVietDienDan/XuLyThem',
                 type: 'POST',
-                data: $form.serialize(),
+                data: layDataLCTForm($form),
                 dataType: 'JSON',
                 processData: false
             }).done(function (data) {
@@ -379,7 +510,7 @@ function khoiTaoForm_BaiGiang($form) {
             $.ajax({
                 url: '/BaiVietBaiGiang/XuLyThem',
                 type: 'POST',
-                data: $form.serialize(),
+                data: layDataLCTForm($form),
                 dataType: 'JSON',
                 processData: false
             }).done(function (data) {
@@ -603,7 +734,7 @@ function khoiTaoForm_BaiTap($form) {
             $.ajax({
                 url: '/BaiVietBaiTap/XuLyThem',
                 type: 'POST',
-                data: $form.serialize(),
+                data: layDataLCTForm($form),
                 dataType: 'JSON',
                 processData: false
             }).done(function (data) {
@@ -670,7 +801,7 @@ function khoiTaoItem_BaiTap($danhSachBaiTap) {
                 $.ajax({
                     url: '/BaiTapNop/XuLyThem',
                     type: 'POST',
-                    data: $form.serialize(),
+                    data: layDataLCTForm($form),
                     dataType: 'JSON'
                 }).done(function (data) {
                     if (data.trangThai == 0) {

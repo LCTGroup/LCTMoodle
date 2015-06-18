@@ -39,15 +39,16 @@
                     </ul>
                 }
                 else
-                {                    
-                    DTOLayer.NguoiDungDTO nguoiDung = (BUSLayer.NguoiDungBUS.layTheoMa((int)Session["NguoiDung"])).ketQua as DTOLayer.NguoiDungDTO;
+                {
+                    var ketQua = BUSLayer.NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]);
+                    DTOLayer.NguoiDungDTO nguoiDung = ketQua.ketQua as DTOLayer.NguoiDungDTO;
                         
                     <ul class="da-dang-nhap">
                         <li><a href="#"><i class="pe-7s-chat"></i></a></li>
                         <li><a href="#"><i class="pe-7s-global"></i></a></li>
                         <li>
                             <a href="javascript:void(0)" data-mo-doi-tuong="HopDieuKhien">
-                                <img src="/LayTapTin/NguoiDung_HinhDaiDien/@nguoiDung.hinhDaiDien.ma" />
+                                <img src="@(nguoiDung.hinhDaiDien != null ? "/LayTapTin/NguoiDung_HinhDaiDien/" + nguoiDung.hinhDaiDien.ma : "#")" />
                                 <span>@nguoiDung.tenTaiKhoan</span>
                             </a>
                             <div class="hop-dieu-khien" data-doi-tuong="HopDieuKhien">

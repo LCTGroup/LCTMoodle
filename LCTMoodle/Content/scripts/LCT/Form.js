@@ -1,5 +1,6 @@
 ﻿// Lưu đối tượng vừa focus
-$inputVuaFocus = {};
+var $inputVuaFocus = {};
+var soLuongEditor = 0;
 
 /*
     Khởi tạo input
@@ -24,7 +25,7 @@ function khoiTaoLCTForm($form, thamSo) {
     khoiTaoTapTinInput_LCT($form);
 
     //Xử lý chọn chủ đề
-    khoiTaoChuDeInput_LCT($form);
+    //khoiTaoChuDeInput_LCT($form);
 
     //Xử lý gợi ý input
     khoiTaoGoiYInput_LCT($form);
@@ -165,28 +166,38 @@ function khoiTaoHienThiInput_LCT($form) {
         $phanTu.attr('type', 'hidden');
     })
 
-    $form.find('input[data-input-type="chu-de"]').each(function () {
-        $phanTu = $(this);
-
-        $phanTu.after($('<input type="hidden" />').attr({
-            'name': $phanTu.attr('name')
-        }));
-
-        $phanTu.removeAttr('name');
-    })
-
     $form.find('input[data-input-type="goi-y"]').each(function () {
         var $phanTu = $(this);
         $phanTu.wrap('<article class="khung-input-goi-y"></article>');
         var name = $phanTu.attr('name');
         $phanTu.removeAttr('name');
-        $phanTu.after('<input type="hidden" name="' + name + '"><section class="khung-danh-sach-goi-y"><ul class="danh-sach-goi-y"></ul><span>Không có giá trị trùng khớp từ khóa</span></section>');
-    })
+        $phanTu.after('<input type="hidden" name="' + name + '"><section class="khung-danh-sach-goi-y"><ul class="danh-sach-goi-y"></ul><span></span></section>');
+    });
 
+    $form.find('input[data-input-type="chu-de"]').each(function () {
+        var $phanTu = $(this);
+        $phanTu.wrap('<article class="khung-input-goi-y"></article>');
+        var name = $phanTu.attr('name');
+        $phanTu.removeAttr('name');
+        $phanTu.attr({
+            'data-url': '/ChuDe/_GoiY',
+            'data-input-type': 'goi-y'
+        });
+        $phanTu.after('<input type="hidden" name="' + name + '"><section class="khung-danh-sach-goi-y"><ul class="danh-sach-goi-y"></ul><span></span></section>');
+    });
+    
     //Trường hợp đặc biệt, xử lý validate riêng cho editor
     $form.find('textarea[data-input-type="editor"]').each(function () {
-        CKEDITOR.replace(this);
         var $phanTu = $(this);
+        var name = $phanTu.attr('name');
+
+        $phanTu.attr({
+            'data-real-name': name,
+            'data-fake-name': name + soLuongEditor,
+            'name': name + soLuongEditor++
+        });
+
+        CKEDITOR.replace(this);
 
         CKEDITOR.on('instanceReady', function (e) {
             e.removeListener();
@@ -266,50 +277,63 @@ function khoiTaoTapTinInput_LCT($form) {
     });
 }
 
-function khoiTaoChuDeInput_LCT($form) {
-    $form.find('input[data-input-type="chu-de"]').on('focus', function (e, mo) {
-        var $phanTu = $(this);
+//function khoiTaoChuDeInput_LCT($form) {
+//    $form.find('input[data-input-type="chu-de"]').on('focus', function (e, mo) {
+//        var $phanTu = $(this);
 
-        moPopupFull({
-            url: '/ChuDe/_Chon',
-            thanhCong: function ($popup) {
-                var $khung = $popup.find('#khung_quan_ly');
+//        moPopupFull({
+//            url: '/ChuDe/_Chon',
+//            thanhCong: function ($popup) {
+//                var $khung = $popup.find('#khung_quan_ly');
 
-                khoiTaoKhungChuDe($khung);
+//                khoiTaoKhungChuDe($khung);
 
-                $khung.on('chon', function (e, data) {
-                    $popup.tat();
-                    $phanTu.val(data.ten).focusout();
-                    $phanTu.next().val(data.ma).change();
-                });
-            }
-        });
-    });
-}
+//                $khung.on('chon', function (e, data) {
+//                    $popup.tat();
+//                    $phanTu.val(data.ten).focusout();
+//                    $phanTu.next().val(data.ma).change();
+//                });
+//            }
+//        });
+//    });
+//}
 
 function khoiTaoGoiYInput_LCT($form) {
     var maTam = 'goi-y_';
+    var $dsHienTai, $inputHienTai;
 
     $form.find('input[data-input-type="goi-y"]').each(function () {
         var $inputGoiY = $(this);
         var $khungDanhSachGoiY = $inputGoiY.find('~ .khung-danh-sach-goi-y');
         var $danhSachGoiY = $khungDanhSachGoiY.children('ul');
 
+        //Để xử lý sự kiện chọn = cách nhấn
+        $khungDanhSachGoiY.on('click', function (e) {
+            e.stopPropagation();
+        });
+
         $inputGoiY.on({
-            focusout: function () {
-                if (mangTam[maTam + 'td'] === false) {
-                    return;
-                }
+            focus: function () {
+                $dsHienTai = $danhSachGoiY;
+                $inputHienTai = $inputGoiY;
+                $inputGoiY.addClass('focus');
+                $danhSachGoiY.html('').next().text('Nhập từ khóa để tìm kiếm');
+                mangTam[maTam + 'cu'] = $inputGoiY.val();
 
-                var $giaTriChon = $danhSachGoiY.children('.chon');
+                //Xử lý sự kiện nhấn chuột ra ngoài đối tượng
+                $(document).on('click.tat_mo', function (e) {
+                    if (!$inputGoiY.is(':focus')) {
+                        $inputGoiY.removeClass('focus');
+                        $(document).off('click.tat_mo');
 
-                if ($giaTriChon.length != 0) {
-                    layGoiY_LCT($danhSachGoiY.children('.chon'));
-                }
-                else {
-                    $inputGoiY.next().val('');
-                    $danhSachGoiY.removeClass('rong').html('');
-                }
+                        if (mangTam[maTam + 'td']) {
+                            huyGoiY_LCT();
+                        }
+                        else {
+                            $inputHienTai.trigger('kiemTra');
+                        }
+                    }
+                });
             },
             keyup: function () {
                 if (mangTam[maTam + 'gt'] == $inputGoiY.val()) {
@@ -321,7 +345,7 @@ function khoiTaoGoiYInput_LCT($form) {
                 mangTam[maTam + 'to'] = setTimeout(function () {
                     mangTam[maTam + 'gt'] = $inputGoiY.val();
                     var data = $.parseJSON($inputGoiY.attr('data-data') || '{}');
-                    data.input = $inputGoiY.val();
+                    data.tuKhoa = $inputGoiY.val();
 
                     $.ajax({
                         url: $inputGoiY.attr('data-url'),
@@ -329,20 +353,24 @@ function khoiTaoGoiYInput_LCT($form) {
                         dataType: 'JSON'
                     }).done(function (data) {
                         if (data.trangThai != 0 || data.ketQua.length == 0) {
-                            $danhSachGoiY.addClass('rong').html('');
+                            $danhSachGoiY.html('').next().text('Không tìm thấy kết quả phù hợp');
                         }
                         else {
                             var html = taoGoiY_LCT(data.ketQua);
-                            $danhSachGoiY.removeClass('rong').html(html);
+                            $danhSachGoiY.html(html);
+
+                            khoiTaoDanhSachGoiY_LCT($danhSachGoiY)
+
                             $danhSachGoiY.find(':first-child').addClass('chon');
                         }
                     }).fail(function () {
-                        $danhSachGoiY.addClass('rong').html('');
+                        $danhSachGoiY.html('').next().text('Không tìm thấy kết quả phù hợp');
                     });
                 }, 200)
             },
             keydown: function (e) {
                 switch (e.which) {
+                    //Lên
                     case 38:
                         e.preventDefault();
 
@@ -360,6 +388,7 @@ function khoiTaoGoiYInput_LCT($form) {
                             }
                         }
                         break;
+                    //Xuống
                     case 40:
                         e.preventDefault();
 
@@ -377,20 +406,33 @@ function khoiTaoGoiYInput_LCT($form) {
                             }
                         }
                         break;
+                    //Enter
                     case 13:
                         e.preventDefault();
                         layGoiY_LCT($danhSachGoiY.children('.chon'));
+                    //Tab
+                    case 9:
+                        $inputGoiY.removeClass('focus');
+                        if (mangTam[maTam + 'td']) {
+                            var $giaTriChon = $danhSachGoiY.children('.chon');
+
+                            if ($giaTriChon.length != 0) {
+                                layGoiY_LCT($giaTriChon);
+                            }
+                            else {
+                                huyGoiY_LCT();
+                            }
+                        }
+                        break;
+                    //Esc
                     case 27:
                         e.preventDefault();
+                        $inputGoiY.val(mangTam[maTam + 'cu']);
                     default:
                         break;
                 }
             }
         });
-
-
-        //Tạm
-        khoiTaoDanhSachGoiY_LCT($inputGoiY.find('~ .khung-danh-sach-goi-y .danh-sach-goi-y'));
     })
 
     function khoiTaoDanhSachGoiY_LCT($danhSach) {
@@ -401,8 +443,8 @@ function khoiTaoGoiYInput_LCT($form) {
             },
             click: function () {
                 layGoiY_LCT($(this));
-            }
-        })
+            },
+        });
     }
 
     function chonGoiY_LCT($item) {
@@ -410,16 +452,27 @@ function khoiTaoGoiYInput_LCT($form) {
         $item.addClass('chon');
     }
 
+    function huyGoiY_LCT() {
+        var $chua = $inputHienTai.closest('.khung-input-goi-y'),
+            $input = $inputHienTai;
+
+        $input.next().val('');
+        $input.removeClass('focus').val('').trigger('kiemTra');
+
+        mangTam[maTam + 'td'] = false;
+        mangTam[maTam + 'gt'] = '';
+        clearTimeout(mangTam[maTam + 'to']);
+    }
+
     function layGoiY_LCT($item) {
         var $chua = $item.closest('.khung-input-goi-y'),
             $giaTriChon = $item.children(),
             $input = $chua.children(':first-child'),
             ten = $giaTriChon.text() || '',
-            ma = $giaTriChon.attr('data-value') || '';
-        $input.val(ten);
-        $input.next().val(ma).change();
+            ma = $giaTriChon.attr('data-ma') || '';
 
-        $chua.find('.danh-sach-goi-y').removeClass('rong').html('');
+        $input.next().val(ma);
+        $input.removeClass('focus').val(ten).trigger('kiemTra');
 
         mangTam[maTam + 'td'] = false;
         mangTam[maTam + 'gt'] = $input.val();
@@ -430,7 +483,7 @@ function khoiTaoGoiYInput_LCT($form) {
         var html = '', soLuong = data.length;
 
         for (var i = 0; i < soLuong; i++) {
-            html += '<li><span data-value="' + data[i].ma + '">' + data[i].ten + '</span></li>';
+            html += '<li><span data-ma="' + data[i].ma + '">' + data[i].ten + '</span></li>';
         }
 
         return html;
@@ -774,7 +827,7 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
             });
         }
         else if ($input.is('[type="file"]')) {
-            $input.on('focusout', function () {
+            $input.on('kiemTra', function () {
                 if ($input.next().val()) {
                     tatLoi($input, 'bat-buoc');
                 }
@@ -785,8 +838,8 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
                 }
             });
         }
-        else if ($input.is('[data-input-type="chu-de"], [data-input-type="goi-y"]')) {
-            $input.on('focusout', function () {
+        else if ($input.is('[data-input-type="goi-y"]')) {
+            $input.on('kiemTra', function () {
                 if ($input.next().val()) {
                     tatLoi($input, 'bat-buoc');
                 }
@@ -1047,7 +1100,9 @@ function khoiTaoSubmit_LCT($form, thamSo) {
         mangTam.dangSubmit = true;
 
         $form.find('textarea[data-input-type="editor"]').each(function () {
-            $(this).change();
+            var $phanTu = $(this);
+            $phanTu.change();
+
             CKEDITOR.instances[this.getAttribute('name')].updateElement();
         });
 
@@ -1170,15 +1225,27 @@ function khoiTaoSubmit_LCT($form, thamSo) {
                 });
             }
         }
+        else {
+            mangTam.dangSubmit = false;
+        }
     });
 }
 
 function layDataLCTForm($form) {
     var data;
 
+    var $editor = $form.find('[data-input-type="editor"]')
+    $editor.each(function () {
+        this.name = $(this).attr('data-real-name');
+    });
+
     var $inputs = $form.find(':input[name]:not(:disabled)' + ($form.is('[data-cap-nhat]') ? ':not([data-cu])' : ''));
 
     data = $inputs.not('[type="checkbox"]').serialize();
+
+    $editor.each(function () {
+        this.name = $(this).attr('data-fake-name');
+    });
 
     $inputs.not('[type!="checkbox"]').each(function () {
         data += '&' + this.name + "=" + (this.checked ? '1' : '0');

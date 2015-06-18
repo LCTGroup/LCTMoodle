@@ -30,13 +30,23 @@ namespace LCTMoodle.Controllers
                 thanhVien = ketQua.trangThai == 0 ? ketQua.ketQua as KhoaHoc_NguoiDungDTO : null;
             }
 
-            if ((thanhVien == null && khoaHoc.cheDoRiengTu == "NoiBo") ||
-                (thanhVien != null && thanhVien.trangThai == 4))
+            //Thành viên bị chặn
+            if (thanhVien != null && thanhVien.trangThai == 3)
             {
                 return RedirectToAction("Index", "TrangChu");
             }
 
             ViewData["ThanhVien"] = thanhVien;
+
+            //Khóa học nội bộ & người dùng không phải là thành viên
+            if (
+                (khoaHoc.cheDoRiengTu == "NoiBo" && 
+                (thanhVien == null || thanhVien.trangThai != 0)) ||
+                thanhVien != null && thanhVien.trangThai == 3)
+            {
+                return View("DangKyThamGia", khoaHoc);
+            }
+
             return View(khoaHoc);
         }
 
@@ -82,17 +92,49 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyDangKyThamGia(int ma)
         {
-            return Json(KhoaHoc_NguoiDungBUS.them(ma));
+            return Json(KhoaHoc_NguoiDungBUS.dangKyThamGia(ma));
         }
 
-        public ActionResult XuLyMoi(int ma, int maNguoiDung)
+        [HttpPost]
+        public ActionResult XuLyHuyDangKy(int ma)
         {
-            return Json(KhoaHoc_NguoiDungBUS.them(ma, 3, maNguoiDung));
+            return Json(KhoaHoc_NguoiDungBUS.huyDangKy(ma));
         }
 
-        public ActionResult XuLyChan(int ma, int maNguoiDung)
+        public ActionResult ThanhVien(int ma)
         {
-            return Json(KhoaHoc_NguoiDungBUS.them(ma, 4, maNguoiDung));
+            //Lấy khóa học & kiểm tra tồn tại hay không
+            #region Lấy khóa học & kiểm tra tồn tại
+            KetQua ketQua = KhoaHocBUS.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return RedirectToAction("Index", "TrangChu");
+            }
+            KhoaHocDTO khoaHoc = ketQua.ketQua as KhoaHocDTO; 
+            #endregion
+
+            //Lấy danh sách thành viên của nhóm
+            #region Lấy danh sách thành viên của nhóm
+		    ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaTrangThai(ma, 0);
+            if (ketQua.trangThai == 0)
+            {
+                ViewData["ThanhVien"] = ketQua.ketQua;
+            }
+	        #endregion
+
+            //Lấy danh sách thành viên đăng ký
+            #region Lấy danh sách thành viên đăng ký
+            if (khoaHoc.canDangKy)
+            {
+                ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaTrangThai(ma, 1);
+                if (ketQua.trangThai == 0)
+                {
+                    ViewData["ThanhVienDangKy"] = ketQua.ketQua;
+                }
+            }
+            #endregion
+
+            return View(khoaHoc);
         }
 	}
 }
