@@ -105,3 +105,16 @@ BEGIN
 	FROM dbo.CauHoi
 	WHERE TieuDe LIKE @0 OR NoiDung LIKE @0
 END 
+
+GO
+--Lấy Câu Hỏi theo Chủ Đề
+CREATE PROC dbo.layCauHoiTheoChuDe
+(
+	@0 INT --Mã Chủ Đề
+)
+AS
+BEGIN
+	SELECT *
+	FROM dbo.CauHoi
+	WHERE MaChuDe = @0
+END

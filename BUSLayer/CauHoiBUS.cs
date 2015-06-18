@@ -129,29 +129,6 @@ namespace BUSLayer
         {
             return CauHoiDAO.xoaTheoMa(ma);
         }
-        
-        public static KetQua layTheoMa(int? ma)
-        {            
-            return CauHoiDAO.layTheoMa(ma, new LienKet()
-            {
-                "NguoiTao", 
-                { 
-                    "TraLoi", 
-                    new LienKet()
-                    {
-                        "NguoiTao"
-                    }
-                }
-            });
-        }
-
-        public static KetQua layDanhSachCauHoi()
-        {
-            return CauHoiDAO.layDanhSachCauHoi(new LienKet() 
-            { 
-                "NguoiTao"
-            });
-        }
 
         public static KetQua capNhat(Form form)
         {
@@ -183,8 +160,40 @@ namespace BUSLayer
 
             return CauHoiDAO.capNhatTheoMa(maCauHoi, layBangCapNhat(cauHoi, form.Keys.ToArray()), new LienKet() 
             {
-                "NguoiTao"
+                "MaNguoiTao"
             });
         }
+
+        public static KetQua layTheoMa(int? ma)
+        {            
+            return CauHoiDAO.layTheoMa(ma, new LienKet()
+            {
+                "MaNguoiTao", 
+                { 
+                    "TraLoi", 
+                    new LienKet()
+                    {
+                        "MaNguoiTao"
+                    }
+                }
+            });
+        }
+
+        public static KetQua layDanhSachCauHoi()
+        {
+            return CauHoiDAO.layDanhSachCauHoi(new LienKet() 
+            { 
+                "MaNguoiTao"
+            });
+        }
+
+        public static KetQua layTheoChuDe(int? ma)
+        {
+            return CauHoiDAO.layTheoChuDe(ma, new LienKet() { 
+                "MaNguoiTao",
+                "MaChuDe"
+            });
+        }
+
     }
 }

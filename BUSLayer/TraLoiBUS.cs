@@ -106,7 +106,7 @@ namespace BUSLayer
             {
                 return ketQua;
             }
-            return TraLoiDAO.them(traLoi, new LienKet() { "NguoiTao" });
+            return TraLoiDAO.them(traLoi, new LienKet() { "MaNguoiTao" });
         }
 
         public static KetQua xoaTheoMa(int? ma)
@@ -116,7 +116,7 @@ namespace BUSLayer
 
         public static KetQua layTheoMaCauHoi(int maCauHoi)
         {
-            return TraLoiDAO.layTheoMaCauHoi(maCauHoi, new LienKet() { "NguoiTao" });
+            return TraLoiDAO.layTheoMaCauHoi(maCauHoi, new LienKet() { "MaNguoiTao" });
         }
 
         public static KetQua layTheoMa(int? ma)
@@ -151,8 +151,8 @@ namespace BUSLayer
             }
 
             return TraLoiDAO.capNhatTheoMa(maTraLoi, layBangCapNhat(traLoi, form.Keys.ToArray()), new LienKet() { 
-                "NguoiTao",
-                "CauHoi"
+                "MaNguoiTao",
+                "MaCauHoi"
             });
         }
     }

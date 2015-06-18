@@ -34,7 +34,7 @@ namespace DAOLayer
 
                         if (maTam.HasValue)
                         {
-                            cauHoi.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
+                            cauHoi.nguoiTao = LienKet.co(lienKet, "MaNguoiTao") ?
                                 layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam.Value)) :
                                 new NguoiDungDTO()
                                 {
@@ -47,7 +47,7 @@ namespace DAOLayer
 
                         if (maTam.HasValue)
                         {
-                            cauHoi.chuDe = LienKet.co(lienKet, "ChuDe") ?
+                            cauHoi.chuDe = LienKet.co(lienKet, "MaChuDe") ?
                                 layDTO<ChuDeDTO>(ChuDeDAO.layTheoMa(maTam.Value)) :
                                 new ChuDeDTO()
                                 {
@@ -82,19 +82,6 @@ namespace DAOLayer
                 }
             );
         }
-        
-        public static KetQua layTheoMa(int? maCauHoi, LienKet lienKet = null)
-        {
-            return layDong
-            (
-                "layCauHoiTheoMa",
-                new object[]
-                {
-                    maCauHoi
-                },
-                lienKet
-            );
-        }
 
         public static KetQua xoaTheoMa(int? ma)
         {
@@ -105,6 +92,32 @@ namespace DAOLayer
                 {
                     ma
                 }
+            );
+        }
+
+        public static KetQua capNhatTheoMa(int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)
+        {
+            return layDong(
+                "capNhatCauHoiTheoMa",
+                new object[] 
+                {
+                    ma,
+                    bangCapNhat.bang
+                },
+                lienKet
+            );
+        }
+   
+        public static KetQua layTheoMa(int? maCauHoi, LienKet lienKet = null)
+        {
+            return layDong
+            (
+                "layCauHoiTheoMa",
+                new object[]
+                {
+                    maCauHoi
+                },
+                lienKet
             );
         }
         
@@ -119,15 +132,14 @@ namespace DAOLayer
                 lienKet
             );
         }
-        
-        public static KetQua capNhatTheoMa(int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)
+
+        public static KetQua layTheoChuDe(int? ma, LienKet lienKet = null)
         {
             return layDong(
-                "capNhatCauHoiTheoMa",
+                "layCauHoiTheoChuDe",
                 new object[] 
                 {
-                    ma,
-                    bangCapNhat.bang
+                    ma
                 },
                 lienKet
             );

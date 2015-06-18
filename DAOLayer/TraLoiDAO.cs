@@ -34,7 +34,7 @@ namespace DAOLayer
 
                         if (maTam.HasValue)
                         {
-                            traLoi.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
+                            traLoi.nguoiTao = LienKet.co(lienKet, "MaNguoiTao") ?
                                 layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam.Value)) :
                                 new NguoiDungDTO()
                                 {
@@ -47,7 +47,7 @@ namespace DAOLayer
 
                         if (maTam.HasValue)
                         {
-                            traLoi.cauHoi = LienKet.co(lienKet, "CauHoi") ?
+                            traLoi.cauHoi = LienKet.co(lienKet, "MaCauHoi") ?
                                 layDTO<CauHoiDTO>(CauHoiDAO.layTheoMa(maTam.Value)) :
                                 new CauHoiDTO()
                                 {
