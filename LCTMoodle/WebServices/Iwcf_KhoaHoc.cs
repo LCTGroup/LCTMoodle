@@ -16,7 +16,7 @@ namespace LCTMoodle.WebServices
         List<KhoaHocDTO> layKhoaHoc();
 
         [OperationContract]
-        List<KhoaHocDTO> layLK();
+        string layLK(int _Ma);
 
         [OperationContract]
         KhoaHocDTO layKhoaHocTheoMa(int _Ma);

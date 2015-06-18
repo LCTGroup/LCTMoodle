@@ -29,12 +29,17 @@ namespace LCTMoodle.WebServices
         }
 
 
-        public List<KhoaHocDTO> layLK()
+        public string layLK(int _Ma)
         {
             //return TapTinHelper.layDuongDan("KhoaHoc_HinhDaiDien", "1 jpg");
 
-            KetQua ketQua = KhoaHocBUS.lay(new LienKet() { "HinhDaiDien" });
-            
+            //KetQua ketQua = KhoaHocBUS.lay(new LienKet() { "HinhDaiDien" });
+            //List<KhoaHocDTO> lstKhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
+            //return lstKhoaHoc;
+
+            KetQua ketQua = KhoaHocBUS.layTheoMa(_Ma, new LienKet() { "HinhDaiDien" });
+            KhoaHocDTO dto_KhoaHoc = ketQua.ketQua as KhoaHocDTO;
+            return dto_KhoaHoc.hinhDaiDien.ten;
         }
     }
 }
