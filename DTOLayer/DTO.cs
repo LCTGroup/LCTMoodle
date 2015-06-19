@@ -10,5 +10,6 @@ namespace DTOLayer
     public class DTO
     {
         public int? ma;
+        public object duLieu;
     }
 }

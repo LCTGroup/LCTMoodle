@@ -321,11 +321,76 @@ namespace BUSLayer
                 }
                 return KhoaHoc_NguoiDungDAO.them(thanhVien);
             }
+
             thanhVien = ketQua.ketQua as KhoaHoc_NguoiDungDTO;
             thanhVien.nguoiThem = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?);
             thanhVien.trangThai = 3;
+            return KhoaHoc_NguoiDungDAO.capNhatTheoMaKhoaHocVaMaNguoiDung_TrangThai(thanhVien);
             #endregion
-            return null;
+        }
+
+        public static KetQua huyChanNguoiDung(int maKhoaHoc, int maNguoiDung)
+        {
+            //Lấy khóa học và kiểm tra tồn tại
+            #region Lấy khóa học và kiểm tra
+            KetQua ketQua = KhoaHocDAO.layTheoMa(maKhoaHoc);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+            #endregion
+
+            //Kiểm tra xem thành viên có phải đang đăng ký hay không
+            #region Kiểm tra trạng thái hợp lệ
+            ketQua = KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
+            if (ketQua.trangThai > 1)
+            {
+                return ketQua;
+            }
+            if (ketQua.trangThai == 1 ||
+                (ketQua.ketQua as KhoaHoc_NguoiDungDTO).trangThai != 3)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = new List<string>() { "Người dùng không bị chặn" }
+                };
+            }
+            #endregion
+
+            return KhoaHoc_NguoiDungDAO.xoaTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
+        }
+
+        public static KetQua xoaThanhVien(int maKhoaHoc, int maNguoiDung)
+        {
+            //Lấy khóa học và kiểm tra tồn tại
+            #region Lấy khóa học và kiểm tra
+            KetQua ketQua = KhoaHocDAO.layTheoMa(maKhoaHoc);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+            #endregion
+
+            //Kiểm tra xem thành viên có phải đang đăng ký hay không
+            #region Kiểm tra trạng thái hợp lệ
+            ketQua = KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
+            if (ketQua.trangThai > 1)
+            {
+                return ketQua;
+            }
+            if (ketQua.trangThai == 1 ||
+                (ketQua.ketQua as KhoaHoc_NguoiDungDTO).trangThai != 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = new List<string>() { "Người dùng không phải là thành viên" }
+                };
+            }
+            #endregion
+
+            return KhoaHoc_NguoiDungDAO.xoaTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
         }
     }
 }

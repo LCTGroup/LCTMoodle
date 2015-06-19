@@ -164,14 +164,14 @@ function khoiTaoNutHuyDangKy($nuts) {
             else {
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: 'Đăng ký vào khóa học thất bại',
+                    thongBao: 'Hủy đăng ký thất bại',
                     bieuTuong: 'nguy-hiem'
                 });
             }
         }).fail(function () {
             moPopup({
                 tieuDe: 'Thông báo',
-                thongBao: 'Đăng ký vào khóa học thất bại',
+                thongBao: 'Hủy đăng ký thất bại',
                 bieuTuong: 'nguy-hiem'
             });
         });
