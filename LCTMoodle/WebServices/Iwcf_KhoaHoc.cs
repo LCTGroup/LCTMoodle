@@ -13,16 +13,27 @@ namespace LCTMoodle.WebServices
     [ServiceContract]
     public interface Iwcf_KhoaHoc
     {
-        [OperationContract]
-        List<KhoaHocDTO> layKhoaHoc();
+        //[OperationContract]
+        //List<KhoaHocDTO> layKhoaHoc();
 
-        [OperationContract]
-        string layLK(int _Ma);
+        //[OperationContract]
+        //string layLK(int _Ma);
 
+        //[OperationContract]
+        //KhoaHocDTO layKhoaHocTheoMa(int _Ma);
+
+        //[OperationContract]
+        //Dictionary<KhoaHocDTO, byte[]> layKhoaHoc15(int _Dau, int _Cuoi);
         [OperationContract]
         KhoaHocDTO layKhoaHocTheoMa(int _Ma);
 
         [OperationContract]
-        Dictionary<KhoaHocDTO, byte[]> layKhoaHoc15(int _Dau, int _Cuoi);
+        Dictionary<KhoaHocDTO, byte[]> layKhoaHocTheoMa_HinhDD(int _Ma);
+
+        [OperationContract]
+        Dictionary<KhoaHocDTO, byte[]> layKhoaHoc(int _Dau, int _Cuoi);
+
+        [OperationContract]
+        byte[] layHinhDaiDien(string _Loai, string _Ten);
     }
 }

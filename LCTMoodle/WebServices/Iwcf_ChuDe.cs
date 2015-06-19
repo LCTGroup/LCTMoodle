@@ -13,7 +13,7 @@ namespace LCTMoodle.WebServices
     public interface Iwcf_ChuDe
     {
         [OperationContract]
-        Dictionary<ChuDeDTO, byte[]> layChuDeCha(int _MaCha);
+        Dictionary<DTOLayer.ChuDeDTO, byte[]> layChuDeTheoMaCha(int _MaCha);
 
         [OperationContract]
         byte[] layHinhDaiDien(string _Loai, string _Ten);
