@@ -14,7 +14,8 @@
     //Mã nhóm hiện tại
     _NhomHienTai, 
     //Mảng chứa danh sách quyền của nhóm { "MaNhom", { "PhamViMa", "ChuoiMaQuyen |1|2|3|" } }
-    _MangQuyenNhom = {}, //Chỉ lưu quyền lá
+    //Chỉ lưu quyền lá
+    _MangQuyenNhom = {}, 
     //Quyền hiện tại (Ma, Global = 0)
     _DoiTuongHienTai;
 

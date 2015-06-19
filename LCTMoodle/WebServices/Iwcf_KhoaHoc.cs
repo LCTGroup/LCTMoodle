@@ -19,8 +19,6 @@ namespace LCTMoodle.WebServices
         [OperationContract]
         string layLK(int _Ma);
 
-        [OperationContract]
-        Stream layHinhAnh(string _Loai,string _Ten);
 
         [OperationContract]
         KhoaHocDTO layKhoaHocTheoMa(int _Ma);

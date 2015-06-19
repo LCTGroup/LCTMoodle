@@ -19,6 +19,10 @@ namespace LCTMoodle.WebServices
         {
             KetQua ketQua = KhoaHocBUS.lay();
             List<KhoaHocDTO> lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
+            foreach(var item in lst_KhoaHoc)
+            {
+                item.duLieu = layHinhAnh("KhoaHoc_HinhDaiDien", item.hinhDaiDien.ma + item.hinhDaiDien.duoi);
+            }
             return lst_KhoaHoc;
         }
 
@@ -46,11 +50,22 @@ namespace LCTMoodle.WebServices
         }
 
 
-        public Stream layHinhAnh(string _Loai, string _Ten)
+        public byte[] layHinhAnh(string _Loai, string _Ten)
         {
             string _LienKet = TapTinHelper.layDuongDan(_Loai, _Ten);
-            FileStream fs = File.OpenRead(@_LienKet);
-            return fs;
+            System.Drawing.Image img = System.Drawing.Image.FromFile(_LienKet);
+            using (var ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+                return ms.ToArray();
+            }
+        }
+
+        public System.Drawing.Image layHinhAnh2(string _Loai, string _Ten)
+        {
+            string _LienKet = TapTinHelper.layDuongDan(_Loai, _Ten);
+            System.Drawing.Image img = System.Drawing.Image.FromFile(_LienKet);
+            return img;
         }
     }
 }

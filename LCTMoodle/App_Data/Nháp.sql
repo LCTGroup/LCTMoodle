@@ -1,4 +1,6 @@
 ﻿select * from khoahoc_nguoidung
+delete from khoahoc_nguoidung
+update khoahoc_nguoidung set trangthai = 1 where makhoahoc = 3
 select * from khoahoc
 
 update khoahoc set chedoriengtu = 'CongKhai'
