@@ -19,8 +19,10 @@ namespace LCTMoodle.WebServices
         [OperationContract]
         string layLK(int _Ma);
 
-
         [OperationContract]
         KhoaHocDTO layKhoaHocTheoMa(int _Ma);
+
+        [OperationContract]
+        Dictionary<KhoaHocDTO, byte[]> layKhoaHoc15(int _Dau, int _Cuoi);
     }
 }

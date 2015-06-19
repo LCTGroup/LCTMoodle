@@ -13,15 +13,14 @@ namespace LCTMoodle.WebServices
     public class wcf_NguoiDung : Iwcf_NguoiDung
     {
         /// <summary>
-        /// Webservice kiểm tra đăng nhập đăng nhập
-        /// Trả về int
-        /// 1: tên đăng nhập không tồn tại
-        /// 2: mật khẩu không đúng
-        /// 3: thành công
+        /// Webservice kiểm tra đăng nhập đăng nhậ
+        ///  - 1: tên đăng nhập không tồn tại
+        ///  - 2: mật khẩu không đúng
+        ///  - 3: thành công
         /// </summary>
         /// <param name="_TenDN"></param>
         /// <param name="_MatKhau"></param>
-        /// <returns></returns>
+        /// <returns>int</returns>
         public int kiemTraDangNhap(string _TenDN, string _MatKhau)
         {
             KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(_TenDN);

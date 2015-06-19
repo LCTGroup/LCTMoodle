@@ -15,14 +15,12 @@ namespace LCTMoodle.WebServices
     // NOTE: In order to launch WCF Test Client for testing this service, please select wcf_KhoaHoc.svc or wcf_KhoaHoc.svc.cs at the Solution Explorer and start debugging.
     public class wcf_KhoaHoc : Iwcf_KhoaHoc
     {
+        private string _Loai = "KhoaHoc_HinhDaiDien";
+   
         public List<KhoaHocDTO> layKhoaHoc()
         {
             KetQua ketQua = KhoaHocBUS.lay();
             List<KhoaHocDTO> lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
-            foreach(var item in lst_KhoaHoc)
-            {
-                item.duLieu = layHinhAnh("KhoaHoc_HinhDaiDien", item.hinhDaiDien.ma + item.hinhDaiDien.duoi);
-            }
             return lst_KhoaHoc;
         }
 
@@ -61,11 +59,16 @@ namespace LCTMoodle.WebServices
             }
         }
 
-        public System.Drawing.Image layHinhAnh2(string _Loai, string _Ten)
+
+        public Dictionary<KhoaHocDTO, byte[]> layKhoaHoc15(int _Dau, int _Cuoi)
         {
-            string _LienKet = TapTinHelper.layDuongDan(_Loai, _Ten);
-            System.Drawing.Image img = System.Drawing.Image.FromFile(_LienKet);
-            return img;
+            Dictionary<KhoaHocDTO, byte[]> dict_KhoaHoc = new Dictionary<KhoaHocDTO, byte[]>();
+            for(int i = _Dau ; i < _Cuoi ; i++)
+            {
+                KhoaHocDTO dto_KhoaHoc = layKhoaHocTheoMa(i);
+                dict_KhoaHoc.Add(dto_KhoaHoc, layHinhAnh(_Loai, dto_KhoaHoc.hinhDaiDien.ma + dto_KhoaHoc.hinhDaiDien.duoi));
+            }
+            return dict_KhoaHoc;
         }
     }
 }
