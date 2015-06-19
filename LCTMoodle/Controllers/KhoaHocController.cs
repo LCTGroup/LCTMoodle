@@ -115,7 +115,7 @@ namespace LCTMoodle.Controllers
 
             //Lấy danh sách thành viên của nhóm
             #region Lấy danh sách thành viên của nhóm
-		    ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaTrangThai(ma, 0);
+            ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaTrangThai(ma, 0, new LienKet() { "NguoiDung" });
             if (ketQua.trangThai == 0)
             {
                 ViewData["ThanhVien"] = ketQua.ketQua;
@@ -126,7 +126,7 @@ namespace LCTMoodle.Controllers
             #region Lấy danh sách thành viên đăng ký
             if (khoaHoc.canDangKy)
             {
-                ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaTrangThai(ma, 1);
+                ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaTrangThai(ma, 1, new LienKet() { "NguoiDung" });
                 if (ketQua.trangThai == 0)
                 {
                     ViewData["ThanhVienDangKy"] = ketQua.ketQua;
@@ -135,6 +135,27 @@ namespace LCTMoodle.Controllers
             #endregion
 
             return View(khoaHoc);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyChapNhanDangKy(int ma, int maNguoiDung)
+        {
+
+            return null;
+        }
+
+        [HttpPost]
+        public ActionResult XuLyTuChoiDangKy(int ma, int maNguoiDung)
+        {
+
+            return null;
+        }
+
+        [HttpPost]
+        public ActionResult XuLyChanNguoiDung(int ma, int maNguoiDung)
+        {
+
+            return null;
         }
 	}
 }
