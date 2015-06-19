@@ -35,7 +35,7 @@ namespace LCTMoodle.Controllers
             ChuDeDTO chuDe;
             if (ma != 0)
             {
-                KetQua ketQua = ChuDeBUS.layTheoMa(ma);
+                KetQua ketQua = ChuDeBUS.layTheoMa(ma, new LienKet() { "Con" });
 
                 if (ketQua.trangThai != 0)
                 {
