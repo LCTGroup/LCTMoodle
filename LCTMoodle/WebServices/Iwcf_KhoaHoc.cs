@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using DTOLayer;
+using System.IO;
 
 namespace LCTMoodle.WebServices
 {
@@ -17,6 +18,9 @@ namespace LCTMoodle.WebServices
 
         [OperationContract]
         string layLK(int _Ma);
+
+        [OperationContract]
+        Stream layHinhAnh(string _Loai,string _Ten);
 
         [OperationContract]
         KhoaHocDTO layKhoaHocTheoMa(int _Ma);

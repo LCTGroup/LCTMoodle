@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.IO;
 using BUSLayer;
 using DTOLayer;
 using Helpers;
@@ -23,7 +24,7 @@ namespace LCTMoodle.WebServices
 
         public KhoaHocDTO layKhoaHocTheoMa(int _Ma)
         {
-            KetQua ketQua = KhoaHocBUS.layTheoMa(_Ma);
+            KetQua ketQua = KhoaHocBUS.layTheoMa(_Ma, new LienKet() { "HinhDaiDien" });
             KhoaHocDTO dto_KhoaHoc = ketQua.ketQua as KhoaHocDTO;
             return dto_KhoaHoc;
         }
@@ -39,7 +40,17 @@ namespace LCTMoodle.WebServices
 
             KetQua ketQua = KhoaHocBUS.layTheoMa(_Ma, new LienKet() { "HinhDaiDien" });
             KhoaHocDTO dto_KhoaHoc = ketQua.ketQua as KhoaHocDTO;
-            return dto_KhoaHoc.hinhDaiDien.ten;
+            string lk;
+            lk = TapTinHelper.layDuongDan("KhoaHoc_HinhDaiDien", dto_KhoaHoc.hinhDaiDien.ma + dto_KhoaHoc.hinhDaiDien.duoi);
+            return lk;
+        }
+
+
+        public Stream layHinhAnh(string _Loai, string _Ten)
+        {
+            string _LienKet = TapTinHelper.layDuongDan(_Loai, _Ten);
+            FileStream fs = File.OpenRead(@_LienKet);
+            return fs;
         }
     }
 }
