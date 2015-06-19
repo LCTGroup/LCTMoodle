@@ -109,7 +109,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Plugin\ckeditor\adapters\" />
     <Folder Include="Plugin\ckeditor\samples\assets\inlineall\" />
     <Folder Include="Plugin\ckeditor\samples\assets\outputxhtml\" />
@@ -148,6 +147,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Nhap.sql" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\ChuDe\ChuDe.png" />
     <Content Include="Content\images\ChuDe\MacDinh\he-thong.png" />
@@ -165,7 +165,7 @@
     <Content Include="Content\scripts\ChuDe\Khung.js" />
     <Content Include="Content\images\user-avatar.jpg" />
     <Content Include="Content\scripts\BangDiem\Tao.js" />
-    <Content Include="Content\scripts\GiaoTrinh\Tao.js" />
+    <Content Include="Content\scripts\GiaoTrinh\Index.js" />
     <Content Include="Content\scripts\HoiDap\XemCauHoi.js" />
     <Content Include="Content\scripts\HoiDap\TaoCauHoi.js" />
     <Content Include="Content\scripts\KhoaHoc\DanhSachThanhVien.js" />
@@ -178,7 +178,7 @@
     <Content Include="Content\scripts\Quyen\QuanLy.js" />
     <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\BangDiem\Tao.css" />
-    <Content Include="Content\styles\GiaoTrinh\Tao.css" />
+    <Content Include="Content\styles\GiaoTrinh\Index.css" />
     <Content Include="Content\styles\HoiDap\XemCauHoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
     <Content Include="Content\styles\KhoaHoc\DanhSachThanhVien.css" />
@@ -412,7 +412,7 @@
     <Content Include="Views\GiaoTrinh\ChuDe\_Chon.cshtml" />
     <Content Include="Views\BaiTapNop\_Khung.cshtml" />
     <Content Include="Views\HoiDap\TaoCauHoi.cshtml" />
-    <Content Include="Views\GiaoTrinh\Tao.cshtml" />
+    <Content Include="Views\GiaoTrinh\Index.cshtml" />
     <Content Include="Views\GiaoTrinh\_Item_Tao.cshtml" />
     <Content Include="Views\BaiVietDienDan\_Form.cshtml" />
     <Content Include="Views\BangDiem\Tao.cshtml" />

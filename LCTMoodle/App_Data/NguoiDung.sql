@@ -73,9 +73,29 @@ BEGIN
 		Ma,
 		Ho,
 		Ten
-		FROM dbo.nguoiDung
+		FROM dbo.NguoiDung
 		WHERE 
 			Ho + ' ' + Ten LIKE '%' + REPLACE(@0, ' ', '%') + '%'
+END
+
+GO
+--Lấy người dùng theo mã khóa học và từ khóa
+ALTER PROC dbo.layNguoiDungTheoMaKhoaHoc_TimKiem (
+	@0 INT, --MaKhoaHoc
+	@1 NVARCHAR(MAX) --Từ khóa
+)
+AS
+BEGIN
+	SELECT
+		ND.Ma,
+		ND.Ho,
+		ND.Ten
+		FROM 
+			dbo.KhoaHoc_NguoiDung KH_ND INNER JOIN
+				dbo.NguoiDung ND ON
+					KH_ND.MaKhoaHoc = @0 AND
+					KH_ND.MaNguoiDung = ND.Ma AND
+					ND.Ho + ' ' + ND.Ten LIKE '%' + REPLACE(@1, ' ', '%') + '%'
 END
 
 GO

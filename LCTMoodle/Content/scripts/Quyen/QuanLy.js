@@ -45,7 +45,7 @@ function khoiTaoTimKiemNguoiDung($inputs) {
         var giaTriTam = $input.val();
 
         if (giaTriTam.length == 0) {
-            mangTam[$input + 'gt'] = giaTriTam;
+            mangTam[maTam + 'gt'] = giaTriTam;
             var $items = $(_MangHtmlNguoi[_NhomHienTai]);
             khoiTaoItem_NguoiDung($items);
             $_DanhSachNguoi.html($items);
@@ -57,13 +57,13 @@ function khoiTaoTimKiemNguoiDung($inputs) {
         }
 
         mangTam[maTam + 'td'] = true;
-        clearTimeout(mangTam[$input + 'to']);
-        mangTam[$input + 'to'] = setTimeout(function () {
-            mangTam[$input + 'gt'] = giaTriTam;
+        clearTimeout(mangTam[maTam + 'to']);
+        mangTam[maTam + 'to'] = setTimeout(function () {
+            mangTam[maTam + 'gt'] = giaTriTam;
 
             $.ajax({
                 url: '/Quyen/_DanhSachNguoiDung_Tim',
-                data: { tuKhoa: $input.val(), phamVi: _PhamViHienTai, maNhom: _NhomHienTai },
+                data: { tuKhoa: $input.val(), phamVi: _PhamViHienTai, maNhom: _NhomHienTai, maDoiTuong: _DoiTuongQuanLy },
                 dataType: 'JSON'
             }).done(function (data) {
                 if (data.trangThai == 0) {

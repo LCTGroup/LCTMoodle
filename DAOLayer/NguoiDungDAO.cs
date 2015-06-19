@@ -101,7 +101,7 @@ namespace DAOLayer
                 },
                 lienKet
             );
-        }        
+        }
 
         public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
         {
@@ -110,6 +110,20 @@ namespace DAOLayer
                     "layNguoiDung_TimKiem",
                     new object[]
                     {
+                        tuKhoa
+                    },
+                    lienKet
+                );
+        }
+
+        public static KetQua layTheoMaKhoaHoc_TimKiem(int? maKhoaHoc, string tuKhoa, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layNguoiDungTheoMaKhoaHoc_TimKiem",
+                    new object[]
+                    {
+                        maKhoaHoc,
                         tuKhoa
                     },
                     lienKet
