@@ -3,6 +3,8 @@
 @{    
     Layout = "~/Views/LCT/Khung.cshtml";
 
+    ViewData["TieuDe"] = "Danh sách khóa học của bạn";
+
     List<DTOLayer.KhoaHocDTO> 
         dsThamGia = ViewData["ThamGia"] as List<DTOLayer.KhoaHocDTO>,
         dsDangKy = ViewData["DangKy"] as List<DTOLayer.KhoaHocDTO>,
@@ -27,18 +29,8 @@
             Danh sách khóa học bạn đã tham gia
         </section>
         <section class="noi-dung khung-khoa-hoc">
-            <ul class="danh-sach">
-                @foreach (var khoaHoc in dsThamGia)
-                {
-                    <li class="item">
-                        <section class="hinh-dai-dien">
-                            <img src="/LayTapTin/KhoaHoc_HinhDaiDien/@khoaHoc.hinhDaiDien.ma" />
-                        </section>
-                        <a href="/KhoaHoc/@khoaHoc.ma" class="ten">
-                            <h1>@khoaHoc.ten</h1>
-                        </a>
-                    </li>   
-                }
+            <ul class="danh-sach">                
+                @Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", dsThamGia);
             </ul>
         </section>
     </article>      
@@ -51,18 +43,8 @@
             Danh sách khóa học bạn đã đăng ký
         </section>
         <section class="noi-dung khung-khoa-hoc">
-            <ul class="danh-sach">
-                @foreach (var khoaHoc in dsDangKy)
-                {
-                    <li class="item">
-                        <section class="hinh-dai-dien">
-                            <img src="/LayTapTin/KhoaHoc_HinhDaiDien/@khoaHoc.hinhDaiDien.ma" />
-                        </section>
-                        <a href="/KhoaHoc/@khoaHoc.ma" class="ten">
-                            <h1>@khoaHoc.ten</h1>
-                        </a>
-                    </li>   
-                }
+            <ul class="danh-sach">                
+                @Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", dsDangKy);
             </ul>
         </section>
     </article>      
@@ -76,17 +58,7 @@
         </section>
         <section class="noi-dung khung-khoa-hoc">
             <ul class="danh-sach">
-                @foreach (var khoaHoc in dsDuocMoi)
-                {
-                    <li class="item">
-                        <section class="hinh-dai-dien">
-                            <img src="/LayTapTin/KhoaHoc_HinhDaiDien/@khoaHoc.hinhDaiDien.ma" />
-                        </section>
-                        <a href="/KhoaHoc/@khoaHoc.ma" class="ten">
-                            <h1>@khoaHoc.ten</h1>
-                        </a>
-                    </li>   
-                }
+                @Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", dsDuocMoi);
             </ul>
         </section>
     </article>      
@@ -100,17 +72,7 @@
         </section>
         <section class="noi-dung khung-khoa-hoc">
             <ul class="danh-sach">
-                @foreach (var khoaHoc in dsBiChan)
-                {
-                    <li class="item">
-                        <section class="hinh-dai-dien">
-                            <img src="/LayTapTin/KhoaHoc_HinhDaiDien/@khoaHoc.hinhDaiDien.ma" />
-                        </section>
-                        <a href="/KhoaHoc/@khoaHoc.ma" class="ten">
-                            <h1>@khoaHoc.ten</h1>
-                        </a>
-                    </li>   
-                }
+                @Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", dsBiChan);
             </ul>
         </section>
     </article>      

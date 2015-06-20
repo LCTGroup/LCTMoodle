@@ -2,6 +2,8 @@
 
 @{    
     Layout = "~/Views/LCT/Khung.cshtml";
+    
+    ViewData["TieuDe"] = "Danh sách khóa học";
 }
 
 @section Styles {
@@ -16,17 +18,7 @@
         </section>
         <section class="noi-dung khung-khoa-hoc">
             <ul class="danh-sach">
-                @foreach(var khoaHoc in Model)
-                {
-                    <li class="item">
-                        <section class="hinh-dai-dien">
-                            <img src="/LayTapTin/KhoaHoc_HinhDaiDien/@khoaHoc.hinhDaiDien.ma" />
-                        </section>
-                        <a href="/KhoaHoc/@khoaHoc.ma" class="ten">
-                            <h1>@khoaHoc.ten</h1>
-                        </a>
-                    </li>   
-                }
+                @Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", Model)
             </ul>
         </section>
     </article>   

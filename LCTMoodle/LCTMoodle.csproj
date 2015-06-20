@@ -493,6 +493,8 @@
     <Content Include="Views\ChuDe\_Form.cshtml" />
     <Content Include="Views\KhoaHoc\DanhSach.cshtml" />
     <Content Include="Views\KhoaHoc\DanhSachCuaToi.cshtml" />
+    <Content Include="Views\KhoaHoc\_Item.cshtml" />
+    <Content Include="Views\KhoaHoc\_DanhSach.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

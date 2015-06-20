@@ -1,0 +1,9 @@
+﻿@model List<DTOLayer.KhoaHocDTO>
+
+@if (Model != null)
+{
+    foreach(var khoaHoc in Model)
+    {
+        @Html.Partial("~/Views/KhoaHoc/_Item.cshtml", khoaHoc);
+    }
+}

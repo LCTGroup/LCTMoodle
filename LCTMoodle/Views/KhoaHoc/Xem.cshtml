@@ -21,13 +21,13 @@
             if (!Model.hanDangKy.HasValue || Model.hanDangKy > DateTime.Now)
             {
                 chucNang.Add("Đăng ký");
-                chucNang.Add("data-chuc-nang=\"dang-ky\"");
+                chucNang.Add("data-chuc-nang='dang-ky'");
             }
         }
         else
         {
             chucNang.Add("Tham gia");
-            chucNang.Add("data-chuc-nang=\"tham-gia\"");   
+            chucNang.Add("data-chuc-nang='tham-gia'");   
         }
     }
     else
@@ -36,25 +36,25 @@
         {
             case 0:
                 chucNang.Add("Rời khóa học");
-                chucNang.Add("data-chuc-nang=\"roi-kh\"");
+                chucNang.Add("data-chuc-nang='roi-kh'");
                 break;
             case 1:
                 chucNang.Add("Hủy đăng ký");
-                chucNang.Add("data-chuc-nang=\"huy-dang-ky\"");
+                chucNang.Add("data-chuc-nang='huy-dang-ky'");
                 break;
             case 2:
                 chucNang.Add("Xác nhận lời mời");
-                chucNang.Add("data-chuc-nang=\"xac-nhan-moi\"");
+                chucNang.Add("data-chuc-nang='xac-nhan-moi'");
                 chucNang.Add("Từ chối lời mời");
-                chucNang.Add("data-chuc-nang=\"tu-choi-moi\"");
+                chucNang.Add("data-chuc-nang='tu-choi-moi'");
                 break;
         }
     }
 
     chucNang.Add("Danh sách thành viên");
-    chucNang.Add("href=\"/KhoaHoc/DanhSachThanhVien/" + Model.ma + "\"");
+    chucNang.Add("href='/KhoaHoc/DanhSachThanhVien/" + Model.ma + "'");
     chucNang.Add("Quản lý quyền");
-    chucNang.Add("href=\"/QuanlyQuyen/KH/" + Model.ma + "\"");
+    chucNang.Add("href='/QuanlyQuyen/KH/" + Model.ma + "'");
 
     ViewData["ChucNang"] = chucNang;
 }

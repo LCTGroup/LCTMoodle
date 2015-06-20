@@ -79,22 +79,11 @@
                 <nav>
                     <ul>
                         <li>
-                            @if (nguoiDung != null)
-                            {
-                                <a href="/KhoaHoc/DanhSachCuaToi">
-                                    <i class="pe-7s-study"></i>
-                                    <u></u>
-                                    Khóa học của tôi
-                                </a>   
-                            }
-                            else
-                            {
-                                <a href="/KhoaHoc/DanhSach">
-                                    <i class="pe-7s-study"></i>
-                                    <u></u>
-                                    Khóa học
-                                </a>
-                            }
+                            <a href="/KhoaHoc/DanhSach">
+                                <i class="pe-7s-study"></i>
+                                <u></u>
+                                Khóa học
+                            </a>
                         </li>
                         <li>
                             <a href="/HoiDap/">
@@ -151,8 +140,7 @@
                                     if (ketQua.trangThai == 0)
                                     {
                                         <li>
-                                            <a>
-                                                <u></u>
+                                            <a href="/KhoaHoc/DanhSachCuaToi">
                                                 Khóa học của tôi
                                             </a>
                                             <ul>
