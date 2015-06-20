@@ -1,6 +1,8 @@
 ﻿@model DTOLayer.CauHoiDTO
 
-<article class="muc-hoi-dap cau-hoi">
+@if (Model != null)
+{
+    <article class="muc-hoi-dap cau-hoi">
 
     <section class="khung-chuc-nang-lct">
 
@@ -57,3 +59,5 @@
     </section>
 
 </article>
+}
+

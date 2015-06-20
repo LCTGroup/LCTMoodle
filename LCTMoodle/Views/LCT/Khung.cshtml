@@ -53,7 +53,7 @@
                             </a>
                             <div class="hop-dieu-khien" data-doi-tuong="HopDieuKhien">
                                 <ul>
-                                    <li><a href="/NguoiDung/"><i class="pe-7s-user"></i><span>Thông tin cá nhân</span></a></li>
+                                    <li><a href="/NguoiDung/Xem/@Session["NguoiDung"]"><i class="pe-7s-user"></i><span>Thông tin cá nhân</span></a></li>
                                     <li><a href="#"><i class="pe-7s-config"></i><span>Cài đặt</span></a></li>
                                     <li><a href="/NguoiDung/xuLyDangXuat"><i class="pe-7s-power"></i><span>Thoát</span></a></li>
                                 </ul>
@@ -118,7 +118,23 @@
             {
                 <aside class="cot-trai">
                     <article class="menu">
-                        <section class="khung-thong-tin"></section>
+                        @if (Session["NguoiDung"] != null)
+                        {
+                            DTOLayer.KetQua ketQua = BUSLayer.NguoiDungBUS.layTheoMa((int)Session["NguoiDung"], new DTOLayer.LienKet() { "HinhDaiDien" });
+                            DTOLayer.NguoiDungDTO nguoiDung = ketQua.ketQua as DTOLayer.NguoiDungDTO;
+                            
+                            <a href="/NguoiDung/Xem/@nguoiDung.ma">
+                                <section class="khung-thong-tin">
+                                    <div class="hinh-dai-dien">
+                                        <img src="/LayTapTin/NguoiDung_HinhDaiDien/@(nguoiDung.hinhDaiDien != null ? nguoiDung.hinhDaiDien.ma : null)" />
+                                    </div>
+                                    <div class="thong-tin-nguoi-dung">
+                                        <div class="ten-nguoi-dung">@nguoiDung.ho @nguoiDung.ten</div>
+                                    </div>
+                                </section>
+                            </a>
+                            
+                        }
                         <nav>
                             <ul>
                                 <li>

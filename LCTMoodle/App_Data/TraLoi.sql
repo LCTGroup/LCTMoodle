@@ -8,7 +8,7 @@ CREATE TABLE dbo.TraLoi
 	NoiDung NVARCHAR(MAX) NOT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE(),
 	ThoiDiemCapNhat DATETIME DEFAULT GETDATE(),
-	Duyet BIT DEFAULT NULL,
+	Duyet BIT DEFAULT 0,
 	MaNguoiTao INT NOT NULL,
 	MaCauHoi INT NOT NULL,
 )	
@@ -45,6 +45,17 @@ CREATE PROC dbo.xoaTraLoiTheoMa
 AS
 BEGIN
 	DELETE FROM dbo.TraLoi WHERE Ma = @0
+END
+
+GO
+--Xóa Trả Lời theo mã Câu Hỏi
+CREATE PROC dbo.xoaTraLoiTheoMaCauHoi
+(
+	@0 INT --Mã Câu Hỏi
+)
+AS
+BEGIN
+	DELETE FROM dbo.TraLoi WHERE MaCauHoi = @0
 END
 
 GO
@@ -94,13 +105,16 @@ END
 
 GO
 --Lấy toàn bộ trả lời của câu hỏi
-CREATE PROC dbo.layDanhSachTraLoiTheoMaCauHoi
+ALTER PROC dbo.layDanhSachTraLoiTheoMaCauHoi
 (
 	@0 INT --Mã câu hỏi	
 )
 AS
 BEGIN
-	SELECT * FROM dbo.TraLoi WHERE MaCauHoi=@0
+	SELECT *
+	FROM dbo.TraLoi 
+	WHERE MaCauHoi=@0
+	ORDER BY Duyet DESC
 END
 
 GO

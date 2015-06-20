@@ -16,7 +16,42 @@ namespace BUSLayer
     {
         public static void gan(ref NguoiDungDTO nguoiDung, Form form)
         {
-            
+            if (nguoiDung == null)
+            {
+                nguoiDung = new NguoiDungDTO();
+            }
+            foreach(var key in form.Keys.ToArray())
+            {
+                switch(key)
+                {
+                    case "TenTaiKhoan":
+                        nguoiDung.tenTaiKhoan = form.layString(key);
+                        break;
+                    case "Email":
+                        nguoiDung.email = form.layString(key);
+                        break;
+                    case "Ho":
+                        nguoiDung.ho = form.layString(key);
+                        break;
+                    case "Ten":
+                        nguoiDung.ten = form.layString(key);
+                        break;
+                    case "NgaySinh":
+                        nguoiDung.ngaySinh = form.layDate(key);
+                        break;
+                    case "DiaChi":
+                        nguoiDung.diaChi = form.layString(key);
+                        break;
+                    case "SoDienThoai":
+                        nguoiDung.soDienThoai = form.layString(key);
+                        break;
+                    case "MaHinhDaiDien":
+                        nguoiDung.hinhDaiDien = TapTinBUS.chuyen("NguoiDung_HinhDaiDien", form.layInt(key)).ketQua as TapTinDTO;
+                        break;
+                    default: 
+                        break;
+                }
+            }
         }
 
         public static KetQua kiemTra(NguoiDungDTO nguoiDung, string[] truong = null, bool kiemTra = true)
@@ -25,10 +60,10 @@ namespace BUSLayer
 
             #region Kiểm tra Valid
 
-            if (coKiemTra("TenTaiKhoan", truong, kiemTra) && NguoiDungBUS.tonTaiTenTaiKhoan(nguoiDung.tenTaiKhoan))
-            {
-                thongBao.Add("Tên tài khoản bị trùng");
-            }
+            //if (coKiemTra("TenTaiKhoan", truong, kiemTra) && NguoiDungBUS.tonTaiTenTaiKhoan(nguoiDung.tenTaiKhoan))
+            //{
+            //    thongBao.Add("Tên tài khoản bị trùng");
+            //}
             if (coKiemTra("TenTaiKhoan", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.tenTaiKhoan))
             {
                 thongBao.Add("Tên tài khoản không được bỏ trống");
@@ -66,6 +101,44 @@ namespace BUSLayer
             return ketQua;
         }
 
+        public static BangCapNhat layBangCapNhat(NguoiDungDTO nguoiDung, string[] keys)
+        {
+            BangCapNhat bangCapNhat = new BangCapNhat();
+            foreach (string key in keys)
+            {
+                switch (key)
+                {
+                    case "TenTaiKhoan":
+                        bangCapNhat.Add("TenTaiKhoan", nguoiDung.tenTaiKhoan, 2);
+                        break;
+                    case "Email":
+                        bangCapNhat.Add("Email", nguoiDung.email, 2);
+                        break;
+                    case "Ho":
+                        bangCapNhat.Add("Ho", nguoiDung.ho, 2);
+                        break;
+                    case "Ten":
+                        bangCapNhat.Add("Ten", nguoiDung.ten, 2);
+                        break;
+                    case "NgaySinh":
+                        bangCapNhat.Add("NgaySinh", nguoiDung.ngaySinh.HasValue ? nguoiDung.ngaySinh.Value.ToString("d/M/yyyy") : null, 3);
+                        break;
+                    case "DiaChi":
+                        bangCapNhat.Add("DiaChi", nguoiDung.diaChi, 2);
+                        break;
+                    case "SoDienThoai":
+                        bangCapNhat.Add("SoDienThoai", nguoiDung.soDienThoai, 2);
+                        break;
+                    case "MaHinhDaiDien":
+                        bangCapNhat.Add("MaHinhDaiDien", layMa_String(nguoiDung.hinhDaiDien), 2);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return bangCapNhat;
+        }
+
         public static KetQua them(Form form)
         {
             KetQua ketQua = TapTinBUS.chuyen("NguoiDung_HinhDaiDien", layInt(form, "HinhDaiDien"));
@@ -100,15 +173,38 @@ namespace BUSLayer
             }
             return ketQua;
         }
+
+        public static KetQua capNhat(Form form)
+        {
+            int? ma = form.layInt("Ma");
+
+            KetQua ketQua = NguoiDungBUS.layTheoMa(ma.Value);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;            
+            
+            gan(ref nguoiDung, form);
+            
+            ketQua = NguoiDungBUS.kiemTra(nguoiDung, form.Keys.ToArray());
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            return NguoiDungDAO.capNhat(ma, layBangCapNhat(nguoiDung, form.Keys.ToArray()));
+        }
         
         public static KetQua layTheoTenTaiKhoan(string tenTaiKhoan)
         {
             return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
         }
         
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
-            return NguoiDungDAO.layTheoMa(ma, new LienKet() { "HinhDaiDien" });
+            return NguoiDungDAO.layTheoMa(ma, lienKet);
         }
 
         public static KetQua kiemTraDangNhap(string tenTaiKhoan, string matKhau, bool ghiNho = false)

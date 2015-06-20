@@ -14,11 +14,11 @@ namespace LCTMoodle.Controllers
     {
         //
         // GET: /NguoiDung/
-        public ActionResult Index()
+        public ActionResult Xem(int? ma)
         {
-            if (Session["NguoiDung"] != null)
+            if (ma != null)
             {
-                return View(NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]).ketQua as NguoiDungDTO);
+                return View(NguoiDungBUS.layTheoMa(ma).ketQua);
             }
             return RedirectToAction("Index", "TrangChu");
         }
@@ -27,6 +27,7 @@ namespace LCTMoodle.Controllers
         /// Đăng nhập
         /// </summary>
         /// <returns></returns>
+        
         public ActionResult DangNhap()
         {
             //Tắt hiển thị cột trái, cột phải
@@ -48,7 +49,20 @@ namespace LCTMoodle.Controllers
             return View();
         }
 
-        [HttpPost]        
+        public ActionResult SuaNguoiDung(int? ma)
+        {
+            KetQua ketQua = NguoiDungBUS.layTheoMa(ma, new LienKet() { 
+                "HinhDaiDien"
+            });
+            return View(ketQua.ketQua);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyCapNhat(FormCollection formCollection)
+        {
+            return Json(NguoiDungBUS.capNhat(chuyenForm(formCollection)));
+        }
+
         public ActionResult XuLyThem(FormCollection formCollection)
         {
             return Json(NguoiDungBUS.them(chuyenForm(formCollection)));

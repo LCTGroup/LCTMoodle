@@ -58,11 +58,7 @@ namespace BUSLayer
             if (coKiemTra("MaNguoiTao", truong, kiemTra) && cauHoi.nguoiTao == null)
             {
                 loi.Add("Chưa đăng nhập");
-            }
-            if (coKiemTra("MaChuDe", truong, kiemTra) && cauHoi.chuDe == null)
-            {
-                loi.Add("Chủ đề không bỏ trống");
-            }
+            }            
             #endregion
 
             if (loi.Count > 0)
@@ -96,7 +92,7 @@ namespace BUSLayer
                         bangCapNhat.Add("NoiDung", cauHoi.noiDung, 2);
                         break;
                     case "MaChuDe":
-                        bangCapNhat.Add("MaChuDe", cauHoi.chuDe.ma.ToString(), 1);
+                        bangCapNhat.Add("MaChuDe", layMa_String(cauHoi.chuDe), 1);
                         break;
                     default:
                         break;
@@ -130,7 +126,7 @@ namespace BUSLayer
             return CauHoiDAO.xoaTheoMa(ma);
         }
 
-        public static KetQua capNhat(Form form)
+        public static KetQua capNhat(Form form, LienKet lienKet = null)
         {
             int? maCauHoi = form.layInt("Ma");
             if (!maCauHoi.HasValue)
@@ -141,7 +137,18 @@ namespace BUSLayer
                 };
             }
 
-            KetQua ketQua = CauHoiBUS.layTheoMa(maCauHoi.Value);
+            KetQua ketQua = CauHoiBUS.layTheoMa(maCauHoi.Value, new LienKet()
+            {
+                "NguoiTao", 
+                {
+                    "TraLoi",
+                    new LienKet() 
+                    {
+                        "NguoiTao"
+                    }
+                },
+                "ChuDe"
+            });
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
@@ -158,52 +165,27 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return CauHoiDAO.capNhatTheoMa(maCauHoi, layBangCapNhat(cauHoi, form.Keys.ToArray()), new LienKet() 
-            {
-                "MaNguoiTao",
-                "MaChuDe"
-            });
+            return CauHoiDAO.capNhatTheoMa(maCauHoi, layBangCapNhat(cauHoi, form.Keys.ToArray()), lienKet);
         }
 
-        public static KetQua layTheoMa(int? ma)
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {            
-            return CauHoiDAO.layTheoMa(ma, new LienKet()
-            {
-                "MaNguoiTao", 
-                {
-                    "TraLoi",
-                    new LienKet() 
-                    {
-                        "MaNguoiTao"
-                    }
-                },
-                "MaChuDe"
-            });
+            return CauHoiDAO.layTheoMa(ma, lienKet);
         }
 
-        public static KetQua layDanhSachCauHoi()
+        public static KetQua layDanhSachCauHoi(LienKet lienKet = null)
         {
-            return CauHoiDAO.layDanhSachCauHoi(new LienKet() 
-            { 
-                "MaNguoiTao",
-                "MaChuDe"
-            });
+            return CauHoiDAO.layDanhSachCauHoi(lienKet);
         }
 
-        public static KetQua layTheoChuDe(int? ma)
+        public static KetQua layTheoChuDe(int? ma, LienKet lienKet = null)
         {
-            return CauHoiDAO.layTheoChuDe(ma, new LienKet() { 
-                "MaNguoiTao",
-                "MaChuDe"
-            });
+            return CauHoiDAO.layTheoChuDe(ma, lienKet);
         }
 
-        public static KetQua lay_TimKiem(string tuKhoa)
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
         {
-            return CauHoiDAO.lay_TimKiem(tuKhoa, new LienKet() { 
-                "MaNguoiTao",
-                "MaChuDe"
-            });
+            return CauHoiDAO.lay_TimKiem(tuKhoa, lienKet);
         }
 
     }

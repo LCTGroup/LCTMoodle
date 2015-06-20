@@ -90,7 +90,6 @@ function khoiTaoDangKy($form) {
                             noiDung: 'Lỗi ajax'
                         })
                     });
-                    console.log(ketQua);
                     return ketQua;
                 }
             }]

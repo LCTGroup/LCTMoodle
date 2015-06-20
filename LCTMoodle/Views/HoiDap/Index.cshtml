@@ -18,15 +18,33 @@
     <link rel="stylesheet" href="/Index.css/HoiDap/" />
 }
 @section Scripts {
+    <script src="/Index.js/HoiDap/"></script>
 }
 
+<!--#region Tìm kiếm câu hỏi -->
+
+<article class="hop hop-1-vien">
+    <section class="tieu-de">Tìm câu hỏi</section>
+    <section class="noi-dung">
+        <form class="lct-form" id="form_tim_kiem">
+            <section class="noi-dung">
+                <article class="input">
+                    <input type="text" placeholder="Nhập từ khóa" />
+                </article>                            
+            </section>
+        </form>
+    </section>
+</article>
+
+<!--#endregion -->
+
+ <!--#region Danh sách câu hỏi -->
 <article class="hop">
     <section class="tieu-de">Danh sách câu hỏi</section>
     <section class="noi-dung">
-        
         @if (Model != null)
         {
-            for (int i = (Model.Count-1); i >= 0; i--)
+            for (int i = (Model.Count - 1); i >= 0; i--)
             {
                 <article class="cau-hoi">
                     <div class="chi-tiet">
@@ -61,3 +79,4 @@
         }
     </section>
 </article>
+<!--#endregion -->

@@ -1,0 +1,119 @@
+﻿@model DTOLayer.NguoiDungDTO
+
+@{
+    ViewData["Title"] = "Người Dùng";
+    Layout = "~/Views/LCT/Khung.cshtml";
+}
+@section Styles {
+}
+@section Scripts {
+    <script src="/SuaNguoiDung.js/NguoiDung"></script>
+}
+
+@if (Model != null)
+{
+    <article class="hop hop-1-vien">
+        <section class="tieu-de">Sửa thông tin người dùng</section>
+        <section class="noi-dung">
+            <form class="lct-form" action="/NguoiDung/XuLyThem" method="POST" data-doi-tuong="form-sua-nguoi-dung" data-cap-nhat data-ma="@Model.ma" data-ten-tai-khoan="@Model.tenTaiKhoan">
+                <input type="hidden" name="Ma" value="@Model.ma" />
+                <article>
+                    <ul>
+                        <li>
+                            <section class="tieu-de">
+                                <label>(*) Tên tài khoản:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="text" id="TenTaiKhoan" name="TenTaiKhoan" data-validate="bat-buoc" data-mac-dinh="@Model.tenTaiKhoan" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>(*) Email:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="text" name="Email" data-validate="email bat-buoc" data-mac-dinh="@Model.email" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>(*) Họ</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="text" name="Ho" data-validate="bat-buoc" data-mac-dinh="@Model.ho" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>(*) Tên</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="text" name="Ten" data-validate="bat-buoc" data-mac-dinh="@Model.ten" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>(*) Ngày sinh:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input data-input-type="ngay" name="NgaySinh" data-validate="bat-buoc" data-mac-dinh="@(Model.ngaySinh != null ? Model.ngaySinh.Value.ToString("d/M/yyyy") : null)" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Địa chỉ:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="text" name="DiaChi" data-mac-dinh="@Model.diaChi" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Số điện thoại:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="text" name="SoDienThoai" data-mac-dinh="@Model.soDienThoai" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Hình đại diện</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="file" name="MaHinhDaiDien" data-ma-mac-dinh="@(Model.hinhDaiDien != null ? Model.hinhDaiDien.ma : null)" data-loai-mac-dinh="NguoiDung_HinhDaiDien" />
+                                </article>
+                            </section>
+                        </li>
+                    </ul>
+                    <section class="khung-button">
+                        <button type="submit" class="chap-nhan">
+                            Cập nhật
+                        </button>
+                        <button type="button" data-chuc-nang="reset" class="can-than">
+                            Làm lại
+                        </button>
+                    </section>
+                </article>
+            </form>
+        </section>
+    </article>
+}
+else
+{
+    <p>Người dùng không tồn tại</p>
+}

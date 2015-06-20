@@ -1,7 +1,18 @@
 ﻿@model DTOLayer.NguoiDungDTO
 @{
     ViewData["Title"] = "Người Dùng";
-    Layout = "~/Views/LCT/Khung.cshtml";   
+    Layout = "~/Views/LCT/Khung.cshtml";
+    
+    if (Model != null)
+    {
+        List<string> chucNang = new List<string>();
+        
+        chucNang.Add("Cập nhật thông tin cá nhân");
+        chucNang.Add("href='/NguoiDung/SuaNguoiDung/" + Model.ma + "'");
+
+        ViewData["ChucNang"] = chucNang;
+    }
+    
 }
 @section Styles {
     <link rel="stylesheet" href="/Index.css/NguoiDung/" />
@@ -15,7 +26,7 @@
         <section>
             <article class="khung-tren">
                 <div class="hinh-dai-dien">
-                    <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.hinhDaiDien.ma" />
+                    <img src="/LayTapTin/NguoiDung_HinhDaiDien/@(Model.hinhDaiDien != null ? Model.hinhDaiDien.ma : null)" />
                 </div>
                 <div class="thong-tin-nguoi-dung">
                     <div class="ten-nguoi-dung">@(Model.ho + " " + Model.ten)</div>
@@ -25,7 +36,8 @@
         </section>
     </article>
 </section>
-<section class="hop hop-1-vien" >  
+
+<section class="hop hop-1-vien">  
     <section class="tieu-de">Thông tin cơ bản</section>
     <section class="noi-dung khung-duoi">
         <div class="dong-noi-dung">
@@ -42,24 +54,14 @@
             <div class="tieu-de">Email</div>
             <div class="noi-dung" data-change="Email">@Model.email</div>
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="Email"></a>
-        </div>       
-        <div class="dong-noi-dung">
-            <div class="tieu-de">Họ</div>
-            <div class="noi-dung" data-change="HoTen">@Model.ho</div>
-            <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="HoTen"></a>
-        </div>
-        <div class="dong-noi-dung">
-            <div class="tieu-de">Họ</div>
-            <div class="noi-dung" data-change="HoTen">@Model.ten</div>
-            <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="HoTen"></a>
-        </div>
+        </div>        
         <div class="dong-noi-dung">
             <div class="tieu-de">Ngày sinh</div>
-            <div class="noi-dung" data-change="NgaySinh">@Model.ngaySinh</div>
+            <div class="noi-dung" data-change="NgaySinh">@(Model.ngaySinh.HasValue ? @Model.ngaySinh.Value.ToString("dd/M/yyyy") : null)</div>
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="NgaySinh"></a>
         </div>
         <div class="dong-noi-dung">
-            <div class="tieu-de">Họ tên</div>
+            <div class="tieu-de">Địa chỉ</div>
             <div class="noi-dung" data-change="DiaChi">@Model.diaChi</div>
             <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="DiaChi"></a>
         </div>

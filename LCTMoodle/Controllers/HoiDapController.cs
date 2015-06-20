@@ -17,11 +17,46 @@ namespace LCTMoodle.Controllers
         // GET: /HoiDap/
         public ActionResult Index()
         {
-            return View((CauHoiBUS.layDanhSachCauHoi().ketQua) as List<CauHoiDTO>);
+            return View((CauHoiBUS.layDanhSachCauHoi(new LienKet() 
+            { 
+                "NguoiTao",
+                "ChuDe"
+            }).ketQua) as List<CauHoiDTO>);
         }
 
         #region Câu Hỏi
 
+        [HttpPost]
+        public ActionResult _Form_CauHoi(int? ma = 0)
+        {
+            KetQua ketQua = CauHoiBUS.layTheoMa(ma, new LienKet()
+            {
+                "NguoiTao", 
+                {
+                    "TraLoi",
+                    new LienKet() 
+                    {
+                        "NguoiTao"
+                    }
+                },
+                "ChuDe"
+            });
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua);
+            }
+            else
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 0,
+
+                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Form_CauHoi.cshtml", ketQua.ketQua)
+                });
+            }
+        }
+        
         public ActionResult TaoCauHoi()
         {
             return View();
@@ -29,8 +64,21 @@ namespace LCTMoodle.Controllers
 
         public ActionResult XemCauHoi(int ma)
         {
+            LienKet lienKetMacDinh = new LienKet()
+            {
+                "NguoiTao", 
+                {
+                    "TraLoi",
+                    new LienKet() 
+                    {
+                        "NguoiTao"
+                    }
+                },
+                "ChuDe"
+            };
+
             ViewData["MaCauHoi"] = ma;
-            KetQua ketQua = CauHoiBUS.layTheoMa(ma);
+            KetQua ketQua = CauHoiBUS.layTheoMa(ma, lienKetMacDinh);
 
             if (ketQua.trangThai != 0)
             {
@@ -49,7 +97,11 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyCapNhatCauHoi(FormCollection form)
         {
-            KetQua ketQua = CauHoiBUS.capNhat(chuyenForm(form));
+            KetQua ketQua = CauHoiBUS.capNhat(chuyenForm(form), new LienKet() 
+            {
+                "NguoiTao",
+                "ChuDe"
+            });
             if (ketQua.trangThai == 0)
             {
                 return Json(new KetQua()
@@ -61,26 +113,6 @@ namespace LCTMoodle.Controllers
             else
             {
                 return Json(ketQua);
-            }
-        }
-
-        [HttpPost]
-        public ActionResult _Form_CauHoi(int ma = 0)
-        {
-            KetQua ketQua = CauHoiBUS.layTheoMa(ma);
-
-            if (ketQua.trangThai != 0)
-            {
-                return Json(ketQua);
-            }
-            else
-            {
-                return Json(new KetQua()
-                {
-                    trangThai = 0,
-
-                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Form_CauHoi.cshtml", ketQua.ketQua)
-                });
             }
         }
 

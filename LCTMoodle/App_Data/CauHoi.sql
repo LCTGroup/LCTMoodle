@@ -10,7 +10,7 @@ CREATE TABLE dbo.CauHoi
 	ThoiDiemTao DATETIME DEFAULT GETDATE(),
 	ThoiDiemCapNhat DATETIME DEFAULT GETDATE(),
 	MaNguoiTao INT NOT NULL,
-	MaChuDe INT,
+	MaChuDe INT DEFAULT 0,
 )
 
 GO
@@ -90,7 +90,7 @@ CREATE PROC dbo.layToanBoCauHoi
 AS
 BEGIN
 	SELECT *
-	FROM dbo.CauHoi
+	FROM dbo.CauHoi	
 END
 
 GO
@@ -120,4 +120,14 @@ BEGIN
 	WHERE MaChuDe = @0
 END
 
-select * from dbo.CauHoi
+GO
+--Xóa Trả Lời thuộc Câu Hỏi
+CREATE TRIGGER dbo.xoaCauHoi_TRIGGER
+ON dbo.CauHoi
+AFTER DELETE
+AS
+	DECLARE @a INT
+	
+	SELECT @a = Ma FROM deleted
+
+	EXEC dbo.xoaTraLoiTheoMaCauHoi @a	

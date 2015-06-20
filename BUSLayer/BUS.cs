@@ -19,6 +19,16 @@ namespace BUSLayer
                 Array.Exists(truong, x => x == ten) == kiemTra;
         }
 
+        protected static object layMa(DTO dto)
+        {
+            return dto != null ? dto.ma : null;
+        }
+
+        protected static string layMa_String(DTO dto)
+        {
+            return dto != null ? dto.ma.ToString() : null;
+        }
+
         protected static T layDTO<T>(Dictionary<string, string> form, string key, T macDinh = null)
             where T : DTOLayer.DTO, new()
         {

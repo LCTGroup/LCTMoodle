@@ -52,6 +52,13 @@ namespace LCTMoodle
                 constraints: new { ma = @"\d+" }
             );
 
+            //routes.MapRoute(
+            //    name: "XemNguoiDung",
+            //    url: "NguoiDung/{ma}",
+            //    defaults: new { controller = "NguoiDung", action = "Xem", ma = UrlParameter.Optional },
+            //    constraints: new { ma = @"\d+" }
+            //);
+
             routes.MapRoute(
                 name: "MacDinh",
                 url: "{controller}/{action}/{ma}",

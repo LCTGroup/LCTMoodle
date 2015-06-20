@@ -37,6 +37,27 @@ BEGIN
 END
 
 GO
+--Cập nhật Người Dùng theo mã
+CREATE PROC dbo.capNhatNguoiDungTheoMa 
+(
+	@0 INT, --Mã
+	@1 dbo.BangCapNhat READONLY
+)
+AS
+BEGIN
+	--Tạo chuỗi gán
+	DECLARE @query NVARCHAR(MAX) = dbo.taoChuoiCapNhat(@1)
+	IF (@query <> '')
+	BEGIN
+		EXEC('
+		UPDATE dbo.NguoiDung
+			SET ' + @query + '
+			WHERE Ma = ' + @0 + '
+		')
+	END	
+END
+
+GO
 --Lấy người dùng
 CREATE PROC dbo.layNguoiDungTheoTenTaiKhoan (
 	@0 NVARCHAR(MAX) --Tên tài khoản

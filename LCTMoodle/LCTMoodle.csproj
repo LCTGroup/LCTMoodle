@@ -166,6 +166,7 @@
     <Content Include="Content\images\user-avatar.jpg" />
     <Content Include="Content\scripts\BangDiem\Tao.js" />
     <Content Include="Content\scripts\GiaoTrinh\Tao.js" />
+    <Content Include="Content\scripts\HoiDap\Index.js" />
     <Content Include="Content\scripts\HoiDap\XemCauHoi.js" />
     <Content Include="Content\scripts\HoiDap\TaoCauHoi.js" />
     <Content Include="Content\scripts\KhoaHoc\ThanhVien.js" />
@@ -174,6 +175,7 @@
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
+    <Content Include="Content\scripts\NguoiDung\SuaNguoiDung.js" />
     <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
     <Content Include="Content\scripts\Quyen\QuanLy.js" />
     <Content Include="Content\styles\BinhLuan\Khung.css" />
@@ -432,6 +434,7 @@
     <Content Include="Views\KhoaHoc\DangKyThamGia.cshtml" />
     <Content Include="Views\HoiDap\_Item_CauHoi.cshtml" />
     <Content Include="Views\KhoaHoc\ThanhVien.cshtml" />
+    <Content Include="Views\NguoiDung\SuaNguoiDung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">
@@ -450,7 +453,7 @@
       <Project>{f03e2462-211a-47ab-bb76-9ad537ea4734}</Project>
       <Name>DTOLayer</Name>
     </ProjectReference>
-    <Content Include="Views\NguoiDung\Index.cshtml" />
+    <Content Include="Views\NguoiDung\Xem.cshtml" />
     <ProjectReference Include="..\Helper\Helpers.csproj">
       <Project>{752edde4-57aa-4c15-aa3c-748429b1a135}</Project>
       <Name>Helpers</Name>

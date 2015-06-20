@@ -77,6 +77,19 @@ namespace DAOLayer
                 }
             );
         }
+
+        public static KetQua capNhat(int? ma, BangCapNhat bangCapNhat)
+        {
+            return khongTruyVan
+                (
+                    "capNhatNguoiDungTheoMa",
+                    new object[]
+                    {
+                        ma,
+                        bangCapNhat.bang
+                    }
+                );
+        }
         
         public static KetQua layTheoTenTaiKhoan(string tenTaiKhoan)
         {
