@@ -1,8 +1,19 @@
-﻿@{                                 
+﻿@using DTOLayer
+@{                                 
     bool CotTrai = ViewData["CotTrai"] == null ? true : (bool)ViewData["CotTrai"];
     bool CotPhai = ViewData["CotPhai"] == null ? true : (bool)ViewData["CotPhai"];
     
-    int? maNguoiDung = Session["NguoiDung"] as int?;
+    KetQua ketQua;
+    NguoiDungDTO nguoiDung = null;
+    
+    if (Session["NguoiDung"] != null)
+    {
+        ketQua = BUSLayer.NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]);
+        if (ketQua.trangThai == 0)
+        {
+            nguoiDung = ketQua.ketQua as NguoiDungDTO;
+        }
+    }
 }
 <!DOCTYPE html>
 
@@ -33,7 +44,7 @@
             </section>
             <section class="top-header">
                 <article class="hop-nguoi-dung">
-                @if (Session["NguoiDung"] == null)
+                @if (nguoiDung == null)
                 {                    
                     <ul class="chua-dang-nhap">
                         <li><a href="/NguoiDung/DangNhap">Đăng nhập</a></li>
@@ -42,8 +53,6 @@
                 }
                 else
                 {
-                    var ketQua = BUSLayer.NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]);
-                    DTOLayer.NguoiDungDTO nguoiDung = ketQua.ketQua as DTOLayer.NguoiDungDTO;
                         
                     <ul class="da-dang-nhap">
                         <li><a href="#"><i class="pe-7s-chat"></i></a></li>
@@ -70,7 +79,7 @@
                 <nav>
                     <ul>
                         <li>
-                            @if (maNguoiDung.HasValue)
+                            @if (nguoiDung != null)
                             {
                                 <a href="/KhoaHoc/DanhSachCuaToi">
                                     <i class="pe-7s-study"></i>
@@ -127,15 +136,18 @@
         <!-- Main -->
         <main>
             <!-- Cột trái -->
-            @if (maNguoiDung.HasValue && CotTrai)
+            @if (nguoiDung != null && CotTrai)
             {
                 <aside class="cot-trai">
                     <article class="menu">
-                        <section class="khung-thong-tin"></section>
+                        <section class="khung-thong-tin" style="display: flex; align-items: center">
+                            <img style="margin-right: 5px; min-height: 40px; width: 40px;" src="/LayTapTin/NguoiDung_HinhDaiDien/@nguoiDung.hinhDaiDien.ma" />
+                            <span style="font-weight: bold; color: #555;">@(nguoiDung.ho + " " + nguoiDung.ten)</span>
+                        </section>
                         <nav>
                             <ul>
                                 @{
-                                    DTOLayer.KetQua ketQua = BUSLayer.KhoaHocBUS.layTheoMaNguoiDungVaTrangThai(maNguoiDung.Value, 0);
+                                    ketQua = BUSLayer.KhoaHocBUS.layTheoMaNguoiDungVaTrangThai(nguoiDung.ma.Value, 0);
                                     if (ketQua.trangThai == 0)
                                     {
                                         <li>
