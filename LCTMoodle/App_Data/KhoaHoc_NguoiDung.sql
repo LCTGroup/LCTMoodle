@@ -94,3 +94,39 @@ BEGIN
 			MaKhoaHoc = @0 AND
 			MaNguoiDung = @1
 END
+
+GO
+--Lấy theo mã người dùng
+CREATE PROC dbo.layKhoaHoc_NguoiDungTheoMaNguoiDung (
+	@0 INT --MaNguoiDung
+)
+AS
+BEGIN
+	SELECT 
+		MaKhoaHoc,
+		MaNguoiDung,
+		TrangThai,
+		MaNguoiThem
+		FROM dbo.KhoaHoc_NguoiDung
+		WHERE
+			MaNguoiDung = @0
+END
+
+GO
+--Lấy theo mã người dùng và trạng thái
+CREATE PROC dbo.layKhoaHoc_NguoiDungTheoMaNguoiDungVaTrangThai (
+	@0 INT, --MaNguoiDung
+	@1 INT --TrangThai
+)
+AS
+BEGIN
+	SELECT 
+		MaKhoaHoc,
+		MaNguoiDung,
+		TrangThai,
+		MaNguoiThem
+		FROM dbo.KhoaHoc_NguoiDung
+		WHERE
+			MaNguoiDung = @0 AND
+			TrangThai = @1
+END

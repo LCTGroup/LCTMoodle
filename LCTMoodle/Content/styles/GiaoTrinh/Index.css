@@ -3,13 +3,17 @@
     margin-bottom: 38px;
 }
 
-.khung-giao-trinh .td:nth-child(1),
-.khung-giao-trinh .td:nth-child(3) {
+.khung-giao-trinh .td:nth-child(1) {
     width: 25%;
 }
 
 .khung-giao-trinh .td:nth-child(2) {
     width: 50%;
+}
+
+.khung-giao-trinh .td:nth-child(3) {
+    width: 25%;
+    text-align: center;
 }
 
 .khung-giao-trinh.keo .item-giao-trinh:not(.keo) {

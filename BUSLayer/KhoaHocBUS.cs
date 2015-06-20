@@ -122,5 +122,77 @@ namespace BUSLayer
         {
             return KhoaHocDAO.lay_TimKiem(tuKhoa, lienKet);
         }
+
+        public static KetQua layTheoMaNguoiDung(int maNguoiDung)
+        {
+            //Lấy toàn bộ khóa học mà người dùng liên quan
+            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDung(maNguoiDung, new LienKet() { "KhoaHoc" });
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            List<KhoaHocDTO>
+                danhSachThamGia = new List<KhoaHocDTO>(),
+                danhSachDangKy = new List<KhoaHocDTO>(),
+                danhSachDuocMoi = new List<KhoaHocDTO>(),
+                danhSachBiChan = new List<KhoaHocDTO>();
+
+            foreach(var thanhVien in ketQua.ketQua as List<KhoaHoc_NguoiDungDTO>)
+            {
+                switch(thanhVien.trangThai)
+                {
+                    case 0:
+                        danhSachThamGia.Add(thanhVien.khoaHoc);
+                        break;
+                    case 1:
+                        danhSachDangKy.Add(thanhVien.khoaHoc);
+                        break;
+                    case 2:
+                        danhSachDuocMoi.Add(thanhVien.khoaHoc);
+                        break;
+                    case 3:
+                        danhSachBiChan.Add(thanhVien.khoaHoc);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return new KetQua()
+            {
+                trangThai = 0,
+                ketQua = new List<KhoaHocDTO>[]
+                {
+                    danhSachThamGia.Count != 0 ? danhSachThamGia : null,
+                    danhSachDangKy.Count != 0 ? danhSachDangKy : null,
+                    danhSachDuocMoi.Count != 0 ? danhSachDuocMoi : null,
+                    danhSachBiChan.Count != 0 ? danhSachBiChan : null
+                }
+            };
+        }
+
+        public static KetQua layTheoMaNguoiDungVaTrangThai(int maNguoiDung, int trangThai)
+        {
+            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDungVaTrangThai(maNguoiDung, trangThai, new LienKet() { "KhoaHoc" });
+
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            var dsKhoaHoc = new List<KhoaHocDTO>();
+
+            foreach (var thanhVien in ketQua.ketQua as List<KhoaHoc_NguoiDungDTO>)
+            {
+                dsKhoaHoc.Add(thanhVien.khoaHoc);
+            }
+
+            return new KetQua()
+            {
+                trangThai = 0,
+                ketQua = dsKhoaHoc
+            };
+        }
     }
 }

@@ -25,6 +25,7 @@ $(function () {
     khoiTaoNutDangKy($('[data-chuc-nang="dang-ky"]'));
     khoiTaoNutThamGia($('[data-chuc-nang="tham-gia"]'));
     khoiTaoNutHuyDangKy($('[data-chuc-nang="huy-dang-ky"]'));
+    khoiTaoNutRoiKhoaHoc($('[data-chuc-nang="roi-kh"]'));
 });
 
 function hienThi(nhom) {
@@ -137,8 +138,32 @@ function khoiTaoNutThamGia($nuts) {
     });
 }
 
-function khoiTaoNutRoiKhoaHoc() {
-
+function khoiTaoNutRoiKhoaHoc($nuts) {
+    $nuts.on('click', function (e) {
+        var $nut = $(this);
+        $.ajax({
+            url: '/KhoaHoc/XuLyRoiKhoaHoc/' + maKhoaHoc,
+            method: 'POST',
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                location.reload();
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Rời khóa học thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
+            }
+        }).fail(function () {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Rời khóa học thất bại',
+                bieuTuong: 'nguy-hiem'
+            });
+        });
+    })
 }
 
 function khoiTaoNutHuyDangKy($nuts) {
@@ -164,14 +189,14 @@ function khoiTaoNutHuyDangKy($nuts) {
             else {
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: 'Đăng ký vào khóa học thất bại',
+                    thongBao: 'Hủy đăng ký thất bại',
                     bieuTuong: 'nguy-hiem'
                 });
             }
         }).fail(function () {
             moPopup({
                 tieuDe: 'Thông báo',
-                thongBao: 'Đăng ký vào khóa học thất bại',
+                thongBao: 'Hủy đăng ký thất bại',
                 bieuTuong: 'nguy-hiem'
             });
         });

@@ -101,12 +101,9 @@ namespace BUSLayer
             return ChuDeDAO.them(chuDe);
         }
 
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
         {
-            return ChuDeDAO.layTheoMa(ma, new LienKet()
-            {
-                "Con"
-            });
+            return ChuDeDAO.layTheoMa(ma, lienKet);
         }
 
         public static KetQua layTheoMaCha(int maCha, LienKet lienKet = null)

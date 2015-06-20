@@ -13,9 +13,17 @@ namespace BUSLayer
 {
     public class NhomNguoiDung_NguoiDungBUS : BUS
     {
-        public static KetQua layTheoTuKhoa(string tuKhoa, string phamVi, int maNhomNguoiDung)
+        public static KetQua layNguoiDung_TimKiem(string tuKhoa, string phamVi, int maNhomNguoiDung, int maDoiTuong = 0)
         {
-            KetQua ketQua = NguoiDungDAO.lay_TimKiem(tuKhoa);
+            KetQua ketQua;
+            if (phamVi == "KH")
+            {
+                ketQua = NguoiDungDAO.layTheoMaKhoaHoc_TimKiem(maDoiTuong, tuKhoa);
+            }
+            else
+            {
+                ketQua = NguoiDungDAO.lay_TimKiem(tuKhoa);
+            }
 
             if (ketQua.trangThai != 0)
             {

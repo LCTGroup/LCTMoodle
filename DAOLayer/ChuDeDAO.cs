@@ -58,7 +58,7 @@ namespace DAOLayer
 
                         if (maTam.HasValue)
                         {
-                            chuDe.hinhDaiDien = LienKet.co(lienKet, "TapTin") ?
+                            chuDe.hinhDaiDien = LienKet.co(lienKet, "HinhDaiDien") ?
                                 layDTO<TapTinDTO>(TapTinDAO.layTheoMa("ChuDe_HinhDaiDien", maTam.Value)) :
                                 new TapTinDTO()
                                 {

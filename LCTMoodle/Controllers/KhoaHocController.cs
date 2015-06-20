@@ -55,6 +55,49 @@ namespace LCTMoodle.Controllers
             return View();
         }       
 
+        public ActionResult DanhSach()
+        {
+            KetQua ketQua = KhoaHocBUS.lay();
+
+            return View(ketQua.trangThai == 0 ? ketQua.ketQua : null);
+        }
+
+        public ActionResult DanhSachCuaToi()
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return RedirectToAction("DanhSach", "KhoaHoc");
+            }
+
+            KetQua ketQua = KhoaHocBUS.layTheoMaNguoiDung((int)Session["NguoiDung"]);
+            if (ketQua.trangThai > 1)
+            {
+                RedirectToAction("Index", "NguoiDung");
+            }
+            if (ketQua.trangThai == 0)
+            {
+                var danhSachKhoaHoc = ketQua.ketQua as List<KhoaHocDTO>[];
+
+                ViewData["ThamGia"] = danhSachKhoaHoc[0];
+                ViewData["DangKy"] = danhSachKhoaHoc[1];
+                ViewData["DuocMoi"] = danhSachKhoaHoc[2];
+                ViewData["BiChan"] = danhSachKhoaHoc[3];
+            }
+
+            return View();
+        }
+
+        public ActionResult _DanhSach_Tim(string tuKhoa)
+        {
+            KetQua ketQua = KhoaHocBUS.lay_TimKiem(tuKhoa);
+            if (ketQua.trangThai == 0)
+            {
+                ketQua.ketQua = renderPartialViewToString(ControllerContext, "KhoaHoc/_DanhSach.cshtml", ketQua.ketQua);
+            }
+
+            return Json(ketQua, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult XuLyThem(FormCollection formCollection)
         {
             return Json(KhoaHocBUS.them(chuyenDuLieuForm(formCollection)));
@@ -101,7 +144,7 @@ namespace LCTMoodle.Controllers
             return Json(KhoaHoc_NguoiDungBUS.huyDangKy(ma));
         }
 
-        public ActionResult ThanhVien(int ma)
+        public ActionResult DanhSachThanhVien(int ma)
         {
             //Lấy khóa học & kiểm tra tồn tại hay không
             #region Lấy khóa học & kiểm tra tồn tại
@@ -122,15 +165,24 @@ namespace LCTMoodle.Controllers
             }
 	        #endregion
 
-            //Lấy danh sách thành viên đăng ký
-            #region Lấy danh sách thành viên đăng ký
+            //Lấy danh sách người dùng đăng ký
+            #region Lấy danh sách người dùng đăng ký
             if (khoaHoc.canDangKy)
             {
                 ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaTrangThai(ma, 1, new LienKet() { "NguoiDung" });
                 if (ketQua.trangThai == 0)
                 {
-                    ViewData["ThanhVienDangKy"] = ketQua.ketQua;
+                    ViewData["DanhSachDangKy"] = ketQua.ketQua;
                 }
+            }
+            #endregion
+
+            //Lấy danh sách người dùng bị chặn
+            #region Lấy danh sách chặn
+            ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaTrangThai(ma, 3, new LienKet() { "NguoiDung" });
+            if (ketQua.trangThai == 0)
+            {
+                ViewData["DanhSachBiChan"] = ketQua.ketQua;
             }
             #endregion
 
@@ -140,22 +192,37 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyChapNhanDangKy(int ma, int maNguoiDung)
         {
-
-            return null;
+            return Json(KhoaHoc_NguoiDungBUS.chapNhanDangKy(ma, maNguoiDung));
         }
 
         [HttpPost]
         public ActionResult XuLyTuChoiDangKy(int ma, int maNguoiDung)
         {
-
-            return null;
+            return Json(KhoaHoc_NguoiDungBUS.tuChoiDangKy(ma, maNguoiDung));
         }
 
         [HttpPost]
         public ActionResult XuLyChanNguoiDung(int ma, int maNguoiDung)
         {
+            return Json(KhoaHoc_NguoiDungBUS.chanNguoiDung(ma, maNguoiDung));
+        }
 
-            return null;
+        [HttpPost]
+        public ActionResult XuLyHuyChanNguoiDung(int ma, int maNguoiDung)
+        {
+            return Json(KhoaHoc_NguoiDungBUS.huyChanNguoiDung(ma, maNguoiDung));
+        }
+
+        [HttpPost]
+        public ActionResult XuLyXoaThanhVien(int ma, int maNguoiDung)
+        {
+            return Json(KhoaHoc_NguoiDungBUS.xoaThanhVien(ma, maNguoiDung));
+        }
+
+        [HttpPost]
+        public ActionResult XuLyRoiKhoaHoc(int ma)
+        {
+            return Json(KhoaHoc_NguoiDungBUS.roiKhoaHoc(ma));
         }
 	}
 }

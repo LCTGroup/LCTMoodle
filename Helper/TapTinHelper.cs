@@ -16,6 +16,5 @@ namespace Helpers
         {
             return layDuongDanGoc() + loai + "/" + ten;
         }
-
     }
 }

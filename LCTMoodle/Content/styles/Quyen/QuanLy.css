@@ -171,14 +171,15 @@
                 }
 
             .khung-chua .khung-tren .khung-nguoi .item img {
-                width: 40px;
-                height: 40px;
+                width: 50px;
+                height: 50px;
             }
 
             .khung-chua .khung-tren .khung-nguoi .item > a {
                 font-weight: bold;
                 font-size: 11px;
                 color: #333;
+                text-align: center;
             }
 
 /*#endregion */

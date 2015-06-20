@@ -162,9 +162,9 @@ namespace LCTMoodle.Controllers
             }
         }
 
-        public ActionResult _DanhSachNguoiDung_Tim(string tuKhoa, string phamVi, int maNhom)
+        public ActionResult _DanhSachNguoiDung_Tim(string tuKhoa, string phamVi, int maNhom, int maDoiTuong = 0)
         {
-            KetQua ketQua = NhomNguoiDung_NguoiDungBUS.layTheoTuKhoa(tuKhoa, phamVi, maNhom);
+            KetQua ketQua = NhomNguoiDung_NguoiDungBUS.layNguoiDung_TimKiem(tuKhoa, phamVi, maNhom, maDoiTuong);
 
             if (ketQua.trangThai != 0)
             {

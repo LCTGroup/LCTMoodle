@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,6 +46,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -109,7 +112,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Plugin\ckeditor\adapters\" />
     <Folder Include="Plugin\ckeditor\samples\assets\inlineall\" />
     <Folder Include="Plugin\ckeditor\samples\assets\outputxhtml\" />
@@ -120,8 +122,8 @@
     <Folder Include="Plugin\ckeditor\samples\plugins\magicline\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\toolbar\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\wysiwygarea\" />
+    <Folder Include="Uploads\ChuDe_HinhDaiDien\" />
     <Folder Include="Views\TapTin\" />
-    <Folder Include="WebServices\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -146,8 +148,21 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebServices\Iwcf_ChuDe.cs" />
+    <Compile Include="WebServices\Iwcf_KhoaHoc.cs" />
+    <Compile Include="WebServices\Iwcf_NguoiDung.cs" />
+    <Compile Include="WebServices\wcf_ChuDe.svc.cs">
+      <DependentUpon>wcf_ChuDe.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\wcf_KhoaHoc.svc.cs">
+      <DependentUpon>wcf_KhoaHoc.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\wcf_NguoiDung.svc.cs">
+      <DependentUpon>wcf_NguoiDung.svc</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Nhap.sql" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\ChuDe\ChuDe.png" />
     <Content Include="Content\images\ChuDe\MacDinh\he-thong.png" />
@@ -167,9 +182,11 @@
     <Content Include="Content\scripts\BangDiem\Tao.js" />
     <Content Include="Content\scripts\GiaoTrinh\Tao.js" />
     <Content Include="Content\scripts\HoiDap\Index.js" />
+    <Content Include="Content\scripts\GiaoTrinh\Index.js" />
     <Content Include="Content\scripts\HoiDap\XemCauHoi.js" />
     <Content Include="Content\scripts\HoiDap\TaoCauHoi.js" />
-    <Content Include="Content\scripts\KhoaHoc\ThanhVien.js" />
+    <Content Include="Content\scripts\KhoaHoc\DanhSachThanhVien.js" />
+    <Content Include="Content\scripts\KhoaHoc\DanhSach.js" />
     <Content Include="Content\scripts\KhoaHoc\Xem.js" />
     <Content Include="Content\scripts\KhoaHoc\Tao.js" />
     <Content Include="Content\scripts\LCT\Form.js" />
@@ -180,10 +197,11 @@
     <Content Include="Content\scripts\Quyen\QuanLy.js" />
     <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\BangDiem\Tao.css" />
-    <Content Include="Content\styles\GiaoTrinh\Tao.css" />
+    <Content Include="Content\styles\GiaoTrinh\Index.css" />
     <Content Include="Content\styles\HoiDap\XemCauHoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
-    <Content Include="Content\styles\KhoaHoc\ThanhVien.css" />
+    <Content Include="Content\styles\KhoaHoc\DanhSachThanhVien.css" />
+    <Content Include="Content\styles\KhoaHoc\DanhSach.css" />
     <Content Include="Content\styles\KhoaHoc\Xem.css" />
     <Content Include="Content\styles\LCT\bootstrap.css" />
     <Content Include="Content\styles\LCT\filled-icons.css" />
@@ -352,7 +370,38 @@
     <Content Include="Plugin\ckeditor\skins\office2013\images\lock.png" />
     <Content Include="Plugin\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="Plugin\ckeditor\styles.js" />
-    <Content Include="Web.config" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\1.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\10.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\11.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\12.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\13.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\14.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\15.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\16.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\17.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\18.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\19.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\2.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\20.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\21.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\22.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\23.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\24.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\25.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\26.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\27.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\28.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\29.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\3.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\4.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\5.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\6.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\7.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\8.png" />
+    <Content Include="Uploads\KhoaHoc_HinhDaiDien\9.png" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -360,6 +409,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="WebServices\wcf_ChuDe.svc" />
+    <Content Include="WebServices\wcf_KhoaHoc.svc" />
+    <Content Include="WebServices\wcf_NguoiDung.svc" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -414,7 +466,7 @@
     <Content Include="Views\GiaoTrinh\ChuDe\_Chon.cshtml" />
     <Content Include="Views\BaiTapNop\_Khung.cshtml" />
     <Content Include="Views\HoiDap\TaoCauHoi.cshtml" />
-    <Content Include="Views\GiaoTrinh\Tao.cshtml" />
+    <Content Include="Views\GiaoTrinh\Index.cshtml" />
     <Content Include="Views\GiaoTrinh\_Item_Tao.cshtml" />
     <Content Include="Views\BaiVietDienDan\_Form.cshtml" />
     <Content Include="Views\BangDiem\Tao.cshtml" />
@@ -435,6 +487,19 @@
     <Content Include="Views\HoiDap\_Item_CauHoi.cshtml" />
     <Content Include="Views\KhoaHoc\ThanhVien.cshtml" />
     <Content Include="Views\NguoiDung\SuaNguoiDung.cshtml" />
+    <None Include="Properties\PublishProfiles\LCTMoodle.pubxml" />
+    <Content Include="Views\KhoaHoc\DanhSachThanhVien.cshtml" />
+    <Content Include="Views\ChuDe\QuanLy.cshtml" />
+    <Content Include="Views\ChuDe\_Cay_Con_Item.cshtml" />
+    <Content Include="Views\ChuDe\_Cay_Item.cshtml" />
+    <Content Include="Views\ChuDe\_Chon.cshtml" />
+    <Content Include="Views\ChuDe\_DanhSach.cshtml" />
+    <Content Include="Views\ChuDe\_DanhSach_Item.cshtml" />
+    <Content Include="Views\ChuDe\_Form.cshtml" />
+    <Content Include="Views\KhoaHoc\DanhSach.cshtml" />
+    <Content Include="Views\KhoaHoc\DanhSachCuaToi.cshtml" />
+    <Content Include="Views\KhoaHoc\_Item.cshtml" />
+    <Content Include="Views\KhoaHoc\_DanhSach.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

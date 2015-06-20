@@ -35,7 +35,7 @@ namespace LCTMoodle.Controllers
             ChuDeDTO chuDe;
             if (ma != 0)
             {
-                KetQua ketQua = ChuDeBUS.layTheoMa(ma);
+                KetQua ketQua = ChuDeBUS.layTheoMa(ma, new LienKet() { "Con" });
 
                 if (ketQua.trangThai != 0)
                 {
@@ -107,7 +107,7 @@ namespace LCTMoodle.Controllers
                 trangThai = 0,
                 ketQua = new
                 {
-                    cayCon = renderPartialViewToString(ControllerContext,
+                    cayCon_Item = renderPartialViewToString(ControllerContext,
                         "ChuDe/_Cay_Con_Item.cshtml",
                         ketQua.ketQua
                     ),

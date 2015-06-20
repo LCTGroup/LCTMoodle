@@ -183,17 +183,14 @@ function khoiTaoNutTao($nutTao) {
                                 
                                 if (ma in mangNut)
                                 {
-                                    mangNut[ma].cay += data.ketQua.cayCon;
+                                    var $fake = $('<fake>' + mangNut[ma].cay + '</fake>');
+                                    $fake.find('[data-doi-tuong="danh-sach-muc"]').append(data.ketQua.cayCon_Item);
+
+                                    mangNut[ma].cay = $fake.html();
                                     mangNut[ma].danhSach += data.ketQua.danhSach_Item;
                                 }
-                                else {
-                                    mangNut[ma] = {
-                                        cay: data.ketQua.cayCon,
-                                        danhSach: data.ketQua.danhSach_Item
-                                    };
-                                }
 
-                                var $cayCon_Item = $(data.ketQua.cayCon),
+                                var $cayCon_Item = $(data.ketQua.cayCon_Item),
                                     $danhSach_Item = $(data.ketQua.danhSach_Item);
 
                                 khoiTaoCayCon_Item($cayCon_Item);
@@ -222,6 +219,7 @@ function khoiTaoNutTao($nutTao) {
         })
     })
 }
+
 //#endregion
 
 //#region Xử lý nút xóa

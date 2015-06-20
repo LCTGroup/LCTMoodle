@@ -1,0 +1,112 @@
+﻿@model DTOLayer.KhoaHocDTO
+@{
+    Layout = "~/Views/LCT/Khung.cshtml";
+
+    var danhSachThanhVien = ViewData["ThanhVien"] as List<DTOLayer.KhoaHoc_NguoiDungDTO>;
+    var danhSachDangKy = ViewData["DanhSachDangKy"] as List<DTOLayer.KhoaHoc_NguoiDungDTO>;
+    var danhSachBiChan = ViewData["DanhSachBiChan"] as List<DTOLayer.KhoaHoc_NguoiDungDTO>;
+        
+    ViewData["TieuDe"] = "Danh sách thành viên - " + Model.ten;
+
+    ViewData["DieuHuong"] = new List<string>() {
+        Model.ten, "/KhoaHoc/" + Model.ma,
+        "Danh sách thành viên", "/KhoaHoc/DanhSachThanhVien/" + Model.ma
+    };
+
+    List<string> chucNang = new List<string>() 
+    {
+        "Danh sách bài viết", "href='/KhoaHoc/" + Model.ma + "'",
+        "Danh sách chặn", "href='/KhoaHoc/DanhSachChan/" + Model.ma + "'"
+    };
+
+    ViewData["ChucNang"] = chucNang;
+}
+
+@section Styles {
+    <link href="/DanhSachThanhVien.css/KhoaHoc/" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="/DanhSachThanhVien.js/KhoaHoc/"></script>
+    <script>
+        maKhoaHoc = '@Model.ma';
+    </script>
+}
+
+@if (danhSachDangKy != null)
+{
+    <article class="hop">
+        <section class="tieu-de">
+            Danh sách người dùng đăng ký
+        </section>
+        <section class="noi-dung khung-nguoi-dung">
+            <ul id="danh_sach_dang_ky" class="danh-sach">
+                @foreach (var nd in danhSachDangKy)
+                {
+                    <li class="item" data-ma="@nd.nguoiDung.ma">
+                        <img src="/boy.png/" />
+                        <a href="#">@(nd.nguoiDung.ho + " " + nd.nguoiDung.ten)</a>
+                        <section class="khung-chuc-nang">
+                            <a data-chuc-nang="dong-y" class="dong-y" title="Chấp nhận"><i></i></a>
+                            <a data-chuc-nang="tu-choi" class="tu-choi" title="Từ chối"><i></i></a>
+                            <a data-chuc-nang="chan" class="chan" title="Chặn"><i></i></a>
+                        </section>
+                    </li>
+                }
+            </ul>
+        </section>
+    </article>
+}
+
+@if (danhSachThanhVien != null)
+{
+    <article class="hop">
+        <section class="tieu-de">
+            Danh sách thành viên
+        </section>
+        <section class="noi-dung khung-nguoi-dung">
+            <ul id="danh_sach_thanh_vien" class="danh-sach">
+                @foreach (var tv in danhSachThanhVien)
+                {
+                    <li class="item" data-ma="@tv.nguoiDung.ma">
+                        <img src="/boy.png/" />
+                        <a href="#">@(tv.nguoiDung.ho + " " + tv.nguoiDung.ten)</a>
+                        <section class="khung-chuc-nang-lct">
+                            <ul data-doi-tuong="cnnd-@tv.nguoiDung.ma">
+                                <li>
+                                    <a data-chuc-nang="xoa-thanh-vien">Loại bỏ thành viên</a>
+                                </li>
+                            </ul>
+                            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnnd-@tv.nguoiDung.ma">
+                                <i class="pe-7f-config"></i>
+                            </button>
+                        </section>
+                    </li>
+                }
+            </ul>
+        </section>
+    </article>
+}
+
+@if (danhSachBiChan != null)
+{
+    <article class="hop">
+        <section class="tieu-de">
+            Danh sách người dùng bị chặn
+        </section>
+        <section class="noi-dung khung-nguoi-dung">
+            <ul id="danh_sach_bi_chan" class="danh-sach">
+                @foreach (var nd in danhSachBiChan)
+                {
+                    <li class="item" data-ma="@nd.nguoiDung.ma">
+                        <img src="/boy.png/" />
+                        <a href="#">@(nd.nguoiDung.ho + " " + nd.nguoiDung.ten)</a>
+                        <section class="khung-chuc-nang">
+                            <a data-chuc-nang="bo-chan" class="bo-chan" title="Bỏ chặn"><i></i></a>
+                        </section>
+                    </li>
+                }
+            </ul>
+        </section>
+    </article>
+}
