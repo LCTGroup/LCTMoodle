@@ -1,0 +1,117 @@
+﻿@model List<DTOLayer.KhoaHocDTO>
+
+@{    
+    Layout = "~/Views/LCT/Khung.cshtml";
+
+    List<DTOLayer.KhoaHocDTO> 
+        dsThamGia = ViewData["ThamGia"] as List<DTOLayer.KhoaHocDTO>,
+        dsDangKy = ViewData["DangKy"] as List<DTOLayer.KhoaHocDTO>,
+        dsDuocMoi = ViewData["DuocMoi"] as List<DTOLayer.KhoaHocDTO>,
+        dsBiChan = ViewData["BiChan"] as List<DTOLayer.KhoaHocDTO>;
+}
+
+@section Styles {
+    <link href="/DanhSach.css/KhoaHoc" rel="stylesheet" />
+}
+
+@if (dsThamGia == null && dsDangKy == null && dsDuocMoi == null && dsBiChan == null)
+{
+    <a href="/KhoaHoc/DanhSach">Bạn chưa tham gia khóa học nào, hãy tìm kiếm một khóa học mà bạn quan tâm</a>
+    return;
+}
+
+@if (dsThamGia != null)
+{
+    <article class="hop">
+        <section class="tieu-de">
+            Danh sách khóa học bạn đã tham gia
+        </section>
+        <section class="noi-dung khung-khoa-hoc">
+            <ul class="danh-sach">
+                @foreach (var khoaHoc in dsThamGia)
+                {
+                    <li class="item">
+                        <section class="hinh-dai-dien">
+                            <img src="/LayTapTin/KhoaHoc_HinhDaiDien/@khoaHoc.hinhDaiDien.ma" />
+                        </section>
+                        <a href="/KhoaHoc/@khoaHoc.ma" class="ten">
+                            <h1>@khoaHoc.ten</h1>
+                        </a>
+                    </li>   
+                }
+            </ul>
+        </section>
+    </article>      
+}
+
+@if (dsDangKy != null)
+{
+    <article class="hop">
+        <section class="tieu-de">
+            Danh sách khóa học bạn đã đăng ký
+        </section>
+        <section class="noi-dung khung-khoa-hoc">
+            <ul class="danh-sach">
+                @foreach (var khoaHoc in dsDangKy)
+                {
+                    <li class="item">
+                        <section class="hinh-dai-dien">
+                            <img src="/LayTapTin/KhoaHoc_HinhDaiDien/@khoaHoc.hinhDaiDien.ma" />
+                        </section>
+                        <a href="/KhoaHoc/@khoaHoc.ma" class="ten">
+                            <h1>@khoaHoc.ten</h1>
+                        </a>
+                    </li>   
+                }
+            </ul>
+        </section>
+    </article>      
+}
+
+@if (dsDuocMoi != null)
+{
+    <article class="hop">
+        <section class="tieu-de">
+            Danh sách khóa học gửi lời mời cho bạn
+        </section>
+        <section class="noi-dung khung-khoa-hoc">
+            <ul class="danh-sach">
+                @foreach (var khoaHoc in dsDuocMoi)
+                {
+                    <li class="item">
+                        <section class="hinh-dai-dien">
+                            <img src="/LayTapTin/KhoaHoc_HinhDaiDien/@khoaHoc.hinhDaiDien.ma" />
+                        </section>
+                        <a href="/KhoaHoc/@khoaHoc.ma" class="ten">
+                            <h1>@khoaHoc.ten</h1>
+                        </a>
+                    </li>   
+                }
+            </ul>
+        </section>
+    </article>      
+}
+
+@if (dsBiChan != null)
+{
+    <article class="hop">
+        <section class="tieu-de">
+            Danh sách khóa học đã chặn bạn
+        </section>
+        <section class="noi-dung khung-khoa-hoc">
+            <ul class="danh-sach">
+                @foreach (var khoaHoc in dsBiChan)
+                {
+                    <li class="item">
+                        <section class="hinh-dai-dien">
+                            <img src="/LayTapTin/KhoaHoc_HinhDaiDien/@khoaHoc.hinhDaiDien.ma" />
+                        </section>
+                        <a href="/KhoaHoc/@khoaHoc.ma" class="ten">
+                            <h1>@khoaHoc.ten</h1>
+                        </a>
+                    </li>   
+                }
+            </ul>
+        </section>
+    </article>      
+}

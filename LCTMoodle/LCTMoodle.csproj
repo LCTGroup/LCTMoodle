@@ -197,6 +197,7 @@
     <Content Include="Content\styles\HoiDap\XemCauHoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
     <Content Include="Content\styles\KhoaHoc\DanhSachThanhVien.css" />
+    <Content Include="Content\styles\KhoaHoc\DanhSach.css" />
     <Content Include="Content\styles\KhoaHoc\Xem.css" />
     <Content Include="Content\styles\LCT\bootstrap.css" />
     <Content Include="Content\styles\LCT\filled-icons.css" />
@@ -490,6 +491,8 @@
     <Content Include="Views\ChuDe\_DanhSach.cshtml" />
     <Content Include="Views\ChuDe\_DanhSach_Item.cshtml" />
     <Content Include="Views\ChuDe\_Form.cshtml" />
+    <Content Include="Views\KhoaHoc\DanhSach.cshtml" />
+    <Content Include="Views\KhoaHoc\DanhSachCuaToi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

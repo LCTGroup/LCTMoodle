@@ -193,6 +193,41 @@ namespace BUSLayer
             return KhoaHoc_NguoiDungDAO.xoaTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
         }
 
+        public static KetQua roiKhoaHoc(int maKhoaHoc)
+        {
+            #region Lấy người dùng hiện tại
+            if (Session["NguoiDung"] == null)
+            {
+                return new KetQua()
+                {
+                    trangThai = 4
+                };
+            }
+            //Lấy mã người dùng hiện tại
+            int maNguoiDung = (int)Session["NguoiDung"];
+            #endregion
+
+            //Kiểm tra người dùng có phải là thành viên của khóa học không
+            #region Kiểm tra trạng thái người dùng
+            KetQua ketQua = KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
+            if (ketQua.trangThai > 1)
+            {
+                return ketQua;
+            }
+            if (ketQua.trangThai == 1 ||
+                (ketQua.ketQua as KhoaHoc_NguoiDungDTO).trangThai != 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = new List<string>() { "Người dùng không phải là thành viên" }
+                };
+            }
+            #endregion
+
+            return KhoaHoc_NguoiDungDAO.xoaTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
+        }
+
         public static KetQua layTheoMaKhoaHocVaMaNguoiDung(int maKhoaHoc, int maNguoiDung)
         {
             return KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);

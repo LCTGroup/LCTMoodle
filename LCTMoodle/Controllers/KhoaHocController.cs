@@ -55,6 +55,38 @@ namespace LCTMoodle.Controllers
             return View();
         }       
 
+        public ActionResult DanhSach()
+        {
+            KetQua ketQua = KhoaHocBUS.lay();
+
+            return View(ketQua.trangThai == 0 ? ketQua.ketQua : null);
+        }
+
+        public ActionResult DanhSachCuaToi()
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return RedirectToAction("DanhSach", "KhoaHoc");
+            }
+
+            KetQua ketQua = KhoaHocBUS.layTheoMaNguoiDung((int)Session["NguoiDung"]);
+            if (ketQua.trangThai > 1)
+            {
+                RedirectToAction("Index", "NguoiDung");
+            }
+            if (ketQua.trangThai == 0)
+            {
+                var danhSachKhoaHoc = ketQua.ketQua as List<KhoaHocDTO>[];
+
+                ViewData["ThamGia"] = danhSachKhoaHoc[0];
+                ViewData["DangKy"] = danhSachKhoaHoc[1];
+                ViewData["DuocMoi"] = danhSachKhoaHoc[2];
+                ViewData["BiChan"] = danhSachKhoaHoc[3];
+            }
+
+            return View();
+        }
+
         public ActionResult XuLyThem(FormCollection formCollection)
         {
             return Json(KhoaHocBUS.them(chuyenDuLieuForm(formCollection)));
@@ -174,6 +206,12 @@ namespace LCTMoodle.Controllers
         public ActionResult XuLyXoaThanhVien(int ma, int maNguoiDung)
         {
             return Json(KhoaHoc_NguoiDungBUS.xoaThanhVien(ma, maNguoiDung));
+        }
+
+        [HttpPost]
+        public ActionResult XuLyRoiKhoaHoc(int ma)
+        {
+            return Json(KhoaHoc_NguoiDungBUS.roiKhoaHoc(ma));
         }
 	}
 }

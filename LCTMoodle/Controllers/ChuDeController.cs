@@ -107,7 +107,7 @@ namespace LCTMoodle.Controllers
                 trangThai = 0,
                 ketQua = new
                 {
-                    cayCon = renderPartialViewToString(ControllerContext,
+                    cayCon_Item = renderPartialViewToString(ControllerContext,
                         "ChuDe/_Cay_Con_Item.cshtml",
                         ketQua.ketQua
                     ),

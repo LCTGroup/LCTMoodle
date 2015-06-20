@@ -142,5 +142,32 @@ namespace DAOLayer
                     }
                 );
         }
+
+        public static KetQua layTheoMaNguoiDung(int? maNguoiDung, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layKhoaHoc_NguoiDungTheoMaNguoiDung",
+                    new object[]
+                    {
+                        maNguoiDung
+                    },
+                    lienKet
+                );
+        }
+
+        public static KetQua layTheoMaNguoiDungVaTrangThai(int? maNguoiDung, int? trangThai, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layKhoaHoc_NguoiDungTheoMaKhoaHocVaTrangThai",
+                    new object[]
+                    {
+                        maNguoiDung,
+                        trangThai
+                    },
+                    lienKet
+                );
+        }
     }
 }

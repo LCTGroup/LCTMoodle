@@ -1,6 +1,8 @@
 ﻿@{                                 
     bool CotTrai = ViewData["CotTrai"] == null ? true : (bool)ViewData["CotTrai"];
     bool CotPhai = ViewData["CotPhai"] == null ? true : (bool)ViewData["CotPhai"];
+    
+    int? maNguoiDung = Session["NguoiDung"] as int?;
 }
 <!DOCTYPE html>
 
@@ -68,11 +70,22 @@
                 <nav>
                     <ul>
                         <li>
-                            <a href="#">
-                                <i class="pe-7s-study"></i>
-                                <u></u>
-                                Khóa học của tôi
-                            </a>
+                            @if (maNguoiDung.HasValue)
+                            {
+                                <a href="/KhoaHoc/DanhSachCuaToi">
+                                    <i class="pe-7s-study"></i>
+                                    <u></u>
+                                    Khóa học của tôi
+                                </a>   
+                            }
+                            else
+                            {
+                                <a href="/KhoaHoc/DanhSach">
+                                    <i class="pe-7s-study"></i>
+                                    <u></u>
+                                    Khóa học
+                                </a>
+                            }
                         </li>
                         <li>
                             <a href="/HoiDap/">
@@ -114,53 +127,39 @@
         <!-- Main -->
         <main>
             <!-- Cột trái -->
-            @if (CotTrai)
+            @if (maNguoiDung.HasValue && CotTrai)
             {
                 <aside class="cot-trai">
                     <article class="menu">
                         <section class="khung-thong-tin"></section>
                         <nav>
                             <ul>
-                                <li>
-                                    <a>
-                                        <u></u>
-                                        Khóa học
-                                    </a>
-                                    <ul>
+                                @{
+                                    DTOLayer.KetQua ketQua = BUSLayer.KhoaHocBUS.layTheoMaNguoiDungVaTrangThai(maNguoiDung.Value, 0);
+                                    if (ketQua.trangThai == 0)
+                                    {
                                         <li>
-                                            <a href="#">
-                                                Tên khóa học
+                                            <a>
+                                                <u></u>
+                                                Khóa học của tôi
                                             </a>
+                                            <ul>
+                                                @foreach (var khoaHoc in ketQua.ketQua as List<DTOLayer.KhoaHocDTO>)
+                                                {
+                                                    <li>
+                                                        <a href="/KhoaHoc/@khoaHoc.ma">
+                                                            @khoaHoc.ten
+                                                        </a>
+                                                    </li>   
+                                                }
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <a href="#">
-                                                Tên khóa học
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a>
-                                        <u></u>
-                                        Khóa học của tôi
-                                    </a>
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                Tên khóa học
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Tên khóa học
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                    }
+                                }
                             </ul>
                         </nav>
                     </article>
-                </aside>
+                </aside>   
             }
 
             <!-- Cột giữa -->

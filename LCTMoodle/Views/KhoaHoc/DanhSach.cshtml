@@ -1,0 +1,34 @@
+﻿@model List<DTOLayer.KhoaHocDTO>
+
+@{    
+    Layout = "~/Views/LCT/Khung.cshtml";
+}
+
+@section Styles {
+    <link href="/DanhSach.css/KhoaHoc" rel="stylesheet" />
+}
+
+@if (Model != null)
+{
+    <article class="hop">
+        <section class="tieu-de">
+            Danh sách khóa học
+        </section>
+        <section class="noi-dung khung-khoa-hoc">
+            <ul class="danh-sach">
+                @foreach(var khoaHoc in Model)
+                {
+                    <li class="item">
+                        <section class="hinh-dai-dien">
+                            <img src="/LayTapTin/KhoaHoc_HinhDaiDien/@khoaHoc.hinhDaiDien.ma" />
+                        </section>
+                        <a href="/KhoaHoc/@khoaHoc.ma" class="ten">
+                            <h1>@khoaHoc.ten</h1>
+                        </a>
+                    </li>   
+                }
+            </ul>
+        </section>
+    </article>   
+}
+
