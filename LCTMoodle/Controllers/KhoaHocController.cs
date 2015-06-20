@@ -87,6 +87,17 @@ namespace LCTMoodle.Controllers
             return View();
         }
 
+        public ActionResult _DanhSach_Tim(string tuKhoa)
+        {
+            KetQua ketQua = KhoaHocBUS.lay_TimKiem(tuKhoa);
+            if (ketQua.trangThai == 0)
+            {
+                ketQua.ketQua = renderPartialViewToString(ControllerContext, "KhoaHoc/_DanhSach.cshtml", ketQua.ketQua);
+            }
+
+            return Json(ketQua, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult XuLyThem(FormCollection formCollection)
         {
             return Json(KhoaHocBUS.them(chuyenDuLieuForm(formCollection)));

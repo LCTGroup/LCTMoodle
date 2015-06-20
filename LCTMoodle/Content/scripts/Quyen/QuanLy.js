@@ -63,7 +63,7 @@ function khoiTaoTimKiemNguoiDung($inputs) {
 
             $.ajax({
                 url: '/Quyen/_DanhSachNguoiDung_Tim',
-                data: { tuKhoa: $input.val(), phamVi: _PhamViHienTai, maNhom: _NhomHienTai, maDoiTuong: _DoiTuongQuanLy },
+                data: { tuKhoa: giaTriTam, phamVi: _PhamViHienTai, maNhom: _NhomHienTai, maDoiTuong: _DoiTuongQuanLy },
                 dataType: 'JSON'
             }).done(function (data) {
                 if (data.trangThai == 0) {

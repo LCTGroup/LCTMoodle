@@ -5,7 +5,7 @@
     .khung-khoa-hoc .danh-sach {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: space-around;
     }
 
     .khung-khoa-hoc .danh-sach .item {
@@ -37,3 +37,12 @@
             .khung-khoa-hoc .danh-sach .ten h1 {
                 font-size: 15px;
             }
+            
+    .khung-khoa-hoc .danh-sach + * {
+        display: none;
+    }
+
+    .khung-khoa-hoc .danh-sach:empty + * {
+        display: block;
+        
+    }

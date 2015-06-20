@@ -184,6 +184,7 @@
     <Content Include="Content\scripts\HoiDap\XemCauHoi.js" />
     <Content Include="Content\scripts\HoiDap\TaoCauHoi.js" />
     <Content Include="Content\scripts\KhoaHoc\DanhSachThanhVien.js" />
+    <Content Include="Content\scripts\KhoaHoc\DanhSach.js" />
     <Content Include="Content\scripts\KhoaHoc\Xem.js" />
     <Content Include="Content\scripts\KhoaHoc\Tao.js" />
     <Content Include="Content\scripts\LCT\Form.js" />

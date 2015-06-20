@@ -10,6 +10,10 @@
     <link href="/DanhSach.css/KhoaHoc" rel="stylesheet" />
 }
 
+@section Scripts {
+    <script src="/DanhSach.js/KhoaHoc"></script>
+}
+
 @if (Model != null)
 {
     <article class="hop">
@@ -17,9 +21,15 @@
             Danh sách khóa học
         </section>
         <section class="noi-dung khung-khoa-hoc">
-            <ul class="danh-sach">
+            <section class="khung-tim lct-form">
+                <article class="input">
+                    <input id="tim_kiem" type="text" placeholder="Bạn đang muốn tìm kiếm khóa học gì?" />
+                </article>
+            </section>
+            <ul id="danh_sach" class="danh-sach">
                 @Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", Model)
             </ul>
+            <section class="thong-bao">Không có khóa học phù hợp</section>
         </section>
     </article>   
 }
