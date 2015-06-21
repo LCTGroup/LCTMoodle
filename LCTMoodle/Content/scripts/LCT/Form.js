@@ -41,7 +41,7 @@ function khoiTaoLCTForm($form, thamSo) {
     khoiTaoTatMo_LCT($form);
 
     //Khởi tạo bắt lỗi
-    khoiTaoBatLoi_LCT($form, thamSo);
+    khoiTaoSukienInput_LCT($form, thamSo);
 
     //Xử lý ajax submit chung
     khoiTaoSubmit_LCT($form, thamSo);
@@ -117,7 +117,7 @@ function khoiTaoNutMacDinh_LCT($form) {
 function khoiTaoHienThiInput_LCT($form) {
     $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
         $element = $(this);
-        $element.wrap('<label class="checkbox-radio-label"></label>');
+        $element.wrap('<label class="checkbox-radio-label" style="' + $element.attr('style') + '"></label>');
         $element.after('<u></u>' + $element.attr('data-text'));
     });
 
@@ -311,7 +311,7 @@ function khoiTaoGoiYInput_LCT($form) {
                 $dsHienTai = $danhSachGoiY;
                 $inputHienTai = $inputGoiY;
                 $inputGoiY.addClass('focus');
-                $danhSachGoiY.html('').next().text('Nhập từ khóa để tìm kiếm');
+                $danhSachGoiY.empty().next().text('Nhập từ khóa để tìm kiếm');
                 mangTam[maTam + 'cu'] = $inputGoiY.val();
 
                 //Xử lý sự kiện nhấn chuột ra ngoài đối tượng
@@ -334,6 +334,10 @@ function khoiTaoGoiYInput_LCT($form) {
                     return;
                 }
 
+                if (!$inputGoiY.hasClass('focus')) {
+                    $inputGoiY.focus();
+                }
+
                 mangTam[maTam + 'td'] = true;
                 clearTimeout(mangTam[maTam + 'to']);
                 mangTam[maTam + 'to'] = setTimeout(function () {
@@ -347,7 +351,7 @@ function khoiTaoGoiYInput_LCT($form) {
                         dataType: 'JSON'
                     }).done(function (data) {
                         if (data.trangThai != 0 || data.ketQua.length == 0) {
-                            $danhSachGoiY.html('').next().text('Không tìm thấy kết quả phù hợp');
+                            $danhSachGoiY.empty().next().text('Không tìm thấy kết quả phù hợp');
                         }
                         else {
                             var html = taoGoiY_LCT(data.ketQua);
@@ -358,7 +362,7 @@ function khoiTaoGoiYInput_LCT($form) {
                             $danhSachGoiY.find(':first-child').addClass('chon');
                         }
                     }).fail(function () {
-                        $danhSachGoiY.html('').next().text('Không tìm thấy kết quả phù hợp');
+                        $danhSachGoiY.empty().next().text('Không tìm thấy kết quả phù hợp');
                     });
                 }, 200)
             },
@@ -465,7 +469,7 @@ function khoiTaoGoiYInput_LCT($form) {
             ten = $giaTriChon.text() || '',
             ma = $giaTriChon.attr('data-ma') || '';
 
-        $input.next().change().val(ma);
+        $input.next().val(ma).change();
         $input.removeClass('focus').val(ten).trigger('kiemTra');
 
         mangTam[maTam + 'td'] = false;
@@ -793,7 +797,7 @@ function tatLoi($input, loai) {
     $input.removeClass('loi-' + loai);
 }
 
-function khoiTaoBatLoi_LCT($form, thamSo) {
+function khoiTaoSukienInput_LCT($form, thamSo) {
     var auto = $form.is('[data-validate-auto]');
 
     //Bắt buộc
@@ -1050,8 +1054,8 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
 
     //Custom
         /*  */
-    if ('validates' in thamSo) {
-        $(thamSo.validates).each(function (index) {
+    if ('custom' in thamSo) {
+        $(thamSo.custom).each(function (index) {
             var $input = this.input;
 
             if ('validate' in this) {
@@ -1072,8 +1076,16 @@ function khoiTaoBatLoi_LCT($form, thamSo) {
                 });
             }
 
-            if ('customEvent' in this) {
-                $input.on(this.customEvent);
+            if ('event' in this) {
+                if ('valueChanged' in this.event) {
+                    if ($input.is('[data-input-type="goi-y"]')) {
+                        $input.next().on('change', this.event.valueChanged);
+                    }
+                    
+                    delete this.event.valueChanged;
+                }
+
+                $input.on(this.event);
             }
         });
     }
@@ -1200,8 +1212,8 @@ function khoiTaoSubmit_LCT($form, thamSo) {
         });
 
         //Custom
-        if ('validates' in thamSo) {
-            $(thamSo.validates).each(function (index) {
+        if ('custom' in thamSo) {
+            $(thamSo.custom).each(function (index) {
                 if ('validate' in this) {
                     var $input = this.input;
                     var loai = 'custom-' + index;

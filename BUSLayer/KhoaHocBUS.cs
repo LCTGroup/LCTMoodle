@@ -123,6 +123,11 @@ namespace BUSLayer
             return KhoaHocDAO.lay_TimKiem(tuKhoa, lienKet);
         }
 
+        public static KetQua layTheoMaChuDe_TimKiem(int maChuDe, string tuKhoa, LienKet lienKet = null)
+        {
+            return KhoaHocDAO.layTheoMaChuDe_TimKiem(maChuDe, tuKhoa, lienKet);
+        }
+
         public static KetQua layTheoMaNguoiDung(int maNguoiDung)
         {
             //Lấy toàn bộ khóa học mà người dùng liên quan

@@ -73,10 +73,10 @@ function khoiTaoTimKiemNguoiDung($inputs) {
                     $_DanhSachNguoi.html($items);
                 }
                 else {
-                    $_DanhSachNguoi.html('');
+                    $_DanhSachNguoi.empty();
                 }
             }).fail(function () {
-                $_DanhSachNguoi.html('');
+                $_DanhSachNguoi.empty();
             });
         }, 500)
     })
@@ -483,7 +483,7 @@ function khoiTaoItem_Nhom($items) {
                 }
                 else if (data.trangThai == 1) {
                     _MangHtmlNguoi[_NhomHienTai] = '';
-                    $_DanhSachNguoi.html('');
+                    $_DanhSachNguoi.empty();
                 }
                 else {
                     moPopup({

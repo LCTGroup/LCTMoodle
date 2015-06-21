@@ -140,9 +140,9 @@ function khoiTaoCauHoi($cauHoi) {
                             }
                         });
                     },
-                    validates: [{
+                    custom: [{
                         input: $formSuaCauHoi.find('[data-chuc-nang="huy"]'),
-                        customEvent: {
+                        event: {
                             'click': function () {                                
                                 $cauHoi.html(mangTam['CauHoi' + ma]);
                                 khoiTaoCauHoi($cauHoi);
@@ -252,10 +252,10 @@ function khoiTaoTraLoi($danhSachTraLoi) {
                             }
                         });
                     },
-                    validates: [
+                    custom: [
                         {
                             input: $traLoi.find('[data-chuc-nang="huy"]'),
-                            customEvent: {
+                            event: {
                                 'click': function () {
                                     $traLoi.html(mangTam['TraLoi' + ma]);
                                     khoiTaoTraLoi($traLoi);

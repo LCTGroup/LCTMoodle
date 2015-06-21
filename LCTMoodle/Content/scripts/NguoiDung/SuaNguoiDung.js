@@ -34,40 +34,13 @@ function khoiTaoFormSuaNguoiDung($form) {
                 }
             });
         },
-        validates:
+        custom:
         [{
             input: $form.find('[data-chuc-nang="reset"]'),
-            customEvent: {
+            event: {
                 'click': function () {
                     khoiTaoLCTFormMacDinh($form);
                 }
-            }
-        },
-        {
-            input: $('#TenTaiKhoan'),
-            thongBao: 'Tài khoản đã tồn tại',
-            validate: function () {
-                var ketQua;
-                $.ajax({
-                    url: '/NguoiDung/KiemTraTenTaiKhoan',
-                    data: { tenTaiKhoan: $('#TenTaiKhoan').val() },
-                    async: false
-                }).done(function (data) {
-                    if ($('#TenTaiKhoan').val() != tenTaiKhoan)
-                    {
-                        ketQua = !data;
-                    }
-                    else
-                    {
-                        ketQua = data;
-                    }
-                }).fail(function () {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        noiDung: 'Lỗi ajax'
-                    })
-                });
-                return ketQua;
             }
         }]
     });

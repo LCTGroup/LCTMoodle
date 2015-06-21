@@ -87,9 +87,18 @@ namespace LCTMoodle.Controllers
             return View();
         }
 
-        public ActionResult _DanhSach_Tim(string tuKhoa)
+        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0)
         {
-            KetQua ketQua = KhoaHocBUS.lay_TimKiem(tuKhoa);
+            KetQua ketQua;
+            if (maChuDe == 0)
+            {
+                ketQua = KhoaHocBUS.lay_TimKiem(tuKhoa);
+            }
+            else
+            {
+                ketQua = KhoaHocBUS.layTheoMaChuDe_TimKiem(maChuDe, tuKhoa);
+            }
+
             if (ketQua.trangThai == 0)
             {
                 ketQua.ketQua = renderPartialViewToString(ControllerContext, "KhoaHoc/_DanhSach.cshtml", ketQua.ketQua);

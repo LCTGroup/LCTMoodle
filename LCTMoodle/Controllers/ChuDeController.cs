@@ -30,7 +30,7 @@ namespace LCTMoodle.Controllers
         ///         cay: html của nút ở cây
         ///         danhSach: html của danh sách nút con của nút
         /// </returns>
-        public ActionResult _Khung(int ma)
+        public ActionResult _Khung(int ma, bool coChon)
         {
             ChuDeDTO chuDe;
             if (ma != 0)
@@ -77,7 +77,8 @@ namespace LCTMoodle.Controllers
                     ),
                     danhSach = renderPartialViewToString(ControllerContext,
                         "ChuDe/_DanhSach.cshtml",
-                        chuDe.con
+                        chuDe.con,
+                        new ViewDataDictionary() { { "CoChon", coChon } }
                     )
                 }
             }, JsonRequestBehavior.AllowGet);
@@ -113,7 +114,8 @@ namespace LCTMoodle.Controllers
                     ),
                     danhSach_Item = renderPartialViewToString(ControllerContext,
                         "ChuDe/_DanhSach_Item.cshtml",
-                        ketQua.ketQua
+                        ketQua.ketQua,
+                        new ViewDataDictionary() { { "CoChon", formCollection["CoChon"] == "1" ? true : false } }
                     )
                 }
             });
@@ -135,10 +137,11 @@ namespace LCTMoodle.Controllers
             }
             else
             {
+                ViewData["CoChon"] = true;
                 return Json(new KetQua()
                 {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Chon.cshtml", ketQua.ketQua)
+                    ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Chon.cshtml", ketQua.ketQua, ViewData)
                 }, JsonRequestBehavior.AllowGet);
             }
         }

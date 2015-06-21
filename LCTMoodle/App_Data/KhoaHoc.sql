@@ -148,3 +148,33 @@ BEGIN
 		WHERE MaChuDe = @0
 		ORDER BY ThoiDiemTao DESC
 END
+
+GO
+--Lấy theo từ khóa và mã chủ đề
+CREATE PROC dbo.layKhoaHocTheoMaChuDe_TimKiem (
+	@0 INT, --MaChuDe
+	@1 NVARCHAR(MAX) --Từ khóa
+)
+AS
+BEGIN
+	SELECT
+		Ma,
+		Ten,
+		MoTa,
+		MaHinhDaiDien,
+		MaChuDe,
+		MaNguoiTao,
+		ThoiDiemTao,
+		ThoiDiemHetHan,
+		CanDangKy,
+		HanDangKy,
+		PhiThamGia,
+		CheDoRiengTu,
+		CoBangDiem,
+		CoBangDiemDanh,
+		CanDuyetBaiViet
+		FROM dbo.KhoaHoc
+		WHERE 
+			MaChuDe = @0 AND
+			Ten LIKE '%' + REPLACE(@1, ' ', '%') + '%'
+END

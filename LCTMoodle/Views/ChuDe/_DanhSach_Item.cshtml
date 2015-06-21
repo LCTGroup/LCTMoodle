@@ -1,4 +1,7 @@
 ﻿@model DTOLayer.ChuDeDTO
+@{
+    bool coChon = ViewData["CoChon"] != null && (bool)ViewData["CoChon"];
+}
 
 <li data-doi-tuong="muc" data-loai="ds-nut" data-ma="@Model.ma">
     <section class="mo-ta">
@@ -18,5 +21,8 @@
             <i class="pe-7f-config"></i>
         </button>
     </section>
-    <a class="nut-chon" data-chuc-nang="chon"></a>
+    @if (coChon)
+    {
+        <a class="nut-chon" data-chuc-nang="chon"></a>   
+    }
 </li>

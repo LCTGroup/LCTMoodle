@@ -40,9 +40,14 @@
             
     .khung-khoa-hoc .danh-sach + * {
         display: none;
+        text-align: center;
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid #eee;
+        font-weight: bold;
+        color: #555;
     }
 
     .khung-khoa-hoc .danh-sach:empty + * {
         display: block;
-        
     }

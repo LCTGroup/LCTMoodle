@@ -20,11 +20,21 @@ namespace BUSLayer
 
         public static KetQua them(System.Web.HttpPostedFileBase tapTinLuu)
         {
+            if (Session["NguoiDung"] == null)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = new List<string>() { "Người dùng không được bỏ trống" }
+                };
+            }
+
             TapTinDTO tapTin = new TapTinDTO()
             {
                 ten = tapTinLuu.FileName,
                 loai = tapTinLuu.ContentType,
-                duoi = Path.GetExtension(tapTinLuu.FileName)
+                duoi = Path.GetExtension(tapTinLuu.FileName),
+                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?)
             };
 
             KetQua ketQua = TapTinDAO.them(tapTin);

@@ -1,19 +1,27 @@
-﻿var $_Khung,
-    $_Cay,
-    $_DanhSach,
-    mangNut = {}; //Xác định bằng mã chủ đề
+﻿var $_Khung_CD,
+    $_Cay_CD,
+    $_DanhSach_CD,
+    mangNut = {},
+    coChon; //Xác định bằng mã chủ đề
 
 //Khởi tạo
-function khoiTaoKhungChuDe($khung) {
-    $_Khung = $khung;
-    $_Cay = $_Khung.find('#khung_cay');
-    $_DanhSach = $_Khung.find('#khung_danh_sach');
+function khoiTaoKhungChuDe($khung, thamSo) {
+    thamSo = thamSo || {};
 
-    khoiTaoCay_Item($_Cay.find('[data-doi-tuong="muc"]'));
-    khoiTaoDanhSach_Item($_DanhSach.find('[data-doi-tuong="muc"]'));
-    khoiTaoNutTao($_Khung.find('[data-chuc-nang="tao"]'));
+    $_Khung_CD = $khung;
+    $_Cay_CD = $_Khung_CD.find('#khung_cay');
+    $_DanhSach_CD = $_Khung_CD.find('#khung_danh_sach');
 
-    khoiTaoNutChon($_DanhSach.find('[data-chuc-nang="chon"]'));
+    khoiTaoCay_Item($_Cay_CD.find('[data-doi-tuong="muc"]'));
+    khoiTaoDanhSach_Item($_DanhSach_CD.find('[data-doi-tuong="muc"]'));
+    khoiTaoNutTao($_Khung_CD.find('[data-chuc-nang="tao"]'));
+
+    khoiTaoNutChon($_DanhSach_CD.find('[data-chuc-nang="chon"]'));
+
+    coChon = $_Khung_CD.is('[data-chon]');
+    if ('event' in thamSo) {
+        $_Khung_CD.on(thamSo.event);
+    }
 }
 
 //#region Xử lý nút nhấn
@@ -27,7 +35,7 @@ function khoiTaoNutChon($nut) {
 }
 
 function chonNut($muc) {
-    $_Khung.trigger('chon', [{
+    $_Khung_CD.trigger('chon', [{
         ma: $muc.attr('data-ma'),
         ten: $muc.children('[data-doi-tuong="ten"]').text()
     }])
@@ -71,7 +79,7 @@ function khoiTaoMoNut($nutMo) {
 
             $.ajax({
                 url: '/ChuDe/_Khung',
-                data: { ma: ma },
+                data: { ma: ma, coChon: coChon },
                 contentType: 'JSON',
                 async: false
             }).done(function (data) {
@@ -126,23 +134,23 @@ function khoiTaoMoNut($nutMo) {
                 $mucCha.after($cay)
                 break;
             case 'ds-nut':
-                $_Cay.append($cay);
+                $_Cay_CD.append($cay);
                 break;
             default:
                 return;
         }
 
         //Điều chỉnh hiển thị cây con
-        var $danhSachMuc = $_Cay.find(':nth-last-child(2) [data-doi-tuong="danh-sach-muc"]');
+        var $danhSachMuc = $_Cay_CD.find(':nth-last-child(2) [data-doi-tuong="danh-sach-muc"]');
         $danhSachMuc.prepend($danhSachMuc.children('[data-ma="' + ma + '"]'));
 
         //Hiển thị danh sách
-        $_DanhSach.html($danhSach);
+        $_DanhSach_CD.html($danhSach);
 
         //#endregion
 
         //#region Cập nhật giá trị cây
-        $_Khung.attr('data-ma', ma);
+        $_Khung_CD.attr('data-ma', ma);
         //#endregion
 
         mangTam.dangMoNut = false;
@@ -162,7 +170,7 @@ function khoiTaoNutTao($nutTao) {
             url: '/ChuDe/_Form',
             data: function () {
                 return {
-                    ma: $_Khung.attr('data-ma')
+                    ma: $_Khung_CD.attr('data-ma')
                 };
             },
             width: '450px',
@@ -174,12 +182,12 @@ function khoiTaoNutTao($nutTao) {
                         $.ajax({
                             url: '/ChuDe/XuLyThem',
                             type: 'POST',
-                            data: $form.serialize(),
+                            data: $form.serialize() + '&CoChon=' + (coChon ? 1 : 0),
                             dataType: 'JSON'
                         }).done(function (data) {
                             if (data.trangThai == 0) {
                                 $khung.tat();
-                                var ma = $_Khung.attr('data-ma');
+                                var ma = $_Khung_CD.attr('data-ma');
                                 
                                 if (ma in mangNut)
                                 {
@@ -196,8 +204,8 @@ function khoiTaoNutTao($nutTao) {
                                 khoiTaoCayCon_Item($cayCon_Item);
                                 khoiTaoDanhSach_Item($danhSach_Item);
 
-                                $_Cay.find(':last-child [data-doi-tuong="danh-sach-muc"]').append($cayCon_Item);
-                                $_DanhSach.prepend($danhSach_Item);
+                                $_Cay_CD.find(':last-child [data-doi-tuong="danh-sach-muc"]').append($cayCon_Item);
+                                $_DanhSach_CD.prepend($danhSach_Item);
                             }
                             else {
                                 moPopup({
@@ -246,12 +254,12 @@ function khoiTaoNutXoa($nutXoa) {
                             if (data.trangThai == 0) {
                                 //Xóa hiển thị hiện tại
                                 $muc.remove();
-                                $_Cay.find(':last-child [data-ma="' + ma + '"]').remove();
+                                $_Cay_CD.find(':last-child [data-ma="' + ma + '"]').remove();
 
                                 //Xóa dữ liệu đã lưu trữ 
-                                var maCha = $_Khung.attr('data-ma');
+                                var maCha = $_Khung_CD.attr('data-ma');
                                 if (maCha === '0') {
-                                    maCha = $_Khung.attr('data-pham-vi');
+                                    maCha = $_Khung_CD.attr('data-pham-vi');
                                 }
 
                                 var duLieuChuDe = mangNut[maCha],

@@ -60,10 +60,10 @@ namespace BUSLayer
 
             #region Kiểm tra Valid
 
-            //if (coKiemTra("TenTaiKhoan", truong, kiemTra) && NguoiDungBUS.tonTaiTenTaiKhoan(nguoiDung.tenTaiKhoan))
-            //{
-            //    thongBao.Add("Tên tài khoản bị trùng");
-            //}
+            if (coKiemTra("TenTaiKhoan", truong, kiemTra) && NguoiDungBUS.tonTaiTenTaiKhoan(nguoiDung.tenTaiKhoan))
+            {
+                thongBao.Add("Tên tài khoản bị trùng");
+            }
             if (coKiemTra("TenTaiKhoan", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.tenTaiKhoan))
             {
                 thongBao.Add("Tên tài khoản không được bỏ trống");

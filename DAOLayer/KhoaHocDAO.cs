@@ -171,5 +171,19 @@ namespace DAOLayer
                     lienKet
                 );
         }
+
+        public static KetQua layTheoMaChuDe_TimKiem(int? maChuDe, string tuKhoa, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layKhoaHocTheoMaChuDe_TimKiem",
+                    new object[] 
+                    { 
+                        maChuDe,
+                        tuKhoa
+                    },
+                    lienKet
+                );
+        }
     }
 }

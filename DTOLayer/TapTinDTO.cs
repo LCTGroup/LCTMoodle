@@ -12,5 +12,6 @@ namespace DTOLayer
         public string loai;
         public string duoi;
         public DateTime? thoiDiemTao;
+        public NguoiDungDTO nguoiTao;
     }
 }

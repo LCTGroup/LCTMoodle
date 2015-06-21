@@ -27,8 +27,12 @@ namespace DAOLayer
                         nguoiDung.matKhau = layString(dong, i); break;
                     case "Email":
                         nguoiDung.email = layString(dong, i); break;
+                    case "GioiTinh":
+                        nguoiDung.gioiTinh = layInt(dong, i); break;
                     case "Ho":
                         nguoiDung.ho = layString(dong, i); break;
+                    case "TenLot":
+                        nguoiDung.tenLot = layString(dong, i); break;
                     case "Ten":
                         nguoiDung.ten = layString(dong, i); break;
                     case "NgaySinh":

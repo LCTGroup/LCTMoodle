@@ -1,15 +1,8 @@
-﻿select * from khoahoc_nguoidung
-delete from khoahoc_nguoidung
-update khoahoc_nguoidung set trangthai = 1 where makhoahoc = 3
-select * from khoahoc
+﻿SELECT * FROM chuDe
+SELECT * FROM khoahoc
 
-update khoahoc set chedoriengtu = 'CongKhai'
+update khoahoc set machude = 18 where ma = 5
 
-select * from dbo.nguoidung
-select * from dbo.cauhoi
-select * from dbo.traloi
-select * from dbo.ChuDe
+exec laykhoahoctheomachude_timKiem 13, ''
 
-update dbo.cauhoi
-set machude=18
-where ma=3
+select * from taptin_tam
