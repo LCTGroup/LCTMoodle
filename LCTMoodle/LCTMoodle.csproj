@@ -485,7 +485,6 @@
     <Content Include="Views\KhoaHoc\QuanLyQuyen.cshtml" />
     <Content Include="Views\KhoaHoc\DangKyThamGia.cshtml" />
     <Content Include="Views\HoiDap\_Item_CauHoi.cshtml" />
-    <Content Include="Views\KhoaHoc\ThanhVien.cshtml" />
     <Content Include="Views\NguoiDung\SuaNguoiDung.cshtml" />
     <None Include="Properties\PublishProfiles\LCTMoodle.pubxml" />
     <Content Include="Views\KhoaHoc\DanhSachThanhVien.cshtml" />
