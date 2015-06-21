@@ -11,7 +11,9 @@ namespace DTOLayer
         public string tenTaiKhoan;
         public string matKhau;
         public string email;
+        public int? gioiTinh;
         public string ho;
+        public string tenLot;
         public string ten;
         public DateTime? ngaySinh;
         public string diaChi;

@@ -2,23 +2,27 @@
 
 GO
 --Người dùng
-CREATE TABLE dbo.NguoiDung (
+CREATE TABLE dbo.NguoiDung 
+(
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	TenTaiKhoan NVARCHAR(MAX) NOT NULL,
 	MatKhau NVARCHAR(MAX) NOT NULL,
 	Email NVARCHAR(MAX) NOT NULL,
+	GioiTinh INT DEFAULT 0, 
 	Ho NVARCHAR(MAX),
+	TenLot NVARCHAR(MAX),
 	Ten NVARCHAR(MAX),
 	NgaySinh DATETIME,
 	DiaChi NVARCHAR(MAX),
 	SoDienThoai NVARCHAR(MAX),
 	MaHinhDaiDien INT,
 	CoQuyenHT BIT DEFAULT 0
-);
+)
 
 GO
 --Thêm người dùng
-ALTER PROC dbo.themNguoiDung (
+ALTER PROC dbo.themNguoiDung 
+(
 	@0 NVARCHAR(MAX), --Tên tài khoản
 	@1 NVARCHAR(MAX), --Mật khẩu
 	@2 NVARCHAR(MAX), --Email
@@ -58,22 +62,9 @@ BEGIN
 END
 
 GO
---Lấy người dùng
-CREATE PROC dbo.layNguoiDungTheoTenTaiKhoan (
-	@0 NVARCHAR(MAX) --Tên tài khoản
-)
-AS
-BEGIN
-	SELECT *
-	FROM dbo.NguoiDung
-	WHERE TenTaiKhoan = @0
-END
-
-select * from dbo.NguoiDung
-
-GO
 --Lấy người dùng theo mã
-CREATE PROC dbo.layNguoiDungTheoMa (
+CREATE PROC dbo.layNguoiDungTheoMa 
+(
 	@0 INT --Mã người dùng
 )
 AS
@@ -84,8 +75,35 @@ BEGIN
 END
 
 GO
+--Lấy người dùng theo Tên Tài Khoản
+CREATE PROC dbo.layNguoiDungTheoTenTaiKhoan 
+(
+	@0 NVARCHAR(MAX) --Tên tài khoản
+)
+AS
+BEGIN
+	SELECT *
+	FROM dbo.NguoiDung
+	WHERE TenTaiKhoan = @0
+END
+
+GO
+--Lấy người dùng theo Email
+CREATE PROC dbo.layNguoiDungTheoEmail
+(
+	@0 NVARCHAR(MAX) --Email
+)
+AS
+BEGIN
+	SELECT *
+	FROM dbo.NguoiDung
+	WHERE Email = @0
+END
+
+GO
 --Lấy người dùng theo từ khóa
-ALTER PROC dbo.layNguoiDung_TimKiem (
+ALTER PROC dbo.layNguoiDung_TimKiem 
+(
 	@0 NVARCHAR(MAX) --Từ khóa
 )
 AS
@@ -100,7 +118,7 @@ BEGIN
 END
 
 GO
---Lấy người dùng theo mã khóa học và từ khóa
+--Lấy người dùng theo mã khóa học và từ khóa (Chiêu)
 ALTER PROC dbo.layNguoiDungTheoMaKhoaHoc_TimKiem (
 	@0 INT, --MaKhoaHoc
 	@1 NVARCHAR(MAX) --Từ khóa

@@ -10,6 +10,8 @@ select * from dbo.cauhoi
 select * from dbo.traloi
 select * from dbo.ChuDe
 
-update dbo.cauhoi
-set machude=18
-where ma=3
+insert into dbo.NguoiDungTam (TenTaiKhoan, MatKhau, Email, Ho, Ten, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien, CoQuyenHT)
+select TenTaiKhoan, MatKhau, Email, Ho, Ten, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien, CoQuyenHT from dbo.NguoiDung
+
+UPDATE dbo.NguoiDung
+SET TenLot = Right(

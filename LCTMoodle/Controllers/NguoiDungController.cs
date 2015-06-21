@@ -49,7 +49,7 @@ namespace LCTMoodle.Controllers
             return View();
         }
 
-        public ActionResult SuaNguoiDung(int? ma)
+        public ActionResult Sua(int? ma)
         {
             KetQua ketQua = NguoiDungBUS.layTheoMa(ma, new LienKet() { 
                 "HinhDaiDien"
