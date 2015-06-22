@@ -20,15 +20,6 @@ namespace BUSLayer
 
         public static KetQua them(System.Web.HttpPostedFileBase tapTinLuu)
         {
-            if (Session["NguoiDung"] == null)
-            {
-                return new KetQua()
-                {
-                    trangThai = 3,
-                    ketQua = new List<string>() { "Người dùng không được bỏ trống" }
-                };
-            }
-
             TapTinDTO tapTin = new TapTinDTO()
             {
                 ten = tapTinLuu.FileName,

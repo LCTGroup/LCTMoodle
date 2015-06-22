@@ -160,7 +160,7 @@ namespace BUSLayer
                 ketQua = NguoiDungDAO.them(nguoiDung);
                 if (ketQua.trangThai == 0)
                 {
-                    Session["NguoiDung"] = ketQua.ketQua;
+                    HttpContext.Current.Session["NguoiDung"] = ketQua.ketQua;
                 }
             }
             return ketQua;
@@ -252,7 +252,7 @@ namespace BUSLayer
 
             return NguoiDungBUS.kiemTraDangNhap(tenTaiKhoan, matKhau, ghiNho);
         }
-        
+                
         public static void xuLyDangXuat()
         {
             //Xóa Cookie
@@ -266,7 +266,7 @@ namespace BUSLayer
             }
                        
             //Xóa session            
-            Session.Clear();
+            HttpContext.Current.Session.Clear();
         }
         
         public static bool tonTaiTenTaiKhoan(string tenTaiKhoan)
