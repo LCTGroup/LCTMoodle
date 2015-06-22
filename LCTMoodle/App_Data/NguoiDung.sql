@@ -9,9 +9,9 @@ CREATE TABLE dbo.NguoiDung
 	MatKhau NVARCHAR(MAX) NOT NULL,
 	Email NVARCHAR(MAX) NOT NULL,
 	GioiTinh INT DEFAULT 0, 
-	Ho NVARCHAR(MAX),
+	Ho NVARCHAR(MAX) NOT NULL,
 	TenLot NVARCHAR(MAX),
-	Ten NVARCHAR(MAX),
+	Ten NVARCHAR(MAX) NOT NULL,
 	NgaySinh DATETIME,
 	DiaChi NVARCHAR(MAX),
 	SoDienThoai NVARCHAR(MAX),
@@ -26,16 +26,18 @@ ALTER PROC dbo.themNguoiDung
 	@0 NVARCHAR(MAX), --Tên tài khoản
 	@1 NVARCHAR(MAX), --Mật khẩu
 	@2 NVARCHAR(MAX), --Email
-	@3 NVARCHAR(MAX), --Họ
-	@4 NVARCHAR(MAX), --Tên
-	@5 DATETIME, --Ngày Sinh
-	@6 NVARCHAR(MAX), --Địa chỉ
-	@7 NVARCHAR(MAX), --Số điện thoại
-	@8 INT --Hình đại diện
+	@3 INT, --Giới tính
+	@4 NVARCHAR(MAX), --Họ
+	@5 NVARCHAR(MAX), --Tên lót
+	@6 NVARCHAR(MAX), --Tên
+	@7 DATETIME, --Ngày Sinh
+	@8 NVARCHAR(MAX), --Địa chỉ
+	@9 NVARCHAR(MAX), --Số điện thoại
+	@10 INT --Hình đại diện
 )
 AS
 BEGIN
-	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, Ho, Ten, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien) VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8);
+	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, GioiTinh, Ho, TenLot, Ten, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien) VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10);
 
 	SELECT @@IDENTITY Ma
 END

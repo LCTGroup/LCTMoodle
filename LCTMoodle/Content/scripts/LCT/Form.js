@@ -1449,11 +1449,20 @@ function khoiTaoForm_Lich(id) {
 }
 
 function layGiaTriMacDinh_Lich($lich, $lichInput) {
-    var date = new Date();
-    var
-        ngay = date.getDate(),
-        thang = date.getMonth() + 1,
+    var ngay, thang, nam;
+
+    if ($lichInput.is('[data-ngay-bat-dau]')) {
+        var lich = $lichInput.attr('data-ngay-bat-dau').split('/');
+        ngay = lich[0];
+        thang = lich[1];
+        nam = lich[2];
+    }
+    else {
+        var date = new Date();
+        ngay = date.getDate();
+        thang = date.getMonth() + 1;
         nam = date.getFullYear();
+    }
 
     $lich.attr('data-ngay', ngay);
     $lich.attr('data-thang', thang);

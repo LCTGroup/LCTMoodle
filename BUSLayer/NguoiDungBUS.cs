@@ -27,11 +27,20 @@ namespace BUSLayer
                     case "TenTaiKhoan":
                         nguoiDung.tenTaiKhoan = form.layString(key);
                         break;
+                    case "MatKhau":
+                        nguoiDung.matKhau = form.layString(key);
+                        break;
                     case "Email":
                         nguoiDung.email = form.layString(key);
                         break;
+                    case "GioiTinh":
+                        nguoiDung.gioiTinh = form.layInt(key);
+                        break;
                     case "Ho":
                         nguoiDung.ho = form.layString(key);
+                        break;
+                    case "TenLot":
+                        nguoiDung.tenLot = form.layString(key);
                         break;
                     case "Ten":
                         nguoiDung.ten = form.layString(key);
@@ -108,14 +117,14 @@ namespace BUSLayer
             {
                 switch (key)
                 {
-                    case "TenTaiKhoan":
-                        bangCapNhat.Add("TenTaiKhoan", nguoiDung.tenTaiKhoan, 2);
-                        break;
-                    case "Email":
-                        bangCapNhat.Add("Email", nguoiDung.email, 2);
+                    case "GioiTinh":
+                        bangCapNhat.Add("GioiTinh", nguoiDung.gioiTinh.ToString(), 1);
                         break;
                     case "Ho":
                         bangCapNhat.Add("Ho", nguoiDung.ho, 2);
+                        break;
+                    case "TenLot":
+                        bangCapNhat.Add("TenLot", nguoiDung.tenLot, 2);
                         break;
                     case "Ten":
                         bangCapNhat.Add("Ten", nguoiDung.ten, 2);
@@ -141,34 +150,17 @@ namespace BUSLayer
 
         public static KetQua them(Form form)
         {
-            KetQua ketQua = TapTinBUS.chuyen("NguoiDung_HinhDaiDien", layInt(form, "HinhDaiDien"));
+            NguoiDungDTO nguoiDung = new NguoiDungDTO();
+            gan(ref nguoiDung, form);
             
-            if (ketQua.trangThai != 0)
-            {
-                return ketQua;                
-            }
-
-            NguoiDungDTO nguoiDung = new NguoiDungDTO()
-            {
-                tenTaiKhoan = form.layString("TenTaiKhoan"),
-                matKhau = Helpers.NguoiDungHelper.layMaMD5(form.layString("MatKhau")),
-                email = form.layString("Email"),
-                ho = form.layString("Ho"),
-                ten = form.layString("Ten"),
-                ngaySinh = form.layDateTime("NgaySinh"),
-                diaChi = form.layString("DiaChi"),
-                soDienThoai = form.layString("SoDienThoai"),
-                hinhDaiDien = ketQua.ketQua as TapTinDTO
-            };
-            
-            ketQua = kiemTra(nguoiDung);           
+            KetQua ketQua = kiemTra(nguoiDung);           
 
             if (ketQua.trangThai == 0)
             {
                 ketQua = NguoiDungDAO.them(nguoiDung);
                 if (ketQua.trangThai == 0)
                 {
-                    HttpContext.Current.Session["NguoiDung"] = (int)ketQua.ketQua;
+                    Session["NguoiDung"] = ketQua.ketQua;
                 }
             }
             return ketQua;
@@ -274,7 +266,7 @@ namespace BUSLayer
             }
                        
             //Xóa session            
-            HttpContext.Current.Session.Abandon();
+            Session.Clear();
         }
         
         public static bool tonTaiTenTaiKhoan(string tenTaiKhoan)

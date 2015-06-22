@@ -60,31 +60,35 @@
                     </li>
                     <li>
                         <section class="tieu-de">
-                            <label>(*) Họ</label>
+                            <label>Giới Tính</label>
                         </section>
                         <section class="noi-dung">
                             <article class="input">
-                                <input type="text" name="Ho" data-validate="bat-buoc" />
+                                <input type="radio" name="GioiTinh" value="1" data-text="Nam" style="width:auto;" />
+                                <input type="radio" name="GioiTinh" value="2" data-text="Nữ" style="width:auto;" />
+                                <input type="radio" name="GioiTinh" value="0" data-text="Không xác định" data-mac-dinh style="width:auto;" />
                             </article>
                         </section>
                     </li>
                     <li>
                         <section class="tieu-de">
-                            <label>(*) Tên</label>
+                            <label>(*) Họ và tên</label>
                         </section>
                         <section class="noi-dung">
                             <article class="input">
-                                <input type="text" name="Ten" data-validate="bat-buoc" />
+                                <input type="text" placeholder="Họ" name="Ho" data-validate="bat-buoc" style="width:calc(100%/3 - 19px);" />
+                                <input type="text" placeholder="Tên lót" name="TenLot" style="width:calc(100%/3 - 19px);" />
+                                <input type="text" placeholder="Tên" name="Ten" data-validate="bat-buoc" style="width:calc(100%/3 - 19px);" />
                             </article>
                         </section>
-                    </li>
+                    </li>                    
                     <li>
                         <section class="tieu-de">
                             <label>(*) Ngày sinh:</label>
                         </section>
                         <section class="noi-dung">
                             <article class="input">
-                                <input data-input-type="ngay" name="NgaySinh" value="" data-validate="bat-buoc" />
+                                <input data-input-type="ngay" name="NgaySinh" value="" data-ngay-bat-dau="1/1/@(DateTime.Now.Year - 18)" data-validate="bat-buoc" />
                             </article>
                         </section>
                     </li>
@@ -104,7 +108,7 @@
                         </section>
                         <section class="noi-dung">
                             <article class="input">
-                                <input type="text" name="SoDienThoai" />
+                                <input type="text" name="SoDienThoai" data-validate="so-nguyen" id="SoDienThoai" placeholder="Vui lòng nhập số điện thoại hiện hữu tại Việt Nam" />
                             </article>
                         </section>
                     </li>
@@ -124,7 +128,7 @@
                         </section>
                         <section class="noi-dung">
                             <article class="input">                                
-                                <input type="checkbox" name="ChapNhanQuyDinh" data-text="Chấp nhận quy định của Mạng xã hội LCT Moodle" />                                
+                                <input type="checkbox" name="ChapNhanQuyDinh" data-text="Chấp nhận &lt;a href='#' style='color:#08c;'&gt;quy định&lt;/a&gt; của Mạng xã hội LCT Moodle" style="width:auto;" />
                             </article>
                         </section>
                     </li>                    

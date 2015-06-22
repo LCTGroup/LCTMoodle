@@ -80,7 +80,7 @@ function khoiTaoDangKy($form) {
                     var ketQua;
                     $.ajax({
                         url: '/NguoiDung/KiemTraTenTaiKhoan',
-                        data: { tenTaiKhoan: $('#TenTaiKhoan').val() },                        
+                        data: { tenTaiKhoan: $('#TenTaiKhoan').val() },
                         async: false
                     }).done(function (data) {
                         ketQua = !data;
