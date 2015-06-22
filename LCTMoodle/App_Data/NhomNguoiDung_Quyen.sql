@@ -35,12 +35,12 @@ BEGIN
 			END
 			ELSE
 			BEGIN
-				DECLARE @chuoiMaLa VARCHAR(MAX) = dbo.layQuyenLa_FUNCTION(' + @2 + ')
+				DECLARE @chuoiMaLa VARCHAR(MAX) = ''|'' + dbo.layQuyenLa_FUNCTION(' + @2 + ')
 
 				INSERT INTO dbo.NhomNguoiDung_' + @0 + '_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong)
 					SELECT ' + @1 + ', Ma, ' + @3 + '
 						FROM dbo.Quyen
-						WHERE @chuoiMaLa LIKE ''%'' + CAST(Ma AS VARCHAR(MAX)) + ''%''
+						WHERE @chuoiMaLa LIKE ''%|'' + CAST(Ma AS VARCHAR(MAX)) + ''|%''
 			END
 		')
 	END
@@ -62,7 +62,7 @@ BEGIN
 				DELETE FROM dbo.NhomNguoiDung_' + @0 + '_Quyen
 				WHERE
 					MaNhomNguoiDung = ' + @1 + ' AND
-					@chuoiMaLa LIKE ''%'' + CAST(MaQuyen AS VARCHAR(MAX)) + ''%'' AND
+					@chuoiMaLa LIKE ''%|'' + CAST(MaQuyen AS VARCHAR(MAX)) + ''|%'' AND
 					MaDoiTuong = ' + @3 + '
 			END
 		')			

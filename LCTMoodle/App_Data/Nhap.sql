@@ -1,8 +1,9 @@
-﻿SELECT * FROM chuDe
-SELECT * FROM khoahoc
+﻿SELECT Ho, TenLot, Ten FROM NguoiDung WHERE Ma > 3
 
-update khoahoc set machude = 18 where ma = 5
+UPDATE NguoiDung
+	SET Ten = SUBSTRING(Ten , LEN(Ten) - CHARINDEX(' ', REVERSE(Ten)) + 2, LEN(Ten))
+	WHERE Ma > 3
 
-exec laykhoahoctheomachude_timKiem 13, ''
+SELECT SUBSTRING('Le Binh Chieu' , LEN(Le Binh Chieu) - CHARINDEX(' ', REVERSE(Le Binh Chieu)) + 2, LEN(Ten))
 
-select * from taptin_tam
+SELECT SUBSTRING_INDEX(,' ',-1)

@@ -48,31 +48,49 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua themHoacCapNhat(Dictionary<string, string> form)
+        public static void gan(ref BaiTapNopDTO baiNop, Form form)
         {
-            KetQua ketQua = TapTinBUS.chuyen("BaiTapNop_TapTin", layInt(form, "TapTin"));
+            if (baiNop == null)
+            {
+                baiNop = new BaiTapNopDTO();
+            }
+
+            foreach (string key in form.Keys.ToArray())
+            {
+                switch (key)
+                {
+                    case "MaTapTin":
+                        baiNop.tapTin = TapTinBUS.chuyen("BaiTapNop_TapTin", form.layInt(key)).ketQua as TapTinDTO;
+                        break;
+                    case "DuongDan":
+                        baiNop.duongDan = form.layString(key);
+                        break;
+                    case "MaNguoiTao":
+                        baiNop.nguoiTao = form.layDTO<NguoiDungDTO>(key);
+                        break;
+                    case "MaBaiVietBaiTap":
+                        baiNop.baiVietBaiTap = form.layDTO<BaiVietBaiTapDTO>(key);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public static KetQua themHoacCapNhat(Form form)
+        {
+            BaiTapNopDTO baiNop = new BaiTapNopDTO();
+
+            gan(ref baiNop, form);
+
+            KetQua ketQua = kiemTra(baiNop);
 
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            BaiTapNopDTO baiTapNop = new BaiTapNopDTO()
-            {
-                tapTin = ketQua.ketQua as TapTinDTO,
-                duongDan = layString(form, "DuongDan"),
-                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
-                baiVietBaiTap = layDTO<BaiVietBaiTapDTO>(form, "BaiVietBaiTap")
-            };
-
-            ketQua = kiemTra(baiTapNop);
-
-            if (ketQua.trangThai != 0)
-            {
-                return ketQua;
-            }
-
-            return BaiTapNopDAO.themHoacCapNhat(baiTapNop);
+            return BaiTapNopDAO.themHoacCapNhat(baiNop);
         }
 
         public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap)

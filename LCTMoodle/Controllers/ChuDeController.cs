@@ -96,7 +96,12 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            KetQua ketQua = ChuDeBUS.them(chuyenForm(formCollection));
+            Form form = chuyenForm(formCollection);
+            if (Session["NguoiDung"] != null)
+            {
+                form.Add("MaNguoiTao", ((int)Session["NguoiDung"]).ToString());
+            }
+            KetQua ketQua = ChuDeBUS.them(form);
 
             if (ketQua.trangThai != 0)
             {

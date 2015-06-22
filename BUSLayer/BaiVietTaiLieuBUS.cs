@@ -11,9 +11,9 @@ using Data;
 
 namespace BUSLayer
 {
-    public class BaiVietBaiTapBUS : BUS
+    public class BaiVietTaiLieuBUS : BUS
     {
-        public static KetQua kiemTra(BaiVietBaiTapDTO baiViet, string[] truong = null, bool kiemTra = true)
+        public static KetQua kiemTra(BaiVietTaiLieuDTO baiViet, string[] truong = null, bool kiemTra = true)
         {
             List<string> loi = new List<string>();
 
@@ -53,11 +53,11 @@ namespace BUSLayer
             }
         }
 
-        public static void gan(ref BaiVietBaiTapDTO baiViet, Form form)
+        public static void gan(ref BaiVietTaiLieuDTO baiViet, Form form)
         {
             if (baiViet == null)
             {
-                baiViet = new BaiVietBaiTapDTO();
+                baiViet = new BaiVietTaiLieuDTO();
             }
 
             foreach (string key in form.Keys.ToArray())
@@ -71,10 +71,7 @@ namespace BUSLayer
                         baiViet.noiDung = form.layString(key);
                         break;
                     case "MaTapTin":
-                        baiViet.tapTin = TapTinBUS.chuyen("BaiVietBaiTap_TapTin", form.layInt(key)).ketQua as TapTinDTO;
-                        break;
-                    case "CoThoiDiemHetHan":
-                        baiViet.thoiDiemHetHan = form.layBool("CoThoiDiemHetHan") ? form.layDateTime("ThoiDiemHetHan") : null;
+                        baiViet.tapTin = TapTinBUS.chuyen("BaiVietTaiLieu_TapTin", form.layInt(key)).ketQua as TapTinDTO;
                         break;
                     case "MaNguoiTao":
                         baiViet.nguoiTao = form.layDTO<NguoiDungDTO>(key);
@@ -88,7 +85,7 @@ namespace BUSLayer
             }
         }
 
-        public static BangCapNhat layBangCapNhat(BaiVietBaiTapDTO baiViet, string[] keys)
+        public static BangCapNhat layBangCapNhat(BaiVietTaiLieuDTO baiViet, string[] keys)
         {
             BangCapNhat bangCapNhat = new BangCapNhat();
             foreach (string key in keys)
@@ -96,16 +93,13 @@ namespace BUSLayer
                 switch (key)
                 {
                     case "TieuDe":
-                        bangCapNhat.Add("TieuDe", baiViet.tieuDe, 2);
+                        bangCapNhat.Add(key, baiViet.tieuDe, 2);
                         break;
                     case "NoiDung":
-                        bangCapNhat.Add("NoiDung", baiViet.noiDung, 2);
+                        bangCapNhat.Add(key, baiViet.noiDung, 2);
                         break;
                     case "MaTapTin":
-                        bangCapNhat.Add("MaTapTin", baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString(), 1);
-                        break;
-                    case "CoThoiDiemHetHan":
-                        bangCapNhat.Add("ThoiDiemHetHan", baiViet.thoiDiemHetHan.HasValue ? baiViet.thoiDiemHetHan.Value.ToString("d/M/yyyy H:mm") : null, 3);
+                        bangCapNhat.Add(key, baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString(), 1);
                         break;
                     default:
                         break;
@@ -116,41 +110,38 @@ namespace BUSLayer
 
         public static KetQua them(Form form)
         {
-            BaiVietBaiTapDTO baiViet = new BaiVietBaiTapDTO();
-            gan(ref baiViet, form);
-
-            KetQua ketQua = kiemTra(baiViet);
+            BaiVietTaiLieuDTO baiVietTaiLieu = new BaiVietTaiLieuDTO();
+            gan(ref baiVietTaiLieu, form);
+            
+            KetQua ketQua = kiemTra(baiVietTaiLieu);
 
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            return BaiVietBaiTapDAO.them(baiViet, new LienKet()
-                {
-                    "NguoiTao",
-                    "TapTin"
-                });
+            return BaiVietTaiLieuDAO.them(baiVietTaiLieu, new LienKet()
+            {
+                "TapTin"
+            });
         }
 
         public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
         {
-            return BaiVietBaiTapDAO.layTheoMaKhoaHoc(maKhoaHoc, new LienKet()
+            return BaiVietTaiLieuDAO.layTheoMaKhoaHoc(maKhoaHoc, new LienKet()
             {
-                "NguoiTao",
-                "TapTin",
-                "BaiTapNop"
+                "TapTin"
             });
         }
 
         public static KetQua layTheoMa(int ma)
         {
-            return BaiVietBaiTapDAO.layTheoMa(ma);
+            return BaiVietTaiLieuDAO.layTheoMa(ma);
         }
 
         public static KetQua xoaTheoMa(int ma)
         {
-            return BaiVietBaiTapDAO.xoaTheoMa(ma);
+            return BaiVietTaiLieuDAO.xoaTheoMa(ma);
         }
 
         public static KetQua capNhatTheoMa(Form form)
@@ -164,13 +155,13 @@ namespace BUSLayer
                 };
             }
 
-            KetQua ketQua = layTheoMa(maBaiViet.Value);
+            KetQua ketQua = BaiVietTaiLieuDAO.layTheoMa(maBaiViet);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            BaiVietBaiTapDTO baiViet = ketQua.ketQua as BaiVietBaiTapDTO;
+            BaiVietTaiLieuDTO baiViet = ketQua.ketQua as BaiVietTaiLieuDTO;
 
             gan(ref baiViet, form);
 
@@ -181,7 +172,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return BaiVietBaiTapDAO.capNhatTheoMa(maBaiViet, layBangCapNhat(baiViet, form.Keys.ToArray()), new LienKet()
+            return BaiVietTaiLieuDAO.capNhatTheoMa(maBaiViet, layBangCapNhat(baiViet, form.Keys.ToArray()), new LienKet()
             {
                 "NguoiTao",
                 "TapTin"

@@ -10,16 +10,16 @@ using Data;
 
 namespace LCTMoodle.Controllers
 {
-    public class BaiVietBaiGiangController : LCTController
+    public class BaiVietTaiLieuController : LCTController
     {
         public ActionResult _Khung(int maKhoaHoc)
         {
             ViewData["MaKhoaHoc"] = maKhoaHoc;
 
-            KetQua ketQua = BaiVietBaiGiangBUS.layTheoMaKhoaHoc(maKhoaHoc);
-            List<BaiVietBaiGiangDTO> danhSachBaiViet = 
+            KetQua ketQua = BaiVietTaiLieuBUS.layTheoMaKhoaHoc(maKhoaHoc);
+            List<BaiVietTaiLieuDTO> danhSachBaiViet = 
                 ketQua.trangThai == 0 ?
-                (List<BaiVietBaiGiangDTO>)ketQua.ketQua :
+                (List<BaiVietTaiLieuDTO>)ketQua.ketQua :
                 null;
 
             try
@@ -28,7 +28,7 @@ namespace LCTMoodle.Controllers
                     {
                         trangThai = 0,
                         ketQua =
-                            renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Khung.cshtml", danhSachBaiViet, ViewData)
+                            renderPartialViewToString(ControllerContext, "BaiVietTaiLieu/_Khung.cshtml", danhSachBaiViet, ViewData)
                     }, JsonRequestBehavior.AllowGet);
             }
             catch
@@ -42,7 +42,7 @@ namespace LCTMoodle.Controllers
 
         public ActionResult _Form(int ma = 0)
         {
-            KetQua ketQua = BaiVietBaiGiangBUS.layTheoMa(ma);
+            KetQua ketQua = BaiVietTaiLieuBUS.layTheoMa(ma);
 
             if (ketQua.trangThai != 0)
             {
@@ -54,7 +54,7 @@ namespace LCTMoodle.Controllers
                 {
                     trangThai = 0,
                     ketQua =
-                        renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Form.cshtml", ketQua.ketQua)
+                        renderPartialViewToString(ControllerContext, "BaiVietTaiLieu/_Form.cshtml", ketQua.ketQua)
                 }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -65,16 +65,16 @@ namespace LCTMoodle.Controllers
             Form form = chuyenForm(formCollection);
             if (Session["NguoiDung"] != null)
             {
-                form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+                form.Add("MaNguoiTao", ((int)Session["NguoiDung"]).ToString());
             }
-            KetQua ketQua = BaiVietBaiGiangBUS.them(form);
+            KetQua ketQua = BaiVietTaiLieuBUS.them(form);
 
             if (ketQua.trangThai == 0)
             {
                 return Json(new KetQua()
                     {
                         trangThai = 0,
-                        ketQua = renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Item.cshtml", ketQua.ketQua)
+                        ketQua = renderPartialViewToString(ControllerContext, "BaiVietTaiLieu/_Item.cshtml", ketQua.ketQua)
                     });
             }
             else
@@ -87,7 +87,7 @@ namespace LCTMoodle.Controllers
         public ActionResult XuLyXoa(int ma)
         {
             return Json(
-                BaiVietBaiGiangDAO.xoaTheoMa(ma),
+                BaiVietTaiLieuDAO.xoaTheoMa(ma),
                 JsonRequestBehavior.AllowGet
             );
         }
@@ -96,14 +96,14 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyCapNhat(FormCollection form)
         {
-            KetQua ketQua = BaiVietBaiGiangBUS.capNhatTheoMa(chuyenForm(form));
+            KetQua ketQua = BaiVietTaiLieuBUS.capNhatTheoMa(chuyenForm(form));
 
             if (ketQua.trangThai == 0)
             {
                 return Json(new KetQua()
                 {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Item.cshtml", ketQua.ketQua)
+                    ketQua = renderPartialViewToString(ControllerContext, "BaiVietTaiLieu/_Item.cshtml", ketQua.ketQua)
                 });
             }
             else

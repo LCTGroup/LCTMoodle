@@ -12,7 +12,7 @@ CREATE TABLE dbo.BinhLuan_BaiVietDienDan (
 	MaNguoiTao INT NOT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE()
 );
-
+	
 GO
 --Thêm bình luận
 ALTER PROC dbo.themBinhLuan (
@@ -30,7 +30,7 @@ BEGIN
 
 		SELECT
 			Ma,
-			''' + @4 + ''' AS LoaiDoiTuong,
+			''' + @4 + ''' LoaiDoiTuong,
 			NoiDung,
 			MaTapTin,
 			MaDoiTuong,

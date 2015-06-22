@@ -49,25 +49,44 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua them(Dictionary<string, string> form)
+        public static void gan(ref BinhLuanDTO binhLuan, Form form)
         {
-            KetQua ketQua = TapTinBUS.chuyen("BinhLuan_" + layString(form, "Loai") + "_TapTin", layInt(form, "TapTin"));
-
-            if (ketQua.trangThai != 0)
+            if (binhLuan == null)
             {
-                return ketQua;
+                binhLuan = new BinhLuanDTO();
             }
 
-            var binhLuan = new BinhLuanDTO()
+            foreach (string key in form.Keys.ToArray())
             {
-                noiDung = layString(form, "NoiDung"),
-                tapTin = ketQua.ketQua as TapTinDTO,
-                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
-                doiTuong = layDTO<DTO>(form, "DoiTuong"),
-                loaiDoiTuong = layString(form, "Loai")
-            };
+                switch (key)
+                {
+                    case "NoiDung":
+                        binhLuan.noiDung = form.layString(key);
+                        break;
+                    case "MaTapTin":
+                        binhLuan.tapTin = TapTinBUS.chuyen("BinhLuan_" + form.layString("LoaiDoiTuong") + "_TapTin", form.layInt(key)).ketQua as TapTinDTO;
+                        break;
+                    case "MaNguoiTao":
+                        binhLuan.nguoiTao = form.layDTO<NguoiDungDTO>(key);
+                        break;
+                    case "MaDoiTuong":
+                        binhLuan.doiTuong = form.layDTO<NguoiDungDTO>(key);
+                        break;
+                    case "LoaiDoiTuong":
+                        binhLuan.loaiDoiTuong = form.layString(key);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
-            ketQua = kiemTra(binhLuan);
+        public static KetQua them(Form form)
+        {
+            var binhLuan = new BinhLuanDTO();
+            gan(ref binhLuan, form);
+
+            KetQua ketQua = kiemTra(binhLuan);
 
             if (ketQua.trangThai != 0)
             {

@@ -65,13 +65,13 @@ namespace BUSLayer
                     case "MoTa":
                         chuDe.moTa = form.layString(key);
                         break;
-                    case "HinhDaiDien":
+                    case "MaHinhDaiDien":
                         chuDe.hinhDaiDien = TapTinBUS.chuyen("ChuDe_HinhDaiDien", form.layInt(key)).ketQua as TapTinDTO;
                         break;
-                    case "NguoiTao":
+                    case "MaNguoiTao":
                         chuDe.nguoiTao = form.layDTO<NguoiDungDTO>(key);
                         break;
-                    case "Cha":
+                    case "MaCha":
                         chuDe.cha = form.layDTO<ChuDeDTO>(key);
                         break;
                     default:
@@ -83,11 +83,6 @@ namespace BUSLayer
         public static KetQua them(Form form)
         {
             ChuDeDTO chuDe = new ChuDeDTO();
-
-            if (Session["NguoiDung"] != null)
-            {
-                form.Add("NguoiTao", Session["NguoiDung"].ToString());
-            }
 
             gan(ref chuDe, form);
 

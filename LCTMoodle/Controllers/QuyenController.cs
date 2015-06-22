@@ -47,7 +47,7 @@ namespace LCTMoodle.Controllers
             switch (phamVi)
             {
                 case "HT":
-                    ketQua = QuyenBUS.layTheoPhamVi_Cay("HT");
+                    ketQua = QuyenBUS.layTheoPhamVi_Cay("HT", true);
                     break;
                 case "KH":
                     ketQua = QuyenBUS.layTheoPhamVi_Cay("KH");
@@ -74,9 +74,9 @@ namespace LCTMoodle.Controllers
             }
         }
 
-        public ActionResult _DanhSachQuyen(string phamVi)
+        public ActionResult _DanhSachQuyen(string phamVi, bool laQuyenChung)
         {
-            KetQua ketQua = QuyenBUS.layTheoPhamVi_Cay(phamVi);
+            KetQua ketQua = QuyenBUS.layTheoPhamVi_Cay(phamVi, laQuyenChung);
 
             if (ketQua.trangThai != 0)
             {
@@ -102,9 +102,14 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
-        public ActionResult XuLyThemNhom(FormCollection form)
+        public ActionResult XuLyThemNhom(FormCollection formCollection)
         {
-            KetQua ketQua = NhomNguoiDungBUS.them(chuyenForm(form));
+            Form form = chuyenForm(formCollection);
+            if (Session["NguoiDung"] != null)
+            {
+                form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+            }
+            KetQua ketQua = NhomNguoiDungBUS.them(form);
 
             if (ketQua.trangThai != 0)
             {

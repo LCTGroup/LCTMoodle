@@ -12,9 +12,14 @@ namespace LCTMoodle.Controllers
 {
     public class BaiTapNopController : LCTController
     {
-        public ActionResult XuLyThem(FormCollection form)
-        {            
-            return Json(BaiTapNopBUS.themHoacCapNhat(chuyenDuLieuForm(form)));
+        public ActionResult XuLyThem(FormCollection formCollection)
+        {
+            Form form = chuyenForm(formCollection);
+            if (Session["NguoiDung"] != null)
+            {
+                form.Add("MaNguoiTao", ((int)Session["NguoiDung"]).ToString());
+            }
+            return Json(BaiTapNopBUS.themHoacCapNhat(form));
         }
 
         public ActionResult _DanhSachNop(int maBaiTap)

@@ -70,16 +70,13 @@ namespace BUSLayer
                     case "NoiDung":
                         baiViet.noiDung = form.layString(key);
                         break;
-                    case "TapTin":
+                    case "MaTapTin":
                         baiViet.tapTin = TapTinBUS.chuyen("BaiVietBaiGiang_TapTin", form.layInt(key)).ketQua as TapTinDTO;
                         break;
-                    case "ThoiDiemTao":
-                        baiViet.thoiDiemTao = form.layDateTime(key);
-                        break;
-                    case "NguoiTao":
+                    case "MaNguoiTao":
                         baiViet.nguoiTao = form.layDTO<NguoiDungDTO>(key);
                         break;
-                    case "KhoaHoc":
+                    case "MaKhoaHoc":
                         baiViet.khoaHoc = form.layDTO<KhoaHocDTO>(key);
                         break;
                     default:
@@ -96,13 +93,13 @@ namespace BUSLayer
                 switch (key)
                 {
                     case "TieuDe":
-                        bangCapNhat.Add("TieuDe", baiViet.tieuDe, 2);
+                        bangCapNhat.Add(key, baiViet.tieuDe, 2);
                         break;
                     case "NoiDung":
-                        bangCapNhat.Add("NoiDung", baiViet.noiDung, 2);
+                        bangCapNhat.Add(key, baiViet.noiDung, 2);
                         break;
-                    case "TapTin":
-                        bangCapNhat.Add("MaTapTin", baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString(), 1);
+                    case "MaTapTin":
+                        bangCapNhat.Add(key, baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString(), 1);
                         break;
                     default:
                         break;
@@ -111,25 +108,12 @@ namespace BUSLayer
             return bangCapNhat;
         }
 
-        public static KetQua them(Dictionary<string, string> form)
+        public static KetQua them(Form form)
         {
-            KetQua ketQua = TapTinBUS.chuyen("BaiVietBaiGiang_TapTin", layInt(form, "TapTin"));
-
-            if (ketQua.trangThai != 0)
-            {
-                return ketQua;
-            }
-
-            BaiVietBaiGiangDTO baiVietBaiGiang = new BaiVietBaiGiangDTO()
-            {
-                tieuDe = layString(form, "TieuDe"),
-                noiDung = layString(form, "NoiDung"),
-                tapTin = ketQua.ketQua as TapTinDTO,
-                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
-                khoaHoc = layDTO<KhoaHocDTO>(form, "KhoaHoc")
-            };
+            BaiVietBaiGiangDTO baiVietBaiGiang = new BaiVietBaiGiangDTO();
+            gan(ref baiVietBaiGiang, form);
             
-            ketQua = kiemTra(baiVietBaiGiang);
+            KetQua ketQua = kiemTra(baiVietBaiGiang);
 
             if (ketQua.trangThai != 0)
             {
@@ -171,7 +155,7 @@ namespace BUSLayer
                 };
             }
 
-            KetQua ketQua = layTheoMa(maBaiViet.Value);
+            KetQua ketQua = BaiVietBaiGiangDAO.layTheoMa(maBaiViet);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;

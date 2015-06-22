@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaiVietTaiLieuDTO.cs" />
     <Compile Include="BangCapNhat.cs" />
     <Compile Include="DTO.cs" />
     <Compile Include="Form.cs" />
