@@ -73,10 +73,10 @@ namespace BUSLayer
                     case "PhamVi":
                         nhomNguoiDung.phamVi = form.layString(key);
                         break;
-                    case "DoiTuong":
+                    case "MaDoiTuong":
                         nhomNguoiDung.doiTuong = form.layDTO<DTO>(key);
                         break;
-                    case "NguoiTao":
+                    case "MaNguoiTao":
                         nhomNguoiDung.nguoiTao = form.layDTO<NguoiDungDTO>(key);
                         break;
                     default:
@@ -87,11 +87,6 @@ namespace BUSLayer
 
         public static KetQua them(Form form)
         {
-            if (Session["NguoiDung"] != null)
-            {
-                form.Add("NguoiTao", Session["NguoiDung"].ToString());
-            }
-
             NhomNguoiDungDTO nhomNguoiDung = new NhomNguoiDungDTO();
 
             gan(ref nhomNguoiDung, form);

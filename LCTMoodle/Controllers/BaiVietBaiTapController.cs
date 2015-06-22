@@ -61,7 +61,12 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            KetQua ketQua = BaiVietBaiTapBUS.them(chuyenDuLieuForm(formCollection));
+            Form form = chuyenForm(formCollection);
+            if (Session["NguoiDung"] != null)
+            {
+                form.Add("MaNguoiTao", ((int)Session["NguoiDung"]).ToString());
+            }
+            KetQua ketQua = BaiVietBaiTapBUS.them(form);
 
             if (ketQua.trangThai == 0)
             {

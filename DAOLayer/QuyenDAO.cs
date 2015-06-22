@@ -43,6 +43,9 @@ namespace DAOLayer
                             quyen.cha = layDTO<QuyenDTO>(QuyenDAO.layTheoMa(maTam));
                         }
                         break;
+                    case "LaQuyenChung":
+                        quyen.laQuyenChung = layBool(dong, i);
+                        break;
                     default:
                         break;
                 }
@@ -51,15 +54,16 @@ namespace DAOLayer
             return quyen;
         }
 
-        public static KetQua layTheoPhamViVaMaCha(string phamVi, int? maCha)
+        public static KetQua layTheoPhamViVaMaChaVaLaQuyenChung(string phamVi, int? maCha, bool laQuyenChung = false)
         {
             return layDanhSachDong
                 (
-                    "layQuyenTheoPhamViVaMaCha",
+                    "layQuyenTheoPhamViVaMaChaVaLaQuyenChung",
                     new object[]
                     {
                         phamVi,
-                        maCha
+                        maCha,
+                        laQuyenChung
                     }
                 );
         }
@@ -76,16 +80,31 @@ namespace DAOLayer
                 );
         }
 
-        public static KetQua layTheoMaDoiTuongVaMaNguoiDung_ChuoiGiaTri(string phamVi, int? maDoiTuong, int? maNguoiDung) 
+        public static KetQua layTheoMaNguoiDung_MaDoiTuong_ChuoiGiaTri(int? maNguoiDung, string phamVi, int? maDoiTuong) 
         {
             return layGiaTri<string>
                 (
-                    "layQuyenTheoMaDoiTuongVaMaNguoiDung_ChuoiGiaTri",
+                    "layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri",
                     new object[]
                     {
+                        maNguoiDung,
                         phamVi,
-                        maDoiTuong,
-                        maNguoiDung
+                        maDoiTuong
+                    }
+                );
+        }
+        
+        public static KetQua layTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra(int? maNguoiDung, string giaTri, string phamVi, int? maDoiTuong)
+        {
+            return layGiaTri<bool>
+                (
+                    "layQuyenTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra",
+                    new object[]
+                    {
+                        maNguoiDung,
+                        giaTri,
+                        phamVi,
+                        maDoiTuong
                     }
                 );
         }

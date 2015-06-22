@@ -208,11 +208,21 @@ namespace DAOLayer
 
                 object ketQua = lenh.ExecuteScalar();
 
-                return new KetQua()
+                if (ketQua != null)
                 {
-                    trangThai = 0,
-                    ketQua = Convert.ChangeType(ketQua, typeof(T))
-                };
+                    return new KetQua()
+                    {
+                        trangThai = 0,
+                        ketQua = Convert.ChangeType(ketQua, typeof(T))
+                    };
+                }
+                else
+                {
+                    return new KetQua()
+                    {
+                        trangThai = 1
+                    };
+                }
             }
             catch (SqlException e)
             {

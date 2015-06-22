@@ -313,10 +313,10 @@ function khoiTaoForm_DienDan($form) {
         khoiTao: function () {
             $doiTuongAn.hide();
         },
-        validates: [
+        custom: [
             {
                 input: $doiTuongBatDauBaiViet,
-                customEvent: {
+                event: {
                     focus: function () {
                         $doiTuongAn.show();
                     }
@@ -521,10 +521,10 @@ function khoiTaoForm_BaiGiang($form) {
         khoiTao: function () {
             $doiTuongAn.hide();
         },
-        validates: [
+        custom: [
             {
                 input: $doiTuongBatDauBaiViet,
-                customEvent: {
+                event: {
                     focus: function () {
                         $doiTuongAn.show();
                     }
@@ -745,10 +745,10 @@ function khoiTaoForm_BaiTap($form) {
         khoiTao: function () {
             $doiTuongAn.hide();
         },
-        validates: [
+        custom: [
             {
                 input: $doiTuongBatDauBaiViet,
-                customEvent: {
+                event: {
                     focus: function () {
                         $doiTuongAn.show();
                     }
@@ -795,9 +795,9 @@ function khoiTaoItem_BaiTap($danhSachBaiTap) {
         var $form = $baiTap.find('[data-doi-tuong="nop-bai-form"]');
 
         khoiTaoLCTForm($form, {
-            validates: [{
+            custom: [{
                 input: $form.find('[data-chuc-nang="thay-doi-input"]'),
-                customEvent: {
+                event: {
                     click: function () {
                         var $doiTuong = $(this);
 

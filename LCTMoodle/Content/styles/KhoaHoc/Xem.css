@@ -28,6 +28,10 @@
                 background-color: #0c0;
             }
 
+            [data-hien-thi="tai-lieu"] .khung-chon-hien-thi ul:after {
+                background-color: #0c0;
+            }
+
             [data-hien-thi="bai-tap"] .khung-chon-hien-thi ul:after {
                 background-color: #e00;
             }
@@ -44,6 +48,7 @@
 
             [data-hien-thi="khung"] li.khung,
             [data-hien-thi="bai-giang"] li.bai-giang,
+            [data-hien-thi="tai-lieu"] li.tai-lieu,
             [data-hien-thi="bai-tap"] li.bai-tap,
             [data-hien-thi="dien-dan"] li.dien-dan {
                 order: 0;
@@ -72,6 +77,10 @@
               background-color: #0c0;
         }
 
+        .khung-chon-hien-thi .bai-tai-lieu a {
+              background-color: #0c0;
+        }
+
         .khung-chon-hien-thi .bai-tap a {
               background-color: #e00;
         }
@@ -92,9 +101,13 @@
         .khung-chon-hien-thi .khung i {
             background-position-y: 0px;
         }
-
+        
         .khung-chon-hien-thi .bai-giang i {
             background-position-y: -96px;
+        }
+        
+        .khung-chon-hien-thi .tai-lieu i {
+            background-position-y: -48px;
         }
 
         .khung-chon-hien-thi .bai-tap i {
@@ -111,6 +124,7 @@
     
         [data-hien-thi="khung"] .khung-chon-hien-thi .khung a,
         [data-hien-thi="bai-giang"] .khung-chon-hien-thi .bai-giang a,
+        [data-hien-thi="tai-lieu"] .khung-chon-hien-thi .tai-lieu a,
         [data-hien-thi="bai-tap"] .khung-chon-hien-thi .bai-tap a,
         [data-hien-thi="dien-dan"] .khung-chon-hien-thi .dien-dan a {
             border-right: 2px solid #f5f5f5;
@@ -389,6 +403,80 @@
             }
         
             [data-hien-thi="bai-giang"] .muc-bai-viet .khung-noi-dung .tap-tin span {
+                align-self: center;
+                color: #555;
+            }
+
+/*#endregion */
+
+/*#endregion */
+
+/*#region Tài liệu */
+
+/*#region Khung bài viết */
+
+[data-hien-thi="tai-lieu"] .muc-bai-viet {
+    margin: 10px 0;
+    position: relative;
+}
+
+    [data-hien-thi="tai-lieu"] .muc-bai-viet .tieu-de {
+        color: #333;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        [data-hien-thi="tai-lieu"] .muc-bai-viet.mo .tieu-de {
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-bottom: 0;
+            text-align: center;
+            padding-top: 10px;
+            font-weight: normal;
+            font-size: 22px;
+        }
+
+        [data-hien-thi="tai-lieu"] .muc-bai-viet .tieu-de i {
+            font-size: 26px;
+            vertical-align: middle
+        }
+
+            [data-hien-thi="tai-lieu"] .muc-bai-viet.mo .tieu-de i {
+                font-size: 26px;
+                vertical-align: -3px;
+            }
+
+    [data-hien-thi="tai-lieu"] .muc-bai-viet .khung-noi-dung {
+        background-color: #fff;
+        border: 1px solid #eee;
+        padding: 10px;
+        margin-top: 5px;
+        display: none;
+    }
+
+        [data-hien-thi="tai-lieu"] .muc-bai-viet.mo .khung-noi-dung {
+            border-top: 0;
+            margin-top: 0;
+            display: block;
+        }
+        
+        [data-hien-thi="tai-lieu"] .muc-bai-viet .khung-noi-dung .tap-tin {
+            margin-top: 10px;
+            padding: 5px;
+            border-top: 1px dashed #eee;
+        }
+        
+            [data-hien-thi="tai-lieu"] .muc-bai-viet .khung-noi-dung .tap-tin a {
+                display: flex;
+            }
+        
+            [data-hien-thi="tai-lieu"] .muc-bai-viet .khung-noi-dung .tap-tin img {
+                width: 25px;
+                height: 25px;
+                margin-right: 5px;
+            }
+        
+            [data-hien-thi="tai-lieu"] .muc-bai-viet .khung-noi-dung .tap-tin span {
                 align-self: center;
                 color: #555;
             }

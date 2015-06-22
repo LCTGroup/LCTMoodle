@@ -14,5 +14,6 @@ namespace DTOLayer
         public string phamVi;
         public QuyenDTO cha;
         public List<QuyenDTO> con;
+        public bool laQuyenChung;
     }
 }

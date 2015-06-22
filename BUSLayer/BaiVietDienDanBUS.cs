@@ -70,14 +70,13 @@ namespace BUSLayer
                     case "NoiDung":
                         baiViet.noiDung = form.layString(key);
                         break;
-                    case "TapTin":
+                    case "MaTapTin":
                         baiViet.tapTin = TapTinBUS.chuyen("BaiVietDienDan_TapTin", form.layInt(key)).ketQua as TapTinDTO;
-                        form[key] = baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString();
                         break;
-                    case "NguoiTao":
+                    case "MaNguoiTao":
                         baiViet.nguoiTao = form.layDTO<NguoiDungDTO>(key);
                         break;
-                    case "KhoaHoc":
+                    case "MaKhoaHoc":
                         baiViet.khoaHoc = form.layDTO<KhoaHocDTO>(key);
                         break;
                     default:
@@ -94,13 +93,13 @@ namespace BUSLayer
                 switch (key)
                 {
                     case "TieuDe":
-                        bangCapNhat.Add("TieuDe", baiViet.tieuDe, 2);
+                        bangCapNhat.Add(key, baiViet.tieuDe, 2);
                         break;
                     case "NoiDung":
-                        bangCapNhat.Add("NoiDung", baiViet.noiDung, 2);
+                        bangCapNhat.Add(key, baiViet.noiDung, 2);
                         break;
-                    case "TapTin":
-                        bangCapNhat.Add("MaTapTin", baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString(), 1);
+                    case "MaTapTin":
+                        bangCapNhat.Add(key, baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString(), 1);
                         break;
                     default:
                         break;
@@ -112,11 +111,6 @@ namespace BUSLayer
         public static KetQua them(Form form)
         {
             BaiVietDienDanDTO baiViet = new BaiVietDienDanDTO();
-
-            if (Session["NguoiDung"] != null)
-            {
-                form.Add("NguoiTao", Session["NguoiDung"].ToString());
-            }
             gan(ref baiViet, form);
             
             KetQua ketQua = kiemTra(baiViet);

@@ -63,7 +63,7 @@ function khoiTaoDangKy($form) {
                 });
             })
         },
-        validates: [
+        custom: [
             {
                 input: $('#NhapLaiMatKhau'),
                 thongBao: 'Mật khẩu chưa khớp',

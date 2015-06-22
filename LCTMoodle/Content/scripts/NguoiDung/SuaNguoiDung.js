@@ -34,10 +34,10 @@ function khoiTaoFormSuaNguoiDung($form) {
                 }
             });
         },
-        validates:
+        custom:
         [{
             input: $form.find('[data-chuc-nang="reset"]'),
-            customEvent: {
+            event: {
                 'click': function () {
                     khoiTaoLCTFormMacDinh($form);
                 }

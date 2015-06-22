@@ -1,0 +1,35 @@
+﻿@model DTOLayer.BaiVietTaiLieuDTO
+
+<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma=@Model.ma>
+    <h2 class="tieu-de">
+        <i class="pe-7s-notebook"></i>
+        @Model.tieuDe
+    </h2>
+    <section data-doi-tuong="khung-noi-dung" class="khung-noi-dung">
+        <section class="noi-dung">
+            @Html.Raw(Model.noiDung)
+        </section>        
+        @if (@Model.tapTin != null)
+        {
+            <section class="tap-tin">
+                <a href="/LayTapTin/BaiVietTaiLieu_TapTin/@Model.tapTin.ma">
+                    <img src="/LayTapTin/BaiVietTaiLieu_TapTin/@Model.tapTin.ma" />
+                    <span>@Model.tapTin.ten</span>
+                </a>
+            </section>
+        }
+    </section>
+    <section class="khung-chuc-nang-lct" style="top: 10px; right: 10px;">
+        <ul data-doi-tuong="cnbg-@Model.ma">
+            <li>
+                <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
+            </li>
+            <li>
+                <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
+            </li>
+        </ul>
+        <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbg-@Model.ma">
+            <i class="pe-7f-config"></i>
+        </button>
+    </section>
+</li>

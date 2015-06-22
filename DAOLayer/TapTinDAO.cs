@@ -14,6 +14,7 @@ namespace DAOLayer
         {
             TapTinDTO tapTin = new TapTinDTO();
 
+            int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
@@ -28,6 +29,19 @@ namespace DAOLayer
                         tapTin.duoi = layString(dong, i); break;
                     case "ThoiDiemTao":
                         tapTin.thoiDiemTao = layDateTime(dong, i); break;
+                    case "MaNguoiTao":
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
+                        {
+                            tapTin.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam)) :
+                                new NguoiDungDTO()
+                                {
+                                    ma = maTam
+                                };
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -45,7 +59,8 @@ namespace DAOLayer
                     { 
                         tapTin.ten,
                         tapTin.loai,
-                        tapTin.duoi
+                        tapTin.duoi,
+                        layMa(tapTin.nguoiTao)
                     }
                 );
         }

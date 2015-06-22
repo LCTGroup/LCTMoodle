@@ -1,17 +1,9 @@
-﻿select * from khoahoc_nguoidung
-delete from khoahoc_nguoidung
-update khoahoc_nguoidung set trangthai = 1 where makhoahoc = 3
-select * from khoahoc
+﻿SELECT Ho, TenLot, Ten FROM NguoiDung WHERE Ma > 3
 
-update khoahoc set chedoriengtu = 'CongKhai'
+UPDATE NguoiDung
+	SET Ten = SUBSTRING(Ten , LEN(Ten) - CHARINDEX(' ', REVERSE(Ten)) + 2, LEN(Ten))
+	WHERE Ma > 3
 
-select * from dbo.nguoidung
-select * from dbo.cauhoi
-select * from dbo.traloi
-select * from dbo.ChuDe
+SELECT SUBSTRING('Le Binh Chieu' , LEN(Le Binh Chieu) - CHARINDEX(' ', REVERSE(Le Binh Chieu)) + 2, LEN(Ten))
 
-insert into dbo.NguoiDungTam (TenTaiKhoan, MatKhau, Email, Ho, Ten, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien, CoQuyenHT)
-select TenTaiKhoan, MatKhau, Email, Ho, Ten, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien, CoQuyenHT from dbo.NguoiDung
-
-UPDATE dbo.NguoiDung
-SET TenLot = Right(
+SELECT SUBSTRING_INDEX(,' ',-1)

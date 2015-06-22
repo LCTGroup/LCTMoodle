@@ -73,10 +73,10 @@ function khoiTaoTimKiemNguoiDung($inputs) {
                     $_DanhSachNguoi.html($items);
                 }
                 else {
-                    $_DanhSachNguoi.html('');
+                    $_DanhSachNguoi.empty();
                 }
             }).fail(function () {
-                $_DanhSachNguoi.html('');
+                $_DanhSachNguoi.empty();
             });
         }, 500)
     })
@@ -97,7 +97,7 @@ function khoiTaoNutChonPhamVi($nuts) {
             if (!(phamVi in _MangHtmlQuyen)) {
                 $.ajax({
                     url: '/Quyen/_DanhSachQuyen',
-                    data: { phamVi: phamVi },
+                    data: { phamVi: phamVi, laQuyenChung: $nut.is('[data-chung]') },
                     dataType: 'JSON',
                     async: false
                 }).done(function (data) {
@@ -144,56 +144,58 @@ function khoiTaoNutChonPhamVi($nuts) {
             moPopupFull({
                 url: '/ChuDe/_Chon',
                 thanhCong: function ($popup) {
-                    var $khung = $popup.find('#khung_quan_ly');
+                    var $khung = $popup.find('#khung_chu_de');
 
-                    khoiTaoKhungChuDe($khung);
+                    khoiTaoKhungChuDe($khung, {
+                        event: {
+                            'chon': function (e, data) {
+                                $popup.tat();
 
-                    $khung.on('chon', function (e, data) {
-                        $popup.tat();
+                                thanhCong = true;
 
-                        thanhCong = true;
-
-                        if (!(phamVi in _MangHtmlQuyen)) {
-                            $.ajax({
-                                url: '/Quyen/_DanhSachQuyen',
-                                data: { phamVi: phamVi },
-                                dataType: 'JSON',
-                                async: false
-                            }).done(function (data) {
-                                if (data.trangThai == 0) {
-                                    _MangHtmlQuyen[phamVi] = data.ketQua;
-                                }
-                                else {
-                                    moPopup({
-                                        tieuDe: 'Thông báo',
-                                        thongBao: 'Lấy danh sách quyền thất bại',
-                                        bieuTuong: 'nguy-hiem'
+                                if (!(phamVi in _MangHtmlQuyen)) {
+                                    $.ajax({
+                                        url: '/Quyen/_DanhSachQuyen',
+                                        data: { phamVi: phamVi, laQuyenChung: $nut.is('[data-chung]') },
+                                        dataType: 'JSON',
+                                        async: false
+                                    }).done(function (data) {
+                                        if (data.trangThai == 0) {
+                                            _MangHtmlQuyen[phamVi] = data.ketQua;
+                                        }
+                                        else {
+                                            moPopup({
+                                                tieuDe: 'Thông báo',
+                                                thongBao: 'Lấy danh sách quyền thất bại',
+                                                bieuTuong: 'nguy-hiem'
+                                            });
+                                            thanhCong = false;
+                                        }
+                                    }).fail(function () {
+                                        moPopup({
+                                            tieuDe: 'Thông báo',
+                                            thongBao: 'Lấy danh sách quyền thất bại',
+                                            bieuTuong: 'nguy-hiem'
+                                        });
+                                        thanhCong = false;
                                     });
-                                    thanhCong = false;
                                 }
-                            }).fail(function () {
-                                moPopup({
-                                    tieuDe: 'Thông báo',
-                                    thongBao: 'Lấy danh sách quyền thất bại',
-                                    bieuTuong: 'nguy-hiem'
-                                });
-                                thanhCong = false;
-                            });
+
+                                if (thanhCong) {
+                                    $nut.parent().addClass('chon').siblings().removeClass('chon');
+                                    _PhamViHienTai = phamVi;
+
+                                    $_DanhSachQuyen.html(_MangHtmlQuyen[_PhamViHienTai]);
+                                    khoiTaoItem_Quyen($_DanhSachQuyen.find('[data-doi-tuong="item-quyen"]'));
+
+                                    $_MoTaPhamVi.text('Tùy chỉnh quyền cho nhóm - ' + data.ten);
+                                    _DoiTuongHienTai = data.ma;
+
+                                    capNhatDanhSachQuyen();
+                                }
+                            }
                         }
-
-                        if (thanhCong) {
-                            $nut.parent().addClass('chon').siblings().removeClass('chon');
-                            _PhamViHienTai = phamVi;
-
-                            $_DanhSachQuyen.html(_MangHtmlQuyen[_PhamViHienTai]);
-                            khoiTaoItem_Quyen($_DanhSachQuyen.find('[data-doi-tuong="item-quyen"]'));
-
-                            $_MoTaPhamVi.text('Tùy chỉnh quyền cho nhóm - ' + data.ten);
-                            _DoiTuongHienTai = data.ma;
-
-                            capNhatDanhSachQuyen();
-                        }
-                    });
+                    })
                 }
             });
         }
@@ -483,7 +485,7 @@ function khoiTaoItem_Nhom($items) {
                 }
                 else if (data.trangThai == 1) {
                     _MangHtmlNguoi[_NhomHienTai] = '';
-                    $_DanhSachNguoi.html('');
+                    $_DanhSachNguoi.empty();
                 }
                 else {
                     moPopup({

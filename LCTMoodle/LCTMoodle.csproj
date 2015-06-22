@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaiTapNopController.cs" />
+    <Compile Include="Controllers\BaiVietTaiLieuController.cs" />
     <Compile Include="Controllers\BaiVietBaiGiangController.cs" />
     <Compile Include="Controllers\BaiVietBaiTapController.cs" />
     <Compile Include="Controllers\BaiVietDienDanController.cs" />
@@ -442,8 +443,6 @@
     <Content Include="Views\NguoiDung\DangNhap.cshtml" />
     <Content Include="Views\NguoiDung\DangKy.cshtml" />
     <Content Include="Views\TrangChu\CayMau.cshtml" />
-    <Content Include="Views\GiaoTrinh\ChuDe\QuanLy.cshtml" />
-    <Content Include="Views\GiaoTrinh\ChuDe\_Form.cshtml" />
     <Content Include="Views\KhoaHoc\Xem.cshtml" />
     <Content Include="Views\HoiDap\Index.cshtml" />
     <Content Include="Views\BaiVietDienDan\_Item.cshtml" />
@@ -459,11 +458,6 @@
     <Content Include="Views\HoiDap\_Item_TraLoi.cshtml" />
     <Content Include="Views\KhoaHoc\_Khung.cshtml" />
     <Content Include="Views\BaiTapNop\_DanhSachNop.cshtml" />
-    <Content Include="Views\GiaoTrinh\ChuDe\_DanhSach_Item.cshtml" />
-    <Content Include="Views\GiaoTrinh\ChuDe\_Cay_Item.cshtml" />
-    <Content Include="Views\GiaoTrinh\ChuDe\_Cay_Con_Item.cshtml" />
-    <Content Include="Views\GiaoTrinh\ChuDe\_DanhSach.cshtml" />
-    <Content Include="Views\GiaoTrinh\ChuDe\_Chon.cshtml" />
     <Content Include="Views\BaiTapNop\_Khung.cshtml" />
     <Content Include="Views\HoiDap\TaoCauHoi.cshtml" />
     <Content Include="Views\GiaoTrinh\Index.cshtml" />
@@ -485,6 +479,7 @@
     <Content Include="Views\KhoaHoc\QuanLyQuyen.cshtml" />
     <Content Include="Views\KhoaHoc\DangKyThamGia.cshtml" />
     <Content Include="Views\HoiDap\_Item_CauHoi.cshtml" />
+    <Content Include="Views\NguoiDung\SuaNguoiDung.cshtml" />
     <Content Include="Views\KhoaHoc\ThanhVien.cshtml" />
     <Content Include="Views\NguoiDung\Sua.cshtml" />
     <None Include="Properties\PublishProfiles\LCTMoodle.pubxml" />
@@ -500,6 +495,9 @@
     <Content Include="Views\KhoaHoc\DanhSachCuaToi.cshtml" />
     <Content Include="Views\KhoaHoc\_Item.cshtml" />
     <Content Include="Views\KhoaHoc\_DanhSach.cshtml" />
+    <Content Include="Views\BaiVietTaiLieu\_Form.cshtml" />
+    <Content Include="Views\BaiVietTaiLieu\_Item.cshtml" />
+    <Content Include="Views\BaiVietTaiLieu\_Khung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

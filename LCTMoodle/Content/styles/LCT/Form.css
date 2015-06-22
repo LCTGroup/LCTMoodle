@@ -171,6 +171,28 @@
 
 /*#endregion */
 
+/*#region Inline */
+
+.lct-form .line {
+    display: flex;
+}
+
+.lct-form button.inline {
+    margin: 0;
+    height: 32px;
+    padding: 0;
+}
+
+.lct-form a.button.inline {
+    margin: 0;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 5px;
+    text-align: center;
+}
+
+/*#endregion */
+
 /*#region Đường dẫn */
 
 .lct-form a {
@@ -1550,7 +1572,10 @@
 
     .lct-cay .con {
         background-color: #fcfcfc;
-        padding: 10px;
+        padding: 10px;  
+        max-height: 300px;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
         .lct-cay .con > a {
@@ -1897,6 +1922,7 @@
     display: inline-block;
     vertical-align: middle;
     text-decoration: none;
+    white-space: nowrap;
 }
 
     .lct-form button:after,

@@ -7,18 +7,20 @@ GO
 	--KhoaHoc_HinhDaiDien
 	--BaiVietDienDan_TapTin
 	--BaiVietBaiGiang_TapTin
+	--BaiVietTaiLieu_TapTin
 	--BaiVietBaiTap_TapTin
 	--NguoiDung_HinhDaiDien
 	--BinhLuan_BaiVietDienDan_TapTin
 	--BaiTapNop_TapTin
 --Ghi chú cách đặt tên bảng: TapTin_[tên bảng]
 
-CREATE TABLE dbo.TapTin_NguoiDung_HinhDaiDien (
+CREATE TABLE dbo.TapTin_BaiVietTaiLieu_TapTin (
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	Ten NVARCHAR(MAX) NOT NULL,
 	Loai NVARCHAR(MAX) NOT NULL,
 	Duoi NVARCHAR(MAX) NOT NULL,
-	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL
+	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
+	MaNguoiTao INT NOT NULL
 );
 
 GO
@@ -26,19 +28,21 @@ GO
 ALTER PROC dbo.themTapTin (
 	@0 NVARCHAR(MAX), --Ten
 	@1 NVARCHAR(MAX), --Loai
-	@2 NVARCHAR(MAX) --Duoi
+	@2 NVARCHAR(MAX), --Duoi
+	@3 INT --MaNguoiTao
 )
 AS
 BEGIN
-	INSERT INTO dbo.TapTin_Tam (Ten, Loai, Duoi) VALUES
-		(@0, @1, @2);
+	INSERT INTO dbo.TapTin_Tam (Ten, Loai, Duoi, MaNguoiTao) VALUES
+		(@0, @1, @2, @3);
 
 	SELECT 
 		Ma,
 		Ten,
 		Loai,
 		Duoi,
-		ThoiDiemTao
+		ThoiDiemTao,
+		MaNguoiTao
 		FROM dbo.TapTin_Tam
 		WHERE Ma = @@IDENTITY;
 END
@@ -52,8 +56,8 @@ ALTER PROC dbo.chuyenTapTin (
 AS
 BEGIN
 	EXEC ('
-		INSERT INTO dbo.TapTin_' + @0 + ' (Ten, Loai, Duoi)
-			SELECT TOP 1 Ten, Loai, Duoi
+		INSERT INTO dbo.TapTin_' + @0 + ' (Ten, Loai, Duoi, MaNguoiTao)
+			SELECT TOP 1 Ten, Loai, Duoi, MaNguoiTao
 				FROM dbo.TapTin_Tam
 				WHERE Ma = ' + @1 + ';
 
@@ -65,7 +69,8 @@ BEGIN
 			Ten,
 			Loai,
 			Duoi,
-			ThoiDiemTao
+			ThoiDiemTao,
+			MaNguoiTao
 			FROM dbo.TapTin_' + @0 + '
 			WHERE Ma = @@IDENTITY;
 	')
@@ -85,7 +90,8 @@ BEGIN
 			Ten,
 			Loai,
 			Duoi,
-			ThoiDiemTao
+			ThoiDiemTao,
+			MaNguoiTao
 			FROM dbo.TapTin_' + @0 + '
 			WHERE Ma = ' + @1 + '
 	')

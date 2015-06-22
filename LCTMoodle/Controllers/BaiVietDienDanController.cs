@@ -23,7 +23,8 @@ namespace LCTMoodle.Controllers
                 ketQua.ketQua as List<BaiVietDienDanDTO> :
                 null;
 
-            ViewData["Quyen"] = QuyenBUS.layTheoMaDoiTuongVaMaNguoiDung_MangGiaTri("KH", maKhoaHoc);
+            ketQua = QuyenBUS.layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri(null, "KH", maKhoaHoc);
+            ViewData["Quyen"] = ketQua.trangThai == 0 ? ketQua.ketQua : new string[0];
 
             try
             {
@@ -65,7 +66,12 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            KetQua ketQua = BaiVietDienDanBUS.them(chuyenForm(formCollection));
+            Form form = chuyenForm(formCollection);
+            if (Session["NguoiDung"] != null)
+            {
+                form.Add("MaNguoiTao", ((int)Session["NguoiDung"]).ToString());
+            }
+            KetQua ketQua = BaiVietDienDanBUS.them(form);
 
             if (ketQua.trangThai == 0)
             {
