@@ -20,8 +20,11 @@ CREATE TABLE dbo.TapTin_BaiVietTaiLieu_TapTin (
 	Loai NVARCHAR(MAX) NOT NULL,
 	Duoi NVARCHAR(MAX) NOT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
-	MaNguoiTao INT NOT NULL
+	MaNguoiTao INT
 );
+
+ALTER TABLE dbo.TapTin_BaiTapNop_TapTin
+	ALTER COLUMN MaNguoiTao INT
 
 GO
 --Thêm tập tin (chỉ thêm vào bảng tạm)
