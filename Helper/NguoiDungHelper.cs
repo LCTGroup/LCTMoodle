@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Web;
+using System.Net;
+using System.Net.Mail;
 
 namespace Helpers
 {
@@ -32,6 +35,7 @@ namespace Helpers
 
             return giaTriTraVe.ToString();
         }
+        
         public static bool chuaDangNhap()
         {
             if (HttpContext.Current.Session["NguoiDung"] == null)
@@ -39,6 +43,32 @@ namespace Helpers
                 return true;
             }
             return false;
+        }
+
+        public static void guiEmail(string tieuDe, string noiDung, string diaChiNguoiNhan)
+        {
+                MailAddress emailNguoiGui = new MailAddress("ModeratorLCTMoodle@gmail.com");
+                MailAddress emailNguoiNhan = new MailAddress(diaChiNguoiNhan);
+
+                MailMessage mail = new MailMessage(emailNguoiNhan, emailNguoiNhan);
+                mail.Subject = tieuDe;
+                mail.Body = noiDung;
+                mail.IsBodyHtml = true;
+
+                SmtpClient smtp = new SmtpClient();
+                smtp.Credentials = new NetworkCredential("moderatorlctmoodle@gmail.com", "LCTMoodle@Moderator123");
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+                smtp.Port = 587;
+                smtp.Send(mail);            
+            
+        }                
+
+        public static string PhatSinhMaKichHoat()
+        {
+            Random rd = new Random();
+            string maKichHoat = rd.Next(100000, 999999).ToString();
+            return maKichHoat;
         }
     }
 }

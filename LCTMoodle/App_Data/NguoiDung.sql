@@ -16,7 +16,9 @@ CREATE TABLE dbo.NguoiDung
 	DiaChi NVARCHAR(MAX),
 	SoDienThoai NVARCHAR(MAX),
 	MaHinhDaiDien INT,
-	CoQuyenHT BIT DEFAULT 0
+	CoQuyenHT BIT DEFAULT 0,
+	DaKichHoat BIT DEFAULT 0,
+	MaKichHoat NVARCHAR(MAX),
 )
 
 GO
@@ -33,11 +35,12 @@ ALTER PROC dbo.themNguoiDung
 	@7 DATETIME, --Ngày Sinh
 	@8 NVARCHAR(MAX), --Địa chỉ
 	@9 NVARCHAR(MAX), --Số điện thoại
-	@10 INT --Hình đại diện
+	@10 INT, --Hình đại diện
+	@11 NVARCHAR(MAX) --Mã kích hoạt
 )
 AS
 BEGIN
-	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, GioiTinh, Ho, TenLot, Ten, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien) VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10);
+	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, GioiTinh, Ho, TenLot, Ten, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien, MaKichHoat) VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11);
 
 	SELECT @@IDENTITY Ma
 END
@@ -61,6 +64,20 @@ BEGIN
 			WHERE Ma = ' + @0 + '
 		')
 	END	
+END
+
+GO
+--Cập nhật kích hoạt Người dùng theo tenTaiKhoan
+ALTER PROC dbo.kichHoatNguoiDungTheoTenTaiKhoan
+(
+	@0 NVARCHAR(MAX), --Tên tài khoản
+	@1 NVARCHAR(MAX) --Giá trị kích hoạt
+)
+AS
+BEGIN
+	UPDATE dbo.NguoiDung
+	SET MaKichHoat = @1
+	WHERE TenTaiKhoan = @0
 END
 
 GO

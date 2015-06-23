@@ -54,13 +54,16 @@
                             </a>
                         </div>
                         <div class="thong-tin-dang">
-                            <div class="nguoi-dang">
-                                <a href="/NguoiDung/@Model[i].nguoiTao.ma">
-                                    <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model[i].nguoiTao.hinhDaiDien.ma" />
-                                    <span>@Model[i].nguoiTao.tenTaiKhoan</span>
-
-                                </a>
-                            </div>
+                            @if (Model[i].nguoiTao != null)
+                            {
+                                <div class="nguoi-dang">
+                                    <a href="/NguoiDung/Xem/@Model[i].nguoiTao.ma">
+                                        <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model[i].nguoiTao.hinhDaiDien.ma" />
+                                        <span>@Model[i].nguoiTao.tenTaiKhoan</span>
+                                    </a>
+                                </div>
+                            }
+                            
                             <div class="thoi-gian-dang">
                                 <span>@Model[i].thoiDiemTao</span>
                             </div>

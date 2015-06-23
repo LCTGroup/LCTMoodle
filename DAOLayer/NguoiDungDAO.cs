@@ -54,6 +54,8 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "MaKichHoat":
+                        nguoiDung.maKichHoat = layString(dong, i); break;
                     default:
                         break;
                 }
@@ -79,7 +81,8 @@ namespace DAOLayer
                     nguoiDung.ngaySinh,
                     nguoiDung.diaChi,
                     nguoiDung.soDienThoai,
-                    layMa(nguoiDung.hinhDaiDien)
+                    layMa(nguoiDung.hinhDaiDien),
+                    nguoiDung.maKichHoat
                 }
             );
         }
@@ -97,6 +100,19 @@ namespace DAOLayer
                 );
         }
         
+        public static KetQua kichHoatTaiKhoanTheoTenTaiKhoan(string tenTaiKhoan, string maKichHoat)
+        {
+            return khongTruyVan
+                (
+                    "kichHoatNguoiDungTheoTenTaiKhoan",
+                    new object[]
+                    {
+                        tenTaiKhoan,
+                        maKichHoat
+                    }
+                );
+        }
+
         public static KetQua layTheoTenTaiKhoan(string tenTaiKhoan)
         {
             return layDong
