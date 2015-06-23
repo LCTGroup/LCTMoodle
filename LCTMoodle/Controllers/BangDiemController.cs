@@ -33,7 +33,7 @@ namespace LCTMoodle.Controllers
 
             if (ketQua.trangThai == 0)
             {
-                ketQua.ketQua = renderPartialViewToString(ControllerContext, "BangDiem/CotDiem/_Item_Tao.cshtml", ketQua.ketQua);
+                ketQua.ketQua = renderPartialViewToString(ControllerContext, "BangDiem/_Item.cshtml", ketQua.ketQua);
             }
 
             return Json(ketQua);

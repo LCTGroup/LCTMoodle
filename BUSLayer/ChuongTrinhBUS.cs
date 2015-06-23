@@ -25,10 +25,6 @@ namespace BUSLayer
             {
                 loi.Add("Công việc không được bỏ trống");
             }
-            if (string.IsNullOrEmpty(chuongTrinh.moTa))
-            {
-                loi.Add("Mô tả không được bỏ trống");
-            }
             #endregion
 
             if (loi.Count > 0)

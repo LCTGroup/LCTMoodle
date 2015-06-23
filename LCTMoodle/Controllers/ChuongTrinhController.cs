@@ -38,7 +38,7 @@ namespace LCTMoodle.Controllers
                 return Json(new KetQua()
                 {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "ChuongTrinh/_Item_Tao.cshtml", ketQua.ketQua)
+                    ketQua = renderPartialViewToString(ControllerContext, "ChuongTrinh/_Item.cshtml", ketQua.ketQua)
                 });
             }
             else

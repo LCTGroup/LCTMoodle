@@ -6,6 +6,8 @@ $(function () {
 
     khoiTaoForm($_Khung.find('#tao_cot_diem_form'));
     khoiTaoItem($_DanhSach.children());
+
+    capNhatThuTu();
 })
 
 function khoiTaoForm($form) {
@@ -22,6 +24,7 @@ function khoiTaoForm($form) {
                     khoiTaoItem($item);
 
                     $_DanhSach.append($item);
+                    $item.find('.td:eq(0)').text($item.index() + 1);
 
                     khoiTaoLCTFormMacDinh($form);
                 }
@@ -97,9 +100,11 @@ function khoiTaoItem($item) {
 
                         if (e.offsetY < this.offsetHeight / 2) {
                             $item.before($itemKeo);
+                            capNhatThuTu();
                         }
                         else {
                             $item.after($itemKeo);
+                            capNhatThuTu();
                         }
                     },
                     'drop.keo-thu-tu': function () {
@@ -141,9 +146,11 @@ function khoiTaoItem($item) {
 
                                     if (viTriHienTai < viTriBatDau) {
                                         $_DanhSach.children(':nth-child(' + (viTriBatDau + 1) + ')').after($itemKeo);
+                                        capNhatThuTu();
                                     }
                                     else if (viTriHienTai > viTriBatDau) {
                                         $_DanhSach.children(':nth-child(' + (viTriBatDau + 1) + ')').before($itemKeo);
+                                        capNhatThuTu();
                                     }
                                 }
                             }).fail(function () {
@@ -180,3 +187,13 @@ function khoiTaoItem($item) {
         })
     })
 }
+
+//#region Hỗ trợ
+
+function capNhatThuTu() {
+    $_DanhSach.find('.tr').each(function (index) {
+        $(this).find('.td:eq(0)').text(index + 1);
+    });
+}
+
+//#endregion

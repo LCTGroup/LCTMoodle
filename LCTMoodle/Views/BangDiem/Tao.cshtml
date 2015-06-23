@@ -31,6 +31,7 @@
             <article id="khung_cot_diem" class="lct-bang khung-cot-diem">
                 <section class="thead">
                     <section class="tr">
+                        <section class="th"></section>
                         <section class="th">
                             Tên
                         </section>
@@ -50,12 +51,13 @@
                     {
                         foreach (var cotDiem in Model)
                         {
-                            @Html.Partial("~/Views/BangDiem/CotDiem/_Item_Tao.cshtml", cotDiem);
+                            @Html.Partial("~/Views/BangDiem/_Item.cshtml", cotDiem);
                         }
                     }
                 </section>
                 <form id="tao_cot_diem_form" class="lct-form tao-cot-diem-form tfoot" data-an-rang-buoc>
                     <section class="tr">
+                        <section class="td"></section>
                         <section class="td">
                             <input type="hidden" name="KhoaHoc" value="@khoaHoc.ma" />
                             <article class="input">
@@ -69,7 +71,7 @@
                         </section>
                         <section class="td">
                             <article class="input">
-                                <input type="text" name="MoTa" placeholder="Mô tả" />
+                                <textarea name="MoTa" placeholder="Mô tả" style="height: 20px;"></textarea>
                             </article>
                         </section>
                         <section class="td">

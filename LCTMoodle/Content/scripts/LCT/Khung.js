@@ -18,8 +18,6 @@ $(function () {
 */
 function khoiTaoTatMoDoiTuong($danhSachNut, laChucNang) {
     $danhSachNut.off('click.tat_mo').on('click.tat_mo', function (e) {
-        e.stopPropagation();
-
         //Lấy đối tượng 
         // $nut: nút nhấn
         // $doiTuong: đối tượng popup sẽ được hiển thị
@@ -40,9 +38,10 @@ function khoiTaoTatMoDoiTuong($danhSachNut, laChucNang) {
         }
 
         //Xử lý sự kiện nhấn chuột ra ngoài đối tượng
-        $(document).on('click.tat_mo', function (e) {
-            $doiTuong.hide().removeClass('mo');
-            $(document).off('click.tat_mo');
+        setTimeout(function () {
+            $(document).one('click', function (e) {
+                $doiTuong.hide().removeClass('mo');
+            })
         });
     });
 }

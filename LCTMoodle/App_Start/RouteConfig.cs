@@ -47,7 +47,7 @@ namespace LCTMoodle
 
             routes.MapRoute(
                 name: "BangDiem",
-                url: "KhoaHoc/BangDiem/{action}/{ma}",
+                url: "KhoaHoc/{action}/BangDiem/{ma}",
                 defaults: new { controller = "BangDiem", action = "Index" }
             );
 
