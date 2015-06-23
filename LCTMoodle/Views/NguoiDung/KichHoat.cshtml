@@ -1,0 +1,74 @@
+﻿@model DTOLayer.NguoiDungDTO
+@{
+    ViewData["Title"] = "Kích hoạt tài khoản";    
+    Layout = "~/Views/LCT/Khung.cshtml";          
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/KichHoatTaiKhoan.css/NguoiDung/" />
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/KichHoatNguoiDung.js/NguoiDung"></script>
+}
+
+@if (Model != null)
+{
+    <article class="hop-form">
+    <section class="tieu-de">Nhập mã kích hoạt tài khoản</section>
+    <section class="noi-dung">
+        <form class="lct-form" id="kich_hoat_tai_khoan" action="/NguoiDung/XuLyKichHoatTaiKhoan" method="post">
+            <article>
+                <ul>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Tên tài khoản:</label>
+                        </section>
+                        <section class="noi-dung">
+                            <label class="ten-tai-khoan-kich-hoat">@Model.tenTaiKhoan</label>
+                            <input type="hidden" name="TenTaiKhoan" value="@Model.tenTaiKhoan" />
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Mật khẩu:</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input type="password" name="MatKhau" data-validate="bat-buoc" />
+                            </article>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>Mã kích hoạt:</label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input type="text" name="MaKichHoat" data-validate="bat-buoc" />
+                            </article>
+                        </section>
+                    </li>
+                    <li>
+                        <section class="tieu-de">
+                            <label>&nbsp;</label>
+                        </section>
+                        <section class="noi-dung">
+                            <a href="#">Quên mật khẩu?</a>
+                        </section>
+                    </li>
+                </ul>
+                <section class="khung-button">
+                    <button type="submit" class="chap-nhan">
+                        Kích hoạt và đăng nhập tài khoản
+                    </button>
+                </section>
+            </article>
+        </form>
+    </section>
+</article>
+}
+else 
+{
+    <div>Không có người dùng tồn tại</div>
+}

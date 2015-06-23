@@ -1,24 +1,6 @@
-﻿@model List<DTOLayer.KhoaHocDTO>
-
-@{    
+﻿@{    
     Layout = "~/Views/LCT/Khung.cshtml";
 }
 
 @section Styles {
-    <link href="/Index.css/TrangChu" rel="stylesheet" />
 }
-
-@if (Model != null)
-{
-    <article class="hop">
-        <section class="tieu-de">
-            Danh sách khóa học
-        </section>
-        <section class="noi-dung khung-khoa-hoc">
-            <ul class="danh-sach">
-                @Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", Model)
-            </ul>
-        </section>
-    </article>   
-}
-

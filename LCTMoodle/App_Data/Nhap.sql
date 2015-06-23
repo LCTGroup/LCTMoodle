@@ -7,3 +7,10 @@ UPDATE NguoiDung
 SELECT SUBSTRING('Le Binh Chieu' , LEN(Le Binh Chieu) - CHARINDEX(' ', REVERSE(Le Binh Chieu)) + 2, LEN(Ten))
 
 SELECT SUBSTRING_INDEX(,' ',-1)
+
+select * from dbo.NguoiDung
+delete from dbo.NguoiDung where ma >= 288
+
+update dbo.NguoiDung
+set MaKichHoat = 675316
+where Ma=311

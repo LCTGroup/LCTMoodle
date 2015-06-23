@@ -12,8 +12,6 @@ namespace LCTMoodle.Controllers
 {
     public class NguoiDungController : LCTController
     {
-        //
-        // GET: /NguoiDung/
         public ActionResult Xem(int? ma)
         {
             if (ma != null)
@@ -23,11 +21,6 @@ namespace LCTMoodle.Controllers
             return RedirectToAction("Index", "TrangChu");
         }
 
-        /// <summary>
-        /// Đăng nhập
-        /// </summary>
-        /// <returns></returns>
-        
         public ActionResult DangNhap()
         {
             //Tắt hiển thị cột trái, cột phải
@@ -36,10 +29,7 @@ namespace LCTMoodle.Controllers
 
             return View();
         }
-        /// <summary>
-        /// Đăng ký
-        /// </summary>
-        /// <returns></returns>
+
         public ActionResult DangKy()
         {
             //Tắt hiển thị cột trái, cột phải
@@ -47,6 +37,21 @@ namespace LCTMoodle.Controllers
             ViewData["CotPhai"] = false;
          
             return View();
+        }
+
+        public ActionResult KichHoat(string tenTaiKhoan)
+        {
+            ViewData["CotTrai"] = false;
+            ViewData["CotPhai"] = false;
+
+            KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenTaiKhoan);            
+            return View(ketQua.ketQua);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyKichHoatTaiKhoan(FormCollection form)
+        {
+            return Json(NguoiDungBUS.kichHoatTaiKhoan(chuyenForm(form)));
         }
 
         public ActionResult Sua(int? ma)
@@ -83,7 +88,6 @@ namespace LCTMoodle.Controllers
             return RedirectToAction("DangNhap", "NguoiDung");
         }
         
-        [HttpGet]
         public ActionResult KiemTraTenTaiKhoan(string tenTaiKhoan)
         {
             return Json(NguoiDungBUS.tonTaiTenTaiKhoan(tenTaiKhoan), JsonRequestBehavior.AllowGet);

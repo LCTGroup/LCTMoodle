@@ -18,6 +18,7 @@ namespace DTOLayer
         public DateTime? ngaySinh;
         public string diaChi;
         public string soDienThoai;
-        public TapTinDTO hinhDaiDien;      
+        public TapTinDTO hinhDaiDien;
+        public string maKichHoat;
     }
 }

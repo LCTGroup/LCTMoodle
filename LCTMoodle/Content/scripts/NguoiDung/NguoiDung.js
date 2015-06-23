@@ -24,7 +24,7 @@ function khoiTaoDangKy($form) {
                     case 0:
                         moPopup({
                             tieuDe: 'Thông báo',
-                            thongBao: 'Đăng ký thành công',
+                            thongBao: 'Đăng ký thành công. Vui lòng kiểm tra email để kích hoạt tài khoản',
                             nut: [{
                                 ten: 'Về trang chủ',
                                 href: '/TrangChu/'
@@ -108,6 +108,13 @@ function khoiTaoDangNhap($form) {
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     window.location = '/TrangChu/';
+                }
+                if (data.trangThai == 5) {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: data.ketQua,
+                        bieuTuong: 'nguy-hiem'
+                    });
                 }
                 if (data.trangThai == 1) {
                     moPopup({

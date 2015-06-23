@@ -28,7 +28,7 @@ namespace BUSLayer
                         nguoiDung.tenTaiKhoan = form.layString(key);
                         break;
                     case "MatKhau":
-                        nguoiDung.matKhau = form.layString(key);
+                        nguoiDung.matKhau = NguoiDungHelper.layMaMD5(form.layString(key));
                         break;
                     case "Email":
                         nguoiDung.email = form.layString(key);
@@ -150,17 +150,27 @@ namespace BUSLayer
 
         public static KetQua them(Form form)
         {
-            NguoiDungDTO nguoiDung = new NguoiDungDTO();
+            string maKichHoat = NguoiDungHelper.PhatSinhMaKichHoat();
+            NguoiDungDTO nguoiDung = new NguoiDungDTO() 
+            {
+                maKichHoat = maKichHoat
+            };
             gan(ref nguoiDung, form);
             
             KetQua ketQua = kiemTra(nguoiDung);           
 
             if (ketQua.trangThai == 0)
             {
+                string duongDanKichHoat = @"http://localhost:1711/NguoiDung/KichHoat?tenTaiKhoan=" + form.layString("TenTaiKhoan");
                 ketQua = NguoiDungDAO.them(nguoiDung);
                 if (ketQua.trangThai == 0)
                 {
-                    HttpContext.Current.Session["NguoiDung"] = ketQua.ketQua;
+                    string mailDangKy = form.layString("Email");
+                    string tieuDe = "Kích hoạt tài khoản LCTMoodle";
+                    string noiDung = "Mã kích hoạt tài khoản của bạn là: <b>" + maKichHoat +
+                        "</b><br><br>Đường dẫn kích hoạt: <a href=\"" + duongDanKichHoat + "\">Nhấp vào đây</a>";
+
+                    NguoiDungHelper.guiEmail(tieuDe, noiDung, mailDangKy);
                 }
             }
             return ketQua;
@@ -189,6 +199,43 @@ namespace BUSLayer
             return NguoiDungDAO.capNhat(ma, layBangCapNhat(nguoiDung, form.Keys.ToArray()));
         }
         
+        public static KetQua kichHoatTaiKhoan(Form form)
+        {
+            string tenTaiKhoan = form.layString("TenTaiKhoan");
+            string matKhau = form.layString("MatKhau");
+            string maKichHoat = form.layString("MaKichHoat");
+            
+            KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenTaiKhoan);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
+            if (nguoiDung.maKichHoat != maKichHoat)
+            {
+                ketQua.trangThai = 3;
+                ketQua.ketQua = "Mã kích hoạt không đúng";
+                return ketQua;
+            }
+
+            NguoiDungDAO.kichHoatTaiKhoanTheoTenTaiKhoan(tenTaiKhoan, null);
+
+            ketQua = NguoiDungBUS.xuLyDangNhap(tenTaiKhoan, matKhau, true);
+            if (ketQua.trangThai != 0)
+            {
+                //Cập nhật lại mã kích hoạt cũ để trạng thái tài khoản trở thành như ban đầu
+                NguoiDungDAO.kichHoatTaiKhoanTheoTenTaiKhoan(tenTaiKhoan, maKichHoat);
+                
+                ketQua.trangThai = 3;
+                ketQua.ketQua = "Sai Mật khẩu";
+                return ketQua;
+            }
+
+            
+            return ketQua;            
+        }
+
         public static KetQua layTheoTenTaiKhoan(string tenTaiKhoan)
         {
             return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
@@ -199,7 +246,8 @@ namespace BUSLayer
             return NguoiDungDAO.layTheoMa(ma, lienKet);
         }
 
-        public static KetQua kiemTraDangNhap(string tenTaiKhoan, string matKhau, bool ghiNho = false)
+        //Hàm cùng tên
+        public static KetQua xuLyDangNhap(string tenTaiKhoan, string matKhau, bool ghiNho = false)
         {
             if (!tonTaiTenTaiKhoan(tenTaiKhoan))
             {
@@ -217,6 +265,14 @@ namespace BUSLayer
             }
             
             NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
+            if (nguoiDung.maKichHoat != null)
+            {
+                return new KetQua()
+                {
+                    trangThai = 5,
+                    ketQua = "Tài khoản chưa được kích hoạt. Bạn vui lòng kiểm tra email để kích hoạt tài khoản."
+                };
+            }
 
             if ((NguoiDungHelper.layMaMD5(matKhau) == nguoiDung.matKhau) || (matKhau == nguoiDung.matKhau))
             {
@@ -250,7 +306,7 @@ namespace BUSLayer
             string matKhau = form.layString("MatKhau");
             bool ghiNho = form.layBool("GhiNho");
 
-            return NguoiDungBUS.kiemTraDangNhap(tenTaiKhoan, matKhau, ghiNho);
+            return NguoiDungBUS.xuLyDangNhap(tenTaiKhoan, matKhau, ghiNho);
         }
                 
         public static void xuLyDangXuat()
