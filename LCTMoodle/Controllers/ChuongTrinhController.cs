@@ -10,7 +10,7 @@ using DTOLayer;
 
 namespace LCTMoodle.Controllers
 {
-    public class GiaoTrinhController : LCTController
+    public class ChuongTrinhController : LCTController
     {
         public ActionResult Index(int ma) //Để tạm, sau này sửa route, đổi thành mã khóa học
         {
@@ -23,7 +23,7 @@ namespace LCTMoodle.Controllers
 
             ViewData["KhoaHoc"] = ketQua.ketQua as KhoaHocDTO;
 
-            ketQua = GiaoTrinhBUS.layTheoMaKhoaHoc(ma);
+            ketQua = ChuongTrinhBUS.layTheoMaKhoaHoc(ma);
 
             return View(model: ketQua.trangThai == 0 ? ketQua.ketQua : null);
         }
@@ -31,14 +31,14 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            KetQua ketQua = GiaoTrinhBUS.them(chuyenDuLieuForm(formCollection));
+            KetQua ketQua = ChuongTrinhBUS.them(chuyenDuLieuForm(formCollection));
 
             if (ketQua.trangThai == 0)
             {
                 return Json(new KetQua()
                 {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "GiaoTrinh/_Item_Tao.cshtml", ketQua.ketQua)
+                    ketQua = renderPartialViewToString(ControllerContext, "ChuongTrinh/_Item_Tao.cshtml", ketQua.ketQua)
                 });
             }
             else
@@ -50,13 +50,13 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoa(int ma)
         {
-            return Json(GiaoTrinhBUS.xoaTheoMa(ma));
+            return Json(ChuongTrinhBUS.xoaTheoMa(ma));
         }
 
         [HttpPost]
         public ActionResult XuLyCapNhatThuTu(int thuTuCu, int thuTuMoi, int maKhoaHoc)
         {
-            return Json(GiaoTrinhBUS.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc));
+            return Json(ChuongTrinhBUS.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc));
         }
 	}
 }

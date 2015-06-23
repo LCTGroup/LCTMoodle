@@ -61,39 +61,61 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua them(Dictionary<string, string> form)
+        public static void gan(ref KhoaHocDTO khoaHoc, Form form)
         {
-            KetQua ketQua = TapTinBUS.chuyen("KhoaHoc_HinhDaiDien", layInt(form, "HinhDaiDien"));
-
-            if (ketQua.trangThai != 0)
+            if (khoaHoc == null)
             {
-                return ketQua;
+                khoaHoc = new KhoaHocDTO();
             }
 
+            foreach (string key in form.Keys.ToArray())
+            {
+                switch (key)
+                {
+                    case "Ten":
+                        khoaHoc.ten = form.layString(key);
+                        break;
+                    case "MoTa":
+                        khoaHoc.moTa = form.layString(key);
+                        break;
+                    case "MaChuDe":
+                        khoaHoc.chuDe = form.layDTO<ChuDeDTO>(key);
+                        break;
+                    case "MaNguoiTao":
+                        khoaHoc.nguoiTao = form.layDTO<NguoiDungDTO>(key);
+                        break;
+                    case "MaHinhDaiDien":
+                        khoaHoc.hinhDaiDien = TapTinBUS.chuyen("KhoaHoc_HinhDaiDien", form.layInt(key)).ketQua as TapTinDTO;
+                        break;
+                    case "CanDangKy":
+                        khoaHoc.canDangKy = form.layBool(key);
+                        if (khoaHoc.canDangKy)
+                        {
+                            khoaHoc.hanDangKy = form.layDateTime("HanDangKy");
+                        }
+                        break;
+                    case "PhiThamGia":
+                        khoaHoc.phiThamGia = form.layInt(key);
+                        break;
+                    case "CheDoRiengTu":
+                        khoaHoc.cheDoRiengTu = form.layString(key);
+                        break;
+                    case "CoHan":
+                        khoaHoc.thoiDiemHetHan = form.layDateTime("ThoiDiemHetHan");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public static KetQua them(Form form)
+        {
             //Chưa xử lý quản lý
-            KhoaHocDTO khoaHoc  = new KhoaHocDTO()
-            {
-                ten = layString(form, "Ten"),
-                moTa = layString(form, "MoTa"),
-                chuDe = layDTO<ChuDeDTO>(form, "ChuDe"),
-                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
-                hinhDaiDien = ketQua.ketQua as TapTinDTO,
-                canDangKy = layBool(form, "CanDangKy"),
-                phiThamGia = layInt(form, "PhiThamGia"),
-                cheDoRiengTu = layString(form, "CheDoRiengTu")
-            };
+            KhoaHocDTO khoaHoc = new KhoaHocDTO();
+            gan(ref khoaHoc, form);
 
-            if (layBool(form, "CoHan"))
-            {
-                khoaHoc.thoiDiemHetHan = layDateTime(form, "ThoiDiemHetHan");
-            }
-
-            if (khoaHoc.canDangKy && layBool(form, "CoHanDangKy"))
-            {
-                khoaHoc.hanDangKy = layDateTime(form, "HanDangKy");
-            }
-
-            ketQua = kiemTra(khoaHoc);
+            KetQua ketQua = kiemTra(khoaHoc);
 
             if (ketQua.trangThai != 0)
             {

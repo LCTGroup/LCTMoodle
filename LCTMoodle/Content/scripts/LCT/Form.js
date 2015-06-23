@@ -31,8 +31,8 @@ function khoiTaoLCTForm($form, thamSo) {
     khoiTaoGoiYInput_LCT($form);
 
     //Khởi tạo thời gian
-    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="gio"]'), 'thoi-gian', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
-    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="ngay"]'), 'lich', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
+    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="gio"]'), 'gio', 'dong_ho_form', khoiTaoForm_DongHo, layGiaTriMacDinh_DongHo, layGiaTri_DongHo);
+    khoiTaoInputThoiGian_LCT($form.find('input[data-input-type="ngay"]'), 'ngay', 'lich_form', khoiTaoForm_Lich, layGiaTriMacDinh_Lich, layGiaTri_Lich);
 
     //Xử lý lấy giá trị mặc định
     khoiTaoLCTFormMacDinh($form);
@@ -141,19 +141,19 @@ function khoiTaoHienThiInput_LCT($form) {
     $form.find('input[data-input-type="ngay-gio"]').each(function () {
         var $phanTu = $(this);
 
-        var thoiGianMacDinh = $phanTu.attr('data-thoi-gian-mac-dinh') || '',
-            lichMacDinh = $phanTu.attr('data-lich-mac-dinh') || '',
-            thoiGianPlaceholder = $phanTu.attr('data-thoi-gian-placeholder') || '',
-            lichPlaceholder = $phanTu.attr('data-lich-placeholder') || '',
+        var thoiGianMacDinh = $phanTu.attr('data-gio-mac-dinh') || '',
+            ngayMacDinh = $phanTu.attr('data-ngay-mac-dinh') || '',
+            thoiGianPlaceholder = $phanTu.attr('data-gio-placeholder') || '',
+            ngayPlaceholder = $phanTu.attr('data-ngay-placeholder') || '',
             validate = $phanTu.attr('data-validate');
 
-        $phanTu.removeAttr('data-validate data-thoi-gian-mac-dinh data-lich-mac-dinh data-thoi-gian-placeholder data-lich-placeholder');
+        $phanTu.removeAttr('data-validate data-gio-mac-dinh data-ngay-mac-dinh data-gio-placeholder data-ngay-placeholder');
 
         $phanTu.after($phanTu.clone().attr({
             'name': '',
             'data-input-type': 'ngay',
-            'data-mac-dinh': lichMacDinh,
-            'placeholder': lichPlaceholder,
+            'data-mac-dinh': ngayMacDinh,
+            'placeholder': ngayPlaceholder,
             'data-validate': validate
         }).css('width', 'calc(50% - 19px)')).after($phanTu.clone().attr({
             'name': '',
@@ -203,6 +203,9 @@ function khoiTaoHienThiInput_LCT($form) {
             e.removeListener();
 
             var $htmlTag = $phanTu.find('~ div iframe').contents().find('html');
+            if ($phanTu.is('[data-validate~="bat-buoc"]') && form.is(':not([data-an-rang-buoc])')) {
+                $htmlTag.addClass('bat-buoc');
+            }
 
             $htmlTag.find('body').on({
                 focus: function () {
@@ -488,7 +491,7 @@ function khoiTaoGoiYInput_LCT($form) {
     }
 }
 
-// loai Loại input (thoi-gian, lich)
+// loai Loại input (gio, ngay)
 // id của form nhập (đồng hồ hoặc lịch)
 // hàm khởi tạo form lúc chưa có
 // hàm xử lý giá trị mặc định
@@ -784,6 +787,10 @@ function baoLoi($input, loai, noiDung) {
     }
 
     $input.addClass('loi-' + loai);
+
+    if ($input.is('[data-input-type="editor"]')) {
+        $input.find('~ div iframe').contents().find('html').addClass('loi');
+    }
 }
 
 function tatLoi($input, loai) {
@@ -795,6 +802,10 @@ function tatLoi($input, loai) {
     }
 
     $input.removeClass('loi-' + loai);
+
+    if ($input.is('[data-input-type="editor"]')) {
+        $input.find('~ div iframe').contents().find('html').removeClass('loi');
+    }
 }
 
 function khoiTaoSukienInput_LCT($form, thamSo) {

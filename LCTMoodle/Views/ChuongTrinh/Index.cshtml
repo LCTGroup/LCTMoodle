@@ -1,4 +1,4 @@
-﻿@model List<DTOLayer.GiaoTrinhDTO>
+﻿@model List<DTOLayer.ChuongTrinhDTO>
 
 @{
     var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocDTO;
@@ -9,14 +9,14 @@
     {
         "Khóa học của tôi", "/KhoaHoc",
         khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
-        "Soạn giáo trình", "/GiaoTrinh/" + khoaHoc.ma
+        "Soạn giáo trình", "/ChuongTrinh/" + khoaHoc.ma
     };
 }
 @section Styles {
-    <link href="/Index.css/GiaoTrinh" rel="stylesheet" />
+    <link href="/Index.css/ChuongTrinh" rel="stylesheet" />
 }
 @section Scripts {
-    <script src="/Index.js/GiaoTrinh"></script>
+    <script src="/Index.js/ChuongTrinh"></script>
     <script>
         maKhoaHoc = '@khoaHoc.ma';
     </script>
@@ -41,11 +41,11 @@
                     {
                         foreach (var item in Model)
                         {
-                            @Html.Partial("~/Views/GiaoTrinh/_Item_Tao.cshtml", item)
+                            @Html.Partial("~/Views/ChuongTrinh/_Item_Tao.cshtml", item)
                         }
                     }
                 </section>
-                <form id="tao_giao_trinh_form" class="lct-form tao-giao-trinh-form tfoot">
+                <form id="tao_giao_trinh_form" class="lct-form tao-giao-trinh-form tfoot" data-an-rang-buoc>
                     <section class="tr">
                         <section class="td">
                             <input type="hidden" name="KhoaHoc" value="@khoaHoc.ma" />

@@ -36,6 +36,9 @@ function hienThi(nhom) {
         case 'baigiang':
             hienThi_BaiGiang();
             break;
+        case 'tailieu':
+            hienThi_TaiLieu();
+            break;
         case 'baitap':
             hienThi_BaiTap();
             break;
@@ -678,6 +681,230 @@ function khoiTaoItem_BaiGiang($danhSachBaiGiang) {
 }
 
 function moItem_BaiGiang($baiGiang) {
+    if ($baiGiang.hasClass('mo')) {
+        $baiGiang.removeClass('mo');
+    }
+    else {
+        $_DanhSach.find('.mo[data-doi-tuong="muc-bai-viet"]').removeClass('mo');
+        $baiGiang.addClass('mo');
+        $body.animate({
+            scrollTop: $baiGiang.offset().top
+        }, 200);
+    }
+}
+
+//#endregion
+
+//#region Tài liệu
+
+function hienThi_TaiLieu() {
+    var $khung = layKhung_TaiLieu();
+
+    $_KhungHienThi.html($khung);
+    $_KhungChua.attr('data-hien-thi', 'tai-lieu');
+    document.title = 'Bài giảng - ' + tieuDe;
+
+    $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
+
+    khoiTaoForm_TaiLieu($_KhungHienThi.find('#tao_bai_viet_form'));
+    khoiTaoItem_TaiLieu($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
+}
+
+function layKhung_TaiLieu() {
+    var $khung;
+
+    $.ajax({
+        url: '/BaiVietTaiLieu/_Khung',
+        data: { maKhoaHoc: maKhoaHoc },
+        dataType: 'JSON',
+        async: false
+    }).done(function (data) {
+        if (data.trangThai == 0) {
+            $khung = $(data.ketQua);
+        }
+        else {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Lấy bài giảng thất bại',
+                bieuTuong: 'nguy-hiem'
+            })
+        }
+    }).fail(function () {
+        moPopup({
+            tieuDe: 'Thông báo',
+            thongBao: 'Lấy bài giảng thất bại',
+            bieuTuong: 'nguy-hiem'
+        })
+    });
+
+    return $khung;
+}
+
+function khoiTaoForm_TaiLieu($form) {
+    var $doiTuongAn = $form.find('[data-an]');
+    var $doiTuongBatDauBaiViet = $form.find('[data-chuc-nang="bat-dau-tao-bai-viet"]');
+
+    khoiTaoLCTForm($form, {
+        khoiTao: function () {
+            $doiTuongAn.hide();
+        },
+        custom: [
+            {
+                input: $doiTuongBatDauBaiViet,
+                event: {
+                    focus: function () {
+                        $doiTuongAn.show();
+                    }
+                }
+            }
+        ],
+        submit: function () {
+            $.ajax({
+                url: '/BaiVietTaiLieu/XuLyThem',
+                type: 'POST',
+                data: layDataLCTForm($form),
+                dataType: 'JSON',
+                processData: false
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    var $mucBaiViet = $(data.ketQua);
+
+                    khoiTaoItem_TaiLieu($mucBaiViet);
+                    $_DanhSach.append($mucBaiViet);
+                    moItem_TaiLieu($mucBaiViet);
+
+                    khoiTaoLCTFormMacDinh($form);
+                    $doiTuongAn.hide();
+                }
+                else {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Thêm bài viết thất bại'
+                    });
+                }
+            }).fail(function () {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Thêm bài viết thất bại'
+                });
+            });
+        }
+    });
+}
+
+function khoiTaoItem_TaiLieu($danhSachTaiLieu) {
+    $danhSachTaiLieu.find('.tieu-de').on('click', function () {
+        moItem_TaiLieu($(this).parent());
+    });
+
+    khoiTaoTatMoDoiTuong($danhSachTaiLieu.find('[data-chuc-nang="tat-mo"]'), true);
+
+    $danhSachTaiLieu.find('[data-chuc-nang="xoa-bai-viet"]').on('click', function () {
+        var $baiViet = $(this).closest('[data-doi-tuong="muc-bai-viet"]');
+
+        moPopup({
+            tieuDe: 'Xác nhận',
+            thongBao: 'Bạn có chắc muốn xóa bài viết này?',
+            bieuTuong: 'hoi',
+            nut: [
+                {
+                    ten: 'Có',
+                    xuLy: function () {
+                        $.ajax({
+                            url: '/BaiVietTaiLieu/XuLyXoa/' + $baiViet.attr('data-ma'),
+                            type: 'POST',
+                            dataType: 'JSON'
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $baiViet.remove();
+                            }
+                            else {
+                                moPopup({
+                                    tieuDe: 'Thông báo',
+                                    thongBao: 'Xóa bài viết thất bại',
+                                    bieuTuong: 'nguy-hiem'
+                                })
+                            }
+                        }).fail(function () {
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: 'Xóa bài viết thất bại',
+                                bieuTuong: 'nguy-hiem'
+                            })
+                        });
+                    }
+                },
+                {
+                    ten: 'Không',
+                }
+            ]
+        });
+    });
+
+    $danhSachTaiLieu.find('[data-chuc-nang="sua-bai-viet"]').on('click', function () {
+        var $baiViet = $(this).closest('[data-doi-tuong="muc-bai-viet"]');
+
+        $.ajax({
+            url: '/BaiVietTaiLieu/_Form/' + $baiViet.attr('data-ma'),
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                var $form = $(data.ketQua);
+                khoiTaoLCTForm($form, {
+                    submit: function () {
+                        $.ajax({
+                            url: '/BaiVietTaiLieu/XuLyCapNhat',
+                            type: 'POST',
+                            data: layDataLCTForm($form),
+                            dataType: 'JSON'
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                var $item = $(data.ketQua);
+                                khoiTaoItem_TaiLieu($item);
+
+                                $baiViet.replaceWith($item);
+                            }
+                            else {
+                                moPopup({
+                                    tieuDe: 'Thông báo',
+                                    thongBao: 'Cập nhật thất bại',
+                                    bieuTuong: 'nguy-hiem'
+                                });
+                            }
+                        }).fail(function () {
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: 'Cập nhật thất bại',
+                                bieuTuong: 'nguy-hiem'
+                            });
+                        });
+                    }
+                });
+
+                $form.css({
+                    border: '1px solid #ddd'
+                });
+
+                $baiViet.html($form);
+            }
+            else {
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Sửa bài viết thất bại',
+                    bieuTuong: 'nguy-hiem'
+                });
+            }
+        }).fail(function () {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Sửa bài viết thất bại',
+                bieuTuong: 'nguy-hiem'
+            });
+        });
+    });
+}
+
+function moItem_TaiLieu($baiGiang) {
     if ($baiGiang.hasClass('mo')) {
         $baiGiang.removeClass('mo');
     }

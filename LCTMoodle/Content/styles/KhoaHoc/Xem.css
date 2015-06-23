@@ -29,7 +29,7 @@
             }
 
             [data-hien-thi="tai-lieu"] .khung-chon-hien-thi ul:after {
-                background-color: #0c0;
+                background-color: #6b00b2;
             }
 
             [data-hien-thi="bai-tap"] .khung-chon-hien-thi ul:after {
@@ -77,8 +77,8 @@
               background-color: #0c0;
         }
 
-        .khung-chon-hien-thi .bai-tai-lieu a {
-              background-color: #0c0;
+        .khung-chon-hien-thi .tai-lieu a {
+              background-color: #6b00b2;
         }
 
         .khung-chon-hien-thi .bai-tap a {

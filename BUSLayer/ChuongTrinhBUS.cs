@@ -10,22 +10,22 @@ using Data;
 
 namespace BUSLayer
 {
-    public class GiaoTrinhBUS : BUS
+    public class ChuongTrinhBUS : BUS
     {
-        public static KetQua kiemTra(GiaoTrinhDTO giaoTrinh)
+        public static KetQua kiemTra(ChuongTrinhDTO chuongTrinh)
         {
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (giaoTrinh.khoaHoc == null)
+            if (chuongTrinh.khoaHoc == null)
             {
                 loi.Add("Khóa học không được bỏ trống");
             }
-            if (string.IsNullOrEmpty(giaoTrinh.congViec))
+            if (string.IsNullOrEmpty(chuongTrinh.congViec))
             {
                 loi.Add("Công việc không được bỏ trống");
             }
-            if (string.IsNullOrEmpty(giaoTrinh.moTa))
+            if (string.IsNullOrEmpty(chuongTrinh.moTa))
             {
                 loi.Add("Mô tả không được bỏ trống");
             }
@@ -50,12 +50,12 @@ namespace BUSLayer
 
         public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
         {
-            return GiaoTrinhDAO.layTheoMaKhoaHoc(maKhoaHoc);
+            return ChuongTrinhDAO.layTheoMaKhoaHoc(maKhoaHoc);
         }
 
         public static KetQua them(Dictionary<string, string> form)
         {
-            GiaoTrinhDTO giaoTrinh = new GiaoTrinhDTO()
+            ChuongTrinhDTO chuongTrinh = new ChuongTrinhDTO()
             {
                 khoaHoc = layDTO<KhoaHocDTO>(form, "KhoaHoc"),
                 congViec = layString(form, "CongViec"),
@@ -63,24 +63,24 @@ namespace BUSLayer
                 thoiGian = layString(form, "ThoiGian")
             };
 
-            KetQua ketQua = kiemTra(giaoTrinh);
+            KetQua ketQua = kiemTra(chuongTrinh);
 
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            return GiaoTrinhDAO.them(giaoTrinh);
+            return ChuongTrinhDAO.them(chuongTrinh);
         }
 
         public static KetQua xoaTheoMa(int ma)
         {
-            return GiaoTrinhDAO.xoaTheoMa(ma);
+            return ChuongTrinhDAO.xoaTheoMa(ma);
         }
 
         public static KetQua capNhatThuTu(int thuTuCu, int thuTuMoi, int maKhoaHoc)
         {
-            return GiaoTrinhDAO.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc);
+            return ChuongTrinhDAO.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc);
         }
     }
 }

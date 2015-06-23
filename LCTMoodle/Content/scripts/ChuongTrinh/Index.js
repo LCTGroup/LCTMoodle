@@ -12,7 +12,7 @@ function khoiTaoForm($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
             $.ajax({
-                url: '/GiaoTrinh/XuLyThem',
+                url: '/ChuongTrinh/XuLyThem',
                 type: 'POST',
                 data: $form.serialize(),
                 dataType: 'JSON',
@@ -61,7 +61,7 @@ function khoiTaoItem($item) {
                     loai: 'can-than',
                     xuLy: function () {
                         $.ajax({
-                            url: '/GiaoTrinh/XuLyXoa/' + $item.attr('data-ma'),
+                            url: '/ChuongTrinh/XuLyXoa/' + $item.attr('data-ma'),
                             type: 'POST',
                             dataType: 'JSON'
                         }).done(function () {
@@ -127,7 +127,7 @@ function khoiTaoItem($item) {
 
                         if (mangTam.keo === true) {
                             $.ajax({
-                                url: '/GiaoTrinh/XuLyCapNhatThuTu/',
+                                url: '/ChuongTrinh/XuLyCapNhatThuTu/',
                                 type: 'POST',
                                 data: { thuTuCu: mangTam.viTriBatDau + 1, thuTuMoi: $itemKeo.index() + 1, maKhoaHoc: maKhoaHoc },
                                 dataType: 'JSON'

@@ -46,7 +46,7 @@
     <Compile Include="NhomNguoiDungBUS.cs" />
     <Compile Include="QuyenBUS.cs" />
     <Compile Include="CotDiemBUS.cs" />
-    <Compile Include="GiaoTrinhBUS.cs" />
+    <Compile Include="ChuongTrinhBUS.cs" />
     <Compile Include="BaiTapNopBUS.cs" />
     <Compile Include="BaiVietBaiGiangBUS.cs" />
     <Compile Include="BaiVietBaiTapBUS.cs" />

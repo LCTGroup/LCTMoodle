@@ -7,3 +7,7 @@ UPDATE NguoiDung
 SELECT SUBSTRING('Le Binh Chieu' , LEN(Le Binh Chieu) - CHARINDEX(' ', REVERSE(Le Binh Chieu)) + 2, LEN(Ten))
 
 SELECT SUBSTRING_INDEX(,' ',-1)
+
+SELECT * FROM nguoidung
+
+UPDATE nguoidung set email = tentaikhoan + '@gmail.com' where ma > 3
