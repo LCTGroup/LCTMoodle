@@ -57,6 +57,9 @@ namespace BUSLayer
                     case "MaHinhDaiDien":
                         nguoiDung.hinhDaiDien = TapTinBUS.chuyen("NguoiDung_HinhDaiDien", form.layInt(key)).ketQua as TapTinDTO;
                         break;
+                    case "MatKhauCap2":
+                        nguoiDung.matKhauCap2 = NguoiDungHelper.layMaMD5(form.layString(key));
+                        break;
                     default: 
                         break;
                 }
@@ -102,6 +105,10 @@ namespace BUSLayer
                 thongBao.Add("Tên không được bỏ trống");
             }
 
+            if (coKiemTra("MatKhauCap2", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.matKhau))
+            {
+                thongBao.Add("Mật khẩu cấp 2 không được bỏ trống");
+            }
             #endregion
 
             KetQua ketQua = new KetQua();
@@ -150,6 +157,17 @@ namespace BUSLayer
 
         public static KetQua them(Form form)
         {
+            bool chapNhanQuyDinh = form.layBool("ChapNhanQuyDinh");
+
+            if (!chapNhanQuyDinh)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Chấp nhận quy định của LCTMoodle bạn mới có thể trở thành thành viên của hệ thống"
+                };
+            }
+
             string maKichHoat = NguoiDungHelper.PhatSinhMaKichHoat();
             NguoiDungDTO nguoiDung = new NguoiDungDTO() 
             {
@@ -305,7 +323,7 @@ namespace BUSLayer
             string tenTaiKhoan = form.layString("TenTaiKhoan");
             string matKhau = form.layString("MatKhau");
             bool ghiNho = form.layBool("GhiNho");
-
+            
             return NguoiDungBUS.xuLyDangNhap(tenTaiKhoan, matKhau, ghiNho);
         }
                 

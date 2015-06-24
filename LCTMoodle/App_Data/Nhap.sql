@@ -14,3 +14,6 @@ delete from dbo.NguoiDung where ma >= 288
 update dbo.NguoiDung
 set MaKichHoat = 675316
 where Ma=311
+
+alter table dbo.NguoiDung
+add MatKhauCap2 NVARCHAR(MAX)

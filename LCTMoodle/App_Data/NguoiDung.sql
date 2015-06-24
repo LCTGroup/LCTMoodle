@@ -19,6 +19,7 @@ CREATE TABLE dbo.NguoiDung
 	CoQuyenHT BIT DEFAULT 0,
 	DaKichHoat BIT DEFAULT 0,
 	MaKichHoat NVARCHAR(MAX),
+	MatKhauCap2 NVARCHAR(MAX)
 )
 
 GO
@@ -36,11 +37,13 @@ ALTER PROC dbo.themNguoiDung
 	@8 NVARCHAR(MAX), --Địa chỉ
 	@9 NVARCHAR(MAX), --Số điện thoại
 	@10 INT, --Hình đại diện
-	@11 NVARCHAR(MAX) --Mã kích hoạt
+	@11 NVARCHAR(MAX), --Mã kích hoạt
+	@12 NVARCHAR(MAX) --Mật khẩu cấp 2
 )
 AS
 BEGIN
-	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, GioiTinh, Ho, TenLot, Ten, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien, MaKichHoat) VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11);
+	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, GioiTinh, Ho, TenLot, Ten, NgaySinh, DiaChi, SoDienThoai, MaHinhDaiDien, MaKichHoat, MatKhauCap2) 
+	VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12);
 
 	SELECT @@IDENTITY Ma
 END

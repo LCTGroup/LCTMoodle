@@ -61,7 +61,6 @@ namespace Helpers
                 smtp.EnableSsl = true;
                 smtp.Port = 587;
                 smtp.Send(mail);            
-            
         }                
 
         public static string PhatSinhMaKichHoat()
@@ -69,6 +68,19 @@ namespace Helpers
             Random rd = new Random();
             string maKichHoat = rd.Next(100000, 999999).ToString();
             return maKichHoat;
+        }
+
+        public static string chuyenGioiTinh(int? soGioiTinh)
+        {
+            switch(soGioiTinh.Value)
+            {
+                case 1:
+                    return "Nam";
+                case 2:
+                    return "Nữ";
+                default:
+                    return "Không xác định";
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿/*
-    Khởi tạo
-*/
+﻿//#region Khởi tạo
+
 $(function () {
     //Khởi tạo xử lý đăng ký    
     khoiTaoDangKy($('#dang_ky'));
@@ -9,7 +8,10 @@ $(function () {
     khoiTaoDangNhap($('#dang_nhap'));
 });
 
-//Xử lý đăng ký
+//#endregion
+
+//#region Xử lý đăng ký
+
 function khoiTaoDangKy($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
@@ -19,41 +21,25 @@ function khoiTaoDangKy($form) {
                 data: layDataLCTForm($form),
                 dataType: 'JSON',
                 async: false
-            }).done(function (data) {                
-                switch(data.trangThai) {
-                    case 0:
-                        moPopup({
-                            tieuDe: 'Thông báo',
-                            thongBao: 'Đăng ký thành công. Vui lòng kiểm tra email để kích hoạt tài khoản',
-                            nut: [{
-                                ten: 'Về trang chủ',
-                                href: '/TrangChu/'
-                            }],
-                            esc: false,
-                            bieuTuong: 'thanh-cong'
-                        });
-                        break;
-                    case 1:
-                        moPopup({
-                            tieuDe: 'Thông báo',
-                            thongBao: 'Đăng ký chưa thành công',
-                            bieuTuong: 'nguy-hiem'
-                        });
-                        break;
-                    case 2:
-                        moPopup({
-                            tieuDe: 'Thông báo',
-                            thongBao: 'Lỗi kết nối CSDL hoặc lỗi truy vấn.',
-                            bieuTuong: 'nguy-hiem'
-                        });
-                        break;
-                    case 3:
-                        moPopup({
-                            tieuDe: 'Thông báo',
-                            thongBao: data.ketQua,
-                            bieuTuong: 'nguy-hiem'
-                        });
-                        break;
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: 'Đăng ký thành công. Vui lòng kiểm tra email để kích hoạt tài khoản',
+                        nut: [{
+                            ten: 'Về trang chủ',
+                            href: '/TrangChu/'
+                        }],
+                        esc: false,
+                        bieuTuong: 'thanh-cong'
+                    });
+                }
+                else {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: data.ketQua,
+                        bieuTuong: 'nguy-hiem'
+                    });
                 }
             }).fail(function () {
                 moPopup({
@@ -69,6 +55,15 @@ function khoiTaoDangKy($form) {
                 thongBao: 'Mật khẩu chưa khớp',
                 validate: function () {
                     if ($('#NhapLaiMatKhau').val() != $('#MatKhau').val()) {
+                        return false;
+                    }
+                }            
+            },
+            {
+                input: $('#MatKhauCap2'),
+                thongBao: 'Mật khẩu cấp 2 không được trùng với Mật khẩu cấp 1',
+                validate: function () {
+                    if ($('#MatKhauCap2').val() == $('#MatKhau').val()) {
                         return false;
                     }
                 }            
@@ -96,7 +91,10 @@ function khoiTaoDangKy($form) {
     });
 }
 
-//Xử lý đăng nhập
+//#endregion
+
+//#region Xử lý đăng nhập
+
 function khoiTaoDangNhap($form) {
     khoiTaoLCTForm($form, {
         submit: function (e) {
@@ -109,21 +107,22 @@ function khoiTaoDangNhap($form) {
                 if (data.trangThai == 0) {
                     window.location = '/TrangChu/';
                 }
-                if (data.trangThai == 5) {
+                else if (data.trangThai == 5)
+                {
+                    moPopup({
+                        tieuDe: 'Thông báo',
+                        thongBao: data.ketQua,
+                        bieuTuong: 'thong-tin'
+                    });
+                }
+                else
+                {
                     moPopup({
                         tieuDe: 'Thông báo',
                         thongBao: data.ketQua,
                         bieuTuong: 'nguy-hiem'
                     });
                 }
-                if (data.trangThai == 1) {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        thongBao: data.ketQua,
-                        bieuTuong: 'nguy-hiem'
-                    });
-                }
-                
             }).fail(function () {
                 moPopup({
                     tieuDe: 'Thông báo',
@@ -141,3 +140,5 @@ function khoiTaoDangNhap($form) {
         }
     });
 }
+
+//#endregion

@@ -43,37 +43,30 @@
         <div class="dong-noi-dung">
             <div class="tieu-de">Tên đăng nhập</div>
             <div class="noi-dung" data-change="TenDangNhap">@Model.tenTaiKhoan</div>
-            <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="TenDangNhap"></a>
         </div> 
         <div class="dong-noi-dung">
             <div class="tieu-de">Mật khẩu</div>
             <div class="noi-dung" data-change="MatKhau">**********</div>
-            <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="MatKhau"></a>
         </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Email</div>
             <div class="noi-dung" data-change="Email">@Model.email</div>
-            <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="Email"></a>
         </div>  
         <div class="dong-noi-dung">
             <div class="tieu-de">Giới tính</div>
-            <div class="noi-dung" data-change="Email">@Model.gioiTinh</div>
-            <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="Email"></a>
+            <div class="noi-dung" data-change="Email">@Helpers.NguoiDungHelper.chuyenGioiTinh(Model.gioiTinh)</div>
         </div>      
         <div class="dong-noi-dung">
             <div class="tieu-de">Ngày sinh</div>
             <div class="noi-dung" data-change="NgaySinh">@(Model.ngaySinh.HasValue ? @Model.ngaySinh.Value.ToString("dd/M/yyyy") : null)</div>
-            <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="NgaySinh"></a>
         </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Địa chỉ</div>
             <div class="noi-dung" data-change="DiaChi">@Model.diaChi</div>
-            <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="DiaChi"></a>
         </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Số điện thoại</div>
             <div class="noi-dung" data-change="SoDienThoai">@Model.soDienThoai</div>
-            <a href="javascript:void(0)" class="chuc-nang pe-7s-pen" data-edit="SoDienThoai"></a>
         </div>
     </section>
 </section>
