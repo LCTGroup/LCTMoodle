@@ -25,7 +25,7 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 --401
 	
 --5xx: Khóa học
---501
+--519
 --	('KH', 5, 0,	N'','',0,0),		--|
 	('KH', 501, 1,	N'Quản lý quyền',					'QuanLyQuyen',				0,		2),		--|
 
