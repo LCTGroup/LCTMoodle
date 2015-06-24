@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿SELECT Ho, TenLot, Ten FROM NguoiDung WHERE Ma > 3
 
 UPDATE NguoiDung
@@ -18,3 +17,4 @@ where Ma=311
 
 alter table dbo.NguoiDung
 add MatKhauCap2 NVARCHAR(MAX)
+﻿select * from quyen

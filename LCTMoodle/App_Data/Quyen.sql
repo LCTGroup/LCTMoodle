@@ -78,7 +78,8 @@ BEGIN
 
 	RETURN @chuoiMaLa
 END
-
+EXEC layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri 1, 'KH', 1
+SELECT * from nhomnguoidung_kh_quyen
 GO
 --Lấy danh sách quyền theo mã người dùng và đối tượng
 CREATE PROC dbo.layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri (
