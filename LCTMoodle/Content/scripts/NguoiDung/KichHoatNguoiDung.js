@@ -28,16 +28,7 @@ function khoiTaoKichHoatTaiKhoan($form) {
                             href: '/TrangChu/'
                         }]
                     });
-                }
-                else if (data.trangThai == 3)
-                {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        thongBao: data.ketQua,
-                        bieuTuong: 'nguy-hiem'                        
-                    });
-                }
-                else {
+                } else {
                     moPopup({
                         tieuDe: 'Thông báo',
                         thongBao: data.ketQua,

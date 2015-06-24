@@ -31,11 +31,15 @@ html:after {
 
 html.focus:after,
 html:hover:after {
-    background-color: #08c;
+    background-color: #08c !important;
 }
 
 html.loi:after {
-    background-color: #e00;
+    background-color: #e00 !important;
+}
+
+html.bat-buoc:after {
+    background-color: #f90;
 }
 
 .cke_editable

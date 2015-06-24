@@ -109,7 +109,12 @@ namespace LCTMoodle.Controllers
 
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            return Json(KhoaHocBUS.them(chuyenDuLieuForm(formCollection)));
+            Form form = chuyenForm(formCollection);
+            if (Session["NguoiDung"] != null)
+            {
+                form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+            }
+            return Json(KhoaHocBUS.them(form));
         }
 
         public ActionResult _Khung(int ma)

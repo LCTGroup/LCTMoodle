@@ -1,6 +1,6 @@
 ﻿@model DTOLayer.BaiVietBaiTapDTO
 
-<form class="noi-dung lct-form" id="tao_bai_viet_form" @(Model != null ? "data-cap-nhat" : null)>
+<form class="noi-dung lct-form" id="tao_bai_viet_form" @(Model != null ? "data-cap-nhat" : null) data-an-rang-buoc>
     @if (Model == null)
     {
         <input type="hidden" name="MaKhoaHoc" value="@ViewData["MaKhoaHoc"]" />
@@ -29,10 +29,8 @@
                 <section class="noi-dung">
                     <article class="input">
                         <input type="file" name="MaTapTin"
-                            @if (Model != null && Model.tapTin != null) 
-                            {  
-                                @: data-ma-mac-dinh="@Model.tapTin.ma" data-loai-mac-dinh="BaiVietDienDan_TapTin"
-                            } />
+                               @if (Model != null && Model.tapTin != null) {   @: data-ma-mac-dinh="@Model.tapTin.ma" data-loai-mac-dinh="BaiVietDienDan_TapTin"
+                                                           } />
                     </article>
                 </section>
             </li>
@@ -54,7 +52,7 @@
             </li>
         </ul>
         <section data-an class="khung-button">
-            <button type="submit" class="chap-nhan">                
+            <button type="submit" class="chap-nhan">
                 @(Model == null ? "Đăng" : "Cập nhật")
             </button>
         </section>

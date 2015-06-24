@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿SELECT Ho, TenLot, Ten FROM NguoiDung WHERE Ma > 3
 
 UPDATE NguoiDung

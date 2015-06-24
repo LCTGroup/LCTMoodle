@@ -59,7 +59,14 @@
                         <li><a href="#"><i class="pe-7s-global"></i></a></li>
                         <li>
                             <a href="javascript:void(0)" data-mo-doi-tuong="HopDieuKhien">
-                                <img src="@(nguoiDung.hinhDaiDien != null ? "/LayTapTin/NguoiDung_HinhDaiDien/" + nguoiDung.hinhDaiDien.ma : "#")" />
+                                @if (nguoiDung.hinhDaiDien != null)
+                                {
+                                    <img src="/LayTapTin/NguoiDung_HinhDaiDien/@nguoiDung.hinhDaiDien.ma" />    
+                                }
+                                else
+                                {
+                                    <div class="hinh-dai-dien"><i></i></div>
+                                }
                                 <span>@nguoiDung.tenTaiKhoan</span>
                             </a>
                             <div class="hop-dieu-khien" data-doi-tuong="HopDieuKhien">
@@ -134,7 +141,10 @@
                             <a href="/NguoiDung/Xem/@nguoiDung.ma">
                                 <section class="khung-thong-tin">
                                     <div class="hinh-dai-dien">
-                                        <img src="/LayTapTin/NguoiDung_HinhDaiDien/@(nguoiDung.hinhDaiDien != null ? nguoiDung.hinhDaiDien.ma : null)" />
+                                        @if (nguoiDung.hinhDaiDien != null)
+                                        {
+                                            <img src="/LayTapTin/NguoiDung_HinhDaiDien/@nguoiDung.hinhDaiDien.ma" />
+                                        }
                                     </div>
                                     <div class="thong-tin-nguoi-dung">
                                         <div class="ten-nguoi-dung">@nguoiDung.ho @nguoiDung.tenLot @nguoiDung.ten</div>

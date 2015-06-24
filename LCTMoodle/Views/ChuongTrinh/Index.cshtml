@@ -1,4 +1,4 @@
-﻿@model List<DTOLayer.GiaoTrinhDTO>
+﻿@model List<DTOLayer.ChuongTrinhDTO>
 
 @{
     var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocDTO;
@@ -9,14 +9,14 @@
     {
         "Khóa học của tôi", "/KhoaHoc",
         khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
-        "Soạn giáo trình", "/GiaoTrinh/" + khoaHoc.ma
+        "Soạn giáo trình", "/ChuongTrinh/" + khoaHoc.ma
     };
 }
 @section Styles {
-    <link href="/Index.css/GiaoTrinh" rel="stylesheet" />
+    <link href="/Index.css/ChuongTrinh" rel="stylesheet" />
 }
 @section Scripts {
-    <script src="/Index.js/GiaoTrinh"></script>
+    <script src="/Index.js/ChuongTrinh"></script>
     <script>
         maKhoaHoc = '@khoaHoc.ma';
     </script>
@@ -31,6 +31,7 @@
             <article id="khung_giao_trinh" class="lct-bang khung-giao-trinh">
                 <section class="thead">
                     <article class="tr">
+                        <section class="th"></section>
                         <section class="th">Công việc</section>
                         <section class="th">Mô tả</section>
                         <section class="th">Thời gian</section>
@@ -41,12 +42,13 @@
                     {
                         foreach (var item in Model)
                         {
-                            @Html.Partial("~/Views/GiaoTrinh/_Item_Tao.cshtml", item)
+                            @Html.Partial("~/Views/ChuongTrinh/_Item.cshtml", item)
                         }
                     }
                 </section>
-                <form id="tao_giao_trinh_form" class="lct-form tao-giao-trinh-form tfoot">
+                <form id="tao_giao_trinh_form" class="lct-form tao-giao-trinh-form tfoot" data-an-rang-buoc>
                     <section class="tr">
+                        <section class="td"></section>
                         <section class="td">
                             <input type="hidden" name="KhoaHoc" value="@khoaHoc.ma" />
                             <article class="input">
@@ -55,7 +57,7 @@
                         </section>
                         <section class="td">
                             <article class="input">
-                                <input data-validate="bat-buoc" type="text" name="MoTa" placeholder="Mô tả" />
+                                <textarea name="MoTa" placeholder="Mô tả" style="height: 20px;"></textarea>
                             </article>
                         </section>
                         <section class="td">

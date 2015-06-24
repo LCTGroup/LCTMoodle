@@ -1,15 +1,16 @@
-﻿@model DTOLayer.GiaoTrinhDTO
+﻿@model DTOLayer.ChuongTrinhDTO
 
 <section class="tr item-giao-trinh" data-doi-tuong="item-giao-trinh" data-ma="@Model.ma">
+    <section class="td"></section>
     <section class="td">
         @Model.congViec
     </section>
     <section class="td">
         @Model.moTa
     </section>
-    <section class="td" style="position: relative">
+    <section class="td" style="position: relative;">
         @Model.thoiGian
-        <section class="khung-chuc-nang-lct" style="top: 1px; right: 1px;">
+        <section class="khung-chuc-nang-lct trai">
             <ul data-doi-tuong="cngt-@Model.ma">
                 <li>
                     <a data-chuc-nang="xoa">Xóa giáo trình</a>

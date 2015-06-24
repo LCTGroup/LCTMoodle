@@ -222,14 +222,20 @@
     .lct-form input[type="text"][class*=" loi-"],
     .lct-form input[type="password"][class^="loi-"],
     .lct-form input[type="password"][class*=" loi-"] {
-        border-left-color: #e00;
+        border-left-color: #e00 !important;
     }
 
     .lct-form input[type="text"]:hover,
     .lct-form input[type="password"]:hover,
     .lct-form input[type="text"]:focus,
     .lct-form input[type="password"]:focus {
-        border-left-color: #08c;
+        border-left-color: #08c !important;
+    }
+    
+
+    .lct-form:not([data-an-rang-buoc]) input[type="text"][data-validate~="bat-buoc"],
+    .lct-form:not([data-an-rang-buoc]) input[type="password"][data-validate~="bat-buoc"] {
+        border-left-color: #f90;
     }
 
 /*#endregion */
@@ -251,13 +257,17 @@
 
     .lct-form textarea[class^="loi-"],
     .lct-form textarea[class*=" loi-"] {
-        border-left-color: #e00;
+        border-left-color: #e00 !important;
     }
 
-.lct-form textarea:hover,
-.lct-form textarea:focus {
-    border-left-color: #08c;
-}
+    .lct-form textarea:hover,
+    .lct-form textarea:focus {
+        border-left-color: #08c !important;
+    }
+
+    .lct-form:not([data-an-rang-buoc]) textarea[data-validate~="bat-buoc"] {
+        border-left-color: #f90;
+    }
 
 /*#endregion */
 
@@ -279,12 +289,16 @@
 
     .lct-form select[class^="loi-"],
     .lct-form select[class*=" loi-"] {
-        border-left-color: #e00;
+        border-left-color: #e00 !important;
     }
 
     .lct-form select:hover,
     .lct-form select:focus {
-        border-left-color: #08c;
+        border-left-color: #08c !important;
+    }
+
+    .lct-form:not([data-an-rang-buoc]) select[data-validate~="bat-buoc"] {
+        border-left-color: #f90;
     }
 
 /*#endregion */
@@ -448,14 +462,18 @@
 
     .lct-form .file-label input[type="file"][class^="loi-"] ~ u,
     .lct-form .file-label input[type="file"][class*=" loi-"] ~ u {
-        background-color: #e00;
+        background-color: #e00 !important;
     }
 
-.lct-form .file-label:hover u,
-.lct-form .file-label input[type="file"]:focus ~ u,
-.lct-form .file-label input[type="file"].dang ~ u {
-    background-color: #08c !important;
-}
+    .lct-form .file-label:hover u,
+    .lct-form .file-label input[type="file"]:focus ~ u,
+    .lct-form .file-label input[type="file"].dang ~ u {
+        background-color: #08c !important;
+    }
+
+    .lct-form:not([data-an-rang-buoc]) .file-label input[type="file"][data-validate~="bat-buoc"] ~ u {
+        background-color: #f90;
+    }
 
 /*#endregion */
 
@@ -484,6 +502,10 @@
     .lct-form input[data-input-type="chu-de"]:focus {
         border-left-color: #08c;
     }
+    
+    .lct-form:not([data-an-rang-buoc]) input[data-input-type="chu-de"][data-validate~="bat-buoc"] {
+        border-left-color: #f90;
+    }
 
 /*#endregion */
 
@@ -504,12 +526,16 @@
 
     .lct-form input[data-input-type="goi-y"][class^="loi-"],
     .lct-form input[data-input-type="goi-y"][class*=" loi-"] {
-        border-left-color: #e00;
+        border-left-color: #e00 !important;
     }
     
     .lct-form input[data-input-type="goi-y"]:hover,
     .lct-form input[data-input-type="goi-y"]:focus {
-        border-left-color: #08c;
+        border-left-color: #08c !important;
+    }
+    
+    .lct-form:not([data-an-rang-buoc]) input[data-input-type="goi-y"][data-validate~="bat-buoc"] {
+        border-left-color: #f90;
     }
 
 .lct-form .khung-input-goi-y {
@@ -616,14 +642,19 @@
     .lct-form input[data-input-type="gio"][class*=" loi-"],
     .lct-form input[data-input-type="ngay"][class^="loi-"],
     .lct-form input[data-input-type="ngay"][class*=" loi-"] {
-        border-left-color: #e00;
+        border-left-color: #e00 !important;
     }
 
     .lct-form input[data-input-type="gio"]:hover,
     .lct-form input[data-input-type="ngay"]:hover,
     .lct-form input[data-input-type="gio"]:focus,
     .lct-form input[data-input-type="ngay"]:focus {
-        border-left-color: #08c;
+        border-left-color: #08c !important;
+    }
+
+    .lct-form:not([data-an-rang-buoc]) input[data-input-type="gio"][data-validate~="bat-buoc"],
+    .lct-form:not([data-an-rang-buoc]) input[data-input-type="ngay"][data-validate~="bat-buoc"] {
+        border-left-color: #f90;
     }
 
 /*#region Đồng hồ */

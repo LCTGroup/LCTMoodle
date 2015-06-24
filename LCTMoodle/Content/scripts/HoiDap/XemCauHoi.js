@@ -33,17 +33,10 @@ function khoiTaoChucNangTraLoi($form) {
                     khoiTaoLCTFormMacDinh($form);
                     khoiTaoTraLoi($traLoiMoi);
                 }
-                else if (data.trangThai == 3) {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        thongBao: 'Vui lòng đăng nhập để trả lời',
-                        bieuTuong: 'thong-tin'
-                    });
-                }
                 else {
                     moPopup({
                         tieuDe: 'Thông báo',
-                        thongBao: 'Thêm trả lời thất bại',
+                        thongBao: data.ketQua,
                         bieuTuong: 'nguy-hiem'
                     });
                 }

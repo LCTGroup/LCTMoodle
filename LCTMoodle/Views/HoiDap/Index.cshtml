@@ -58,7 +58,14 @@
                             {
                                 <div class="nguoi-dang">
                                     <a href="/NguoiDung/Xem/@Model[i].nguoiTao.ma">
-                                        <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model[i].nguoiTao.hinhDaiDien.ma" />
+                                        @if (Model[i].nguoiTao.hinhDaiDien != null)
+                                        {
+                                            <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model[i].nguoiTao.hinhDaiDien.ma" />
+                                        }
+                                        else
+                                        {
+                                            <img src="/avatarDefault.png/NguoiDung" />
+                                        }
                                         <span>@Model[i].nguoiTao.tenTaiKhoan</span>
                                     </a>
                                 </div>

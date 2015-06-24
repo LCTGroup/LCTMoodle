@@ -1,8 +1,8 @@
 ﻿use rtcmfraf_Moodle;
 
 GO
---Tạo giáo trình
-CREATE TABLE dbo.GiaoTrinh (
+--Chương trình
+CREATE TABLE dbo.ChuongTrinh (
 	Ma INT PRIMARY KEY IDENTITY(1, 1),
 	MaKhoaHoc INT NOT NULL,
 	CongViec NVARCHAR(MAX) NOT NULL,
@@ -12,8 +12,8 @@ CREATE TABLE dbo.GiaoTrinh (
 )
 
 GO
---Lấy giáo trình theo mã khóa học
-ALTER PROC dbo.layGiaoTrinhTheoMaKhoaHoc (
+--Lấy chương trình theo mã khóa học
+CREATE PROC dbo.layChuongTrinhTheoMaKhoaHoc (
 	@0 INT --MaKhoaHoc
 )
 AS
@@ -25,14 +25,14 @@ BEGIN
 		MoTa,
 		ThoiGian,
 		ThuTu
-		FROM dbo.GiaoTrinh
+		FROM dbo.ChuongTrinh
 		WHERE MaKhoaHoc = @0
 		ORDER BY ThuTu
 END
 
 GO
---Thêm giáo trình
-ALTER PROC dbo.themGiaoTrinh (
+--Thêm chương trình
+CREATE PROC dbo.themChuongTrinh (
 	@0 INT, --MaKhoaHoc
 	@1 NVARCHAR(MAX), --CongViec
 	@2 NVARCHAR(MAX), --ThoiGian
@@ -44,7 +44,7 @@ BEGIN
 	DECLARE @thuTu INT
 
 	SELECT @thuTu = MAX(ThuTu)
-		FROM dbo.GiaoTrinh
+		FROM dbo.ChuongTrinh
 		WHERE MaKhoaHoc = @0
 
 	SET @thuTu = 
@@ -55,7 +55,7 @@ BEGIN
 			@thuTu + 1
 		END
 
-	INSERT INTO dbo.GiaoTrinh (MaKhoaHoc, CongViec, MoTa, ThoiGian, ThuTu)
+	INSERT INTO dbo.ChuongTrinh (MaKhoaHoc, CongViec, MoTa, ThoiGian, ThuTu)
 		VALUES (@0, @1, @2, @3, @thuTu)
 		
 	SELECT TOP 1
@@ -64,25 +64,25 @@ BEGIN
 		CongViec,
 		MoTa,
 		ThoiGian
-		FROM dbo.GiaoTrinh
+		FROM dbo.ChuongTrinh
 		WHERE Ma = @@IDENTITY
 END
 
 GO
 --Xóa giáo trình
-CREATE PROC dbo.xoaGiaoTrinhTheoMa (
+CREATE PROC dbo.xoaChuongTrinhTheoMa (
 	@0 INT --Ma
 )
 AS
 BEGIN
-	DELETE FROM dbo.GiaoTrinh
+	DELETE FROM dbo.ChuongTrinh
 		WHERE Ma = @0
 END
 
 GO
 --[Trigger] Xóa giáo trinh
-CREATE TRIGGER dbo.xoaGiaoTrinh_TRIGGER
-	ON dbo.GiaoTrinh
+CREATE TRIGGER dbo.xoaChuongTrinh_TRIGGER
+	ON dbo.ChuongTrinh
 	AFTER DELETE
 AS
 BEGIN
@@ -90,7 +90,7 @@ BEGIN
 		SET
 			GT.ThuTu = GT.ThuTu - 1
 		FROM
-			dbo.GiaoTrinh GT
+			dbo.ChuongTrinh GT
 				INNER JOIN deleted d
 				ON 
 					GT.MaKhoaHoc = d.MaKhoaHoc AND
@@ -99,7 +99,7 @@ END
 
 GO
 --Thay đổi thứ tự
-ALTER PROC dbo.capNhatGiaoTrinh_ThuTu (
+CREATE PROC dbo.capNhatChuongTrinh_ThuTu (
 	@0 INT, --ThuTu cũ
 	@1 INT, --ThuTu mới
 	@2 INT --MaKhoaHoc
@@ -135,7 +135,7 @@ BEGIN
 				ELSE
 					@1
 				END
-		FROM dbo.GiaoTrinh GT
+		FROM dbo.ChuongTrinh GT
 		WHERE 
 			GT.MaKhoaHoc = @2 AND
 			GT.ThuTu BETWEEN @gioiHanDuoi AND @gioiHanTren

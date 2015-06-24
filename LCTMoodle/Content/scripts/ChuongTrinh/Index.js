@@ -6,23 +6,24 @@ $(function () {
 
     khoiTaoForm($_Khung.find('#tao_giao_trinh_form'));
     khoiTaoItem($_DanhSach.children());
+    capNhatThuTu();
 })
 
 function khoiTaoForm($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
             $.ajax({
-                url: '/GiaoTrinh/XuLyThem',
+                url: '/ChuongTrinh/XuLyThem',
                 type: 'POST',
                 data: $form.serialize(),
-                dataType: 'JSON',
-                async: false
+                dataType: 'JSON'
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     var $item = $(data.ketQua);
                     khoiTaoItem($item);
 
                     $_Khung.find('.tbody').append($item);
+                    $item.find('.td:eq(0)').text($item.index() + 1);
 
                     khoiTaoLCTFormMacDinh($form);
                 }
@@ -61,11 +62,12 @@ function khoiTaoItem($item) {
                     loai: 'can-than',
                     xuLy: function () {
                         $.ajax({
-                            url: '/GiaoTrinh/XuLyXoa/' + $item.attr('data-ma'),
+                            url: '/ChuongTrinh/XuLyXoa/' + $item.attr('data-ma'),
                             type: 'POST',
                             dataType: 'JSON'
                         }).done(function () {
                             $item.remove();
+                            capNhatThuTu();
                         }).fail(function () {
                             moPopup({
                                 tieuDe: 'Thông báo',
@@ -104,9 +106,11 @@ function khoiTaoItem($item) {
 
                         if (e.offsetY < this.offsetHeight / 2) {
                             $item.before($itemKeo);
+                            capNhatThuTu();
                         }
                         else {
                             $item.after($itemKeo);
+                            capNhatThuTu();
                         }
                     },
                     'drop.keo-thu-tu': function () {
@@ -127,7 +131,7 @@ function khoiTaoItem($item) {
 
                         if (mangTam.keo === true) {
                             $.ajax({
-                                url: '/GiaoTrinh/XuLyCapNhatThuTu/',
+                                url: '/ChuongTrinh/XuLyCapNhatThuTu/',
                                 type: 'POST',
                                 data: { thuTuCu: mangTam.viTriBatDau + 1, thuTuMoi: $itemKeo.index() + 1, maKhoaHoc: maKhoaHoc },
                                 dataType: 'JSON'
@@ -143,9 +147,11 @@ function khoiTaoItem($item) {
 
                                     if (viTriHienTai < viTriBatDau) {
                                         $_DanhSach.children(':nth-child(' + (viTriBatDau + 1) + ')').after($itemKeo);
+                                        capNhatThuTu();
                                     }
                                     else if (viTriHienTai > viTriBatDau) {
                                         $_DanhSach.children(':nth-child(' + (viTriBatDau + 1) + ')').before($itemKeo);
+                                        capNhatThuTu();
                                     }
                                 }
                             }).fail(function () {
@@ -163,6 +169,7 @@ function khoiTaoItem($item) {
                                 else if (viTriHienTai > viTriBatDau) {
                                     $_DanhSach.children(':nth-child(' + (viTriBatDau + 1) + ')').before($itemKeo);
                                 }
+                                capNhatThuTu();
                             });
                         }
                         else {
@@ -182,3 +189,13 @@ function khoiTaoItem($item) {
         })
     })
 }
+
+//#region Hỗ trợ
+
+function capNhatThuTu() {
+    $_DanhSach.find('.tr').each(function (index) {
+        $(this).find('.td:eq(0)').text(index + 1);
+    });
+}
+
+//#endregion

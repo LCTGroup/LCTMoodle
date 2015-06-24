@@ -62,7 +62,7 @@ body:not(.tai) > .bieu-tuong-tai {
     position: absolute;
     top: 1px;
     right: 1px;
-    z-index: 8;
+    z-index: 1;
 }
 
     .khung-chuc-nang-lct button {
@@ -98,8 +98,13 @@ body:not(.tai) > .bieu-tuong-tai {
         background-color: #fff;
         border: 1px solid #ddd;
         display: none;
-        z-index: 9;
+        z-index: 1;
     }
+
+        .khung-chuc-nang-lct.trai ul {
+            top: -4px;
+            right: 22px;
+        }
 
         .khung-chuc-nang-lct ul:before,
         .khung-chuc-nang-lct ul:after {
@@ -109,17 +114,36 @@ body:not(.tai) > .bieu-tuong-tai {
             height: 0;
             border: 5px solid transparent;
             position: absolute;
+        }
+        
+        .khung-chuc-nang-lct:not(.trai) ul:before,
+        .khung-chuc-nang-lct:not(.trai) ul:after  {
             right: 5px;
         }
 
-        .khung-chuc-nang-lct ul:before {
+        .khung-chuc-nang-lct:not(.trai) ul:before {
             border-bottom-color: #ddd;
             top: -10px;
         }
 
-        .khung-chuc-nang-lct ul:after {
+        .khung-chuc-nang-lct:not(.trai) ul:after {
             border-bottom-color: #fff;
             top: -9px;
+        }
+        
+        .khung-chuc-nang-lct.trai ul:before,
+        .khung-chuc-nang-lct.trai ul:after {
+            top: 5px;
+        }
+
+        .khung-chuc-nang-lct.trai ul:before {
+            border-left-color: #ddd;
+            right: -10px;
+        }
+
+        .khung-chuc-nang-lct.trai ul:after {
+            border-left-color: #fff;
+            right: -9px;
         }
 
     .khung-chuc-nang-lct li a {
@@ -480,8 +504,22 @@ header .top-header {
                         float: left;                                       
                         padding: 7px;
                         width: 22px;
-                        height: 22px;
+                        height: 22px;                        
                     }
+                    .hop-nguoi-dung ul.da-dang-nhap > li > a > .hinh-dai-dien {
+                        padding: 7px;
+                        width: 22px;
+                        height: 22px;
+                        display: block;
+                        float: left;  
+                    }
+                        .hop-nguoi-dung ul.da-dang-nhap > li > a > .hinh-dai-dien > i {
+                            background: url("/NguoiDung.png/NguoiDung") no-repeat;
+                            width: 22px;
+                            height: 22px;
+                            display: block;
+                        }
+
 
                     /*#region Hộp điều khiển */
 
@@ -715,6 +753,7 @@ main > .cot-trai {
         max-width: 40px;
         min-width: 40px;    
         position: relative;
+        background: url('/NguoiDung.png/NguoiDung') no-repeat -22px 0;
     }
         .khung-thong-tin .hinh-dai-dien img {
             height: 100%;

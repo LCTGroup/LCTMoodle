@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTOLayer
 {
-    public class GiaoTrinhDTO : DTO
+    public class ChuongTrinhDTO : DTO
     {
         public KhoaHocDTO khoaHoc;
         public string congViec;

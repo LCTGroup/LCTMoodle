@@ -2,7 +2,7 @@
 
 @if (Model != null)
 {
-    <article class="muc-hoi-dap cau-hoi">
+<article class="muc-hoi-dap cau-hoi">
 
     <section class="khung-chuc-nang-lct">
 
@@ -22,15 +22,24 @@
     </section>
 
     <section class="thong-tin">
-        <a href="@(Model.nguoiTao != null ? "/NguoiDung/Xem/" + Model.nguoiTao.ma : "void(0)")">
-            <div class="nguoi-dung">
-                <div class="hinh-dai-dien">
-                    <img src="/Content/images/user-avatar.jpg" />
+        @if (Model.nguoiTao != null)
+        {
+            <a href="/NguoiDung/Xem/@Model.nguoiTao.ma">
+                <div class="nguoi-dung">
+                    <div class="hinh-dai-dien">
+                        @if (Model.nguoiTao.hinhDaiDien != null)
+                        {
+                            <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.nguoiTao.hinhDaiDien.ma" />
+                        }
+                        else
+                        {
+                            <img src="/avatarDefault.png/NguoiDung" />
+                        }
+                    </div>
+                    <span>@Model.nguoiTao.tenTaiKhoan</span>
                 </div>
-                <span>@Model.nguoiTao.tenTaiKhoan</span>
-            </div>
-        </a>
-
+            </a>
+        }
         <div class="diem-so">
             <i class="pe-7s-angle-up"></i>
             <span class="so">5</span>
@@ -61,4 +70,3 @@
 
 </article>
 }
-

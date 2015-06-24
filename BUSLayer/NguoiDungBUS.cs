@@ -230,6 +230,12 @@ namespace BUSLayer
             }
 
             NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
+            if (nguoiDung.maKichHoat == null)
+            {
+                ketQua.trangThai = 5;
+                ketQua.ketQua = "Tài khoản đã được kích hoạt. Bạn đã có thể đăng nhập vào LCTMoodle";
+                return ketQua;
+            }
             if (nguoiDung.maKichHoat != maKichHoat)
             {
                 ketQua.trangThai = 3;
@@ -340,7 +346,7 @@ namespace BUSLayer
             }
                        
             //Xóa session            
-            HttpContext.Current.Session.Clear();
+            HttpContext.Current.Session["NguoiDung"] = null;
         }
         
         public static bool tonTaiTenTaiKhoan(string tenTaiKhoan)

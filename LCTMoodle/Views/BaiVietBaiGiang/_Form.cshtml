@@ -1,6 +1,6 @@
 ﻿@model DTOLayer.BaiVietBaiGiangDTO
 
-<form class="noi-dung lct-form" id="tao_bai_viet_form" @(Model != null ? "data-cap-nhat" : null)>
+<form class="noi-dung lct-form" id="tao_bai_viet_form" @(Model != null ? "data-cap-nhat" : null) data-an-rang-buoc>
     @if (Model == null)
     {
         <input type="hidden" name="MaKhoaHoc" value="@ViewData["MaKhoaHoc"]" />

@@ -1,13 +1,13 @@
 ﻿@model DTOLayer.BaiVietDienDanDTO
 
-<form class="noi-dung lct-form" id="tao_bai_viet_form" @(Model != null ? "data-cap-nhat" : null)>
-    @if(Model == null)
+<form class="noi-dung lct-form" id="tao_bai_viet_form" @(Model != null ? "data-cap-nhat" : null) data-an-rang-buoc>
+    @if (Model == null)
     {
-        <input type="hidden" name="MaKhoaHoc" value="@ViewData["MaKhoaHoc"]" />   
+        <input type="hidden" name="MaKhoaHoc" value="@ViewData["MaKhoaHoc"]" />
     }
     else
     {
-        <input type="hidden" name="Ma" value="@Model.ma" />      
+        <input type="hidden" name="Ma" value="@Model.ma" />
     }
     <article>
         <ul>
@@ -28,11 +28,9 @@
             <li data-an>
                 <section class="noi-dung">
                     <article class="input">
-                        <input type="file" name="MaTapTin" 
-                        @if (Model != null && Model.tapTin != null) 
-                        { 
-                                @:data-ma-mac-dinh="@Model.tapTin.ma" data-loai-mac-dinh="BaiVietDienDan_TapTin"
-                        } />
+                        <input type="file" name="MaTapTin"
+                               @if (Model != null && Model.tapTin != null) {  @: data-ma-mac-dinh="@Model.tapTin.ma" data-loai-mac-dinh="BaiVietDienDan_TapTin"
+                                                       } />
                     </article>
                 </section>
             </li>

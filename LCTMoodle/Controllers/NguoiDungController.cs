@@ -44,7 +44,15 @@ namespace LCTMoodle.Controllers
             ViewData["CotTrai"] = false;
             ViewData["CotPhai"] = false;
 
-            KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenTaiKhoan);            
+            KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenTaiKhoan);  
+            if (ketQua.trangThai == 0)
+            {
+                NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
+                if (nguoiDung.maKichHoat == null)
+                {
+                    return RedirectToAction("DangNhap", "NguoiDung");
+                }
+            }
             return View(ketQua.ketQua);
         }
 

@@ -43,7 +43,7 @@
     <Compile Include="BangCapNhat.cs" />
     <Compile Include="DTO.cs" />
     <Compile Include="Form.cs" />
-    <Compile Include="GiaoTrinhDTO.cs" />
+    <Compile Include="ChuongTrinhDTO.cs" />
     <Compile Include="KetQua.cs" />
     <Compile Include="KhoaHoc_NguoiDungDTO.cs" />
     <Compile Include="LienKet.cs" />

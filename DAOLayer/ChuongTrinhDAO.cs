@@ -9,11 +9,11 @@ using System.Reflection;
 
 namespace DAOLayer
 {
-    public class GiaoTrinhDAO : DAO<GiaoTrinhDAO, GiaoTrinhDTO>
+    public class ChuongTrinhDAO : DAO<ChuongTrinhDAO, ChuongTrinhDTO>
     {
-        public static GiaoTrinhDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
+        public static ChuongTrinhDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
-            GiaoTrinhDTO giaoTrinh = new GiaoTrinhDTO();
+            ChuongTrinhDTO giaoTrinh = new ChuongTrinhDTO();
 
             int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
@@ -60,7 +60,7 @@ namespace DAOLayer
         {
             return layDanhSachDong
             (
-                "layGiaoTrinhTheoMaKhoaHoc",
+                "layChuongTrinhTheoMaKhoaHoc",
                 new object[]
                 {
                     maKhoaHoc
@@ -69,11 +69,11 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua them(GiaoTrinhDTO giaoTrinh)
+        public static KetQua them(ChuongTrinhDTO giaoTrinh)
         {
             return layDong
             (
-                "themGiaoTrinh",
+                "themChuongTrinh",
                 new object[]
                 {
                     layMa(giaoTrinh.khoaHoc),
@@ -88,7 +88,7 @@ namespace DAOLayer
         {
             return khongTruyVan
             (
-                "xoaGiaoTrinhTheoMa",
+                "xoaChuongTrinhTheoMa",
                 new object[]
                 {
                     ma
@@ -100,7 +100,7 @@ namespace DAOLayer
         {
             return khongTruyVan
             (
-                "capNhatGiaoTrinh_ThuTu",
+                "capNhatChuongTrinh_ThuTu",
                 new object[]
                 {
                     thuTuCu,
