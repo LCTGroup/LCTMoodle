@@ -256,7 +256,6 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            
             return ketQua;            
         }
 

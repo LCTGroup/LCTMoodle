@@ -1,19 +1,19 @@
 ﻿@model DTOLayer.ChuongTrinhDTO
 
-<section class="tr item-giao-trinh" data-doi-tuong="item-giao-trinh" data-ma="@Model.ma">
+<section class="tr item-chuong-trinh" data-doi-tuong="item-chuong-trinh" data-ma="@Model.ma">
     <section class="td"></section>
     <section class="td">
-        @Model.congViec
+        @Model.baiHoc
     </section>
     <section class="td">
-        @Model.moTa
+        @Model.noiDung
     </section>
     <section class="td" style="position: relative;">
         @Model.thoiGian
         <section class="khung-chuc-nang-lct trai">
             <ul data-doi-tuong="cngt-@Model.ma">
                 <li>
-                    <a data-chuc-nang="xoa">Xóa giáo trình</a>
+                    <a data-chuc-nang="xoa">Xóa bài học</a>
                 </li>
             </ul>
             <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cngt-@Model.ma">

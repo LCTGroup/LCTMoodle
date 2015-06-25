@@ -457,7 +457,7 @@ function khoiTaoGoiYInput_LCT($form) {
         var $chua = $inputHienTai.closest('.khung-input-goi-y'),
             $input = $inputHienTai;
 
-        $input.next().change().val('');
+        $input.next().val('').change();
         $input.removeClass('focus').val('').trigger('kiemTra');
 
         mangTam[maTam + 'td'] = false;
@@ -922,7 +922,7 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
     //Chỉ số thực
     $form.find('[data-validate~="so-thuc"]').on({
         'keydown': function (e) {
-            e = e || window.event;
+            var $input = $(this);
             var keyCode = e.keyCode;
 
             if (

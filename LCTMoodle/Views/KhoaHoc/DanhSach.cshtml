@@ -11,6 +11,7 @@
 }
 
 @section Scripts {
+    <script src="/TimKiem.js/LCT"></script>
     <script src="/DanhSach.js/KhoaHoc"></script>
     <script src="/Khung.js/ChuDe/"></script>
 }
@@ -22,18 +23,17 @@
             Tìm kiếm khóa học
         </section>
         <section class="noi-dung khung-khoa-hoc">
-            <section id="form_tim" class="khung-tim lct-form">
+            <section id="khung_tim" class="khung-tim lct-form">
                 <section class="line">
                     <article style="width: 100%" class="input">
-                        <input id="tim_ten" type="text" placeholder="Tên khóa học bạn muốn tìm" />
+                        <input data-doi-tuong="ten-tim" type="text" placeholder="Tên khóa học bạn muốn tìm" />
                     </article>
                     <article style="width: 100%" class="input">
-                        <input id="tim_chu_de" data-input-type="chu-de" placeholder="Chủ đề bạn muốn tìm" />
+                        <input data-doi-tuong="chu-de-tim" data-input-type="chu-de" placeholder="Chủ đề bạn muốn tìm" />
                     </article>
                     <a data-chuc-nang="tat-mo-chu-de" style="min-width: 90px; margin-left: 5px;" class="button inline">Chọn chủ đề</a>
                 </section>
             </section>
-            <section id="chu_de" style="margin-top: 5px;"></section>
         </section>
     </section>
     <section class="hop">

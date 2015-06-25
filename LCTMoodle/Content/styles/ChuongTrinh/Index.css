@@ -23,7 +23,7 @@
     text-align: center;
 }
 
-.khung-giao-trinh.keo .item-giao-trinh:not(.keo) {
+.khung-giao-trinh.keo .item-chuong-trinh:not(.keo) {
     color: #eee;
 }
 

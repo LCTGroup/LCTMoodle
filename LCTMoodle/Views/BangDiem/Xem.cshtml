@@ -1,0 +1,76 @@
+﻿@model DTOLayer.KhoaHocDTO
+@{
+    Layout = "~/Views/LCT/Khung.cshtml";
+    
+    ViewData["TieuDe"] = Model.ten;
+
+    var dsCotDiem = ViewData["CotDiem"] as List<DTOLayer.CotDiemDTO>;
+    var dsNguoiDung = ViewData["NguoiDung"] as List<DTOLayer.NguoiDungDTO>;
+    var chuoiDiem = ViewData["Diem"] as string[];
+    var slCotDiem = dsCotDiem.Count;
+}
+
+@section Styles {
+    <link href="/Xem.css/BangDiem" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="/Xem.js/BangDiem"></script>
+}
+
+<article class="hop hop-2-vien" style="text-align: center;">
+    <section class="tieu-de" style="text-align: left;">
+        Bảng điểm
+    </section>
+    <section class="khung-chuc-nang lct-form">
+        <a data-chuc-nang="sua-bang-diem" class="button">Chuyển chế độ sửa</a>
+    </section>
+    <section class="noi-dung" style="display: inline-block; max-width: 100%;">
+        <article style="border: 0; background-color: transparent;">
+            <section class="khung-diem">
+                <table class="lct-bang" style="width: auto;">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Họ tên</th>
+                            @foreach (var cotDiem in dsCotDiem)
+                            {
+                                <th data-ma="@cotDiem.ma" class="ngay">@(cotDiem.ngay.HasValue ? cotDiem.ngay.Value.ToString("d/M") : null)</th>
+                            }
+                            <th>TB</th>
+                        </tr>
+                    </thead>
+                    <tbody id="khung_diem" class="lct-form" data-cap-nhat>
+                        @{
+                            int iNguoiDung = 0;
+                            foreach (var nguoiDung in dsNguoiDung)
+                            {
+                                <tr data-ma="@nguoiDung.ma">
+                                    <th class="khong-vien">@nguoiDung.ho @nguoiDung.tenLot</th>
+                                    <th class="khong-vien">@nguoiDung.ten</th>
+                                    @{
+                                        double trungBinh = 0;
+                                        int hangHienTai = slCotDiem * iNguoiDung++;
+                                        for (int i = 0; i < slCotDiem; i++)
+                                        {
+                                            string strDiem = chuoiDiem[i + hangHienTai];
+                                            if (strDiem.IsEmpty())
+                                            {
+                                                <td class="cot-diem"></td>
+                                            }
+                                            else
+                                            {
+                                                trungBinh += double.Parse(strDiem);
+                                                <td class="cot-diem" data-diem="@strDiem">@strDiem</td>
+                                            }
+                                        }
+                                        <td>@((trungBinh / slCotDiem).ToString("#.##"))</td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </section>
+        </article>
+    </section>
+</article>

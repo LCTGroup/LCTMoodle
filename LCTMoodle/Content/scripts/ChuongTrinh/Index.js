@@ -51,7 +51,7 @@ function khoiTaoItem($item) {
 
     //Nút xóa
     $item.find('[data-chuc-nang="xoa"]').on('click', function () {
-        var $item = $(this).closest('[data-doi-tuong="item-giao-trinh"]');
+        var $item = $(this).closest('[data-doi-tuong="item-chuong-trinh"]');
         moPopup({
             tieuDe: 'Xác nhận',
             thongBao: 'Bạn có chắc muốn xóa công việc này?',
@@ -96,7 +96,7 @@ function khoiTaoItem($item) {
                 mangTam.keo = false;
                 mangTam.viTriBatDau = $itemKeo.index();
 
-                $itemKeo.siblings('[data-doi-tuong="item-giao-trinh"]').on({
+                $itemKeo.siblings('[data-doi-tuong="item-chuong-trinh"]').on({
                     'dragover.keo-thu-tu': function (e) {
                         e = e.originalEvent;
                         e.preventDefault();
@@ -127,7 +127,7 @@ function khoiTaoItem($item) {
                     },
                     'dragend.keo-thu-tu': function () {
                         $_Khung.add($itemKeo).removeClass('keo');
-                        $_Khung.find('[data-doi-tuong="item-giao-trinh"]').off('.keo-thu-tu');
+                        $_Khung.find('[data-doi-tuong="item-chuong-trinh"]').off('.keo-thu-tu');
 
                         if (mangTam.keo === true) {
                             $.ajax({

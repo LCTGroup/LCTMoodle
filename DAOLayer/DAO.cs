@@ -268,6 +268,11 @@ namespace DAOLayer
             return dong.IsDBNull(index) ? macDinh : dong.GetInt32(index);
         }
 
+        protected static double? layDouble(System.Data.SqlClient.SqlDataReader dong, int index, double? macDinh = null)
+        {
+            return dong.IsDBNull(index) ? macDinh : dong.GetDouble(index);
+        }
+
         protected static DateTime? layDateTime(System.Data.SqlClient.SqlDataReader dong, int index, DateTime? macDinh = null)
         {
             return dong.IsDBNull(index) ? macDinh : dong.GetDateTime(index);

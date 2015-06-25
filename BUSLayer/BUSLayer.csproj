@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaiVietTaiLieuBUS.cs" />
+    <Compile Include="CotDiem_NguoiDungBUS.cs" />
     <Compile Include="KhoaHoc_NguoiDungBUS.cs" />
     <Compile Include="NhomNguoiDung_NguoiDungBUS.cs" />
     <Compile Include="NhomNguoiDung_QuyenBUS.cs" />

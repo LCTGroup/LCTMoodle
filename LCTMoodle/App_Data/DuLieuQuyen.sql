@@ -42,7 +42,7 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('KH', 514, 0,	N'Xóa bài viết',					'BG_Xoa',					507,	2),		--| | | |
 	('KH', 515, 0,	N'Thay đổi thứ tự bài viết',		'BG_ThuTu',					507,	3),		--| | | |
 	('KH', 508, 0,	N'Tài liệu',						NULL,						505,	3),		--| | |
-	('KH', 509, 0,	N'Bài tập',							NULL,						505,	3),		--| | |
+	('KH', 509, 0,	N'Bài tập',							NULL,						505,	4),		--| | |
 	('KH', 516, 0,	N'Sửa bài viết',					'BT_Sua',					509,	1),		--| | | |
 	('KH', 517, 0,	N'Xóa bài viết',					'BT_Xoa',					509,	2),		--| | | |
 	('KH', 518, 0,	N'Quản lý bài nộp',					'BT_BaiNop',				509,	3)		--| | | |

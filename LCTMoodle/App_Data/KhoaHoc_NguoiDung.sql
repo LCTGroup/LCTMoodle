@@ -7,7 +7,8 @@ CREATE TABLE dbo.KhoaHoc_NguoiDung (
 	MaNguoiDung INT NOT NULL,
 	TrangThai INT NOT NULL,
 	ThoiDiemThamGia DATETIME NOT NULL DEFAULT GETDATE(),
-	MaNguoiThem INT
+	MaNguoiThem INT,
+	LaHocVien BIT DEFAULT 1
 )
 
 GO
