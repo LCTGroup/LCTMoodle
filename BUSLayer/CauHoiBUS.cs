@@ -104,11 +104,6 @@ namespace BUSLayer
         public static KetQua them(Form form)
         {
             CauHoiDTO cauHoi = new CauHoiDTO();
-
-            if (Session["NguoiDung"] != null)
-            {
-                form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
-            }
             gan(ref cauHoi, form);
 
             KetQua ketQua = kiemTra(cauHoi);

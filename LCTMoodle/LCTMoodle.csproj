@@ -176,7 +176,7 @@
     <Content Include="Content\images\LCT\ChuDe\he-thong.png" />
     <Content Include="Content\images\LCT\ChuDe\khoa-hoc.png" />
     <Content Include="Content\images\LCT\mini_logo.png" />
-    <Content Include="Content\images\NguoiDung\avatarDefault.png" />
+    <Content Include="Content\images\NguoiDung\HinhDaiDienMacDinh.png" />
     <Content Include="Content\images\NguoiDung\NguoiDung.png" />
     <Content Include="Content\images\Quyen\Quyen.png" />
     <Content Include="Content\scripts\BinhLuan\Khung.js" />
@@ -195,9 +195,12 @@
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
+    <Content Include="Content\scripts\NguoiDung\PhucHoiMatKhau.js" />
+    <Content Include="Content\scripts\NguoiDung\DoiMatKhau.js" />
     <Content Include="Content\scripts\NguoiDung\KichHoatNguoiDung.js" />
     <Content Include="Content\scripts\NguoiDung\SuaNguoiDung.js" />
     <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
+    <Content Include="Content\scripts\NguoiDung\Xem.js" />
     <Content Include="Content\scripts\Quyen\QuanLy.js" />
     <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\BangDiem\Tao.css" />
@@ -212,8 +215,8 @@
     <Content Include="Content\styles\LCT\Form.css" />
     <Content Include="Content\styles\LCT\Khung.css" />
     <Content Include="Content\styles\LCT\stroke-icons.css" />
-    <Content Include="Content\styles\NguoiDung\KichHoatTaiKhoan.css" />
     <Content Include="Content\styles\NguoiDung\Index.css" />
+    <Content Include="Content\styles\NguoiDung\Xem.css" />
     <Content Include="Content\styles\Quyen\QuanLy.css" />
     <Content Include="Content\styles\TrangChu\Index.css" />
     <Content Include="Global.asax" />
@@ -464,7 +467,7 @@
     <Content Include="Views\KhoaHoc\_Khung.cshtml" />
     <Content Include="Views\BaiTapNop\_DanhSachNop.cshtml" />
     <Content Include="Views\BaiTapNop\_Khung.cshtml" />
-    <Content Include="Views\HoiDap\TaoCauHoi.cshtml" />
+    <Content Include="Views\HoiDap\ThemCauHoi.cshtml" />
     <Content Include="Views\ChuongTrinh\Index.cshtml" />
     <Content Include="Views\ChuongTrinh\_Item.cshtml" />
     <Content Include="Views\BaiVietDienDan\_Form.cshtml" />
@@ -503,6 +506,8 @@
     <Content Include="Views\BaiVietTaiLieu\_Item.cshtml" />
     <Content Include="Views\BaiVietTaiLieu\_Khung.cshtml" />
     <Content Include="Views\NguoiDung\KichHoat.cshtml" />
+    <Content Include="Views\NguoiDung\DoiMatKhau.cshtml" />
+    <Content Include="Views\NguoiDung\QuenMatKhau.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

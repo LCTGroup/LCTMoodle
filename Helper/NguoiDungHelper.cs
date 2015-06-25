@@ -82,5 +82,22 @@ namespace Helpers
                     return "Không xác định";
             }
         }
+
+        public static string phatSinhMatKhauMoi(int doDai)
+        {
+            StringBuilder str = new StringBuilder();
+
+            Random random = new Random();
+
+            Char ch;
+            
+            for (int i = 0; i < doDai; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 97)));
+                str.Append(ch);
+            }
+
+            return str.ToString();
+        }
     }
 }

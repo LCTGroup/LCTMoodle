@@ -1,0 +1,86 @@
+﻿@model DTOLayer.NguoiDungDTO
+@{
+    ViewData["Title"] = "Quên mật khẩu";
+    Layout = "~/Views/LCT/Khung.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/Index.css/NguoiDung/" />
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/DoiMatKhau.js/NguoiDung"></script>
+}
+
+@if (Model != null)
+{
+    <article class="hop-form hop-2-vien">
+        <section class="tieu-de">Đổi mật khẩu</section>
+        <section class="noi-dung">
+            <article>
+                <form class="lct-form" id="doi_mat_khau" data-ma="@Model.ma">
+                    <article>
+                        <ul>
+                            <li>
+                                <section class="tieu-de">
+                                    <label>Tên tài khoản:</label>
+                                </section>
+                                <section class="noi-dung">
+                                    <label class="ten-tai-khoan-kich-hoat">@Model.tenTaiKhoan</label>
+                                    <input type="hidden" name="TenTaiKhoan" value="@Model.tenTaiKhoan" />
+                                </section>
+                            </li>
+                            <li>
+                                <section class="tieu-de">
+                                    <label>Mật khẩu cũ:</label>
+                                </section>
+                                <section class="noi-dung">
+                                    <article class="input">
+                                        <input type="password" name="MatKhauCu" data-validate="bat-buoc" />
+                                    </article>
+                                </section>
+                            </li>
+                            <li>
+                                <section class="tieu-de">
+                                    <label>Mật khẩu mới:</label>
+                                </section>
+                                <section class="noi-dung">
+                                    <article class="input">
+                                        <input type="password" name="MatKhauMoi" id="MatKhauMoi" data-validate="bat-buoc" />
+                                    </article>
+                                </section>
+                            </li>
+                            <li>
+                                <section class="tieu-de">
+                                    <label>Nhập lại mật khẩu mới:</label>
+                                </section>
+                                <section class="noi-dung">
+                                    <article class="input">
+                                        <input type="password" name="NhapLaiMatKhauMoi" id="NhapLaiMatKhauMoi" data-validate="bat-buoc" />
+                                    </article>
+                                </section>
+                            </li>
+                            <li>
+                                <section class="tieu-de">
+                                    <label>&nbsp;</label>
+                                </section>
+                                <section class="noi-dung">
+                                    <a href="#">Quên mật khẩu?</a>
+                                </section>
+                            </li>
+                        </ul>
+                        <section class="khung-button">
+                            <button type="submit" class="chap-nhan">
+                                Đổi mật khẩu
+                            </button>
+                        </section>
+                    </article>
+                </form>
+            </article>
+        </section>
+    </article>
+}
+else
+{
+    <div>Không có người dùng tồn tại</div>
+}

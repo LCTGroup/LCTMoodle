@@ -15,144 +15,146 @@
         để được trải nghiệm các khoá học bổ ích        
     </section>
     <section class="noi-dung">
-        <form class="lct-form" action="/NguoiDung/XuLyThem" method="POST" id="dang_ky">
-            <article>
-                <ul>
-                    <li>
-                        <section class="tieu-de">
-                            <label>(*) Tên tài khoản:</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">
-                                <input type="text" id="TenTaiKhoan" name="TenTaiKhoan" data-validate="bat-buoc"/>
-                            </article>
-                        </section>
-                    </li>
-                    <li>
-                        <section class="tieu-de">
-                            <label>(*) Mật khẩu:</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">
-                                <input type="password" id="MatKhau" name="MatKhau" data-validate="bat-buoc" />
-                            </article>
-                        </section>
-                    </li>
-                    <li>
-                        <section class="tieu-de">
-                            <label>(*) Nhập lại mật khẩu:</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">
-                                <input type="password" id="NhapLaiMatKhau" />
-                            </article>
-                        </section>
-                    </li>
-                    <li>
-                        <section class="tieu-de">
-                            <label>(*) Mật khẩu cấp 2:</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">
-                                <input type="password" id="MatKhauCap2" name="MatKhauCap2" data-validate="bat-buoc" />
-                            </article>
-                        </section>
-                    </li>
-                    <li>
-                        <section class="tieu-de">
-                            <label>(*) Email:</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">
-                                <input type="text" name="Email" data-validate="email bat-buoc"/>
-                            </article>
-                        </section>
-                    </li>
-                    <li>
-                        <section class="tieu-de">
-                            <label>Giới Tính</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">
-                                <input type="radio" name="GioiTinh" value="1" data-text="Nam" style="width:auto;" />
-                                <input type="radio" name="GioiTinh" value="2" data-text="Nữ" style="width:auto;" />
-                                <input type="radio" name="GioiTinh" value="0" data-text="Không xác định" data-mac-dinh style="width:auto;" />
-                            </article>
-                        </section>
-                    </li>
-                    <li>
-                        <section class="tieu-de">
-                            <label>(*) Họ và tên</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">
-                                <input type="text" placeholder="Họ" name="Ho" data-validate="bat-buoc" style="width:calc(100%/3 - 19px);" />
-                                <input type="text" placeholder="Tên lót" name="TenLot" style="width:calc(100%/3 - 19px);" />
-                                <input type="text" placeholder="Tên" name="Ten" data-validate="bat-buoc" style="width:calc(100%/3 - 19px);" />
-                            </article>
-                        </section>
-                    </li>                    
-                    <li>
-                        <section class="tieu-de">
-                            <label>(*) Ngày sinh:</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">
-                                <input data-input-type="ngay" name="NgaySinh" value="" data-ngay-bat-dau="1/1/@(DateTime.Now.Year - 18)" data-validate="bat-buoc" />
-                            </article>
-                        </section>
-                    </li>
-                    <li>
-                        <section class="tieu-de">
-                            <label>Địa chỉ:</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">
-                                <input type="text" name="DiaChi" />
-                            </article>
-                        </section>
-                    </li>
-                    <li>
-                        <section class="tieu-de">
-                            <label>Số điện thoại:</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">
-                                <input type="text" name="SoDienThoai" data-validate="so-nguyen" id="SoDienThoai" placeholder="Vui lòng nhập số điện thoại hiện hữu tại Việt Nam" />
-                            </article>
-                        </section>
-                    </li>
-                    <li>
-                        <section class="tieu-de">
-                            <label>Hình đại diện</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">
-                                <input type="file" name="MaHinhDaiDien" />
-                            </article>
-                        </section>
-                    </li>
-                    <li>
-                        <section class="tieu-de">
-                            <label>&nbsp;</label>
-                        </section>
-                        <section class="noi-dung">
-                            <article class="input">                                
-                                <input type="checkbox" name="ChapNhanQuyDinh" data-text="Chấp nhận &lt;a href='#' style='color:#08c;'&gt;quy định&lt;/a&gt; của Mạng xã hội LCT Moodle" style="width:auto;" />
-                            </article>
-                        </section>
-                    </li>                    
-                </ul>
-                <section class="khung-button">
-                    <button type="submit" class="chap-nhan">
-                        Đăng Ký
-                    </button>
-                    <button type="reset" class="can-than">
-                        Làm lại
-                    </button>
-                </section>
-            </article>
-        </form>
+        <article>
+            <form class="lct-form" action="/NguoiDung/XuLyThem" method="POST" id="dang_ky">
+                <article>
+                    <ul>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Tên tài khoản:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="text" id="TenTaiKhoan" name="TenTaiKhoan" data-validate="bat-buoc" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Mật khẩu:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="password" id="MatKhau" name="MatKhau" data-validate="bat-buoc" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Nhập lại mật khẩu:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="password" id="NhapLaiMatKhau" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Mật khẩu cấp 2:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="password" id="MatKhauCap2" name="MatKhauCap2" data-validate="bat-buoc" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Email:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="text" name="Email" data-validate="email bat-buoc" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Giới Tính</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="radio" name="GioiTinh" value="1" data-text="Nam" style="width:auto;" />
+                                    <input type="radio" name="GioiTinh" value="2" data-text="Nữ" style="width:auto;" />
+                                    <input type="radio" name="GioiTinh" value="0" data-text="Không xác định" data-mac-dinh style="width:auto;" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Họ và tên</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="text" placeholder="Họ" name="Ho" data-validate="bat-buoc" style="width:calc(100%/3 - 19px);" />
+                                    <input type="text" placeholder="Tên lót" name="TenLot" style="width:calc(100%/3 - 19px);" />
+                                    <input type="text" placeholder="Tên" name="Ten" data-validate="bat-buoc" style="width:calc(100%/3 - 19px);" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Ngày sinh:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input data-input-type="ngay" name="NgaySinh" value="" data-ngay-bat-dau="1/1/@(DateTime.Now.Year - 18)" data-validate="bat-buoc" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Địa chỉ:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="text" name="DiaChi" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Số điện thoại:</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="text" name="SoDienThoai" data-validate="so-nguyen" id="SoDienThoai" placeholder="Vui lòng nhập số điện thoại hiện hữu tại Việt Nam" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>Hình đại diện</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="file" name="MaHinhDaiDien" />
+                                </article>
+                            </section>
+                        </li>
+                        <li>
+                            <section class="tieu-de">
+                                <label>&nbsp;</label>
+                            </section>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <input type="checkbox" name="ChapNhanQuyDinh" data-text="Chấp nhận &lt;a href='#' style='color:#08c;'&gt;quy định&lt;/a&gt; của Mạng xã hội LCT Moodle" style="width:auto;" />
+                                </article>
+                            </section>
+                        </li>
+                    </ul>
+                    <section class="khung-button">
+                        <button type="submit" class="chap-nhan">
+                            Đăng Ký
+                        </button>
+                        <button type="reset" class="can-than">
+                            Làm lại
+                        </button>
+                    </section>
+                </article>
+            </form>
+        </article>
     </section>
 </article>
 

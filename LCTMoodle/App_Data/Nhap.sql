@@ -12,8 +12,8 @@ select * from dbo.NguoiDung
 delete from dbo.NguoiDung where ma >= 288
 
 update dbo.NguoiDung
-set MaKichHoat = 675316
-where Ma=311
+set MatKhauCap2 = 'a346a38a656709fbb9618ad2976097a4'
+where Ma=2
 
 alter table dbo.NguoiDung
 add MatKhauCap2 NVARCHAR(MAX)
