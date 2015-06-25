@@ -1,0 +1,138 @@
+﻿/*#region Khung chọn hiển thị */
+
+.khung-chon-hien-thi {
+    margin-bottom: 20px;
+}
+
+    .khung-chon-hien-thi ul {
+        display: flex;
+        position: relative;
+    }
+
+        .khung-chon-hien-thi ul:after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 3px;
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            background-color: #ddd;
+        }
+
+            [data-hien-thi="khung"] .khung-chon-hien-thi ul:after {
+                background-color: #f90;
+            }
+
+            [data-hien-thi="bai-giang"] .khung-chon-hien-thi ul:after {
+                background-color: #0c0;
+            }
+
+            [data-hien-thi="tai-lieu"] .khung-chon-hien-thi ul:after {
+                background-color: #6b00b2;
+            }
+
+            [data-hien-thi="bai-tap"] .khung-chon-hien-thi ul:after {
+                background-color: #e00;
+            }
+
+            [data-hien-thi="dien-dan"] .khung-chon-hien-thi ul:after {
+                background-color: #08c;
+            }
+
+    .khung-chon-hien-thi li {
+        order: 1;
+        opacity: 0.8;
+        transition: 0.5s;
+    }
+
+            [data-hien-thi="khung"] li.khung,
+            [data-hien-thi="bai-giang"] li.bai-giang,
+            [data-hien-thi="tai-lieu"] li.tai-lieu,
+            [data-hien-thi="bai-tap"] li.bai-tap,
+            [data-hien-thi="dien-dan"] li.dien-dan {
+                order: 0;
+                opacity: 1;
+            }
+
+            .khung-chon-hien-thi li:hover {
+                opacity: 1;
+            }
+
+    .khung-chon-hien-thi a {
+        padding: 7px 15px;
+        display: block;
+        color: #fff;
+    }
+
+        .khung-chon-hien-thi a:hover {
+            text-decoration: none;
+        }
+
+        .khung-chon-hien-thi .khung a {
+              background-color: #f90;
+        }
+
+        .khung-chon-hien-thi .bai-giang a {
+              background-color: #0c0;
+        }
+
+        .khung-chon-hien-thi .tai-lieu a {
+              background-color: #6b00b2;
+        }
+
+        .khung-chon-hien-thi .bai-tap a {
+              background-color: #e00;
+        }
+
+        .khung-chon-hien-thi .dien-dan a {
+              background-color: #08c;
+        }
+
+    .khung-chon-hien-thi i {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        vertical-align: bottom;
+        background-image: url('/KhoaHoc.png/KhoaHoc');
+        background-position-x: -48px;
+    }
+
+        .khung-chon-hien-thi .khung i {
+            background-position-y: 0px;
+        }
+        
+        .khung-chon-hien-thi .bai-giang i {
+            background-position-y: -96px;
+        }
+        
+        .khung-chon-hien-thi .tai-lieu i {
+            background-position-y: -48px;
+        }
+
+        .khung-chon-hien-thi .bai-tap i {
+            background-position-y: -24px;
+        }
+
+        .khung-chon-hien-thi .dien-dan i {
+            background-position-y: -72px;
+        }
+
+    .khung-chon-hien-thi span {
+        font-size: 15px;
+    }
+    
+        [data-hien-thi="khung"] .khung-chon-hien-thi .khung a,
+        [data-hien-thi="bai-giang"] .khung-chon-hien-thi .bai-giang a,
+        [data-hien-thi="tai-lieu"] .khung-chon-hien-thi .tai-lieu a,
+        [data-hien-thi="bai-tap"] .khung-chon-hien-thi .bai-tap a,
+        [data-hien-thi="dien-dan"] .khung-chon-hien-thi .dien-dan a {
+            border-right: 2px solid #f5f5f5;
+            border-top: 2px solid #f5f5f5;
+            margin-top: -8px;
+            padding-top: 15px;
+            font-weight: bold;
+        }
+
+/*#endregion */
+

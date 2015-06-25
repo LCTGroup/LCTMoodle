@@ -39,6 +39,28 @@ namespace LCTMoodle.Controllers
             return View();
         }
 
+        public ActionResult Sua(int? ma)
+        {
+            KetQua ketQua = NguoiDungBUS.layTheoMa(ma, new LienKet() { 
+                "HinhDaiDien"
+            });
+            return View(ketQua.ketQua);
+        }
+
+        public ActionResult DoiMatKhau()
+        {
+            NguoiDungDTO nguoiDung = NguoiDungBUS.layTheoMa((int?)Session["NguoiDung"]).ketQua as NguoiDungDTO;
+            
+            return View(nguoiDung); 
+        }
+
+        public ActionResult QuenMatKhau()
+        {
+            ViewData["CotPhai"] = false;
+
+            return View();
+        }
+        
         public ActionResult KichHoat(string tenTaiKhoan)
         {
             ViewData["CotTrai"] = false;
@@ -57,17 +79,15 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
+        public ActionResult XuLyPhucHoiMatKhau(FormCollection form)
+        {
+            return Json(NguoiDungBUS.phucHoiMatKhau(chuyenForm(form)));
+        }
+
+        [HttpPost]
         public ActionResult XuLyKichHoatTaiKhoan(FormCollection form)
         {
             return Json(NguoiDungBUS.kichHoatTaiKhoan(chuyenForm(form)));
-        }
-
-        public ActionResult Sua(int? ma)
-        {
-            KetQua ketQua = NguoiDungBUS.layTheoMa(ma, new LienKet() { 
-                "HinhDaiDien"
-            });
-            return View(ketQua.ketQua);
         }
 
         [HttpPost]
@@ -76,6 +96,12 @@ namespace LCTMoodle.Controllers
             return Json(NguoiDungBUS.capNhat(chuyenForm(formCollection)));
         }
 
+        [HttpPost]
+        public ActionResult XuLyDoiMatKhau(FormCollection formCollection)
+        {            
+            return Json(NguoiDungBUS.xuLyDoiMatKhau(chuyenForm(formCollection)));
+        }
+        
         public ActionResult XuLyThem(FormCollection formCollection)
         {
             return Json(NguoiDungBUS.them(chuyenForm(formCollection)));

@@ -57,8 +57,8 @@ namespace LCTMoodle.Controllers
             }
         }
         
-        public ActionResult TaoCauHoi()
-        {
+        public ActionResult ThemCauHoi()
+        {            
             return View();
         }
 
@@ -120,6 +120,10 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyThemCauHoi(FormCollection form)
         {
+            if (Session["NguoiDung"] != null)
+            {
+                form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+            }
             return Json(CauHoiBUS.them(chuyenForm(form)));
         }
 

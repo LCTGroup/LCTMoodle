@@ -72,7 +72,7 @@ END
 
 GO
 --Cập nhật kích hoạt Người dùng theo tenTaiKhoan
-ALTER PROC dbo.kichHoatNguoiDungTheoTenTaiKhoan
+ALTER PROC dbo.capNhatNguoiDungTheoTenTaiKhoan_KichHoat
 (
 	@0 NVARCHAR(MAX), --Tên tài khoản
 	@1 NVARCHAR(MAX) --Giá trị kích hoạt

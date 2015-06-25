@@ -103,11 +103,11 @@ namespace DAOLayer
                 );
         }
         
-        public static KetQua kichHoatTaiKhoanTheoTenTaiKhoan(string tenTaiKhoan, string maKichHoat)
+        public static KetQua capNhatTheoTenTaiKhoan_KichHoat(string tenTaiKhoan, string maKichHoat)
         {
             return khongTruyVan
                 (
-                    "kichHoatNguoiDungTheoTenTaiKhoan",
+                    "capNhatNguoiDungTheoTenTaiKhoan_KichHoat",
                     new object[]
                     {
                         tenTaiKhoan,
@@ -181,5 +181,6 @@ namespace DAOLayer
                     lienKet
                 );
         }
+        
     }
 }
