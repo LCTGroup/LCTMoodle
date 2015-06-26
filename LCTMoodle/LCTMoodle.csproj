@@ -508,6 +508,7 @@
     <Content Include="Views\NguoiDung\KichHoat.cshtml" />
     <Content Include="Views\NguoiDung\DoiMatKhau.cshtml" />
     <Content Include="Views\NguoiDung\QuenMatKhau.cshtml" />
+    <Content Include="Views\HoiDap\_DanhSachCauHoi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

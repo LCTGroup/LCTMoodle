@@ -19,74 +19,41 @@
 }
 @section Scripts {
     <script src="/Index.js/HoiDap/"></script>
+    <script src="/Khung.js/ChuDe/"></script>
+    <script src="/TimKiem.js/LCT/"></script>
 }
 
 <!--#region Tìm kiếm câu hỏi -->
 
-<article class="hop hop-1-vien">
-    <section class="tieu-de">Tìm câu hỏi</section>
-    <section class="noi-dung">
-        <form class="lct-form" id="form_tim_kiem">
-            <section class="noi-dung">
-                <article class="input">
-                    <input type="text" placeholder="Nhập từ khóa" />
-                </article>                            
+<article class="hop">
+    <section class="tieu-de">
+        Tìm kiếm câu hỏi
+    </section>
+    <section class="noi-dung khung-khoa-hoc">
+        <section id="form_tim" class="khung-tim lct-form">
+            <section class="line">
+                <article style="width: 100%" class="input">
+                    <input id="tim_ten" type="text" placeholder="Tiêu đề câu hỏi bạn muốn tìm" />
+                </article>
+                <article style="width: 100%" class="input">
+                    <input id="tim_chu_de" data-input-type="chu-de" placeholder="Chủ đề bạn muốn tìm" />
+                </article>
+                <a data-chuc-nang="tat-mo-chu-de" style="min-width: 90px; margin-left: 5px;" class="button inline">Chọn chủ đề</a>
             </section>
-        </form>
+        </section>
+        <section id="chu_de" style="margin-top: 5px;"></section>
     </section>
 </article>
 
 <!--#endregion -->
 
  <!--#region Danh sách câu hỏi -->
+
 <article class="hop">
     <section class="tieu-de">Danh sách câu hỏi</section>
-    <section class="noi-dung">
-        @if (Model != null)
-        {
-            for (int i = (Model.Count - 1); i >= 0; i--)
-            {
-                <article class="cau-hoi">
-                    <div class="chi-tiet">
-                        <div class="tieu-de">
-                            <a href="/HoiDap/@Model[i].ma">
-                                @Model[i].tieuDe
-                            </a>
-                        </div>
-                        <div class="thong-tin-dang">
-                            @if (Model[i].nguoiTao != null)
-                            {
-                                <div class="nguoi-dang">
-                                    <a href="/NguoiDung/Xem/@Model[i].nguoiTao.ma">
-                                        @if (Model[i].nguoiTao.hinhDaiDien != null)
-                                        {
-                                            <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model[i].nguoiTao.hinhDaiDien.ma" />
-                                        }
-                                        else
-                                        {
-                                            <img src="/avatarDefault.png/NguoiDung" />
-                                        }
-                                        <span>@Model[i].nguoiTao.tenTaiKhoan</span>
-                                    </a>
-                                </div>
-                            }
-                            
-                            <div class="thoi-gian-dang">
-                                <span>@Model[i].thoiDiemTao</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="thong-tin">
-                        <div class="diem">
-                            <span>0</span>
-                        </div>
-                        <div class="tra-loi">
-                            <span>0</span>
-                        </div>
-                    </div>
-                </article>
-            }
-        }
+    <section class="noi-dung" id="danh_sach">
+        @Html.Partial("_DanhSachCauHoi", Model)
     </section>
 </article>
+
 <!--#endregion -->

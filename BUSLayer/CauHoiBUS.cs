@@ -173,9 +173,9 @@ namespace BUSLayer
             return CauHoiDAO.layDanhSachCauHoi(lienKet);
         }
 
-        public static KetQua layTheoChuDe(int? ma, LienKet lienKet = null)
+        public static KetQua layTheoMaChuDe_TimKiem(int? ma, string tuKhoa, LienKet lienKet = null)
         {
-            return CauHoiDAO.layTheoChuDe(ma, lienKet);
+            return CauHoiDAO.layTheoMaChuDe_TimKiem(ma, tuKhoa, lienKet);
         }
 
         public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)

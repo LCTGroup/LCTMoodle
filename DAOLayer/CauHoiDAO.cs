@@ -134,13 +134,14 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua layTheoChuDe(int? ma, LienKet lienKet = null)
+        public static KetQua layTheoMaChuDe_TimKiem(int? ma, string maChuDe, LienKet lienKet = null)
         {
-            return layDong(
-                "layCauHoiTheoChuDe",
+            return layDanhSachDong(
+                "layCauHoiTheoMaChuDe_TimKiem",
                 new object[] 
                 {
-                    ma
+                    ma,
+                    maChuDe
                 },
                 lienKet
             );

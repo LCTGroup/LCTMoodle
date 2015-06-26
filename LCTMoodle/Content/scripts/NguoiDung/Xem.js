@@ -1,54 +1,63 @@
-﻿//#region Khởi tạo
+﻿var $_khungChonHienThi;
+var $_khungHienThi;
+
+//#region Khởi tạo
 
 $(function () {
-    hienThi_Khung()
+    $_khungChonHienThi = $('#khung_chon_hien_thi');
+    $_khungHienThi = $('#khung_hien_thi');
+
+    khoiTaoKhungChonHienThi($_khungChonHienThi);
 });
 
 //#endregion
 
 //#region Khung
 
-function hienThi_Khung() {
-    var $khung = layKhung_Khung();
+function khoiTaoKhungChonHienThi($khungChonHienThi)
+{
+    $khungChonHienThi.find('[data-chuc-nang="hien-thi"]').on('click', function (e) {
+        e = e || window.event;
 
-    $_KhungHienThi.html($khung);
-    $_KhungChua.attr('data-hien-thi', 'khung');
-}
+        var giaTriHienThi = $(this).attr('data-value');
 
-function layKhung_Khung() {
-    var $khung;
+        hienThiNutTab(this, giaTriHienThi);
 
-    $.ajax({
-        url: '/KhoaHoc/_Khung',
-        data: { ma: maKhoaHoc },
-        dataType: 'JSON',
-        async: false
-    }).done(function (data) {
-        if (data.trangThai == 0) {
-            $khung = $(data.ketQua);
-        }
-        else {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Lấy khung thất bại',
-                bieuTuong: 'nguy-hiem'
-            })
-        }
-    }).fail(function () {
-        moPopup({
-            tieuDe: 'Thông báo',
-            thongBao: 'Lấy khung thất bại',
-            bieuTuong: 'nguy-hiem'
-        })
+        hienThiNoiDung(giaTriHienThi);
     });
-
-    khoiTaoKhung($khung);
-
-    return $khung;
 }
 
-function khoiTaoKhung($khung) {
-    khoiTaoNutHienThi($khung.find('[data-chuc-nang="hien-thi"]'));
+//#region Hiển thị nút tab
+
+function hienThiNutTab(obj, objValue) {
+    $_khungChonHienThi.find('[data-chuc-nang="hien-thi"]').removeClass('clicked');
+    $(obj).addClass('clicked');
+
+    $_khungChonHienThi.find('li').removeClass('active');
+    switch(objValue)
+    {
+        case "nhiemvumoi":
+            $_khungChonHienThi.find('.nhiem-vu-moi').addClass('active');
+            break;
+        case "baigiangmoi":
+            $_khungChonHienThi.find('.bai-giang-moi').addClass('active');
+            break;
+        case "baitapmoi":
+            $_khungChonHienThi.find('.bai-tap-moi').addClass('active');
+            break;
+    }
 }
+
+//#endregion
+
+//#region Hiển thị nội dung tab
+
+function hienThiNoiDung(objValue) {
+    $_khungHienThi.find('.noi-dung').removeClass('active');
+
+    $('#' + objValue).addClass('active');
+}
+
+//#endregion
 
 //#endregion

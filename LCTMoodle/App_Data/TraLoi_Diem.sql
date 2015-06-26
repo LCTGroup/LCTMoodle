@@ -2,10 +2,10 @@
 
 GO
 --Tạo Hỏi Đáp - Điểm
-CREATE TABLE dbo.HoiDap_Diem
+CREATE TABLE dbo.TraLoi_Diem
 (
-	Ma INT NOT NULL,
+	MaTraLoi INT NOT NULL,
 	MaNguoiTao INT NOT NULL,
 	Diem BIT NOT NULL,
-	PRIMARY KEY(Ma, MaNguoiTao)
+	PRIMARY KEY(MaTraLoi, MaNguoiTao)
 )

@@ -94,6 +94,27 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
+        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0)
+        {
+            KetQua ketQua;
+            if (maChuDe == 0)
+            {
+                ketQua = CauHoiBUS.lay_TimKiem(tuKhoa);
+            }
+            else
+            {
+                ketQua = CauHoiBUS.layTheoMaChuDe_TimKiem(maChuDe, tuKhoa);
+            }
+
+            if (ketQua.trangThai == 0)
+            {
+                ketQua.ketQua = renderPartialViewToString(ControllerContext, "CauHoi/_DanhSach.cshtml", ketQua.ketQua);
+            }
+
+            return Json(ketQua, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         [ValidateInput(false)]
         public ActionResult XuLyCapNhatCauHoi(FormCollection form)
         {

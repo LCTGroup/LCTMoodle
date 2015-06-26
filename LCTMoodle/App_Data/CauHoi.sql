@@ -109,15 +109,18 @@ END
 
 GO
 --Lấy Câu Hỏi theo Chủ Đề
-CREATE PROC dbo.layCauHoiTheoChuDe
+CREATE PROC dbo.layCauHoiTheoMaChuDe_TimKiem
 (
-	@0 INT --Mã Chủ Đề
+	@0 INT, --Mã Chủ Đề
+	@1 NVARCHAR(MAX) --Từ khóa
 )
 AS
 BEGIN
 	SELECT *
 	FROM dbo.CauHoi
-	WHERE MaChuDe = @0
+	WHERE 
+		MaChuDe = @0 AND 
+		TieuDe LIKE '%' + REPLACE(@1, ' ', '%') + '%'
 END
 
 GO
