@@ -36,11 +36,11 @@ namespace DAOLayer
                                 };
                         }
                         break;
-                    case "CongViec":
-                        giaoTrinh.congViec = layString(dong, i);
+                    case "BaiHoc":
+                        giaoTrinh.baiHoc = layString(dong, i);
                         break;
-                    case "MoTa":
-                        giaoTrinh.moTa = layString(dong, i);
+                    case "NoiDung":
+                        giaoTrinh.noiDung = layString(dong, i);
                         break;
                     case "ThoiGian":
                         giaoTrinh.thoiGian = layString(dong, i);
@@ -77,8 +77,8 @@ namespace DAOLayer
                 new object[]
                 {
                     layMa(giaoTrinh.khoaHoc),
-                    giaoTrinh.congViec,
-                    giaoTrinh.moTa,
+                    giaoTrinh.baiHoc,
+                    giaoTrinh.noiDung,
                     giaoTrinh.thoiGian
                 }
             );

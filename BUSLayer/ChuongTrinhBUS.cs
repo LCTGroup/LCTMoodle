@@ -21,9 +21,9 @@ namespace BUSLayer
             {
                 loi.Add("Khóa học không được bỏ trống");
             }
-            if (string.IsNullOrEmpty(chuongTrinh.congViec))
+            if (string.IsNullOrEmpty(chuongTrinh.baiHoc))
             {
-                loi.Add("Công việc không được bỏ trống");
+                loi.Add("Bài học không được bỏ trống");
             }
             #endregion
 
@@ -54,8 +54,8 @@ namespace BUSLayer
             ChuongTrinhDTO chuongTrinh = new ChuongTrinhDTO()
             {
                 khoaHoc = layDTO<KhoaHocDTO>(form, "KhoaHoc"),
-                congViec = layString(form, "CongViec"),
-                moTa = layString(form, "MoTa"),
+                baiHoc = layString(form, "BaiHoc"),
+                noiDung = layString(form, "NoiDung"),
                 thoiGian = layString(form, "ThoiGian")
             };
 

@@ -17,6 +17,7 @@ CREATE TABLE dbo.NguoiDung
 	SoDienThoai NVARCHAR(MAX),
 	MaHinhDaiDien INT,
 	CoQuyenHT BIT DEFAULT 0,
+	CoQuyenCD BIT DEFAULT 0,
 	DaKichHoat BIT DEFAULT 0,
 	MaKichHoat NVARCHAR(MAX),
 	MatKhauCap2 NVARCHAR(MAX)

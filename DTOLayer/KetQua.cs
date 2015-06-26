@@ -14,7 +14,8 @@ namespace DTOLayer
         /// 2: Lỗi truy vấn / Lỗi xử lý ---
         /// 3: Lỗi ràng buộc ---
         /// 4: Chưa đăng nhập ---
-        /// 5: Chưa kích hoạt
+        /// 5: Chưa kích hoạt ---
+        /// 6: Trạng thái đặc biệt của nghiệp vụ, kết quả có thể là loại
         /// </summary>
         public int trangThai;
         public object ketQua;

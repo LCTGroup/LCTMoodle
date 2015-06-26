@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DTOLayer;
 using BUSLayer;
+using Newtonsoft.Json;
 
 namespace LCTMoodle.Controllers
 {
@@ -49,6 +50,34 @@ namespace LCTMoodle.Controllers
         public ActionResult XuLyCapNhatThuTuCotDiem(int thuTuCu, int thuTuMoi, int maKhoaHoc)
         {
             return Json(CotDiemBUS.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc));
+        }
+
+        public ActionResult Xem(int ma)
+        {
+            var ketQua = KhoaHocBUS.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                RedirectToAction("Index", "TrangChu");
+            }
+            var khoaHoc = ketQua.ketQua;
+
+            ketQua = CotDiem_NguoiDungBUS.layTheoMaKhoaHoc(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return RedirectToAction("Xem", "KhoaHoc", new { ma = ma });
+            }
+            object[] mangKetQua = ketQua.ketQua as object[];
+            ViewData["CotDiem"] = mangKetQua[0];
+            ViewData["NguoiDung"] = mangKetQua[1];
+            ViewData["Diem"] = mangKetQua[2];
+
+            return View(khoaHoc);
+        }
+
+        public ActionResult CapNhatBangDiem(string jsonDiem)
+        {
+            List<CotDiem_NguoiDungDTO> dsDiem = JsonConvert.DeserializeObject<List<CotDiem_NguoiDungDTO>>(jsonDiem);
+            return null;
         }
 	}
 }

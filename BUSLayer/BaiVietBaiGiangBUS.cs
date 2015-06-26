@@ -70,6 +70,9 @@ namespace BUSLayer
                     case "NoiDung":
                         baiViet.noiDung = form.layString(key);
                         break;
+                    case "TomTat":
+                        baiViet.tomTat = form.layString(key);
+                        break;
                     case "MaTapTin":
                         baiViet.tapTin = TapTinBUS.chuyen("BaiVietBaiGiang_TapTin", form.layInt(key)).ketQua as TapTinDTO;
                         break;
@@ -97,6 +100,9 @@ namespace BUSLayer
                         break;
                     case "NoiDung":
                         bangCapNhat.Add(key, baiViet.noiDung, 2);
+                        break;
+                    case "TomTat":
+                        bangCapNhat.Add(key, baiViet.tomTat, 2);
                         break;
                     case "MaTapTin":
                         bangCapNhat.Add(key, baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString(), 1);

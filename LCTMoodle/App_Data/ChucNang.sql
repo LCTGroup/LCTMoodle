@@ -1,15 +1,6 @@
 ﻿use rtcmfraf_Moodle;
 
 GO
-CREATE TYPE dbo.BangCapNhat
-AS
-TABLE (
-	TenTruong NVARCHAR(MAX) NOT NULL,
-	GiaTri NVARCHAR(MAX),
-	Loai TINYINT NOT NULL
-)
-
-GO
 CREATE FUNCTION dbo.taoChuoiCapNhat (
 	@0 dbo.BangCapNhat READONLY
 )

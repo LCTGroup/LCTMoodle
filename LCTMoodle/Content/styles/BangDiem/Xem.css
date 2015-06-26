@@ -1,0 +1,32 @@
+﻿/*#region Khung điểm */
+
+.khung-diem {
+    overflow-x: auto;
+}
+
+.khung-diem thead .ngay {
+    font-size: 11px;
+    padding: 0;
+    min-width: 35px;
+    width: 35px;
+}
+
+.khung-diem tbody .cot-diem {
+    text-align: center;
+}
+
+.khung-diem tbody th:nth-child(1) {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.khung-diem tbody th:nth-child(2) {
+    text-align: left;
+}
+
+.khung-diem .diem-input {
+    width: 25px !important;
+    text-align: center;
+}
+
+/*#endregion */

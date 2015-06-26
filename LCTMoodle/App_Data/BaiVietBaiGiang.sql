@@ -2,10 +2,11 @@
 
 GO
 --Tạo bài viết bài giảng
-CREATE TABLE dbo.BaiVietBaiGiang(
+CREATE TABLE dbo.BaiVietBaiGiang (
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	TieuDe NVARCHAR(MAX) NOT NULL,
 	NoiDung NVARCHAR(MAX) NOT NULL,
+	TomTat NVARCHAR(MAX),
 	MaTapTin INT DEFAULT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
 	MaNguoiTao INT NOT NULL,
@@ -14,22 +15,24 @@ CREATE TABLE dbo.BaiVietBaiGiang(
 
 GO
 --Thêm bài viết bài giảng
-CREATE PROC dbo.themBaiVietBaiGiang(
+ALTER PROC dbo.themBaiVietBaiGiang(
 	@0 NVARCHAR(MAX), --TieuDe
 	@1 NVARCHAR(MAX), --NoiDung
-	@2 INT, --MaTapTin
-	@3 INT, --MaNguoiTao
-	@4 INT --MaKhoaHoc
+	@2 NVARCHAR(MAX), --TomTat
+	@3 INT, --MaTapTin
+	@4 INT, --MaNguoiTao
+	@5 INT --MaKhoaHoc
 )
 AS
 BEGIN
-	INSERT INTO dbo.BaiVietBaiGiang(TieuDe, NoiDung, MaTapTin, MaNguoiTao, MaKhoaHoc)
-		VALUES (@0, @1, @2, @3, @4)
+	INSERT INTO dbo.BaiVietBaiGiang(TieuDe, NoiDung, TomTat, MaTapTin, MaNguoiTao, MaKhoaHoc)
+		VALUES (@0, @1, @2, @3, @4, @5)
 
 	SELECT 
 		Ma,
 		TieuDe,
 		NoiDung,
+		TomTat,
 		MaTapTin,
 		ThoiDiemTao,
 		MaNguoiTao,
@@ -49,6 +52,7 @@ BEGIN
 		Ma,
 		TieuDe,
 		NoiDung,
+		TomTat,
 		MaTapTin,
 		ThoiDiemTao,
 		MaNguoiTao,
@@ -80,6 +84,7 @@ BEGIN
 		Ma,
 		TieuDe,
 		NoiDung,
+		TomTat,
 		MaTapTin,
 		ThoiDiemTao,
 		MaNguoiTao,
@@ -90,7 +95,7 @@ END
 
 GO
 --Cập nhật theo mã
-CREATE PROC dbo.capNhatBaiVietBaiGiangTheoMa (
+ALTER PROC dbo.capNhatBaiVietBaiGiangTheoMa (
 	@0 INT, --Mã
 	@1 dbo.BangCapNhat READONLY
 )
@@ -111,6 +116,7 @@ BEGIN
 		Ma,
 		TieuDe,
 		NoiDung,
+		TomTat,
 		MaTapTin,
 		ThoiDiemTao,
 		MaNguoiTao,

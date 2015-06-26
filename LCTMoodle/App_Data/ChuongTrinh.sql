@@ -13,7 +13,7 @@ CREATE TABLE dbo.ChuongTrinh (
 
 GO
 --Lấy chương trình theo mã khóa học
-CREATE PROC dbo.layChuongTrinhTheoMaKhoaHoc (
+ALTER PROC dbo.layChuongTrinhTheoMaKhoaHoc (
 	@0 INT --MaKhoaHoc
 )
 AS
@@ -21,8 +21,8 @@ BEGIN
 	SELECT
 		Ma,
 		MaKhoaHoc,
-		CongViec,
-		MoTa,
+		BaiHoc,
+		NoiDung,
 		ThoiGian,
 		ThuTu
 		FROM dbo.ChuongTrinh
@@ -32,10 +32,10 @@ END
 
 GO
 --Thêm chương trình
-CREATE PROC dbo.themChuongTrinh (
+ALTER PROC dbo.themChuongTrinh (
 	@0 INT, --MaKhoaHoc
-	@1 NVARCHAR(MAX), --CongViec
-	@2 NVARCHAR(MAX), --ThoiGian
+	@1 NVARCHAR(MAX), --BaiHoc
+	@2 NVARCHAR(MAX), --NoiDung
 	@3 NVARCHAR(MAX) --ThoiGian
 )
 AS
@@ -55,14 +55,14 @@ BEGIN
 			@thuTu + 1
 		END
 
-	INSERT INTO dbo.ChuongTrinh (MaKhoaHoc, CongViec, MoTa, ThoiGian, ThuTu)
+	INSERT INTO dbo.ChuongTrinh (MaKhoaHoc, BaiHoc, NoiDung, ThoiGian, ThuTu)
 		VALUES (@0, @1, @2, @3, @thuTu)
 		
 	SELECT TOP 1
 		Ma,
 		MaKhoaHoc,
-		CongViec,
-		MoTa,
+		BaiHoc,
+		NoiDung,
 		ThoiGian
 		FROM dbo.ChuongTrinh
 		WHERE Ma = @@IDENTITY
@@ -70,7 +70,7 @@ END
 
 GO
 --Xóa giáo trình
-CREATE PROC dbo.xoaChuongTrinhTheoMa (
+ALTER PROC dbo.xoaChuongTrinhTheoMa (
 	@0 INT --Ma
 )
 AS
@@ -81,7 +81,7 @@ END
 
 GO
 --[Trigger] Xóa giáo trinh
-CREATE TRIGGER dbo.xoaChuongTrinh_TRIGGER
+ALTER TRIGGER dbo.xoaChuongTrinh_TRIGGER
 	ON dbo.ChuongTrinh
 	AFTER DELETE
 AS
@@ -99,7 +99,7 @@ END
 
 GO
 --Thay đổi thứ tự
-CREATE PROC dbo.capNhatChuongTrinh_ThuTu (
+ALTER PROC dbo.capNhatChuongTrinh_ThuTu (
 	@0 INT, --ThuTu cũ
 	@1 INT, --ThuTu mới
 	@2 INT --MaKhoaHoc

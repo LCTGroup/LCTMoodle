@@ -28,6 +28,9 @@ namespace DAOLayer
                     case "NoiDung":
                         baiViet.noiDung = layString(dong, i);
                         break;
+                    case "TomTat":
+                        baiViet.tomTat = layString(dong, i);
+                        break;
                     case "MaTapTin":
                         maTam = layInt(dong, i);
 
@@ -87,6 +90,7 @@ namespace DAOLayer
                     {
                         baiViet.tieuDe,
                         baiViet.noiDung,
+                        baiViet.tomTat,
                         layMa(baiViet.tapTin),
                         layMa(baiViet.nguoiTao),
                         layMa(baiViet.khoaHoc)

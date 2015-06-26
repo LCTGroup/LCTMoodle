@@ -1940,7 +1940,7 @@
     padding: 0px 20px;
     height: 35px;
     margin: 5px;
-    color: #333;
+    color: #555;
     font-weight: bold;
     position: relative;
     outline: none;
@@ -1976,10 +1976,10 @@
         width: 100%;
     }
     
-    .lct-form button.chap-nhan:hover:after,
-    .lct-form button.chap-nhan:focus:after,
-    .lct-form a.button.chap-nhan:hover:after,
-    .lct-form a.button.chap-nhan:focus:after {
+    .lct-form button:hover:after,
+    .lct-form button:focus:after,
+    .lct-form a.button:hover:after,
+    .lct-form a.button:focus:after {
         background-color: #08c;
     }
 
@@ -2004,10 +2004,10 @@
         background-color: #e00;
     }
 
-    .lct-form button.chap-nhan:hover,
-    .lct-form button.chap-nhan:focus,
-    .lct-form a.button.chap-nhan:hover,
-    .lct-form a.button.chap-nhan:focus {
+    .lct-form button:hover,
+    .lct-form button:focus,
+    .lct-form a.button:hover,
+    .lct-form a.button:focus {
         color: #08c;
     }
 
@@ -2062,15 +2062,23 @@
 
 .lct-bang .td,
 .lct-bang .th {
-    border: 1px solid #eee;
     display: table-cell;
 }
 
-.lct-bang .td {
+.lct-bang .td,
+.lct-bang .th,
+.lct-bang td,
+.lct-bang th {
+    border: 1px solid #eee;
+}
+
+.lct-bang .td,
+.lct-bang td {
     padding: 5px;
 }
 
-.lct-bang .th {
+.lct-bang .thead .th,
+.lct-bang thead th {
     text-align: center;
     font-weight: bold;
     position: relative;
@@ -2079,7 +2087,8 @@
     background-color: #fcfcfc;
 }
 
-    .lct-bang .th:after {
+    .lct-bang .thead .th:not(.khong-vien):after,
+    .lct-bang thead th:not(.khong-vien):after {
         content: '';
         display: block;
         position: absolute;
@@ -2089,8 +2098,31 @@
         left: 0;
         background-color: #08c;
     }
+    
+.lct-bang .tbody .th,
+.lct-bang tbody th {
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    padding: 5px 10px;
+    vertical-align: middle;
+    background-color: #fcfcfc;
+}
 
-.lct-bang .tr:nth-child(odd) {
+    .lct-bang .tbody .th:not(.khong-vien):after,
+    .lct-bang tbody th:not(.khong-vien):after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 3px;
+        height: 100%;
+        top: 0;
+        right: 0;
+        background-color: #08c;
+    }
+    
+.lct-bang .tr:nth-child(odd),
+.lct-bang tr:nth-child(odd) {
     background-color: #fcfcfc;
 }
 

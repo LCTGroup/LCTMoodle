@@ -78,44 +78,101 @@ BEGIN
 
 	RETURN @chuoiMaLa
 END
-EXEC layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri 1, 'KH', 1
-SELECT * from nhomnguoidung_kh_quyen
+
 GO
 --Lấy danh sách quyền theo mã người dùng và đối tượng
-CREATE PROC dbo.layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri (
+ALTER PROC dbo.layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri (
 	@0 INT, --MaNguoiDung
 	@1 NVARCHAR(MAX), --PhamVi
 	@2 INT --MaDoiTuong
 )
 AS
 BEGIN
-	IF (@1 = 'HT')
+	DECLARE @coQuyenHT BIT, @coQuyenCD BIT
+	SELECT 
+		@coQuyenHT = CoQuyenHT,
+		@coQuyenCD = CoQuyenCD
+		FROM dbo.NguoiDung
+		WHERE Ma = @0
+
+	--Chuỗi giá trị chứa danh sách quyền
+	DECLARE @giaTri VARCHAR(MAX) = ''
+
+	--Lấy danh sách quyền ở khóa học đó
+	SELECT 
+		@giaTri += GiaTri + ','
+		FROM 
+			dbo.NhomNguoiDung_KH_NguoiDung NND_ND
+				--Lấy nhóm người dùng mà người dùng thuộc
+				INNER JOIN dbo.NhomNguoiDung_KH NND ON 
+					NND_ND.MaNguoiDung = @0 AND
+					NND_ND.MaNhomNguoiDung = NND.Ma
+				--Lấy quyền mà nhóm quyền đó có TRÊN ĐỐI TƯỢNG
+				INNER JOIN dbo.NhomNguoiDung_KH_Quyen NND_Q ON
+					NND_Q.MaDoiTuong = @2 AND
+					NND.Ma = NND_Q.MaNhomNguoiDung
+				--Lấy giá trị quyền của nhóm quyền đó
+				INNER JOIN dbo.Quyen Q ON 
+					NND_Q.MaQuyen = Q.Ma AND
+					Q.GiaTri IS NOT NULL AND
+					Q.PhamVi = 'KH'
+
+	--Lấy danh sách quyền ở chủ đề của khóa học đó
+	IF (@coQuyenCD = 1)
 	BEGIN
-		SELECT 1
-	END
-	ELSE IF (@1 = 'KH')
-	BEGIN
-		DECLARE @giaTri VARCHAR(MAX) = ''
-		SELECT 
+		--Lấy mã chủ đề của khóa học
+		DECLARE @maChuDe INT
+		SELECT @maChuDe = MaChuDe
+			FROM dbo.KhoaHoc
+			WHERE Ma = @2
+
+		--Lấy quyền của người dùng trên chủ đề đó
+		SELECT
 			@giaTri += GiaTri + ','
-			FROM 
-				dbo.NhomNguoiDung_KH_NguoiDung NND_ND
-					INNER JOIN dbo.NhomNguoiDung_KH NND ON 
-						NND_ND.MaNguoiDung = @0
-					INNER JOIN dbo.NhomNguoiDung_KH_Quyen NND_Q ON
+			FROM
+				dbo.NhomNguoiDung_CD_NguoiDung NND_ND 
+					--Lấy nhóm người dùng mà người dùng đó thuộc
+					INNER JOIN dbo.NhomNguoiDung_CD NND ON
+						NND_ND.MaNguoiDung = @0 AND
+						NND_ND.MaNhomNguoiDung = NND.Ma
+					--Lấy quyền mà nhóm người dùng đó có TRÊN ĐỐI TƯỢNG
+					INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
 						NND_Q.MaDoiTuong = @2 AND
 						NND.Ma = NND_Q.MaNhomNguoiDung
-					INNER JOIN dbo.Quyen Q ON 
+					--Lấy giá trị quyền của nhóm quyền đó
+					INNER JOIN dbo.Quyen Q ON
+						NND_Q.MaQuyen = Q.Ma AND
 						Q.GiaTri IS NOT NULL AND
-						NND_Q.MaQuyen = Q.Ma
-
-		SELECT CASE
-			WHEN @giaTri = '' THEN
-				''
-			ELSE
-				LEFT(@giaTri, LEN(@giaTri) - 1)
-			END
+						Q.PhamVi = 'KH'
 	END
+
+	IF (@coQuyenHT = 1)
+	BEGIN
+		--Lấy quyền của người dùng trên hệ thống
+		SELECT
+			@giaTri += GiaTri + ','
+			FROM
+				dbo.NhomNguoiDung_CD_NguoiDung NND_ND 
+					--Lấy nhóm người dùng mà người dùng đó thuộc
+					INNER JOIN dbo.NhomNguoiDung_HT NND ON
+						NND_ND.MaNguoiDung = @0 AND
+						NND_ND.MaNhomNguoiDung = NND.Ma
+					--Lấy quyền mà nhóm người dùng đó
+					INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
+						NND.Ma = NND_Q.MaNhomNguoiDung
+					--Lấy giá trị quyền của nhóm quyền đó
+					INNER JOIN dbo.Quyen Q ON
+						NND_Q.MaQuyen = Q.Ma AND
+						Q.GiaTri IS NOT NULL AND
+						Q.PhamVi = 'KH'
+	END
+
+	SELECT CASE
+		WHEN @giaTri = '' THEN
+			''
+		ELSE
+			LEFT(@giaTri, LEN(@giaTri) - 1)
+		END
 END
 
 GO

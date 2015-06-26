@@ -21,6 +21,13 @@
             <li data-an>
                 <section class="noi-dung">
                     <section class="input">
+                        <textarea name="TomTat" placeholder="Tóm tắt" data-mac-dinh="@(Model != null ? Model.tomTat : null)"></textarea>
+                    </section>
+                </section>
+            </li>
+            <li data-an>
+                <section class="noi-dung">
+                    <section class="input">
                         <textarea data-validate="bat-buoc" name="NoiDung" data-input-type="editor" placeholder="Nội dung" data-mac-dinh="@(Model != null ? Model.noiDung : null)"></textarea>
                     </section>
                 </section>

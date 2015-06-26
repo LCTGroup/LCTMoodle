@@ -164,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Nhap.sql" />
+    <Content Include="App_Data\Type.sql" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\ChuDe\ChuDe.png" />
     <Content Include="Content\images\ChuDe\MacDinh\he-thong.png" />
@@ -179,6 +180,7 @@
     <Content Include="Content\images\NguoiDung\HinhDaiDienMacDinh.png" />
     <Content Include="Content\images\NguoiDung\NguoiDung.png" />
     <Content Include="Content\images\Quyen\Quyen.png" />
+    <Content Include="Content\scripts\BangDiem\Xem.js" />
     <Content Include="Content\scripts\BinhLuan\Khung.js" />
     <Content Include="Content\scripts\ChuDe\Khung.js" />
     <Content Include="Content\images\user-avatar.jpg" />
@@ -192,6 +194,7 @@
     <Content Include="Content\scripts\KhoaHoc\DanhSach.js" />
     <Content Include="Content\scripts\KhoaHoc\Xem.js" />
     <Content Include="Content\scripts\KhoaHoc\Tao.js" />
+    <Content Include="Content\scripts\LCT\TimKiem.js" />
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
@@ -202,6 +205,7 @@
     <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
     <Content Include="Content\scripts\NguoiDung\Xem.js" />
     <Content Include="Content\scripts\Quyen\QuanLy.js" />
+    <Content Include="Content\styles\BangDiem\Xem.css" />
     <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\BangDiem\Tao.css" />
     <Content Include="Content\styles\ChuongTrinh\Index.css" />
@@ -506,6 +510,7 @@
     <Content Include="Views\BaiVietTaiLieu\_Item.cshtml" />
     <Content Include="Views\BaiVietTaiLieu\_Khung.cshtml" />
     <Content Include="Views\NguoiDung\KichHoat.cshtml" />
+    <Content Include="Views\BangDiem\Xem.cshtml" />
     <Content Include="Views\NguoiDung\DoiMatKhau.cshtml" />
     <Content Include="Views\NguoiDung\QuenMatKhau.cshtml" />
     <Content Include="Views\HoiDap\_DanhSachCauHoi.cshtml" />

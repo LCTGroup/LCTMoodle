@@ -9,8 +9,8 @@ namespace DTOLayer
     public class ChuongTrinhDTO : DTO
     {
         public KhoaHocDTO khoaHoc;
-        public string congViec;
-        public string moTa;
+        public string baiHoc;
+        public string noiDung;
         public string thoiGian;
         public int? thuTu;
     }
