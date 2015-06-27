@@ -19,8 +19,8 @@ namespace BUSLayer
             bang.Columns.AddRange(new DataColumn[] {
                 new DataColumn("MaCotDiem"),
                 new DataColumn("MaNguoiDung"),
-                new DataColumn("MaNguoiTao"),
-                new DataColumn("Diem")
+                new DataColumn("Diem"),
+                new DataColumn("MaNguoiTao")
             });
 
             foreach (var diem in dsDiem)
@@ -29,8 +29,8 @@ namespace BUSLayer
                 {
                     layMa(diem.cotDiem),
                     layMa(diem.nguoiDung),
-                    layMa(diem.nguoiTao),
-                    diem.diem
+                    diem.diem.Value,
+                    layMa(diem.nguoiTao)
                 });
             }
 
@@ -94,10 +94,32 @@ namespace BUSLayer
             };
         }
 
-        public static KetQua capNhat(List<CotDiem_NguoiDungDTO> dsDiem)
+        public static KetQua capNhat(List<dynamic> ds)
         {
-            DataTable bang = toDataTable(dsDiem);
-            return CotDiem_NguoiDungDAO.capNhat(bang);
+            if (Session["NguoiDung"] == null)
+            {
+                return new KetQua()
+                {
+                    trangThai = 4
+                };
+            }
+
+            var nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?);
+
+            List<CotDiem_NguoiDungDTO> dsDiem = new List<CotDiem_NguoiDungDTO>();
+
+            foreach(var item in ds)
+            {
+                dsDiem.Add(new CotDiem_NguoiDungDTO()
+                    {
+                        cotDiem = layDTO<CotDiemDTO>(Convert.ToInt32(item.maCotDiem)),
+                        nguoiDung = layDTO<NguoiDungDTO>(Convert.ToInt32(item.maNguoiDung)),
+                        diem = Convert.ToDouble(item.diem),
+                        nguoiTao = nguoiTao
+                    });
+            }
+
+            return CotDiem_NguoiDungDAO.capNhat(toDataTable(dsDiem));
         }
     }
 }

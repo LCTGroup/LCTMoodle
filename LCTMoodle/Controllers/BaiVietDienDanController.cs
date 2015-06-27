@@ -119,5 +119,11 @@ namespace LCTMoodle.Controllers
                 );
             }
         }
+
+        [HttpPost]
+        public ActionResult XuLyGhim(int ma, bool ghim)
+        {
+            return Json(BaiVietDienDanBUS.ghim(ma, ghim));
+        }
 	}
 }

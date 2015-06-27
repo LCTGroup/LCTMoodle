@@ -44,6 +44,41 @@ function khoiTaoItem_ThanhVien($items) {
             });
         });
     });
+
+    khoiTaoTatMoHocVien($items.find('[data-chuc-nang="tat-hoc-vien"]').data('mo', false));
+
+    khoiTaoTatMoHocVien($items.find('[data-chuc-nang="mo-hoc-vien"]').data('mo', true));
+
+    function khoiTaoTatMoHocVien($nuts) {
+        $nuts.on('click', function () {
+            var $nut = $(this);
+            var mo = $nut.data('mo');
+
+            $.ajax({
+                url: '/KhoaHoc/XuLyCapNhatHocVien/' + maKhoaHoc,
+                method: 'POST',
+                data: {
+                    maNguoiDung: $nut.closest('.item').attr('data-ma'),
+                    laHocVien: mo
+                },
+                dataType: 'JSON'
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    $nut.text(mo ? 'Xóa khỏi danh sách học viên' : 'Đưa vào danh sách học viên');
+                    $nut.data('mo', !mo);
+                }
+                else {
+                    moPopup({
+                        thongBao: 'Cập nhật học viên thất bại'
+                    });
+                }
+            }).fail(function () {
+                moPopup({
+                    thongBao: 'Cập nhật học viên thất bại'
+                });
+            })
+        })
+    }
 }
 
 function khoiTaoItem_DangKy($items) {

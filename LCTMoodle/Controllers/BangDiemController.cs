@@ -74,10 +74,18 @@ namespace LCTMoodle.Controllers
             return View(khoaHoc);
         }
 
+        [HttpPost]
         public ActionResult CapNhatBangDiem(string jsonDiem)
         {
-            List<CotDiem_NguoiDungDTO> dsDiem = JsonConvert.DeserializeObject<List<CotDiem_NguoiDungDTO>>(jsonDiem);
-            return null;
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(CotDiem_NguoiDungBUS.capNhat(JsonConvert.DeserializeObject<List<dynamic>>(jsonDiem)));
         }
 	}
 }

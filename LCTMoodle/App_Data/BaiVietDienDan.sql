@@ -9,7 +9,8 @@ CREATE TABLE dbo.BaiVietDienDan(
 	MaTapTin INT DEFAULT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
 	MaNguoiTao INT NOT NULL,
-	MaKhoaHoc INT NOT NULL
+	MaKhoaHoc INT NOT NULL,
+	Ghim BIT
 )
 
 GO
@@ -52,10 +53,11 @@ BEGIN
 		MaTapTin,
 		ThoiDiemTao,
 		MaNguoiTao,
-		MaKhoaHoc
+		MaKhoaHoc,
+		Ghim
 		FROM dbo.BaiVietDienDan
 		WHERE MaKhoaHoc = @0
-		ORDER BY ThoiDiemTao DESC
+		ORDER BY Ghim DESC, ThoiDiemTao DESC
 END
 
 GO
@@ -71,7 +73,7 @@ END
 
 GO
 --Lấy bài viết diễn đàn theo mã
-CREATE PROC dbo.layBaiVietDienDanTheoMa (
+ALTER PROC dbo.layBaiVietDienDanTheoMa (
 	@0 INT --Ma
 )
 AS
@@ -90,7 +92,7 @@ END
 
 GO
 --Cập nhật theo mã
-CREATE PROC dbo.capNhatBaiVietDienDanTheoMa (
+ALTER PROC dbo.capNhatBaiVietDienDanTheoMa (
 	@0 INT, --Mã
 	@1 dbo.BangCapNhat READONLY
 )
@@ -114,7 +116,33 @@ BEGIN
 		MaTapTin,
 		ThoiDiemTao,
 		MaNguoiTao,
-		MaKhoaHoc
+		MaKhoaHoc,
+		Ghim
 		FROM dbo.BaiVietDienDan
 		WHERE Ma = @0
+END
+
+GO
+--Cập nhật ghim bài viết
+CREATE PROC dbo.capNhatBaiVietDienDanTheoMa_Ghim (
+	@0 INT, --Ma
+	@1 BIT --Ghim
+)
+AS
+BEGIN
+	UPDATE dbo.BaiVietDienDan
+		SET Ghim = @1
+		WHERE Ma = @0
+END
+
+GO
+--Xóa tất cả ghim theo mã khóa học
+CREATE PROC dbo.capNhatBaiVietDienDanTheoMaKhoaHoc_XoaGhim (
+	@0 INT --MaKhoaHoc
+)
+AS
+BEGIN
+	UPDATE dbo.BaiVietDienDan
+		SET Ghim = null
+		WHERE MaKhoaHoc = @0
 END
