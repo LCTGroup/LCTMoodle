@@ -23,12 +23,12 @@ namespace LCTMoodle.WebServices
         CauHoiDTO layTheoMa(int _Ma);
 
         [OperationContract]
-        List<CauHoiDTO> layTheoChuDe(int _MaChuDe);
-
-        [OperationContract]
-        List<CauHoiDTO> lay();
+        List<CauHoiDTO> lay(int _SoDong);
 
         [OperationContract]
         List<CauHoiDTO> timKiem(string _TuKhoa);
+
+        [OperationContract]
+        List<CauHoiDTO> timKiemTheoChuDe(int _MaChuDe, string _TuKhoa);
     }
 }

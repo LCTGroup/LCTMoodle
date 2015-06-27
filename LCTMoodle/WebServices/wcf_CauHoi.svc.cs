@@ -78,29 +78,12 @@ namespace LCTMoodle.WebServices
         }
 
         /// <summary>
-        /// Webservice lấy câu hỏi theo mã chủ đề
-        /// </summary>
-        /// <param name="_MaChuDe"></param>
-        /// <returns>List<CauHoiDTO></returns>
-        public List<CauHoiDTO> layTheoChuDe(int _MaChuDe)
-        {
-            KetQua ketQua = CauHoiBUS.layTheoChuDe(_MaChuDe, new LienKet { "NguoiTao", "HinhDaiDien" });
-            List<CauHoiDTO> lst_CauHoi = new List<CauHoiDTO>();
-
-            if(ketQua.trangThai == 0)
-            {
-                lst_CauHoi = ketQua.ketQua as List<CauHoiDTO>;
-            }
-            return lst_CauHoi;
-        }
-
-        /// <summary>
         /// Webservice lấy danh sách câu hỏi
         /// </summary>
         /// <returns>List<CauHoiDTO></returns>
-        public List<CauHoiDTO> lay()
+        public List<CauHoiDTO> lay(int _SoDong)
         {
-            KetQua ketQua = CauHoiBUS.layDanhSachCauHoi(new LienKet { "NguoiTao", "HinhDaiDien" });
+            KetQua ketQua = CauHoiBUS.layDanhSach(_SoDong, new LienKet { "NguoiTao", "HinhDaiDien" });
             List<CauHoiDTO> lst_CauHoi = new List<CauHoiDTO>();
 
             if(ketQua.trangThai == 0)
@@ -121,6 +104,23 @@ namespace LCTMoodle.WebServices
             List<CauHoiDTO> lst_CauHoi = new List<CauHoiDTO>();
 
             if(ketQua.trangThai == 0)
+            {
+                lst_CauHoi = ketQua.ketQua as List<CauHoiDTO>;
+            }
+            return lst_CauHoi;
+        }
+
+        /// <summary>
+        /// Webservice tìm kiếm câu hỏi theo mã chủ đề
+        /// </summary>
+        /// <param name="_MaChuDe"></param>
+        /// <returns>List<CauHoiDTO></returns>
+        public List<CauHoiDTO> timKiemTheoChuDe(int _MaChuDe, string _TuKhoa)
+        {
+            KetQua ketQua = CauHoiBUS.layTheoMaChuDe_TimKiem(_MaChuDe, _TuKhoa, new LienKet { "NguoiTao", "HinhDaiDien" });
+            List<CauHoiDTO> lst_CauHoi = new List<CauHoiDTO>();
+
+            if (ketQua.trangThai == 0)
             {
                 lst_CauHoi = ketQua.ketQua as List<CauHoiDTO>;
             }
