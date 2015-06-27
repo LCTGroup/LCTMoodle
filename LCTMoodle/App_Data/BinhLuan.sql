@@ -3,7 +3,7 @@
 GO
 --Bình luận
 	--BaiVietDienDan
-
+	
 CREATE TABLE dbo.BinhLuan_BaiVietDienDan (
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,
 	NoiDung NVARCHAR(MAX) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE dbo.BinhLuan_BaiVietDienDan (
 	MaNguoiTao INT NOT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE()
 );
-	
+
 GO
 --Thêm bình luận
 ALTER PROC dbo.themBinhLuan (
@@ -24,9 +24,16 @@ ALTER PROC dbo.themBinhLuan (
 )
 AS
 BEGIN
-	EXEC ('
+	DECLARE @maTapTin VARCHAR(MAX) = CASE 
+		WHEN @1 IS NULL THEN 
+			'NULL'
+		ELSE 
+			CAST(@1 AS VARCHAR(MAX))
+		END
+
+	EXEC('
 		INSERT INTO dbo.BinhLuan_' + @4 + ' (NoiDung, MaTapTin, MaDoiTuong, MaNguoiTao)
-			VALUES (N''' + @0 + ''', ' + @1 + ', ' + @2 + ', ' + @3 + ')
+			VALUES (N''' + @0 + ''', ' + @maTapTin + ', ' + @2 + ', ' + @3 + ')
 
 		SELECT
 			Ma,

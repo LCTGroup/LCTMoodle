@@ -875,24 +875,14 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
 
     //Chỉ số nguyên
     $form.find('[data-validate~="so-nguyen"]').on({
-        'keydown': function (e) {
-            e = e || window.event;
-            var keyCode = e.keyCode;
+        'keypress': function (e) {
+            var keyCode = e.which;
 
             if (
-                //number
-                (!e.shiftKey &&
-                ((48 <= keyCode && keyCode <= 57) ||
-                (96 <= keyCode && keyCode <= 105))) ||
-
-                //backspace, delete, tab, enter
-                $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
-
-                //home, end, left, right, down, up
-                (35 <= keyCode && keyCode <= 40) ||
-
-                //ctrl A | Z | X | C | V |...
-                e.ctrlKey) {
+                    //Số
+                    48 <= keyCode &&
+                    keyCode <= 57
+                ) {
                 return;
             }
 
@@ -921,27 +911,17 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
 
     //Chỉ số thực
     $form.find('[data-validate~="so-thuc"]').on({
-        'keydown': function (e) {
-            var $input = $(this);
-            var keyCode = e.keyCode;
+        'keypress': function (e) {
+            var keyCode = e.which;
 
             if (
-                //number
-                (!e.shiftKey &&
-                ((48 <= keyCode && keyCode <= 57) ||
-                (96 <= keyCode && keyCode <= 105))) ||
+                    //Số
+                    (48 <= keyCode &&
+                    keyCode <= 57) ||
 
-                //dấu chấm thập phân
-                keyCode == 190 && $input.val().indexOf('.') === -1 ||
-
-                //backspace, delete, tab, enter
-                $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
-
-                //home, end, left, right, down, up
-                (35 <= keyCode && keyCode <= 40) ||
-
-                //ctrl A | Z | X | C | V |...
-                e.ctrlKey) {
+                    //dấu chấm thập phân
+                    (keyCode == 46 && this.value.indexOf('.') === -1)
+                ) {
                 return;
             }
 
@@ -983,22 +963,13 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
 
     //Chỉ chữ
     $form.find('[data-validate~="chu"]').on({
-        'keydown': function (e) {
-            e = e || window.event;
-            var keyCode = e.keyCode;
+        'keypress': function (e) {
+            var keyCode = e.which;
+            console.log(e.which);
 
             if (
-                //number
-                (65 < keyCode && keyCode < 90) ||
-
-                //backspace, delete, tab, enter
-                $.inArray(keyCode, [8, 46, 9, 13]) !== -1 ||
-
-                //home, end, left, right, down, up
-                (35 <= keyCode && keyCode <= 40) ||
-
-                //ctrl A | Z | X | C | V |...
-                e.ctrlKey) {
+                (97 <= keyCode && keyCode <= 122) ||
+                (65 <= keyCode && keyCode <= 90)) {
                 return;
             }
 

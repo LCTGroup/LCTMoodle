@@ -14,7 +14,26 @@ function khoiTaoSubmit($form) {
                 dataType: 'JSON'
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    window.location = '/KhoaHoc/' + data.ketQua;
+                    moPopup({
+                        tieuDe: 'Xác nhận',
+                        thongBao: 'Tạo khóa học thành công.<br />Bạn có muốn thực hiện việc gì tiếp theo?',
+                        nut: [{
+                            ten: 'Vào khóa học',
+                            xuLy: function () {
+                                window.location = '/KhoaHoc/' + data.ketQua;
+                            }
+                        }, {
+                            ten: 'Tạo chương trình',
+                            xuLy: function () {
+                                window.location = '/KhoaHoc/ChuongTrinh/' + data.ketQua;
+                            }
+                        }, {
+                            ten: 'Tiếp tục tạo'
+                        }],
+                        tat: function () {
+                            khoiTaoLCTFormMacDinh($form);
+                        }
+                    });
                 }
                 else {
                     moPopup({

@@ -26,7 +26,6 @@
         <a data-chuc-nang="sua-bang-diem" class="button">Chuyển chế độ sửa</a>
         <a data-chuc-nang="luu-sua" class="button">Lưu</a>
         <a data-chuc-nang="hoan-thanh-sua" class="button">Hoàn thành</a>
-        <a data-chuc-nang="huy-sua" class="button">Hủy</a>
     </section>
     <section class="noi-dung" style="display: inline-block; max-width: 100%;">
         <article style="border: 0; background-color: transparent;">
@@ -80,6 +79,5 @@
         <a data-chuc-nang="sua-bang-diem" class="button">Chuyển chế độ sửa</a>
         <a data-chuc-nang="luu-sua" class="button">Lưu</a>
         <a data-chuc-nang="hoan-thanh-sua" class="button">Hoàn thành</a>
-        <a data-chuc-nang="huy-sua" class="button">Hủy</a>
     </section>
 </article>

@@ -72,6 +72,9 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "Ghim":
+                        baiViet.ghim = layBool(dong, i);
+                        break;
                     default:
                         break;
                 }
@@ -146,6 +149,31 @@ namespace DAOLayer
                 },
                 lienKet
             );
+        }
+
+        public static KetQua capNhatTheoMa_Ghim(int? ma, bool ghim)
+        {
+            return khongTruyVan
+                (
+                    "capNhatBaiVietDienDanTheoMa_Ghim",
+                    new object[]
+                    {
+                        ma,
+                        ghim
+                    }
+                );
+        }
+
+        public static KetQua capNhatTheoMaKhoaHoc_XoaGhim(int? maKhoaHoc)
+        {
+            return khongTruyVan
+                (
+                    "capNhatBaiVietDienDanTheoMaKhoaHoc_XoaGhim",
+                    new object[] 
+                    {
+                        maKhoaHoc
+                    }
+                );
         }
     }
 }

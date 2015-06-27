@@ -65,6 +65,9 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "LaHocVien":
+                        thanhVien.laHocVien = layBool(dong, i);
+                        break;
                     default:
                         break;
                 }
@@ -167,6 +170,20 @@ namespace DAOLayer
                         trangThai
                     },
                     lienKet
+                );
+        }
+
+        public static KetQua capNhatTheoMaKhoaHocVaMaNguoiDung_LaHocVien(int? maKhoaHoc, int? maNguoiDung, bool laHocVien)
+        {
+            return khongTruyVan
+                (
+                    "capNhatKhoaHoc_NguoiDungTheoMaKhoaHocVaMaNguoiDung_LaHocVien",
+                    new object[]
+                    {
+                        maKhoaHoc,
+                        maNguoiDung,
+                        laHocVien
+                    }
                 );
         }
     }

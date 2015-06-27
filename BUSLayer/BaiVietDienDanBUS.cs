@@ -180,5 +180,31 @@ namespace BUSLayer
                 "TapTin"
             });
         }
+
+        public static KetQua ghim(int ma, bool ghim)
+        {
+            #region Kiểm tra bài viết, lấy khóa học
+            var ketQua = BaiVietDienDanDAO.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Bài viết không hợp lệ"
+                };
+            }
+
+            var baiViet = ketQua.ketQua as BaiVietDienDanDTO;
+            #endregion
+            
+            //Xóa ghim hiện tại nếu là ghim
+            if (ghim)
+            {
+                BaiVietDienDanDAO.capNhatTheoMaKhoaHoc_XoaGhim(baiViet.khoaHoc.ma);
+            }
+
+            //Cập nhật ghim
+            return BaiVietDienDanDAO.capNhatTheoMa_Ghim(ma, ghim);
+        }
     }
 }

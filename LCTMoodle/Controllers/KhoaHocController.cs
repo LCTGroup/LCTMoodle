@@ -238,5 +238,11 @@ namespace LCTMoodle.Controllers
         {
             return Json(KhoaHoc_NguoiDungBUS.roiKhoaHoc(ma));
         }
+
+        [HttpPost]
+        public ActionResult XuLyCapNhatHocVien(int ma, int maNguoiDung, bool laHocVien)
+        {
+            return Json(KhoaHoc_NguoiDungBUS.capNhatHocVien(ma, maNguoiDung, laHocVien));
+        }
 	}
 }
