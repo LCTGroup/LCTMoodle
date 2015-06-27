@@ -5,54 +5,116 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.IO;
-using Helpers;
-using BUSLayer;
+using System.Drawing;
+using LCTMoodle.WebServices.Client_Model;
 using DTOLayer;
+using BUSLayer;
+using Helpers;
 
 namespace LCTMoodle.WebServices
 {
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "wcf_ChuDe" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select wcf_ChuDe.svc or wcf_ChuDe.svc.cs at the Solution Explorer and start debugging.
     public class wcf_ChuDe : Iwcf_ChuDe
     {
-        private string _Loai = "ChuDe_HinhDaiDien";
+        private const string _Loai = "ChuDe_HinhDaiDien";
 
         /// <summary>
-        /// Webservice lấy mã chủ đề cha
-        /// với byte[] : hình đại diện
+        /// Webservice lấy hình ảnh
         /// </summary>
-        /// <param name="_MaCha"></param>
-        /// <returns>Dictionary<DTOLayer.ChuDeDTO, byte[]></returns>
-        public Dictionary<DTOLayer.ChuDeDTO, byte[]> layChuDeTheoMaCha(int _MaCha)
+        /// <param name="_Ten"></param>
+        /// <returns>byte[]</returns>
+        public byte[] layHinhAnh(string _Ten)
         {
-            Dictionary<ChuDeDTO, byte[]> dict_ChuDe = new Dictionary<ChuDeDTO, byte[]>();
-            KetQua ketQua = ChuDeBUS.layTheoMaCha(_MaCha, new LienKet() { "HinhDaiDien" });
-            List<ChuDeDTO> lst_ChuDe = ketQua.ketQua as List<ChuDeDTO>;
+            string _DuongDan = TapTinHelper.layDuongDan(_Loai, _Ten);
 
-            if (ketQua.trangThai == 0)
+            if(File.Exists(@_DuongDan))
             {
-                foreach (ChuDeDTO chuDe in lst_ChuDe)
+                Image img = Image.FromFile(@_DuongDan);
+                using (var ms = new MemoryStream())
                 {
-                    dict_ChuDe.Add(chuDe, layHinhDaiDien(_Loai, chuDe.hinhDaiDien.ma + chuDe.hinhDaiDien.duoi));
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    return ms.ToArray();
                 }
             }
-            return dict_ChuDe;
+            return null;
         }
 
         /// <summary>
-        /// Webservice lấy ảnh đại diện
-        /// với _Ten = ChuDe.HinhDaiDien.Ma + ChuDe.HinhDaiDien.Duoi
+        /// Webservice lấy hình ảnh và trả về chỉ số
         /// </summary>
-        /// <param name="_Loai"></param>
+        /// <param name="_ChiSo"></param>
         /// <param name="_Ten"></param>
-        /// <returns>byte[]</returns>
-        public byte[] layHinhDaiDien(string _Loai, string _Ten)
+        /// <returns>clientmodel_HinhAnh</returns>
+        public clientmodel_HinhAnh layHinhAnhChiSo(int _ChiSo, string _Ten)
         {
-            string _LienKet = TapTinHelper.layDuongDan(_Loai, _Ten);
-            System.Drawing.Image img = System.Drawing.Image.FromFile(@_LienKet);
-            using (var ms = new MemoryStream())
+            string _DuongDan = TapTinHelper.layDuongDan(_Loai, _Ten);
+            clientmodel_HinhAnh cm_HinhAnh = new clientmodel_HinhAnh();
+
+            cm_HinhAnh._ChiSo = _ChiSo;
+
+            if (File.Exists(@_DuongDan))
             {
-                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                return ms.ToArray();
+                Image img = Image.FromFile(@_DuongDan);
+                using (var ms = new MemoryStream())
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    cm_HinhAnh._HinhAnh = ms.ToArray();
+                }
             }
+
+            return cm_HinhAnh;
+        }
+
+        /// <summary>
+        /// Webservice lấy chủ đề theo mã
+        /// </summary>
+        /// <param name="_Ma"></param>
+        /// <returns>ChuDeDTO</returns>
+        public ChuDeDTO layTheoMa(int _Ma)
+        {
+            KetQua ketQua = ChuDeBUS.layTheoMa(_Ma, new LienKet { "HinhDaiDien" });
+            ChuDeDTO dto_ChuDe = new ChuDeDTO();
+            
+            if(ketQua.trangThai == 0)
+            {
+                dto_ChuDe = ketQua.ketQua as ChuDeDTO;
+            }
+            return dto_ChuDe;
+        }
+
+        /// <summary>
+        /// Webservice lấy chủ đề theo mã chủ đề cha
+        /// </summary>
+        /// <param name="_MaChuDeCha"></param>
+        /// <returns>List<ChuDeDTO></returns>
+        public List<ChuDeDTO> layTheoMaCha(int _MaChuDeCha)
+        {
+            KetQua ketQua = ChuDeBUS.layTheoMaCha(_MaChuDeCha, new LienKet { "HinhDaiDien" });
+            List<ChuDeDTO> lst_ChuDe = new List<ChuDeDTO>();
+
+            if(ketQua.trangThai == 0)
+            {
+                lst_ChuDe = ketQua.ketQua as List<ChuDeDTO>;
+            }
+            return lst_ChuDe;
+        }
+
+        /// <summary>
+        /// Webservice tìm kiếm chủ đề
+        /// </summary>
+        /// <param name="_TuKhoa"></param>
+        /// <returns>List<ChuDeDTO></returns>
+        public List<ChuDeDTO> timKiem(string _TuKhoa)
+        {
+            KetQua ketQua = ChuDeBUS.lay_TimKiem(_TuKhoa, new LienKet { "HinhDaiDien" });
+            List<ChuDeDTO> lst_ChuDe = new List<ChuDeDTO>();
+
+            if(ketQua.trangThai == 0)
+            {
+                lst_ChuDe = ketQua.ketQua as List<ChuDeDTO>;
+            }
+            return lst_ChuDe;
         }
     }
 }

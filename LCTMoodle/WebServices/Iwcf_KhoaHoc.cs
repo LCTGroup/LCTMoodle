@@ -4,36 +4,39 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using LCTMoodle.WebServices.Client_Model;
 using DTOLayer;
-using System.IO;
 
 namespace LCTMoodle.WebServices
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "Iwcf_KhoaHoc" in both code and config file together.
     [ServiceContract]
     public interface Iwcf_KhoaHoc
     {
-        //[OperationContract]
-        //List<KhoaHocDTO> layKhoaHoc();
-
-        //[OperationContract]
-        //string layLK(int _Ma);
-
-        //[OperationContract]
-        //KhoaHocDTO layKhoaHocTheoMa(int _Ma);
-
-        //[OperationContract]
-        //Dictionary<KhoaHocDTO, byte[]> layKhoaHoc15(int _Dau, int _Cuoi);
         [OperationContract]
-        KhoaHocDTO layKhoaHocTheoMa(int _Ma);
+        byte[] layHinhAnh(string _Ten);
 
         [OperationContract]
-        Dictionary<KhoaHocDTO, byte[]> layKhoaHocTheoMa_HinhDD(int _Ma);
+        clientmodel_HinhAnh layHinhAnhChiSo(int _ChiSo, string _Ten);
 
         [OperationContract]
-        Dictionary<KhoaHocDTO, byte[]> layKhoaHoc(int _Dau, int _Cuoi);
+        KhoaHocDTO layTheoMa(int _Ma);
 
         [OperationContract]
-        byte[] layHinhDaiDien(string _Loai, string _Ten);
+        List<KhoaHocDTO> lay();
+
+        [OperationContract]
+        List<KhoaHocDTO> layTheoMaChuDe(int _MaChuDe);
+
+        [OperationContract]
+        List<KhoaHocDTO> layTheoMaNguoiDung(int _MaNguoiDung);
+
+        [OperationContract]
+        List<KhoaHocDTO> layTheoMaNguoiDungVaTrangThai(int _MaNguoiDung, int _TrangThai);
+
+        [OperationContract]
+        List<KhoaHocDTO> timKiem(string _TuKhoa);
+
+        [OperationContract]
+        List<KhoaHocDTO> timKiemTheoMaChuDe(int _MaChuDe, string _TuKhoa);
     }
 }
