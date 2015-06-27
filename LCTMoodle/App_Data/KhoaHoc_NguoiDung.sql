@@ -132,6 +132,7 @@ BEGIN
 			MaNguoiDung = @0
 END
 
+exec layKhoaHoc_NguoiDungTheoMaNguoiDungVaTrangThai 1, 0
 GO
 --Lấy theo mã người dùng và trạng thái
 ALTER PROC dbo.layKhoaHoc_NguoiDungTheoMaNguoiDungVaTrangThai (

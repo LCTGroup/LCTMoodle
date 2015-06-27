@@ -1,7 +1,7 @@
 ﻿@model DTOLayer.BinhLuanDTO
 @using LCTMoodle.LCTHtml
 
-<li data-doi-tuong="muc-binh-luan" class="muc-binh-luan" data-loai-doi-tuong="@Model.loaiDoiTuong">
+<li data-doi-tuong="muc-binh-luan" class="muc-binh-luan" data-ma="@Model.ma" data-loai-doi-tuong="@Model.loaiDoiTuong">
     <section class="trai">
         <article class="hinh-dai-dien">
             <img src="/boy.png/" />
@@ -13,7 +13,7 @@
         </section>
         <section class="noi-dung">
             @Model.noiDung
-        </section>        
+        </section>
         @if (@Model.tapTin != null)
         {
             <section class="tap-tin">
@@ -24,15 +24,18 @@
             </section>
         }
         <section class="thong-tin">
-            <span class="thoi-gian">                
+            <span class="thoi-gian">
                 @Model.thoiDiemTao.Value.ToString("H:mm d/M/yyyy")
             </span>
-        </section>        
+        </section>
     </section>
-    <section class="khung-chuc-nang-lct" style="top: 0; right: 0;">
+    <section class="khung-chuc-nang-lct ben-trai" style="top: 0; right: 0;">
         <ul data-doi-tuong="cnbl-@Model.ma">
             <li>
-                <a data-chuc-nang="xoa-binh-luan" data-value="@Model.ma">Xóa bình luận</a>
+                <a data-chuc-nang="sua-binh-luan">Sửa bình luận</a>
+            </li>
+            <li>
+                <a data-chuc-nang="xoa-binh-luan">Xóa bình luận</a>
             </li>
         </ul>
         <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbl-@Model.ma">

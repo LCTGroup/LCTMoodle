@@ -83,3 +83,57 @@ BEGIN
 			WHERE Ma = ' + @1 + '
 	')
 END
+
+GO
+--Cập nhật theo mã
+CREATE PROC dbo.capNhatBinhLuanTheoMa (
+	@0 NVARCHAR(MAX), --Loại đối tượng
+	@1 INT, --Mã
+	@2 dbo.BangCapNhat READONLY
+)
+AS
+BEGIN
+	--Tạo chuỗi gán
+	DECLARE @query NVARCHAR(MAX) = dbo.taoChuoiCapNhat(@2)
+	IF (@query <> '')
+	BEGIN
+		EXEC('
+			UPDATE dbo.BinhLuan_' + @0 + '
+				SET ' + @query + '
+				WHERE Ma = ' + @1 + '
+
+			SELECT
+				Ma,
+				''' + @0 + ''' LoaiDoiTuong,
+				NoiDung,
+				MaTapTin,
+				MaDoiTuong,
+				MaNguoiTao,
+				ThoiDiemTao
+				FROM dbo.BinhLuan_' + @0 + '
+				WHERE Ma = ' + @1 + '
+		')
+	END	
+END
+
+GO
+--Lấy theo mã
+ALTER PROC dbo.layBinhLuanTheoMa(
+	@0 NVARCHAR(MAX), --LoaiDoiTuong
+	@1 INT --Ma
+)
+AS
+BEGIN
+	EXEC('
+		SELECT TOP 1
+			Ma,
+			''' + @0 + ''' LoaiDoiTuong,
+			NoiDung,
+			MaTapTin,
+			MaDoiTuong,
+			MaNguoiTao,
+			ThoiDiemTao
+			FROM dbo.BinhLuan_' + @0 + '
+			WHERE Ma = ' + @1 + '
+	')
+END

@@ -28,7 +28,7 @@
                 width: 35px;
             }
 
-        .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai {
+        .khung-binh-luan .khung-danh-sach .muc-binh-luan > .phai {
             width: 100%;
         }
 

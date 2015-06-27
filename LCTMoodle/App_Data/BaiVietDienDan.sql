@@ -103,9 +103,9 @@ BEGIN
 	IF (@query <> '')
 	BEGIN
 		EXEC('
-		UPDATE dbo.BaiVietDienDan
-			SET ' + @query + '
-			WHERE Ma = ' + @0 + '
+			UPDATE dbo.BaiVietDienDan
+				SET ' + @query + '
+				WHERE Ma = ' + @0 + '
 		')
 	END	
 	

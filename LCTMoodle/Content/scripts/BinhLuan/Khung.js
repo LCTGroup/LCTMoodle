@@ -43,14 +43,11 @@ function khoiTaoForm($form) {
     });
 }
 
-function khoiTaoItem($item) {
-    khoiTaoTatMoDoiTuong($item.find('[data-chuc-nang="tat-mo"]'));
-    khoiTaoXoa($item.find('[data-chuc-nang="xoa-binh-luan"]'));
-}
-
-function khoiTaoXoa($danhSachNut) {
-    $danhSachNut.on('click', function () {
-        var $nut = $(this);
+function khoiTaoItem($items) {
+    khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'));
+    
+    $items.find('[data-chuc-nang="xoa-binh-luan"]').on('click', function () {
+        var $item = $(this).closest('[data-doi-tuong="muc-binh-luan"]');
 
         moPopup({
             tieuDe: 'Xác nhận',
@@ -60,16 +57,15 @@ function khoiTaoXoa($danhSachNut) {
                 {
                     ten: 'Có',
                     xuLy: function () {
-                        var $mucBinhLuan = $nut.closest('[data-doi-tuong="muc-binh-luan"]');
 
                         $.ajax({
-                            url: '/BinhLuan/XuLyXoa/' + $nut.attr('data-value'),
-                            data: { loaiDoiTuong: $mucBinhLuan.attr('data-loai-doi-tuong') },
+                            url: '/BinhLuan/XuLyXoa/' + $item.attr('data-ma'),
+                            data: { loaiDoiTuong: $item.attr('data-loai-doi-tuong') },
                             type: 'POST',
                             dataType: 'JSON'
                         }).done(function (data) {
                             if (data.trangThai == 0) {
-                                $mucBinhLuan.remove();
+                                $item.remove();
                             }
                             else {
                                 moPopup({
@@ -93,4 +89,47 @@ function khoiTaoXoa($danhSachNut) {
             ]
         });
     });
+
+    $items.find('[data-chuc-nang="sua-binh-luan"]').on('click', function () {
+        var $item = $(this).closest('[data-doi-tuong="muc-binh-luan"]');
+
+        $.ajax({
+            url: '/BinhLuan/_Form',
+            data: { ma: $item.data('ma'), loaiDoiTuong: $item.data('loai-doi-tuong') },
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                var $form = $(data.ketQua);
+
+                $item.html($form);
+
+                khoiTaoLCTForm($form, {
+                    submit: function () {
+                        $.ajax({
+                            url: '/BinhLuan/XuLyCapNhat',
+                            method: 'POST',
+                            data: layDataLCTForm($form),
+                            dataType: 'JSON'
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                var $newItem = $(data.ketQua);
+                                khoiTaoItem($newItem);
+                                $item.replaceWith($newItem);
+                            }
+                            else {
+                                moPopupThongBao(data);
+                            }
+                        }).fail(function () {
+                            moPopupThongBao('Cập nhật thất bại');
+                        })
+                    }
+                });
+            }
+            else {
+                moPopupThongBao(data);
+            }
+        }).fail(function () {
+            moPopupThongBao('Lấy dữ liệu sửa thất bại');
+        });
+    })
 }

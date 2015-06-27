@@ -45,7 +45,7 @@ html.bat-buoc:after {
 .cke_editable
 {
 	font-size: 13px;
-	line-height: 1.6;
+	line-height: 1.8;
 }
 
 blockquote
@@ -56,6 +56,7 @@ blockquote
 	border-style: solid;
 	border-color: #ccc;
 	border-width: 0;
+    margin: 5px 0;
 }
 
 .cke_contents_ltr blockquote
@@ -83,6 +84,7 @@ ol,ul,dl
 	*margin-right: 0px;
 	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
 	padding: 0 40px;
+    margin: 5px 0;
 }
 
 ol {
@@ -95,14 +97,19 @@ ul {
 
 h1,h2,h3,h4,h5,h6
 {
-	font-weight: normal;
-	line-height: 1.2;
+    margin: 5px 0;
+}
+
+p {
+    margin: 5px 0;
+    text-indent: 10px;
 }
 
 hr
 {
 	border: 0px;
 	border-top: 1px solid #ccc;
+    margin: 5px 0;
 }
 
 img.right
@@ -129,6 +136,7 @@ pre
 	-o-tab-size: 4;
 	-webkit-tab-size: 4;
 	tab-size: 4;
+    margin: 5px 0;
 }
 
 .marker
