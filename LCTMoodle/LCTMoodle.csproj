@@ -149,6 +149,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LCTHtml\NguoiDungHtml.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_HinhAnh.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi.cs" />
     <Compile Include="WebServices\Iwcf_ChuDe.cs" />
@@ -169,7 +170,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Nhap.sql" />
-    <Content Include="App_Data\Type.sql" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\ChuDe\ChuDe.png" />
     <Content Include="Content\images\ChuDe\MacDinh\he-thong.png" />
@@ -497,7 +497,6 @@
     <Content Include="Views\KhoaHoc\QuanLyQuyen.cshtml" />
     <Content Include="Views\KhoaHoc\DangKyThamGia.cshtml" />
     <Content Include="Views\HoiDap\_Item_CauHoi.cshtml" />
-    <Content Include="Views\KhoaHoc\ThanhVien.cshtml" />
     <Content Include="Views\NguoiDung\Sua.cshtml" />
     <None Include="Properties\PublishProfiles\LCTMoodle.pubxml" />
     <Content Include="Views\KhoaHoc\DanhSachThanhVien.cshtml" />
@@ -519,6 +518,8 @@
     <Content Include="Views\BangDiem\Xem.cshtml" />
     <Content Include="Views\NguoiDung\DoiMatKhau.cshtml" />
     <Content Include="Views\NguoiDung\QuenMatKhau.cshtml" />
+    <Content Include="Views\HoiDap\_DanhSachCauHoi.cshtml" />
+    <Content Include="Views\NguoiDung\_FormDangNhap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

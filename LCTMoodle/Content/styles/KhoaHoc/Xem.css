@@ -249,6 +249,9 @@
     border: 1px solid #eee;
     margin-bottom: 10px;
 }
+    [data-hien-thi="dien-dan"] .muc-bai-viet[data-ghim] {
+        border-color: #ddd;
+    }
 
 [data-hien-thi="dien-dan"] .khung-binh-luan {
     border-top: 1px solid #f5f5f5;
@@ -304,7 +307,19 @@
     [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung {
         padding: 10px;
         color: #333;
+        position: relative;
     }
+
+        [data-hien-thi="dien-dan"] .muc-bai-viet[data-ghim] .khung-noi-dung:after {
+            content: '';
+            display: block;
+            width: 3px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #08c;
+            position: absolute;
+        }
 
         [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung .tieu-de {
             font-weight: bold;

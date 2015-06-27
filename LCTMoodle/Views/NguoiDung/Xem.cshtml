@@ -25,6 +25,8 @@
     <script src="/Xem.js/NguoiDung/"></script>
 }
 
+<!--#region Thông tin cơ bản -->
+
 <section class="hop hop-2-vien">    
     <article class="noi-dung">
         <section>
@@ -44,13 +46,13 @@
     </article>
 </section>
 
-<section class="hop hop-1-vien">  
+<section class="hop hop-1-vien">
     <section class="tieu-de">Thông tin cơ bản</section>
     <section class="noi-dung khung-duoi">
         <div class="dong-noi-dung">
             <div class="tieu-de">Tên đăng nhập</div>
             <div class="noi-dung" data-change="TenDangNhap">@Model.tenTaiKhoan</div>
-        </div> 
+        </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Mật khẩu</div>
             <div class="noi-dung" data-change="MatKhau">**********</div>
@@ -58,11 +60,11 @@
         <div class="dong-noi-dung">
             <div class="tieu-de">Email</div>
             <div class="noi-dung" data-change="Email">@Model.email</div>
-        </div>  
+        </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Giới tính</div>
             <div class="noi-dung" data-change="Email">@Helpers.NguoiDungHelper.chuyenGioiTinh(Model.gioiTinh)</div>
-        </div>      
+        </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Ngày sinh</div>
             <div class="noi-dung" data-change="NgaySinh">@(Model.ngaySinh.HasValue ? @Model.ngaySinh.Value.ToString("dd/M/yyyy") : null)</div>
@@ -78,42 +80,80 @@
     </section>
 </section>
 
+<!--#endregion-->
+
+<!--#region Thông tin khóa học -->
 
 <section class="hop hop-1-vien">
     <section class="tieu-de">Thông tin khóa học</section>
     <section id="khung_chon_hien_thi" class="khung-chon-hien-thi">
         <ul>
-            <li class="khung">
-                <a data-chuc-nang="hien-thi" data-value="khung">
+            <li class="nhiem-vu-moi active">
+                <a class="clicked" data-chuc-nang="hien-thi" data-value="nhiemvumoi">
                     <i></i>
-                    <span>Tổng quát</span>
+                    <span>Nhiệm vụ mới</span>
                 </a>
             </li>
-            <li class="bai-giang">
-                <a data-chuc-nang="hien-thi" data-value="baigiang">
+            <li class="bai-giang-moi">
+                <a data-chuc-nang="hien-thi" data-value="baigiangmoi">
                     <i></i>
-                    <span>Bài giảng</span>
+                    <span>Bài giảng mới</span>
                 </a>
             </li>
-            <li class="bai-tap">
-                <a data-chuc-nang="hien-thi" data-value="baitap">
+            <li class="bai-tap-moi">
+                <a data-chuc-nang="hien-thi" data-value="baitapmoi">
                     <i></i>
-                    <span>Bài tập</span>
-                </a>
-            </li>
-            <li class="tai-lieu">
-                <a data-chuc-nang="hien-thi" data-value="tailieu">
-                    <i></i>
-                    <span>Tài liệu</span>
-                </a>
-            </li>
-            <li class="dien-dan">
-                <a data-chuc-nang="hien-thi" data-value="diendan">
-                    <i></i>
-                    <span>Diễn đàn</span>
+                    <span>Bài tập mới</span>
                 </a>
             </li>
         </ul>
     </section>
-    <section id="khung_hien_thi"></section>   
+    
+    <section id="khung_hien_thi" class="khung-hien-thi">
+        <div id="nhiemvumoi" class="noi-dung active">           
+            Nhiệm vụ mới <br />
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+        <div id="baigiangmoi" class="noi-dung">
+            Bài giảng mới <br />
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+        <div id="baitapmoi" class="noi-dung">
+            Bài tập mới <br />
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+    </section>
 </section>
+
+<!--#endregion-->
+
+<!--#region Thông tin hỏi đáp-->
+
+<article class="hop hop-1-vien">
+    <section class="tieu-de">Thông tin hỏi đáp</section>
+    <section class="noi-dung">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </section>
+</article>
+
+<!--#endregion-->

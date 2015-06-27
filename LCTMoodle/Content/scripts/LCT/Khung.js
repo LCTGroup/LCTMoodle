@@ -9,9 +9,36 @@ var mangTam = [];
 $(function () {
     $body = $('body');
     $body.removeClass('tai');
+    $body.find('[data-doi-tuong="bieu-tuong-tai_page"]').remove();
+    $body.data('tai', 0);
     
     khoiTaoTatMoDoiTuong($('[data-mo-doi-tuong]'));
 });
+
+function moBieuTuongTai($item) {
+    var offset = $item.offset();
+    var bottom = $body.height() - offset.top - $item.height();
+    var left = offset.left;
+
+    var $khungTai = $('<article style="left: ' + left + 'px;bottom: ' + bottom + 'px" class="bieu-tuong-tai-lct"><i></i><i></i><i></i><i></i><i></i><i></i></article>');
+    $body.append($khungTai);
+    $item.addClass('item-tai-lct');
+    $body.data('tai', $body.attr('tai') + 1);
+    $body.addClass('dang-tai');
+
+    $khungTai.tat = function () {
+        var slTai = $body.data('tai');
+        if (slTai == 1) {
+            $body.removeClass('dang-tai-lct');
+        }
+
+        $body.data('tai', slTai - 1);
+        $item.removeClass('item-tai-lct');
+        $khungTai.remove();
+    }
+
+    return $khungTai;
+}
 
 /*
 	Bật tắt đối tượng Target
@@ -27,10 +54,10 @@ function khoiTaoTatMoDoiTuong($danhSachNut, laChucNang) {
         //Xử lý sự kiện click của nút nhấn
         if ($doiTuong.is(':visible')) {
             $doiTuong.hide().removeClass('mo');
-        } else {            
-            $doiTuong.show().addClass('mo');
+            return;
         }
-
+        
+        $doiTuong.show().addClass('mo');
         if (laChucNang !== true) {
             $doiTuong.on('click', function (e) {
                 e.stopPropagation();
@@ -249,6 +276,12 @@ function moPopup(thamSo) {
         esc: 'esc' in thamSo ? thamSo.esc : true
     });
 
+    if ('tat' in thamSo) {
+        $popup.one('tat', function () {
+            thamSo.tat();
+        });
+    }
+
     $noiDungPopup = $popup.find('#noi_dung_popup');
 
     $noiDungPopup.css({
@@ -340,6 +373,62 @@ function moPopup(thamSo) {
     $popup.mo();
 }
 
+function moPopupThongBao(ketQua) {
+    if (typeof (ketqua) === 'object') {
+        switch (ketQua.trangThai) {
+            case 0:
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: ketQua.ketQua || 'Thực hiện thành công',
+                    bieuTuong: 'thanh-cong'
+                });
+                break;
+            case 1:
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Không có dữ liệu trùng khớp',
+                    bieuTuong: 'can-than'
+                });
+                break;
+            case 2:
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Gặp lỗi xử lý truy vấn',
+                    bieuTuong: 'nguy-hiem'
+                });
+                break;
+            case 3:
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: typeof (ketQua.ketQua) === 'object' ? ketQua.ketQua.join('<br />') : (ketQua.ketQua || 'Thực hiện thất bại. Dữ liệu không đúng ràng buộc'),
+                    bieuTuong: 'nguy-hiem'
+                });
+                break;
+            case 4:
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Bạn cần đăng nhập để thực hiện chức năng này',
+                    bieuTuong: 'thong-tin'
+                });
+                break;
+            default:
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Không xác định lỗi',
+                    bieuTuong: 'nguy-hiem'
+                });
+                break;
+        }
+    }
+    else {
+        moPopup({
+            tieuDe: 'Thông báo',
+            thongBao: ketQua || 'Thực hiện thất bại. Không xác định lỗi',
+            bieuTuong: 'nguy-hiem'
+        });
+    }
+}
+
 /*
     Xử lý đăng xuất
 */
@@ -349,5 +438,65 @@ function xuLyDangXuat($btnDangXuat) {
             url: '/NguoiDung/XuLyDangXuat/'
         });
         window.location = "/TrangChu/";
+    });
+}
+
+function moPopupDangNhap(thamSo) {
+    if (typeof (thamSo) === 'undefined') {
+        thamSo = {};
+    }
+
+    moPopupFull({
+        url: '/NguoiDung/_FormDangNhap/',        
+        width: '500px',
+        thanhCong: function ($popup) {
+            var $form = $popup.find('.lct-form');
+            khoiTaoLCTForm($form, {
+                submit: function (e) {
+                    $.ajax({
+                        url: $form.attr('action'),
+                        method: $form.attr('method'),
+                        data: layDataLCTForm($form)
+                    }).done(function (data) {
+                        if (data.trangThai == 0) {
+                            if ('thanhCong' in thamSo) {
+                                thamSo.thanhCong();
+                                $popup.tat();
+                            }
+                            else {
+                                location.reload();
+                            }
+                        }
+                        else if (data.trangThai == 5) {
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: data.ketQua,
+                                bieuTuong: 'thong-tin'
+                            });
+                        }
+                        else {
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: data.ketQua,
+                                bieuTuong: 'nguy-hiem'
+                            });
+                        }
+                    }).fail(function () {
+                        moPopup({
+                            tieuDe: 'Thông báo',
+                            thongBao: 'Lỗi ajax',
+                            nut: [{
+                                ten: 'Về trang chủ',
+                                xuLy: function () {
+                                    window.location = '/';
+                                }
+                            }],
+                            esc: false,
+                            bieuTuong: 'nguy-hiem'
+                        })
+                    })
+                }
+            });
+        }
     });
 }

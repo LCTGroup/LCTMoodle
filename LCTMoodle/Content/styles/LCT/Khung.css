@@ -9,6 +9,7 @@ ul {
 }
 body {
     background-color: #f5f5f5;
+    position: relative;
 }
 body, textarea, select, input {
     font: normal 13px 'Segoe ui';
@@ -45,14 +46,184 @@ a[href]:hover {
 
 /*#region Biểu tượng tải */
 
-body.tai > .khung,
-body:not(.tai) > .bieu-tuong-tai {
+@-webkit-keyframes dang-tai{ 
+    0% {
+        -webkit-transform: translate(0px, 0px);
+        font-size: 10px;
+        opacity: 0.5;
+    }
+    10% {
+        -webkit-transform: translate(0px, 0px);
+        font-size: 10px;
+        opacity: 0.5;
+    }
+    30% {
+        -webkit-transform: translate(20px, -30px);
+        font-size: 30px;
+        opacity: 1;
+    }
+    50% {
+        -webkit-transform: translate(20px, 0px);
+        font-size: 10px;
+        opacity: 0.5;
+    }
+    60% {
+        -webkit-transform: translate(0px, 0px);
+    }
+}
+
+@-moz-keyframes dang-tai{ 
+    0% {
+        -moz-transform: translate(0px, 0px);
+        font-size: 10px;
+        opacity: 0.5;
+    }
+    10% {
+        -moz-transform: translate(0px, 0px);
+        font-size: 10px;
+        opacity: 0.5;
+    }
+    30% {
+        -moz-transform: translate(20px, -30px);
+        font-size: 30px;
+        opacity: 1;
+    }
+    50% {
+        -moz-transform: translate(20px, 0px);
+        font-size: 10px;
+        opacity: 0.5;
+    }
+    60% {
+        -moz-transform: translate(0px, 0px);
+    }
+}
+
+@keyframes dang-tai{ 
+    0% {
+        transform: translate(0px, 0px);
+        font-size: 10px;
+        opacity: 0.5;
+    }
+    10% {
+        transform: translate(0px, 0px);
+        font-size: 10px;
+        opacity: 0.5;
+    }
+    30% {
+        transform: translate(20px, -30px);
+        font-size: 30px;
+        opacity: 1;
+    }
+    50% {
+        transform: translate(20px, 0px);
+        font-size: 10px;
+        opacity: 0.5;
+    }
+    60% {
+        transform: translate(0px, 0px);
+    }
+}
+
+body.tai > .khung {
     display: none;
 }
-.bieu-tuong-tai {
-    text-align: center;
-    margin-top: 10%;
+
+.bieu-tuong-tai-lct {
+    display: block;
+    position: absolute;
+    width: 100%;
+    padding-left: 5px;
+    text-align: left;
+    z-index: 9;
 }
+
+.bieu-tuong-tai-lct_page {
+    position: fixed;
+    bottom: 60%;
+    display: block;
+    padding-left: 0;
+    text-align: center;
+}
+
+    .bieu-tuong-tai-lct i {
+        opacity: 0.5;
+        display: inline-block;
+        font-size: 10px;
+        -webkit-animation: dang-tai 3s infinite ease-in-out;
+        -moz-animation: dang-tai 2s infinite ease-in-out;
+        color: transparent;
+        line-height: 0;
+    }
+
+        .bieu-tuong-tai-lct i:nth-child(6):before {
+            content: 'e'
+        }
+
+        .bieu-tuong-tai-lct i:nth-child(5):before {
+            content: 'l'
+        }
+
+        .bieu-tuong-tai-lct i:nth-child(4):before {
+            content: 'd'
+        }
+
+        .bieu-tuong-tai-lct i:nth-child(3):before {
+            content: 'o'
+        }
+
+        .bieu-tuong-tai-lct i:nth-child(2):before {
+            content: 'o'
+        }
+
+        .bieu-tuong-tai-lct i:nth-child(1):before {
+            content: 'M'
+        }
+
+        .bieu-tuong-tai-lct i:nth-child(6) {
+            -webkit-animation-delay: 1s;
+            -moz-animation-delay: 1s;
+            animation-delay: 1s;
+            color: #0c0;
+        }
+
+        .bieu-tuong-tai-lct i:nth-child(5) {
+            -webkit-animation-delay: 0.8s;
+            -moz-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+            color: #f90;
+        }
+
+        .bieu-tuong-tai-lct i:nth-child(4) {
+            -webkit-animation-delay: 0.6s;
+            -moz-animation-delay: 0.6s;
+            color: #e00;
+        }
+
+        .bieu-tuong-tai-lct i:nth-child(3) {
+            -webkit-animation-delay: 0.4s;
+            -moz-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+            color: #6b00b2;
+        }
+
+        .bieu-tuong-tai-lct i:nth-child(2) {
+            -webkit-animation-delay: 0.2s;
+            -moz-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+            color: #6b00b2;
+        }
+
+        .bieu-tuong-tai-lct i:nth-child(1) {
+            -webkit-animation-delay: 0s;
+            -moz-animation-delay: 0s;
+            animation-delay: 0s;
+            color: #08c;
+        }
+
+        .item-tai-lct {
+            opacity: 0.5;
+            pointer-events: none;
+        }
 
 /*#endregion */
 
@@ -423,6 +594,44 @@ header .top-header {
     position: fixed;
     z-index: 10;
 }
+
+/*#region Tải */
+
+@-webkit-keyframes dang-tai-header {
+    0% { border-bottom-color: #08c; }
+    20% { border-bottom-color: #6b00b2; }
+    60% { border-bottom-color: #e00; }
+    40% { border-bottom-color: #f90; }
+    80% { border-bottom-color: #0c0; }
+    100% { border-bottom-color: #08c; }
+}
+
+@-moz-keyframes dang-tai-header {
+    0% { border-bottom-color: #08c; }
+    20% { border-bottom-color: #6b00b2; }
+    60% { border-bottom-color: #e00; }
+    40% { border-bottom-color: #f90; }
+    80% { border-bottom-color: #0c0; }
+    100% { border-bottom-color: #08c; }
+}
+
+@keyframes dang-tai-header {
+    0% { border-bottom-color: #08c; }
+    20% { border-bottom-color: #6b00b2; }
+    60% { border-bottom-color: #e00; }
+    40% { border-bottom-color: #f90; }
+    80% { border-bottom-color: #0c0; }
+    100% { border-bottom-color: #08c; }
+}
+
+body.dang-tai-lct header .top-header {
+    border-bottom-width: 5px;
+    -webkit-animation: dang-tai-header 5s linear infinite;
+    -moz-animation: dang-tai-header 5s linear infinite;
+    animation: dang-tai-header 5s linear infinite;
+}
+
+/*#endregion */
 
     /*#region Hộp người dùng */    
 

@@ -25,8 +25,10 @@
 }
 
 .khung-diem .diem-input {
-    width: 25px !important;
     text-align: center;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    width: 35px !important;
 }
 
 /*#endregion */

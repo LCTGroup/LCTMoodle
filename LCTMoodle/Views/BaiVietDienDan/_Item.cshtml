@@ -1,16 +1,17 @@
 ﻿@model DTOLayer.BaiVietDienDanDTO
 @using Helpers
+@using LCTMoodle.LCTHtml
 
 @{
     var quyen = (string[])ViewData["Quyen"];
     int maNguoiDung = Session["NguoiDung"] == null ? 0 : (int)Session["NguoiDung"];
 
     bool
-        coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(quyen, "DienDan_Xoa"),
-        coQuyenSua = maNguoiDung == Model.nguoiTao.ma;
+        coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(quyen, "DienDan_Xoa") || true,
+        coQuyenSua = maNguoiDung == Model.nguoiTao.ma || true;
 }
 
-<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma=@Model.ma>
+<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma="@Model.ma" @(Model.ghim ? "data-ghim" : null) >
     <section class="khung-bai-viet">
         <section class="khung-thong-tin">
             <section class="trai">
@@ -20,7 +21,7 @@
             </section>
             <section class="phai">
                 <section class="nguoi-dung">
-                    <a href="#">@(Model.nguoiTao.ho + " " + Model.nguoiTao.ten)</a>
+                    <a href="#">@NguoiDungHtml.link(Model.nguoiTao)</a>
                 </section>
                 <section class="bai-viet">
                     <section class="thoi-gian">
@@ -48,6 +49,9 @@
         </section>
         <section class="khung-chuc-nang-lct" style="top: 10px; right: 10px;">
             <ul data-doi-tuong="cndd-@Model.ma">
+                <li>
+                    <a data-chuc-nang="ghim-bai-viet">Ghim bài viết</a>
+                </li>  
                 @if (coQuyenSua)
                 {
                     <li>

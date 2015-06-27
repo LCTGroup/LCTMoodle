@@ -36,13 +36,15 @@
             }
         .muc-hoi-dap .thong-tin .diem-so {
             display: flex;
+            align-items: center;
             flex-direction: column;
             padding: 0;
         }
             .muc-hoi-dap .thong-tin .diem-so .so {
                 text-align: center;
-                font-size: 25px;
+                font-size: 22px;
                 font-weight: bold;
+                color: #555;
             }
             .muc-hoi-dap .thong-tin .diem-so i {
                 text-align: center;
@@ -50,8 +52,23 @@
                 cursor: pointer;
                 font-weight: bold;
                 height: 20px;
+                width: 20px;
                 line-height: 20px;
-            }
+                background: url('/HoiDap.png/HoiDap') no-repeat;
+            }                
+                .muc-hoi-dap .thong-tin .diem-so i.arrow-up {
+                    background-position: -16px 0;
+                    transform: rotate(180deg);
+                }
+                    .muc-hoi-dap .thong-tin .diem-so i.arrow-up:hover {
+                        background-position: -16px -20px;
+                    }
+                .muc-hoi-dap .thong-tin .diem-so i.arrow-down {
+                    background-position: -16px 0;
+                }
+                    .muc-hoi-dap .thong-tin .diem-so i.arrow-down:hover {
+                        background-position: -16px -20px;
+                    }
         .muc-hoi-dap .thong-tin .thoi-gian {
             margin-top: 10px;
             font-size: 11px;

@@ -1,4 +1,5 @@
-﻿@model DTOLayer.KhoaHocDTO
+﻿@using LCTMoodle.LCTHtml
+@model DTOLayer.KhoaHocDTO
 @{
     Layout = "~/Views/LCT/Khung.cshtml";
 
@@ -44,7 +45,7 @@
                 {
                     <li class="item" data-ma="@nd.nguoiDung.ma">
                         <img src="/boy.png/" />
-                        <a href="#">@(nd.nguoiDung.ho + " " + nd.nguoiDung.ten)</a>
+                        <a href="#">@NguoiDungHtml.link(nd.nguoiDung)</a>
                         <section class="khung-chuc-nang">
                             <a data-chuc-nang="dong-y" class="dong-y" title="Chấp nhận"><i></i></a>
                             <a data-chuc-nang="tu-choi" class="tu-choi" title="Từ chối"><i></i></a>
@@ -69,9 +70,19 @@
                 {
                     <li class="item" data-ma="@tv.nguoiDung.ma">
                         <img src="/boy.png/" />
-                        <a href="#">@(tv.nguoiDung.ho + " " + tv.nguoiDung.ten)</a>
+                        <a href="#">@NguoiDungHtml.link(tv.nguoiDung)</a>
                         <section class="khung-chuc-nang-lct">
                             <ul data-doi-tuong="cnnd-@tv.nguoiDung.ma">
+                                <li>
+                                    @if (tv.laHocVien)
+                                    {
+                                        <a data-chuc-nang="tat-hoc-vien">Xóa khỏi danh sách học viên</a>
+                                    }
+                                    else
+                                    {
+                                        <a data-chuc-nang="mo-hoc-vien">Đưa vào danh sách học viên</a>   
+                                    }
+                                </li>
                                 <li>
                                     <a data-chuc-nang="xoa-thanh-vien">Loại bỏ thành viên</a>
                                 </li>
@@ -99,7 +110,7 @@
                 {
                     <li class="item" data-ma="@nd.nguoiDung.ma">
                         <img src="/boy.png/" />
-                        <a href="#">@(nd.nguoiDung.ho + " " + nd.nguoiDung.ten)</a>
+                        <a href="#">@NguoiDungHtml.link(nd.nguoiDung)</a>
                         <section class="khung-chuc-nang">
                             <a data-chuc-nang="bo-chan" class="bo-chan" title="Bỏ chặn"><i></i></a>
                         </section>

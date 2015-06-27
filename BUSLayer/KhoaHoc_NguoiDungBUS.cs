@@ -427,5 +427,45 @@ namespace BUSLayer
 
             return KhoaHoc_NguoiDungDAO.xoaTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
         }
+
+        public static KetQua capNhatHocVien(int maKhoaHoc, int maNguoiDung, bool laHocVien)
+        {
+            #region Kiểm tra người dùng hiện tại
+            if (Session["NguoiDung"] == null)
+            {
+                return new KetQua()
+                {
+                    trangThai = 4
+                };
+            }
+            #endregion
+
+            #region Kiểm tra khóa học
+            var ketQua = KhoaHocDAO.layTheoMa(maKhoaHoc);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+            #endregion
+
+            #region Kiểm tra người dùng
+            ketQua = KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+            var thanhVien = ketQua.ketQua as KhoaHoc_NguoiDungDTO;
+            if (thanhVien.trangThai != 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = new List<string>() { "Người dùng chưa phải là thành viên" }
+                };
+            }
+            #endregion
+
+            return KhoaHoc_NguoiDungDAO.capNhatTheoMaKhoaHocVaMaNguoiDung_LaHocVien(maKhoaHoc, maNguoiDung, laHocVien);
+        }
     }
 }

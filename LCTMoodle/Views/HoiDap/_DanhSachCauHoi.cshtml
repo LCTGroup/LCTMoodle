@@ -1,0 +1,47 @@
+﻿@model List<DTOLayer.CauHoiDTO>
+
+@if (Model != null)
+{
+    for (int i = (Model.Count - 1); i >= 0; i--)
+    {
+        <article class="cau-hoi">
+            <div class="chi-tiet">
+                <div class="tieu-de">
+                    <a href="/HoiDap/@Model[i].ma">
+                        @Model[i].tieuDe
+                    </a>
+                </div>
+                <div class="thong-tin-dang">
+                    @if (Model[i].nguoiTao != null)
+                    {
+                        <div class="nguoi-dang">
+                            <a href="/NguoiDung/Xem/@Model[i].nguoiTao.ma">
+                                @if (Model[i].nguoiTao.hinhDaiDien != null)
+                                {
+                                    <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model[i].nguoiTao.hinhDaiDien.ma" />
+                                }
+                                else
+                                {
+                                    <img src="/avatarDefault.png/NguoiDung" />
+                                }
+                                <span>@Model[i].nguoiTao.tenTaiKhoan</span>
+                            </a>
+                        </div>
+                    }
+
+                    <div class="thoi-gian-dang">
+                        <span>@Model[i].thoiDiemTao</span>
+                    </div>
+                </div>
+            </div>
+            <div class="thong-tin">
+                <div class="diem">
+                    <span>0</span>
+                </div>
+                <div class="tra-loi">
+                    <span>0</span>
+                </div>
+            </div>
+        </article>
+    }
+}

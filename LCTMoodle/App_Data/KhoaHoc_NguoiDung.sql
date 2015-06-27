@@ -37,7 +37,8 @@ BEGIN
 		MaKhoaHoc,
 		MaNguoiDung,
 		TrangThai,
-		MaNguoiThem
+		MaNguoiThem,
+		LaHocVien
 		FROM dbo.KhoaHoc_NguoiDung
 		WHERE
 			MaNguoiDung = @1 AND
@@ -70,7 +71,8 @@ BEGIN
 		MaKhoaHoc,
 		MaNguoiDung,
 		TrangThai,
-		MaNguoiThem
+		MaNguoiThem,
+		LaHocVien
 		FROM dbo.KhoaHoc_NguoiDung
 		WHERE
 			MaKhoaHoc = @0 AND
@@ -97,8 +99,24 @@ BEGIN
 END
 
 GO
+--Cập nhật thuộc tính học viên theo mã người dùng và mã khóa học
+CREATE PROC dbo.capNhatKhoaHoc_NguoiDungTheoMaKhoaHocVaMaNguoiDung_LaHocVien (
+	@0 INT, --MaKhoaHoc
+	@1 INT, --MaNguoiDung
+	@2 BIT --LaHocVien
+)
+AS
+BEGIN
+	UPDATE dbo.KhoaHoc_NguoiDung
+		SET LaHocVien = @2
+		WHERE
+			MaKhoaHoc = @0 AND
+			MaNguoiDung = @1
+END
+
+GO
 --Lấy theo mã người dùng
-CREATE PROC dbo.layKhoaHoc_NguoiDungTheoMaNguoiDung (
+ALTER PROC dbo.layKhoaHoc_NguoiDungTheoMaNguoiDung (
 	@0 INT --MaNguoiDung
 )
 AS
@@ -107,7 +125,8 @@ BEGIN
 		MaKhoaHoc,
 		MaNguoiDung,
 		TrangThai,
-		MaNguoiThem
+		MaNguoiThem,
+		LaHocVien
 		FROM dbo.KhoaHoc_NguoiDung
 		WHERE
 			MaNguoiDung = @0
@@ -115,7 +134,7 @@ END
 
 GO
 --Lấy theo mã người dùng và trạng thái
-CREATE PROC dbo.layKhoaHoc_NguoiDungTheoMaNguoiDungVaTrangThai (
+ALTER PROC dbo.layKhoaHoc_NguoiDungTheoMaNguoiDungVaTrangThai (
 	@0 INT, --MaNguoiDung
 	@1 INT --TrangThai
 )
@@ -125,7 +144,8 @@ BEGIN
 		MaKhoaHoc,
 		MaNguoiDung,
 		TrangThai,
-		MaNguoiThem
+		MaNguoiThem,
+		LaHocVien
 		FROM dbo.KhoaHoc_NguoiDung
 		WHERE
 			MaNguoiDung = @0 AND

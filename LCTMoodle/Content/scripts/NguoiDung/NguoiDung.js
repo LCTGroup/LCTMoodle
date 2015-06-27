@@ -101,8 +101,7 @@ function khoiTaoDangNhap($form) {
             $.ajax({
                 url: $form.attr('action'),
                 method: $form.attr('method'),
-                data: layDataLCTForm($form),
-                asyne: false
+                data: layDataLCTForm($form)
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     window.location = '/TrangChu/';

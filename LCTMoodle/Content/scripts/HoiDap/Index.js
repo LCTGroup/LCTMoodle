@@ -1,17 +1,13 @@
-﻿//#region Khởi tạo
+﻿var $_danhSach;
+var $_khungTim;
+
+//#region Khởi tạo
 
 $(function () {
-    $form = $('#form_tim_kiem');
-    khoiTaoLCTForm($('#form_tim_kiem'));
-    khoiTaoTimKiemCauHoi($form);
+    $_danhSach = $('#danh_sach');
+    $_khungTim = $('#khung_tim');
+
+    khoiTaoKhungTimKiemLCT($_danhSach, $_khungTim, '/HoiDap/_DanhSach_Tim')
 });
-
-//#endregion
-
-//#region Khởi tạo tìm kiếm câu hỏi
-
-function khoiTaoTimKiemCauHoi($form) {
-    khoiTaoLCTForm($form);
-}
 
 //#endregion

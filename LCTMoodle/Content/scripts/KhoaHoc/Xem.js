@@ -466,6 +466,36 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
         });
     });
 
+    $danhSachBaiViet.find('[data-chuc-nang="ghim-bai-viet"]').on('click', function () {
+        var $nut = $(this),
+            $item = $nut.closest('[data-doi-tuong="muc-bai-viet"]'),
+            ghim = !$item.is('[data-ghim]');
+
+        $.ajax({
+            url: '/BaiVietDienDan/XuLyGhim/' + $item.attr('data-ma'),
+            method: 'POST',
+            data: { ghim: ghim},
+            dataType: 'JSON'
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                if (ghim) {
+                    $_DanhSach.find('[data-ghim]').removeAttr('data-ghim');
+                    $item.attr('data-ghim', '');
+                    $nut.text('Bỏ ghim bài viết');
+                }
+                else {
+                    $item.removeAttr('data-ghim');
+                    $nut.text('Ghim bài viết');
+                }
+            }
+            else {
+                moPopupThongBao(data);
+            }
+        }).fail(function () {
+            moPopupThongBao();
+        })
+    })
+
     khoiTaoKhungBinhLuan($danhSachBaiViet.find('[data-doi-tuong="khung-binh-luan"]'));
 }
 

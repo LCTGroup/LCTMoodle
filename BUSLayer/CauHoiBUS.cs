@@ -36,6 +36,9 @@ namespace BUSLayer
                     case "MaChuDe":
                         cauHoi.chuDe = form.layDTO<ChuDeDTO>(key);
                         break;
+                    case "Diem":
+                        cauHoi.diem = form.layInt(key);
+                        break;
                     default:
                         break;
                 }
@@ -58,7 +61,11 @@ namespace BUSLayer
             if (coKiemTra("MaNguoiTao", truong, kiemTra) && cauHoi.nguoiTao == null)
             {
                 loi.Add("Chưa đăng nhập");
-            }            
+            }  
+            if (coKiemTra("Diem",truong,kiemTra) && cauHoi.diem == null)
+            {
+                loi.Add("Chưa có điểm");
+            }
             #endregion
 
             if (loi.Count > 0)
@@ -93,6 +100,9 @@ namespace BUSLayer
                         break;
                     case "MaChuDe":
                         bangCapNhat.Add("MaChuDe", layMa_String(cauHoi.chuDe), 1);
+                        break;
+                    case "Diem":
+                        bangCapNhat.Add("Diem", cauHoi.diem.ToString(), 1);
                         break;
                     default:
                         break;
@@ -163,19 +173,34 @@ namespace BUSLayer
             return CauHoiDAO.capNhatTheoMa(maCauHoi, layBangCapNhat(cauHoi, form.Keys.ToArray()), lienKet);
         }
 
+        public static KetQua capNhatDiem(int? maCauHoi, bool diem)
+        {
+            KetQua ketQua = CauHoi_DiemBUS.layDiem(maCauHoi);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            int? soDiem = ketQua.ketQua as int?;
+
+            //soDiem = soDiem + (diem == true ? 1 : -1);
+
+            return CauHoiDAO.capNhatTheoMa_Diem(maCauHoi, soDiem);
+        }
+
         public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {            
             return CauHoiDAO.layTheoMa(ma, lienKet);
         }
 
-        public static KetQua layDanhSachCauHoi(LienKet lienKet = null)
+        public static KetQua layDanhSach(int? soDong = null, LienKet lienKet = null)
         {
-            return CauHoiDAO.layDanhSachCauHoi(lienKet);
+            return CauHoiDAO.lay(soDong, lienKet);
         }
 
-        public static KetQua layTheoChuDe(int? ma, LienKet lienKet = null)
+        public static KetQua layTheoMaChuDe_TimKiem(int? ma, string tuKhoa, LienKet lienKet = null)
         {
-            return CauHoiDAO.layTheoChuDe(ma, lienKet);
+            return CauHoiDAO.layTheoMaChuDe_TimKiem(ma, tuKhoa, lienKet);
         }
 
         public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
