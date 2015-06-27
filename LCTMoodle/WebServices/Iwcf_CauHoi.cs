@@ -9,9 +9,9 @@ using DTOLayer;
 
 namespace LCTMoodle.WebServices
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "Iwcf_ChuDe" in both code and config file together.
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "Iwcf_CauHoi" in both code and config file together.
     [ServiceContract]
-    public interface Iwcf_ChuDe
+    public interface Iwcf_CauHoi
     {
         [OperationContract]
         byte[] layHinhAnh(string _Ten);
@@ -20,12 +20,15 @@ namespace LCTMoodle.WebServices
         clientmodel_HinhAnh layHinhAnhChiSo(int _ChiSo, string _Ten);
 
         [OperationContract]
-        ChuDeDTO layTheoMa(int _Ma);
+        CauHoiDTO layTheoMa(int _Ma);
 
         [OperationContract]
-        List<ChuDeDTO> layTheoMaCha(int _MaChuDeCha);
+        List<CauHoiDTO> layTheoChuDe(int _MaChuDe);
 
         [OperationContract]
-        List<ChuDeDTO> timKiem(string _TuKhoa);
+        List<CauHoiDTO> lay();
+
+        [OperationContract]
+        List<CauHoiDTO> timKiem(string _TuKhoa);
     }
 }

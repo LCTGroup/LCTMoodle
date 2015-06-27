@@ -1,114 +1,186 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
-using System.IO;
-using BUSLayer;
+using LCTMoodle.WebServices.Client_Model;
 using DTOLayer;
+using BUSLayer;
 using Helpers;
 
 namespace LCTMoodle.WebServices
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "wcf_KhoaHoc" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select wcf_KhoaHoc.svc or wcf_KhoaHoc.svc.cs at the Solution Explorer and start debugging.
     public class wcf_KhoaHoc : Iwcf_KhoaHoc
     {
-        private string _Loai = "KhoaHoc_HinhDaiDien";
+        private const string _Loai = "KhoaHoc_HinhDaiDien";
 
-        
+        /// <summary>
+        /// Webservice lấy hình ảnh
+        /// </summary>
+        /// <param name="_Ten"></param>
+        /// <returns>byte[]</returns>
+        public byte[] layHinhAnh(string _Ten)
+        {
+            string _DuongDan = TapTinHelper.layDuongDan(_Loai, _Ten);
 
-        //public byte[] layHinhAnh(string _Loai, string _Ten)
-        //{
-        //    string _LienKet = TapTinHelper.layDuongDan(_Loai, _Ten);
-        //    System.Drawing.Image img = System.Drawing.Image.FromFile(_LienKet);
-        //    using (var ms = new MemoryStream())
-        //    {
-        //        img.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
-        //        return ms.ToArray();
-        //    }
-        //}
+            if (File.Exists(@_DuongDan))
+            {
+                Image img = Image.FromFile(@_DuongDan);
+                using (var ms = new MemoryStream())
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    return ms.ToArray();
+                }
+            }
+            return null;
+        }
 
+        /// <summary>
+        /// Webservice lấy hình ảnh và trả về chỉ số
+        /// </summary>
+        /// <param name="_ChiSo"></param>
+        /// <param name="_Ten"></param>
+        /// <returns>clientmodel_HinhAnh</returns>
+        public clientmodel_HinhAnh layHinhAnhChiSo(int _ChiSo, string _Ten)
+        {
+            string _DuongDan = TapTinHelper.layDuongDan(_Loai, _Ten);
+            clientmodel_HinhAnh cm_HinhAnh = new clientmodel_HinhAnh();
 
-        //public Dictionary<KhoaHocDTO, byte[]> layKhoaHoc15(int _Dau, int _Cuoi)
-        //{
-        //    Dictionary<KhoaHocDTO, byte[]> dict_KhoaHoc = new Dictionary<KhoaHocDTO, byte[]>();
-        //    for(int i = _Dau ; i < _Cuoi ; i++)
-        //    {
-        //        KhoaHocDTO dto_KhoaHoc = layKhoaHocTheoMa(i);
-        //        dict_KhoaHoc.Add(dto_KhoaHoc, layHinhAnh(_Loai, dto_KhoaHoc.hinhDaiDien.ma + dto_KhoaHoc.hinhDaiDien.duoi));
-        //    }
-        //    return dict_KhoaHoc;
-        //}
+            cm_HinhAnh._ChiSo = _ChiSo;
+
+            if (File.Exists(@_DuongDan))
+            {
+                Image img = Image.FromFile(@_DuongDan);
+                using (var ms = new MemoryStream())
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    cm_HinhAnh._HinhAnh = ms.ToArray();
+                }
+            }
+
+            return cm_HinhAnh;
+        }
 
         /// <summary>
         /// Webservice lấy khóa học theo mã
         /// </summary>
         /// <param name="_Ma"></param>
         /// <returns>KhoaHocDTO</returns>
-        public KhoaHocDTO layKhoaHocTheoMa(int _Ma)
+        public KhoaHocDTO layTheoMa(int _Ma)
         {
-            KetQua ketQua = KhoaHocBUS.layTheoMa(_Ma);
-            KhoaHocDTO dto_KhoaHoc = ketQua.ketQua as KhoaHocDTO;
+            KetQua ketQua = KhoaHocBUS.layTheoMa(_Ma, new LienKet { "HinhDaiDien" });
+            KhoaHocDTO dto_KhoaHoc = new KhoaHocDTO();
+
+            if(ketQua.trangThai == 0)
+            {
+                dto_KhoaHoc = ketQua.ketQua as KhoaHocDTO;
+            }
             return dto_KhoaHoc;
         }
 
         /// <summary>
-        /// Webservice lấy khóa học theo mã - hình đại diện
-        /// với byte[] : hình đại diện
+        /// Webservice lấy tất cả khóa học
         /// </summary>
-        /// <param name="_Ma"></param>
-        /// <returns>Dictionary<KhoaHocDTO, byte[]></returns>
-        public Dictionary<KhoaHocDTO, byte[]> layKhoaHocTheoMa_HinhDD(int _Ma)
+        /// <returns>List<KhoaHocDTO></returns>
+        public List<KhoaHocDTO> lay()
         {
-            Dictionary<KhoaHocDTO, byte[]> dict_KhoaHoc = new Dictionary<KhoaHocDTO, byte[]>();
-            KetQua ketQua = KhoaHocBUS.layTheoMa(_Ma, new LienKet { "HinhDaiDien" });
-            KhoaHocDTO dto_KhoaHoc = ketQua.ketQua as KhoaHocDTO;
-            
+            KetQua ketQua = KhoaHocBUS.lay(new LienKet { "HinhDaiDien" });
+            List<KhoaHocDTO> lst_KhoaHoc = new List<KhoaHocDTO>();
+
             if(ketQua.trangThai == 0)
             {
-                dict_KhoaHoc.Add(dto_KhoaHoc, layHinhDaiDien(_Loai, dto_KhoaHoc.hinhDaiDien.ma + dto_KhoaHoc.hinhDaiDien.duoi));
+                lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
             }
-
-            return dict_KhoaHoc;
+            return lst_KhoaHoc;
         }
 
         /// <summary>
-        /// Webservice lấy khóa học trong khoảng (_Dau , _Cuoi)
-        /// với _Dau : mã khóa học bắt đầu
-        /// và _Cuoi : mã khóa học kết thúc
+        /// Webservice lấy khóa học theo mã chủ đề
         /// </summary>
-        /// <param name="_Dau"></param>
-        /// <param name="_Cuoi"></param>
-        /// <returns>Dictionary<KhoaHocDTO, byte[]> </returns>
-        public Dictionary<KhoaHocDTO, byte[]> layKhoaHoc(int _Dau, int _Cuoi)
+        /// <param name="_MaChuDe"></param>
+        /// <returns>List<KhoaHocDTO> </returns>
+        public List<KhoaHocDTO> layTheoMaChuDe(int _MaChuDe)
         {
-            Dictionary<KhoaHocDTO, byte[]> dict_KhoaHoc = new Dictionary<KhoaHocDTO, byte[]>();
-            for (int i = _Dau; i <= _Cuoi; i++)
+            KetQua ketQua = KhoaHocBUS.layTheoMaChuDe(_MaChuDe, new LienKet { "HinhDaiDien" });
+            List<KhoaHocDTO> lst_KhoaHoc = new List<KhoaHocDTO>();
+
+            if(ketQua.trangThai == 0)
             {
-                KhoaHocDTO dto_KhoaHoc = layKhoaHocTheoMa(i);
-                dict_KhoaHoc.Add(dto_KhoaHoc, layHinhDaiDien(_Loai, dto_KhoaHoc.hinhDaiDien.ma + dto_KhoaHoc.hinhDaiDien.duoi));
+                lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
             }
-            return dict_KhoaHoc;
+            return lst_KhoaHoc;
         }
 
         /// <summary>
-        /// Webservice lấy ảnh đại diện
-        /// với _Ten = KhoaHoc.HinhDaiDien.Ma + KhoaHoc.HinhDaiDien.Duoi
+        /// Webservice lấy khóa học theo mã người dùng
         /// </summary>
-        /// <param name="_Loai"></param>
-        /// <param name="_Ten"></param>
-        /// <returns>byte[]</returns>
-        public byte[] layHinhDaiDien(string _Loai, string _Ten)
+        /// <param name="_MaNguoiDung"></param>
+        /// <returns>List<KhoaHocDTO> </returns>
+        public List<KhoaHocDTO> layTheoMaNguoiDung(int _MaNguoiDung)
         {
-            string _LienKet = TapTinHelper.layDuongDan(_Loai, _Ten);
-            System.Drawing.Image img = System.Drawing.Image.FromFile(@_LienKet);
-            using (var ms = new MemoryStream())
+            KetQua ketQua = KhoaHocBUS.layTheoMaNguoiDung(_MaNguoiDung);
+            List<KhoaHocDTO> lst_KhoaHoc = new List<KhoaHocDTO>();
+
+            if(ketQua.trangThai == 0)
             {
-                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                return ms.ToArray();
+                lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
             }
+            return lst_KhoaHoc;
+        }
+
+        /// <summary>
+        /// Webservice lấy khóa học theo mã người dùng và trạng thái
+        /// </summary>
+        /// <param name="_MaNguoiDung"></param>
+        /// <param name="_TrangThai"></param>
+        /// <returns>List<KhoaHocDTO></returns>
+        public List<KhoaHocDTO> layTheoMaNguoiDungVaTrangThai(int _MaNguoiDung, int _TrangThai)
+        {
+            KetQua ketQua = KhoaHocBUS.layTheoMaNguoiDungVaTrangThai(_MaNguoiDung, _TrangThai);
+            List<KhoaHocDTO> lst_KhoaHoc = new List<KhoaHocDTO>();
+
+            if(ketQua.trangThai == 0)
+            {
+                lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
+            }
+            return lst_KhoaHoc;
+        }
+
+        /// <summary>
+        /// Webservice tìm kiếm khóa học
+        /// </summary>
+        /// <param name="_TuKhoa"></param>
+        /// <returns>List<KhoaHocDTO> </returns>
+        public List<KhoaHocDTO> timKiem(string _TuKhoa)
+        {
+            KetQua ketQua = KhoaHocBUS.lay_TimKiem(_TuKhoa, new LienKet { "HinhDaiDien" });
+            List<KhoaHocDTO> lst_KhoaHoc = new List<KhoaHocDTO>();
+
+            if(ketQua.trangThai == 0)
+            {
+                lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
+            }
+            return lst_KhoaHoc;
+        }
+
+        /// <summary>
+        /// Webservice tìm kiếm theo mã chủ đề
+        /// </summary>
+        /// <param name="_TuKhoa"></param>
+        /// <returns>List<KhoaHocDTO> </returns>
+        public List<KhoaHocDTO> timKiemTheoMaChuDe(int _MaChuDe,string _TuKhoa)
+        {
+            KetQua ketQua = KhoaHocBUS.layTheoMaChuDe_TimKiem(_MaChuDe, _TuKhoa, new LienKet { "HinhDaiDien" });
+            List<KhoaHocDTO> lst_KhoaHoc = new List<KhoaHocDTO>();
+
+            if(ketQua.trangThai == 0)
+            {
+                lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
+            }
+            return lst_KhoaHoc;
         }
     }
 }

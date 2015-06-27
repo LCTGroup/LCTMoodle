@@ -4,16 +4,16 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
-using BUSLayer;
-using DTOLayer;
 using Helpers;
+using DTOLayer;
+using BUSLayer;
 
 namespace LCTMoodle.WebServices
 {
     public class wcf_NguoiDung : Iwcf_NguoiDung
     {
         /// <summary>
-        /// Webservice kiểm tra đăng nhập đăng nhậ
+        /// Webservice kiểm tra đăng nhập đăng nhập
         ///  - 1: tên đăng nhập không tồn tại
         ///  - 2: mật khẩu không đúng
         ///  - 3: thành công
@@ -26,13 +26,13 @@ namespace LCTMoodle.WebServices
             KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(_TenDN);
             NguoiDungDTO dto_NguoiDung = ketQua.ketQua as NguoiDungDTO;
 
-            if(ketQua.trangThai != 0)
+            if (ketQua.trangThai != 0)
             {
                 return 1; //Tên đăng nhập không tồn tại
             }
             else
             {
-                if(_MatKhau == dto_NguoiDung.matKhau || NguoiDungHelper.layMaMD5(_MatKhau) == dto_NguoiDung.matKhau)
+                if (_MatKhau == dto_NguoiDung.matKhau || NguoiDungHelper.layMaMD5(_MatKhau) == dto_NguoiDung.matKhau)
                 {
                     return 3; //Đúng
                 }
