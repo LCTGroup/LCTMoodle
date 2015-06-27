@@ -17,7 +17,7 @@ namespace LCTMoodle.Controllers
         // GET: /HoiDap/
         public ActionResult Index()
         {
-            return View((CauHoiBUS.layDanhSachCauHoi(new LienKet() 
+            return View((CauHoiBUS.layDanhSach(null, new LienKet() 
             { 
                 "NguoiTao",
                 "ChuDe"
@@ -64,6 +64,30 @@ namespace LCTMoodle.Controllers
 
         public ActionResult XemCauHoi(int ma)
         {
+            int VoteDiem = 0;
+            KetQua ketQua = new KetQua();
+
+            if (Session["NguoiDung"] == null)
+            {
+                VoteDiem = 0;
+            }
+            else
+            {
+                ketQua = CauHoi_DiemBUS.layDiemVoteNguoiDung((int?)Session["NguoiDung"]);
+                if (ketQua.trangThai != 0)
+                {
+                    VoteDiem = 0;
+                }
+                else
+                {
+                    bool ketQuaVote = (bool)ketQua.ketQua;
+                    VoteDiem = ketQuaVote == true ?  1 : 2;
+                }
+            }
+
+            //0: chưa vote, 1:vote cộng, 2:vote trừ
+            ViewData["VoteDiem"] = VoteDiem;
+
             LienKet lienKetMacDinh = new LienKet()
             {
                 "NguoiTao", 
@@ -78,8 +102,7 @@ namespace LCTMoodle.Controllers
             };
 
             ViewData["MaCauHoi"] = ma;
-            KetQua ketQua = CauHoiBUS.layTheoMa(ma, lienKetMacDinh);
-
+            ketQua = CauHoiBUS.layTheoMa(ma, lienKetMacDinh);
             if (ketQua.trangThai != 0)
             {
                 return RedirectToAction("Index", "TrangChu");
@@ -91,24 +114,29 @@ namespace LCTMoodle.Controllers
         public ActionResult XuLyXoaCauHoi(int ma)
         {
             return Json(CauHoiBUS.xoaTheoMa(ma));
-        }
+        }        
 
-        [HttpPost]
         public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0)
         {
             KetQua ketQua;
             if (maChuDe == 0)
             {
-                ketQua = CauHoiBUS.lay_TimKiem(tuKhoa);
+                ketQua = CauHoiBUS.lay_TimKiem(tuKhoa, new LienKet() { 
+                    "NguoiTao",
+                    "HinhDaiDien"
+                });
             }
             else
             {
-                ketQua = CauHoiBUS.layTheoMaChuDe_TimKiem(maChuDe, tuKhoa);
+                ketQua = CauHoiBUS.layTheoMaChuDe_TimKiem(maChuDe, tuKhoa, new LienKet() { 
+                    "NguoiTao",
+                    "HinhDaiDien"
+                });
             }
 
             if (ketQua.trangThai == 0)
             {
-                ketQua.ketQua = renderPartialViewToString(ControllerContext, "CauHoi/_DanhSach.cshtml", ketQua.ketQua);
+                ketQua.ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_DanhSachCauHoi.cshtml", ketQua.ketQua);
             }
 
             return Json(ketQua, JsonRequestBehavior.AllowGet);
@@ -229,6 +257,40 @@ namespace LCTMoodle.Controllers
             return Json(TraLoiBUS.capNhatDuyetTheoMa(maTraLoi, trangThaiDuyet));
         }
         #endregion
+
+        #region Câu hỏi - Điểm
         
-	}
+        public ActionResult XuLyDiemCauHoi(int? maCauHoi, bool diem)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4,
+                        ketQua = "Chưa đăng nhập"
+                    }, JsonRequestBehavior.AllowGet);
+            }
+            int? maNguoiTao = (int?)Session["NguoiDung"];
+
+            KetQua ketQua = CauHoi_DiemBUS.layDiemVoteNguoiDung(maNguoiTao);
+            if (ketQua.trangThai != 0)
+            {
+                CauHoi_DiemBUS.them(maCauHoi, maNguoiTao, diem);
+            }
+            else
+            {
+                CauHoi_DiemBUS.xoaTheoMa(maCauHoi, maNguoiTao);
+            }
+
+            ketQua = CauHoiBUS.capNhatDiem(maCauHoi, diem);
+            
+            return Json(ketQua, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Trả lời - Điểm
+
+        #endregion
+    }
 }

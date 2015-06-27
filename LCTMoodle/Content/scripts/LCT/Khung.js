@@ -351,3 +351,63 @@ function xuLyDangXuat($btnDangXuat) {
         window.location = "/TrangChu/";
     });
 }
+
+function moPopupDangNhap(thamSo) {
+    if (typeof (thamSo) === 'undefined') {
+        thamSo = {};
+    }
+
+    moPopupFull({
+        url: '/NguoiDung/_FormDangNhap/',        
+        width: '500px',
+        thanhCong: function ($popup) {
+            var $form = $popup.find('.lct-form');
+            khoiTaoLCTForm($form, {
+                submit: function (e) {
+                    $.ajax({
+                        url: $form.attr('action'),
+                        method: $form.attr('method'),
+                        data: layDataLCTForm($form)
+                    }).done(function (data) {
+                        if (data.trangThai == 0) {
+                            if ('thanhCong' in thamSo) {
+                                thamSo.thanhCong();
+                                $popup.tat();
+                            }
+                            else {
+                                location.reload();
+                            }
+                        }
+                        else if (data.trangThai == 5) {
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: data.ketQua,
+                                bieuTuong: 'thong-tin'
+                            });
+                        }
+                        else {
+                            moPopup({
+                                tieuDe: 'Thông báo',
+                                thongBao: data.ketQua,
+                                bieuTuong: 'nguy-hiem'
+                            });
+                        }
+                    }).fail(function () {
+                        moPopup({
+                            tieuDe: 'Thông báo',
+                            thongBao: 'Lỗi ajax',
+                            nut: [{
+                                ten: 'Về trang chủ',
+                                xuLy: function () {
+                                    window.location = '/';
+                                }
+                            }],
+                            esc: false,
+                            bieuTuong: 'nguy-hiem'
+                        })
+                    })
+                }
+            });
+        }
+    });
+}

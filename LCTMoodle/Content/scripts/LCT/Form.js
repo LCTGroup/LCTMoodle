@@ -203,7 +203,7 @@ function khoiTaoHienThiInput_LCT($form) {
             e.removeListener();
 
             var $htmlTag = $phanTu.find('~ div iframe').contents().find('html');
-            if ($phanTu.is('[data-validate~="bat-buoc"]') && form.is(':not([data-an-rang-buoc])')) {
+            if ($phanTu.is('[data-validate~="bat-buoc"]') && $form.is(':not([data-an-rang-buoc])')) {
                 $htmlTag.addClass('bat-buoc');
             }
 

@@ -11,6 +11,7 @@ CREATE TABLE dbo.CauHoi
 	ThoiDiemCapNhat DATETIME DEFAULT GETDATE(),
 	MaNguoiTao INT NOT NULL,
 	MaChuDe INT DEFAULT 0,
+	Diem INT DEFAULT 0
 )
 
 GO
@@ -38,6 +39,22 @@ CREATE PROC dbo.xoaCauHoiTheoMa
 AS
 BEGIN
 	DELETE FROM dbo.CauHoi WHERE Ma = @0
+END
+
+GO
+--Cập nhật điểm Câu hỏi theo Mã
+ALTER PROC dbo.capNhatCauHoi_Diem
+(
+	@0 INT, --Mã câu hỏi
+	@1 INT --Điểm số
+)
+AS
+BEGIN
+	UPDATE dbo.CauHoi
+	SET Diem = @1
+	WHERE Ma = @0
+
+	SELECT @1
 END
 
 GO
@@ -86,11 +103,23 @@ END
 
 GO
 --Lấy toàn bộ Câu Hỏi
-CREATE PROC dbo.layToanBoCauHoi
+CREATE PROC dbo.layCauHoi (
+	@0 INT --So dong lay
+)
 AS
 BEGIN
-	SELECT *
-	FROM dbo.CauHoi	
+	IF (@0 IS NULL)
+	BEGIN
+		SELECT *
+		FROM dbo.CauHoi	
+	END
+	ELSE
+	BEGIN
+		EXEC('
+			SELECT TOP ' + @0 + ' *
+			FROM dbo.CauHoi	
+		')
+	END
 END
 
 GO

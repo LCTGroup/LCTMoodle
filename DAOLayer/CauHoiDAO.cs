@@ -55,6 +55,8 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "Diem":
+                        cauHoi.diem = layInt(dong, i); break;
                     default:
                         break;
                 }                
@@ -109,6 +111,19 @@ namespace DAOLayer
                 );
         }
         
+        public static KetQua capNhatTheoMa_Diem(int? maCauHoi, int? soDiem)
+        {
+            return layGiaTri<int>
+                (
+                    "capNhatCauHoi_Diem",
+                    new object[]
+                    {
+                        maCauHoi,
+                        soDiem
+                    }
+                );
+        }
+
         public static KetQua layTheoMa(int? maCauHoi, LienKet lienKet = null)
         {
             return layDong
@@ -122,13 +137,14 @@ namespace DAOLayer
             );
         }
         
-        public static KetQua layDanhSachCauHoi(LienKet lienKet = null)
+        public static KetQua lay(int? soDong = null, LienKet lienKet = null)
         {
             return layDanhSachDong
             (
-                "layToanBoCauHoi",
+                "layCauHoi",
                 new object[] 
                 {
+                    soDong
                 },
                 lienKet
             );

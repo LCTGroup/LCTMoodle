@@ -11,7 +11,7 @@
 
     ViewData["ChucNang"] = new List<string>()
     {
-        "Tạo câu hỏi", "href='/HoiDap/TaoCauHoi'"
+        "Thêm câu hỏi", "href='/HoiDap/ThemCauHoi'"
     };
 }
 
@@ -25,8 +25,8 @@
 <!-- region Câu hỏi -->
 
 <article class="hop hop-1-vien">
-    <section class="noi-dung" data-doi-tuong="cau-hoi" data-ma="@Model.ma">
-        @Html.Partial("~/Views/HoiDap/_Item_CauHoi.cshtml", Model)
+    <section class="noi-dung">
+        @Html.Partial("~/Views/HoiDap/_Item_CauHoi.cshtml", Model, new ViewDataDictionary() { { "VoteDiem", ViewData["VoteDiem"] } })
     </section>
 </article>
 

@@ -10,7 +10,7 @@
 
     ViewData["ChucNang"] = new List<string>()
     {
-        "Tạo câu hỏi", "href='/HoiDap/ThemCauHoi'"
+        "Thêm câu hỏi", "href='/HoiDap/ThemCauHoi'"
     };
 }
 
@@ -29,20 +29,18 @@
     <section class="tieu-de">
         Tìm kiếm câu hỏi
     </section>
-    <section class="noi-dung khung-khoa-hoc">
-        <section id="form_tim" class="khung-tim lct-form">
+    <section class="noi-dung">
+        <section id="khung_tim" class="khung-tim lct-form">
             <section class="line">
                 <article style="width: 100%" class="input">
-                    <input id="tim_ten" type="text" placeholder="Tiêu đề câu hỏi bạn muốn tìm" />
+                    <input data-doi-tuong="ten-tim" type="text" placeholder="Tên khóa học bạn muốn tìm" />
                 </article>
                 <article style="width: 100%" class="input">
-                    <input id="tim_chu_de" data-input-type="chu-de" placeholder="Chủ đề bạn muốn tìm" />
+                    <input data-doi-tuong="chu-de-tim" data-input-type="chu-de" placeholder="Chủ đề bạn muốn tìm" />
                 </article>
                 <a data-chuc-nang="tat-mo-chu-de" style="min-width: 90px; margin-left: 5px;" class="button inline">Chọn chủ đề</a>
             </section>
         </section>
-        <section id="chu_de" style="margin-top: 5px;"></section>
-    </section>
 </article>
 
 <!--#endregion -->

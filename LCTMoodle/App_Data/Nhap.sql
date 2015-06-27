@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-﻿select * from nhomnguoidung_kh 
-=> ma = 4
-select * from nhomnguoidung_kh_quyen
-510 511 512
-SELECT 
-	GiaTri
-	FROM 
-		dbo.NhomNguoiDung_KH_NguoiDung NND_ND
-			INNER JOIN dbo.NhomNguoiDung_KH NND ON 
-				NND_ND.MaNguoiDung = 1 AND
-				NND_ND.MaNhomNguoiDung = NND.Ma
-			INNER JOIN dbo.NhomNguoiDung_KH_Quyen NND_Q ON
-				NND_Q.MaDoiTuong = 1 AND
-				NND.Ma = NND_Q.MaNhomNguoiDung
-			INNER JOIN dbo.Quyen Q ON 
-				Q.GiaTri IS NOT NULL AND
-				NND_Q.MaQuyen = Q.Ma
-=======
 ﻿SELECT Ho, TenLot, Ten FROM NguoiDung WHERE Ma > 3
 
 UPDATE NguoiDung
@@ -37,4 +18,53 @@ where Ma=2
 alter table dbo.NguoiDung
 add MatKhauCap2 NVARCHAR(MAX)
 ﻿select * from quyen
->>>>>>> dbb32a95e737e249fce9383728c0dea11147b333
+
+select * from dbo.cauhoi
+update dbo.CauHoi
+set diem = 0
+where ma>=1
+select *
+from dbo.nguoiDung
+DECLARE @a INT = 5
+EXEc ('
+	SELECT TOP ' + @a + ' *
+		FROM NguoiDung
+')
+
+
+select * from dbo.cauhoi
+select * from dbo.cauHoi_Diem
+
+drop table dbo.cauHoi_Diem
+
+select * from ChuDe
+
+--declare @a bit = 1, @b bit = 1
+
+--SELECT @a + @b
+
+--select * from hoidap_diem
+
+--declare @a INT = 0, @b INT = 0
+--select @a += CASE
+--	WHEN Diem = 1 THEN
+--		1
+--	ELSE
+--		-1
+--	END,
+--	@b += CASE
+--	WHEN MaNguoiTao = 1 THEN
+--		CASE 
+--			WHEN Diem = 1 THEN
+--				2
+--			ELSE
+--				1
+--			END
+--	ELSE
+--		0
+--	END
+--	FROM CauHoi_Diem
+
+--SELECT @a
+--SELECT @b
+--select CAST(@a AS VARCHAR(MAX)) + '|' + CAST(@b AS VARCHAR(MAX))

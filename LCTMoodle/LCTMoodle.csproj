@@ -514,6 +514,7 @@
     <Content Include="Views\NguoiDung\DoiMatKhau.cshtml" />
     <Content Include="Views\NguoiDung\QuenMatKhau.cshtml" />
     <Content Include="Views\HoiDap\_DanhSachCauHoi.cshtml" />
+    <Content Include="Views\NguoiDung\_FormDangNhap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

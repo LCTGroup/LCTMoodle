@@ -30,6 +30,14 @@ namespace LCTMoodle.Controllers
             return View();
         }
 
+        public ActionResult _FormDangNhap()
+        {
+            return Json(new KetQua() { 
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "NguoiDung/_FormDangNhap.cshtml")
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult DangKy()
         {
             //Tắt hiển thị cột trái, cột phải
