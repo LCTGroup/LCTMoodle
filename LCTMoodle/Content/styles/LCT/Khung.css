@@ -272,7 +272,7 @@ body.tai > .khung {
         z-index: 1;
     }
 
-        .khung-chuc-nang-lct.trai ul {
+        .khung-chuc-nang-lct.ben-trai ul {
             top: -4px;
             right: 22px;
         }
@@ -287,32 +287,32 @@ body.tai > .khung {
             position: absolute;
         }
         
-        .khung-chuc-nang-lct:not(.trai) ul:before,
-        .khung-chuc-nang-lct:not(.trai) ul:after  {
+        .khung-chuc-nang-lct:not(.ben-trai) ul:before,
+        .khung-chuc-nang-lct:not(.ben-trai) ul:after  {
             right: 5px;
         }
 
-        .khung-chuc-nang-lct:not(.trai) ul:before {
+        .khung-chuc-nang-lct:not(.ben-trai) ul:before {
             border-bottom-color: #ddd;
             top: -10px;
         }
 
-        .khung-chuc-nang-lct:not(.trai) ul:after {
+        .khung-chuc-nang-lct:not(.ben-trai) ul:after {
             border-bottom-color: #fff;
             top: -9px;
         }
         
-        .khung-chuc-nang-lct.trai ul:before,
-        .khung-chuc-nang-lct.trai ul:after {
+        .khung-chuc-nang-lct.ben-trai ul:before,
+        .khung-chuc-nang-lct.ben-trai ul:after {
             top: 5px;
         }
 
-        .khung-chuc-nang-lct.trai ul:before {
+        .khung-chuc-nang-lct.ben-trai ul:before {
             border-left-color: #ddd;
             right: -10px;
         }
 
-        .khung-chuc-nang-lct.trai ul:after {
+        .khung-chuc-nang-lct.ben-trai ul:after {
             border-left-color: #fff;
             right: -9px;
         }
@@ -355,6 +355,36 @@ body.tai > .khung {
 
 /*#region Nội dung CKEDITOR */
 
+.noi-dung-ckeditor {
+    line-height: 1.8;
+}
+
+.noi-dung-ckeditor blockquote {
+	font-style: italic;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	padding: 2px 0;
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 0;
+    margin: 5px 0;
+}
+
+.noi-dung-ckeditor .cke_contents_ltr blockquote {
+	padding-left: 20px;
+	padding-right: 8px;
+	border-left-width: 5px;
+}
+
+.noi-dung-ckeditor .cke_contents_rtl blockquote {
+	padding-left: 8px;
+	padding-right: 20px;
+	border-right-width: 5px;
+}
+
+.noi-dung-ckeditor a {
+	color: #0782C1;
+}
+
 .noi-dung-ckeditor ol,
 .noi-dung-ckeditor ul,
 .noi-dung-ckeditor dl
@@ -363,6 +393,7 @@ body.tai > .khung {
 	*margin-right: 0px;
 	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
 	padding: 0 40px;
+    margin: 5px 0;
 }
 
 .noi-dung-ckeditor ol {
@@ -378,56 +409,54 @@ body.tai > .khung {
 .noi-dung-ckeditor h3,
 .noi-dung-ckeditor h4,
 .noi-dung-ckeditor h5,
-.noi-dung-ckeditor h6
-{
-	font-weight: normal;
-	line-height: 1.2;
+.noi-dung-ckeditor h6 {
+    margin: 5px 0;
 }
 
-.noi-dung-ckeditor hr
-{
+.noi-dung-ckeditor p {
+    margin: 5px 0;
+    text-indent: 10px;
+}
+
+.noi-dung-ckeditor hr {
 	border: 0px;
 	border-top: 1px solid #ccc;
+    margin: 5px 0;
 }
 
-.noi-dung-ckeditor img.right
-{
+.noi-dung-ckeditor img.right {
 	border: 1px solid #ccc;
 	float: right;
 	margin-left: 15px;
 	padding: 5px;
 }
 
-.noi-dung-ckeditor img.left
-{
+.noi-dung-ckeditor img.left {
 	border: 1px solid #ccc;
 	float: left;
 	margin-right: 15px;
 	padding: 5px;
 }
 
-.noi-dung-ckeditor pre
-{
+.noi-dung-ckeditor pre {
 	white-space: pre-wrap; /* CSS 2.1 */
 	word-wrap: break-word; /* IE7 */
 	-moz-tab-size: 4;
 	-o-tab-size: 4;
 	-webkit-tab-size: 4;
 	tab-size: 4;
+    margin: 5px 0;
 }
 
-.noi-dung-ckeditor .marker
-{
+.noi-dung-ckeditor .marker {
 	background-color: Yellow;
 }
 
-.noi-dung-ckeditor span[lang]
-{
+.noi-dung-ckeditor span[lang] {
 	font-style: italic;
 }
 
-.noi-dung-ckeditor figure
-{
+.noi-dung-ckeditor figure {
 	text-align: center;
 	border: solid 1px #ccc;
 	border-radius: 2px;
@@ -437,8 +466,7 @@ body.tai > .khung {
 	display: inline-block;
 }
 
-.noi-dung-ckeditor figure > figcaption
-{
+.noi-dung-ckeditor figure > figcaption {
 	text-align: center;
 	display: block; /* For IE8 */
 }
@@ -956,6 +984,7 @@ main > .cot-trai {
 .khung-thong-tin {
     display: flex;
 }
+
     .khung-thong-tin .hinh-dai-dien {
         max-height: 40px;    
         min-height: 40px;
@@ -964,15 +993,18 @@ main > .cot-trai {
         position: relative;
         background: url('/NguoiDung.png/NguoiDung') no-repeat -22px 0;
     }
+
         .khung-thong-tin .hinh-dai-dien img {
             height: 100%;
             width: 100%;
             position: absolute;
         }
+
     .khung-thong-tin .thong-tin-nguoi-dung {
         margin-left: 10px;
         width: 100%;
     }
+
         .khung-thong-tin .thong-tin-nguoi-dung .ten-nguoi-dung {
             line-height: 40px;
             color: #555;
@@ -1003,6 +1035,9 @@ main > .cot-trai {
     .cot-trai nav li li {
         background-color: #fbfbfb;
         border-top: 1px solid #e5e5e5;
+    }
+    .cot-trai nav li li:nth-child(even) {
+        background-color: #fdfdfd;
     }
     .cot-trai nav a {
         display: block;

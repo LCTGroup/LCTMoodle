@@ -12,11 +12,14 @@ $(function () {
 function khoiTaoForm($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
+            var $tai = moBieuTuongTai($_Khung);
             $.ajax({
                 url: '/ChuongTrinh/XuLyThem',
                 type: 'POST',
                 data: $form.serialize(),
                 dataType: 'JSON'
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     var $item = $(data.ketQua);
@@ -28,18 +31,10 @@ function khoiTaoForm($form) {
                     khoiTaoLCTFormMacDinh($form);
                 }
                 else {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        thongBao: 'Thêm thất bại',
-                        bieuTuong: 'nguy-hiem'
-                    })
+                    moPopupThongBao(data);
                 }
             }).fail(function () {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Thêm thất bại',
-                    bieuTuong: 'nguy-hiem'
-                })
+                moPopupThongBao('Thêm mục chương trình thất bại');
             });
         }
     });
@@ -61,19 +56,23 @@ function khoiTaoItem($item) {
                     ten: 'Có',
                     loai: 'can-than',
                     xuLy: function () {
+                        var $tai = moBieuTuongThongBao($_Khung);
                         $.ajax({
                             url: '/ChuongTrinh/XuLyXoa/' + $item.attr('data-ma'),
                             type: 'POST',
                             dataType: 'JSON'
-                        }).done(function () {
-                            $item.remove();
-                            capNhatThuTu();
+                        }).always(function () {
+                            $tai.tat();
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $item.remove();
+                                capNhatThuTu();
+                            }
+                            else {
+                                moPopupThongBao(data);
+                            }
                         }).fail(function () {
-                            moPopup({
-                                tieuDe: 'Thông báo',
-                                thongBao: 'Xóa công việc thất bại',
-                                bieuTuong: 'nguy-hiem'
-                            })
+                            moPopupThongBao('Xóa công việc thất bại');
                         })
                     }
                 },
@@ -130,11 +129,14 @@ function khoiTaoItem($item) {
                         $_Khung.find('[data-doi-tuong="item-chuong-trinh"]').off('.keo-thu-tu');
 
                         if (mangTam.keo === true) {
+                            var $tai = moBieuTuongTai($_Khung);
                             $.ajax({
                                 url: '/ChuongTrinh/XuLyCapNhatThuTu/',
                                 type: 'POST',
                                 data: { thuTuCu: mangTam.viTriBatDau + 1, thuTuMoi: $itemKeo.index() + 1, maKhoaHoc: maKhoaHoc },
                                 dataType: 'JSON'
+                            }).always(function () {
+                                $tai.tat();
                             }).done(function (data) {
                                 if (data.trangThai != 0) {
                                     moPopup({

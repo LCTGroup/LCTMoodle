@@ -29,8 +29,9 @@
                 <section class="noi-dung">
                     <article class="input">
                         <input type="file" name="MaTapTin"
-                               @if (Model != null && Model.tapTin != null) {   @: data-ma-mac-dinh="@Model.tapTin.ma" data-loai-mac-dinh="BaiVietDienDan_TapTin"
-                                                           } />
+                               @if (Model != null && Model.tapTin != null) {   
+                                   @: data-ma-mac-dinh="@Model.tapTin.ma" data-loai-mac-dinh="BaiVietDienDan_TapTin"
+                                } />
                     </article>
                 </section>
             </li>

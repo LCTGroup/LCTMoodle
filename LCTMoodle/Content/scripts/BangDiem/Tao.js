@@ -13,11 +13,14 @@ $(function () {
 function khoiTaoForm($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
+            var $tai = moBieuTuongTai($form);
             $.ajax({
                 url: '/BangDiem/XuLyThemCotDiem',
                 type: 'POST',
                 data: $form.serialize(),
                 dataType: 'JSON'
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     var $item = $(data.ketQua);
@@ -29,18 +32,10 @@ function khoiTaoForm($form) {
                     khoiTaoLCTFormMacDinh($form);
                 }
                 else {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        thongBao: 'Thêm cột thất bại',
-                        bieuTuong: 'nguy-hiem'
-                    });
+                    moPopupThongBao(data);
                 }
             }).fail(function () {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Thêm cột thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao('Thêm cột thất bại');
             });
         }
     });
@@ -54,27 +49,22 @@ function khoiTaoItem($item) {
     $item.find('[data-chuc-nang="xoa"]').on('click', function () {
         var $item = $(this).closest('[data-doi-tuong="item-cot-diem"]');
 
+        var $tai = moBieuTuongTai($_Khung);
         $.ajax({
             url: '/BangDiem/XuLyXoaCotDiem/' + $item.attr('data-ma'),
             type: 'POST',
             dataType: 'JSON'
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $item.remove();
             }
             else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Xóa cột điểm thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao(data);
             }
         }).fail(function () {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Xóa cột điểm thất bại',
-                bieuTuong: 'nguy-hiem'
-            });
+            moPopupThongBao('Xóa cột điểm thất bại');
         });
     });
 
@@ -131,11 +121,14 @@ function khoiTaoItem($item) {
                                 return;
                             }
 
+                            var $tai = moBieuTuongTai($_Khung);
                             $.ajax({
                                 url: '/BangDiem/XuLyCapNhatThuTuCotDiem/',
                                 type: 'POST',
                                 data: { thuTuCu: viTriBatDau + 1, thuTuMoi: viTriHienTai + 1, maKhoaHoc: maKhoaHoc },
                                 dataType: 'JSON'
+                            }).always(function () {
+                                $tai.tat();
                             }).done(function (data) {
                                 if (data.trangThai != 0) {
                                     moPopup({
@@ -154,11 +147,7 @@ function khoiTaoItem($item) {
                                     }
                                 }
                             }).fail(function () {
-                                moPopup({
-                                    tieuDe: 'Thông báo',
-                                    thongBao: 'Thay đổi thứ tự thất bại',
-                                    bieuTuong: 'nguy-hiem'
-                                });
+                                moPopupThongBao('Thay đổi vị trí thất bại');
                                 var viTriHienTai = $itemKeo.index();
                                 var viTriBatDau = mangTam.viTriBatDau;
 

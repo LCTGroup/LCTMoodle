@@ -6,7 +6,7 @@
         @Model.tieuDe
     </h2>
     <section data-doi-tuong="khung-noi-dung" class="khung-noi-dung">
-        <section class="noi-dung">
+        <section class="noi-dung noi-dung-ckeditor">
             @Html.Raw(Model.noiDung)
         </section>        
         @if (@Model.tapTin != null)
@@ -19,7 +19,7 @@
             </section>
         }
     </section>
-    <section class="khung-chuc-nang-lct" style="top: 10px; right: 10px;">
+    <section class="khung-chuc-nang-lct ben-trai" style="top: 10px; right: 10px;">
         <ul data-doi-tuong="cnbg-@Model.ma">
             <li>
                 <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>

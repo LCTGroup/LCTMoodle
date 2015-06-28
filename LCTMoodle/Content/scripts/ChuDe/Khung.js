@@ -77,11 +77,14 @@ function khoiTaoMoNut($nutMo) {
             //Để xác định lấy dữ liệu thành công hay thất bại
             var thanhCong;
 
+            var $tai = moBieuTuongTai($_Khung_CD);
             $.ajax({
                 url: '/ChuDe/_Khung',
                 data: { ma: ma, coChon: coChon },
                 contentType: 'JSON',
                 async: false
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai <= 1) {
                     //Lưu lại kết quả lấy được
@@ -179,11 +182,14 @@ function khoiTaoNutTao($nutTao) {
 
                 khoiTaoLCTForm($form, {
                     submit: function () {
+                        var $tai = moBieuTuongTai($_Khung_CD);
                         $.ajax({
                             url: '/ChuDe/XuLyThem',
                             type: 'POST',
                             data: $form.serialize() + '&CoChon=' + (coChon ? 1 : 0),
                             dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
                         }).done(function (data) {
                             if (data.trangThai == 0) {
                                 $khung.tat();
@@ -208,18 +214,10 @@ function khoiTaoNutTao($nutTao) {
                                 $_DanhSach_CD.prepend($danhSach_Item);
                             }
                             else {
-                                moPopup({
-                                    tieuDe: 'Thông báo',
-                                    thongBao: 'Tạo chủ đề thất bại',
-                                    bieuTuong: 'nguy-hiem'
-                                })
+                                moPopupThongBao(data);
                             }
                         }).fail(function () {
-                            moPopup({
-                                tieuDe: 'Thông báo',
-                                thongBao: 'Tạo chủ đề thất bại',
-                                bieuTuong: 'nguy-hiem'
-                            })
+                            moPopupThongBao('Thêm chủ đề thất bại');
                         });
                     }
                 });
@@ -245,11 +243,14 @@ function khoiTaoNutXoa($nutXoa) {
                     ten: 'Có',
                     xuLy: function () {
                         var ma = $muc.attr('data-ma');
-
+                        
+                        var $tai = moBieuTuongTai($_Khung_CD);
                         $.ajax({
                             url: '/ChuDe/XuLyXoa/' + ma,
                             type: 'POST',
                             dataType: 'JSON'
+                        }).always(function () {
+                            $tai;
                         }).done(function (data) {
                             if (data.trangThai == 0) {
                                 //Xóa hiển thị hiện tại
@@ -273,20 +274,10 @@ function khoiTaoNutXoa($nutXoa) {
                                 duLieuChuDe.danhSach = $danhSach_fake.html();
                             }
                             else {
-                                moPopup({
-                                    tieuDe: 'Thông báo',
-                                    thongBao: 'Xóa chủ đề thất bại',
-                                    bieuTuong: 'nguy-hiem'
-                                });
-                                return false;
+                                moPopupThongBao();
                             }
                         }).fail(function () {
-                            moPopup({
-                                tieuDe: 'Thông báo',
-                                thongBao: 'Xóa chủ đề thất bại',
-                                bieuTuong: 'nguy-hiem'
-                            });
-                            return false;
+                            moPopupThongBao('Xóa chủ đề thất bại');
                         });
                     }
                 },

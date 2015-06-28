@@ -19,6 +19,7 @@
 }
 @section Styles {
     <link rel="stylesheet" href="/Index.css/NguoiDung/" />
+    <link rel="stylesheet" href="/Index.css/HoiDap/" />
     <link rel="stylesheet" href="/Xem.css/NguoiDung/" />
 }
 @section Scripts {
@@ -111,13 +112,13 @@
     
     <section id="khung_hien_thi" class="khung-hien-thi">
         <div id="nhiemvumoi" class="noi-dung active">           
-            Nhiệm vụ mới           
+            <p align="center">Chưa có nhiệm vụ mới</p>       
         </div>
         <div id="baigiangmoi" class="noi-dung">
-            Bài giảng mới
+            <p align="center">Chưa có bài giảng mới</p>
         </div>
         <div id="baitapmoi" class="noi-dung">
-            Bài tập mới
+            <p align="center">Chưa có bài tập mới</p>
         </div>
     </section>
 </section>
@@ -126,10 +127,18 @@
 
 <!--#region Thông tin hỏi đáp-->
 
-<article class="hop hop-1-vien">
+<article class="hop">
     <section class="tieu-de">Thông tin hỏi đáp</section>
     <section class="noi-dung">
-        Câu hỏi đăng vừa được trả lời
+        @if (ViewData["DanhSachCauHoi"] != null)
+        {
+            List<DTOLayer.CauHoiDTO> dsCauHoi = ViewData["DanhSachCauHoi"] as List<DTOLayer.CauHoiDTO>;
+            @Html.Partial("~/Views/HoiDap/_DanhSachCauHoi.cshtml", dsCauHoi)
+        }
+        else
+        {
+            <p align="center">Bạn chưa có câu hỏi nào</p>
+        }
     </section>
 </article>
 

@@ -41,5 +41,37 @@ namespace LCTMoodle.Controllers
         {
             return Json(BinhLuanDAO.xoaTheoMa(loaiDoiTuong, ma));
         }
+
+        public ActionResult _Form(string loaiDoiTuong, int ma)
+        {
+            var ketQua = BinhLuanBUS.layTheoMa(loaiDoiTuong, ma);
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewData["LoaiDoiTuong"] = loaiDoiTuong;
+            return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "BinhLuan/_Form.cshtml", ketQua.ketQua, ViewData)
+                }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyCapNhat(FormCollection formCollection)
+        {
+            var ketQua = BinhLuanBUS.capNhatTheoMa(chuyenForm(formCollection));
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua);
+            }
+
+            return Json(new KetQua() 
+            { 
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "BinhLuan/_Item.cshtml", ketQua.ketQua)
+            });
+        }
 	}
 }

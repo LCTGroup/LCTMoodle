@@ -256,6 +256,9 @@ function khoiTaoTapTinInput_LCT($form) {
                 }
                 return xhr;
             }
+        }).always(function () {
+            thanhTheHien.style.height = '';
+            $phanTu.removeClass('dang');
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $phanTu.addClass('co');
@@ -267,9 +270,6 @@ function khoiTaoTapTinInput_LCT($form) {
             }
         }).fail(function () {
             alert('Thêm file thất bại')
-        }).always(function () {
-            thanhTheHien.style.height = '';
-            $phanTu.removeClass('dang');
         });
     });
 }
@@ -348,10 +348,13 @@ function khoiTaoGoiYInput_LCT($form) {
                     var data = $.parseJSON($inputGoiY.attr('data-data') || '{}');
                     data.tuKhoa = $inputGoiY.val();
 
+                    var $tai = moBieuTuongTai($danhSachGoiY);
                     $.ajax({
                         url: $inputGoiY.attr('data-url'),
                         data: data,
                         dataType: 'JSON'
+                    }).always(function () {
+                        $tai.tat();
                     }).done(function (data) {
                         if (data.trangThai != 0 || data.ketQua.length == 0) {
                             $danhSachGoiY.empty().next().text('Không tìm thấy kết quả phù hợp');

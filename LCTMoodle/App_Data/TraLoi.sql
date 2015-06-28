@@ -129,3 +129,16 @@ AS
 BEGIN
 	SELECT * FROM dbo.TraLoi WHERE Ma=@0
 END
+
+GO
+--Lấy số lượng trả lời theo Câu hỏi
+CREATE PROC dbo.layTraLoiTheoMaCauHoi_SoLuong
+(
+	@0 INT --Mã câu hỏi
+)
+AS
+BEGIN
+	SELECT COUNT(*)
+	FROM dbo.TraLoi
+	WHERE MaCauHoi = @0
+END

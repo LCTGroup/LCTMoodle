@@ -15,6 +15,6 @@ namespace DTOLayer
         public NguoiDungDTO nguoiTao;
         public ChuDeDTO chuDe;
         public int? diem;
-        public List<TraLoiDTO> danhSachTraLoi;
+        public List<TraLoiDTO> danhSachTraLoi;      
     }
 }

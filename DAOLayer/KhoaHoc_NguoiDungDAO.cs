@@ -163,7 +163,7 @@ namespace DAOLayer
         {
             return layDanhSachDong
                 (
-                    "layKhoaHoc_NguoiDungTheoMaKhoaHocVaTrangThai",
+                    "layKhoaHoc_NguoiDungTheoMaNguoiDungVaTrangThai",
                     new object[]
                     {
                         maNguoiDung,
