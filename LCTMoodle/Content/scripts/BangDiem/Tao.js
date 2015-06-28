@@ -19,6 +19,8 @@ function khoiTaoForm($form) {
                 type: 'POST',
                 data: $form.serialize(),
                 dataType: 'JSON'
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     var $item = $(data.ketQua);
@@ -34,8 +36,6 @@ function khoiTaoForm($form) {
                 }
             }).fail(function () {
                 moPopupThongBao('Thêm cột thất bại');
-            }).always(function () {
-                $tai.tat();
             });
         }
     });
@@ -54,6 +54,8 @@ function khoiTaoItem($item) {
             url: '/BangDiem/XuLyXoaCotDiem/' + $item.attr('data-ma'),
             type: 'POST',
             dataType: 'JSON'
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $item.remove();
@@ -63,8 +65,6 @@ function khoiTaoItem($item) {
             }
         }).fail(function () {
             moPopupThongBao('Xóa cột điểm thất bại');
-        }).always(function () {
-            $tai.tat();
         });
     });
 
@@ -127,6 +127,8 @@ function khoiTaoItem($item) {
                                 type: 'POST',
                                 data: { thuTuCu: viTriBatDau + 1, thuTuMoi: viTriHienTai + 1, maKhoaHoc: maKhoaHoc },
                                 dataType: 'JSON'
+                            }).always(function () {
+                                $tai.tat();
                             }).done(function (data) {
                                 if (data.trangThai != 0) {
                                     moPopup({
@@ -155,8 +157,6 @@ function khoiTaoItem($item) {
                                 else if (viTriHienTai > viTriBatDau) {
                                     $_DanhSach.children(':nth-child(' + (viTriBatDau + 1) + ')').before($itemKeo);
                                 }
-                            }).always(function () {
-                                $tai.tat();
                             });
                         }
                         else {

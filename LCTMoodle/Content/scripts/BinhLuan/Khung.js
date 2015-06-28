@@ -11,11 +11,14 @@
 function khoiTaoForm($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
+            var $tai = moBieuTuongTai($form.closest('[data-doi-tuong="khung-binh-luan"]'));
             $.ajax({
                 url: '/BinhLuan/XuLyThem',
                 type: 'POST',
                 data: $form.serialize(),
                 dataType: 'JSON'
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     var $binhLuan = $(data.ketQua);
@@ -26,18 +29,10 @@ function khoiTaoForm($form) {
                     khoiTaoLCTFormMacDinh($form);
                 }
                 else {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        thongBao: 'Thêm bình luận thất bại',
-                        bieuTuong: 'nguy-hiem'
-                    });
+                    moPopupThongBao(data);
                 }
             }).fail(function () {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Thêm bình luận thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao('Thêm bình luận thất bại');
             });
         }
     });
@@ -57,29 +52,23 @@ function khoiTaoItem($items) {
                 {
                     ten: 'Có',
                     xuLy: function () {
-
+                        var $tai = moBieuTuongTai($item);
                         $.ajax({
                             url: '/BinhLuan/XuLyXoa/' + $item.attr('data-ma'),
                             data: { loaiDoiTuong: $item.attr('data-loai-doi-tuong') },
                             type: 'POST',
                             dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
                         }).done(function (data) {
                             if (data.trangThai == 0) {
                                 $item.remove();
                             }
                             else {
-                                moPopup({
-                                    tieuDe: 'Thông báo',
-                                    thongBao: 'Xóa bài viết thất bại',
-                                    bieuTuong: 'nguy-hiem'
-                                })
+                                moPopupThongBao(data);
                             }
                         }).fail(function () {
-                            moPopup({
-                                tieuDe: 'Thông báo',
-                                thongBao: 'Xóa bài viết thất bại',
-                                bieuTuong: 'nguy-hiem'
-                            })
+                            moPopupThongBao('Xóa bài viết thất bại');
                         });
                     }
                 },
@@ -92,10 +81,14 @@ function khoiTaoItem($items) {
 
     $items.find('[data-chuc-nang="sua-binh-luan"]').on('click', function () {
         var $item = $(this).closest('[data-doi-tuong="muc-binh-luan"]');
+        var $khung = $item.closest('[data-doi-tuong="khung-binh-luan"]');
+
+        var $tai = moBieuTuongTai($khung);
         $.ajax({
-            url: '/BinhLuan/_Form',
             data: { ma: $item.data('ma'), loaiDoiTuong: $item.data('loai-doi-tuong') },
             dataType: 'JSON'
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 var $form = $(data.ketQua);
@@ -103,11 +96,14 @@ function khoiTaoItem($items) {
                 $item.html($form);
                 khoiTaoLCTForm($form, {
                     submit: function () {
+                        $tai = moBieuTuongTai($khung);
                         $.ajax({
                             url: '/BinhLuan/XuLyCapNhat',
                             method: 'POST',
                             data: layDataLCTForm($form),
                             dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
                         }).done(function (data) {
                             if (data.trangThai == 0) {
                                 var $newItem = $(data.ketQua);

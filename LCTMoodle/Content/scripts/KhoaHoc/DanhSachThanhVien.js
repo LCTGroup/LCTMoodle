@@ -16,10 +16,13 @@ function khoiTaoItem_ThanhVien($items) {
     $items.find('[data-chuc-nang="xoa-thanh-vien"]').on('click', function () {
         var $item = $(this).closest('.item');
 
+        var $tai = moBieuTuongTai($item);
         $.ajax({
             url: '/KhoaHoc/XuLyXoaThanhVien/' + maKhoaHoc,
             method: 'POST',
             data: { maNguoiDung: $item.attr('data-ma') }
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $item.remove();
@@ -30,18 +33,10 @@ function khoiTaoItem_ThanhVien($items) {
                 });
             }
             else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Xóa thành viên thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao(data);
             }
         }).fail(function () {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Xóa thành viên thất bại',
-                bieuTuong: 'nguy-hiem'
-            });
+            moPopupThongBao('Xóa thành viên thất bại');
         });
     });
 
@@ -52,32 +47,32 @@ function khoiTaoItem_ThanhVien($items) {
     function khoiTaoTatMoHocVien($nuts) {
         $nuts.on('click', function () {
             var $nut = $(this);
+            var $item = $nut.closest('.item');
             var mo = $nut.data('mo');
 
+            var $tai = moBieuTuongTai($item);
             $.ajax({
                 url: '/KhoaHoc/XuLyCapNhatHocVien/' + maKhoaHoc,
                 method: 'POST',
                 data: {
-                    maNguoiDung: $nut.closest('.item').attr('data-ma'),
+                    maNguoiDung: $item.attr('data-ma'),
                     laHocVien: mo
                 },
                 dataType: 'JSON'
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     $nut.text(mo ? 'Xóa khỏi danh sách học viên' : 'Đưa vào danh sách học viên');
                     $nut.data('mo', !mo);
                 }
                 else {
-                    moPopup({
-                        thongBao: 'Cập nhật học viên thất bại'
-                    });
+                    moPopupThongBao(data);
                 }
             }).fail(function () {
-                moPopup({
-                    thongBao: 'Cập nhật học viên thất bại'
-                });
-            })
-        })
+                moPopupThongBao('Cập nhật học viên thất bại');
+            });
+        });
     }
 }
 
@@ -85,96 +80,66 @@ function khoiTaoItem_DangKy($items) {
     $items.find('[data-chuc-nang="dong-y"]').on('click', function () {
         var $item = $(this).closest('.item');
 
+        var $tai = moBieuTuongTai($item);
         $.ajax({
             url: '/KhoaHoc/XuLyChapNhanDangKy/' + maKhoaHoc,
             method: 'POST',
             data: { maNguoiDung: $item.attr('data-ma') }
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $item.remove();
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Chấp nhận đăng ký thành công',
-                    bieuTuong: 'thanh-cong'
-                });
             }
             else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Chấp nhận đăng ký thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao(data);
             }
         }).fail(function () {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Chấp nhận đăng ký thất bại',
-                bieuTuong: 'nguy-hiem'
-            });
+            moPopupThongBao('Chấp nhận đăng ký thất bại');
         });
     });
 
     $items.find('[data-chuc-nang="tu-choi"]').on('click', function () {
         var $item = $(this).closest('.item');
 
+        var $tai = moBieuTuongTai($item);
         $.ajax({
             url: '/KhoaHoc/XuLyTuChoiDangKy/' + maKhoaHoc,
             method: 'POST',
             data: { maNguoiDung: $item.attr('data-ma') }
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $item.remove();
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Từ chối đăng ký thành công',
-                    bieuTuong: 'thanh-cong'
-                });
             }
             else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Từ chối đăng ký thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao(data);
             }
         }).fail(function () {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Từ chối đăng ký thất bại',
-                bieuTuong: 'nguy-hiem'
-            });
+            moPopupThongBao('Từ chối đăng ký thất bại');
         });
     });
 
     $items.find('[data-chuc-nang="chan"]').on('click', function () {
         var $item = $(this).closest('.item');
 
+        var $tai = moBieuTuongTai($item);
         $.ajax({
             url: '/KhoaHoc/XuLyChanNguoiDung/' + maKhoaHoc,
             method: 'POST',
             data: { maNguoiDung: $item.attr('data-ma') }
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $item.remove();
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Chặn người dùng thành công',
-                    bieuTuong: 'thanh-cong'
-                });
             }
             else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Chặn người dùng thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao(data);
             }
         }).fail(function () {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Chặn người dùng thất bại',
-                bieuTuong: 'nguy-hiem'
-            });
+            moPopupThongBao('Chặn người dùng thất bại');
         });
     });
 }
@@ -183,32 +148,22 @@ function khoiTaoitem_BiChan($items) {
     $items.find('[data-chuc-nang="bo-chan"]').on('click', function () {
         var $item = $(this).closest('.item');
 
+        var $tai = moBieuTuongTai($item);
         $.ajax({
             url: '/KhoaHoc/XuLyHuyChanNguoiDung/' + maKhoaHoc,
             method: 'POST',
             data: { maNguoiDung: $item.attr('data-ma') }
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $item.remove();
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Bỏ chặn thành công',
-                    bieuTuong: 'thanh-cong'
-                });
             }
             else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Bỏ chặn thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao(data);
             }
         }).fail(function () {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Bỏ chặn thất bại',
-                bieuTuong: 'nguy-hiem'
-            });
+            moPopupThongBao('Bỏ chặn thất bại');
         });
     })
 }

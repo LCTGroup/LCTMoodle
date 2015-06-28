@@ -4,7 +4,7 @@
 @{
     var quyen = (string[])ViewData["Quyen"];
 
-    bool coQuyenThem = QuyenHelper.co(quyen, "DD_Them");
+    bool coQuyenThem = QuyenHelper.co(quyen, "DD_Them") || true;
 }
 
 @if (coQuyenThem)
