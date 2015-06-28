@@ -150,6 +150,19 @@ namespace DAOLayer
             );
         }
 
+        public static KetQua layTheoMaNguoiTao(int? maNguoiTao, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layCauHoiTheoMaNguoiTao",
+                    new object[]
+                    {
+                        maNguoiTao
+                    },
+                    lienKet
+                );
+        }
+
         public static KetQua layTheoMaChuDe_TimKiem(int? ma, string maChuDe, LienKet lienKet = null)
         {
             return layDanhSachDong(

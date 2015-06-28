@@ -55,6 +55,9 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "Diem":
+                        traLoi.diem = layInt(dong, i);
+                        break;
                     default:
                         break;
                 }

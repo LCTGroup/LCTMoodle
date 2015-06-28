@@ -68,3 +68,10 @@ select * from ChuDe
 --SELECT @a
 --SELECT @b
 --select CAST(@a AS VARCHAR(MAX)) + '|' + CAST(@b AS VARCHAR(MAX))
+
+alter table dbo.traloi
+add Diem int default 0
+
+select * from dbo.traloi
+select * from dbo.cauHoi
+update dbo.traloi set diem=0 where ma>0

@@ -11,6 +11,7 @@ CREATE TABLE dbo.TraLoi
 	Duyet BIT DEFAULT 0,
 	MaNguoiTao INT NOT NULL,
 	MaCauHoi INT NOT NULL,
+	Diem INT DEFAULT 0
 )	
 
 GO
@@ -84,7 +85,8 @@ BEGIN
 		ThoiDiemTao,
 		Duyet,
 		MaNguoiTao,
-		MaCauHoi
+		MaCauHoi,
+		Diem
 		FROM dbo.TraLoi
 		WHERE Ma = @0
 END

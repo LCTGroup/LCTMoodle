@@ -82,8 +82,10 @@ BEGIN
 		TieuDe,
 		NoiDung,
 		ThoiDiemTao,
+		ThoiDiemCapNhat,
 		MaNguoiTao,
-		MaChuDe
+		MaChuDe,
+		Diem
 		FROM dbo.CauHoi
 		WHERE Ma = @0
 END
@@ -99,6 +101,19 @@ BEGIN
 	SELECT *
 	FROM dbo.CauHoi
 	WHERE Ma=@0
+END
+
+GO
+--Lây câu hỏi theo mã người tạo
+CREATE PROC dbo.layCauHoiTheoMaNguoiTao
+(
+	@0 INT --Mã người tạo
+)
+AS
+BEGIN
+	SELECT *
+	FROM dbo.CauHoi
+	WHERE MaNguoiTao = @0
 END
 
 GO
