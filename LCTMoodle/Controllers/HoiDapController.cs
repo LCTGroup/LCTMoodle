@@ -63,31 +63,7 @@ namespace LCTMoodle.Controllers
         }
 
         public ActionResult XemCauHoi(int ma)
-        {
-            int VoteDiem = 0;
-            KetQua ketQua = new KetQua();
-
-            if (Session["NguoiDung"] == null)
-            {
-                VoteDiem = 0;
-            }
-            else
-            {
-                ketQua = CauHoi_DiemBUS.layDiemVoteNguoiDung((int?)Session["NguoiDung"]);
-                if (ketQua.trangThai != 0)
-                {
-                    VoteDiem = 0;
-                }
-                else
-                {
-                    bool ketQuaVote = (bool)ketQua.ketQua;
-                    VoteDiem = ketQuaVote == true ?  1 : 2;
-                }
-            }
-
-            //0: chưa vote, 1:vote cộng, 2:vote trừ
-            ViewData["VoteDiem"] = VoteDiem;
-
+        {            
             LienKet lienKetMacDinh = new LienKet()
             {
                 "NguoiTao", 
@@ -101,14 +77,37 @@ namespace LCTMoodle.Controllers
                 "ChuDe"
             };
 
-            ViewData["MaCauHoi"] = ma;
-            ketQua = CauHoiBUS.layTheoMa(ma, lienKetMacDinh);
+            KetQua ketQua = CauHoiBUS.layTheoMa(ma, lienKetMacDinh);
             if (ketQua.trangThai != 0)
             {
                 return RedirectToAction("Index", "TrangChu");
             }
 
-            return View(ketQua.ketQua);
+            CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
+            int maNguoiDung = cauHoi.nguoiTao.ma.Value;
+            int voteDiem = 0;
+
+            ketQua = CauHoi_DiemDAO.layTheoMaNguoiTao_Diem(maNguoiDung);
+            if (ketQua.trangThai == 0)
+            {
+                bool tam;
+                tam = (bool)ketQua.ketQua;
+                voteDiem = tam == true ? 1 : -1;
+            }
+
+            ViewData["VoteDiem"] = voteDiem;
+            ViewData["MaCauHoi"] = cauHoi.ma.Value;
+
+            ketQua = TraLoiBUS.layTheoMaCauHoi(cauHoi.ma.Value);
+            if (ketQua.trangThai == 0)
+            {
+                cauHoi.danhSachTraLoi = ketQua.ketQua as List<TraLoiDTO>;
+            }
+            else
+            {
+                cauHoi.danhSachTraLoi = null;
+            }
+            return View(cauHoi);
         }
 
         public ActionResult XuLyXoaCauHoi(int ma)
@@ -151,18 +150,40 @@ namespace LCTMoodle.Controllers
                 "NguoiTao",
                 "ChuDe"
             });
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua.ketQua);
+            }
+
+            CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
+            int maNguoiDung = cauHoi.nguoiTao.ma.Value;
+            int voteDiem = 0;
+
+            ketQua = CauHoi_DiemDAO.layTheoMaNguoiTao_Diem(maNguoiDung);
             if (ketQua.trangThai == 0)
             {
-                return Json(new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Item_CauHoi.cshtml", ketQua.ketQua)
-                });
+                bool tam;
+                tam = (bool)ketQua.ketQua;
+                voteDiem = tam == true ? 1 : -1;
+            }
+
+            ViewData["VoteDiem"] = voteDiem;
+            ViewData["MaCauHoi"] = cauHoi.ma.Value;
+
+            ketQua = TraLoiBUS.layTheoMaCauHoi(cauHoi.ma.Value);
+            if (ketQua.trangThai == 0)
+            {
+                cauHoi.danhSachTraLoi = ketQua.ketQua as List<TraLoiDTO>;
             }
             else
             {
-                return Json(ketQua);
+                cauHoi.danhSachTraLoi = null;
             }
+
+            return Json(new KetQua() { 
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Item_CauHoi.cshtml", cauHoi, ViewData)
+            });
         }
 
         [HttpPost]
@@ -260,31 +281,16 @@ namespace LCTMoodle.Controllers
 
         #region Câu hỏi - Điểm
         
-        public ActionResult XuLyDiemCauHoi(int? maCauHoi, bool diem)
+        [HttpPost]
+        public ActionResult XuLyChoDiemCauHoi(int maCauHoi, bool diem)
         {
-            if (Session["NguoiDung"] == null)
-            {
-                return Json(new KetQua()
-                    {
-                        trangThai = 4,
-                        ketQua = "Chưa đăng nhập"
-                    }, JsonRequestBehavior.AllowGet);
-            }
-            int? maNguoiTao = (int?)Session["NguoiDung"];
+            return Json(CauHoi_DiemBUS.them(maCauHoi, Session["NguoiDung"] as int?, diem));
+        }
 
-            KetQua ketQua = CauHoi_DiemBUS.layDiemVoteNguoiDung(maNguoiTao);
-            if (ketQua.trangThai != 0)
-            {
-                CauHoi_DiemBUS.them(maCauHoi, maNguoiTao, diem);
-            }
-            else
-            {
-                CauHoi_DiemBUS.xoaTheoMa(maCauHoi, maNguoiTao);
-            }
-
-            ketQua = CauHoiBUS.capNhatDiem(maCauHoi, diem);
-            
-            return Json(ketQua, JsonRequestBehavior.AllowGet);
+        [HttpPost]
+        public ActionResult XuLyBoChoDiemCauHoi(int maCauHoi)
+        {
+            return Json(CauHoi_DiemBUS.xoa(maCauHoi, Session["NguoiDung"] as int?));
         }
 
         #endregion

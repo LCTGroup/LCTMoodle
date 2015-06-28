@@ -64,7 +64,7 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua xoaTheoMa(int? maCauHoi, int? maNguoiTao)
+        public static KetQua xoaTheoMaCauHoiVaMaNguoiTao(int? maCauHoi, int? maNguoiTao)
         {
             return khongTruyVan
             (
@@ -77,11 +77,11 @@ namespace DAOLayer
             );
         }        
 
-        public static KetQua layCauHoi_DiemTheoMaNguoiTao(int? maNguoiTao)
+        public static KetQua layTheoMaNguoiTao_Diem(int? maNguoiTao)
         {
             return layGiaTri<bool>
                 (
-                    "layCauHoi_DiemTheoMaNguoiTao",
+                    "layCauHoi_DiemTheoMaNguoiTao_Diem",
                     new object[]
                     {
                         maNguoiTao

@@ -63,7 +63,7 @@ function khoiTaoDangKy($form) {
                 input: $('#MatKhauCap2'),
                 thongBao: 'Mật khẩu cấp 2 không được trùng với Mật khẩu cấp 1',
                 validate: function () {
-                    if ($('#MatKhauCap2').val() == $('#MatKhau').val()) {
+                    if ($('#MatKhauCap2').val() == $('#MatKhau').val() && $('#MatKhauCap2').val() != "") {
                         return false;
                     }
                 }            

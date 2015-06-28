@@ -62,10 +62,6 @@ namespace BUSLayer
             {
                 loi.Add("Chưa đăng nhập");
             }  
-            if (coKiemTra("Diem",truong,kiemTra) && cauHoi.diem == null)
-            {
-                loi.Add("Chưa có điểm");
-            }
             #endregion
 
             if (loi.Count > 0)
@@ -171,21 +167,6 @@ namespace BUSLayer
             }
 
             return CauHoiDAO.capNhatTheoMa(maCauHoi, layBangCapNhat(cauHoi, form.Keys.ToArray()), lienKet);
-        }
-
-        public static KetQua capNhatDiem(int? maCauHoi, bool diem)
-        {
-            KetQua ketQua = CauHoi_DiemBUS.layDiem(maCauHoi);
-            if (ketQua.trangThai != 0)
-            {
-                return ketQua;
-            }
-
-            int? soDiem = ketQua.ketQua as int?;
-
-            //soDiem = soDiem + (diem == true ? 1 : -1);
-
-            return CauHoiDAO.capNhatTheoMa_Diem(maCauHoi, soDiem);
         }
 
         public static KetQua layTheoMa(int? ma, LienKet lienKet = null)

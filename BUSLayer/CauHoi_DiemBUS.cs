@@ -13,102 +13,46 @@ namespace BUSLayer
 {
     public class CauHoi_DiemBUS : BUS
     {
-        public static void gan(ref CauHoi_DiemDTO cauHoi_Diem, Form form)
+        public static KetQua them(int maCauHoi, int? maNguoiTao, bool diem)
         {
-            if (cauHoi_Diem == null)
+            if (!maNguoiTao.HasValue)
             {
-                cauHoi_Diem = new CauHoi_DiemDTO();
-            }
-
-            foreach (string key in form.Keys.ToArray())
-            {
-                switch (key)
+                return new KetQua()
                 {
-                    case "MaCauHoi":
-                        cauHoi_Diem.cauHoi = form.layDTO<CauHoiDTO>(key);
-                        break;
-                    case "MaNguoiTao":
-                        cauHoi_Diem.nguoiTao = form.layDTO<NguoiDungDTO>(key);
-                        break;
-                    case "Diem":
-                        cauHoi_Diem.diem = form.layBool(key);
-                        break;                   
-                    default:
-                        break;
-                }
+                    trangThai = 4
+                };
             }
-        }
-        
-        public static KetQua kiemTra(CauHoi_DiemDTO cauHoi_Diem, string[] truong = null, bool kiemTra = true)
-        {
-            List<string> loi = new List<string>();
-
-            #region Bắt lỗi
-            if (coKiemTra("MaCauHoi", truong, kiemTra) && cauHoi_Diem.cauHoi == null)
+            
+            KetQua ketQua = CauHoiDAO.layTheoMa(maCauHoi);
+            if (ketQua.trangThai != 0)
             {
-                loi.Add("Câu hỏi không được bỏ trống");
-            }
-            if (coKiemTra("MaNguoiTao", truong, kiemTra) && cauHoi_Diem.nguoiTao == null)
-            {
-                loi.Add("Chưa đăng nhập");
+                return ketQua;
             }            
-            #endregion
 
-            if (loi.Count > 0)
+            CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
+            if (cauHoi.nguoiTao.ma == maNguoiTao)
             {
                 return new KetQua()
                 {
                     trangThai = 3,
-                    ketQua = loi
+                    ketQua = "Bạn không có quyền vote câu hỏi của mình"
                 };
             }
-            else
-            {
-                return new KetQua()
-                {
-                    trangThai = 0
-                };
-            }
-        }
-        
-        public static BangCapNhat layBangCapNhat(CauHoi_DiemDTO cauHoi_Diem, string[] keys)
-        {
-            BangCapNhat bangCapNhat = new BangCapNhat();
-            foreach (string key in keys)
-            {
-                switch (key)
-                {
-                    case "MaCauHoi":
-                        bangCapNhat.Add("MaNguoiTao", layMa_String(cauHoi_Diem.cauHoi), 1);
-                        break;
-                    case "MaNguoiTao":
-                        bangCapNhat.Add("MaNguoiTao", layMa_String(cauHoi_Diem.nguoiTao), 1);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            return bangCapNhat;
-        }
-       
-        public static KetQua them(int? maCauHoi, int? maNguoiTao, bool diem)
-        {
+            
             return CauHoi_DiemDAO.them(maCauHoi, maNguoiTao, diem);
         }
 
-        public static KetQua xoaTheoMa(int? maCauHoi, int? maNguoiTao)
+        public static KetQua xoa(int? maCauHoi, int? maNguoiTao)
         {
-            return CauHoi_DiemDAO.xoaTheoMa(maCauHoi, maNguoiTao);
-        }
-
-        public static KetQua layDiemVoteNguoiDung(int? maNguoiTao)
-        {
-            return CauHoi_DiemDAO.layCauHoi_DiemTheoMaNguoiTao(maNguoiTao);
-        }
-
-        public static KetQua layDiem(int? maCauHoi)
-        {
-            return CauHoi_DiemDAO.layTheoMaCauHoi_Diem(maCauHoi);
+            if (!maNguoiTao.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 4
+                };
+            }
+            
+            return CauHoi_DiemDAO.xoaTheoMaCauHoiVaMaNguoiTao(maCauHoi, maNguoiTao);
         }
     }
 }
