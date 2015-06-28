@@ -58,7 +58,7 @@ namespace BUSLayer
             //Kiểm tra xem người dùng đã đăng nhập hay chưa
             //Lấy người dùng hiện tại
             #region Lấy và kiểm tra người dùng hiện tại
-            if (Session["NguoiDung"] == null)
+            if (Session["NguoiDung"] == null || true)
             {
                 return new KetQua()
                 {

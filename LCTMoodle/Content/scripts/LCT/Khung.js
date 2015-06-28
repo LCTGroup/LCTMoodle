@@ -374,6 +374,8 @@ function moPopup(thamSo) {
 }
 
 function moPopupThongBao(ketQua) {
+    console.log(typeof (ketQua));
+    console.log(typeof (ketQua) === 'object');
     if (typeof (ketqua) === 'object') {
         switch (ketQua.trangThai) {
             case 0:
