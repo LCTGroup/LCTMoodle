@@ -63,12 +63,19 @@
                     .muc-hoi-dap .thong-tin .diem-so i.arrow-up:hover {
                         background-position: -16px -20px;
                     }
+                    .muc-hoi-dap[data-vote-diem="1"] .thong-tin .diem-so i.arrow-up {
+                        background-position: -16px -40px;
+                    }
                 .muc-hoi-dap .thong-tin .diem-so i.arrow-down {
                     background-position: -16px 0;
                 }
                     .muc-hoi-dap .thong-tin .diem-so i.arrow-down:hover {
                         background-position: -16px -20px;
                     }
+                    .muc-hoi-dap[data-vote-diem="-1"] .thong-tin .diem-so i.arrow-down {
+                        background-position: -16px -40px;
+                    }
+
         .muc-hoi-dap .thong-tin .thoi-gian {
             margin-top: 10px;
             font-size: 11px;

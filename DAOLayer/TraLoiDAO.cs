@@ -55,6 +55,9 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "Diem":
+                        traLoi.diem = layInt(dong, i);
+                        break;
                     default:
                         break;
                 }
@@ -114,6 +117,18 @@ namespace DAOLayer
                 },
                 lienKet
             );
+        }
+
+        public static KetQua layTraLoiTheoMaCauHoi_SoLuong(int? maCauHoi)
+        {
+            return layGiaTri<int>
+                (
+                    "layTraLoiTheoMaCauHoi_SoLuong",
+                    new object[]
+                    {
+                        maCauHoi
+                    }
+                );
         }
 
         public static KetQua capNhatTheoMa(int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)

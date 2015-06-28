@@ -11,6 +11,7 @@ CREATE TABLE dbo.TraLoi
 	Duyet BIT DEFAULT 0,
 	MaNguoiTao INT NOT NULL,
 	MaCauHoi INT NOT NULL,
+	Diem INT DEFAULT 0
 )	
 
 GO
@@ -84,7 +85,8 @@ BEGIN
 		ThoiDiemTao,
 		Duyet,
 		MaNguoiTao,
-		MaCauHoi
+		MaCauHoi,
+		Diem
 		FROM dbo.TraLoi
 		WHERE Ma = @0
 END
@@ -126,4 +128,17 @@ CREATE PROC dbo.layTraLoiTheoMa
 AS
 BEGIN
 	SELECT * FROM dbo.TraLoi WHERE Ma=@0
+END
+
+GO
+--Lấy số lượng trả lời theo Câu hỏi
+CREATE PROC dbo.layTraLoiTheoMaCauHoi_SoLuong
+(
+	@0 INT --Mã câu hỏi
+)
+AS
+BEGIN
+	SELECT COUNT(*)
+	FROM dbo.TraLoi
+	WHERE MaCauHoi = @0
 END

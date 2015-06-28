@@ -124,6 +124,11 @@ namespace BUSLayer
             return TraLoiDAO.layTheoMa(ma);
         }
 
+        public static KetQua laySoLuongTraLoiTrongCauHoi(int maCauHoi)
+        {
+            return TraLoiDAO.layTraLoiTheoMaCauHoi_SoLuong(maCauHoi);
+        }
+
         public static KetQua capNhat(Form form)
         {
             int? maTraLoi = form.layInt("Ma");

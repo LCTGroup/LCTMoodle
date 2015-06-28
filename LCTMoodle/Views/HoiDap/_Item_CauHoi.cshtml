@@ -1,11 +1,12 @@
 ﻿@model DTOLayer.CauHoiDTO
 @{
+    //voteDiem: 0 - Chưa vote | 1 - Vote cộng | -1 - Vote trừ
     int voteDiem = (int)ViewData["VoteDiem"];
 }
 
 @if (Model != null)
 {
-    <article class="muc-hoi-dap cau-hoi" data-doi-tuong="cau-hoi" data-ma="@Model.ma">
+    <article class="muc-hoi-dap cau-hoi" data-doi-tuong="cau-hoi" data-ma="@Model.ma" data-vote-diem="@voteDiem">
 
         <section class="khung-chuc-nang-lct">
             <ul data-doi-tuong="cauhoi-@Model.ma">
@@ -24,26 +25,26 @@
 
         <section class="thong-tin">
             @if (Model.nguoiTao != null)
-        {
-        <a href="/NguoiDung/Xem/@Model.nguoiTao.ma">
-            <div class="nguoi-dung">
-                <div class="hinh-dai-dien">
-                    @if (Model.nguoiTao.hinhDaiDien != null)
+            {
+                <a href="/NguoiDung/Xem/@Model.nguoiTao.ma">
+                    <div class="nguoi-dung">
+                        <div class="hinh-dai-dien">
+                            @if (Model.nguoiTao.hinhDaiDien != null)
                         {
-                        <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.nguoiTao.hinhDaiDien.ma" />
+                    <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.nguoiTao.hinhDaiDien.ma" />
                         }
                         else
                         {
-                        <img src="/avatarDefault.png/NguoiDung" />
+                    <img src="/avatarDefault.png/NguoiDung" />
                         }
-                </div>
-                <span>@Model.nguoiTao.tenTaiKhoan</span>
-            </div>
-        </a>
-        }
-            <div class="diem-so" data-doi-tuong="diem-so-@Model.ma" data-nguoi-dung-vote-diem="@voteDiem">
+                        </div>
+                        <span>@Model.nguoiTao.tenTaiKhoan</span>
+                    </div>
+                </a>
+            }
+            <div class="diem-so">
                 <i class="arrow-up" data-chuc-nang="cong-diem"></i>
-                <span class="so" id="diem_so">@Model.diem</span>
+                <span class="so" data-doi-tuong="diem-so">@Model.diem</span>
                 <i class="arrow-down" data-chuc-nang="tru-diem"></i>
             </div>
 
@@ -60,11 +61,11 @@
 
             @if (Model.chuDe != null)
         {
-        <ul class="chu-de">
-            <li>
-                <a href="#">@Model.chuDe.ten</a>
-            </li>
-        </ul>
+            <ul class="chu-de">
+                <li>
+                    <a href="#">@Model.chuDe.ten</a>
+                </li>
+            </ul>
         }
 
         </section>
