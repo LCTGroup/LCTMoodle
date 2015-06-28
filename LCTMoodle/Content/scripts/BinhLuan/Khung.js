@@ -92,7 +92,6 @@ function khoiTaoItem($items) {
 
     $items.find('[data-chuc-nang="sua-binh-luan"]').on('click', function () {
         var $item = $(this).closest('[data-doi-tuong="muc-binh-luan"]');
-
         $.ajax({
             url: '/BinhLuan/_Form',
             data: { ma: $item.data('ma'), loaiDoiTuong: $item.data('loai-doi-tuong') },
@@ -102,7 +101,6 @@ function khoiTaoItem($items) {
                 var $form = $(data.ketQua);
 
                 $item.html($form);
-
                 khoiTaoLCTForm($form, {
                     submit: function () {
                         $.ajax({
@@ -121,7 +119,7 @@ function khoiTaoItem($items) {
                             }
                         }).fail(function () {
                             moPopupThongBao('Cập nhật thất bại');
-                        })
+                        });
                     }
                 });
             }

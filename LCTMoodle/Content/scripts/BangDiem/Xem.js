@@ -1,6 +1,7 @@
-﻿var $_KhungTieuDe, $_KhungDiem, htmlTruocKhiSua;
+﻿var $_KhungTieuDe, $_KhungDiem, htmlTruocKhiSua, $_Khung;
 
 $(function () {
+    $_Khung = $('#khung');
     $_KhungTieuDe = $('#khung_tieu_de');
     $_KhungDiem = $('#khung_diem');
 
@@ -81,6 +82,7 @@ function khoiTaoNutHoanThanhSua($nuts) {
         })
 
         if (dsCapNhat.length != 0) {
+            var $tai = moBieuTuongTai($_Khung);
             $.ajax({
                 url: '/BangDiem/CapNhatBangDiem',
                 method: 'POST',
@@ -97,14 +99,12 @@ function khoiTaoNutHoanThanhSua($nuts) {
                     });
                 }
                 else {
-                    moPopup({
-                        thongBao: 'Cập nhật điểm thất bại'
-                    });
+                    moPopupThongBao(data);
                 }
             }).fail(function () {
-                moPopup({
-                    thongBao: 'Cập nhật điểm thất bại'
-                });
+                moPopupThongBao('Cập nhật điểm thất bại');
+            }).always(function () {
+                $tai.tat();
             });
         }
         else {
