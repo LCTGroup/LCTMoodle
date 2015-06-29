@@ -443,7 +443,7 @@ function khoiTaoItem_Nhom($items) {
         if (!(_NhomHienTai in _MangQuyenNhom)) {
             $.ajax({
                 url: '/Quyen/XulyLayQuyenNhom',
-                data: { phamVi: _PhamViQuanLy, maNhom: _NhomHienTai, maDoiTuong: _DoiTuongQuanLy },
+                data: { phamVi: _PhamViQuanLy, maNhom: _NhomHienTai },
                 dataType: 'JSON',
                 async: false
             }).done(function (data) {

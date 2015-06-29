@@ -13,16 +13,36 @@ namespace LCTMoodle.Controllers
 {
     public class ChuDeController : LCTController
     {
-        public ActionResult QuanLy(int ma = 0)//Mã cha
+        public ActionResult QuanLy(int ma = 0)
         {
-            KetQua ketQua = ChuDeBUS.layTheoMaCha(ma);
+            KetQua ketQua;
+            ChuDeDTO chuDe = null;
 
-            if (ketQua.trangThai > 1)
+            #region Kiểm tra quyền
+            if (ma != 0)
             {
-                return RedirectToAction("Index", "TrangChu");
+                ketQua = ChuDeBUS.layTheoMa(ma);
+                if (ketQua.trangThai != 0)
+                {
+                    return Redirect("/");
+                }
+                chuDe = ketQua.ketQua as ChuDeDTO;
             }
 
-            return View(model: ketQua.ketQua);
+            if (!BUS.coQuyen("QLQuyen", "CD", ma))
+            {
+                return Redirect("/");
+            }
+            #endregion
+
+            ketQua = ChuDeBUS.layTheoMaCha(ma);
+            if (ketQua.trangThai > 1)
+            {
+                return Redirect("/");
+            }
+            ViewData["DSCon"] = ketQua.ketQua;
+
+            return View(chuDe);
         }
 
         /// <returns>
@@ -177,6 +197,8 @@ namespace LCTMoodle.Controllers
         public ActionResult _Chon(int ma = 0)
         {
             KetQua ketQua;
+            ChuDeDTO chuDe = null;
+
             if (ma != 0)
             {
                 ketQua = ChuDeBUS.layTheoMa(ma);
@@ -184,22 +206,22 @@ namespace LCTMoodle.Controllers
                 {
                     return Json(ketQua, JsonRequestBehavior.AllowGet);
                 }
-                ViewData["ChuDe"] = ketQua.ketQua;
+                chuDe = ketQua.ketQua as ChuDeDTO;
             }
 
             ketQua = ChuDeBUS.layTheoMaCha(ma);
 
-            if (ketQua.trangThai != 0)
+            if (ketQua.trangThai > 1)
             {
                 return Json(ketQua, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                ViewData["CoChon"] = true;
+                ViewData["DSCon"] = ketQua.ketQua;
                 return Json(new KetQua()
                 {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Chon.cshtml", ketQua.ketQua, ViewData)
+                    ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Chon.cshtml", chuDe, ViewData)
                 }, JsonRequestBehavior.AllowGet);
             }
         }

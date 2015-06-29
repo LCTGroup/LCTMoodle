@@ -1,9 +1,10 @@
-﻿@model DTOLayer.KhoaHocDTO
+﻿@using LCTMoodle.LCTView
+@using Helpers
+@model DTOLayer.KhoaHocDTO
 @{
     Layout = "~/Views/LCT/Khung.cshtml";
 
-    var thanhVien = ViewData["ThanhVien"] as DTOLayer.KhoaHoc_NguoiDungDTO;
-        
+
     ViewData["TieuDe"] = Model.ten;
 
     ViewData["DieuHuong"] = new List<string>()
@@ -11,9 +12,15 @@
         Model.ten, "/KhoaHoc/" + Model.ma
     };
 
+    /*
+        Chức năng
+     */
     List<string> chucNang = new List<string>();
-    
-    //Kiểm tra thành viên để hiển thị các nút chức năng tham gia/rời nhóm
+
+    /*
+        Kiểm tra thành viên để hiển thị các nút chức năng tham gia/rời nhóm
+     */
+    var thanhVien = ViewData["ThanhVien"] as DTOLayer.KhoaHoc_NguoiDungDTO;
     if (thanhVien == null)
     {
         if (Model.canDangKy)
@@ -27,12 +34,12 @@
         else
         {
             chucNang.Add("Tham gia");
-            chucNang.Add("data-chuc-nang='tham-gia'");   
+            chucNang.Add("data-chuc-nang='tham-gia'");
         }
     }
     else
     {
-        switch(thanhVien.trangThai)
+        switch (thanhVien.trangThai)
         {
             case 0:
                 chucNang.Add("Rời khóa học");
@@ -53,12 +60,24 @@
 
     chucNang.Add("Danh sách thành viên");
     chucNang.Add("href='/KhoaHoc/DanhSachThanhVien/" + Model.ma + "'");
-    chucNang.Add("Quản lý quyền");
-    chucNang.Add("href='/QuanlyQuyen/KH/" + Model.ma + "'");
+
+    var dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
+
+    if (QuyenHelper.co(dsQuyen, "QLQuyen"))
+    {
+        chucNang.Add("Quản lý quyền");
+        chucNang.Add("href='/QuanlyQuyen/KH/" + Model.ma + "'");   
+    }
+    
     chucNang.Add("Chương trình khóa học");
     chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + Model.ma + "'");
-    chucNang.Add("Bảng điểm khóa học");
-    chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + Model.ma + "'");
+
+    if (QuyenHelper.co(dsQuyen, "QLCotDiem"))
+    {
+        chucNang.Add("Quản lý bảng điểm");
+        chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + Model.ma + "'");
+    }
+    
     chucNang.Add("Xem điểm khóa học");
     chucNang.Add("href='/KhoaHoc/Xem-BangDiem/" + Model.ma + "'");
 

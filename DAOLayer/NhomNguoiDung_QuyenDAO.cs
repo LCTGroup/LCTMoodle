@@ -108,16 +108,15 @@ namespace DAOLayer
                 );
         }
 
-        public static KetQua layTheoMaNhomNguoiDungVaMaDoiTuong(string phamVi, int? maNhomNguoiDung, int? maDoiTuong, LienKet lienKet = null)
+        public static KetQua layTheoMaNhomNguoiDung(string phamVi, int? maNhomNguoiDung, LienKet lienKet = null)
         {
             return layDanhSachDong
                 (
-                    "layNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaDoiTuong",
+                    "layNhomNguoiDung_QuyenTheoMaNhomNguoiDung",
                     new object[]
                     {
                         phamVi,
-                        maNhomNguoiDung,
-                        maDoiTuong
+                        maNhomNguoiDung
                     },
                     lienKet
                 );

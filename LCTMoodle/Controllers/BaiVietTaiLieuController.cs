@@ -14,9 +14,58 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult _Khung(int maKhoaHoc)
         {
+            #region Kiểm tra quyền
+            #region Lấy khóa học
+            KetQua ketQua = KhoaHocBUS.layTheoMa(maKhoaHoc);
+            if (ketQua.trangThai != 0)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Khóa học không tồn tại"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
+            #endregion
+
+            #region Lấy thành viên
+            KhoaHoc_NguoiDungDTO thanhVien = null;
+            if (Session["NguoiDung"] != null)
+            {
+                ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(khoaHoc.ma.Value, (int)Session["NguoiDung"]);
+                thanhVien = ketQua.trangThai == 0 ? ketQua.ketQua as KhoaHoc_NguoiDungDTO : null;
+            }
+            #endregion
+
+            #region Kiểm tra nếu thành viên bị chặn
+            if (thanhVien != null && thanhVien.trangThai == 3)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Bạn đã bị chặn"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            #region Kiểm tra trường hợp khóa học nội bộ
+            if (
+                    (khoaHoc.cheDoRiengTu == "NoiBo" &&
+                    (thanhVien == null || thanhVien.trangThai != 0)) ||
+                    thanhVien != null && thanhVien.trangThai == 3)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Đây là khóa học nội bộ, bạn cần tham gia để xem nội dung"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+            #endregion
+
             ViewData["MaKhoaHoc"] = maKhoaHoc;
 
-            KetQua ketQua = BaiVietTaiLieuBUS.layTheoMaKhoaHoc(maKhoaHoc);
+            ketQua = BaiVietTaiLieuBUS.layTheoMaKhoaHoc(maKhoaHoc);
             List<BaiVietTaiLieuDTO> danhSachBaiViet = 
                 ketQua.trangThai == 0 ?
                 (List<BaiVietTaiLieuDTO>)ketQua.ketQua :

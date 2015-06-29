@@ -1,4 +1,5 @@
 ﻿@using Helpers
+@using LCTMoodle.LCTView
 @model List<DTOLayer.KhoaHocDTO>
 
 @{    
@@ -6,8 +7,7 @@
     
     ViewData["TieuDe"] = "Danh sách khóa học";
 
-    var ketQua = BUSLayer.QuyenBUS.layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri("KH");
-    string[] dsQuyen = ketQua.trangThai == 0 ? ketQua.ketQua as string[] : null;
+    string[] dsQuyen = QuyenView.layDSQuyen("KH");
 
     bool
         coQuyenQLNoiDungKH = QuyenHelper.co(dsQuyen, "QLNoiDung");
@@ -61,9 +61,7 @@
             Danh sách khóa học
         </section>
         <section class="noi-dung khung-khoa-hoc">
-            <ul id="danh_sach" class="danh-sach">
-                @Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", Model)
-            </ul>
+            <ul id="danh_sach" class="danh-sach">@Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", Model)</ul>
             <section class="thong-bao">Không có khóa học phù hợp</section>
         </section>
     </section>

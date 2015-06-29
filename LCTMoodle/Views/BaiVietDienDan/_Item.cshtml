@@ -1,6 +1,6 @@
 ﻿@model DTOLayer.BaiVietDienDanDTO
 @using Helpers
-@using LCTMoodle.LCTHtml
+@using LCTMoodle.LCTView
 
 @{
     var quyen = (string[])ViewData["Quyen"];
@@ -21,7 +21,7 @@
             </section>
             <section class="phai">
                 <section class="nguoi-dung">
-                    <a href="#">@NguoiDungHtml.link(Model.nguoiTao)</a>
+                    <a href="#">@NguoiDungView.link(Model.nguoiTao)</a>
                 </section>
                 <section class="bai-viet">
                     <section class="thoi-gian">

@@ -41,14 +41,14 @@ namespace LCTMoodle
 
             routes.MapRoute(
                 name: "Xem_QuanLyChuongTrinh",
-                url: "KhoaHoc/ChuongTrinh/{ma}",
-                defaults: new { controller = "ChuongTrinh", action = "Index" }
+                url: "KhoaHoc/ChuongTrinh/{maKhoaHoc}",
+                defaults: new { controller = "ChuongTrinh", action = "Index", maKhoaHoc = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 name: "BangDiem",
-                url: "KhoaHoc/{action}-BangDiem/{ma}",
-                defaults: new { controller = "BangDiem", action = "Index" }
+                url: "KhoaHoc/{action}-BangDiem/{maKhoaHoc}",
+                defaults: new { controller = "BangDiem", action = "Index", maKhoaHoc = UrlParameter.Optional }
             );
 
             routes.MapRoute(

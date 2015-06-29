@@ -1,13 +1,29 @@
-﻿@model DTOLayer.KhoaHocDTO
+﻿@using LCTMoodle.LCTView
+@using Helpers
+@model DTOLayer.KhoaHocDTO
 @{
     Layout = "~/Views/LCT/Khung.cshtml";
-    
+
     ViewData["TieuDe"] = Model.ten;
 
     var dsCotDiem = ViewData["CotDiem"] as List<DTOLayer.CotDiemDTO>;
     var dsNguoiDung = ViewData["NguoiDung"] as List<DTOLayer.NguoiDungDTO>;
     var chuoiDiem = ViewData["Diem"] as string[];
     var slCotDiem = dsCotDiem.Count;
+
+    var dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
+    
+    List<string> chucNang = new List<string>();
+    if (QuyenHelper.co(dsQuyen, "QLCotDiem"))
+    {
+        chucNang.Add("Quản lý bảng điểm");
+        chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + Model.ma + "'");
+    }
+    
+    if (chucNang.Count != 0)
+    {
+        ViewData["ChucNang"] = chucNang;
+    }
 }
 
 @section Styles {
@@ -51,21 +67,21 @@
                                     <th class="khong-vien">@nguoiDung.ho @nguoiDung.tenLot</th>
                                     <th class="khong-vien">@nguoiDung.ten</th>
                                     @{
-                                        double trungBinh = 0;
-                                        int hangHienTai = slCotDiem * iNguoiDung++;
-                                        for (int i = 0; i < slCotDiem; i++)
-                                        {
-                                            string strDiem = chuoiDiem[i + hangHienTai];
-                                            if (strDiem.IsEmpty())
-                                            {
+                                double trungBinh = 0;
+                                int hangHienTai = slCotDiem * iNguoiDung++;
+                                for (int i = 0; i < slCotDiem; i++)
+                                {
+                                    string strDiem = chuoiDiem[i + hangHienTai];
+                                    if (strDiem.IsEmpty())
+                                    {
                                                 <td class="cot-diem"></td>
-                                            }
-                                            else
-                                            {
-                                                trungBinh += double.Parse(strDiem);
+                                    }
+                                    else
+                                    {
+                                        trungBinh += double.Parse(strDiem);
                                                 <td class="cot-diem" data-diem="@strDiem">@strDiem</td>
-                                            }
-                                        }
+                                    }
+                                }
                                         <td>@((trungBinh / slCotDiem).ToString("#.##"))</td>
                                     }
                                 </tr>

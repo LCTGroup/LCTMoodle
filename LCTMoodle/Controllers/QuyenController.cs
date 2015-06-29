@@ -30,6 +30,12 @@ namespace LCTMoodle.Controllers
             #endregion
 
             KetQua ketQua;
+            #region Kiểm tra quyền
+            if (!BUS.coQuyen("QLQuyen", phamVi, maDoiTuong))
+            {
+                return Redirect("/");
+            }
+            #endregion
 
             #region Kiểm tra đối tượng
             switch (phamVi)
@@ -161,9 +167,9 @@ namespace LCTMoodle.Controllers
             return Json(NhomNguoiDung_QuyenBUS.themHoacXoaTheoMaNhomNguoiDungVaMaQuyen(phamVi, maNhom, maQuyen, maDoiTuong, la, them));
         }
 
-        public ActionResult XulyLayQuyenNhom(string phamVi, int maNhom, int maDoiTuong)
+        public ActionResult XulyLayQuyenNhom(string phamVi, int maNhom)
         {
-            KetQua ketQua = NhomNguoiDung_QuyenBUS.layTheoMaNhomNguoiDungVaMaDoiTuong(phamVi, maNhom, maDoiTuong);
+            KetQua ketQua = NhomNguoiDung_QuyenBUS.layTheoMaNhomNguoiDung(phamVi, maNhom);
 
             if (ketQua.trangThai == 0)
             {

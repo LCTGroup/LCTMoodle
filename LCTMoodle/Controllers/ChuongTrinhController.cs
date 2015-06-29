@@ -12,18 +12,49 @@ namespace LCTMoodle.Controllers
 {
     public class ChuongTrinhController : LCTController
     {
-        public ActionResult Index(int ma) //Để tạm, sau này sửa route, đổi thành mã khóa học
+        public ActionResult Index(int maKhoaHoc)
         {
-            KetQua ketQua = KhoaHocBUS.layTheoMa(ma);
-            
+            #region Kiểm tra quyền
+            #region Lấy khóa học
+            KetQua ketQua = KhoaHocBUS.layTheoMa(maKhoaHoc);
             if (ketQua.trangThai != 0)
             {
-                return RedirectToAction("Index", "TrangChu");
+                return Redirect("/");
             }
+            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
+            #endregion
 
-            ViewData["KhoaHoc"] = ketQua.ketQua as KhoaHocDTO;
+            #region Lấy thành viên
+            KhoaHoc_NguoiDungDTO thanhVien = null;
+            if (Session["NguoiDung"] != null)
+            {
+                ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(khoaHoc.ma.Value, (int)Session["NguoiDung"]);
+                thanhVien = ketQua.trangThai == 0 ? ketQua.ketQua as KhoaHoc_NguoiDungDTO : null;
+            }
+            #endregion
 
-            ketQua = ChuongTrinhBUS.layTheoMaKhoaHoc(ma);
+            #region Kiểm tra nếu thành viên bị chặn
+            if (thanhVien != null && thanhVien.trangThai == 3)
+            {
+                return Redirect("/");
+            }
+            #endregion
+
+            #region Kiểm tra trường hợp khóa học nội bộ
+            if (
+                    (khoaHoc.cheDoRiengTu == "NoiBo" &&
+                    (thanhVien == null || thanhVien.trangThai != 0)) ||
+                    thanhVien != null && thanhVien.trangThai == 3)
+            {
+                ViewData["ThanhVien"] = thanhVien;
+                return View("DangKyThamGia", khoaHoc);
+            }
+            #endregion
+            #endregion
+
+            ViewData["KhoaHoc"] = khoaHoc;
+
+            ketQua = ChuongTrinhBUS.layTheoMaKhoaHoc(maKhoaHoc);
 
             return View(model: ketQua.trangThai == 0 ? ketQua.ketQua : null);
         }
