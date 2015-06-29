@@ -122,7 +122,7 @@ namespace BUSLayer
             return TraLoiDAO.layTraLoiTheoMaCauHoi_SoLuong(maCauHoi);
         }
 
-        public static KetQua capNhat(Form form)
+        public static KetQua capNhat(Form form, LienKet lienKet = null)
         {
             int? maTraLoi = form.layInt("Ma");
             if (!maTraLoi.HasValue)
@@ -148,10 +148,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return TraLoiDAO.capNhatTheoMa(maTraLoi, layBangCapNhat(traLoi, form.Keys.ToArray()), new LienKet() { 
-                "NguoiTao",
-                "CauHoi"
-            });
+            return TraLoiDAO.capNhatTheoMa(maTraLoi, layBangCapNhat(traLoi, form.Keys.ToArray()), lienKet);
         }
 
         public static KetQua capNhatDuyetTheoMa(int? ma, bool duyet)

@@ -127,12 +127,15 @@ function khoiTaoCauHoi($cauHoi) {
                 $cauHoi.html($formSuaCauHoi);
                 khoiTaoLCTForm($formSuaCauHoi, {
                     submit: function () {
+                        var $tai = moBieuTuongTai($formSuaCauHoi);
                         $.ajax({
                             url: '/HoiDap/XuLyCapNhatCauHoi/',
                             method: 'POST',
                             dataType: 'JSON',
                             data: layDataLCTForm($formSuaCauHoi)
-                        }).done(function (data) {                            
+                        }).always(function () {
+                            $tai.tat();
+                        }).done(function (data) {
                             if (data.trangThai == 0) {                                
                                 $cauHoi.html($(data.ketQua).html());
                                 khoiTaoCauHoi($cauHoi);
@@ -158,20 +161,16 @@ function khoiTaoCauHoi($cauHoi) {
                 });
             }
             else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Lỗi lấy câu hỏi',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao(data);
             }
         });
     });
 
     $cauHoi.find('[data-chuc-nang="cong-diem"]').on('click', function () {
-        var $tai = moBieuTuongTai($('.diem-so'));
+        var $tai = moBieuTuongTai($cauHoi.find('.diem-so'));
         var maCauHoi = $cauHoi.attr('data-ma');
         var trangThaiVote = $cauHoi.attr('data-trang-thai-vote');
-        
+
         if (trangThaiVote == 1) {
             $.ajax({
                 url: '/HoiDap/XuLyBoChoDiemCauHoi',
@@ -202,7 +201,7 @@ function khoiTaoCauHoi($cauHoi) {
                 $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    var $diem = $('[data-doi-tuong="diem-so"]');
+                    var $diem = $cauHoi.find('[data-doi-tuong="diem-so"]');
                     $diem.text(parseInt($diem.text()) + (trangThaiVote == '-1' ? 2 : 1));
 
                     $cauHoi.attr('data-trang-thai-vote', '1');
@@ -231,7 +230,7 @@ function khoiTaoCauHoi($cauHoi) {
                 $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    var $diem = $('[data-doi-tuong="diem-so"]');
+                    var $diem = $cauHoi.find('[data-doi-tuong="diem-so"]');
                     $diem.text(parseInt($diem.text()) + 1);
 
                     $cauHoi.attr('data-trang-thai-vote', '0');
@@ -253,7 +252,7 @@ function khoiTaoCauHoi($cauHoi) {
                 $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    var $diem = $('[data-doi-tuong="diem-so"]');
+                    var $diem = $cauHoi.find('[data-doi-tuong="diem-so"]');
                     $diem.text(parseInt($diem.text()) - (trangThaiVote == '1' ? 2 : 1));
 
                     $cauHoi.attr('data-trang-thai-vote', '-1');
@@ -321,7 +320,7 @@ function khoiTaoTraLoi($dsTraLoi) {
         });
     });
 
-    $dsTraLoi.find('[data-chuc-nang="sua-tra-loi"]').on('click', function () {
+    $dsTraLoi.find('[data-chuc-nang="sua-tra-loi"]').on('click', function () {        
         var $traLoi = $(this).closest('[data-doi-tuong="tra-loi"]');
         var $tai = moBieuTuongTai($traLoi);
         var ma = $traLoi.attr('data-ma');
@@ -343,11 +342,14 @@ function khoiTaoTraLoi($dsTraLoi) {
                 
                 khoiTaoLCTForm($formSuaTraLoi, {
                     submit: function () {
+                        var $tai = moBieuTuongTai($formSuaTraLoi);
                         $.ajax({
                             url: '/HoiDap/XuLyCapNhatTraLoi',
                             method: 'POST',
                             dataType: 'JSON',
                             data: layDataLCTForm($formSuaTraLoi)
+                        }).always(function () {
+                            $tai.tat();
                         }).done(function (data) {
                             if (data.trangThai == 0) {
                                 $ketQua = $(data.ketQua).html();
@@ -357,11 +359,7 @@ function khoiTaoTraLoi($dsTraLoi) {
                                 khoiTaoTraLoi($traLoi);
                             }
                             else {
-                                moPopup({
-                                    tieuDe: 'Thông báo',
-                                    thongBao: 'Cập nhật trả lời thất bại',
-                                    bieuTuong: 'nguy-hiem'
-                                })
+                                moPopupThongBao(data);
                             }
                         });
                     },
@@ -379,11 +377,7 @@ function khoiTaoTraLoi($dsTraLoi) {
                 });
             }
             else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Lấy trả lời lỗi',
-                    bieuTuong: 'nguy-hiem'
-                })
+                moPopupThongBao(data);
             }
         });
     });
@@ -410,10 +404,12 @@ function khoiTaoTraLoi($dsTraLoi) {
         });
     });
 
-    $cauHoi.find('[data-chuc-nang="cong-diem"]').on('click', function () {
-        var $tai = moBieuTuongTai($('.diem-so'));
-        var maTraLoi = $dsTraLoi.attr('data-ma');
-        var trangThaiVote = $dsTraLoi.attr('data-trang-thai-vote');
+    $dsTraLoi.find('[data-chuc-nang="cong-diem"]').on('click', function () {
+        var $traLoi = $(this).closest('[data-doi-tuong="tra-loi"]');
+        var $tai = moBieuTuongTai($traLoi.find('.diem-so'));
+        var maTraLoi = $traLoi.attr('data-ma');        
+        var $mucTraLoi = $traLoi.find('[data-doi-tuong="muc-tra-loi"]');
+        var trangThaiVote = $mucTraLoi.attr('data-trang-thai-vote');
 
         if (trangThaiVote == 1) {
             $.ajax({
@@ -424,16 +420,16 @@ function khoiTaoTraLoi($dsTraLoi) {
                 $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    var $diem = $dsTraLoi.find('[data-doi-tuong="diem-so"]');
+                    var $diem = $mucTraLoi.find('[data-doi-tuong="diem-so"]');
                     $diem.text(parseInt($diem.text()) - 1);
 
-                    $dsTraLoi.attr('data-trang-thai-vote', '0');
+                    $mucTraLoi.attr('data-trang-thai-vote', '0');
                 }
                 else {
                     moPopupThongBao(data);
                 }
             }).fail(function () {
-                moPopupThongBao("Vote điểm thất bại")
+                moPopupThongBao("Cho điểm thất bại")
             });
         }
         else {
@@ -445,39 +441,43 @@ function khoiTaoTraLoi($dsTraLoi) {
                 $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    var $diem = $('[data-doi-tuong="diem-so"]');
+                    var $diem = $traLoi.find('[data-doi-tuong="diem-so"]');
                     $diem.text(parseInt($diem.text()) + (trangThaiVote == '-1' ? 2 : 1));
 
-                    $cauHoi.attr('data-trang-thai-vote', '1');
+                    $mucTraLoi.attr('data-trang-thai-vote', '1');
                 }
                 else if (data.trangThai == 4) {
                     moPopupDangNhap();
                 }
                 else {
-                    moPopupThongBao(data.ketQua);
+                    moPopupThongBao(data);
                 }
+            }).fail(function () {
+                moPopupThongBao('Cho điểm thất bại');
             });
         }
     });
 
-    $cauHoi.find('[data-chuc-nang="tru-diem"]').on('click', function () {
-        var $tai = moBieuTuongTai($('.diem-so'));
-        var maCauHoi = $cauHoi.attr('data-ma');
-        var trangThaiVote = $cauHoi.attr('data-trang-thai-vote');
+    $dsTraLoi.find('[data-chuc-nang="tru-diem"]').on('click', function () {
+        var $traLoi = $(this).closest('[data-doi-tuong="tra-loi"]');
+        var $tai = moBieuTuongTai($traLoi.find('.diem-so'));
+        var maTraLoi = $traLoi.attr('data-ma');
+        var $mucTraLoi = $traLoi.find('[data-doi-tuong="muc-tra-loi"]');
+        var trangThaiVote = $mucTraLoi.attr('data-trang-thai-vote');
 
         if (trangThaiVote == -1) {
             $.ajax({
-                url: '/HoiDap/XuLyBoChoDiemCauHoi',
+                url: '/HoiDap/XuLyBoChoDiemTraLoi',
                 method: 'POST',
-                data: { maCauHoi: maCauHoi }
+                data: { maTraLoi: maTraLoi }
             }).always(function () {
                 $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    var $diem = $('[data-doi-tuong="diem-so"]');
+                    var $diem = $traLoi.find('[data-doi-tuong="diem-so"]');
                     $diem.text(parseInt($diem.text()) + 1);
 
-                    $cauHoi.attr('data-trang-thai-vote', '0');
+                    $mucTraLoi.attr('data-trang-thai-vote', '0');
                 }
                 else if (data.trangThai == 4) {
                     moPopupDangNhap();
@@ -485,21 +485,23 @@ function khoiTaoTraLoi($dsTraLoi) {
                 else {
                     moPopupThongBao(data.ketQua);
                 }
+            }).fail(function () {
+                moPopupThongBao('Cho điểm thất bại');
             });
         }
         else {
             $.ajax({
-                url: '/HoiDap/XuLyChoDiemCauHoi',
+                url: '/HoiDap/XuLyChoDiemTraLoi',
                 method: 'POST',
-                data: { maCauHoi: maCauHoi, diem: false }
+                data: { maTraLoi: maTraLoi, diem: false }
             }).always(function () {
                 $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    var $diem = $('[data-doi-tuong="diem-so"]');
+                    var $diem = $traLoi.find('[data-doi-tuong="diem-so"]');
                     $diem.text(parseInt($diem.text()) - (trangThaiVote == '1' ? 2 : 1));
 
-                    $cauHoi.attr('data-trang-thai-vote', '-1');
+                    $mucTraLoi.attr('data-trang-thai-vote', '-1');
                 }
                 else if (data.trangThai == 4) {
                     moPopupDangNhap();
@@ -507,6 +509,8 @@ function khoiTaoTraLoi($dsTraLoi) {
                 else {
                     moPopupThongBao(data.ketQua);
                 }
+            }).fail(function () {
+                moPopupThongBao('Cho điểm thất bại');
             });
         }
     });

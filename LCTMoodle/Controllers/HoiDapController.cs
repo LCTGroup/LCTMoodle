@@ -31,15 +31,24 @@ namespace LCTMoodle.Controllers
             KetQua ketQua = CauHoiBUS.layTheoMa(ma, new LienKet() { 
                 "ChuDe"
             });
-
             if (ketQua.trangThai != 0)
             {
                 return Json(ketQua);
             }
+            CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
+            if (cauHoi.nguoiTao.ma.Value != (int)Session["NguoiDung"])
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền sửa câu hỏi này"
+                });
+            }
+
             return Json(new KetQua()
             {
                 trangThai = 0,
-                ketQua = renderPartialViewToString(ControllerContext, "/HoiDap/_Form_CauHoi.cshtml", ketQua.ketQua)
+                ketQua = renderPartialViewToString(ControllerContext, "/HoiDap/_Form_CauHoi.cshtml", cauHoi)
             });
         }
 
@@ -162,19 +171,25 @@ namespace LCTMoodle.Controllers
         public ActionResult _Form_TraLoi(int ma = 0)
         {
             KetQua ketQua = TraLoiBUS.layTheoMa(ma);
-
             if (ketQua.trangThai != 0)
             {
                 return Json(ketQua);
             }
-            else
+            TraLoiDTO traLoi = ketQua.ketQua as TraLoiDTO;
+            if (traLoi.nguoiTao.ma.Value != (int)Session["NguoiDung"])
             {
                 return Json(new KetQua()
                 {
-                    trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Form_TraLoi.cshtml", ketQua.ketQua)
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền sửa trả lời này"
                 });
             }
+
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Form_TraLoi.cshtml", traLoi)
+            });
         }
 
         [HttpPost]
@@ -209,19 +224,23 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyCapNhatTraLoi(FormCollection form)
         {
-            KetQua ketQua = TraLoiBUS.capNhat(chuyenForm(form));
-            if (ketQua.trangThai == 0)
-            {
-                return Json(new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Item_TraLoi.cshtml", ketQua.ketQua)
-                });
-            }
-            else
+            KetQua ketQua = TraLoiBUS.capNhat(chuyenForm(form), new LienKet() { 
+                "NguoiTao",
+                "CauHoi"
+            });
+            if (ketQua.trangThai != 0)
             {
                 return Json(ketQua);
             }
+            TraLoiDTO traLoi = ketQua.ketQua as TraLoiDTO;
+
+            ViewData["TrangThaiVoteTraLoi"] = TraLoi_DiemBUS.trangThaiVoteCuaNguoiDungTrongTraLoi(traLoi.ma.Value, (int?)Session["NguoiDung"]);
+
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Item_TraLoi.cshtml", ketQua.ketQua, ViewData)
+            });
         }
 
         [HttpPost]
