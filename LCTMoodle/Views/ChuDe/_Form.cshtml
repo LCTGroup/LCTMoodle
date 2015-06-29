@@ -1,10 +1,18 @@
-﻿@model int
+﻿@model DTOLayer.ChuDeDTO
+
 <article class="hop hop-1-vien">
     <section class="tieu-de">
-        Tạo chủ đề
+        @(Model == null ? "Tạo" : "Sửa") chủ đề
     </section>
-    <form id="tao_chu_de_form" class="noi-dung lct-form">
-        <input type="hidden" name="MaCha" value="@Model" />
+    <form id="tao_chu_de_form" class="noi-dung lct-form" @(Model != null ? "data-cap-nhat" : null)>
+        @if (Model == null)
+        {
+            <input type="hidden" name="MaCha" value="@ViewData["MaCha"]" />   
+        }
+        else
+        {
+            <input type="hidden" name="Ma" value="@Model.ma" />   
+        }
         <ul>
             <li>
                 <section class="tieu-de">
@@ -14,7 +22,7 @@
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Nhập tên chủ đề..." />
+                        <input data-mac-dinh="@(Model != null ? Model.ten : null)" data-validate="bat-buoc" type="text" name="Ten" placeholder="Nhập tên chủ đề..." />
                     </article>
                 </section>
             </li>
@@ -26,7 +34,7 @@
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <textarea data-validate="bat-buoc" name="MoTa" placeholder="Nhập mô tả chủ đề..."></textarea>
+                        <textarea data-mac-dinh="@(Model != null ? Model.moTa : null)" data-validate="bat-buoc" name="MoTa" placeholder="Nhập mô tả chủ đề..."></textarea>
                     </article>
                 </section>
             </li>
@@ -38,14 +46,18 @@
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <input type="file" name="MaHinhDaiDien" />
+                        <input
+                            @if (Model != null && Model.hinhDaiDien != null)
+                            {
+                                @: data-ma-mac-dinh="@Model.hinhDaiDien.ma" data-loai-mac-dinh="ChuDe_HinhDaiDien"
+                            } type="file" name="MaHinhDaiDien" />
                     </article>
                 </section>
             </li>
         </ul>
         <section class="khung-button">
             <button type="submit" class="chap-nhan">
-                Tạo
+                @(Model == null ? "Tạo" : "Cập nhật")
             </button>
         </section>
     </form>

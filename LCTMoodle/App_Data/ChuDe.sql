@@ -106,3 +106,47 @@ BEGIN
 		FROM dbo.ChuDe
 		WHERE Ten LIKE '%' + REPLACE(@0, ' ', '%') + '%'
 END
+
+GO
+--Cập nhật chủ đề
+CREATE PROC dbo.capNhatChuDeTheoMa (
+	@0 INT, --Ma
+	@1 dbo.BangCapNhat READONLY
+)
+AS
+BEGIN
+	--Tạo chuỗi gán
+	DECLARE @query NVARCHAR(MAX) = dbo.taoChuoiCapNhat(@1)
+	IF (@query <> '')
+	BEGIN
+		EXEC('
+		UPDATE dbo.ChuDe
+			SET ' + @query + '
+			WHERE Ma = ' + @0 + '
+		')
+	END	
+
+	SELECT TOP 1
+		Ma,
+		Ten,
+		MoTa,
+		MaNguoiTao,
+		ThoiDiemTao,
+		MaCha,
+		MaHinhDaiDien
+		FROM dbo.ChuDe
+		WHERE Ma = @0
+END
+
+GO
+--Cập nhật chủ đề - mã cha
+CREATE PROC dbo.capNhatChuDeTheoMa_MaCha (
+	@0 INT, --Ma
+	@1 INT --MaCha
+)
+AS
+BEGIN
+	UPDATE dbo.ChuDe
+		SET MaCha = @1
+		WHERE Ma = @0
+END

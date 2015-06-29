@@ -61,7 +61,14 @@ namespace BUSLayer
             return danhSachCon;
         }
 
-        public static KetQua layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri(int? maNguoiDung = null, string phamVi = "HT", int maDoiTuong = 0)
+        /// <summary>
+        /// Lấy danh sách quyền
+        /// </summary>
+        /// <param name="phamVi">Phạm vi quyền ("HT", "ND", "CD", "HD", "KH") - !Không phải phạm vi nhóm quyền</param>
+        /// <param name="maDoiTuong">Đối tượng tác động. Chỉ "CD", "KH" cần truyền</param>
+        /// <param name="maNguoiDung">Mã người dùng cần kiểm tra (Mặc định là người dùng hiện tại)</param>
+        /// <returns>string[]</returns>
+        public static KetQua layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri(string phamVi, int maDoiTuong = 0, int? maNguoiDung = null)
         {
             if (Session["NguoiDung"] != null || maNguoiDung.HasValue)
             {
@@ -69,7 +76,7 @@ namespace BUSLayer
 
                 if (ketQua.trangThai == 0)
                 {
-                    ketQua.ketQua = ketQua.ketQua.ToString().Split(',');
+                    ketQua.ketQua = ketQua.ketQua.ToString().Split('|');
                 }
 
                 return ketQua;
@@ -81,11 +88,11 @@ namespace BUSLayer
             };
         }
 
-        public static KetQua kiemTraQuyenNguoiDung(string giaTri, string phamVi, int? maNguoiDung = null, int maDoiTuong = 0)
+        public static KetQua kiemTraQuyenNguoiDung(string giaTri, string phamVi, int maDoiTuong = 0, int? maNguoiDung = null)
         {
             if (Session["NguoiDung"] != null || maNguoiDung.HasValue)
             {
-                KetQua ketQua = QuyenDAO.layTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra(maNguoiDung.HasValue ? maNguoiDung.Value : (int)Session["NguoiDung"], giaTri, phamVi, maDoiTuong);
+                KetQua ketQua = QuyenDAO.layTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra(giaTri, maNguoiDung.HasValue ? maNguoiDung : Session["NguoiDung"] as int?, phamVi, maDoiTuong);
 
                 if (ketQua.trangThai > 1)
                 {

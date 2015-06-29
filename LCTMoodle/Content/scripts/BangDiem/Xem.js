@@ -88,6 +88,8 @@ function khoiTaoNutHoanThanhSua($nuts) {
                 method: 'POST',
                 data: { jsonDiem: JSON.stringify(dsCapNhat) },
                 dataType: 'JSON'
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     $_KhungDiem.find('td:not(:last-child)').each(function () {
@@ -103,8 +105,6 @@ function khoiTaoNutHoanThanhSua($nuts) {
                 }
             }).fail(function () {
                 moPopupThongBao('Cập nhật điểm thất bại');
-            }).always(function () {
-                $tai.tat();
             });
         }
         else {

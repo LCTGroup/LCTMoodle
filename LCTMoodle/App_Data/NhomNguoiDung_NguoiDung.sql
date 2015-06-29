@@ -44,18 +44,17 @@ BEGIN
 	EXEC('
 		INSERT INTO dbo.NhomNguoiDung_' + @0 + '_NguoiDung (MaNhomNguoiDung, MaNguoiDung)
 			VALUES (' + @1 + ', ' + @2 + ')
-	')
-	IF (@0 = 'HT')
-	BEGIN
+			
+		--Cập nhật CoQuyenNhom
 		UPDATE dbo.NguoiDung
-			SET CoQuyenHT = 1
-			WHERE Ma = @2
-	END
+			SET CoQuyenNhom' + @0 + ' = 1
+			WHERE Ma = ' + @2 + '
+	')
 END
 
 GO
 --Xóa theo mã nhóm người dùng, người dùng
-ALTER PROC dbo.xoaNhomNguoiDung_NguoiDungTheoMaNhomNguoiDungVaMaNguoiDung (
+CREATE PROC dbo.xoaNhomNguoiDung_NguoiDungTheoMaNhomNguoiDungVaMaNguoiDung (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT, --MaNhomNguoiDung
 	@2 INT --MaNguoiDung

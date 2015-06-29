@@ -23,8 +23,8 @@ function moBieuTuongTai($item) {
     var $khungTai = $('<article style="left: ' + left + 'px;bottom: ' + bottom + 'px" class="bieu-tuong-tai-lct"><i></i><i></i><i></i><i></i><i></i><i></i></article>');
     $body.append($khungTai);
     $item.addClass('item-tai-lct');
-    $body.data('tai', $body.attr('tai') + 1);
-    $body.addClass('dang-tai');
+    $body.data('tai', $body.data('tai') + 1);
+    $body.addClass('dang-tai-lct');
 
     $khungTai.tat = function () {
         var slTai = $body.data('tai');
@@ -373,50 +373,59 @@ function moPopup(thamSo) {
     $popup.mo();
 }
 
+function xuatKetQua(obj, macDinh) {
+    if (obj === null) {
+        return macDinh;
+    }
+    if (typeof (obj) === 'object') {
+        return obj.join('<br />');
+    }
+    return obj || macDinh;
+}
+
 function moPopupThongBao(ketQua) {
-    console.log(typeof (ketQua));
-    console.log(typeof (ketQua) === 'object');
-    if (typeof (ketqua) === 'object') {
+    if (typeof (ketQua) === 'object') {
         switch (ketQua.trangThai) {
             case 0:
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: ketQua.ketQua || 'Thực hiện thành công',
+                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thành công'),
                     bieuTuong: 'thanh-cong'
                 });
                 break;
             case 1:
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Không có dữ liệu trùng khớp',
+                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thất bại. Không có dữ liệu trùng khớp'),
                     bieuTuong: 'can-than'
                 });
                 break;
             case 2:
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Gặp lỗi xử lý truy vấn',
+                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thất bại. Gặp lỗi xử lý truy vấn'),
                     bieuTuong: 'nguy-hiem'
                 });
                 break;
             case 3:
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: typeof (ketQua.ketQua) === 'object' ? ketQua.ketQua.join('<br />') : (ketQua.ketQua || 'Thực hiện thất bại. Dữ liệu không đúng ràng buộc'),
+                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thất bại. Dữ liệu không đúng ràng buộc'),
                     bieuTuong: 'nguy-hiem'
                 });
                 break;
             case 4:
+                console.log(ketQua.trangThai);
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Bạn cần đăng nhập để thực hiện chức năng này',
+                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thất bại. Bạn cần đăng nhập để thực hiện chức năng này'),
                     bieuTuong: 'thong-tin'
                 });
                 break;
             default:
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Không xác định lỗi',
+                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thất bại. Không xác định lỗi'),
                     bieuTuong: 'nguy-hiem'
                 });
                 break;
@@ -425,7 +434,7 @@ function moPopupThongBao(ketQua) {
     else {
         moPopup({
             tieuDe: 'Thông báo',
-            thongBao: ketQua || 'Thực hiện thất bại. Không xác định lỗi',
+            thongBao: xuatKetQua(ketQua, 'Thực hiện thất bại. Không xác định lỗi'),
             bieuTuong: 'nguy-hiem'
         });
     }

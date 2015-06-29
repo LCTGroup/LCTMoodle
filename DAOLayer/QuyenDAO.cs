@@ -94,7 +94,7 @@ namespace DAOLayer
                 );
         }
         
-        public static KetQua layTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra(int? maNguoiDung, string giaTri, string phamVi, int? maDoiTuong)
+        public static KetQua layTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra(string giaTri, int? maNguoiDung, string phamVi, int? maDoiTuong)
         {
             return layGiaTri<bool>
                 (
@@ -102,9 +102,9 @@ namespace DAOLayer
                     new object[]
                     {
                         maNguoiDung,
-                        giaTri,
                         phamVi,
-                        maDoiTuong
+                        maDoiTuong,
+                        giaTri
                     }
                 );
         }

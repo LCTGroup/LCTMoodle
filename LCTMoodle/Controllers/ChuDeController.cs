@@ -84,13 +84,26 @@ namespace LCTMoodle.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult _Form(int ma)
+        public ActionResult _FormTao(int maCha)
         {
+            ViewData["MaCha"] = maCha;
             return Json(new KetQua()
             {
                 trangThai = 0,
-                ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", ma)
+                ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", null, ViewData)
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult _FormSua(int ma)
+        {
+            var ketQua = ChuDeBUS.layTheoMa(ma);
+
+            if (ketQua.trangThai == 0)
+            {
+                ketQua.ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", ketQua.ketQua);
+            }
+
+            return Json(ketQua, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -127,6 +140,35 @@ namespace LCTMoodle.Controllers
         }
         
         [HttpPost]
+        public ActionResult XuLyCapNhat(FormCollection formCollection)
+        {
+            var ketQua = ChuDeBUS.capNhatTheoMa(chuyenForm(formCollection));
+            if (ketQua.trangThai == 0)
+            {
+                ketQua.ketQua = new
+                {
+                    cayCon_Item = renderPartialViewToString(ControllerContext,
+                        "ChuDe/_Cay_Con_Item.cshtml",
+                        ketQua.ketQua
+                    ),
+                    danhSach_Item = renderPartialViewToString(ControllerContext,
+                        "ChuDe/_DanhSach_Item.cshtml",
+                        ketQua.ketQua,
+                        new ViewDataDictionary() { { "CoChon", formCollection["CoChon"] == "1" ? true : false } }
+                    )
+                };
+            }
+
+            return Json(ketQua);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyChuyen(int ma, int maCha)
+        {
+            return Json(ChuDeBUS.capNhatCha(ma, maCha));
+        }
+
+        [HttpPost]
         public ActionResult XuLyXoa(int ma)
         {
             return Json(ChuDeDAO.xoaTheoMa(ma));
@@ -134,7 +176,18 @@ namespace LCTMoodle.Controllers
 
         public ActionResult _Chon(int ma = 0)
         {
-            KetQua ketQua = ChuDeBUS.layTheoMaCha(ma);
+            KetQua ketQua;
+            if (ma != 0)
+            {
+                ketQua = ChuDeBUS.layTheoMa(ma);
+                if (ketQua.trangThai != 0)
+                {
+                    return Json(ketQua, JsonRequestBehavior.AllowGet);
+                }
+                ViewData["ChuDe"] = ketQua.ketQua;
+            }
+
+            ketQua = ChuDeBUS.layTheoMaCha(ma);
 
             if (ketQua.trangThai != 0)
             {

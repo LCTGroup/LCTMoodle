@@ -485,7 +485,6 @@
     <Content Include="Views\BangDiem\_Item.cshtml" />
     <Content Include="Views\BaiVietBaiGiang\_Form.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Form.cshtml" />
-    <Content Include="Views\Quyen\QuanLy.cshtml" />
     <Content Include="Views\Quyen\_DanhSach_Quyen.cshtml" />
     <Content Include="Views\Quyen\_Form_Nhom.cshtml" />
     <Content Include="Views\Quyen\_Item_Nhom.cshtml" />
@@ -494,7 +493,7 @@
     <Content Include="Views\Quyen\_DanhSach_NguoiDung_Tim.cshtml" />
     <Content Include="Views\Quyen\_Item_NguoiDung.cshtml" />
     <Content Include="Views\Quyen\_DanhSach_NguoiDung.cshtml" />
-    <Content Include="Views\KhoaHoc\QuanLyQuyen.cshtml" />
+    <Content Include="Views\Quyen\QuyenKhoaHoc.cshtml" />
     <Content Include="Views\KhoaHoc\DangKyThamGia.cshtml" />
     <Content Include="Views\HoiDap\_Item_CauHoi.cshtml" />
     <Content Include="Views\NguoiDung\Sua.cshtml" />
@@ -521,6 +520,8 @@
     <Content Include="Views\HoiDap\_DanhSachCauHoi.cshtml" />
     <Content Include="Views\NguoiDung\_FormDangNhap.cshtml" />
     <Content Include="Views\BinhLuan\_Form.cshtml" />
+    <Content Include="Views\Quyen\QuyenHeThong.cshtml" />
+    <Content Include="Views\Quyen\QuyenChuDe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

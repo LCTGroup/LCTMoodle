@@ -1,9 +1,31 @@
-﻿@model List<DTOLayer.KhoaHocDTO>
+﻿@using Helpers
+@model List<DTOLayer.KhoaHocDTO>
 
 @{    
     Layout = "~/Views/LCT/Khung.cshtml";
     
     ViewData["TieuDe"] = "Danh sách khóa học";
+
+    //var ketQua = BUSLayer.QuyenBUS.layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri("KH");
+    //string[] dsQuyen = ketQua.trangThai == 0 ? ketQua.ketQua as string[] : null;
+
+    var ketQua = BUSLayer.QuyenBUS.kiemTraQuyenNguoiDung("QLNoiDung", "KH");
+    bool
+        //coQuyenQLNoiDungKH = QuyenHelper.co(dsQuyen, "QLNoiDung");
+        coQuyenQLNoiDungKH = ketQua.trangThai == 0 ? (bool)ketQua.ketQua : false;
+
+    List<string> dsChucNang = new List<string>();
+    
+    if (coQuyenQLNoiDungKH)
+    {
+        dsChucNang.Add("Tạo khóa học");
+        dsChucNang.Add("/KhoaHoc/Tao");
+    }
+    
+    if (dsChucNang.Count != 0)
+    {
+        ViewData["ChucNang"] = dsChucNang;
+    }
 }
 
 @section Styles {

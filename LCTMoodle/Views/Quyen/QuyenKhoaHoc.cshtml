@@ -5,8 +5,6 @@
     var danhSachNhom = ViewData["DanhSachNhom"] as List<DTOLayer.NhomNguoiDungDTO>;
     var danhSachQuyen = ViewData["DanhSachQuyen"] as List<DTOLayer.QuyenDTO>;
 
-    string phamVi = ViewData["PhamVi"].ToString();
-
     DTOLayer.KhoaHocDTO khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocDTO;
 
     ViewData["TieuDe"] = "Quản lý quyền - " + khoaHoc.ten;
@@ -22,7 +20,7 @@
 @section Scripts {
     <script src="/QuanLy.js/Quyen"></script>    
     <script>
-        _PhamViQuanLy = _PhamViHienTai = '@phamVi';
+        _PhamViQuanLy = _PhamViHienTai = 'KH';
         _DoiTuongHienTai = _DoiTuongQuanLy = '@khoaHoc.ma';
     </script>
 }

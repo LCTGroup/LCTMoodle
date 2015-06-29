@@ -1,16 +1,29 @@
 ﻿@model List<DTOLayer.ChuDeDTO>
 @{
     bool coQuyenTao = ViewData["QuyenTao"] != null && (bool)ViewData["QuyenTao"];
+
+    var chuDe = ViewData["ChuDe"] == null ? null : ViewData["ChuDe"] as DTOLayer.ChuDeDTO;
 }
 
 <section id="khung_chu_de" class="noi-dung lct-cay" data-ma="0" data-chon>
     <section class="cay">
         <ul id="khung_cay" class="nut">
-            @Html.Partial("~/Views/ChuDe/_Cay_Item.cshtml", Model, new ViewDataDictionary()
+            @if (chuDe == null)
             {
-                { "Ma", 0 },
-                { "Ten", "Danh sách" }
-            })
+                @Html.Partial("~/Views/ChuDe/_Cay_Item.cshtml", Model, new ViewDataDictionary()
+                {
+                    { "Ma", 0 },
+                    { "Ten", "Danh sách" }
+                })   
+            }
+            else
+            {
+                @Html.Partial("~/Views/ChuDe/_Cay_Item.cshtml", Model, new ViewDataDictionary()
+                {
+                    { "Ma", chuDe.ma },
+                    { "Ten", chuDe.ten }
+                }) 
+            }
         </ul>
     </section>
     <section class="con">
@@ -25,6 +38,11 @@
             <li>
                 <a class="pe-7s-tools"></a>
             </li>
+            <li>
+                <a data-chuc-nang="chon-nut-ht" class="pe-7s-check">
+                    <u></u>
+                </a>
+            </li>   
             @if (coQuyenTao)
             {
                 <li>

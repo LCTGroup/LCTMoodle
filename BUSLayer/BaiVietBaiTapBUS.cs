@@ -26,11 +26,11 @@ namespace BUSLayer
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
-            if (coKiemTra("NguoiTao", truong, kiemTra) && baiViet.nguoiTao == null)
+            if (coKiemTra("MaNguoiTao", truong, kiemTra) && baiViet.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (coKiemTra("KhoaHoc", truong, kiemTra) && baiViet.khoaHoc == null)
+            if (coKiemTra("MaKhoaHoc", truong, kiemTra) && baiViet.khoaHoc == null)
             {
                 loi.Add("Khóa học không được bỏ trống");
             }

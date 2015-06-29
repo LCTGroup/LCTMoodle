@@ -23,9 +23,6 @@ namespace LCTMoodle.Controllers
                 ketQua.ketQua as List<BaiVietDienDanDTO> :
                 null;
 
-            ketQua = QuyenBUS.layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri(null, "KH", maKhoaHoc);
-            ViewData["Quyen"] = ketQua.trangThai == 0 ? ketQua.ketQua : new string[0];
-
             try
             {
                 return Json(new KetQua()

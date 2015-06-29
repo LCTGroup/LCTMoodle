@@ -13,26 +13,48 @@ truncate table dbo.Quyen
 GO
 INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALUES
 --1xx: Hệ thống
---101
+--102
+--	('HT', 1, 0,	N'','',0,1),		--|
+--	  PV   Ma,  C	Tên									Giá trị						Cha		TT
+	('HT', 101, 0,	N'Quản lý quyền',					'Rieng',					0,		1),		--|
 
 --2xx: Người dùng
---201
+--203
+--	('ND', 2, 0,	N'','',0,1),		--|
+--	  PV   Ma,  C	Tên									Giá trị						Cha		TT
+	('ND', 201, 1,	N'Chung',							'Chung',					0,		1),		--|
+
+	('ND', 202, 0,	N'Riêng',							'Rieng',					0,		1),		--|
 	
 --3xx: Chủ đề
---301
+--305
+--	('CD', 3, 0,	N'','',0,1),		--|
+--	  PV   Ma,  C	Tên									Giá trị						Cha		TT
+	('CD', 301, 1,	N'Thêm, xóa, sửa chủ đề',			'QLNoiDung',				0,		1),		--|
+	('CD', 302, 1,	N'Duyệt chủ đề',					'Duyet',					0,		2),		--|
+	
+	('CD', 303, 0,	N'Thêm, xóa, sửa chủ đề',			'QLNoiDung',				0,		1),		--|
+	('CD', 304, 0,	N'Duyệt chủ đề',					'Duyet',					0,		2),		--|
 	
 --4xx: Hỏi đáp
---401
+--403
+--	('HD', 4, 0,	N'','',0,1),		--|
+--	  PV   Ma,  C	Tên									Giá trị						Cha		TT
+	('HD', 401, 1,	N'Chung',							'Chung',					0,		1),		--|
+
+	('HD', 402, 0,	N'Riêng',							'Rieng',					0,		1),		--|
 	
 --5xx: Khóa học
---519
---	('KH', 5, 0,	N'','',0,0),		--|
-	('KH', 501, 1,	N'Quản lý quyền',					'QuanLyQuyen',				0,		2),		--|
+--524
+--	('KH', 5, 0,	N'','',0,1),		--|
+--	  PV   Ma,  C	Tên									Giá trị						Cha		TT
+	('KH', 520, 1,	N'Thêm, xóa, sửa khóa học',			'QLNoiDung',				0,		1),		--|
+	('KH', 501, 1,	N'Quản lý quyền',					'QLQuyen',					0,		2),		--|
 
 	('KH', 502, 0,	N'Quản lý',							NULL,						0,		1),		--|
-	('KH', 503,	0,	N'Quản lý quyền',					'QuanLyQuyen',				502,	1),		--| |
-	('KH', 504,	0,	N'Quản lý thành viên',				'QuanLyThanhVien',			502,	2),		--| |
-	('KH', 505, 0,	N'Quản lý bài viết',				NULL,						502,	2),		--| |
+	('KH', 503,	0,	N'Quản lý quyền',					'QLQuyen',					502,	1),		--| |
+	('KH', 504,	0,	N'Quản lý thành viên',				'QLThanhVien',				502,	2),		--| |
+	('KH', 505, 0,	N'Quản lý bài viết',				NULL,						502,	3),		--| |
 	('KH', 506, 0,	N'Diễn đàn',						NULL,						505,	1),		--| | |
 	('KH', 510, 0,	N'Sửa bài viết',					'DD_Sua',					506,	1),		--| | | |
 	('KH', 511, 0,	N'Xóa bài viết',					'DD_Xoa',					506,	2),		--| | | |
@@ -45,7 +67,11 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('KH', 509, 0,	N'Bài tập',							NULL,						505,	4),		--| | |
 	('KH', 516, 0,	N'Sửa bài viết',					'BT_Sua',					509,	1),		--| | | |
 	('KH', 517, 0,	N'Xóa bài viết',					'BT_Xoa',					509,	2),		--| | | |
-	('KH', 518, 0,	N'Quản lý bài nộp',					'BT_BaiNop',				509,	3)		--| | | |
+	('KH', 518, 0,	N'Quản lý bài nộp',					'BT_BaiNop',				509,	3),		--| | | |
+	('KH', 519, 0,	N'Quản lý bảng điểm',				NULL,						502,	4),		--| |
+	('KH', 521, 0,	N'Quản lý cột điểm',				'QLCotDiem',				519,	1),		--| | |
+	('KH', 522, 0,	N'Quản lý điểm',					'QLDiem',					519,	2),		--| | |
+	('KH', 523, 0,	N'Quản lý chương trình',			'QLChuongTrinh',			502,	5)		--| |
 
 GO
 SELECT * FROM dbo.Quyen

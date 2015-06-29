@@ -88,83 +88,102 @@ ALTER PROC dbo.layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri (
 )
 AS
 BEGIN
-	DECLARE @coQuyenHT BIT, @coQuyenCD BIT
+	--Lấy các quyền mà người dùng có
+	DECLARE 
+		@coQuyenNhomHT BIT, 
+		@coQuyenNhomCD BIT,
+		@coQuyenNhomKH BIT
+
 	SELECT 
-		@coQuyenHT = CoQuyenHT,
-		@coQuyenCD = CoQuyenCD
+		@coQuyenNhomHT = CoQuyenNhomHT, 
+		@coQuyenNhomCD = CoQuyenNhomCD,
+		@coQuyenNhomKH = CoQuyenNhomKH
 		FROM dbo.NguoiDung
 		WHERE Ma = @0
 
 	--Chuỗi giá trị chứa danh sách quyền
 	DECLARE @giaTri VARCHAR(MAX) = ''
-
-	--Lấy danh sách quyền ở khóa học đó
-	SELECT 
-		@giaTri += GiaTri + ','
-		FROM 
-			dbo.NhomNguoiDung_KH_NguoiDung NND_ND
-				--Lấy nhóm người dùng mà người dùng thuộc
-				INNER JOIN dbo.NhomNguoiDung_KH NND ON 
-					NND_ND.MaNguoiDung = @0 AND
-					NND_ND.MaNhomNguoiDung = NND.Ma
-				--Lấy quyền mà nhóm quyền đó có TRÊN ĐỐI TƯỢNG
-				INNER JOIN dbo.NhomNguoiDung_KH_Quyen NND_Q ON
-					NND_Q.MaDoiTuong = @2 AND
-					NND.Ma = NND_Q.MaNhomNguoiDung
-				--Lấy giá trị quyền của nhóm quyền đó
-				INNER JOIN dbo.Quyen Q ON 
-					NND_Q.MaQuyen = Q.Ma AND
-					Q.GiaTri IS NOT NULL AND
-					Q.PhamVi = 'KH'
-
-	--Lấy danh sách quyền ở chủ đề của khóa học đó
-	IF (@coQuyenCD = 1)
+	
+	--Quyền khóa học chỉ xác định phạm vi quyền khóa học
+	IF (
+		@coQuyenNhomKH = 1 AND
+		@1 = 'KH'
+	)
 	BEGIN
-		--Lấy mã chủ đề của khóa học
-		DECLARE @maChuDe INT
-		SELECT @maChuDe = MaChuDe
-			FROM dbo.KhoaHoc
-			WHERE Ma = @2
-
-		--Lấy quyền của người dùng trên chủ đề đó
-		SELECT
-			@giaTri += GiaTri + ','
-			FROM
-				dbo.NhomNguoiDung_CD_NguoiDung NND_ND 
-					--Lấy nhóm người dùng mà người dùng đó thuộc
-					INNER JOIN dbo.NhomNguoiDung_CD NND ON
+		SELECT @giaTri += Q.GiaTri + '|'
+			FROM 
+				dbo.NhomNguoiDung_KH NND
+					INNER JOIN dbo.NhomNguoiDung_KH_NguoiDung NND_ND ON
 						NND_ND.MaNguoiDung = @0 AND
 						NND_ND.MaNhomNguoiDung = NND.Ma
-					--Lấy quyền mà nhóm người dùng đó có TRÊN ĐỐI TƯỢNG
-					INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
-						NND_Q.MaDoiTuong = @2 AND
-						NND.Ma = NND_Q.MaNhomNguoiDung
-					--Lấy giá trị quyền của nhóm quyền đó
+					INNER JOIN dbo.NhomNguoiDung_KH_Quyen NND_Q ON
+						NND_Q.MaNhomNguoiDung = NND.Ma AND
+						(NND_Q.MaDoiTuong = @2 OR 
+							NND_Q.MaDoiTuong = 0)
 					INNER JOIN dbo.Quyen Q ON
-						NND_Q.MaQuyen = Q.Ma AND
-						Q.GiaTri IS NOT NULL AND
-						Q.PhamVi = 'KH'
+						Q.PhamVi = @1 AND
+						Q.Ma = NND_Q.MaQuyen
+			GROUP BY Q.GiaTri
+
+		IF (@@ROWCOUNT = 0)
+		BEGIN
+			UPDATE dbo.NguoiDung
+				SET CoQuyenNhomHT = NULL
+				WHERE Ma = @0
+		END
 	END
-
-	IF (@coQuyenHT = 1)
+	--Phạm vi chủ đề chỉ kiểm soát chủ đề, khóa học, hỏi đáp
+	IF (
+		@coQuyenNhomCD = 1 AND
+		(@1 = 'CD' OR @1 = 'HD' OR @1 = 'KH')
+	)
 	BEGIN
-		--Lấy quyền của người dùng trên hệ thống
-		SELECT
-			@giaTri += GiaTri + ','
-			FROM
-				dbo.NhomNguoiDung_CD_NguoiDung NND_ND 
-					--Lấy nhóm người dùng mà người dùng đó thuộc
-					INNER JOIN dbo.NhomNguoiDung_HT NND ON
+		SELECT @giaTri += Q.GiaTri + '|'
+			FROM 
+				dbo.NhomNguoiDung_CD NND
+					INNER JOIN dbo.NhomNguoiDung_CD_NguoiDung NND_ND ON
 						NND_ND.MaNguoiDung = @0 AND
 						NND_ND.MaNhomNguoiDung = NND.Ma
-					--Lấy quyền mà nhóm người dùng đó
-					INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
-						NND.Ma = NND_Q.MaNhomNguoiDung
-					--Lấy giá trị quyền của nhóm quyền đó
+					INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
+						NND_Q.MaNhomNguoiDung = NND.Ma AND
+						(NND_Q.MaDoiTuong = @2 OR 
+							NND_Q.MaDoiTuong = 0)
 					INNER JOIN dbo.Quyen Q ON
-						NND_Q.MaQuyen = Q.Ma AND
-						Q.GiaTri IS NOT NULL AND
-						Q.PhamVi = 'KH'
+						Q.PhamVi = @1 AND
+						Q.Ma = NND_Q.MaQuyen
+			GROUP BY Q.GiaTri
+
+		IF (@@ROWCOUNT = 0)
+		BEGIN
+			UPDATE dbo.NguoiDung
+				SET CoQuyenNhomCD = NULL
+				WHERE Ma = @0
+		END
+	END
+	--Phạm vi hệ thống kiểm soát tất cả phạm vi quyền
+	IF (@coQuyenNhomHT = 1)
+	BEGIN
+		SELECT @giaTri += Q.GiaTri + '|'
+			FROM 
+				dbo.NhomNguoiDung_HT NND
+					INNER JOIN dbo.NhomNguoiDung_HT_NguoiDung NND_ND ON
+						NND_ND.MaNguoiDung = @0 AND
+						NND_ND.MaNhomNguoiDung = NND.Ma
+					INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
+						NND_Q.MaNhomNguoiDung = NND.Ma AND
+						(NND_Q.MaDoiTuong = @2 OR 
+							NND_Q.MaDoiTuong = 0)
+					INNER JOIN dbo.Quyen Q ON
+						Q.PhamVi = @1 AND
+						Q.Ma = NND_Q.MaQuyen
+			GROUP BY Q.GiaTri
+
+		IF (@@ROWCOUNT = 0)
+		BEGIN
+			UPDATE dbo.NguoiDung
+				SET CoQuyenNhomHT = NULL
+				WHERE Ma = @0
+		END
 	END
 
 	SELECT CASE
@@ -177,36 +196,105 @@ END
 
 GO
 --Lấy quyền theo mã người dùng và mã đối tượng và giá trị
-CREATE PROC dbo.layQuyenTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra (
+ALTER PROC dbo.layQuyenTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra (
 	@0 INT, --MaNguoiDung
-	@1 NVARCHAR(MAX), --GiaTri
-	@2 NVARCHAR(MAX), --PhamVi
-	@3 INT --MaDoiTuong
+	@1 NVARCHAR(MAX), --PhamVi
+	@2 INT, --MaDoiTuong
+	@3 NVARCHAR(MAX) --GiaTri
 )
 AS
 BEGIN
-	IF (@2 = 'HT')
+	--Lấy các quyền mà người dùng có
+	DECLARE 
+		@coQuyenNhomHT BIT, 
+		@coQuyenNhomCD BIT,
+		@coQuyenNhomKH BIT
+
+	SELECT 
+		@coQuyenNhomHT = CoQuyenNhomHT, 
+		@coQuyenNhomCD = CoQuyenNhomCD,
+		@coQuyenNhomKH = CoQuyenNhomKH
+		FROM dbo.NguoiDung
+		WHERE Ma = @0
+	
+	--Quyền khóa học chỉ xác định phạm vi quyền khóa học
+	IF (
+		@coQuyenNhomKH = 1 AND
+		@1 = 'KH'
+	)
 	BEGIN
-		SELECT 1
+		IF EXISTS(
+			SELECT TOP 1 1
+				FROM 
+					dbo.NhomNguoiDung_KH NND
+						INNER JOIN dbo.NhomNguoiDung_KH_NguoiDung NND_ND ON
+							NND_ND.MaNguoiDung = @0 AND
+							NND_ND.MaNhomNguoiDung = NND.Ma
+						INNER JOIN dbo.NhomNguoiDung_KH_Quyen NND_Q ON
+							NND_Q.MaNhomNguoiDung = NND.Ma AND
+							(NND_Q.MaDoiTuong = @2 OR 
+								NND_Q.MaDoiTuong = 0)
+						INNER JOIN dbo.Quyen Q ON
+							Q.PhamVi = @1 AND
+							Q.Ma = NND_Q.MaQuyen AND
+							Q.GiaTri = @3
+		)
+		BEGIN
+			SELECT 1
+			RETURN
+		END
 	END
-	ELSE IF (@2 = 'KH')
+	--Phạm vi chủ đề chỉ kiểm soát chủ đề, khóa học, hỏi đáp
+	IF (
+		@coQuyenNhomCD = 1 AND
+		(@1 = 'CD' OR @1 = 'HD' OR @1 = 'KH')
+	)
 	BEGIN
-		SELECT CASE
-			WHEN EXISTS(
-				SELECT TOP 1 1
-					FROM 
-						dbo.NhomNguoiDung_KH_NguoiDung NND_ND
-							INNER JOIN dbo.NhomNguoiDung_KH NND ON 
-								NND_ND.MaNguoiDung = @0
-							INNER JOIN dbo.NhomNguoiDung_KH_Quyen NND_Q ON
-								NND_Q.MaDoiTuong = @3 AND
-								NND.Ma = NND_Q.MaNhomNguoiDung
-							INNER JOIN dbo.Quyen Q ON 
-								Q.GiaTri = @1 AND
-								NND_Q.MaQuyen = Q.Ma) THEN
-				1
-			ELSE 
-				0
-			END
+		IF EXISTS(
+			SELECT TOP 1 1
+				FROM 
+					dbo.NhomNguoiDung_CD NND
+						INNER JOIN dbo.NhomNguoiDung_CD_NguoiDung NND_ND ON
+							NND_ND.MaNguoiDung = @0 AND
+							NND_ND.MaNhomNguoiDung = NND.Ma
+						INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
+							NND_Q.MaNhomNguoiDung = NND.Ma AND
+							(NND_Q.MaDoiTuong = @2 OR 
+								NND_Q.MaDoiTuong = 0)
+						INNER JOIN dbo.Quyen Q ON
+							Q.PhamVi = @1 AND
+							Q.Ma = NND_Q.MaQuyen AND
+							Q.GiaTri = @3
+		)
+		BEGIN
+			SELECT 1
+			RETURN
+		END
 	END
+	--Phạm vi hệ thống kiểm soát tất cả phạm vi quyền
+	IF (@coQuyenNhomHT = 1)
+	BEGIN
+		IF EXISTS(
+			SELECT TOP 1 1
+				FROM 
+					dbo.NhomNguoiDung_HT NND
+						INNER JOIN dbo.NhomNguoiDung_HT_NguoiDung NND_ND ON
+							NND_ND.MaNguoiDung = @0 AND
+							NND_ND.MaNhomNguoiDung = NND.Ma
+						INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
+							NND_Q.MaNhomNguoiDung = NND.Ma AND
+							(NND_Q.MaDoiTuong = @2 OR 
+								NND_Q.MaDoiTuong = 0)
+						INNER JOIN dbo.Quyen Q ON
+							Q.PhamVi = @1 AND
+							Q.Ma = NND_Q.MaQuyen AND
+							Q.GiaTri = @3
+		)
+		BEGIN
+			SELECT 1
+			RETURN
+		END
+	END
+
+	SELECT 0
 END
