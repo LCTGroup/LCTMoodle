@@ -16,7 +16,7 @@ CREATE TABLE dbo.TraLoi
 
 GO
 --Thêm Trả Lời
-CREATE PROC dbo.themTraLoi
+ALTER PROC dbo.themTraLoi
 (
 	@0 NVARCHAR(MAX), --Nội dung
 	@1 INT, --Mã người tạo
@@ -26,15 +26,25 @@ AS
 BEGIN
 	INSERT INTO dbo.TraLoi(NoiDung, MaNguoiTao, MaCauHoi) VALUES (@0, @1, @2)
 
-	SELECT
-		Ma,
-		NoiDung,
-		ThoiDiemTao,
-		Duyet,
-		MaNguoiTao,
-		MaCauHoi
+	SELECT *		
 	FROM dbo.TraLoi
 	WHERE Ma = @@Identity
+END
+
+GO
+--Tăng số lượng trả lời trong Câu hỏi khi thêm trả lời
+CREATE TRIGGER dbo.themTraLoi_TRIGGER
+ON dbo.TraLoi
+AFTER INSERT
+AS
+BEGIN
+	DECLARE @maCauHoi INT
+	
+	SELECT @maCauHoi = MaCauHoi	FROM inserted
+
+	UPDATE dbo.CauHoi
+	SET SoLuongTraLoi += 1
+	WHERE Ma = @maCauHoi
 END
 
 GO
@@ -46,6 +56,21 @@ CREATE PROC dbo.xoaTraLoiTheoMa
 AS
 BEGIN
 	DELETE FROM dbo.TraLoi WHERE Ma = @0
+END
+
+--Giảm số lượng trả lời trong Câu hỏi khi thêm trả lời
+CREATE TRIGGER dbo.xoaTraLoi_TRIGGER
+ON dbo.TraLoi
+AFTER DELETE
+AS
+BEGIN
+	DECLARE @maCauHoi INT
+
+	SELECT @maCauHoi = MaCauHoi From DELETED
+
+	UPDATE dbo.CauHoi
+	SET SoLuongTraLoi -= 1
+	WHERE Ma = @maCauHoi
 END
 
 GO
@@ -83,6 +108,7 @@ BEGIN
 		Ma,
 		NoiDung,
 		ThoiDiemTao,
+		ThoiDiemCapNhat,
 		Duyet,
 		MaNguoiTao,
 		MaCauHoi,

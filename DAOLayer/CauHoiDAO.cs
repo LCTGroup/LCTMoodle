@@ -57,6 +57,8 @@ namespace DAOLayer
                         break;
                     case "Diem":
                         cauHoi.diem = layInt(dong, i); break;
+                    case "SoLuongTraLoi":
+                        cauHoi.soLuongTraLoi = layInt(dong, i); break;
                     default:
                         break;
                 }                

@@ -119,7 +119,8 @@ END
 
 GO
 --Lấy toàn bộ Câu Hỏi
-CREATE PROC dbo.layCauHoi (
+CREATE PROC dbo.layCauHoi 
+(
 	@0 INT --So dong lay
 )
 AS

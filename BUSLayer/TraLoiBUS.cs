@@ -91,17 +91,10 @@ namespace BUSLayer
         
         public static KetQua them(Form form)
         {
-            TraLoiDTO traLoi = new TraLoiDTO();
-
-            if (Session["NguoiDung"] != null)
-            {
-                form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
-            }
-            
+            TraLoiDTO traLoi = new TraLoiDTO();            
             gan(ref traLoi, form);
 
             KetQua ketQua = TraLoiBUS.kiemTra(traLoi);
-
             if (ketQua.trangThai != 0)
             {
                 return ketQua;

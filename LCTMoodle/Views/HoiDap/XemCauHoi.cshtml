@@ -26,7 +26,9 @@
 
 <article class="hop hop-1-vien">
     <section class="noi-dung">
-        @Html.Partial("~/Views/HoiDap/_Item_CauHoi.cshtml", Model, new ViewDataDictionary() { { "VoteDiem", ViewData["VoteDiem"] } })
+        @Html.Partial("~/Views/HoiDap/_Item_CauHoi.cshtml", Model, new ViewDataDictionary() { 
+            { "TrangThaiVote", ViewData["TrangThaiVote"] }
+       })
     </section>
 </article>
 
@@ -39,8 +41,10 @@
     <ul class="noi-dung danh-sach-tra-loi" id="danh_sach_tra_loi">@if (Model.danhSachTraLoi != null) 
         {
             foreach (var traLoi in Model.danhSachTraLoi)
-            {
-                @Html.Partial("~/Views/HoiDap/_Item_TraLoi.cshtml", traLoi);
+            {                
+                ViewData["TrangThaiVoteTraLoi"] = 1;
+                
+                @Html.Partial("~/Views/HoiDap/_Item_TraLoi.cshtml", traLoi, new ViewDataDictionary() { { "TrangThaiVoteTraLoi", ViewData["TrangThaiVoteTraLoi"] } });
             }
     }</ul>
     <section>Chưa có trả lời</section>
@@ -53,7 +57,9 @@
 <article class="hop hop-2-vien">
     <section class="tieu-de">Trả lời câu hỏi</section>
     <section class="noi-dung">
-        @Html.Partial("~/Views/HoiDap/_Form_TraLoi.cshtml", null, new ViewDataDictionary() { { "MaCauHoi", ViewData["MaCauHoi"].ToString() } })
+        @Html.Partial("~/Views/HoiDap/_Form_TraLoi.cshtml", null, new ViewDataDictionary() { 
+            { "MaCauHoi", ViewData["MaCauHoi"] }
+        })
     </section>
 </article>
 

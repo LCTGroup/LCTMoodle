@@ -1,12 +1,12 @@
 ﻿@model DTOLayer.CauHoiDTO
 @{
-    //voteDiem: 0 - Chưa vote | 1 - Vote cộng | -1 - Vote trừ
-    int voteDiem = (int)ViewData["VoteDiem"];
+    //0: Chưa vote | 1: Vote cộng | -1: Vote trừ
+    int trangThaiVote = (int)ViewData["TrangThaiVote"];
 }
 
 @if (Model != null)
 {
-    <article class="muc-hoi-dap cau-hoi" data-doi-tuong="cau-hoi" data-ma="@Model.ma" data-vote-diem="@voteDiem">
+    <article class="muc-hoi-dap cau-hoi" data-doi-tuong="cau-hoi" data-ma="@Model.ma" data-trang-thai-vote="@trangThaiVote">
 
         <section class="khung-chuc-nang-lct">
             <ul data-doi-tuong="cauhoi-@Model.ma">

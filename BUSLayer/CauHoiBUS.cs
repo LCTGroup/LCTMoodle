@@ -36,9 +36,6 @@ namespace BUSLayer
                     case "MaChuDe":
                         cauHoi.chuDe = form.layDTO<ChuDeDTO>(key);
                         break;
-                    case "Diem":
-                        cauHoi.diem = form.layInt(key);
-                        break;
                     default:
                         break;
                 }
@@ -97,9 +94,6 @@ namespace BUSLayer
                     case "MaChuDe":
                         bangCapNhat.Add("MaChuDe", layMa_String(cauHoi.chuDe), 1);
                         break;
-                    case "Diem":
-                        bangCapNhat.Add("Diem", cauHoi.diem.ToString(), 1);
-                        break;
                     default:
                         break;
                 }
@@ -156,7 +150,6 @@ namespace BUSLayer
             }
 
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
-
             gan(ref cauHoi, form);
 
             ketQua = kiemTra(cauHoi, form.Keys.ToArray());

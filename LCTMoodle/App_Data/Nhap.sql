@@ -32,7 +32,7 @@ EXEc ('
 		FROM NguoiDung
 ')
 
-
+select * from
 select * from dbo.cauhoi
 select * from dbo.cauHoi_Diem
 
@@ -75,7 +75,8 @@ add Diem int default 0
 
 select * from dbo.traloi
 select * from dbo.cauHoi
-update dbo.traloi set diem=0 where ma>0
+update dbo.cauHoi set diem=0 where ma=1
+ table cauhoi_diem
 =======
 ﻿SELECT * FROM khoaHoc_NguoiDung
 >>>>>>> b220b336de8fba13da8bf1bbb5c2860bb1762df3
