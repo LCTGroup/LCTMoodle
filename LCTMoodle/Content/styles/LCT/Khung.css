@@ -749,13 +749,7 @@ body.dang-tai-lct header .top-header {
                         height: 22px;
                         display: block;
                         float: left;  
-                    }
-                        .hop-nguoi-dung ul.da-dang-nhap > li > a > .hinh-dai-dien > i {
-                            background: url("/NguoiDung.png/NguoiDung") no-repeat;
-                            width: 22px;
-                            height: 22px;
-                            display: block;
-                        }
+                    }                        
 
 
                     /*#region Hộp điều khiển */
@@ -990,8 +984,7 @@ main > .cot-trai {
         min-height: 40px;
         max-width: 40px;
         min-width: 40px;    
-        position: relative;
-        background: url('/NguoiDung.png/NguoiDung') no-repeat -22px 0;
+        position: relative;        
     }
 
         .khung-thong-tin .hinh-dai-dien img {
@@ -1181,6 +1174,72 @@ main > .cot-phai {
         }
 
 /*#endregion */
+
+/*#endregion */
+
+/*#region Hộp câu hỏi */
+
+.noi-dung-hop-cau-hoi {
+
+}
+
+    .noi-dung-hop-cau-hoi ul {
+        border: 1px solid #ddd;
+    }
+
+        .noi-dung-hop-cau-hoi ul li {
+            padding: 0 5px;
+            background-color: #fafafa;
+            border-bottom: 1px solid #eee;
+        }
+
+        .noi-dung-hop-cau-hoi ul li:last-child {
+            border-bottom: 0;
+        }
+
+        .noi-dung-hop-cau-hoi ul li:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+    
+    .noi-dung-hop-cau-hoi .tieu-de {
+        padding: 5px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+        .noi-dung-hop-cau-hoi .tieu-de a {
+            font-weight: bold;
+            color: #555;
+        }
+    
+    .noi-dung-hop-cau-hoi .thong-tin {
+        padding: 0 5px 5px 5px;
+        font-size: 11px;
+        color: #888;
+    }
+        .noi-dung-hop-cau-hoi .thong-tin img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+    
+    .noi-dung-hop-cau-hoi ul:empty {
+        display: none;
+    }
+
+    .noi-dung-hop-cau-hoi ul:empty + * {
+        display: block;
+    }
+
+    .noi-dung-hop-cau-hoi ul + * {
+        display: none;
+        text-align: center;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        color: #555;
+        padding: 10px;
+    }
 
 /*#endregion */
 

@@ -1,7 +1,11 @@
 ﻿@model DTOLayer.CauHoiDTO
 @{
+    int trangThaiVote = 0;
+    if (ViewData["TrangThaiVote"] != null)
+    {
+        trangThaiVote = (int)ViewData["TrangThaiVote"];
+    }
     //0: Chưa vote | 1: Vote cộng | -1: Vote trừ
-    int trangThaiVote = (int)ViewData["TrangThaiVote"];
 }
 
 @if (Model != null)

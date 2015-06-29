@@ -167,19 +167,19 @@ namespace BUSLayer
             return CauHoiDAO.layTheoMa(ma, lienKet);
         }
 
-        public static KetQua layDanhSach(int? soDong = null, LienKet lienKet = null)
+        public static KetQua layDanhSach(int? soDong = null, LienKet lienKet = null, string tieuChiHienThi = null)
         {
-            return CauHoiDAO.lay(soDong, lienKet);
+            return CauHoiDAO.lay(soDong, tieuChiHienThi, lienKet);
         }
 
-        public static KetQua layTheoMaChuDe_TimKiem(int? ma, string tuKhoa, LienKet lienKet = null)
+        public static KetQua layTheoMaChuDe_TimKiem(int? ma, string tuKhoa, LienKet lienKet = null, string cachHienThi = null)
         {
-            return CauHoiDAO.layTheoMaChuDe_TimKiem(ma, tuKhoa, lienKet);
+            return CauHoiDAO.layTheoMaChuDe_TimKiem(ma, tuKhoa, lienKet, cachHienThi);
         }
 
-        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null, string cachHienThi = null)
         {
-            return CauHoiDAO.lay_TimKiem(tuKhoa, lienKet);
+            return CauHoiDAO.lay_TimKiem(tuKhoa, lienKet, cachHienThi);
         }
 
     }

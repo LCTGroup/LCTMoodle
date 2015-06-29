@@ -17,11 +17,12 @@ namespace LCTMoodle.Controllers
 
         public ActionResult Index()
         {
-            return View((CauHoiBUS.layDanhSach(null, new LienKet() 
-            { 
-                "NguoiTao",
-                "ChuDe"
-            }).ketQua) as List<CauHoiDTO>);
+            KetQua ketQua = CauHoiBUS.layDanhSach(null, new LienKet() { "NguoiTao", "ChuDe" }, "MoiNhat");
+            if (ketQua.trangThai != 0)
+            {
+                return RedirectToAction("Index", "TrangChu");
+            }            
+            return View(ketQua.ketQua);
         }
 
         [HttpPost]
@@ -78,15 +79,23 @@ namespace LCTMoodle.Controllers
                 return RedirectToAction("Index", "HoiDap");
             }
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
-            ViewData["MaCauHoi"] = ma;
-            ViewData["TrangThaiVote"] = CauHoi_DiemBUS.trangThaiVoteCuaNguoiDungTrongCauHoi(ma, (int?)Session["NguoiDung"]);
 
-            Dictionary<int, int> trangThaiVoteTraLoi = new Dictionary<int, int>();
-            foreach(var traLoi in cauHoi.danhSachTraLoi)
+            #region Kiểm tra trạng thái Vote trả lời
+
+            if (cauHoi.danhSachTraLoi != null)
             {
-                trangThaiVoteTraLoi.Add(traLoi.ma.Value, TraLoi_DiemBUS.trangThaiVoteCuaNguoiDungTrongTraLoi(traLoi.ma, (int?)Session["NguoiDung"]));
+                ViewData["MaCauHoi"] = ma;
+                ViewData["TrangThaiVote"] = CauHoi_DiemBUS.trangThaiVoteCuaNguoiDungTrongCauHoi(ma, (int?)Session["NguoiDung"]);
+
+                Dictionary<int, int> trangThaiVoteTraLoi = new Dictionary<int, int>();
+                foreach (var traLoi in cauHoi.danhSachTraLoi)
+                {
+                    trangThaiVoteTraLoi.Add(traLoi.ma.Value, TraLoi_DiemBUS.trangThaiVoteCuaNguoiDungTrongTraLoi(traLoi.ma, (int?)Session["NguoiDung"]));
+                }
+                ViewData["DSTrangThaiVoteTraLoi"] = trangThaiVoteTraLoi;
             }
-            ViewData["DSTrangThaiVoteTraLoi"] = trangThaiVoteTraLoi;
+
+            #endregion
 
             return View(cauHoi);
         }
@@ -96,7 +105,7 @@ namespace LCTMoodle.Controllers
             return Json(CauHoiBUS.xoaTheoMa(ma));
         }
 
-        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0)
+        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0, string cachHienThi = null)
         {
             KetQua ketQua;
             if (maChuDe == 0)
@@ -104,14 +113,18 @@ namespace LCTMoodle.Controllers
                 ketQua = CauHoiBUS.lay_TimKiem(tuKhoa, new LienKet() { 
                     "NguoiTao",
                     "HinhDaiDien"
-                });
+                },
+                cachHienThi
+                );
             }
             else
             {
                 ketQua = CauHoiBUS.layTheoMaChuDe_TimKiem(maChuDe, tuKhoa, new LienKet() { 
                     "NguoiTao",
                     "HinhDaiDien"
-                });
+                },
+                cachHienThi
+                );
             }
 
             if (ketQua.trangThai == 0)

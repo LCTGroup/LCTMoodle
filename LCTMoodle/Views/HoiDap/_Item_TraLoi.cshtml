@@ -1,7 +1,11 @@
 ﻿@model DTOLayer.TraLoiDTO
 
 @{
-    int trangThaiVoteTraLoi = (int)ViewData["TrangThaiVoteTraLoi"];
+    int trangThaiVoteTraLoi = 0;
+    if (ViewData["TrangThaiVoteTraLoi"] != null)
+    {
+        trangThaiVoteTraLoi = (int)ViewData["TrangThaiVoteTraLoi"];
+    }
 }
 
 @if (Model != null)
