@@ -9,7 +9,7 @@ namespace Helpers
     {
         public static bool co(string[] quyen, string giaTri)
         {
-            return Array.IndexOf(quyen, giaTri) != -1;
+            return quyen != null && Array.IndexOf(quyen, giaTri) != -1;
         }
     }
 }

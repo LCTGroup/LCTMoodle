@@ -278,20 +278,20 @@ function khoiTaoTapTinInput_LCT($form) {
 //    $form.find('input[data-input-type="chu-de"]').on('focus', function (e, mo) {
 //        var $phanTu = $(this);
 //
-//        moPopupFull({
-//            url: '/ChuDe/_Chon',
-//            thanhCong: function ($popup) {
-//                var $khung = $popup.find('#khung_quan_ly');
-//
-//                khoiTaoKhungChuDe($khung);
-//
-//                $khung.on('chon', function (e, data) {
-//                    $popup.tat();
-//                    $phanTu.val(data.ten).focusout();
-//                    $phanTu.next().val(data.ma).change();
-//                });
-//            }
-//        });
+        //moPopupFull({
+        //    url: '/ChuDe/_Chon',
+        //    thanhCong: function ($popup) {
+        //        var $khung = $popup.find('#khung_quan_ly');
+
+        //        khoiTaoKhungChuDe($khung);
+
+        //        $khung.on('chon', function (e, data) {
+        //            $popup.tat();
+        //            $phanTu.val(data.ten).focusout();
+        //            $phanTu.next().val(data.ma).change();
+        //        });
+        //    }
+        //});
 //    });
 //}
 

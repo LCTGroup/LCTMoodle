@@ -12,20 +12,20 @@ namespace BUSLayer
 {
     public class ChuDeBUS : BUS
     {
-        public static KetQua kiemTra(ChuDeDTO chuDe)
+        public static KetQua kiemTra(ChuDeDTO chuDe, string[] truong = null, bool kiemTra = true)
         {
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (string.IsNullOrEmpty(chuDe.ten))
+            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrEmpty(chuDe.ten))
             {
                 loi.Add("Tên không được bỏ trống");
             }
-            if (string.IsNullOrEmpty(chuDe.moTa))
+            if (coKiemTra("MoTa", truong, kiemTra) && string.IsNullOrEmpty(chuDe.moTa))
             {
                 loi.Add("Mô tả không được bỏ trống");
             }
-            if (chuDe.nguoiTao == null)
+            if (coKiemTra("MaNguoiTao", truong, kiemTra) && chuDe.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
@@ -80,6 +80,29 @@ namespace BUSLayer
             }
         }
 
+        public static BangCapNhat layBangCapNhat(ChuDeDTO chuDe, string[] keys)
+        {
+            BangCapNhat bangCapNhat = new BangCapNhat();
+            foreach (string key in keys)
+            {
+                switch (key)
+                {
+                    case "Ten":
+                        bangCapNhat.Add(key, chuDe.ten, 2);
+                        break;
+                    case "MoTa":
+                        bangCapNhat.Add(key, chuDe.moTa, 2);
+                        break;
+                    case "MaHinhDaiDien":
+                        bangCapNhat.Add(key, chuDe.hinhDaiDien == null ? null : chuDe.hinhDaiDien.ma.ToString(), 1);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return bangCapNhat;
+        }
+
         public static KetQua them(Form form)
         {
             ChuDeDTO chuDe = new ChuDeDTO();
@@ -109,6 +132,50 @@ namespace BUSLayer
         public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
         {
             return ChuDeDAO.lay_TimKiem(tuKhoa, lienKet);
+        }
+
+        public static KetQua capNhatTheoMa(Form form)
+        {
+            int? ma = form.layInt("Ma");
+            if (!ma.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 1
+                };
+            }
+
+            KetQua ketQua = ChuDeDAO.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            ChuDeDTO chuDe = ketQua.ketQua as ChuDeDTO;
+
+            gan(ref chuDe, form);
+
+            ketQua = kiemTra(chuDe, form.Keys.ToArray());
+
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            return ChuDeDAO.capNhatTheoMa(ma, layBangCapNhat(chuDe, form.Keys.ToArray()));
+        }
+
+        public static KetQua capNhatCha(int ma, int maCha)
+        {
+            if (ma == maCha)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Chủ đề chuyển không hợp lệ"
+                };
+            }
+            return ChuDeDAO.capNhatTheoMa_MaCha(ma, maCha);
         }
     }
 }

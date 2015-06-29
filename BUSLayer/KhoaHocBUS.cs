@@ -26,15 +26,15 @@ namespace BUSLayer
             {
                 loi.Add("Mô tả không được bỏ trống");
             }
-            if (coKiemTra("ChuDe", truong, kiemTra) && khoaHoc.chuDe == null)
+            if (coKiemTra("MaChuDe", truong, kiemTra) && khoaHoc.chuDe == null)
             {
                 loi.Add("Chủ đề không được bỏ trống");
             }
-            if (coKiemTra("HinhDaiDien", truong, kiemTra) && khoaHoc.hinhDaiDien == null)
+            if (coKiemTra("MaHinhDaiDien", truong, kiemTra) && khoaHoc.hinhDaiDien == null)
             {
                 loi.Add("Hình đại diện không được bỏ trống");
             }
-            if (coKiemTra("NguoiTao", truong, kiemTra) && khoaHoc.nguoiTao == null)
+            if (coKiemTra("MaNguoiTao", truong, kiemTra) && khoaHoc.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }

@@ -22,13 +22,17 @@ namespace BUSLayer
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
-            if (coKiemTra("NguoiTao", truong, kiemTra) && binhLuan.nguoiTao == null)
+            if (coKiemTra("MaNguoiTao", truong, kiemTra) && binhLuan.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (coKiemTra("DoiTuong", truong, kiemTra) && binhLuan.doiTuong == null)
+            if (coKiemTra("MaDoiTuong", truong, kiemTra) && binhLuan.doiTuong == null)
             {
                 loi.Add("Đối tượng bình luận không được bỏ trống");
+            }
+            if (coKiemTra("LoaiDoiTuong", truong, kiemTra) && string.IsNullOrEmpty(binhLuan.loaiDoiTuong))
+            {
+                loi.Add("Loại đối tượng bình luận không được bỏ trống");
             }
             #endregion
 

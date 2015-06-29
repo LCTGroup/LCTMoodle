@@ -75,18 +75,34 @@ namespace DAOLayer
 
             return nhomNguoiDung_Quyen;
         }
-        public static KetQua themHoacXoaTheoMaNhomNguoiDungVaMaQuyen(string phamVi, int? maNhomNguoiDung, int? maQuyen, int? maDoiTuong, bool them, bool la)
+
+        public static KetQua themTheoMaNhomNguoiDungVaMaQuyen(string phamVi, int? maNhomNguoiDung, int? maQuyen, int? maDoiTuong, bool la)
         {
             return khongTruyVan
                 (
-                    "themHoacXoaNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaQuyen",
+                    "themNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaQuyen",
                     new object[] 
                     { 
                         phamVi,
                         maNhomNguoiDung,
                         maQuyen,
                         maDoiTuong,
-                        them,
+                        la
+                    }
+                );
+        }
+
+        public static KetQua xoaTheoMaNhomNguoiDungVaMaQuyen(string phamVi, int? maNhomNguoiDung, int? maQuyen, int? maDoiTuong, bool la)
+        {
+            return khongTruyVan
+                (
+                    "xoaNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaQuyen",
+                    new object[] 
+                    { 
+                        phamVi,
+                        maNhomNguoiDung,
+                        maQuyen,
+                        maDoiTuong,
                         la
                     }
                 );

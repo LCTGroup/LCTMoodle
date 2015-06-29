@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿SELECT Ho, TenLot, Ten FROM NguoiDung WHERE Ma > 3
 
 UPDATE NguoiDung
@@ -80,3 +81,6 @@ update dbo.cauHoi set diem=0 where ma=1
 =======
 ﻿SELECT * FROM khoaHoc_NguoiDung
 >>>>>>> b220b336de8fba13da8bf1bbb5c2860bb1762df3
+=======
+﻿
+>>>>>>> 0a9f2ac66c4be1f52a2f15aef8261e0c0a8c32f2

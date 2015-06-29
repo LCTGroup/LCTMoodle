@@ -1838,8 +1838,8 @@
     .lct-cay .khung-chuc-nang {
         position: absolute;
         width: 40px;
-        top: 10px;
-        right: -11px;
+        top: -1px;
+        right: -1px;
         border: 1px solid #ddd;
         background-color: #fff;
     }
@@ -1856,20 +1856,23 @@
 
                 .lct-cay .khung-chuc-nang li:first-child a {
                     line-height: 40px;
+                    height: 40px;
                 }
 
         .lct-cay .khung-chuc-nang a {
             display: block;
             width: 40px;
             border: none;
-            line-height: 0px;
             text-align: center;
             font-size: 30px;
             color: #888;
             position: relative;
+            height: 0px;
+            line-height: 0px;
         }
 
         .lct-cay .khung-chuc-nang ul:hover a {
+            height: 40px;
             line-height: 40px;
         }
 
@@ -1914,7 +1917,7 @@
         .lct-cay .khung-chuc-nang li:nth-child(even) a u:after {
             background-color: #fcfcfc;
         }
-
+        
         .lct-cay .khung-chuc-nang a:hover u:after {
             width: 0%;
             left: 31px;

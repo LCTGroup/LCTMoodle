@@ -4,8 +4,6 @@
 
     var danhSachNhom = ViewData["DanhSachNhom"] as List<DTOLayer.NhomNguoiDungDTO>;
     var danhSachQuyen = ViewData["DanhSachQuyen"] as List<DTOLayer.QuyenDTO>;
-
-    string phamVi = @ViewData["PhamVi"].ToString();
 }
 @section Styles {
     <link href="/QuanLy.css/Quyen" rel="stylesheet" />
@@ -14,7 +12,7 @@
     <script src="/QuanLy.js/Quyen"></script>    
     <script src="/Khung.js/ChuDe/"></script>
     <script>
-        _PhamViQuanLy = _PhamViHienTai = '@phamVi';
+        _PhamViQuanLy = _PhamViHienTai = 'HT';
         _DoiTuongHienTai = _DoiTuongQuanLy = 0;
     </script>
 }
@@ -62,7 +60,7 @@
             <section id="khung_quyen" class="khung-duoi tat">
                 <section class="khung-pham-vi">
                     <ul class="danh-sach">
-                        <li class="item @(phamVi == "HT" ? "chon" : null)">
+                        <li class="item chon">
                             <a data-chuc-nang="chon-pham-vi" data-ma="HT">Hệ thống</a>
                         </li>
                         <li class="item">
@@ -73,6 +71,9 @@
                         </li>
                         <li class="item">
                             <a data-chuc-nang="chon-pham-vi" data-ma="HD">Hỏi đáp</a>
+                        </li>
+                        <li class="item">
+                            <a data-chuc-nang="chon-pham-vi" data-ma="KH" data-chung>Khóa học</a>
                         </li>
                     </ul>
                 </section>

@@ -22,7 +22,7 @@ namespace BUSLayer
             {
                 loi.Add("Khóa học không được bỏ trống");
             }
-            if (coKiemTra("NguoiDung", truong, kiemTra) && thanhVien.nguoiDung == null)
+            if (coKiemTra("MaNguoiDung", truong, kiemTra) && thanhVien.nguoiDung == null)
             {
                 loi.Add("Người dùng không được bỏ trống");
             }
@@ -30,7 +30,7 @@ namespace BUSLayer
             {
                 loi.Add("Trạng thái không hợp lệ");
             }
-            if (coKiemTra("NguoiThem", truong, kiemTra) && thanhVien.nguoiThem == null)
+            if (coKiemTra("MaNguoiThem", truong, kiemTra) && thanhVien.nguoiThem == null)
             {
                 loi.Add("Người thêm không thể bỏ trống");
             }
@@ -143,7 +143,7 @@ namespace BUSLayer
                     trangThai = loai
                 };
 
-            ketQua = kiemTra(thanhVien, new string[] { "NguoiThem" }, false);
+            ketQua = kiemTra(thanhVien, new string[] { "MaNguoiThem" }, false);
 
             if (ketQua.trangThai != 0)
             {
@@ -273,7 +273,7 @@ namespace BUSLayer
             #region Cập nhật trạng thái thành viên
             thanhVien.nguoiThem = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?);
             thanhVien.trangThai = 0;
-            ketQua = kiemTra(thanhVien, new string[] { "NguoiThem", "TrangThai" });
+            ketQua = kiemTra(thanhVien, new string[] { "MaNguoiThem", "TrangThai" });
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
