@@ -182,5 +182,6 @@ namespace LCTMoodle.WebServices
             }
             return lst_KhoaHoc;
         }
+
     }
 }
