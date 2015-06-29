@@ -13,6 +13,8 @@
     {
         "Thêm câu hỏi", "href='/HoiDap/ThemCauHoi'"
     };
+
+    Dictionary<int, int> trangThaiVoteTraLoi = ViewData["DSTrangThaiVoteTraLoi"] as Dictionary<int, int>;
 }
 
 @section Styles {
@@ -44,7 +46,7 @@
             {                
                 ViewData["TrangThaiVoteTraLoi"] = 1;
                 
-                @Html.Partial("~/Views/HoiDap/_Item_TraLoi.cshtml", traLoi, new ViewDataDictionary() { { "TrangThaiVoteTraLoi", ViewData["TrangThaiVoteTraLoi"] } });
+                @Html.Partial("~/Views/HoiDap/_Item_TraLoi.cshtml", traLoi, new ViewDataDictionary() { { "TrangThaiVoteTraLoi", trangThaiVoteTraLoi[traLoi.ma.Value] } });
             }
     }</ul>
     <section>Chưa có trả lời</section>

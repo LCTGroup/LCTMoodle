@@ -114,12 +114,53 @@ namespace BUSLayer
             return bangCapNhat;
         }
 
-        public static KetQua them(Form form)
+        public static KetQua them(Form form, int? maNguoiDung = null, int? maKhoaHoc = null)
         {
+            #region Kiểm tra quyền
+            //Lấy mã người dùng
+            if (!maNguoiDung.HasValue)
+            {
+                maNguoiDung = Session["NguoiDung"] as int?;
+            }
+
+            if (!maNguoiDung.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 4
+                };
+            }
+
+            //Lấy mã khóa học
+            if (!maKhoaHoc.HasValue)
+            {
+                maKhoaHoc = form.layInt("MaKhoaHoc");
+            }
+
+            if (!maKhoaHoc.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Khóa học không thể bỏ trống"
+                };
+            }
+
+            var ketQua = QuyenBUS.kiemTraQuyenNguoiDung("BG_Them", "KH", maKhoaHoc.Value, maNguoiDung);
+            if (ketQua.trangThai == 0 && !(bool)ketQua.ketQua)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền thêm bài giảng"
+                };
+            }
+            #endregion
+
             BaiVietBaiGiangDTO baiVietBaiGiang = new BaiVietBaiGiangDTO();
             gan(ref baiVietBaiGiang, form);
             
-            KetQua ketQua = kiemTra(baiVietBaiGiang);
+            ketQua = kiemTra(baiVietBaiGiang);
 
             if (ketQua.trangThai != 0)
             {
@@ -145,8 +186,67 @@ namespace BUSLayer
             return BaiVietBaiGiangDAO.layTheoMa(ma);
         }
 
-        public static KetQua xoaTheoMa(int ma)
+        public static KetQua xoaTheoMa(int ma, int? maNguoiDung = null, int? maKhoaHoc = null)
         {
+            //Lấy bài giảng
+            var ketQua = BaiVietBaiGiangDAO.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Bài giảng không tồn tại"
+                };
+            }
+            BaiVietBaiGiangDTO baiGiang = ketQua.ketQua as BaiVietBaiGiangDTO;
+
+            #region Kiểm tra quyền
+            //Lấy mã người dùng
+            if (!maNguoiDung.HasValue)
+            {
+                maNguoiDung = Session["NguoiDung"] as int?;
+            }
+
+            if (!maNguoiDung.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 4
+                };
+            }
+
+            //Lấy mã khóa học
+            if (!maKhoaHoc.HasValue)
+            {
+                ketQua = BaiVietBaiGiangDAO.layTheoMa(ma);
+                if (ketQua.trangThai != 0)
+                {
+                    maKhoaHoc = (ketQua.ketQua as BaiVietBaiGiangDTO).khoaHoc.ma;
+                }
+            }
+
+            if (!maKhoaHoc.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Khóa học không thể bỏ trống"
+                };
+            }
+
+            if (baiGiang.nguoiTao.ma != maNguoiDung)
+            {
+                ketQua = QuyenBUS.kiemTraQuyenNguoiDung("BG_Xoa", "KH", maKhoaHoc.Value, maNguoiDung);
+                if (ketQua.trangThai == 0 && !(bool)ketQua.ketQua)
+                {
+                    return new KetQua()
+                    {
+                        trangThai = 3,
+                        ketQua = "Bạn không có quyền thêm bài giảng"
+                    };
+                }
+            }
+            #endregion
             return BaiVietBaiGiangDAO.xoaTheoMa(ma);
         }
 

@@ -410,6 +410,106 @@ function khoiTaoTraLoi($dsTraLoi) {
         });
     });
 
+    $cauHoi.find('[data-chuc-nang="cong-diem"]').on('click', function () {
+        var $tai = moBieuTuongTai($('.diem-so'));
+        var maTraLoi = $dsTraLoi.attr('data-ma');
+        var trangThaiVote = $dsTraLoi.attr('data-trang-thai-vote');
+
+        if (trangThaiVote == 1) {
+            $.ajax({
+                url: '/HoiDap/XuLyBoChoDiemTraLoi',
+                method: 'POST',
+                data: { maTraLoi: maTraLoi }
+            }).always(function () {
+                $tai.tat();
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    var $diem = $dsTraLoi.find('[data-doi-tuong="diem-so"]');
+                    $diem.text(parseInt($diem.text()) - 1);
+
+                    $dsTraLoi.attr('data-trang-thai-vote', '0');
+                }
+                else {
+                    moPopupThongBao(data);
+                }
+            }).fail(function () {
+                moPopupThongBao("Vote điểm thất bại")
+            });
+        }
+        else {
+            $.ajax({
+                url: '/HoiDap/XuLyChoDiemTraLoi',
+                method: 'POST',
+                data: { maTraLoi: maTraLoi, diem: true }
+            }).always(function () {
+                $tai.tat();
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    var $diem = $('[data-doi-tuong="diem-so"]');
+                    $diem.text(parseInt($diem.text()) + (trangThaiVote == '-1' ? 2 : 1));
+
+                    $cauHoi.attr('data-trang-thai-vote', '1');
+                }
+                else if (data.trangThai == 4) {
+                    moPopupDangNhap();
+                }
+                else {
+                    moPopupThongBao(data.ketQua);
+                }
+            });
+        }
+    });
+
+    $cauHoi.find('[data-chuc-nang="tru-diem"]').on('click', function () {
+        var $tai = moBieuTuongTai($('.diem-so'));
+        var maCauHoi = $cauHoi.attr('data-ma');
+        var trangThaiVote = $cauHoi.attr('data-trang-thai-vote');
+
+        if (trangThaiVote == -1) {
+            $.ajax({
+                url: '/HoiDap/XuLyBoChoDiemCauHoi',
+                method: 'POST',
+                data: { maCauHoi: maCauHoi }
+            }).always(function () {
+                $tai.tat();
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    var $diem = $('[data-doi-tuong="diem-so"]');
+                    $diem.text(parseInt($diem.text()) + 1);
+
+                    $cauHoi.attr('data-trang-thai-vote', '0');
+                }
+                else if (data.trangThai == 4) {
+                    moPopupDangNhap();
+                }
+                else {
+                    moPopupThongBao(data.ketQua);
+                }
+            });
+        }
+        else {
+            $.ajax({
+                url: '/HoiDap/XuLyChoDiemCauHoi',
+                method: 'POST',
+                data: { maCauHoi: maCauHoi, diem: false }
+            }).always(function () {
+                $tai.tat();
+            }).done(function (data) {
+                if (data.trangThai == 0) {
+                    var $diem = $('[data-doi-tuong="diem-so"]');
+                    $diem.text(parseInt($diem.text()) - (trangThaiVote == '1' ? 2 : 1));
+
+                    $cauHoi.attr('data-trang-thai-vote', '-1');
+                }
+                else if (data.trangThai == 4) {
+                    moPopupDangNhap();
+                }
+                else {
+                    moPopupThongBao(data.ketQua);
+                }
+            });
+        }
+    });
 }
 
 //#endregion

@@ -138,6 +138,27 @@ BEGIN
 		(@1 = 'CD' OR @1 = 'HD' OR @1 = 'KH')
 	)
 	BEGIN
+		--Nếu là CD => Mã đối tượng là mã chủ đề => khỏi xử lý
+		--Nếu là HD => Lấy mã chủ đề của câu hỏi
+		--Nếu là KH => Lấy mã chủ đề của khóa học
+		DECLARE @maChuDe INT
+		IF (@1 = 'KH')
+		BEGIN
+			SELECT @maChuDe = MaChuDe
+				FROM dbo.KhoaHoc
+				WHERE Ma = @2
+		END
+		ELSE IF (@1 = 'HD')
+		BEGIN
+			SELECT @maChuDe = MaChuDe
+				FROM dbo.CauHoi
+				WHERE Ma = @2
+		END
+		ELSE
+		BEGIN
+			SET @maChuDe = @2
+		END
+
 		SELECT @giaTri += Q.GiaTri + '|'
 			FROM 
 				dbo.NhomNguoiDung_CD NND
@@ -146,8 +167,7 @@ BEGIN
 						NND_ND.MaNhomNguoiDung = NND.Ma
 					INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
 						NND_Q.MaNhomNguoiDung = NND.Ma AND
-						(NND_Q.MaDoiTuong = @2 OR 
-							NND_Q.MaDoiTuong = 0)
+						NND_Q.MaDoiTuong = @maChuDe
 					INNER JOIN dbo.Quyen Q ON
 						Q.PhamVi = @1 AND
 						Q.Ma = NND_Q.MaQuyen
@@ -170,9 +190,7 @@ BEGIN
 						NND_ND.MaNguoiDung = @0 AND
 						NND_ND.MaNhomNguoiDung = NND.Ma
 					INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
-						NND_Q.MaNhomNguoiDung = NND.Ma AND
-						(NND_Q.MaDoiTuong = @2 OR 
-							NND_Q.MaDoiTuong = 0)
+						NND_Q.MaNhomNguoiDung = NND.Ma
 					INNER JOIN dbo.Quyen Q ON
 						Q.PhamVi = @1 AND
 						Q.Ma = NND_Q.MaQuyen
@@ -250,6 +268,27 @@ BEGIN
 		(@1 = 'CD' OR @1 = 'HD' OR @1 = 'KH')
 	)
 	BEGIN
+		--Nếu là CD => Mã đối tượng là mã chủ đề => khỏi xử lý
+		--Nếu là HD => Lấy mã chủ đề của câu hỏi
+		--Nếu là KH => Lấy mã chủ đề của khóa học
+		DECLARE @maChuDe INT
+		IF (@1 = 'KH')
+		BEGIN
+			SELECT @maChuDe = MaChuDe
+				FROM dbo.KhoaHoc
+				WHERE Ma = @2
+		END
+		ELSE IF (@1 = 'HD')
+		BEGIN
+			SELECT @maChuDe = MaChuDe
+				FROM dbo.CauHoi
+				WHERE Ma = @2
+		END
+		ELSE
+		BEGIN
+			SET @maChuDe = @2
+		END
+
 		IF EXISTS(
 			SELECT TOP 1 1
 				FROM 
@@ -259,8 +298,7 @@ BEGIN
 							NND_ND.MaNhomNguoiDung = NND.Ma
 						INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
 							NND_Q.MaNhomNguoiDung = NND.Ma AND
-							(NND_Q.MaDoiTuong = @2 OR 
-								NND_Q.MaDoiTuong = 0)
+							NND_Q.MaDoiTuong = @maChuDe
 						INNER JOIN dbo.Quyen Q ON
 							Q.PhamVi = @1 AND
 							Q.Ma = NND_Q.MaQuyen AND
@@ -282,9 +320,7 @@ BEGIN
 							NND_ND.MaNguoiDung = @0 AND
 							NND_ND.MaNhomNguoiDung = NND.Ma
 						INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
-							NND_Q.MaNhomNguoiDung = NND.Ma AND
-							(NND_Q.MaDoiTuong = @2 OR 
-								NND_Q.MaDoiTuong = 0)
+							NND_Q.MaNhomNguoiDung = NND.Ma
 						INNER JOIN dbo.Quyen Q ON
 							Q.PhamVi = @1 AND
 							Q.Ma = NND_Q.MaQuyen AND

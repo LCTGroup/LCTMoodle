@@ -6,13 +6,11 @@
     
     ViewData["TieuDe"] = "Danh sách khóa học";
 
-    //var ketQua = BUSLayer.QuyenBUS.layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri("KH");
-    //string[] dsQuyen = ketQua.trangThai == 0 ? ketQua.ketQua as string[] : null;
+    var ketQua = BUSLayer.QuyenBUS.layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri("KH");
+    string[] dsQuyen = ketQua.trangThai == 0 ? ketQua.ketQua as string[] : null;
 
-    var ketQua = BUSLayer.QuyenBUS.kiemTraQuyenNguoiDung("QLNoiDung", "KH");
     bool
-        //coQuyenQLNoiDungKH = QuyenHelper.co(dsQuyen, "QLNoiDung");
-        coQuyenQLNoiDungKH = ketQua.trangThai == 0 ? (bool)ketQua.ketQua : false;
+        coQuyenQLNoiDungKH = QuyenHelper.co(dsQuyen, "QLNoiDung");
 
     List<string> dsChucNang = new List<string>();
     

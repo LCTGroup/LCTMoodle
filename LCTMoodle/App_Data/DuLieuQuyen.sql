@@ -60,8 +60,9 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('KH', 511, 0,	N'Xóa bài viết',					'DD_Xoa',					506,	2),		--| | | |
 	('KH', 512, 0,	N'Ghim bài viết',					'DD_Ghim',					506,	3),		--| | | |
 	('KH', 507, 0,	N'Bài giảng',						NULL,						505,	2),		--| | |
-	('KH', 513, 0,	N'Sửa bài viết',					'BG_Sua',					507,	1),		--| | | |
-	('KH', 514, 0,	N'Xóa bài viết',					'BG_Xoa',					507,	2),		--| | | |
+	('KH', 524, 0,	N'Đăng bài giảng',					'BG_Them',					507,	1),		--| | | |
+	('KH', 513, 0,	N'Sửa bài giảng',					'BG_Sua',					507,	2),		--| | | |
+	('KH', 514, 0,	N'Xóa bài giảng',					'BG_Xoa',					507,	3),		--| | | |
 	('KH', 515, 0,	N'Thay đổi thứ tự bài viết',		'BG_ThuTu',					507,	3),		--| | | |
 	('KH', 508, 0,	N'Tài liệu',						NULL,						505,	3),		--| | |
 	('KH', 509, 0,	N'Bài tập',							NULL,						505,	4),		--| | |
