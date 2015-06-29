@@ -148,8 +148,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LCTView\QuyenView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LCTHtml\NguoiDungHtml.cs" />
+    <Compile Include="LCTView\NguoiDungView.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_HinhAnh.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi.cs" />
     <Compile Include="WebServices\Iwcf_ChuDe.cs" />

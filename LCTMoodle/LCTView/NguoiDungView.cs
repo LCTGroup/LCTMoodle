@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using DTOLayer;
 
-namespace LCTMoodle.LCTHtml
+namespace LCTMoodle.LCTView
 {
-    public class NguoiDungHtml
+    public class NguoiDungView
     {
         public static HtmlString link(NguoiDungDTO nguoiDung)
         {

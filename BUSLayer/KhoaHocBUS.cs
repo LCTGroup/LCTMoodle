@@ -109,20 +109,46 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua them(Form form)
+        public static KetQua them(Form form, int? maNguoiDung = null)
         {
-            //Chưa xử lý quản lý
-            KhoaHocDTO khoaHoc = new KhoaHocDTO();
+            #region Kiểm tra quyền
+            //Lấy người dùng
+            if (!maNguoiDung.HasValue)
+            {
+                maNguoiDung = Session["NguoiDung"] as int?;
+            }
+            if (!maNguoiDung.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 4
+                };
+            }
+
+            //Lấy quyền tạo khóa học của người dùng
+            if (!coQuyen("QLNoiDung", "KH", 0, maNguoiDung))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền tạo khóa học"
+                };
+            }
+            #endregion
+
+            #region Thêm khóa học
+		    var khoaHoc = new KhoaHocDTO();
             gan(ref khoaHoc, form);
 
-            KetQua ketQua = kiemTra(khoaHoc);
+            var ketQua = kiemTra(khoaHoc);
 
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            return KhoaHocDAO.them(khoaHoc);
+            return KhoaHocDAO.them(khoaHoc); 
+	        #endregion
         }
 
         public static KetQua layTheoMa(int ma, LienKet lienKet = null)

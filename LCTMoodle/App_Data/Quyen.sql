@@ -138,7 +138,7 @@ BEGIN
 		(@1 = 'CD' OR @1 = 'HD' OR @1 = 'KH')
 	)
 	BEGIN
-		--Nếu là CD => Mã đối tượng là mã chủ đề => khỏi xử lý
+		--Nếu là CD => Lấy mã chủ đề cha của chủ đề
 		--Nếu là HD => Lấy mã chủ đề của câu hỏi
 		--Nếu là KH => Lấy mã chủ đề của khóa học
 		DECLARE @maChuDe INT
@@ -156,10 +156,12 @@ BEGIN
 		END
 		ELSE
 		BEGIN
-			SET @maChuDe = @2
-		END
+			SELECT @maChuDe = MaCha
+				FROM dbo.ChuDe
+				WHERE Ma = @2
 
-		SELECT @giaTri += Q.GiaTri + '|'
+			--Khi là chủ đề thì lấy quyền trong chính nó nữa
+			SELECT @giaTri += Q.GiaTri + '|'
 			FROM 
 				dbo.NhomNguoiDung_CD NND
 					INNER JOIN dbo.NhomNguoiDung_CD_NguoiDung NND_ND ON
@@ -167,7 +169,22 @@ BEGIN
 						NND_ND.MaNhomNguoiDung = NND.Ma
 					INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
 						NND_Q.MaNhomNguoiDung = NND.Ma AND
-						NND_Q.MaDoiTuong = @maChuDe
+						NND_Q.MaDoiTuong = @2
+					INNER JOIN dbo.Quyen Q ON
+						Q.PhamVi = @1 AND
+						Q.Ma = NND_Q.MaQuyen
+			GROUP BY Q.GiaTri
+		END
+
+		SELECT @giaTri += Q.GiaTri + '|'
+			FROM 
+				dbo.NhomNguoiDung_CD NND
+					INNER JOIN dbo.NhomNguoiDung_CD_NguoiDung NND_ND ON
+						NND.MaDoiTuong = @maChuDe AND
+						NND_ND.MaNguoiDung = @0 AND
+						NND_ND.MaNhomNguoiDung = NND.Ma
+					INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
+						NND_Q.MaNhomNguoiDung = NND.Ma
 					INNER JOIN dbo.Quyen Q ON
 						Q.PhamVi = @1 AND
 						Q.Ma = NND_Q.MaQuyen
@@ -286,7 +303,30 @@ BEGIN
 		END
 		ELSE
 		BEGIN
-			SET @maChuDe = @2
+			SELECT @maChuDe = MaCha
+				FROM dbo.ChuDe
+				WHERE Ma = @2
+
+			--Khi là chủ đề thì lấy quyền trong chính nó nữa
+			IF EXISTS(
+				SELECT TOP 1 1
+					FROM 
+						dbo.NhomNguoiDung_CD NND
+							INNER JOIN dbo.NhomNguoiDung_CD_NguoiDung NND_ND ON
+								NND_ND.MaNguoiDung = @0 AND
+								NND_ND.MaNhomNguoiDung = NND.Ma
+							INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
+								NND_Q.MaNhomNguoiDung = NND.Ma AND
+								NND_Q.MaDoiTuong = @2
+							INNER JOIN dbo.Quyen Q ON
+								Q.PhamVi = @1 AND
+								Q.Ma = NND_Q.MaQuyen AND
+								Q.GiaTri = @3
+			)
+			BEGIN
+				SELECT 1
+				RETURN
+			END
 		END
 
 		IF EXISTS(
@@ -294,11 +334,11 @@ BEGIN
 				FROM 
 					dbo.NhomNguoiDung_CD NND
 						INNER JOIN dbo.NhomNguoiDung_CD_NguoiDung NND_ND ON
+							NND.MaDoiTuong = @maChuDe AND
 							NND_ND.MaNguoiDung = @0 AND
 							NND_ND.MaNhomNguoiDung = NND.Ma
 						INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
-							NND_Q.MaNhomNguoiDung = NND.Ma AND
-							NND_Q.MaDoiTuong = @maChuDe
+							NND_Q.MaNhomNguoiDung = NND.Ma
 						INNER JOIN dbo.Quyen Q ON
 							Q.PhamVi = @1 AND
 							Q.Ma = NND_Q.MaQuyen AND

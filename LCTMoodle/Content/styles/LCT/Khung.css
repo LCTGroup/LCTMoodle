@@ -131,7 +131,6 @@ body.tai > .khung {
 .bieu-tuong-tai-lct {
     display: block;
     position: absolute;
-    width: 100%;
     padding-left: 5px;
     text-align: left;
     z-index: 9;
@@ -140,6 +139,7 @@ body.tai > .khung {
 .bieu-tuong-tai-lct_page {
     position: fixed;
     bottom: 60%;
+    width: 100%;
     display: block;
     padding-left: 0;
     text-align: center;

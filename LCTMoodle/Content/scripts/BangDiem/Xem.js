@@ -84,7 +84,7 @@ function khoiTaoNutHoanThanhSua($nuts) {
         if (dsCapNhat.length != 0) {
             var $tai = moBieuTuongTai($_Khung);
             $.ajax({
-                url: '/BangDiem/CapNhatBangDiem',
+                url: '/BangDiem/XuLyCapNhatBangDiem',
                 method: 'POST',
                 data: { jsonDiem: JSON.stringify(dsCapNhat) },
                 dataType: 'JSON'
