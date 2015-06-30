@@ -68,9 +68,9 @@ AFTER DELETE
 AS
 BEGIN
 	DECLARE @maTraLoi INT
-
-	SELECT @maTraLoi = MaTraLoi FROM DELETED
 	DECLARE @diem BIT
+		
+	SELECT @maTraLoi = MaTraLoi, @diem = Diem FROM DELETED
 
 	UPDATE dbo.TraLoi
 	SET Diem -= CASE

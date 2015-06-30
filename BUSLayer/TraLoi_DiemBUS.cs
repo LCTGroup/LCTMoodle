@@ -23,7 +23,7 @@ namespace BUSLayer
                 };
             }
 
-            KetQua ketQua = CauHoiDAO.layTheoMa(maTraLoi);
+            KetQua ketQua = TraLoiDAO.layTheoMa(maTraLoi);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;

@@ -14,6 +14,17 @@
             nguoiDung = ketQua.ketQua as NguoiDungDTO;
         }
     }
+
+    List<CauHoiDTO> dsCauHoi = null;
+    ketQua = BUSLayer.CauHoiBUS.layDanhSach(5, new LienKet() { 
+        "NguoiTao",
+        "HinhDaiDien"
+    }, "MoiNhat");
+    if (ketQua.trangThai == 0)
+    {
+        dsCauHoi = ketQua.ketQua as List<CauHoiDTO>;
+    }
+    
 }
 <!DOCTYPE html>
 
@@ -217,18 +228,40 @@
                                 </section>
                             </article>   
                         }
-                        <article class="hop-chuc-nang">
+                        
+                        <article class="hop-cau-hoi">
                             <section class="ten-chuc-nang">
-                                Tiêu đề
+                                Câu hỏi mới trong ngày
                             </section>
-                            <section class="chuc-nang">
-                                <div>
-
-                                </div>
+                            <section class="noi-dung-hop-cau-hoi">
+                                <ul>@{
+                                    if (dsCauHoi != null)
+                                    {
+                                        foreach(var cauHoi in dsCauHoi)
+                                        {
+                                            <li>
+                                                <div class="tieu-de">
+                                                    <a href="/HoiDap/@cauHoi.ma" title="@cauHoi.tieuDe">@cauHoi.tieuDe</a>
+                                                </div>
+                                                <div class="thong-tin">
+                                                    <img src="/LayTapTin/NguoiDung_HinhDaiDien/@cauHoi.nguoiTao.hinhDaiDien.ma" />
+                                                    <span>@cauHoi.nguoiTao.tenTaiKhoan - @cauHoi.thoiDiemTao.Value.ToString("hh:mm tt")</span>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                    
+                                }</ul>
+                                <section>Chưa có câu hỏi mới</section>                             
                             </section>
                         </article>
+
+                        @*<article class="chuc-nang">
+                            <section class="ten-chuc-nang"></section>
+                            <section class="chuc-nang"></section>
+                        </article>*@
                     </article>
-                </aside>
+                </aside>                
             }
         </main>
 

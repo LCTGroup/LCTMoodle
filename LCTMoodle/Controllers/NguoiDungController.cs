@@ -16,6 +16,8 @@ namespace LCTMoodle.Controllers
         {
             if (ma != null)
             {
+                ViewData["DanhSachCauHoi"] = null;
+
                 KetQua ketQua = CauHoiDAO.layTheoMaNguoiTao(ma, new LienKet() { 
                     "NguoiTao",
                     "HinhDaiDien"
@@ -23,11 +25,8 @@ namespace LCTMoodle.Controllers
                 if (ketQua.trangThai == 0)
                 {
                     ViewData["DanhSachCauHoi"] = ketQua.ketQua as List<CauHoiDTO>;
-                }
-                else
-                {
-                    ViewData["DanhSachCauHoi"] = null;
-                }
+                }                               
+
                 return View(NguoiDungBUS.layTheoMa(ma).ketQua);
             }
             return RedirectToAction("Index", "TrangChu");

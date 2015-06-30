@@ -1,4 +1,4 @@
-﻿function khoiTaoKhungTimKiemLCT($danhSach, $khungTim, duongDan) {
+﻿function khoiTaoKhungTimKiemLCT($danhSach, $khungTim, duongDan, thamSo) {
     var 
         maChuDeTim = 0,
         tuKhoaTim = '',
@@ -111,9 +111,27 @@
     //#region Hàm xử lý
 
     function timKiem() {
+        var data;
+        if ('data' in thamSo) {
+            if (typeof (thamSo.data) === 'function') {
+                data = thamSo.data();
+            }
+            else {
+                data = thamSo.data;
+            }
+        }
+
+        if (typeof (data) !== 'object') {
+            data = { tuKhoa: tuKhoaTim, maChuDe: maChuDeTim }
+        }
+        else {
+            data.tuKhoa = tuKhoaTim;
+            data.maChuDe = maChuDeTim;
+        }
+
         $.ajax({
             url: duongDan,
-            data: { tuKhoa: tuKhoaTim, maChuDe: maChuDeTim },
+            data: data,
             dataType: 'JSON'
         }).done(function (data) {
             if (data.trangThai == 0) {
