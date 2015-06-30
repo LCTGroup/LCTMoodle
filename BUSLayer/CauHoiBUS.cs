@@ -103,6 +103,16 @@ namespace BUSLayer
        
         public static KetQua them(Form form)
         {
+            #region Kiểm tra điều kiện
+
+            int? maNguoiTao = form.layInt("MaNguoiTao");
+            if (maNguoiTao.HasValue)
+            {
+                return new KetQua(4);
+            }
+
+            #endregion
+
             CauHoiDTO cauHoi = new CauHoiDTO();
             gan(ref cauHoi, form);
 
@@ -116,40 +126,49 @@ namespace BUSLayer
             return CauHoiDAO.them(cauHoi);
         }
 
-        public static KetQua xoaTheoMa(int? ma)
+        public static KetQua xoaTheoMa(int? ma, int? maNguoiXoa)
         {
+            #region Kiểm tra điều kiện
+
+            //Lấy câu hỏi
+            var ketQua = CauHoiBUS.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Câu hỏi không tồn tại");
+            }
+
+            var cauHoi = ketQua.ketQua as CauHoiDTO;
+            if (cauHoi.nguoiTao.ma != maNguoiXoa && !coQuyen("XoaCauHoi", "HD", 0, maNguoiXoa))
+            {
+                return new KetQua(3, "Bạn không có quyền xóa câu hỏi");
+            }
+
+            #endregion
+
             return CauHoiDAO.xoaTheoMa(ma);
         }
 
         public static KetQua capNhat(Form form, LienKet lienKet = null)
         {
-            int? maCauHoi = form.layInt("Ma");
-            if (!maCauHoi.HasValue)
-            {
-                return new KetQua()
-                {
-                    trangThai = 1
-                };
-            }
+            #region Kiểm tra điều kiện
 
-            KetQua ketQua = CauHoiBUS.layTheoMa(maCauHoi.Value, new LienKet()
-            {
-                "NguoiTao", 
-                {
-                    "TraLoi",
-                    new LienKet() 
-                    {
-                        "NguoiTao"
-                    }
-                },
-                "ChuDe"
-            });
+            int? maNguoiSua = form.layInt("MaNguoiSua");
+            int? maCauHoi = form.layInt("Ma");
+
+            var ketQua = CauHoiDAO.layTheoMa(maCauHoi);
             if (ketQua.trangThai != 0)
             {
-                return ketQua;
+                return new KetQua(1, "Câu hỏi không tồn tại");
             }
 
-            CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
+            var cauHoi = ketQua.ketQua as CauHoiDTO;
+            if (cauHoi.nguoiTao.ma != maNguoiSua && !coQuyen("SuaCauHoi", "HD", 0, maNguoiSua))
+            {
+                return new KetQua(3, "Bạn không có quyền sửa câu hỏi này");
+            }
+
+            #endregion            
+
             gan(ref cauHoi, form);
 
             ketQua = kiemTra(cauHoi, form.Keys.ToArray());

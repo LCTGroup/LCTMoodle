@@ -80,12 +80,10 @@ namespace BUSLayer
             {
                 thongBao.Add("Tên tài khoản không được bỏ trống");
             }
-
             if (coKiemTra("MatKhau", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.matKhau))
             {
                 thongBao.Add("Mật khẩu không được bỏ trống");
             }
-
             if (coKiemTra("Email", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.email))
             {
                 thongBao.Add("Email không được bỏ trống");
@@ -94,17 +92,18 @@ namespace BUSLayer
             {
                 thongBao.Add("Email không hợp lệ");
             }
-
+            if (coKiemTra("Email", truong, kiemTra) && NguoiDungBUS.tonTaiEmail(nguoiDung.email))
+            {
+                thongBao.Add("Email đã tồn tại. Vui lòng chọn email khác");
+            }
             if (coKiemTra("Ho", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.ho))
             {
                 thongBao.Add("Họ không được bỏ trống");
             }
-
             if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.ho))
             {
                 thongBao.Add("Tên không được bỏ trống");
             }
-
             if (coKiemTra("MatKhauCap2", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.matKhau))
             {
                 thongBao.Add("Mật khẩu cấp 2 không được bỏ trống");
@@ -453,7 +452,22 @@ namespace BUSLayer
         
         public static bool tonTaiTenTaiKhoan(string tenTaiKhoan)
         {
-            return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan).trangThai == 0 ? true : false;
+            KetQua ketQua = NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
+            if (ketQua.trangThai == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool tonTaiEmail(string email)
+        {
+            KetQua ketQua = NguoiDungDAO.layTheoEmail(email);
+            if (ketQua.trangThai == 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public static KetQua layTheoMaNhomNguoiDung(string phamVi, int maNhomNguoiDung)

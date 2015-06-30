@@ -141,6 +141,18 @@ namespace DAOLayer
             );
         }
 
+        public static KetQua layTheoEmail(string email, LienKet lienKet = null)
+        {
+            return layDong
+                (
+                    "layNguoiDungTheoEmail",
+                    new object[] {
+                        email
+                    },
+                    lienKet
+                );
+        }
+
         public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
         {
             return layDanhSachDong
