@@ -2,21 +2,36 @@
 @{
     ViewData["Title"] = "Người Dùng";
     Layout = "~/Views/LCT/Khung.cshtml";
+
+    int? maNguoiDung = Session["NguoiDung"] as int?;
+    bool coQuyenCapNhatThongTin, coQuyenDoiMatKhau;
     
-    if (Model != null)
+    if (maNguoiDung.HasValue)
+    {
+        coQuyenCapNhatThongTin = maNguoiDung == Model.ma;
+        coQuyenDoiMatKhau = maNguoiDung == Model.ma;
+    }
+    else
+    {
+        coQuyenDoiMatKhau = coQuyenCapNhatThongTin = false;
+    }
+    
+    if (coQuyenCapNhatThongTin || coQuyenDoiMatKhau)
     {
         List<string> chucNang = new List<string>();
-        
-        chucNang.Add("Cập nhật thông tin cá nhân");
-        chucNang.Add("href='/NguoiDung/Sua/" + Model.ma + "'");
-
-        chucNang.Add("Đổi mật khẩu");
-        chucNang.Add("href='/NguoiDung/DoiMatKhau/'");
-
+        if (coQuyenCapNhatThongTin)
+        {
+            chucNang.Add("Cập nhật thông tin cá nhân");
+            chucNang.Add("href='/NguoiDung/Sua/" + Model.ma + "'");
+        }
+        if (coQuyenDoiMatKhau)
+        {
+            chucNang.Add("Đổi mật khẩu");
+            chucNang.Add("href='/NguoiDung/DoiMatKhau/'");
+        }
         ViewData["ChucNang"] = chucNang;
-        
-        
     }
+    
     
 }
 @section Styles {

@@ -1,4 +1,6 @@
-﻿@model DTOLayer.CauHoiDTO
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model DTOLayer.CauHoiDTO
 @{
     ViewData["Title"] = Model.tieuDe;
     Layout = "~/Views/LCT/Khung.cshtml";
@@ -9,11 +11,30 @@
         Model.tieuDe, "/HoiDap/Xem/" + Model.ma
     };
 
-    ViewData["ChucNang"] = new List<string>()
-    {
-        "Thêm câu hỏi", "href='/HoiDap/ThemCauHoi'"
-    };
+    int? maNguoiDung = (int?)Session["NguoiDung"];
+    string[] dsQuyen;
 
+    bool coQuyenThemCauHoi, coQuyenTraLoiCauHoi;
+    
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("HD", 0, maNguoiDung);        
+        coQuyenThemCauHoi = coQuyenTraLoiCauHoi = true;
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenThemCauHoi = coQuyenTraLoiCauHoi = false;
+    }
+
+    if (coQuyenThemCauHoi)
+    {
+        ViewData["ChucNang"] = new List<string>()
+        {
+            "Thêm câu hỏi", "href='/HoiDap/ThemCauHoi'"
+        };
+    }
+    
     Dictionary<int, int> trangThaiVoteTraLoi = ViewData["DSTrangThaiVoteTraLoi"] as Dictionary<int, int>;
 }
 
@@ -28,9 +49,11 @@
 
 <article class="hop hop-1-vien">
     <section class="noi-dung">
-        @Html.Partial("~/Views/HoiDap/_Item_CauHoi.cshtml", Model, new ViewDataDictionary() { 
-            { "TrangThaiVote", ViewData["TrangThaiVote"] }
-       })
+        @Html.Partial("~/Views/HoiDap/_Item_CauHoi.cshtml", Model, new ViewDataDictionary() 
+        { 
+            { "TrangThaiVote", ViewData["TrangThaiVote"] },
+            { "DSQuyen", dsQuyen}
+        })
     </section>
 </article>
 
@@ -46,7 +69,11 @@
             {                
                 ViewData["TrangThaiVoteTraLoi"] = 1;
                 
-                @Html.Partial("~/Views/HoiDap/_Item_TraLoi.cshtml", traLoi, new ViewDataDictionary() { { "TrangThaiVoteTraLoi", trangThaiVoteTraLoi[traLoi.ma.Value] } });
+                @Html.Partial("~/Views/HoiDap/_Item_TraLoi.cshtml", traLoi, new ViewDataDictionary()
+                { 
+                    { "TrangThaiVoteTraLoi", trangThaiVoteTraLoi[traLoi.ma.Value] }, 
+                    { "DSQuyen", dsQuyen },
+                });
             }
     }</ul>
     <section>Chưa có trả lời</section>
@@ -58,11 +85,16 @@
 
 <article class="hop hop-2-vien">
     <section class="tieu-de">Trả lời câu hỏi</section>
-    <section class="noi-dung">
-        @Html.Partial("~/Views/HoiDap/_Form_TraLoi.cshtml", null, new ViewDataDictionary() { 
-            { "MaCauHoi", ViewData["MaCauHoi"] }
-        })
-    </section>
+        @if (coQuyenTraLoiCauHoi)
+        {
+            <section class="noi-dung">             
+                   @Html.Partial("~/Views/HoiDap/_Form_TraLoi.cshtml", null, new ViewDataDictionary() { { "MaCauHoi", ViewData["MaCauHoi"] } })
+            </section>                   
+        }
+        else
+        {
+            <p class="empty">Đăng nhập để có thể trả lời câu hỏi</p>
+        }
 </article>
 
 <!-- endregion Fom Trả lời -->

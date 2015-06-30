@@ -14,7 +14,7 @@
         min-width: 80px;
         max-width: 80px;
         padding: 10px;
-        border-right: 1px solid #f5f5f5;
+        border-right: 1px solid #eee;
         background-color: #f8f8f8;
     }
         .muc-hoi-dap .thong-tin .nguoi-dung {            
@@ -134,7 +134,6 @@
     }
         .cau-hoi .chi-tiet ul.chu-de li {
             display: inline-block;
-            border: 1px solid #ccc;
         }
             .cau-hoi .chi-tiet ul.chu-de li a {
                 display: block;
@@ -142,6 +141,8 @@
                 color: #888;
                 text-decoration: none;
                 transition: 0.2s;
+                background-color: #f8f8f8;
+                border: 1px solid #ddd;
             }
             .cau-hoi .chi-tiet ul.chu-de li a:hover {
                 background-color: #08c;
@@ -219,6 +220,13 @@
 
 /*#region Form trả lời */
 
+.empty {
+    border: 1px solid #ddd;
+    color: #555;
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+}
 
 /*#endregion */
 

@@ -55,6 +55,15 @@ namespace LCTMoodle.Controllers
 
         public ActionResult ThemCauHoi()
         {
+            #region Kiểm tra điều kiện
+
+            if (Session["NguoiDung"] == null)
+            {
+                return Redirect("/");
+            }
+
+            #endregion
+
             return View();
         }
 
@@ -183,6 +192,15 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult _Form_TraLoi(int ma = 0)
         {
+            #region Kiểm tra điều kiện
+
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            #endregion
+
             KetQua ketQua = TraLoiBUS.layTheoMa(ma);
             if (ketQua.trangThai != 0)
             {
