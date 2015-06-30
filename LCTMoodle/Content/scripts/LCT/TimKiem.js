@@ -1,4 +1,8 @@
 ﻿function khoiTaoKhungTimKiemLCT($danhSach, $khungTim, duongDan, thamSo) {
+    if (typeof (thamSo) === 'undefined') {
+        thamSo = {};
+    }
+
     var 
         maChuDeTim = 0,
         tuKhoaTim = '',

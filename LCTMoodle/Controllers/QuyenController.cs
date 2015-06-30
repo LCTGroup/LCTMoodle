@@ -168,7 +168,7 @@ namespace LCTMoodle.Controllers
                 return Json(new KetQua(4));
             }
 
-            return Json(NhomNguoiDungBUS.xoaTheoMa(phamVi, ma, (int)Session["NguoiTao"]));
+            return Json(NhomNguoiDungBUS.xoaTheoMa(phamVi, ma, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]

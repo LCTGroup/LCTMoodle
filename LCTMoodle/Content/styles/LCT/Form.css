@@ -18,9 +18,8 @@
                 width: 100%;
             }
 
-                .lct-form .tat {
-                    pointer-events: none;
-                    opacity: 0.2;
+                .lct-form ul > li.cot {
+                    flex-direction: column;
                 }
 
                 .lct-form ul > li.loi-dan {
@@ -94,6 +93,10 @@
         line-height: 20px;
         font-size: 13px;
     }
+
+        .lct-form .cot .tieu-de label {
+            text-align: left;
+        }
 
     .lct-form .input {
         border: 1px solid #ddd;

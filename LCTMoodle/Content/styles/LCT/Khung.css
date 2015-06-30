@@ -22,12 +22,13 @@ a {
 a[href]:hover {
     text-decoration: underline;
 }
-.tat {
+.tat:not([data-chi-an]) {
+    display: none !important;
+}
+.tat[data-chi-an],
+.an {
     opacity: 0.5 !important;
     pointer-events: none !important;
-}
-.an {
-    display: none !important;
 }
 @font-face {
     font-family: Berlin;

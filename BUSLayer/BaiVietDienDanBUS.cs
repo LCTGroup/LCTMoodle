@@ -191,7 +191,7 @@ namespace BUSLayer
 
             var baiViet = ketQua.ketQua as BaiVietDienDanDTO;
 
-            if (baiViet.nguoiTao.ma != maNguoiXoa && !coQuyen("DD_Xoa", "KH", baiViet.khoaHoc.ma.Value))
+            if (baiViet.nguoiTao.ma != maNguoiXoa && !coQuyen("DD_Xoa", "KH", baiViet.khoaHoc.ma.Value, maNguoiXoa))
             {
                 return new KetQua()
                 {

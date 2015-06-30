@@ -36,7 +36,7 @@
     {
         ViewData["ChucNang"] = new List<string>()
         {
-            "Quản lý chủ đề", "href='/ChuDe/QuanLy/" + (Model == null ? null : Model.ma) + "'"
+            "Quản lý chủ đề", "href='/ChuDe/QuanLy/" + (chuDe == null ? null : chuDe.ma) + "'"
         };
     }
 }
@@ -81,7 +81,7 @@
                         </ul>
                     </section>
                 </section>
-                <section id="khung_nguoi" class="khung-nguoi tat">
+                <section id="khung_nguoi" class="khung-nguoi tat" data-chi-an>
                     <section class="khung-tim lct-form">
                         <article class="input">
                             <input id="tim_nguoi_input" type="text" placeholder="Tìm người dùng" />
@@ -93,7 +93,7 @@
                     </section>
                 </section>
             </section>
-            <section id="khung_quyen" class="khung-duoi tat">
+            <section id="khung_quyen" class="khung-duoi tat" data-chi-an>
                 <section class="khung-pham-vi">
                     <ul class="danh-sach">
                         <li class="item chon">

@@ -714,37 +714,52 @@ function xuLyTatMo($form, $input, dangKhoiTao, tatHet) {
         doiTuongMo = $option.attr('data-mo');
         doiTuongTat = $option.attr('data-tat');
     }
+    
+    if (doiTuongMo)
+    {
+        var dsDoiTuongMo = '';
+        $(doiTuongMo.split(' ')).each(function () {
+            dsDoiTuongMo += ',[data-doi-tuong~="' + this + '"]';
+        });
 
-    $form.find('[data-doi-tuong~="' + doiTuongMo + '"]').each(function () {
-        var $doiTuong = $(this);
+        $form.find(dsDoiTuongMo.substr(1)).each(function () {
+            var $doiTuong = $(this);
 
-        xuLyTatMoDoiTuong($doiTuong, tatHet || false, dangKhoiTao)
+            xuLyTatMoDoiTuong($doiTuong, tatHet || false, dangKhoiTao)
 
-        if ($doiTuong.is('[data-chuc-nang="tat-mo"]')) {
-            xuLyTatMo($form, $doiTuong, dangKhoiTao);
-        }
-        $doiTuong.find('[data-chuc-nang="tat-mo"]').each(function () {
-            xuLyTatMo($form, $(this), dangKhoiTao);
-        })
-    });
+            if ($doiTuong.is('[data-chuc-nang="tat-mo"]')) {
+                xuLyTatMo($form, $doiTuong, dangKhoiTao);
+            }
+            $doiTuong.find('[data-chuc-nang="tat-mo"]').each(function () {
+                xuLyTatMo($form, $(this), dangKhoiTao);
+            })
+        });
+    }
 
-    $form.find('[data-doi-tuong~="' + doiTuongTat + '"]').each(function () {
-        var $doiTuong = $(this);
+    if (doiTuongTat) {
+        var dsDoiTuongTat = '';
+        $(doiTuongTat.split(' ')).each(function () {
+            dsDoiTuongTat += ',[data-doi-tuong~="' + this + '"]';
+        });
 
-        xuLyTatMoDoiTuong($doiTuong, !tatHet || true, dangKhoiTao);
+        $form.find(dsDoiTuongTat.substr(1)).each(function () {
+            var $doiTuong = $(this);
 
-        if ($doiTuong.is('[data-chuc-nang="tat-mo"]')) {
-            var khiAn = $doiTuong.attr('data-khi-tat');
+            xuLyTatMoDoiTuong($doiTuong, !tatHet || true, dangKhoiTao);
 
-            xuLyTatMo($form, $doiTuong, dangKhoiTao, khiAn != 'mo');
-        }
-        $doiTuong.find('[data-chuc-nang="tat-mo"]').each(function () {
-            var $input = $(this);
-            var khiAn = $input.attr('data-khi-tat');
+            if ($doiTuong.is('[data-chuc-nang="tat-mo"]')) {
+                var khiAn = $doiTuong.attr('data-khi-tat');
 
-            xuLyTatMo($form, $input, dangKhoiTao, khiAn != 'mo');
-        })
-    });
+                xuLyTatMo($form, $doiTuong, dangKhoiTao, khiAn != 'mo');
+            }
+            $doiTuong.find('[data-chuc-nang="tat-mo"]').each(function () {
+                var $input = $(this);
+                var khiAn = $input.attr('data-khi-tat');
+
+                xuLyTatMo($form, $input, dangKhoiTao, khiAn != 'mo');
+            })
+        });
+    }
 }
 
 function khoiTaoTatMo_LCT($form) {
@@ -1011,6 +1026,20 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
             }
         }
     });
+
+    $form.find('[data-input-type="gio"]').on({
+        'focusout': function () {
+            this.value = this.value.replace(/ /g, '');
+            var gio = this.value.split(':');
+            if (
+                gio[0] < 0 || 23 < gio[0] ||
+
+                )
+            {
+
+            }
+        }
+    })
 
     //Regex
     $form.find('[data-regex-validate]').each(function () {
