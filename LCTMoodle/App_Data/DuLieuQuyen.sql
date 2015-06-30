@@ -31,6 +31,8 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 --	('CD', 3, 0,	N'','',0,1),		--|
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
 	('CD', 305, 1,	N'Quản lý quyền',					'QLQuyen',					0,		1),		--|
+	('CD', 301, 1,	N'Thêm, xóa, sửa chủ đề',			'QLNoiDung',				0,		2),		--|
+	('CD', 302, 1,	N'Duyệt chủ đề',					'Duyet',					0,		3),		--|
 	
 	('CD', 303, 0,	N'Thêm, xóa, sửa chủ đề',			'QLNoiDung',				0,		1),		--|
 	('CD', 304, 0,	N'Duyệt chủ đề',					'Duyet',					0,		2),		--|

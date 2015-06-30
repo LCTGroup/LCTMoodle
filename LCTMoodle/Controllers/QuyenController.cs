@@ -16,8 +16,8 @@ namespace LCTMoodle.Controllers
             switch(phamVi)
             {
                 case "HT":
-                    break;
                 case "CD":
+                    break;
                 case "KH":
                     if (maDoiTuong == 0)
                     {
@@ -50,13 +50,16 @@ namespace LCTMoodle.Controllers
                     ViewData["KhoaHoc"] = ketQua.ketQua;
                     break;
                 case "CD":
-                    ketQua = ChuDeBUS.layTheoMa(maDoiTuong);
-                    if (ketQua.trangThai != 0)
+                    if (maDoiTuong != 0)
                     {
-                        return Redirect("/");
-                    }
+                        ketQua = ChuDeBUS.layTheoMa(maDoiTuong);
+                        if (ketQua.trangThai != 0)
+                        {
+                            return Redirect("/");
+                        }
 
-                    ViewData["ChuDe"] = ketQua.ketQua;
+                        ViewData["ChuDe"] = ketQua.ketQua;
+                    }
                     break;
                 default:
                     break;

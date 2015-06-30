@@ -11,10 +11,25 @@
     var chuoiDiem = ViewData["Diem"] as string[];
     var slCotDiem = dsCotDiem.Count;
 
-    var dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
+    var maNguoiDung = Session["NguoiDung"] as int?;
+    string[] dsQuyen;
+
+    bool coQuyenQLDiem;
+    
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
+        
+        coQuyenQLDiem = QuyenHelper.co(dsQuyen, "QLDiem");
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenQLDiem = false;
+    }
     
     List<string> chucNang = new List<string>();
-    if (QuyenHelper.co(dsQuyen, "QLCotDiem"))
+    if (coQuyenQLDiem)
     {
         chucNang.Add("Quản lý bảng điểm");
         chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + Model.ma + "'");
@@ -38,12 +53,15 @@
     <section class="tieu-de" style="text-align: left;">
         Bảng điểm
     </section>
-    <section class="khung-chuc-nang lct-form">
-        <a data-chuc-nang="sua-bang-diem" class="button">Chuyển chế độ sửa</a>
-        <a data-chuc-nang="luu-sua" class="button">Lưu</a>
-        <a data-chuc-nang="hoan-thanh-sua" class="button">Hoàn thành</a>
-        <a data-chuc-nang="huy-sua" class="button">Hủy</a>
-    </section>
+    @if (coQuyenQLDiem)
+    {
+        <section class="khung-chuc-nang lct-form">
+            <a data-chuc-nang="sua-bang-diem" class="button">Chuyển chế độ sửa</a>
+            <a data-chuc-nang="luu-sua" class="button">Lưu</a>
+            <a data-chuc-nang="hoan-thanh-sua" class="button">Hoàn thành</a>
+            <a data-chuc-nang="huy-sua" class="button">Hủy</a>
+        </section>   
+    }
     <section class="noi-dung" style="display: inline-block; max-width: 100%;">
         <article style="border: 0; background-color: transparent;">
             <section id="khung" class="khung-diem">
@@ -91,11 +109,14 @@
                 </table>
             </section>
         </article>
-    </section>
-    <section class="khung-chuc-nang lct-form">
-        <a data-chuc-nang="sua-bang-diem" class="button">Chuyển chế độ sửa</a>
-        <a data-chuc-nang="luu-sua" class="button">Lưu</a>
-        <a data-chuc-nang="hoan-thanh-sua" class="button">Hoàn thành</a>
-        <a data-chuc-nang="huy-sua" class="button">Hủy</a>
-    </section>
+    </section>   
+    @if (coQuyenQLDiem)
+    {
+        <section class="khung-chuc-nang lct-form">
+            <a data-chuc-nang="sua-bang-diem" class="button">Chuyển chế độ sửa</a>
+            <a data-chuc-nang="luu-sua" class="button">Lưu</a>
+            <a data-chuc-nang="hoan-thanh-sua" class="button">Hoàn thành</a>
+            <a data-chuc-nang="huy-sua" class="button">Hủy</a>
+        </section>
+    }
 </article>
