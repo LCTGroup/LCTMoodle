@@ -105,29 +105,24 @@ function khoiTaoNutChonPhamVi($nuts) {
             thanhCong = true;
 
             if (!(phamVi in _MangHtmlQuyen)) {
+                var $tai = moBieuTuongTai($_DanhSachQuyen);
                 $.ajax({
                     url: '/Quyen/_DanhSachQuyen',
                     data: { phamVi: phamVi, laQuyenChung: $nut.is('[data-chung]') },
                     dataType: 'JSON',
                     async: false
+                }).always(function () {
+                    $tai.tat();
                 }).done(function (data) {
                     if (data.trangThai == 0) {
                         _MangHtmlQuyen[phamVi] = data.ketQua;
                     }
                     else {
-                        moPopup({
-                            tieuDe: 'Thông báo',
-                            thongBao: 'Lấy danh sách quyền thất bại',
-                            bieuTuong: 'nguy-hiem'
-                        });
+                        moPopupThongBao(data);
                         thanhCong = false;
                     }
                 }).fail(function () {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        thongBao: 'Lấy danh sách quyền thất bại',
-                        bieuTuong: 'nguy-hiem'
-                    });
+                    moPopupThongBao('Lấy danh sách quyền thất bại');
                     thanhCong = false;
                 });
             }
@@ -159,29 +154,24 @@ function khoiTaoNutChonPhamVi($nuts) {
                                 thanhCong = true;
 
                                 if (!(phamVi in _MangHtmlQuyen)) {
+                                    var $tai = moBieuTuongTai($_DanhSachQuyen);
                                     $.ajax({
                                         url: '/Quyen/_DanhSachQuyen',
                                         data: { phamVi: phamVi, laQuyenChung: $nut.is('[data-chung]') },
                                         dataType: 'JSON',
                                         async: false
+                                    }).always(function () {
+                                        $tai.tat();
                                     }).done(function (data) {
                                         if (data.trangThai == 0) {
                                             _MangHtmlQuyen[phamVi] = data.ketQua;
                                         }
                                         else {
-                                            moPopup({
-                                                tieuDe: 'Thông báo',
-                                                thongBao: 'Lấy danh sách quyền thất bại',
-                                                bieuTuong: 'nguy-hiem'
-                                            });
+                                            moPopupThongBao(data);
                                             thanhCong = false;
                                         }
                                     }).fail(function () {
-                                        moPopup({
-                                            tieuDe: 'Thông báo',
-                                            thongBao: 'Lấy danh sách quyền thất bại',
-                                            bieuTuong: 'nguy-hiem'
-                                        });
+                                        moPopupThongBao('Lấy danh sách quyền thất bại');
                                         thanhCong = false;
                                     });
                                 }
@@ -219,11 +209,14 @@ function khoiTaoNutThemNhom($nuts) {
                 var $form = $khung.find('#them_nhom_form');
                 khoiTaoLCTForm($form, {
                     submit: function () {
+                        var $tai = moBieuTuongTai($khung);
                         $.ajax({
                             url: '/Quyen/XuLyThemNhom',
                             type: 'POST',
                             data: layDataLCTForm($form),
                             dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
                         }).done(function (data) {
                             if (data.trangThai == 0) {
                                 $khung.tat();
@@ -234,18 +227,10 @@ function khoiTaoNutThemNhom($nuts) {
                                 $_DanhSachNhom.prepend($item);
                             }
                             else {
-                                moPopup({
-                                    tieuDe: 'Thông báo',
-                                    thongBao: 'Thêm nhóm thất bại',
-                                    bieuTuong: 'nguy-hiem'
-                                });
+                                moPopupThongBao(data);
                             }
                         }).fail(function () {
-                            moPopup({
-                                tieuDe: 'Thông báo',
-                                thongBao: 'Thêm nhóm thất bại',
-                                bieuTuong: 'nguy-hiem'
-                            });
+                            moPopupThongBao('Thêm nhóm thất bại');
                         });
                     }
                 });
@@ -268,7 +253,9 @@ function khoiTaoItem_Quyen($items) {
     });
 
     $checks.on('change', function () {
-        var $item = $(this).closest('[data-doi-tuong="item-quyen"]'),
+        var 
+            $checkbox = $(this),
+            $item = $checkbox.closest('[data-doi-tuong="item-quyen"]'),
             maQuyen = this.value,
             them = this.checked,
             la = $item.is('[data-la]');
@@ -293,9 +280,11 @@ function khoiTaoItem_Quyen($items) {
                 capNhatCheckQuyenChaCon($item);
             }
             else {
+                $checkbox.prop('checked', !them);
                 moPopupThongBao(data);
             }
         }).fail(function () {
+            $checkbox.prop('checked', !them);
             moPopupThongBao('Cập nhật quyền thất bại');
         })
     });
@@ -402,27 +391,24 @@ function khoiTaoItem_Nhom($items) {
                     ten: 'Có',
                     loai: 'can-than',
                     xuLy: function () {
+                        var $tai = moBieuTuongTai($item);
                         $.ajax({
                             url: '/Quyen/XuLyXoaNhom/' + $item.attr('data-ma'),
                             data: { phamVi: _PhamViQuanLy },
                             type: 'POST',
                             dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
                         }).done(function (data) {
                             if (data.trangThai == 0) {
                                 $item.remove();
                                 capNhatTatMoKhung(false);
                             }
                             else {
-                                moPopup({
-                                    tieuDe: 'Thông báo',
-                                    thongBao: 'Xóa nhóm thất bại'
-                                })
+                                moPopupThongBao(data);
                             }
                         }).fail(function () {
-                            moPopup({
-                                tieuDe: 'Thông báo',
-                                thongBao: 'Xóa nhóm thất bại'
-                            })
+                            moPopupThongBao('Xóa nhóm thất bại');
                         });
                     }
                 },
@@ -441,11 +427,14 @@ function khoiTaoItem_Nhom($items) {
         _NhomHienTai = $item.attr('data-ma');
 
         if (!(_NhomHienTai in _MangQuyenNhom)) {
+            var $tai = moBieuTuongTai($_DanhSachQuyen);
             $.ajax({
                 url: '/Quyen/XulyLayQuyenNhom',
                 data: { phamVi: _PhamViQuanLy, maNhom: _NhomHienTai },
                 dataType: 'JSON',
                 async: false
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     _MangQuyenNhom[_NhomHienTai] = data.ketQua;
@@ -454,26 +443,21 @@ function khoiTaoItem_Nhom($items) {
                     _MangQuyenNhom[_NhomHienTai] = {};
                 }
                 else {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        thongBao: 'Lấy quyền của nhóm thất bại',
-                        bieuTuong: 'nguy-hiem'
-                    });
+                    moPopupThongBao(data);
                 }
             }).fail(function () {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Lấy quyền của nhóm thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao('Lấy quyền của nhóm thất bại');
             });
         }
 
         if (!(_NhomHienTai in _MangHtmlNguoi)) {
+            var $tai = moBieuTuongTai($_DanhSachNguoi.parent());
             $.ajax({
                 url: '/Quyen/_DanhSachNguoiDung',
                 data: { phamVi: _PhamViQuanLy, maNhom: _NhomHienTai },
                 dataType: 'JSON',
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     var $items = $(data.ketQua);
@@ -488,18 +472,10 @@ function khoiTaoItem_Nhom($items) {
                     $_DanhSachNguoi.empty();
                 }
                 else {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        thongBao: 'Lấy danh sách người dùng thất bại',
-                        bieuTuong: 'nguy-hiem'
-                    });
+                    moPopupThongBao(data);
                 }
             }).fail(function () {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Lấy danh sách người dùng thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao('Lấy danh sách người dùng thất bại');
             })
         }
         else {
@@ -551,6 +527,8 @@ function khoiTaoItem_NguoiDung($items) {
     $items.find('[data-chuc-nang="xoa-khoi-nhom"]').on('click', function () {
         var $item = $(this).closest('[data-doi-tuong="item-nguoi-dung"]');
         var ma = $item.attr('data-ma');
+
+        var $tai = moBieuTuongTai($item);
         $.ajax({
             url: '/Quyen/XuLyXoaNguoiDung',
             type: 'POST',
@@ -560,6 +538,8 @@ function khoiTaoItem_NguoiDung($items) {
                 maNguoiDung: ma
             },
             dataType: 'JSON'
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $item.remove();
@@ -569,18 +549,10 @@ function khoiTaoItem_NguoiDung($items) {
                 _MangHtmlNguoi[_NhomHienTai] = $tam.html();
             }
             else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Xóa người dùng khỏi nhóm thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao(data);
             }
         }).fail(function () {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Xóa người dùng khỏi nhóm thất bại',
-                bieuTuong: 'nguy-hiem'
-            });
+            moPopupThongBao('Xóa người dùng khỏi nhóm thất bại');
         })
     });
 }

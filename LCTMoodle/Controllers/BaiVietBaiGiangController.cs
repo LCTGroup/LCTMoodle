@@ -63,13 +63,13 @@ namespace LCTMoodle.Controllers
             #endregion
             #endregion
 
-            ViewData["MaKhoaHoc"] = maKhoaHoc;
-
             ketQua = BaiVietBaiGiangBUS.layTheoMaKhoaHoc(maKhoaHoc);
             List<BaiVietBaiGiangDTO> danhSachBaiViet = 
                 ketQua.trangThai == 0 ?
                 (List<BaiVietBaiGiangDTO>)ketQua.ketQua :
                 null;
+
+            ViewData["MaKhoaHoc"] = maKhoaHoc;
 
             return Json(new KetQua()
                 {
@@ -101,11 +101,16 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            Form form = chuyenForm(formCollection);
-            if (Session["NguoiDung"] != null)
+            if (Session["NguoiDung"] == null)
             {
-                form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
             }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+
             KetQua ketQua = BaiVietBaiGiangBUS.them(form);
 
             if (ketQua.trangThai == 0)
@@ -125,17 +130,33 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoa(int ma)
         {
-            return Json(
-                BaiVietBaiGiangDAO.xoaTheoMa(ma),
-                JsonRequestBehavior.AllowGet
-            );
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
+            }
+
+            return Json(BaiVietBaiGiangBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult XuLyCapNhat(FormCollection form)
+        public ActionResult XuLyCapNhat(FormCollection formCollection)
         {
-            KetQua ketQua = BaiVietBaiGiangBUS.capNhatTheoMa(chuyenForm(form));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
+            }
+
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+
+            KetQua ketQua = BaiVietBaiGiangBUS.capNhatTheoMa(form);
 
             if (ketQua.trangThai == 0)
             {

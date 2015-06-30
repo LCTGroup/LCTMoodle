@@ -124,13 +124,6 @@ BEGIN
 						Q.PhamVi = @1 AND
 						Q.Ma = NND_Q.MaQuyen
 			GROUP BY Q.GiaTri
-
-		IF (@@ROWCOUNT = 0)
-		BEGIN
-			UPDATE dbo.NguoiDung
-				SET CoQuyenNhomHT = NULL
-				WHERE Ma = @0
-		END
 	END
 	--Phạm vi chủ đề chỉ kiểm soát chủ đề, khóa học, hỏi đáp
 	IF (
@@ -189,13 +182,6 @@ BEGIN
 						Q.PhamVi = @1 AND
 						Q.Ma = NND_Q.MaQuyen
 			GROUP BY Q.GiaTri
-
-		IF (@@ROWCOUNT = 0)
-		BEGIN
-			UPDATE dbo.NguoiDung
-				SET CoQuyenNhomCD = NULL
-				WHERE Ma = @0
-		END
 	END
 	--Phạm vi hệ thống kiểm soát tất cả phạm vi quyền
 	IF (@coQuyenNhomHT = 1)
@@ -212,13 +198,6 @@ BEGIN
 						Q.PhamVi = @1 AND
 						Q.Ma = NND_Q.MaQuyen
 			GROUP BY Q.GiaTri
-
-		IF (@@ROWCOUNT = 0)
-		BEGIN
-			UPDATE dbo.NguoiDung
-				SET CoQuyenNhomHT = NULL
-				WHERE Ma = @0
-		END
 	END
 
 	SELECT CASE

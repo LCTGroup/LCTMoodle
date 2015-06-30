@@ -12,24 +12,24 @@ namespace BUSLayer
 {
     public class CotDiemBUS : BUS
     {
-        public static KetQua kiemTra(CotDiemDTO cotDiem)
+        public static KetQua kiemTra(CotDiemDTO cotDiem, string[] truong = null, bool kiemTra = true)
         {
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (cotDiem.khoaHoc == null)
+            if (coKiemTra("MaKhoaHoc", truong, kiemTra) && cotDiem.khoaHoc == null)
             {
                 loi.Add("Khóa học không được bỏ trống");
             }
-            if (string.IsNullOrEmpty(cotDiem.ten))
+            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrEmpty(cotDiem.ten))
             {
                 loi.Add("Tên không được bỏ trống");
             }
-            if (cotDiem.heSo == 0)
+            if (coKiemTra("HeSo", truong, kiemTra) && (cotDiem.heSo == null || cotDiem.heSo < 1))
             {
                 loi.Add("Hệ số không được bỏ trống");
             }
-            if (cotDiem.ngay == null)
+            if (coKiemTra("Ngay", truong, kiemTra) && cotDiem.ngay == null)
             {
                 loi.Add("Ngày không được bỏ trống");
             }
@@ -52,16 +52,77 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua them(Dictionary<string, string> form)
+        public static void gan(ref CotDiemDTO cotDiem, Form form)
         {
-            CotDiemDTO cotDiem = new CotDiemDTO()
+            if (cotDiem == null)
             {
-                ten = layString(form, "Ten"),
-                moTa = layString(form, "MoTa"),
-                heSo = layInt(form, "HeSo"),
-                ngay = layDate(form, "Ngay"),
-                khoaHoc = layDTO<KhoaHocDTO>(form, "KhoaHoc")
-            };
+                cotDiem = new CotDiemDTO();
+            }
+
+            foreach (string key in form.Keys.ToArray())
+            {
+                switch (key)
+                {
+                    case "Ten":
+                        cotDiem.ten = form.layString(key);
+                        break;
+                    case "MoTa":
+                        cotDiem.moTa = form.layString(key);
+                        break;
+                    case "HeSo":
+                        cotDiem.heSo = form.layInt(key);
+                        break;
+                    case "Ngay":
+                        cotDiem.ngay = form.layDate(key);
+                        break;
+                    case "MaKhoaHoc":
+                        cotDiem.khoaHoc = form.layDTO<KhoaHocDTO>(key);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public static KetQua them(Form form)
+        {
+            #region Kiểm tra điều kiện
+            //Lấy mã người tạo
+            int? maNguoiTao = form.layInt("MaNguoiTao");
+            if (!maNguoiTao.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Mã người tạo không được bỏ trống"
+                };
+            }
+
+            //Lấy mã khóa học
+            int? maKhoaHoc = form.layInt("MaKhoaHoc");
+            if (!maKhoaHoc.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Mã khóa học không được bỏ trống"
+                };
+            }
+
+            //Kiểm tra quyền
+            if (!coQuyen("QLCotDiem", "HT", maKhoaHoc.Value, maNguoiTao))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền thêm cột điểm"
+                };
+            }
+            #endregion
+
+            CotDiemDTO cotDiem = new CotDiemDTO();
+
+            gan(ref cotDiem, form);
 
             KetQua ketQua = kiemTra(cotDiem);
             
@@ -78,13 +139,49 @@ namespace BUSLayer
             return CotDiemDAO.layTheoMaKhoaHoc(maKhoaHoc);
         }
 
-        public static KetQua xoaTheoMa(int ma)
+        public static KetQua xoaTheoMa(int ma, int maNguoiXoa)
         {
+            #region Kiểm tra điều kiện
+            //Lấy mục chương trình
+            var ketQua = CotDiemDAO.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Cột điểm không tồn tại"
+                };
+            }
+            var cotDiem = ketQua.ketQua as CotDiemDTO;
+
+            //Kiểm tra quyền
+            if (!coQuyen("QLCotDiem", "KH", cotDiem.khoaHoc.ma.Value, maNguoiXoa))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền xóa cột điểm"
+                };
+            }
+            #endregion
+
             return CotDiemDAO.xoaTheoMa(ma);
         }
 
-        public static KetQua capNhatThuTu(int thuTuCu, int thuTuMoi, int maKhoaHoc)
+        public static KetQua capNhatThuTu(int thuTuCu, int thuTuMoi, int maKhoaHoc, int maNguoiSua)
         {
+            #region Kiểm tra điều kiện
+            //Kiểm tra quyền
+            if (!coQuyen("QLCotDiem", "KH", maKhoaHoc, maNguoiSua))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền sửa cột điểm"
+                };
+            }
+            #endregion
+
             return CotDiemDAO.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc);
         }
     }

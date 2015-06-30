@@ -136,11 +136,13 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThemNhom(FormCollection formCollection)
         {
-            Form form = chuyenForm(formCollection);
-            if (Session["NguoiDung"] != null)
+            if (Session["NguoiDung"] == null)
             {
-                form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+                return Json(new KetQua(4));
             }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+
             KetQua ketQua = NhomNguoiDungBUS.them(form);
 
             if (ketQua.trangThai != 0)
@@ -158,13 +160,23 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoaNhom(string phamVi, int ma)
         {
-            return Json(NhomNguoiDungBUS.xoaTheoMa(phamVi, ma));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(NhomNguoiDungBUS.xoaTheoMa(phamVi, ma, (int)Session["NguoiTao"]));
         }
 
         [HttpPost]
         public ActionResult XuLyCapNhatQuyenNhom(string phamVi, int maNhom, int maQuyen, int maDoiTuong, bool la, bool them)
         {
-            return Json(NhomNguoiDung_QuyenBUS.themHoacXoaTheoMaNhomNguoiDungVaMaQuyen(phamVi, maNhom, maQuyen, maDoiTuong, la, them));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(NhomNguoiDung_QuyenBUS.themHoacXoaTheoMaNhomNguoiDungVaMaQuyen(phamVi, maNhom, maQuyen, maDoiTuong, la, them, (int)Session["NguoiDung"]));
         }
 
         public ActionResult XulyLayQuyenNhom(string phamVi, int maNhom)
@@ -218,7 +230,12 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThemNguoiDung(string phamVi, int maNhom, int maNguoiDung)
         {
-            KetQua ketQua = NhomNguoiDung_NguoiDungBUS.them(phamVi, maNhom, maNguoiDung);
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            KetQua ketQua = NhomNguoiDung_NguoiDungBUS.them(phamVi, maNhom, maNguoiDung, (int)Session["NguoiDung"]);
 
             if (ketQua.trangThai != 0)
             {
@@ -242,7 +259,12 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoaNguoiDung(string phamVi, int maNhom, int maNguoiDung)
         {
-            return Json(NhomNguoiDung_NguoiDungBUS.xoaTheoMaNhomNguoiDungVaMaNguoiDung(phamVi, maNhom, maNguoiDung));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(NhomNguoiDung_NguoiDungBUS.xoaTheoMaNhomNguoiDungVaMaNguoiDung(phamVi, maNhom, maNguoiDung, (int)Session["NguoiDung"]));
         }
 
         public ActionResult _DanhSachNguoiDung(string phamVi, int maNhom)

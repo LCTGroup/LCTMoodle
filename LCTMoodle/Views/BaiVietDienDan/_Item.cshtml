@@ -1,14 +1,52 @@
-﻿@model DTOLayer.BaiVietDienDanDTO
-@using Helpers
+﻿@using Helpers
 @using LCTMoodle.LCTView
+@model DTOLayer.BaiVietDienDanDTO
 
 @{
-    var quyen = (string[])ViewData["Quyen"];
-    int maNguoiDung = Session["NguoiDung"] == null ? 0 : (int)Session["NguoiDung"];
+    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+    var maNguoiDung = Session["NguoiDung"] as int?;
 
-    bool
-        coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(quyen, "DienDan_Xoa") || true,
-        coQuyenSua = maNguoiDung == Model.nguoiTao.ma || true;
+    string[] dsQuyen;
+    bool coQuyenSua, coQuyenXoa, coQuyenGhim, laThanhVien;
+
+    if (maNguoiDung.HasValue)
+    {
+        if (ViewData.ContainsKey("DSQuyen"))
+        {
+            dsQuyen = ViewData["DSQuyen"] as string[];
+        }
+        else
+        {
+            dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc, maNguoiDung);
+        }
+
+        coQuyenSua = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "DD_Sua");
+        coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "DD_Xoa");
+        coQuyenGhim = QuyenHelper.co(dsQuyen, "DD_Ghim");
+
+        if (ViewData.ContainsKey("LaThanhVien"))
+        {
+            laThanhVien = (bool)ViewData["LaThanhVien"];
+        }
+        else
+        {
+            var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
+            if (ketQua.trangThai != 0)
+            {
+                laThanhVien = false;
+            }
+            else
+            {
+                var thanhVien = ketQua.ketQua as DTOLayer.KhoaHoc_NguoiDungDTO;
+                laThanhVien = thanhVien.trangThai == 0;
+            }
+        }
+    }
+    else
+    {
+        coQuyenSua = coQuyenXoa = coQuyenGhim = laThanhVien = false;
+        dsQuyen = null;
+    }
 }
 
 <li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma="@Model.ma" @(Model.ghim ? "data-ghim" : null) >
@@ -47,32 +85,39 @@
                 </section>
             }
         </section>
-        <section class="khung-chuc-nang-lct ben-trai" style="top: 10px; right: 10px;">
-            <ul data-doi-tuong="cndd-@Model.ma">
-                <li>
-                    <a data-chuc-nang="ghim-bai-viet">Ghim bài viết</a>
-                </li>
-                @if (coQuyenSua)
-                {
-                    <li>
-                        <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
-                    </li>
-                }
-                @if (coQuyenXoa)
-                {
-                    <li>
-                        <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
-                    </li>
-                }
-            </ul>
-            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cndd-@Model.ma">
-                <i class="pe-7f-config"></i>
-            </button>
-        </section>
+        @if (coQuyenSua || coQuyenXoa || coQuyenGhim)
+        {
+            <section class="khung-chuc-nang-lct ben-trai" style="top: 10px; right: 10px;">
+                <ul data-doi-tuong="cndd-@Model.ma">
+                    @if (coQuyenGhim)
+                    {
+                        <li>
+                            <a data-chuc-nang="ghim-bai-viet">Ghim bài viết</a>
+                        </li>   
+                    }
+                    @if (coQuyenSua)
+                    {
+                        <li>
+                            <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
+                        </li>
+                    }
+                    @if (coQuyenXoa)
+                    {
+                        <li>
+                            <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
+                        </li>
+                    }
+                </ul>
+                <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cndd-@Model.ma">
+                    <i class="pe-7f-config"></i>
+                </button>
+            </section>
+        }
     </section>
     @Html.Partial("~/Views/BinhLuan/_Khung.cshtml", null, new ViewDataDictionary()
         {
             { "LoaiDoiTuong", "BaiVietDienDan" },
-            { "MaDoiTuong", Model.ma }
+            { "MaDoiTuong", Model.ma },
+            { "CoQuyenBinhLuan", laThanhVien }
         })
 </li>

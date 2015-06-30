@@ -16,11 +16,19 @@ $(function () {
 });
 
 function moBieuTuongTai($item) {
-    var offset = $item.offset();
-    var bottom = $body.height() - offset.top - $item.height();
-    var left = offset.left;
+    var offset, bottom, left, $khungTai;
+    if (typeof ($item) === 'undefined') {
+        $item = $body;
+        $khungTai = $('<article class="bieu-tuong-tai-lct bieu-tuong-tai-lct_page"><i></i><i></i><i></i><i></i><i></i><i></i></article>');
+    }
+    else {
+        var offset = $item.offset();
+        var bottom = $body.height() - offset.top - $item.height();
+        var left = offset.left;
 
-    var $khungTai = $('<article style="left: ' + left + 'px;bottom: ' + bottom + 'px" class="bieu-tuong-tai-lct"><i></i><i></i><i></i><i></i><i></i><i></i></article>');
+        $khungTai = $('<article style="left: ' + left + 'px;bottom: ' + bottom + 'px" class="bieu-tuong-tai-lct"><i></i><i></i><i></i><i></i><i></i><i></i></article>');
+    }
+
     $body.append($khungTai);
     $item.addClass('item-tai-lct');
     $body.data('tai', $body.data('tai') + 1);
@@ -36,7 +44,6 @@ function moBieuTuongTai($item) {
         $item.removeClass('item-tai-lct');
         $khungTai.remove();
     }
-
     return $khungTai;
 }
 
@@ -197,11 +204,14 @@ function moPopupFull(thamSo) {
         $popup.mo();
     }
     else if ('url' in thamSo) {
+        var $tai = moBieuTuongTai();
         $.ajax({
             url: thamSo.url,
             type: 'type' in thamSo ? thamSo.method : 'GET',
             data: 'data' in thamSo ? (typeof thamSo.data == 'function' ? thamSo.data() : thamSo.data) : {},
             dataType: 'JSON'
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $popup = layPopupFull({
@@ -229,10 +239,16 @@ function moPopupFull(thamSo) {
                 if ('thatBai' in thamSo) {
                     thamSo.thatBai();
                 }
+                else {
+                    moPopupThongBao(data);
+                }
             }
         }).fail(function () {
             if ('thatBai' in thamSo) {
                 thamSo.thatBai();
+            }
+            else {
+                moPopupThongBao('Mở chức năng thất bại');
             }
         }).always(function () {
             if ('hoanTat' in thamSo) {
@@ -415,12 +431,7 @@ function moPopupThongBao(ketQua) {
                 });
                 break;
             case 4:
-                console.log(ketQua.trangThai);
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thất bại. Bạn cần đăng nhập để thực hiện chức năng này'),
-                    bieuTuong: 'thong-tin'
-                });
+                moPopupDangNhap();
                 break;
             default:
                 moPopup({

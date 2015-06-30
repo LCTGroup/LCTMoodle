@@ -54,7 +54,7 @@ END
 
 GO
 --Xóa theo mã nhóm người dùng, người dùng
-CREATE PROC dbo.xoaNhomNguoiDung_NguoiDungTheoMaNhomNguoiDungVaMaNguoiDung (
+ALTER PROC dbo.xoaNhomNguoiDung_NguoiDungTheoMaNhomNguoiDungVaMaNguoiDung (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT, --MaNhomNguoiDung
 	@2 INT --MaNguoiDung
@@ -66,5 +66,17 @@ BEGIN
 			WHERE 
 				MaNhomnguoiDung = ' + @1 + ' AND
 				MaNguoiDung = ' + @2 + '
+
+		--Kiểm tra nếu người dùng này không còn nằm trong nhóm người dùng *PV* nào nữa thì sẽ xóa
+		IF (NOT EXISTS (
+			SELECT TOP 1 1
+				FROM dbo.NhomNguoiDung_' + @0 + '_NguoiDung
+				WHERE MaNguoiDung = ' + @2 + '
+		))
+		BEGIN
+			UPDATE dbo.NguoiDung
+				SET CoQuyenNhom' + @0 + ' = NULL
+				WHERE Ma = ' + @2 + '
+		END
 	')
 END

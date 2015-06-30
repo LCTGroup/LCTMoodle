@@ -129,11 +129,16 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            Form form = chuyenForm(formCollection);
-            if (Session["NguoiDung"] != null)
+            if (Session["NguoiDung"] == null)
             {
-                form.Add("MaNguoiTao", ((int)Session["NguoiDung"]).ToString());
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
             }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+
             KetQua ketQua = ChuDeBUS.them(form);
 
             if (ketQua.trangThai != 0)
@@ -162,7 +167,17 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyCapNhat(FormCollection formCollection)
         {
-            var ketQua = ChuDeBUS.capNhatTheoMa(chuyenForm(formCollection));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
+            }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+
+            var ketQua = ChuDeBUS.capNhatTheoMa(form);
             if (ketQua.trangThai == 0)
             {
                 ketQua.ketQua = new
@@ -185,13 +200,29 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyChuyen(int ma, int maCha)
         {
-            return Json(ChuDeBUS.capNhatCha(ma, maCha));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(ChuDeBUS.capNhatCha(ma, maCha, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         public ActionResult XuLyXoa(int ma)
         {
-            return Json(ChuDeDAO.xoaTheoMa(ma));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(ChuDeBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
 
         public ActionResult _Chon(int ma = 0)

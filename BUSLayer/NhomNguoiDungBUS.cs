@@ -87,6 +87,27 @@ namespace BUSLayer
 
         public static KetQua them(Form form)
         {
+            #region Kiểm tra điều kiện
+            //Lấy mã người tạo
+            var maNguoiTao = form.layInt("MaNguoiTao");
+            if (!maNguoiTao.HasValue)
+            {
+                return new KetQua(3, "Người tạo không thể bỏ trống");
+            }
+
+            var phamVi = form.layString("PhamVi");
+            var maDoiTuong = form.layInt("MaDoiTuong");
+            if (phamVi == null || !maDoiTuong.HasValue)
+            {
+                return new KetQua(3, "Đối tượng không thể bỏ trống");
+            }
+
+            if (!coQuyen("QLQuyen", phamVi, maDoiTuong.Value, maNguoiTao))
+            {
+                return new KetQua(3, "Bạn không có quyền thêm nhóm người dùng");
+            }
+            #endregion
+
             NhomNguoiDungDTO nhomNguoiDung = new NhomNguoiDungDTO();
 
             gan(ref nhomNguoiDung, form);
@@ -106,8 +127,23 @@ namespace BUSLayer
             return NhomNguoiDungDAO.layTheoMaDoiTuong(phamVi, maDoiTuong);
         }
 
-        public static KetQua xoaTheoMa(string phamVi, int ma)
+        public static KetQua xoaTheoMa(string phamVi, int ma, int maNguoiXoa)
         {
+            #region Kiểm tra điều kiện
+            //Lấy nhóm người dùng
+            var ketQua = NhomNguoiDungDAO.layTheoMa(phamVi, ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Nhóm người dùng không tồn tại");
+            }
+            var nhomNguoiDung = ketQua.ketQua as NhomNguoiDungDTO;
+
+            if (!coQuyen("QLQuyen", phamVi, nhomNguoiDung.doiTuong.ma.Value, maNguoiXoa))
+            {
+                return new KetQua(3, "Bạn không có quyền xóa nhóm người dùng");
+            }
+            #endregion
+
             return NhomNguoiDungDAO.xoaTheoMa(phamVi, ma);
         }
     }

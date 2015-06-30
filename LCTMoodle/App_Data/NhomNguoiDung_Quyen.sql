@@ -39,15 +39,6 @@ BEGIN
 					FROM dbo.Quyen
 					WHERE @chuoiMaLa LIKE ''%|'' + CAST(Ma AS VARCHAR(MAX)) + ''|%''
 		END
-			
-		--Cập nhật CoQuyenNhom
-		UPDATE ND
-			SET ND.CoQuyenNhom' + @0 + ' = 1
-			FROM
-				NhomNguoiDung_' + @0 + '_NguoiDung NND_ND
-					INNER JOIN dbo.NguoiDung ND ON
-						NND_ND.MaNhomNguoiDung = ' + @1 + ' AND
-						NND_ND.MaNguoiDung = ND.Ma
 	')
 END
 
@@ -84,7 +75,6 @@ BEGIN
 	')			
 END
 
-exec dbo.layNhomNguoiDung_QuyenTheoMaNhomNguoiDung 'CD', 1
 GO
 --Lấy theo mã nhóm người dùng
 ALTER PROC dbo.layNhomNguoiDung_QuyenTheoMaNhomNguoiDung (

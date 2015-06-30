@@ -126,18 +126,32 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoa(int ma)
         {
-            return Json
-            (
-                BaiVietDienDanBUS.xoaTheoMa(ma), 
-                JsonRequestBehavior.AllowGet
-            );
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
+            }
+
+            return Json(BaiVietDienDanBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult XuLyCapNhat(FormCollection form)
+        public ActionResult XuLyCapNhat(FormCollection formCollection)
         {
-            KetQua ketQua = BaiVietDienDanBUS.capNhatTheoMa(chuyenForm(form));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
+            }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+
+            KetQua ketQua = BaiVietDienDanBUS.capNhatTheoMa(form);
 
             if (ketQua.trangThai == 0)
             {
@@ -159,7 +173,15 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyGhim(int ma, bool ghim)
         {
-            return Json(BaiVietDienDanBUS.ghim(ma, ghim));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(BaiVietDienDanBUS.ghim(ma, ghim, (int)Session["NguoiDung"]));
         }
 	}
 }

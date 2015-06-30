@@ -60,13 +60,47 @@ namespace BUSLayer
             };
         }
 
-        public static KetQua them(string phamVi, int maNhomNguoiDung, int maNguoiDung)
+        public static KetQua them(string phamVi, int maNhomNguoiDung, int maNguoiDung, int maNguoiThem)
         {
+            #region Kiểm tra điều kiện
+            //Lấy nhóm người dùng
+            var ketQua = NhomNguoiDungDAO.layTheoMa(phamVi, maNhomNguoiDung);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(3, "Nhóm người dùng không tồn tại");
+            }
+
+            var nhomNguoiDung = ketQua.ketQua as NhomNguoiDungDTO;
+
+            //Kiểm tra quyền
+            if (!coQuyen("QLQuyen", phamVi, nhomNguoiDung.doiTuong.ma.Value, maNguoiThem))
+            {
+                return new KetQua(3, "Bạn không có quyền thêm người dùng vào nhóm");
+            }
+            #endregion
+
             return NhomNguoiDung_NguoiDungDAO.them(phamVi, maNhomNguoiDung, maNguoiDung);
         }
 
-        public static KetQua xoaTheoMaNhomNguoiDungVaMaNguoiDung(string phamVi, int maNhomNguoiDung, int maNguoiDung)
+        public static KetQua xoaTheoMaNhomNguoiDungVaMaNguoiDung(string phamVi, int maNhomNguoiDung, int maNguoiDung, int maNguoiXoa)
         {
+            #region Kiểm tra điều kiện
+            //Lấy nhóm người dùng
+            var ketQua = NhomNguoiDungDAO.layTheoMa(phamVi, maNhomNguoiDung);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(3, "Nhóm người dùng không tồn tại");
+            }
+
+            var nhomNguoiDung = ketQua.ketQua as NhomNguoiDungDTO;
+
+            //Kiểm tra quyền
+            if (!coQuyen("QLQuyen", phamVi, nhomNguoiDung.doiTuong.ma.Value, maNguoiXoa))
+            {
+                return new KetQua(3, "Bạn không có quyền xóa người dùng khỏi nhóm");
+            }
+            #endregion
+
             return NhomNguoiDung_NguoiDungDAO.xoaTheoMaNhomNguoiDungVaMaNguoiDung(phamVi, maNhomNguoiDung, maNguoiDung);
         }
     }

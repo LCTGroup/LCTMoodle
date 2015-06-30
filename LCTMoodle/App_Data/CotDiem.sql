@@ -143,3 +143,21 @@ BEGIN
 			CD.MaKhoaHoc = @2 AND
 			CD.ThuTu BETWEEN @gioiHanDuoi AND @gioiHanTren
 END
+
+GO
+--Lấy theo mã
+CREATE PROC dbo.layCotDiemTheoMa(
+	@0 INT --Ma
+)
+AS
+BEGIN
+	SELECT 
+		Ma,
+		Ten,
+		MoTa,
+		HeSo,
+		Ngay,
+		MaKhoaHoc
+		FROM dbo.CotDiem
+		WHERE Ma = @0
+END

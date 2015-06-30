@@ -1,13 +1,36 @@
-﻿@model List<DTOLayer.BaiVietDienDanDTO>
-@using Helpers
-
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model List<DTOLayer.BaiVietDienDanDTO>
 @{
-    var quyen = (string[])ViewData["Quyen"];
+    int maKhoaHoc = (int)Session["MaKhoaHoc"];
+    int? maNguoiDung = Session["MaNguoiDung"] as int?;
 
-    bool coQuyenThem = QuyenHelper.co(quyen, "DD_Them") || true;
+    string[] dsQuyen;
+    bool laThanhVien;
+    
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc);
+        
+        var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
+        if (ketQua.trangThai != 0)
+        {
+            laThanhVien = false;
+        }
+        else
+        {
+            var thanhVien = ketQua.ketQua as DTOLayer.KhoaHoc_NguoiDungDTO;
+            laThanhVien = thanhVien.trangThai == 0;
+        }
+    }
+    else 
+    {
+        dsQuyen = null;
+        laThanhVien = false;
+    }
 }
 
-@if (coQuyenThem)
+@if (laThanhVien)
 {
     <section class="hop hop-2-vien">
         <section class="tieu-de">
@@ -29,7 +52,12 @@
         {
             foreach (var baiViet in Model)
             {
-                @Html.Partial("~/Views/BaiVietDienDan/_Item.cshtml", baiViet, ViewData)
+                @Html.Partial("~/Views/BaiVietDienDan/_Item.cshtml", baiViet, new ViewDataDictionary()
+                {
+                    { "MaKhoaHoc", maKhoaHoc },
+                    { "DSQuyen", dsQuyen },
+                    { "LaThanhVien", laThanhVien }
+                })
             }  
         } 
     </ul>

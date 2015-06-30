@@ -24,7 +24,7 @@ namespace BUSLayer
                 return false;
             }
 
-            var ketQua = QuyenBUS.kiemTraQuyenNguoiDung(giaTri, phamVi, 0, maNguoiDung);
+            var ketQua = QuyenBUS.kiemTraQuyenNguoiDung(maNguoiDung.Value, giaTri, phamVi, maDoiTuong);
             return ketQua.trangThai == 0 && (bool)ketQua.ketQua;
         }
 

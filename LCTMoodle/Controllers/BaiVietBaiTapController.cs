@@ -62,13 +62,13 @@ namespace LCTMoodle.Controllers
             #endregion
             #endregion
 
-            ViewData["MaKhoaHoc"] = maKhoaHoc;
-
             ketQua = BaiVietBaiTapBUS.layTheoMaKhoaHoc(maKhoaHoc);
             List<BaiVietBaiTapDTO> danhSachBaiViet = 
                 ketQua.trangThai == 0 ?
                 ketQua.ketQua as List<BaiVietBaiTapDTO> :
                 null;
+
+            ViewData["MaKhoaHoc"] = maKhoaHoc;
 
             return Json(new KetQua()
                 {

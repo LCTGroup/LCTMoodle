@@ -34,9 +34,19 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
-        public ActionResult XuLyThemCotDiem(FormCollection form)
+        public ActionResult XuLyThemCotDiem(FormCollection formCollection)
         {
-            KetQua ketQua = CotDiemBUS.them(chuyenDuLieuForm(form));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
+            }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+
+            var ketQua = CotDiemBUS.them(form);
 
             if (ketQua.trangThai == 0)
             {
@@ -49,13 +59,29 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoaCotDiem(int ma)
         {
-            return Json(CotDiemBUS.xoaTheoMa(ma));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(CotDiemBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         public ActionResult XuLyCapNhatThuTuCotDiem(int thuTuCu, int thuTuMoi, int maKhoaHoc)
         {
-            return Json(CotDiemBUS.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(CotDiemBUS.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc, (int)Session["NguoiDung"]));
         }
 
         public ActionResult Xem(int maKhoaHoc)
@@ -115,7 +141,15 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyCapNhatBangDiem(string jsonDiem)
         {
-            return Json(CotDiem_NguoiDungBUS.capNhat(JsonConvert.DeserializeObject<List<dynamic>>(jsonDiem)));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(CotDiem_NguoiDungBUS.capNhat(JsonConvert.DeserializeObject<List<dynamic>>(jsonDiem), (int)Session["NguoiDung"]));
         }
 	}
 }

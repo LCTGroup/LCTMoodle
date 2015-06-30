@@ -284,31 +284,56 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyChapNhanDangKy(int ma, int maNguoiDung)
         {
-            return Json(KhoaHoc_NguoiDungBUS.chapNhanDangKy(ma, maNguoiDung));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(KhoaHoc_NguoiDungBUS.chapNhanDangKy(ma, maNguoiDung, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         public ActionResult XuLyTuChoiDangKy(int ma, int maNguoiDung)
         {
-            return Json(KhoaHoc_NguoiDungBUS.tuChoiDangKy(ma, maNguoiDung));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(KhoaHoc_NguoiDungBUS.tuChoiDangKy(ma, maNguoiDung, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         public ActionResult XuLyChanNguoiDung(int ma, int maNguoiDung)
         {
-            return Json(KhoaHoc_NguoiDungBUS.chanNguoiDung(ma, maNguoiDung));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(KhoaHoc_NguoiDungBUS.chanNguoiDung(ma, maNguoiDung, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         public ActionResult XuLyHuyChanNguoiDung(int ma, int maNguoiDung)
         {
-            return Json(KhoaHoc_NguoiDungBUS.huyChanNguoiDung(ma, maNguoiDung));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(KhoaHoc_NguoiDungBUS.huyChanNguoiDung(ma, maNguoiDung, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         public ActionResult XuLyXoaThanhVien(int ma, int maNguoiDung)
         {
-            return Json(KhoaHoc_NguoiDungBUS.xoaThanhVien(ma, maNguoiDung));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(KhoaHoc_NguoiDungBUS.xoaThanhVien(ma, maNguoiDung, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
@@ -320,7 +345,12 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyCapNhatHocVien(int ma, int maNguoiDung, bool laHocVien)
         {
-            return Json(KhoaHoc_NguoiDungBUS.capNhatHocVien(ma, maNguoiDung, laHocVien));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(KhoaHoc_NguoiDungBUS.capNhatHocVien(ma, maNguoiDung, laHocVien, (int)Session["NguoiDung"]));
         }
 	}
 }

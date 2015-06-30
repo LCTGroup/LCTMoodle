@@ -36,11 +36,12 @@ namespace LCTMoodle.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
 
-            if (!BUS.coQuyen("BT_BaiNop", "KH", (ketQua.ketQua as BaiVietBaiTapDTO).khoaHoc.ma.Value))
+            var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
+            if (!BUS.coQuyen("BT_QLBaiNop", "KH", baiTap.khoaHoc.ma.Value))
             {
                 return Json(new KetQua()
                 {
-                    trangThai = 1,
+                    trangThai = 3,
                     ketQua = "Bạn không có quyền xem bài nộp"
                 }, JsonRequestBehavior.AllowGet);
             }

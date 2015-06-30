@@ -109,5 +109,18 @@ namespace DAOLayer
                 }
             );
         }
+
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
+        {
+            return layDong
+                (
+                    "layChuongTrinhTheoMa",
+                    new object[] 
+                    { 
+                        ma
+                    },
+                    lienKet
+                );
+        }
     }
 }

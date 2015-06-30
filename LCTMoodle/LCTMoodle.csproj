@@ -122,7 +122,6 @@
     <Folder Include="Plugin\ckeditor\samples\plugins\magicline\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\toolbar\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\wysiwygarea\" />
-    <Folder Include="Uploads\ChuDe_HinhDaiDien\" />
     <Folder Include="Views\TapTin\" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +169,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DuLieuQuyen.sql" />
     <Content Include="App_Data\Nhap.sql" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\ChuDe\ChuDe.png" />
@@ -388,35 +388,6 @@
     <Content Include="Plugin\ckeditor\skins\office2013\images\lock.png" />
     <Content Include="Plugin\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="Plugin\ckeditor\styles.js" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\1.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\10.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\11.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\12.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\13.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\14.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\15.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\16.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\17.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\18.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\19.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\2.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\20.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\21.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\22.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\23.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\24.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\25.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\26.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\27.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\28.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\29.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\3.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\4.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\5.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\6.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\7.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\8.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\9.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

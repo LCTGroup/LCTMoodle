@@ -1,4 +1,33 @@
-﻿@model DTOLayer.BaiVietTaiLieuDTO
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model DTOLayer.BaiVietTaiLieuDTO
+@{
+    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+    var maNguoiDung = Session["NguoiDung"] as int?;
+
+    string[] dsQuyen;
+    bool coQuyenSua, coQuyenXoa;
+
+    if (maNguoiDung.HasValue)
+    {
+        if (ViewData.ContainsKey("DSQuyen"))
+        {
+            dsQuyen = ViewData["DSQuyen"] as string[];
+        }
+        else
+        {
+            dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc, maNguoiDung);
+        }
+
+        coQuyenSua = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BG_Sua");
+        coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BG_Xoa");
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenSua = coQuyenXoa = false;
+    }
+}
 
 <li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma=@Model.ma>
     <h2 class="tieu-de">
@@ -19,17 +48,26 @@
             </section>
         }
     </section>
-    <section class="khung-chuc-nang-lct ben-trai" style="top: 10px; right: 10px;">
-        <ul data-doi-tuong="cnbg-@Model.ma">
-            <li>
-                <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
-            </li>
-            <li>
-                <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
-            </li>
-        </ul>
-        <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbg-@Model.ma">
-            <i class="pe-7f-config"></i>
-        </button>
-    </section>
+    @if (coQuyenSua || coQuyenXoa)
+    {
+        <section class="khung-chuc-nang-lct ben-trai" style="top: 10px; right: 10px;">
+            <ul data-doi-tuong="cnbg-@Model.ma">
+                @if (coQuyenSua)
+                {
+                    <li>
+                        <a data-chuc-nang="sua-bai-viet">Sửa tài liệu</a>
+                    </li>
+                }
+                @if (coQuyenXoa)
+                {
+                    <li>
+                        <a data-chuc-nang="xoa-bai-viet">Xóa tài liệu</a>
+                    </li>
+                }
+            </ul>
+            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbg-@Model.ma">
+                <i class="pe-7f-config"></i>
+            </button>
+        </section>
+    }
 </li>

@@ -11,7 +11,7 @@ $(function () {
 //#region Khởi tạo item
 
 function khoiTaoItem_ThanhVien($items) {
-    khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'));
+    khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'), true);
 
     $items.find('[data-chuc-nang="xoa-thanh-vien"]').on('click', function () {
         var $item = $(this).closest('.item');

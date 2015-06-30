@@ -111,7 +111,7 @@ namespace BUSLayer
 
         public static KetQua them(Form form, int? maNguoiDung = null)
         {
-            #region Kiểm tra quyền
+            #region Kiểm tra điều kiện
             //Lấy người dùng
             if (!maNguoiDung.HasValue)
             {

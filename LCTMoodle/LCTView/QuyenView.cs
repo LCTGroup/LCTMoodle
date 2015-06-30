@@ -11,7 +11,16 @@ namespace LCTMoodle.LCTView
     {
         public static string[] layDSQuyen(string phamVi, int maDoiTuong = 0, int? maNguoiDung = null)
         {
-            var ketQua = QuyenBUS.layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri(phamVi, maDoiTuong, maNguoiDung);
+            if (!maNguoiDung.HasValue)
+            {
+                maNguoiDung = HttpContext.Current.Session["NguoiDung"] as int?;
+            }
+            if (!maNguoiDung.HasValue)
+            {
+                return null;
+            }
+
+            var ketQua = QuyenBUS.layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri(maNguoiDung.Value, phamVi, maDoiTuong);
             return ketQua.trangThai == 0 ? ketQua.ketQua as string[] : null;
         }
     }

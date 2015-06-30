@@ -114,16 +114,12 @@ namespace BUSLayer
             return bangCapNhat;
         }
 
-        public static KetQua them(Form form, int? maNguoiDung = null, int? maKhoaHoc = null)
+        public static KetQua them(Form form)
         {
-            #region Kiểm tra quyền
+            #region Kiểm tra điều kiện
             //Lấy mã người dùng
-            if (!maNguoiDung.HasValue)
-            {
-                maNguoiDung = Session["NguoiDung"] as int?;
-            }
-
-            if (!maNguoiDung.HasValue)
+            var maNguoiTao = form.layInt("MaNguoiTao");
+            if (!maNguoiTao.HasValue)
             {
                 return new KetQua()
                 {
@@ -132,11 +128,7 @@ namespace BUSLayer
             }
 
             //Lấy mã khóa học
-            if (!maKhoaHoc.HasValue)
-            {
-                maKhoaHoc = form.layInt("MaKhoaHoc");
-            }
-
+            var maKhoaHoc = form.layInt("MaKhoaHoc");
             if (!maKhoaHoc.HasValue)
             {
                 return new KetQua()
@@ -146,8 +138,7 @@ namespace BUSLayer
                 };
             }
 
-            var ketQua = QuyenBUS.kiemTraQuyenNguoiDung("BG_Them", "KH", maKhoaHoc.Value, maNguoiDung);
-            if (ketQua.trangThai == 0 && !(bool)ketQua.ketQua)
+            if (coQuyen("BG_Them", "KH", maKhoaHoc.Value, maNguoiTao))
             {
                 return new KetQua()
                 {
@@ -160,7 +151,7 @@ namespace BUSLayer
             BaiVietBaiGiangDTO baiVietBaiGiang = new BaiVietBaiGiangDTO();
             gan(ref baiVietBaiGiang, form);
             
-            ketQua = kiemTra(baiVietBaiGiang);
+            var ketQua = kiemTra(baiVietBaiGiang);
 
             if (ketQua.trangThai != 0)
             {
@@ -186,8 +177,9 @@ namespace BUSLayer
             return BaiVietBaiGiangDAO.layTheoMa(ma);
         }
 
-        public static KetQua xoaTheoMa(int ma, int? maNguoiDung = null, int? maKhoaHoc = null)
+        public static KetQua xoaTheoMa(int ma, int maNguoiXoa)
         {
+            #region Kiểm tra điều kiện
             //Lấy bài giảng
             var ketQua = BaiVietBaiGiangDAO.layTheoMa(ma);
             if (ketQua.trangThai != 0)
@@ -198,87 +190,77 @@ namespace BUSLayer
                     ketQua = "Bài giảng không tồn tại"
                 };
             }
-            BaiVietBaiGiangDTO baiGiang = ketQua.ketQua as BaiVietBaiGiangDTO;
 
-            #region Kiểm tra quyền
-            //Lấy mã người dùng
-            if (!maNguoiDung.HasValue)
-            {
-                maNguoiDung = Session["NguoiDung"] as int?;
-            }
+            var baiGiang = ketQua.ketQua as BaiVietBaiGiangDTO;
 
-            if (!maNguoiDung.HasValue)
-            {
-                return new KetQua()
-                {
-                    trangThai = 4
-                };
-            }
-
-            //Lấy mã khóa học
-            if (!maKhoaHoc.HasValue)
-            {
-                ketQua = BaiVietBaiGiangDAO.layTheoMa(ma);
-                if (ketQua.trangThai != 0)
-                {
-                    maKhoaHoc = (ketQua.ketQua as BaiVietBaiGiangDTO).khoaHoc.ma;
-                }
-            }
-
-            if (!maKhoaHoc.HasValue)
+            if (baiGiang.nguoiTao.ma != maNguoiXoa && !coQuyen("BG_Xoa", "KH", baiGiang.khoaHoc.ma.Value, maNguoiXoa))
             {
                 return new KetQua()
                 {
                     trangThai = 3,
-                    ketQua = "Khóa học không thể bỏ trống"
+                    ketQua = "Bạn không có quyền xóa bài giảng"
                 };
             }
-
-            if (baiGiang.nguoiTao.ma != maNguoiDung)
-            {
-                ketQua = QuyenBUS.kiemTraQuyenNguoiDung("BG_Xoa", "KH", maKhoaHoc.Value, maNguoiDung);
-                if (ketQua.trangThai == 0 && !(bool)ketQua.ketQua)
-                {
-                    return new KetQua()
-                    {
-                        trangThai = 3,
-                        ketQua = "Bạn không có quyền thêm bài giảng"
-                    };
-                }
-            }
             #endregion
+
             return BaiVietBaiGiangDAO.xoaTheoMa(ma);
         }
 
         public static KetQua capNhatTheoMa(Form form)
         {
-            int? maBaiViet = form.layInt("Ma");
-            if (!maBaiViet.HasValue)
+            #region Kiểm tra điều kiện
+            //Lấy mã người dùng
+            var maNguoiSua = form.layInt("MaNguoiSua");
+            if (!maNguoiSua.HasValue)
             {
                 return new KetQua()
                 {
-                    trangThai = 1
+                    trangThai = 3,
+                    ketQua = "Mã người sửa ko được bỏ trống"
                 };
             }
 
-            KetQua ketQua = BaiVietBaiGiangDAO.layTheoMa(maBaiViet);
+            //Lấy bài giảng
+            var ma = form.layInt("Ma");
+            if (!ma.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Mã bài giảng không thể bỏ trống"
+                };
+            }
+            var ketQua = BaiVietBaiGiangDAO.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua()
+                    {
+                        trangThai = 1,
+                        ketQua = "Bài giảng không tồn tại"
+                    };
+            }
+            var baiGiang = ketQua.ketQua as BaiVietBaiGiangDTO;
+
+            if (baiGiang.nguoiTao.ma != maNguoiSua && !coQuyen("BG_Sua", "KH", baiGiang.khoaHoc.ma.Value))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền sửa bài giảng"
+                };
+            }
+            #endregion
+
+            gan(ref baiGiang, form);
+
+            ketQua = kiemTra(baiGiang, form.Keys.ToArray());
+
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            BaiVietBaiGiangDTO baiViet = ketQua.ketQua as BaiVietBaiGiangDTO;
-
-            gan(ref baiViet, form);
-
-            ketQua = kiemTra(baiViet, form.Keys.ToArray());
-
-            if (ketQua.trangThai != 0)
-            {
-                return ketQua;
-            }
-
-            return BaiVietBaiGiangDAO.capNhatTheoMa(maBaiViet, layBangCapNhat(baiViet, form.Keys.ToArray()), new LienKet()
+            return BaiVietBaiGiangDAO.capNhatTheoMa(ma, layBangCapNhat(baiGiang, form.Keys.ToArray()), new LienKet()
             {
                 "NguoiTao",
                 "TapTin"

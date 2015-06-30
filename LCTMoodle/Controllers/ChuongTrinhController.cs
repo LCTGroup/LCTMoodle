@@ -62,7 +62,17 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            KetQua ketQua = ChuongTrinhBUS.them(chuyenDuLieuForm(formCollection));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
+            }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+
+            KetQua ketQua = ChuongTrinhBUS.them(form);
 
             if (ketQua.trangThai == 0)
             {
@@ -81,13 +91,27 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoa(int ma)
         {
-            return Json(ChuongTrinhBUS.xoaTheoMa(ma));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+            return Json(ChuongTrinhBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         public ActionResult XuLyCapNhatThuTu(int thuTuCu, int thuTuMoi, int maKhoaHoc)
         {
-            return Json(ChuongTrinhBUS.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+            return Json(ChuongTrinhBUS.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc, (int)Session["NguoiDung"]));
         }
 	}
 }

@@ -1,11 +1,49 @@
-﻿@model List<DTOLayer.BaiVietBaiTapDTO>
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model List<DTOLayer.BaiVietBaiTapDTO>
+@{
+    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+    var maNguoiDung = Session["NguoiDung"] as int?;
 
-<section class="hop hop-2-vien">
-    <section class="tieu-de">
-        Đăng bài tập cho các học viên
+    string[] dsQuyen;
+    bool 
+        coQuyenThem,
+        laHocVien;
+    
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc);
+
+        coQuyenThem = QuyenHelper.co(dsQuyen, "BT_Them");
+
+        var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
+        if (ketQua.trangThai != 0)
+        {
+            laHocVien = false;
+        }
+        else 
+        {
+            var thanhVien = ketQua.ketQua as DTOLayer.KhoaHoc_NguoiDungDTO;
+            laHocVien = thanhVien.trangThai == 0 && thanhVien.laHocVien;
+        }
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenThem = false;
+        laHocVien = false;
+    }
+}
+
+@if (coQuyenThem)
+{
+    <section class="hop hop-2-vien">
+        <section class="tieu-de">
+            Đăng bài tập cho các học viên
+        </section>
+        @Html.Partial("~/Views/BaiVietBaiTap/_Form.cshtml", null, new ViewDataDictionary() { { "MaKhoaHoc", ViewData["MaKhoaHoc"].ToString() } })
     </section>
-    @Html.Partial("~/Views/BaiVietBaiTap/_Form.cshtml", null, new ViewDataDictionary() { { "MaKhoaHoc", ViewData["MaKhoaHoc"].ToString() } })
-</section>
+}
 
 <section class="hop">
     <section class="tieu-de">
@@ -16,7 +54,11 @@
         {
             foreach (var baiViet in Model)
             {
-                @Html.Partial("~/Views/BaiVietBaiTap/_Item.cshtml", baiViet);
+                @Html.Partial("~/Views/BaiVietBaiTap/_Item.cshtml", baiViet, new ViewDataDictionary() { 
+                    { "DSQuyen", dsQuyen },
+                    { "MaKhoaHoc", maKhoaHoc },
+                    { "LaHocVien", laHocVien },
+                });
             }
         }
     </ul>
