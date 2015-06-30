@@ -41,6 +41,21 @@
                 <a data-chuc-nang="tat-mo-chu-de" style="min-width: 90px; margin-left: 5px;" class="button inline">Chọn chủ đề</a>
             </section>
         </section>
+    </section>
+    <section class="lct-form" id="tieu_chi_hien_thi">
+        <ul style="background-color: transparent; padding: 0;">
+            <li style="justify-content: center">
+                <section class="tieu-de"><label style="font-weight: bold;">Tiêu chí hiển thị</label></section>
+                <section class="noi-dung" style="width: auto;">
+                    <section class="input">
+                        <input type="radio" style="width:auto;" name="cachHienThi" value="MoiNhat" data-text="Mới nhất" data-mac-dinh />
+                        <input type="radio" style="width:auto;" name="cachHienThi" value="DiemCaoNhat" data-text="Điểm cao nhất" />
+                        <input type="radio" style="width:auto;" name="cachHienThi" value="TraLoiNhieuNhat" data-text="Trả lời nhiều nhất" />
+                    </section>
+                </section>
+            </li>
+        </ul>
+    </section>
 </article>
 
 <!--#endregion -->
@@ -50,7 +65,7 @@
 <article class="hop">
     <section class="tieu-de">Danh sách câu hỏi</section>
     <section class="noi-dung" id="danh_sach">
-        @Html.Partial("_DanhSachCauHoi", Model)
+        @Html.Partial("~/Views/HoiDap/_DanhSachCauHoi.cshtml", Model)
     </section>
 </article>
 

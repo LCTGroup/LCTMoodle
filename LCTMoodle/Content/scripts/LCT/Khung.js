@@ -16,15 +16,23 @@ $(function () {
 });
 
 function moBieuTuongTai($item) {
-    var offset = $item.offset();
-    var bottom = $body.height() - offset.top - $item.height();
-    var left = offset.left;
+    var offset, bottom, left, $khungTai;
+    if (typeof ($item) === 'undefined') {
+        $item = $body;
+        $khungTai = $('<article class="bieu-tuong-tai-lct bieu-tuong-tai-lct_page"><i></i><i></i><i></i><i></i><i></i><i></i></article>');
+    }
+    else {
+        var offset = $item.offset();
+        var bottom = $body.height() - offset.top - $item.height();
+        var left = offset.left;
 
-    var $khungTai = $('<article style="left: ' + left + 'px;bottom: ' + bottom + 'px" class="bieu-tuong-tai-lct"><i></i><i></i><i></i><i></i><i></i><i></i></article>');
+        $khungTai = $('<article style="left: ' + left + 'px;bottom: ' + bottom + 'px" class="bieu-tuong-tai-lct"><i></i><i></i><i></i><i></i><i></i><i></i></article>');
+    }
+
     $body.append($khungTai);
     $item.addClass('item-tai-lct');
-    $body.data('tai', $body.attr('tai') + 1);
-    $body.addClass('dang-tai');
+    $body.data('tai', $body.data('tai') + 1);
+    $body.addClass('dang-tai-lct');
 
     $khungTai.tat = function () {
         var slTai = $body.data('tai');
@@ -36,7 +44,6 @@ function moBieuTuongTai($item) {
         $item.removeClass('item-tai-lct');
         $khungTai.remove();
     }
-
     return $khungTai;
 }
 
@@ -197,11 +204,14 @@ function moPopupFull(thamSo) {
         $popup.mo();
     }
     else if ('url' in thamSo) {
+        var $tai = moBieuTuongTai();
         $.ajax({
             url: thamSo.url,
             type: 'type' in thamSo ? thamSo.method : 'GET',
             data: 'data' in thamSo ? (typeof thamSo.data == 'function' ? thamSo.data() : thamSo.data) : {},
             dataType: 'JSON'
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $popup = layPopupFull({
@@ -229,10 +239,16 @@ function moPopupFull(thamSo) {
                 if ('thatBai' in thamSo) {
                     thamSo.thatBai();
                 }
+                else {
+                    moPopupThongBao(data);
+                }
             }
         }).fail(function () {
             if ('thatBai' in thamSo) {
                 thamSo.thatBai();
+            }
+            else {
+                moPopupThongBao('Mở chức năng thất bại');
             }
         }).always(function () {
             if ('hoanTat' in thamSo) {
@@ -373,48 +389,54 @@ function moPopup(thamSo) {
     $popup.mo();
 }
 
+function xuatKetQua(obj, macDinh) {
+    if (obj === null) {
+        return macDinh;
+    }
+    if (typeof (obj) === 'object') {
+        return obj.join('<br />');
+    }
+    return obj || macDinh;
+}
+
 function moPopupThongBao(ketQua) {
-    if (typeof (ketqua) === 'object') {
+    if (typeof (ketQua) === 'object') {
         switch (ketQua.trangThai) {
             case 0:
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: ketQua.ketQua || 'Thực hiện thành công',
+                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thành công'),
                     bieuTuong: 'thanh-cong'
                 });
                 break;
             case 1:
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Không có dữ liệu trùng khớp',
+                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thất bại. Không có dữ liệu trùng khớp'),
                     bieuTuong: 'can-than'
                 });
                 break;
             case 2:
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Gặp lỗi xử lý truy vấn',
+                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thất bại. Gặp lỗi xử lý truy vấn'),
                     bieuTuong: 'nguy-hiem'
                 });
                 break;
             case 3:
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: typeof (ketQua.ketQua) === 'object' ? ketQua.ketQua.join('<br />') : (ketQua.ketQua || 'Thực hiện thất bại. Dữ liệu không đúng ràng buộc'),
+                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thất bại. Dữ liệu không đúng ràng buộc'),
                     bieuTuong: 'nguy-hiem'
                 });
                 break;
             case 4:
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Bạn cần đăng nhập để thực hiện chức năng này',
-                    bieuTuong: 'thong-tin'
-                });
+                moPopupDangNhap();
                 break;
             default:
                 moPopup({
                     tieuDe: 'Thông báo',
-                    thongBao: ketQua.ketQua || 'Thực hiện thất bại. Không xác định lỗi',
+                    thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thất bại. Không xác định lỗi'),
                     bieuTuong: 'nguy-hiem'
                 });
                 break;
@@ -423,7 +445,7 @@ function moPopupThongBao(ketQua) {
     else {
         moPopup({
             tieuDe: 'Thông báo',
-            thongBao: ketQua || 'Thực hiện thất bại. Không xác định lỗi',
+            thongBao: xuatKetQua(ketQua, 'Thực hiện thất bại. Không xác định lỗi'),
             bieuTuong: 'nguy-hiem'
         });
     }

@@ -14,34 +14,70 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult _Khung(int maKhoaHoc)
         {
+            #region Kiểm tra quyền
+            #region Lấy khóa học
+            KetQua ketQua = KhoaHocBUS.layTheoMa(maKhoaHoc);
+            if (ketQua.trangThai != 0)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Khóa học không tồn tại"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
+            #endregion
+
+            #region Lấy thành viên
+            KhoaHoc_NguoiDungDTO thanhVien = null;
+            if (Session["NguoiDung"] != null)
+            {
+                ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(khoaHoc.ma.Value, (int)Session["NguoiDung"]);
+                thanhVien = ketQua.trangThai == 0 ? ketQua.ketQua as KhoaHoc_NguoiDungDTO : null;
+            }
+            #endregion
+
+            #region Kiểm tra nếu thành viên bị chặn
+            if (thanhVien != null && thanhVien.trangThai == 3)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Bạn đã bị chặn"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            #region Kiểm tra trường hợp khóa học nội bộ
+            if (
+                    (khoaHoc.cheDoRiengTu == "NoiBo" &&
+                    (thanhVien == null || thanhVien.trangThai != 0)) ||
+                    thanhVien != null && thanhVien.trangThai == 3)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Đây là khóa học nội bộ, bạn cần tham gia để xem nội dung"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+            #endregion
+
             ViewData["MaKhoaHoc"] = maKhoaHoc;
             
-            KetQua ketQua = BaiVietDienDanBUS.layTheoMaKhoaHoc(maKhoaHoc);
+            ketQua = BaiVietDienDanBUS.layTheoMaKhoaHoc(maKhoaHoc);
 
             List<BaiVietDienDanDTO> danhSachBaiViet =
                 ketQua.trangThai == 0 ?
                 ketQua.ketQua as List<BaiVietDienDanDTO> :
                 null;
 
-            ketQua = QuyenBUS.layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri(null, "KH", maKhoaHoc);
-            ViewData["Quyen"] = ketQua.trangThai == 0 ? ketQua.ketQua : new string[0];
-
-            try
+            return Json(new KetQua()
             {
-                return Json(new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua =
-                        renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Khung.cshtml", danhSachBaiViet, ViewData)
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                return Json(new KetQua()
-                {
-                    trangThai = 2
-                }, JsonRequestBehavior.AllowGet);
-            }
+                trangThai = 0,
+                ketQua =
+                    renderPartialViewToString(ControllerContext, "BaiVietDienDan/_Khung.cshtml", danhSachBaiViet, ViewData)
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _Form(int ma = 0)
@@ -90,18 +126,32 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoa(int ma)
         {
-            return Json
-            (
-                BaiVietDienDanBUS.xoaTheoMa(ma), 
-                JsonRequestBehavior.AllowGet
-            );
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
+            }
+
+            return Json(BaiVietDienDanBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult XuLyCapNhat(FormCollection form)
+        public ActionResult XuLyCapNhat(FormCollection formCollection)
         {
-            KetQua ketQua = BaiVietDienDanBUS.capNhatTheoMa(chuyenForm(form));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
+            }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+
+            KetQua ketQua = BaiVietDienDanBUS.capNhatTheoMa(form);
 
             if (ketQua.trangThai == 0)
             {
@@ -123,7 +173,15 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyGhim(int ma, bool ghim)
         {
-            return Json(BaiVietDienDanBUS.ghim(ma, ghim));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(BaiVietDienDanBUS.ghim(ma, ghim, (int)Session["NguoiDung"]));
         }
 	}
 }

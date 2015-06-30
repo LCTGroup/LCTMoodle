@@ -75,33 +75,48 @@ namespace DAOLayer
 
             return nhomNguoiDung_Quyen;
         }
-        public static KetQua themHoacXoaTheoMaNhomNguoiDungVaMaQuyen(string phamVi, int? maNhomNguoiDung, int? maQuyen, int? maDoiTuong, bool them, bool la)
+
+        public static KetQua themTheoMaNhomNguoiDungVaMaQuyen(string phamVi, int? maNhomNguoiDung, int? maQuyen, int? maDoiTuong, bool la)
         {
             return khongTruyVan
                 (
-                    "themHoacXoaNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaQuyen",
+                    "themNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaQuyen",
                     new object[] 
                     { 
                         phamVi,
                         maNhomNguoiDung,
                         maQuyen,
                         maDoiTuong,
-                        them,
                         la
                     }
                 );
         }
 
-        public static KetQua layTheoMaNhomNguoiDungVaMaDoiTuong(string phamVi, int? maNhomNguoiDung, int? maDoiTuong, LienKet lienKet = null)
+        public static KetQua xoaTheoMaNhomNguoiDungVaMaQuyen(string phamVi, int? maNhomNguoiDung, int? maQuyen, int? maDoiTuong, bool la)
+        {
+            return khongTruyVan
+                (
+                    "xoaNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaQuyen",
+                    new object[] 
+                    { 
+                        phamVi,
+                        maNhomNguoiDung,
+                        maQuyen,
+                        maDoiTuong,
+                        la
+                    }
+                );
+        }
+
+        public static KetQua layTheoMaNhomNguoiDung(string phamVi, int? maNhomNguoiDung, LienKet lienKet = null)
         {
             return layDanhSachDong
                 (
-                    "layNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaDoiTuong",
+                    "layNhomNguoiDung_QuyenTheoMaNhomNguoiDung",
                     new object[]
                     {
                         phamVi,
-                        maNhomNguoiDung,
-                        maDoiTuong
+                        maNhomNguoiDung
                     },
                     lienKet
                 );

@@ -77,13 +77,14 @@ namespace DAOLayer
             );
         }        
 
-        public static KetQua layTheoMaNguoiTao_Diem(int? maNguoiTao)
+        public static KetQua layTheoMaCauHoiVaMaNguoiTao_Diem(int? maCauHoi, int? maNguoiTao)
         {
             return layGiaTri<bool>
                 (
-                    "layCauHoi_DiemTheoMaNguoiTao_Diem",
+                    "layCauHoi_DiemTheomMaCauHoiVaMaNguoiTao_Diem",
                     new object[]
                     {
+                        maCauHoi,
                         maNguoiTao
                     }
                 );

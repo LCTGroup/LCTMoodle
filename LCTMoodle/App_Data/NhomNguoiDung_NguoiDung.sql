@@ -44,13 +44,12 @@ BEGIN
 	EXEC('
 		INSERT INTO dbo.NhomNguoiDung_' + @0 + '_NguoiDung (MaNhomNguoiDung, MaNguoiDung)
 			VALUES (' + @1 + ', ' + @2 + ')
-	')
-	IF (@0 = 'HT')
-	BEGIN
+			
+		--Cập nhật CoQuyenNhom
 		UPDATE dbo.NguoiDung
-			SET CoQuyenHT = 1
-			WHERE Ma = @2
-	END
+			SET CoQuyenNhom' + @0 + ' = 1
+			WHERE Ma = ' + @2 + '
+	')
 END
 
 GO
@@ -67,5 +66,17 @@ BEGIN
 			WHERE 
 				MaNhomnguoiDung = ' + @1 + ' AND
 				MaNguoiDung = ' + @2 + '
+
+		--Kiểm tra nếu người dùng này không còn nằm trong nhóm người dùng *PV* nào nữa thì sẽ xóa
+		IF (NOT EXISTS (
+			SELECT TOP 1 1
+				FROM dbo.NhomNguoiDung_' + @0 + '_NguoiDung
+				WHERE MaNguoiDung = ' + @2 + '
+		))
+		BEGIN
+			UPDATE dbo.NguoiDung
+				SET CoQuyenNhom' + @0 + ' = NULL
+				WHERE Ma = ' + @2 + '
+		END
 	')
 END

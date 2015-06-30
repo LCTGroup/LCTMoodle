@@ -1,0 +1,51 @@
+﻿@model DTOLayer.CauHoiDTO
+
+<article class="cau-hoi">
+
+    <div class="chi-tiet">
+
+        <div class="tieu-de">
+            <a href="/HoiDap/@Model.ma">
+                @Model.tieuDe
+            </a>
+        </div>
+
+        <div class="thong-tin-dang">
+            @if (Model.nguoiTao != null)
+            {
+                <div class="nguoi-dang">
+                    <a href="/NguoiDung/Xem/@Model.nguoiTao.ma">
+                        @if (Model.nguoiTao.hinhDaiDien != null)
+                        {
+                            <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.nguoiTao.hinhDaiDien.ma" />
+                        }
+                        else
+                        {
+                            <img src="/avatarDefault.png/NguoiDung" />
+                        }
+                        <span>@Model.nguoiTao.tenTaiKhoan</span>
+                    </a>
+                </div>
+            }
+
+            <div class="thoi-gian-dang">
+                <span>@Model.thoiDiemTao</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="thong-tin">
+
+        <div class="diem">
+            <span>@Model.diem</span>
+        </div>
+
+        <div class="tra-loi">
+            <span>@Model.soLuongTraLoi</span>
+        </div>
+
+    </div>
+
+</article>

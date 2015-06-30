@@ -13,16 +13,36 @@ namespace LCTMoodle.Controllers
 {
     public class ChuDeController : LCTController
     {
-        public ActionResult QuanLy(int ma = 0)//Mã cha
+        public ActionResult QuanLy(int ma = 0)
         {
-            KetQua ketQua = ChuDeBUS.layTheoMaCha(ma);
+            KetQua ketQua;
+            ChuDeDTO chuDe = null;
 
-            if (ketQua.trangThai > 1)
+            #region Kiểm tra quyền
+            if (ma != 0)
             {
-                return RedirectToAction("Index", "TrangChu");
+                ketQua = ChuDeBUS.layTheoMa(ma);
+                if (ketQua.trangThai != 0)
+                {
+                    return Redirect("/");
+                }
+                chuDe = ketQua.ketQua as ChuDeDTO;
             }
 
-            return View(model: ketQua.ketQua);
+            if (!BUS.coQuyen("QLQuyen", "CD", ma))
+            {
+                return Redirect("/");
+            }
+            #endregion
+
+            ketQua = ChuDeBUS.layTheoMaCha(ma);
+            if (ketQua.trangThai > 1)
+            {
+                return Redirect("/");
+            }
+            ViewData["DSCon"] = ketQua.ketQua;
+
+            return View(chuDe);
         }
 
         /// <returns>
@@ -84,23 +104,41 @@ namespace LCTMoodle.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult _Form(int ma)
+        public ActionResult _FormTao(int maCha)
         {
+            ViewData["MaCha"] = maCha;
             return Json(new KetQua()
             {
                 trangThai = 0,
-                ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", ma)
+                ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", null, ViewData)
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult _FormSua(int ma)
+        {
+            var ketQua = ChuDeBUS.layTheoMa(ma);
+
+            if (ketQua.trangThai == 0)
+            {
+                ketQua.ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", ketQua.ketQua);
+            }
+
+            return Json(ketQua, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            Form form = chuyenForm(formCollection);
-            if (Session["NguoiDung"] != null)
+            if (Session["NguoiDung"] == null)
             {
-                form.Add("MaNguoiTao", ((int)Session["NguoiDung"]).ToString());
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
             }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+
             KetQua ketQua = ChuDeBUS.them(form);
 
             if (ketQua.trangThai != 0)
@@ -127,26 +165,94 @@ namespace LCTMoodle.Controllers
         }
         
         [HttpPost]
+        public ActionResult XuLyCapNhat(FormCollection formCollection)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
+            }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+
+            var ketQua = ChuDeBUS.capNhatTheoMa(form);
+            if (ketQua.trangThai == 0)
+            {
+                ketQua.ketQua = new
+                {
+                    cayCon_Item = renderPartialViewToString(ControllerContext,
+                        "ChuDe/_Cay_Con_Item.cshtml",
+                        ketQua.ketQua
+                    ),
+                    danhSach_Item = renderPartialViewToString(ControllerContext,
+                        "ChuDe/_DanhSach_Item.cshtml",
+                        ketQua.ketQua,
+                        new ViewDataDictionary() { { "CoChon", formCollection["CoChon"] == "1" ? true : false } }
+                    )
+                };
+            }
+
+            return Json(ketQua);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyChuyen(int ma, int maCha)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(ChuDeBUS.capNhatCha(ma, maCha, (int)Session["NguoiDung"]));
+        }
+
+        [HttpPost]
         public ActionResult XuLyXoa(int ma)
         {
-            return Json(ChuDeDAO.xoaTheoMa(ma));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(ChuDeBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
 
         public ActionResult _Chon(int ma = 0)
         {
-            KetQua ketQua = ChuDeBUS.layTheoMaCha(ma);
+            KetQua ketQua;
+            ChuDeDTO chuDe = null;
 
-            if (ketQua.trangThai != 0)
+            if (ma != 0)
+            {
+                ketQua = ChuDeBUS.layTheoMa(ma);
+                if (ketQua.trangThai != 0)
+                {
+                    return Json(ketQua, JsonRequestBehavior.AllowGet);
+                }
+                chuDe = ketQua.ketQua as ChuDeDTO;
+            }
+
+            ketQua = ChuDeBUS.layTheoMaCha(ma);
+
+            if (ketQua.trangThai > 1)
             {
                 return Json(ketQua, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                ViewData["CoChon"] = true;
+                ViewData["DSCon"] = ketQua.ketQua;
                 return Json(new KetQua()
                 {
                     trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Chon.cshtml", ketQua.ketQua, ViewData)
+                    ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Chon.cshtml", chuDe, ViewData)
                 }, JsonRequestBehavior.AllowGet);
             }
         }

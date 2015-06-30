@@ -1,5 +1,5 @@
-﻿@model List<DTOLayer.BaiTapNopDTO>
-@using LCTMoodle.LCTHtml
+﻿@using LCTMoodle.LCTView
+@model List<DTOLayer.BaiTapNopDTO>
 
 <article class="hop hop-1-vien">
     <section class="tieu-de">
@@ -32,9 +32,7 @@
                             </section>
                             <section class="phai">
                                 <section class="thong-tin">
-                                    <a class="nguoi-nop" href="#">
-                                        @NguoiDungHtml.link(baiNop.nguoiTao)
-                                    </a>
+                                    @NguoiDungView.link(baiNop.nguoiTao, new Dictionary<string, string>() { { "class", "nguoi-nop" } })
                                     <span class="thoi-gian">
                                         @baiNop.thoiDiemTao.Value.ToString("H:mm d/M/yyyy")
                                     </span>

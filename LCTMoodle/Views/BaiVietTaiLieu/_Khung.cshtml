@@ -1,23 +1,50 @@
-﻿@model List<DTOLayer.BaiVietTaiLieuDTO>
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model List<DTOLayer.BaiVietTaiLieuDTO>
+@{
+    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+    var maNguoiDung = Session["NguoiDung"] as int?;
 
-<section class="hop hop-2-vien">
-    <section class="tieu-de">
-        Đăng bài viết
+    string[] dsQuyen;
+    bool coQuyenThem;
+        
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc, maNguoiDung);
+
+        coQuyenThem = QuyenHelper.co(dsQuyen, "TL_Them");
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenThem = false;
+    }
+}
+
+@if (coQuyenThem)
+{
+    <section class="hop hop-2-vien">
+        <section class="tieu-de">
+            Đăng tài liệu cho khóa học
+        </section>
+        @Html.Partial("~/Views/BaiVietTaiLieu/_Form.cshtml", null, new ViewDataDictionary() { { "MaKhoaHoc", ViewData["MaKhoaHoc"].ToString() } })
     </section>
-    @Html.Partial("~/Views/BaiVietTaiLieu/_Form.cshtml", null, new ViewDataDictionary() { { "MaKhoaHoc", ViewData["MaKhoaHoc"].ToString() } })
-</section>
+}
 
 <section class="hop">
     <section class="tieu-de">
-        Danh sách bài viết
+        Danh sách tài liệu của khóa học
     </section>
     <ul id="danh_sach_bai_viet" class="noi-dung">
         @if (Model != null)
         {
             foreach (var baiViet in Model)
             {
-                @Html.Partial("~/Views/BaiVietTaiLieu/_Item.cshtml", baiViet);
-            }    
+                @Html.Partial("~/Views/BaiVietTaiLieu/_Item.cshtml", baiViet, new ViewDataDictionary() {
+                    { "DSQuyen", dsQuyen },
+                    { "MaKhoaHoc", maKhoaHoc }
+                });
+            }
         }
     </ul>
 </section>

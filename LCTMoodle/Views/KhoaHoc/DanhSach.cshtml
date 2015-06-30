@@ -1,9 +1,29 @@
-﻿@model List<DTOLayer.KhoaHocDTO>
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model List<DTOLayer.KhoaHocDTO>
 
 @{    
     Layout = "~/Views/LCT/Khung.cshtml";
     
     ViewData["TieuDe"] = "Danh sách khóa học";
+
+    string[] dsQuyen = QuyenView.layDSQuyen("KH");
+
+    bool
+        coQuyenQLNoiDungKH = QuyenHelper.co(dsQuyen, "QLNoiDung");
+
+    List<string> dsChucNang = new List<string>();
+    
+    if (coQuyenQLNoiDungKH)
+    {
+        dsChucNang.Add("Tạo khóa học");
+        dsChucNang.Add("/KhoaHoc/Tao");
+    }
+    
+    if (dsChucNang.Count != 0)
+    {
+        ViewData["ChucNang"] = dsChucNang;
+    }
 }
 
 @section Styles {
@@ -41,9 +61,7 @@
             Danh sách khóa học
         </section>
         <section class="noi-dung khung-khoa-hoc">
-            <ul id="danh_sach" class="danh-sach">
-                @Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", Model)
-            </ul>
+            <ul id="danh_sach" class="danh-sach">@Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", Model)</ul>
             <section class="thong-bao">Không có khóa học phù hợp</section>
         </section>
     </section>

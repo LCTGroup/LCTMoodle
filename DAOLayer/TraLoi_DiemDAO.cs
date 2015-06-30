@@ -49,31 +49,56 @@ namespace DAOLayer
             return traLoi_Diem;
         }  
         
-        public static KetQua them(int? maCauHoi, int? maNguoiTao, bool diem)
+        public static KetQua them(int? maTraLoi, int? maNguoiTao, bool diem)
         {
             return khongTruyVan
             (
-                "themtraLoi_Diem",
+                "themTraLoi_Diem",
                 new object[] 
                 {
-                    maCauHoi,
+                    maTraLoi,
                     maNguoiTao,
                     diem
                 }
             );
         }
 
-        public static KetQua xoaTheoMa(int? maCauHoi, int? maNguoiTao)
+        public static KetQua xoaTheoMaTraLoiVaMaNguoiTao(int? maTraLoi, int? maNguoiTao)
         {
             return khongTruyVan
             (
                 "xoaTraLoi_DiemTheoMaTraLoiVaMaNguoiTao",
                 new object[] 
                 {
-                    maCauHoi,
+                    maTraLoi,
                     maNguoiTao
                 }
             );
-        }        
+        }
+
+        public static KetQua layTheoMaTraLoiVaMaNguoiTao_Diem(int? maTraLoi, int? maNguoiTao)
+        {
+            return layGiaTri<bool>
+                (
+                    "layTraLoi_DiemTheomMaTraLoiVaMaNguoiTao_Diem",
+                    new object[]
+                    {
+                        maTraLoi,
+                        maNguoiTao
+                    }
+                );
+        }
+
+        public static KetQua layTheoMaTraLoi_Diem(int? maTraLoi)
+        {
+            return layGiaTri<int>
+                (
+                    "layTraLoi_DiemTheoMaTraLoi_Diem",
+                    new object[]
+                    {
+                        maTraLoi
+                    }
+                );
+        }
     }
 }

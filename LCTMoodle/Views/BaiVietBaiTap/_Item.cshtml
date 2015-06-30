@@ -1,5 +1,53 @@
-﻿@model DTOLayer.BaiVietBaiTapDTO
-@using LCTMoodle.LCTHtml
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model DTOLayer.BaiVietBaiTapDTO
+@{
+    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+    var maNguoiDung = Session["NguoiDung"] as int?;
+    
+    string[] dsQuyen;    
+    bool coQuyenSua, coQuyenXoa, coQuyenQLBaiNop, coQuyenNopBai;
+    
+    if (maNguoiDung.HasValue)
+    {
+        if (ViewData.ContainsKey("DSQuyen"))
+        {
+            dsQuyen = ViewData["DSQuyen"] as string[];
+        }
+        else
+        {
+            dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc, maNguoiDung);
+        }
+    
+        coQuyenSua = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BT_Sua");
+        coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BT_Xoa");
+        coQuyenQLBaiNop = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BT_QLBaiNop");
+        
+        //Kiểm tra người dùng có phải là thành viên không để sử dụng chức năng nộp bài
+        if (ViewData.ContainsKey("LaHocVien"))
+        {
+            coQuyenNopBai = (bool)ViewData["LaHocVien"];
+        }
+        else
+        {
+            var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
+            if (ketQua.trangThai != 0)
+            {
+                coQuyenNopBai = false;
+            }
+            else
+            {
+                var thanhVien = ketQua.ketQua as DTOLayer.KhoaHoc_NguoiDungDTO;
+                coQuyenNopBai = thanhVien.trangThai == 0 && thanhVien.laHocVien;
+            }
+        }
+    }
+    else 
+    {
+        coQuyenSua = coQuyenXoa = coQuyenQLBaiNop = coQuyenNopBai = false;
+        dsQuyen = null;
+    }
+}
 
 <li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma="@Model.ma">
     <section class="khung-bai-viet">
@@ -11,7 +59,7 @@
             </section>
             <section class="phai">
                 <section class="nguoi-dung">
-                    <a href="#">@NguoiDungHtml.link(Model.nguoiTao)</a>
+                    <a href="#">@NguoiDungView.link(Model.nguoiTao)</a>
                 </section>
                 <section class="bai-viet">
                     <section class="thoi-gian">                        
@@ -43,24 +91,36 @@
                 </section>
             }
         </section>
-        <section class="khung-chuc-nang-lct ben-trai" style="top: 10px; right: 10px;">
-            <ul data-doi-tuong="cnbt-@Model.ma">
-                <li>
-                    <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
-                </li>
-                <li>
-                    <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
-                </li>
-            </ul>
-            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbt-@Model.ma">
-                <i class="pe-7f-config"></i>
-            </button>
-        </section>
+        @if (coQuyenSua || coQuyenXoa)
+        {
+            <section class="khung-chuc-nang-lct ben-trai" style="top: 10px; right: 10px;">
+                <ul data-doi-tuong="cnbt-@Model.ma">
+                    @if (coQuyenSua)
+                    {
+                        <li>
+                            <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
+                        </li>   
+                    }
+                    @if (coQuyenXoa)
+                    {
+                        <li>
+                            <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
+                        </li>   
+                    }
+                </ul>
+                <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbt-@Model.ma">
+                    <i class="pe-7f-config"></i>
+                </button>
+            </section>
+        }
     </section>
     <section data-doi-tuong="khung-nop-bai" class="khung-nop-bai">
         @Html.Partial("~/Views/BaiTapNop/_Khung.cshtml", Model.danhSachBaiTapNop, new ViewDataDictionary()
         {
-             { "MaBaiVietBaiTap", Model.ma }
+            { "MaKhoaHoc", maKhoaHoc },
+            { "MaBaiVietBaiTap", Model.ma },
+            { "CoQuyenNopBai", coQuyenNopBai },
+            { "DSQuyen", dsQuyen },
         })
-    </section>
+    </section>   
 </li>

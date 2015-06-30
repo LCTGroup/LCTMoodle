@@ -12,6 +12,22 @@ namespace BUSLayer
         protected static System.Web.SessionState.HttpSessionState Session = System.Web.HttpContext.Current.Session;
 
         #region Lấy giá trị
+        public static bool coQuyen(string giaTri, string phamVi, int maDoiTuong = 0, int? maNguoiDung = null)
+        {
+            if (!maNguoiDung.HasValue)
+            {
+                maNguoiDung = Session["NguoiDung"] as int?;
+            }
+
+            if (!maNguoiDung.HasValue)
+            {
+                return false;
+            }
+
+            var ketQua = QuyenBUS.kiemTraQuyenNguoiDung(maNguoiDung.Value, giaTri, phamVi, maDoiTuong);
+            return ketQua.trangThai == 0 && (bool)ketQua.ketQua;
+        }
+
         protected static bool coKiemTra(string ten, string[] truong, bool kiemTra)
         {
             return 

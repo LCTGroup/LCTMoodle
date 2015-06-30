@@ -79,11 +79,55 @@ namespace BUSLayer
 
         public static KetQua themHoacCapNhat(Form form)
         {
+            #region Kiểm tra điều kiện
+            //Lấy người dùng
+            var maNguoiTao = form.layInt("MaNguoiTao");
+            if (!maNguoiTao.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 4
+                };
+            }
+
+            //Lấy bài viết bài tập để lấy khóa học
+            var maBaiVietBaiTap = form.layInt("MaBaiVietBaiTap");
+            if (!maBaiVietBaiTap.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Mã bài tập không thể bỏ trống",
+                };
+            }
+            var ketQua = BaiVietBaiTapDAO.layTheoMa(maBaiVietBaiTap);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Bài tập không tồn tại"
+                };
+            }
+            var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
+
+            //Kiểm tra người dùng là thành viên của khóa học
+            ketQua = KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(baiTap.khoaHoc.ma, maNguoiTao);
+            if (ketQua.trangThai != 0 || (ketQua.ketQua as KhoaHoc_NguoiDungDTO).trangThai != 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn cần là thành viên chính thức của khóa học để nộp bài"
+                };
+            }
+            #endregion
+
             BaiTapNopDTO baiNop = new BaiTapNopDTO();
 
             gan(ref baiNop, form);
 
-            KetQua ketQua = kiemTra(baiNop);
+            ketQua = kiemTra(baiNop);
 
             if (ketQua.trangThai != 0)
             {

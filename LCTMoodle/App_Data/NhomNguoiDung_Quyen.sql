@@ -15,88 +15,82 @@ CREATE TABLE dbo.NhomNguoiDung_KH_Quyen (
 
 GO
 --Cập nhật quyền
-ALTER PROC dbo.themHoacXoaNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaQuyen (
+ALTER PROC dbo.themNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaQuyen (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT, --MaNhomNguoiDung
 	@2 INT, --MaQuyen
 	@3 INT, --MaDoiTuong
-	@4 BIT, --Them
-	@5 BIT --Là nút lá
+	@4 BIT --Là nút lá
 )
 AS
 BEGIN
-	IF (@4 = 1)
-	BEGIN
-		EXEC('
-			IF (' + @5 + ' = 1)
-			BEGIN
-				INSERT INTO dbo.NhomNguoiDung_' + @0 + '_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong)
-					VALUES (' + @1 + ', ' + @2 + ', ' + @3 + ')
-			END
-			ELSE
-			BEGIN
-				DECLARE @chuoiMaLa VARCHAR(MAX) = ''|'' + dbo.layQuyenLa_FUNCTION(' + @2 + ')
+	EXEC('
+		IF (' + @4 + ' = 1)
+		BEGIN
+			INSERT INTO dbo.NhomNguoiDung_' + @0 + '_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong)
+				VALUES (' + @1 + ', ' + @2 + ', ' + @3 + ')
+		END
+		ELSE
+		BEGIN
+			DECLARE @chuoiMaLa VARCHAR(MAX) = ''|'' + dbo.layQuyenLa_FUNCTION(' + @2 + ')
 
-				INSERT INTO dbo.NhomNguoiDung_' + @0 + '_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong)
-					SELECT ' + @1 + ', Ma, ' + @3 + '
-						FROM dbo.Quyen
-						WHERE @chuoiMaLa LIKE ''%|'' + CAST(Ma AS VARCHAR(MAX)) + ''|%''
-			END
-		')
-	END
-	ELSE
-	BEGIN
-		EXEC('
-			IF (' + @5 + ' = 1)
-			BEGIN
-				DELETE FROM dbo.NhomNguoiDung_' + @0 + '_Quyen
-				WHERE
-					MaNhomNguoiDung = ' + @1 + ' AND
-					MaQuyen = ' + @2 + ' AND
-					MaDoiTuong = ' + @3 + '
-			END
-			ELSE
-			BEGIN
-				DECLARE @chuoiMaLa VARCHAR(MAX) = dbo.layQuyenLa_FUNCTION(' + @2 + ')
-
-				DELETE FROM dbo.NhomNguoiDung_' + @0 + '_Quyen
-				WHERE
-					MaNhomNguoiDung = ' + @1 + ' AND
-					@chuoiMaLa LIKE ''%|'' + CAST(MaQuyen AS VARCHAR(MAX)) + ''|%'' AND
-					MaDoiTuong = ' + @3 + '
-			END
-		')			
-	END
+			INSERT INTO dbo.NhomNguoiDung_' + @0 + '_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong)
+				SELECT ' + @1 + ', Ma, ' + @3 + '
+					FROM dbo.Quyen
+					WHERE @chuoiMaLa LIKE ''%|'' + CAST(Ma AS VARCHAR(MAX)) + ''|%''
+		END
+	')
 END
+
 GO
---Lấy theo mã nhóm người dùng
-ALTER PROC dbo.layNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaDoiTuong (
+--Xóa quyền của nhóm người dung
+CREATE PROC dbo.xoaNhomNguoiDung_QuyenTheoMaNhomNguoiDungVaMaQuyen (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT, --MaNhomNguoiDung
-	@2 INT --MaDoiTuong
+	@2 INT, --MaQuyen
+	@3 INT, --MaDoiTuong
+	@4 BIT --Là nút lá
 )
 AS
 BEGIN
-	IF (@0 = 'HT')
-	BEGIN
+	EXEC('
+		IF (' + @4 + ' = 1)
+		BEGIN
+			DELETE FROM dbo.NhomNguoiDung_' + @0 + '_Quyen
+			WHERE
+				MaNhomNguoiDung = ' + @1 + ' AND
+				MaQuyen = ' + @2 + ' AND
+				MaDoiTuong = ' + @3 + '
+		END
+		ELSE
+		BEGIN
+			DECLARE @chuoiMaLa VARCHAR(MAX) = dbo.layQuyenLa_FUNCTION(' + @2 + ')
+
+			DELETE FROM dbo.NhomNguoiDung_' + @0 + '_Quyen
+			WHERE
+				MaNhomNguoiDung = ' + @1 + ' AND
+				@chuoiMaLa LIKE ''%|'' + CAST(MaQuyen AS VARCHAR(MAX)) + ''|%'' AND
+				MaDoiTuong = ' + @3 + '
+		END
+	')			
+END
+
+GO
+--Lấy theo mã nhóm người dùng
+ALTER PROC dbo.layNhomNguoiDung_QuyenTheoMaNhomNguoiDung (
+	@0 NVARCHAR(MAX), --PhamVi
+	@1 INT --MaNhomNguoiDung
+)
+AS
+BEGIN
+	EXEC('
 		SELECT 
-			MaQuyen,
-			MaDoiTuong,
-			'HT' PhamViNhomNguoiDung
-			FROM dbo.NhomNguoiDung_HT_Quyen NNQ_Q
-			WHERE MaNhomNguoiDung = @1
-	END
-	ELSE
-	BEGIN
-		EXEC('
-			SELECT 
-				MaQuyen,
-				MaDoiTuong,
-				''' + @0 + ''' PhamViNhomNguoiDung
-				FROM dbo.NhomNguoiDung_' + @0 + '_Quyen NNQ_Q
-				WHERE 
-					MaNhomNguoiDung = ' + @1 + ' AND
-					MaDoiTuong = ' + @2 + '
-		')
-	END
+			NND_Q.MaQuyen,
+			NND_Q.MaDoiTuong
+			FROM 
+				dbo.NhomNguoiDung_' + @0 + ' NND
+					INNER JOIN dbo.NhomNguoiDung_' + @0 + '_Quyen NND_Q ON
+						NND.Ma = ' + @1 + ' AND
+						NND_Q.MaNhomNguoiDung = NND.Ma
+	')
 END

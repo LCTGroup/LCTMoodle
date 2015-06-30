@@ -122,7 +122,6 @@
     <Folder Include="Plugin\ckeditor\samples\plugins\magicline\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\toolbar\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\wysiwygarea\" />
-    <Folder Include="Uploads\ChuDe_HinhDaiDien\" />
     <Folder Include="Views\TapTin\" />
   </ItemGroup>
   <ItemGroup>
@@ -148,8 +147,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LCTView\QuyenView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LCTHtml\NguoiDungHtml.cs" />
+    <Compile Include="LCTView\NguoiDungView.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_HinhAnh.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi.cs" />
     <Compile Include="WebServices\Iwcf_ChuDe.cs" />
@@ -169,6 +169,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DuLieuQuyen.sql" />
     <Content Include="App_Data\Nhap.sql" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\ChuDe\ChuDe.png" />
@@ -387,35 +388,6 @@
     <Content Include="Plugin\ckeditor\skins\office2013\images\lock.png" />
     <Content Include="Plugin\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="Plugin\ckeditor\styles.js" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\1.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\10.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\11.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\12.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\13.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\14.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\15.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\16.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\17.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\18.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\19.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\2.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\20.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\21.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\22.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\23.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\24.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\25.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\26.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\27.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\28.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\29.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\3.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\4.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\5.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\6.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\7.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\8.png" />
-    <Content Include="Uploads\KhoaHoc_HinhDaiDien\9.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -485,7 +457,6 @@
     <Content Include="Views\BangDiem\_Item.cshtml" />
     <Content Include="Views\BaiVietBaiGiang\_Form.cshtml" />
     <Content Include="Views\BaiVietBaiTap\_Form.cshtml" />
-    <Content Include="Views\Quyen\QuanLy.cshtml" />
     <Content Include="Views\Quyen\_DanhSach_Quyen.cshtml" />
     <Content Include="Views\Quyen\_Form_Nhom.cshtml" />
     <Content Include="Views\Quyen\_Item_Nhom.cshtml" />
@@ -494,7 +465,7 @@
     <Content Include="Views\Quyen\_DanhSach_NguoiDung_Tim.cshtml" />
     <Content Include="Views\Quyen\_Item_NguoiDung.cshtml" />
     <Content Include="Views\Quyen\_DanhSach_NguoiDung.cshtml" />
-    <Content Include="Views\KhoaHoc\QuanLyQuyen.cshtml" />
+    <Content Include="Views\Quyen\QuyenKhoaHoc.cshtml" />
     <Content Include="Views\KhoaHoc\DangKyThamGia.cshtml" />
     <Content Include="Views\HoiDap\_Item_CauHoi.cshtml" />
     <Content Include="Views\NguoiDung\Sua.cshtml" />
@@ -521,6 +492,9 @@
     <Content Include="Views\HoiDap\_DanhSachCauHoi.cshtml" />
     <Content Include="Views\NguoiDung\_FormDangNhap.cshtml" />
     <Content Include="Views\BinhLuan\_Form.cshtml" />
+    <Content Include="Views\HoiDap\_Item_DanhSachCauHoi.cshtml" />
+    <Content Include="Views\Quyen\QuyenHeThong.cshtml" />
+    <Content Include="Views\Quyen\QuyenChuDe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

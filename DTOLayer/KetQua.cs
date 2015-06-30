@@ -19,5 +19,21 @@ namespace DTOLayer
         /// </summary>
         public int trangThai;
         public object ketQua;
+
+        public KetQua()
+        {
+
+        }
+
+        public KetQua(int trangThai)
+        {
+            this.trangThai = trangThai;
+        }
+
+        public KetQua(int trangThai, object ketQua)
+        {
+            this.trangThai = trangThai;
+            this.ketQua = ketQua;
+        }
     }
 }

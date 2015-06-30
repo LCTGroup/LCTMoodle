@@ -140,3 +140,20 @@ BEGIN
 			GT.MaKhoaHoc = @2 AND
 			GT.ThuTu BETWEEN @gioiHanDuoi AND @gioiHanTren
 END
+
+GO
+--Lấy theo mã
+CREATE PROC dbo.layTheoMa(
+	@0 INT --Ma
+)
+AS
+BEGIN
+	SELECT TOP 1
+		Ma,
+		MaKhoaHoc,
+		BaiHoc,
+		NoiDung,
+		ThoiGian
+		FROM dbo.ChuongTrinh
+		WHERE Ma = @0
+END

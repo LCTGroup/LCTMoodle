@@ -11,26 +11,42 @@ namespace LCTMoodle.Controllers
 {
     public class BangDiemController : LCTController
     {
-        public ActionResult Tao(int ma) //Để tạm, sau này sửa route, đổi thành mã khóa học
+        public ActionResult Tao(int maKhoaHoc)
         {
-            KetQua ketQua = KhoaHocBUS.layTheoMa(ma);
-
+            #region Kiểm tra quyền
+            var ketQua = KhoaHocBUS.layTheoMa(maKhoaHoc);
             if (ketQua.trangThai != 0)
             {
-                return RedirectToAction("Index", "TrangChu");
+                return Redirect("/");
             }
+            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
 
-            ViewData["KhoaHoc"] = ketQua.ketQua as KhoaHocDTO;
+            if (!BUS.coQuyen("QLCotDiem", "KH", maKhoaHoc))
+            {
+                return Redirect("/");
+            }
+            #endregion
 
-            ketQua = CotDiemBUS.layTheoMaKhoaHoc(ma);
+            ViewData["KhoaHoc"] = khoaHoc;
+            ketQua = CotDiemBUS.layTheoMaKhoaHoc(maKhoaHoc);
 
             return View(model: ketQua.trangThai == 0 ? ketQua.ketQua : null);
         }
 
         [HttpPost]
-        public ActionResult XuLyThemCotDiem(FormCollection form)
+        public ActionResult XuLyThemCotDiem(FormCollection formCollection)
         {
-            KetQua ketQua = CotDiemBUS.them(chuyenDuLieuForm(form));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                    {
+                        trangThai = 4
+                    });
+            }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+
+            var ketQua = CotDiemBUS.them(form);
 
             if (ketQua.trangThai == 0)
             {
@@ -43,39 +59,19 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoaCotDiem(int ma)
         {
-            return Json(CotDiemBUS.xoaTheoMa(ma));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(CotDiemBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         public ActionResult XuLyCapNhatThuTuCotDiem(int thuTuCu, int thuTuMoi, int maKhoaHoc)
-        {
-            return Json(CotDiemBUS.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc));
-        }
-
-        public ActionResult Xem(int ma)
-        {
-            var ketQua = KhoaHocBUS.layTheoMa(ma);
-            if (ketQua.trangThai != 0)
-            {
-                RedirectToAction("Index", "TrangChu");
-            }
-            var khoaHoc = ketQua.ketQua;
-
-            ketQua = CotDiem_NguoiDungBUS.layTheoMaKhoaHoc(ma);
-            if (ketQua.trangThai != 0)
-            {
-                return RedirectToAction("Xem", "KhoaHoc", new { ma = ma });
-            }
-            object[] mangKetQua = ketQua.ketQua as object[];
-            ViewData["CotDiem"] = mangKetQua[0];
-            ViewData["NguoiDung"] = mangKetQua[1];
-            ViewData["Diem"] = mangKetQua[2];
-
-            return View(khoaHoc);
-        }
-
-        [HttpPost]
-        public ActionResult CapNhatBangDiem(string jsonDiem)
         {
             if (Session["NguoiDung"] == null)
             {
@@ -85,7 +81,75 @@ namespace LCTMoodle.Controllers
                 });
             }
 
-            return Json(CotDiem_NguoiDungBUS.capNhat(JsonConvert.DeserializeObject<List<dynamic>>(jsonDiem)));
+            return Json(CotDiemBUS.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc, (int)Session["NguoiDung"]));
+        }
+
+        public ActionResult Xem(int maKhoaHoc)
+        {
+            #region Kiểm tra quyền
+            #region Lấy khóa học
+            KetQua ketQua = KhoaHocBUS.layTheoMa(maKhoaHoc);
+            if (ketQua.trangThai != 0)
+            {
+                return Redirect("/");
+            }
+            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
+            #endregion
+
+            #region Lấy thành viên
+            KhoaHoc_NguoiDungDTO thanhVien = null;
+            if (Session["NguoiDung"] != null)
+            {
+                ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(khoaHoc.ma.Value, (int)Session["NguoiDung"]);
+                thanhVien = ketQua.trangThai == 0 ? ketQua.ketQua as KhoaHoc_NguoiDungDTO : null;
+            }
+            #endregion
+
+            #region Kiểm tra nếu thành viên bị chặn
+            if (thanhVien != null && thanhVien.trangThai == 3)
+            {
+                return Redirect("/");
+            }
+            #endregion
+
+            #region Kiểm tra trường hợp khóa học nội bộ
+            if (
+                    (khoaHoc.cheDoRiengTu == "NoiBo" &&
+                    (thanhVien == null || thanhVien.trangThai != 0)) ||
+                    thanhVien != null && thanhVien.trangThai == 3)
+            {
+                ViewData["ThanhVien"] = thanhVien;
+                return View("DangKyThamGia", khoaHoc);
+            }
+            #endregion 
+            #endregion
+
+            ketQua = CotDiem_NguoiDungBUS.layTheoMaKhoaHoc(maKhoaHoc);
+            if (ketQua.trangThai != 0)
+            {
+                return RedirectToAction("Xem", "KhoaHoc", new { ma = maKhoaHoc });
+            }
+
+            object[] mangKetQua = ketQua.ketQua as object[];
+            ViewData["CotDiem"] = mangKetQua[0];
+            ViewData["NguoiDung"] = mangKetQua[1];
+            ViewData["Diem"] = mangKetQua[2];
+
+            return View(khoaHoc);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyCapNhatBangDiem(string jsonDiem)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(CotDiem_NguoiDungBUS.capNhat(JsonConvert.DeserializeObject<List<dynamic>>(jsonDiem), (int)Session["NguoiDung"]));
         }
 	}
 }

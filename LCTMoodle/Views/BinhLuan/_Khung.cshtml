@@ -1,6 +1,7 @@
 ﻿@{
     var ketQua = BUSLayer.BinhLuanBUS.layTheoDoiTuong((string)ViewData["LoaiDoiTuong"], (int)ViewData["MaDoiTuong"]);
     var danhSachBinhLuan = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BinhLuanDTO> : null;
+    var coQuyenBinhLuan = (bool)ViewData["CoQuyenBinhLuan"];
 }
 
 <section data-doi-tuong="khung-binh-luan" class="khung-binh-luan">
@@ -15,7 +16,10 @@
             }
         </ul>
     </section>
-    <section class="khung-form">
-        @Html.Partial("~/Views/BinhLuan/_Form.cshtml", null, ViewData)
-    </section>
+    @if (coQuyenBinhLuan)
+    {
+        <section class="khung-form">
+            @Html.Partial("~/Views/BinhLuan/_Form.cshtml", null, ViewData)
+        </section>   
+    }
 </section>

@@ -26,15 +26,15 @@ namespace BUSLayer
             {
                 loi.Add("Mô tả không được bỏ trống");
             }
-            if (coKiemTra("ChuDe", truong, kiemTra) && khoaHoc.chuDe == null)
+            if (coKiemTra("MaChuDe", truong, kiemTra) && khoaHoc.chuDe == null)
             {
                 loi.Add("Chủ đề không được bỏ trống");
             }
-            if (coKiemTra("HinhDaiDien", truong, kiemTra) && khoaHoc.hinhDaiDien == null)
+            if (coKiemTra("MaHinhDaiDien", truong, kiemTra) && khoaHoc.hinhDaiDien == null)
             {
                 loi.Add("Hình đại diện không được bỏ trống");
             }
-            if (coKiemTra("NguoiTao", truong, kiemTra) && khoaHoc.nguoiTao == null)
+            if (coKiemTra("MaNguoiTao", truong, kiemTra) && khoaHoc.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
@@ -109,20 +109,46 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua them(Form form)
+        public static KetQua them(Form form, int? maNguoiDung = null)
         {
-            //Chưa xử lý quản lý
-            KhoaHocDTO khoaHoc = new KhoaHocDTO();
+            #region Kiểm tra điều kiện
+            //Lấy người dùng
+            if (!maNguoiDung.HasValue)
+            {
+                maNguoiDung = Session["NguoiDung"] as int?;
+            }
+            if (!maNguoiDung.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 4
+                };
+            }
+
+            //Lấy quyền tạo khóa học của người dùng
+            if (!coQuyen("QLNoiDung", "KH", 0, maNguoiDung))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền tạo khóa học"
+                };
+            }
+            #endregion
+
+            #region Thêm khóa học
+		    var khoaHoc = new KhoaHocDTO();
             gan(ref khoaHoc, form);
 
-            KetQua ketQua = kiemTra(khoaHoc);
+            var ketQua = kiemTra(khoaHoc);
 
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            return KhoaHocDAO.them(khoaHoc);
+            return KhoaHocDAO.them(khoaHoc); 
+	        #endregion
         }
 
         public static KetQua layTheoMa(int ma, LienKet lienKet = null)

@@ -16,8 +16,11 @@ CREATE TABLE dbo.NguoiDung
 	DiaChi NVARCHAR(MAX),
 	SoDienThoai NVARCHAR(MAX),
 	MaHinhDaiDien INT,
-	CoQuyenHT BIT DEFAULT 0,
-	CoQuyenCD BIT DEFAULT 0,
+	CoQuyenHT BIT,
+	CoQuyenND BIT,
+	CoQuyenCD BIT,
+	CoQuyenHD BIT,
+	CoQuyenKH BIT,
 	DaKichHoat BIT DEFAULT 0,
 	MaKichHoat NVARCHAR(MAX),
 	MatKhauCap2 NVARCHAR(MAX)
@@ -137,7 +140,7 @@ BEGIN
 		Ten
 		FROM dbo.NguoiDung
 		WHERE 
-			Ho + ' ' + Ten LIKE '%' + REPLACE(@0, ' ', '%') + '%'
+			Ho + ' ' + TenLot + ' ' + Ten LIKE '%' + REPLACE(@0, ' ', '%') + '%'
 END
 
 GO

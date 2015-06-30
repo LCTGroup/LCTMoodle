@@ -36,9 +36,6 @@ namespace BUSLayer
                     case "MaChuDe":
                         cauHoi.chuDe = form.layDTO<ChuDeDTO>(key);
                         break;
-                    case "Diem":
-                        cauHoi.diem = form.layInt(key);
-                        break;
                     default:
                         break;
                 }
@@ -97,9 +94,6 @@ namespace BUSLayer
                     case "MaChuDe":
                         bangCapNhat.Add("MaChuDe", layMa_String(cauHoi.chuDe), 1);
                         break;
-                    case "Diem":
-                        bangCapNhat.Add("Diem", cauHoi.diem.ToString(), 1);
-                        break;
                     default:
                         break;
                 }
@@ -156,7 +150,6 @@ namespace BUSLayer
             }
 
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
-
             gan(ref cauHoi, form);
 
             ketQua = kiemTra(cauHoi, form.Keys.ToArray());
@@ -174,19 +167,19 @@ namespace BUSLayer
             return CauHoiDAO.layTheoMa(ma, lienKet);
         }
 
-        public static KetQua layDanhSach(int? soDong = null, LienKet lienKet = null)
+        public static KetQua layDanhSach(int? soDong = null, LienKet lienKet = null, string tieuChiHienThi = null)
         {
-            return CauHoiDAO.lay(soDong, lienKet);
+            return CauHoiDAO.lay(soDong, tieuChiHienThi, lienKet);
         }
 
-        public static KetQua layTheoMaChuDe_TimKiem(int? ma, string tuKhoa, LienKet lienKet = null)
+        public static KetQua layTheoMaChuDe_TimKiem(int? ma, string tuKhoa, LienKet lienKet = null, string cachHienThi = null)
         {
-            return CauHoiDAO.layTheoMaChuDe_TimKiem(ma, tuKhoa, lienKet);
+            return CauHoiDAO.layTheoMaChuDe_TimKiem(ma, tuKhoa, lienKet, cachHienThi);
         }
 
-        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null, string cachHienThi = null)
         {
-            return CauHoiDAO.lay_TimKiem(tuKhoa, lienKet);
+            return CauHoiDAO.lay_TimKiem(tuKhoa, lienKet, cachHienThi);
         }
 
     }

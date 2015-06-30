@@ -91,17 +91,10 @@ namespace BUSLayer
         
         public static KetQua them(Form form)
         {
-            TraLoiDTO traLoi = new TraLoiDTO();
-
-            if (Session["NguoiDung"] != null)
-            {
-                form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
-            }
-            
+            TraLoiDTO traLoi = new TraLoiDTO();            
             gan(ref traLoi, form);
 
             KetQua ketQua = TraLoiBUS.kiemTra(traLoi);
-
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
@@ -129,7 +122,7 @@ namespace BUSLayer
             return TraLoiDAO.layTraLoiTheoMaCauHoi_SoLuong(maCauHoi);
         }
 
-        public static KetQua capNhat(Form form)
+        public static KetQua capNhat(Form form, LienKet lienKet = null)
         {
             int? maTraLoi = form.layInt("Ma");
             if (!maTraLoi.HasValue)
@@ -155,10 +148,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return TraLoiDAO.capNhatTheoMa(maTraLoi, layBangCapNhat(traLoi, form.Keys.ToArray()), new LienKet() { 
-                "NguoiTao",
-                "CauHoi"
-            });
+            return TraLoiDAO.capNhatTheoMa(maTraLoi, layBangCapNhat(traLoi, form.Keys.ToArray()), lienKet);
         }
 
         public static KetQua capNhatDuyetTheoMa(int? ma, bool duyet)

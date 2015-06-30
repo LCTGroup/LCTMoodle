@@ -26,11 +26,11 @@ namespace BUSLayer
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
-            if (coKiemTra("NguoiTao", truong, kiemTra) && baiViet.nguoiTao == null)
+            if (coKiemTra("MaNguoiTao", truong, kiemTra) && baiViet.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (coKiemTra("KhoaHoc", truong, kiemTra) && baiViet.khoaHoc == null)
+            if (coKiemTra("MaKhoaHoc", truong, kiemTra) && baiViet.khoaHoc == null)
             {
                 loi.Add("Khóa học không được bỏ trống");
             }
@@ -110,10 +110,44 @@ namespace BUSLayer
 
         public static KetQua them(Form form)
         {
-            BaiVietDienDanDTO baiViet = new BaiVietDienDanDTO();
+            #region Kiểm tra điều kiện
+            //Lấy người tạo
+            var maNguoiTao = form.layInt("MaNguoiTao");
+            if (!maNguoiTao.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 4
+                };
+            }
+
+            //Khóa học
+            var maKhoaHoc = form.layInt("MaKhoaHoc");
+            if (!maKhoaHoc.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Mã khóa học không được bỏ trống"
+                };
+            }
+
+            //Người dùng là thành viên
+            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiTao);
+            if (ketQua.trangThai != 0 || (ketQua.ketQua as KhoaHoc_NguoiDungDTO).trangThai != 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn cần phải là thành viên của diễn đàn để đăng bài viết"
+                };
+            }
+	        #endregion
+
+            var baiViet = new BaiVietDienDanDTO();
             gan(ref baiViet, form);
             
-            KetQua ketQua = kiemTra(baiViet);
+            ketQua = kiemTra(baiViet);
 
             if (ketQua.trangThai != 0)
             {
@@ -141,29 +175,80 @@ namespace BUSLayer
             return BaiVietDienDanDAO.layTheoMa(ma);
         }
 
-        public static KetQua xoaTheoMa(int ma)
+        public static KetQua xoaTheoMa(int ma, int maNguoiXoa)
         {
+            #region Kiểm tra điều kiện
+            //Lấy bài viết
+            var ketQua = BaiVietDienDanDAO.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Bài viết không tồn tại"
+                };
+            }
+
+            var baiViet = ketQua.ketQua as BaiVietDienDanDTO;
+
+            if (baiViet.nguoiTao.ma != maNguoiXoa && !coQuyen("DD_Xoa", "KH", baiViet.khoaHoc.ma.Value))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền xóa bài viết"
+                };
+            }
+            #endregion
+
             return BaiVietDienDanDAO.xoaTheoMa(ma);
         }
 
         public static KetQua capNhatTheoMa(Form form)
         {
-            int? maBaiViet = form.layInt("Ma");
-            if (!maBaiViet.HasValue)
+            #region Kiểm tra điều kiện
+            //Lấy mã người sửa
+            int? maNguoiSua = form.layInt("MaNguoiSua");
+            if (!maNguoiSua.HasValue)
             {
                 return new KetQua()
                 {
-                    trangThai = 1
+                    trangThai = 3,
+                    ketQua = "Mã người sửa không được bỏ trống"
                 };
             }
 
-            KetQua ketQua = layTheoMa(maBaiViet.Value);
+            //Lấy bài viết
+            int? ma = form.layInt("Ma");
+            if (!ma.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Mã bài viết không thể bỏ trống"
+                };
+            }
+            var ketQua = BaiVietDienDanDAO.layTheoMa(ma);
             if (ketQua.trangThai != 0)
             {
-                return ketQua;
+                return new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Bài viết không tồn tại"
+                };
             }
+            var baiViet = ketQua.ketQua as BaiVietDienDanDTO;
 
-            BaiVietDienDanDTO baiViet = ketQua.ketQua as BaiVietDienDanDTO;
+            //Kiểm tra quyền
+            if (baiViet.nguoiTao.ma != maNguoiSua && !coQuyen("DD_Sua", "KH", baiViet.khoaHoc.ma.Value, maNguoiSua))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền sửa bài viết"
+                };
+            }
+            #endregion
 
             gan(ref baiViet, form);
 
@@ -174,27 +259,36 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return BaiVietDienDanDAO.capNhatTheoMa(maBaiViet, layBangCapNhat(baiViet, form.Keys.ToArray()), new LienKet()
+            return BaiVietDienDanDAO.capNhatTheoMa(ma, layBangCapNhat(baiViet, form.Keys.ToArray()), new LienKet()
             {
                 "NguoiTao",
                 "TapTin"
             });
         }
 
-        public static KetQua ghim(int ma, bool ghim)
+        public static KetQua ghim(int ma, bool ghim, int maNguoiGhim)
         {
-            #region Kiểm tra bài viết, lấy khóa học
+            #region Kiểm tra điều kiện
+            //Lấy bài viết
             var ketQua = BaiVietDienDanDAO.layTheoMa(ma);
             if (ketQua.trangThai != 0)
             {
                 return new KetQua()
                 {
                     trangThai = 1,
-                    ketQua = "Bài viết không hợp lệ"
+                    ketQua = "Bài viết không tồn tại"
                 };
             }
 
             var baiViet = ketQua.ketQua as BaiVietDienDanDTO;
+            if (!coQuyen("DD_Ghim", "KH", baiViet.khoaHoc.ma.Value, maNguoiGhim))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền ghim"
+                };
+            }
             #endregion
             
             //Xóa ghim hiện tại nếu là ghim

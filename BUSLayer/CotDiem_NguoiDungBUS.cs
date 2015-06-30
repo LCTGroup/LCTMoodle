@@ -94,29 +94,58 @@ namespace BUSLayer
             };
         }
 
-        public static KetQua capNhat(List<dynamic> ds)
+        public static KetQua capNhat(List<dynamic> ds, int maNguoiSua)
         {
-            if (Session["NguoiDung"] == null)
+            #region Kiểm tra điều kiện
+            if (ds.Count == 0)
             {
                 return new KetQua()
                 {
-                    trangThai = 4
+                    trangThai = 0
                 };
             }
-
-            var nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?);
+            #endregion
 
             List<CotDiem_NguoiDungDTO> dsDiem = new List<CotDiem_NguoiDungDTO>();
+            CotDiemDTO cotDiem;
+            CotDiem_NguoiDungDTO diem;
+            KetQua ketQua;
 
+            List<int> dsMaKhoaHoc = new List<int>();
             foreach(var item in ds)
             {
-                dsDiem.Add(new CotDiem_NguoiDungDTO()
+                diem = new CotDiem_NguoiDungDTO()
+                {
+                    cotDiem = layDTO<CotDiemDTO>(Convert.ToInt32(item.maCotDiem)),
+                    nguoiDung = layDTO<NguoiDungDTO>(Convert.ToInt32(item.maNguoiDung)),
+                    diem = Convert.ToDouble(item.diem),
+                    nguoiTao = layDTO<NguoiDungDTO>(maNguoiSua)
+                };
+
+                ketQua = CotDiemDAO.layTheoMa(diem.cotDiem.ma);
+                if (ketQua.trangThai != 0)
+                {
+                    return new KetQua()
                     {
-                        cotDiem = layDTO<CotDiemDTO>(Convert.ToInt32(item.maCotDiem)),
-                        nguoiDung = layDTO<NguoiDungDTO>(Convert.ToInt32(item.maNguoiDung)),
-                        diem = Convert.ToDouble(item.diem),
-                        nguoiTao = nguoiTao
-                    });
+                        trangThai = 1,
+                        ketQua = "Có cột điểm không tồn tại"
+                    };
+                }
+                cotDiem = ketQua.ketQua as CotDiemDTO;
+                if (!dsMaKhoaHoc.Exists(x => x == cotDiem.khoaHoc.ma.Value))
+                {
+                    dsMaKhoaHoc.Add(cotDiem.khoaHoc.ma.Value);
+                    if (!coQuyen("QLDiem", "KH", cotDiem.khoaHoc.ma.Value))
+                    {
+                        return new KetQua()
+                        {
+                            trangThai = 3,
+                            ketQua = "Bạn không có quyền sửa điểm"
+                        };
+                    }
+                }
+
+                dsDiem.Add(diem);
             }
 
             return CotDiem_NguoiDungDAO.capNhat(toDataTable(dsDiem));

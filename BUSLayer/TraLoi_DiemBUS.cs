@@ -11,9 +11,9 @@ using Data;
 
 namespace BUSLayer
 {
-    public class CauHoi_DiemBUS : BUS
+    public class TraLoi_DiemBUS : BUS
     {
-        public static KetQua them(int maCauHoi, int? maNguoiTao, bool diem)
+        public static KetQua them(int maTraLoi, int? maNguoiTao, bool diem)
         {
             if (!maNguoiTao.HasValue)
             {
@@ -22,27 +22,27 @@ namespace BUSLayer
                     trangThai = 4
                 };
             }
-            
-            KetQua ketQua = CauHoiDAO.layTheoMa(maCauHoi);
+
+            KetQua ketQua = TraLoiDAO.layTheoMa(maTraLoi);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }            
 
-            CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
-            if (cauHoi.nguoiTao.ma == maNguoiTao)
+            TraLoiDTO traLoi = ketQua.ketQua as TraLoiDTO;
+            if (traLoi.nguoiTao.ma == maNguoiTao)
             {
                 return new KetQua()
                 {
                     trangThai = 3,
-                    ketQua = "Bạn không có quyền cho điểm câu hỏi của mình"
+                    ketQua = "Bạn không có quyền cho điểm trả lời của mình"
                 };
             }
             
-            return CauHoi_DiemDAO.them(maCauHoi, maNguoiTao, diem);
+            return TraLoi_DiemDAO.them(maTraLoi, maNguoiTao, diem);
         }
 
-        public static KetQua xoa(int? maCauHoi, int? maNguoiTao)
+        public static KetQua xoa(int? maTraLoi, int? maNguoiTao)
         {
             if (!maNguoiTao.HasValue)
             {
@@ -51,11 +51,11 @@ namespace BUSLayer
                     trangThai = 4
                 };
             }
-            
-            return CauHoi_DiemDAO.xoaTheoMaCauHoiVaMaNguoiTao(maCauHoi, maNguoiTao);
+
+            return TraLoi_DiemDAO.xoaTheoMaTraLoiVaMaNguoiTao(maTraLoi, maNguoiTao);
         }
 
-        public static int trangThaiVoteCuaNguoiDungTrongCauHoi(int? maCauHoi, int? maNguoiDung)
+        public static int trangThaiVoteCuaNguoiDungTrongTraLoi(int? maTraLoi, int? maNguoiDung)
         {
             if (!maNguoiDung.HasValue)
             {
@@ -64,7 +64,7 @@ namespace BUSLayer
             //0: chưa vote | 1: vote cộng | 2: vote trừ            
             int trangThaiVote = 0;
 
-            KetQua ketQua = CauHoi_DiemDAO.layTheoMaCauHoiVaMaNguoiTao_Diem(maCauHoi, maNguoiDung);
+            KetQua ketQua = TraLoi_DiemDAO.layTheoMaTraLoiVaMaNguoiTao_Diem(maTraLoi, maNguoiDung);
             if (ketQua.trangThai == 0)
             {
                 bool tam = (bool)ketQua.ketQua;

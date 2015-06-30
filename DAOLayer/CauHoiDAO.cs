@@ -57,6 +57,8 @@ namespace DAOLayer
                         break;
                     case "Diem":
                         cauHoi.diem = layInt(dong, i); break;
+                    case "SoLuongTraLoi":
+                        cauHoi.soLuongTraLoi = layInt(dong, i); break;
                     default:
                         break;
                 }                
@@ -137,14 +139,15 @@ namespace DAOLayer
             );
         }
         
-        public static KetQua lay(int? soDong = null, LienKet lienKet = null)
+        public static KetQua lay(int? soDong = null, string tieuChiHienThi = null, LienKet lienKet = null)
         {
             return layDanhSachDong
             (
                 "layCauHoi",
                 new object[] 
                 {
-                    soDong
+                    soDong,
+                    tieuChiHienThi
                 },
                 lienKet
             );
@@ -163,29 +166,31 @@ namespace DAOLayer
                 );
         }
 
-        public static KetQua layTheoMaChuDe_TimKiem(int? ma, string maChuDe, LienKet lienKet = null)
+        public static KetQua layTheoMaChuDe_TimKiem(int? ma, string maChuDe, LienKet lienKet = null, string cachHienThi = null)
         {
             return layDanhSachDong(
                 "layCauHoiTheoMaChuDe_TimKiem",
                 new object[] 
                 {
                     ma,
-                    maChuDe
+                    maChuDe,
+                    cachHienThi
                 },
                 lienKet
             );
         }
 
-        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null)
+        public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null, string cachHienThi = null)
         {
             return layDanhSachDong
                 (
                     "layCauHoi_TimKiem",
                     new object[]
                     {
-                        tuKhoa
+                        tuKhoa,
+                        cachHienThi
                     },
-                    lienKet
+                    lienKet                    
                 );
         }
     }

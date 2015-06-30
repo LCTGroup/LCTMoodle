@@ -1,8 +1,10 @@
-﻿@model List<DTOLayer.ChuongTrinhDTO>
+﻿@using LCTMoodle.LCTView
+@using Helpers
+@model List<DTOLayer.ChuongTrinhDTO>
 
 @{
     var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocDTO;
-    ViewData["TieuDe"] = "Soạn giáo trình - " + khoaHoc.ten;
+    ViewData["TieuDe"] = "Soạn chương trình - " + khoaHoc.ten;
     Layout = "~/Views/LCT/Khung.cshtml";
 
     ViewData["DieuHuong"] = new List<string>()
@@ -11,6 +13,11 @@
         khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
         "Soạn giáo trình", "/ChuongTrinh/" + khoaHoc.ma
     };
+    
+    var dsQuyen = QuyenView.layDSQuyen("KH", khoaHoc.ma.Value);
+    
+    bool
+        coQuyenQL = QuyenHelper.co(dsQuyen, "QLChuongTrinh");
 }
 @section Styles {
     <link href="/Index.css/ChuongTrinh" rel="stylesheet" />
@@ -24,11 +31,11 @@
 
 <article class="hop hop-2-vien">
     <section class="tieu-de">
-        Soạn chương trình
+        Chương trình khóa học
     </section>
     <section class="noi-dung">
         <article style="border: none;">
-            <article id="khung_giao_trinh" class="lct-bang khung-giao-trinh">
+            <article id="khung_giao_trinh" class="lct-bang khung-giao-trinh" style="@(coQuyenQL ? "margin-bottom: 38px;" : null)">
                 <section class="thead">
                     <article class="tr">
                         <section class="th"></section>
@@ -46,32 +53,35 @@
                         }
                     }
                 </section>
-                <form id="tao_giao_trinh_form" class="lct-form tao-giao-trinh-form tfoot" data-an-rang-buoc>
-                    <section class="tr">
-                        <section class="td"></section>
-                        <section class="td">
-                            <input type="hidden" name="KhoaHoc" value="@khoaHoc.ma" />
-                            <article class="input">
-                                <input data-validate="bat-buoc" type="text" name="BaiHoc" placeholder="Bài học" />
-                            </article>
-                        </section>
-                        <section class="td">
-                            <article class="input">
-                                <textarea name="NoiDung" placeholder="Nội dung" style="height: 20px;"></textarea>
-                            </article>
-                        </section>
-                        <section class="td">
-                            <article class="input">
-                                <input type="text" name="ThoiGian" placeholder="Thời gian" />
-                            </article>
-                            <section class="khung-button">
-                                <button type="submit" class="chap-nhan">
-                                    Thêm
-                                </button>
+                @if (coQuyenQL)
+                {
+                    <form id="tao_giao_trinh_form" class="lct-form tao-giao-trinh-form tfoot" data-an-rang-buoc>
+                        <section class="tr">
+                            <section class="td"></section>
+                            <section class="td">
+                                <input type="hidden" name="MaKhoaHoc" value="@khoaHoc.ma" />
+                                <article class="input">
+                                    <input data-validate="bat-buoc" type="text" name="BaiHoc" placeholder="Bài học" />
+                                </article>
+                            </section>
+                            <section class="td">
+                                <article class="input">
+                                    <textarea name="NoiDung" placeholder="Nội dung" style="height: 20px;"></textarea>
+                                </article>
+                            </section>
+                            <section class="td">
+                                <article class="input">
+                                    <input type="text" name="ThoiGian" placeholder="Thời gian" />
+                                </article>
+                                <section class="khung-button">
+                                    <button type="submit" class="chap-nhan">
+                                        Thêm
+                                    </button>
+                                </section>
                             </section>
                         </section>
-                    </section>
-                </form>
+                    </form>
+                }
             </article>
         </article>
     </section>

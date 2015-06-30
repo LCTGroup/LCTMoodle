@@ -11,6 +11,12 @@
         khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
         "Quản lý cột điểm", "/BangDiem/Tao/" + khoaHoc.ma
     };
+
+    ViewData["ChucNang"] = new List<string>()
+    {
+        "Xem bảng điểm",
+        "href='/KhoaHoc/Xem-BangDiem/" + khoaHoc.ma + "'"
+    };
 }
 @section Styles {
     <link href="/Tao.css/BangDiem" rel="stylesheet" />
@@ -59,7 +65,7 @@
                     <section class="tr">
                         <section class="td"></section>
                         <section class="td">
-                            <input type="hidden" name="KhoaHoc" value="@khoaHoc.ma" />
+                            <input type="hidden" name="MaKhoaHoc" value="@khoaHoc.ma" />
                             <article class="input">
                                 <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Tên cột điểm" />
                             </article>

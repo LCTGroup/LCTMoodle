@@ -119,45 +119,61 @@ END
 
 GO
 --Lấy toàn bộ Câu Hỏi
-CREATE PROC dbo.layCauHoi (
-	@0 INT --So dong lay
+ALTER PROC dbo.layCauHoi 
+(
+	@0 INT, --So dong lay
+	@1 NVARCHAR(MAX) --Cách hiển thị
 )
 AS
 BEGIN
-	IF (@0 IS NULL)
-	BEGIN
-		SELECT *
-		FROM dbo.CauHoi	
-	END
-	ELSE
-	BEGIN
-		EXEC('
-			SELECT TOP ' + @0 + ' *
-			FROM dbo.CauHoi	
-		')
-	END
+	DECLARE @query NVARCHAR(MAX) =
+	'
+		SELECT ' + CASE 
+			WHEN @0 IS NOT NULL THEN
+				'TOP ' + CAST(@0 AS VARCHAR(MAX))
+			ELSE
+				''
+			END + ' *
+		FROM dbo.CauHoi
+		ORDER BY ' + CASE
+			WHEN @1 = 'MoiNhat' THEN 'ThoiDiemTao'
+			WHEN @1 = 'DiemCaoNhat' THEN 'Diem'
+			WHEN @1 = 'TraLoiNhieuNhat' THEN 'SoLuongTraLoi'				
+			ELSE 'Ma'
+		END + ' DESC
+	'
+
+	EXEC(@query)
 END
 
 GO
 --Lấy Câu Hỏi theo từ khóa
 ALTER PROC dbo.layCauHoi_TimKiem 
 (
-	@0 NVARCHAR(MAX) --Từ khóa
+	@0 NVARCHAR(MAX), --Từ khóa
+	@1 NVARCHAR(MAX) --Cách sắp xếp: "MoiNhat", "DiemCaoNhat", "TraLoiNhieuNhat"
 )
 AS
 BEGIN
 	SET @0 = '%' + REPLACE(@0, ' ', '%') + '%'
 	SELECT *
 	FROM dbo.CauHoi
-	WHERE TieuDe LIKE @0 OR NoiDung LIKE @0
+	WHERE TieuDe LIKE @0 OR NoiDung LIKE @0	
+	ORDER BY CASE
+		WHEN @1 = 'MoiNhat'THEN ThoiDiemTao
+		WHEN @1 = 'DiemCaoNhat' THEN Diem
+		WHEN @1 = 'TraLoiNhieuNhat' THEN SoLuongTraLoi
+		ELSE Ma
+	END DESC
 END 
 
 GO
 --Lấy Câu Hỏi theo Chủ Đề
-CREATE PROC dbo.layCauHoiTheoMaChuDe_TimKiem
+ALTER PROC dbo.layCauHoiTheoMaChuDe_TimKiem
 (
 	@0 INT, --Mã Chủ Đề
-	@1 NVARCHAR(MAX) --Từ khóa
+	@1 NVARCHAR(MAX), --Từ khóa
+	@2 NVARCHAR(MAX) --Cách hiển thị
 )
 AS
 BEGIN
@@ -166,6 +182,12 @@ BEGIN
 	WHERE 
 		MaChuDe = @0 AND 
 		TieuDe LIKE '%' + REPLACE(@1, ' ', '%') + '%'
+	ORDER BY CASE
+		WHEN @2 = 'MoiNhat'THEN ThoiDiemTao
+		WHEN @2 = 'DiemCaoNhat' THEN Diem
+		WHEN @2 = 'TraLoiNhieuNhat' THEN SoLuongTraLoi
+		ELSE Ma
+	END DESC
 END
 
 GO

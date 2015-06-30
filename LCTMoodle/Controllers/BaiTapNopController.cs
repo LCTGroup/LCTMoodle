@@ -24,7 +24,30 @@ namespace LCTMoodle.Controllers
 
         public ActionResult _DanhSachNop(int maBaiTap)
         {
-            KetQua ketQua = BaiTapNopBUS.layTheoMaBaiVietBaiTap(maBaiTap);
+            #region Kiểm tra quyền
+            //Lấy bài tập
+            var ketQua = BaiVietBaiTapBUS.layTheoMa(maBaiTap);
+            if (ketQua.trangThai != 0)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Bài tập không tồn tại"
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
+            if (!BUS.coQuyen("BT_QLBaiNop", "KH", baiTap.khoaHoc.ma.Value))
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền xem bài nộp"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            ketQua = BaiTapNopBUS.layTheoMaBaiVietBaiTap(maBaiTap);
             List<BaiTapNopDTO> danhSachBaiTapNop =
                 ketQua.trangThai == 0 ?
                     ketQua.ketQua as List<BaiTapNopDTO> :

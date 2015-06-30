@@ -1,4 +1,5 @@
-﻿@using LCTMoodle.LCTHtml
+﻿@using LCTMoodle.LCTView
+@using Helpers
 @model DTOLayer.KhoaHocDTO
 @{
     Layout = "~/Views/LCT/Khung.cshtml";
@@ -14,10 +15,71 @@
         "Danh sách thành viên", "/KhoaHoc/DanhSachThanhVien/" + Model.ma
     };
 
-    List<string> chucNang = new List<string>() 
+    /*
+        Chức năng
+     */
+    List<string> chucNang = new List<string>();
+
+    /*
+        Kiểm tra thành viên để hiển thị các nút chức năng tham gia/rời nhóm
+     */
+    var thanhVien = ViewData["ThanhVien"] as DTOLayer.KhoaHoc_NguoiDungDTO;
+    if (thanhVien == null)
     {
-        "Danh sách bài viết", "href='/KhoaHoc/" + Model.ma + "'"
-    };
+        if (Model.canDangKy)
+        {
+            if (!Model.hanDangKy.HasValue || Model.hanDangKy > DateTime.Now)
+            {
+                chucNang.Add("Đăng ký");
+                chucNang.Add("data-chuc-nang='dang-ky'");
+            }
+        }
+        else
+        {
+            chucNang.Add("Tham gia");
+            chucNang.Add("data-chuc-nang='tham-gia'");
+        }
+    }
+    else
+    {
+        switch (thanhVien.trangThai)
+        {
+            case 0:
+                chucNang.Add("Rời khóa học");
+                chucNang.Add("data-chuc-nang='roi-kh'");
+                break;
+            case 1:
+                chucNang.Add("Hủy đăng ký");
+                chucNang.Add("data-chuc-nang='huy-dang-ky'");
+                break;
+            case 2:
+                chucNang.Add("Xác nhận lời mời");
+                chucNang.Add("data-chuc-nang='xac-nhan-moi'");
+                chucNang.Add("Từ chối lời mời");
+                chucNang.Add("data-chuc-nang='tu-choi-moi'");
+                break;
+        }
+    }
+
+    var dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
+
+    if (QuyenHelper.co(dsQuyen, "QLQuyen"))
+    {
+        chucNang.Add("Quản lý quyền");
+        chucNang.Add("href='/QuanlyQuyen/KH/" + Model.ma + "'");
+    }
+
+    chucNang.Add("Chương trình khóa học");
+    chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + Model.ma + "'");
+
+    if (QuyenHelper.co(dsQuyen, "QLCotDiem"))
+    {
+        chucNang.Add("Quản lý bảng điểm");
+        chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + Model.ma + "'");
+    }
+
+    chucNang.Add("Xem điểm khóa học");
+    chucNang.Add("href='/KhoaHoc/Xem-BangDiem/" + Model.ma + "'");
 
     ViewData["ChucNang"] = chucNang;
 }
@@ -45,7 +107,7 @@
                 {
                     <li class="item" data-ma="@nd.nguoiDung.ma">
                         <img src="/boy.png/" />
-                        <a href="#">@NguoiDungHtml.link(nd.nguoiDung)</a>
+                        <a href="#">@NguoiDungView.link(nd.nguoiDung)</a>
                         <section class="khung-chuc-nang">
                             <a data-chuc-nang="dong-y" class="dong-y" title="Chấp nhận"><i></i></a>
                             <a data-chuc-nang="tu-choi" class="tu-choi" title="Từ chối"><i></i></a>
@@ -70,7 +132,7 @@
                 {
                     <li class="item" data-ma="@tv.nguoiDung.ma">
                         <img src="/boy.png/" />
-                        <a href="#">@NguoiDungHtml.link(tv.nguoiDung)</a>
+                        <a href="#">@NguoiDungView.link(tv.nguoiDung)</a>
                         <section class="khung-chuc-nang-lct">
                             <ul data-doi-tuong="cnnd-@tv.nguoiDung.ma">
                                 <li>
@@ -110,7 +172,7 @@
                 {
                     <li class="item" data-ma="@nd.nguoiDung.ma">
                         <img src="/boy.png/" />
-                        <a href="#">@NguoiDungHtml.link(nd.nguoiDung)</a>
+                        <a href="#">@NguoiDungView.link(nd.nguoiDung)</a>
                         <section class="khung-chuc-nang">
                             <a data-chuc-nang="bo-chan" class="bo-chan" title="Bỏ chặn"><i></i></a>
                         </section>

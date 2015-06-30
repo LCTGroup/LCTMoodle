@@ -11,7 +11,7 @@ CREATE TABLE dbo.TraLoi_Diem
 
 GO
 --Cho điểm Hỏi Đáp
-CREATE PROC dbo.themTraLoi_Diem
+ALTER PROC dbo.themTraLoi_Diem
 (
 	@0 INT, --Mã hỏi đáp (Câu hỏi hoặc trả lời)
 	@1 INT, --Mã người tạo
@@ -19,13 +19,37 @@ CREATE PROC dbo.themTraLoi_Diem
 )
 AS
 BEGIN
+	EXEC xoaTraLoi_DiemTheoMaTraLoiVaMaNguoiTao @0, @1
+
 	INSERT INTO dbo.TraLoi_Diem(MaTraLoi, MaNguoiTao, Diem)
 	VALUES (@0, @1, @2)
 END
 
 GO
+--Thêm điểm cho Trả lời khi thêm TraLoi_Diem thành công
+ALTER TRIGGER dbo.themTraLoi_Diem_TRIGGER
+ON dbo.TraLoi_Diem
+AFTER INSERT
+AS
+BEGIN
+	DECLARE @maTraLoi INT
+	DECLARE @diem BIT
+
+	SELECT @maTraLoi = MaTraLoi, @diem = Diem FROM INSERTED	
+
+	UPDATE dbo.TraLoi
+	SET Diem += CASE
+		WHEN @diem = 1 THEN
+			1
+		ELSE
+			(-1)
+		END
+	WHERE Ma = @maTraLoi
+END
+
+GO
 --Bỏ cho điểm
-CREATE PROC dbo.xoaTraLoi_DiemTheoMaTraLoiVaMaNguoiTao
+ALTER PROC dbo.xoaTraLoi_DiemTheoMaTraLoiVaMaNguoiTao
 (
 	@0 INT, --Mã trả lời
 	@1 INT --Mã người tạo
@@ -37,8 +61,44 @@ BEGIN
 END
 
 GO
+--Giảm điểm cho Trả Lời khi xóa TraLoi_Diem thành công
+ALTER TRIGGER dbo.xoaTraLoi_Diem_TRIGGER
+ON dbo.TraLoi_Diem
+AFTER DELETE
+AS
+BEGIN
+	DECLARE @maTraLoi INT
+	DECLARE @diem BIT
+		
+	SELECT @maTraLoi = MaTraLoi, @diem = Diem FROM DELETED
+
+	UPDATE dbo.TraLoi
+	SET Diem -= CASE
+		WHEN @diem = 1 THEN
+			1
+		ELSE
+			(-1)
+		END
+	WHERE Ma = @maTraLoi
+END
+
+GO
+--Lấy giá trị vote của người dùng
+CREATE PROC dbo.layTraLoi_DiemTheomMaTraLoiVaMaNguoiTao_Diem
+(
+	@0 INT, --Mã trả lời
+	@1 INT --Mã người dùng
+)
+AS
+BEGIN
+	SELECT Diem
+	FROM dbo.TraLoi_Diem
+	WHERE MaTraLoi = @0 AND MaNguoiTao = @1
+END
+
+GO
 --Lấy điểm cho trả lời
-CREATE PROC dbo.layTraLoi_DiemTheoMaTraLoi_Diem
+ALTER PROC dbo.layTraLoi_DiemTheoMaTraLoi_Diem
 (
 	@0 INT --Mã trả lời
 )

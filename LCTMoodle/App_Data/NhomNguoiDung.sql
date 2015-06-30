@@ -107,21 +107,35 @@ END
 
 GO
 --Lấy theo mã
-CREATE PROC dbo.layNhomNguoiDungTheoMa (
+ALTER PROC dbo.layNhomNguoiDungTheoMa (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT --Ma
 )
 AS
 BEGIN
-	EXEC('
-		SELECT TOP 1
-			Ma,
-			Ten,
-			MoTa,
-			N''' + @0 + ''' PhamVi,
-			MaDoiTuong,
-			MaNguoiTao
-			FROM dbo.NhomNguoiDung_' + @0 + '
-			WHERE Ma = ' + @1 + '
-	')
+	IF (@0 = 'HT')
+	BEGIN
+			SELECT TOP 1
+				Ma,
+				Ten,
+				MoTa,
+				'HT' PhamVi,
+				MaNguoiTao
+				FROM dbo.NhomNguoiDung_HT
+				WHERE Ma = @1
+	END
+	ELSE
+	BEGIN
+		EXEC('
+			SELECT TOP 1
+				Ma,
+				Ten,
+				MoTa,
+				N''' + @0 + ''' PhamVi,
+				MaDoiTuong,
+				MaNguoiTao
+				FROM dbo.NhomNguoiDung_' + @0 + '
+				WHERE Ma = ' + @1 + '
+		')
+	END
 END

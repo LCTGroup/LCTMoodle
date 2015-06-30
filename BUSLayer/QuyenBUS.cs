@@ -61,15 +61,22 @@ namespace BUSLayer
             return danhSachCon;
         }
 
-        public static KetQua layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri(int? maNguoiDung = null, string phamVi = "HT", int maDoiTuong = 0)
+        /// <summary>
+        /// Lấy danh sách quyền
+        /// </summary>
+        /// <param name="phamVi">Phạm vi quyền ("HT", "ND", "CD", "HD", "KH") - !Không phải phạm vi nhóm quyền</param>
+        /// <param name="maDoiTuong">Đối tượng tác động. Chỉ "CD", "KH" cần truyền</param>
+        /// <param name="maNguoiDung">Mã người dùng cần kiểm tra (Mặc định là người dùng hiện tại)</param>
+        /// <returns>string[]</returns>
+        public static KetQua layTheoMaNguoiDungVaMaDoiTuong_MangGiaTri(int maNguoiDung, string phamVi, int maDoiTuong = 0)
         {
-            if (Session["NguoiDung"] != null || maNguoiDung.HasValue)
+            if (maNguoiDung > 0)
             {
-                KetQua ketQua = QuyenDAO.layTheoMaNguoiDung_MaDoiTuong_ChuoiGiaTri(maNguoiDung.HasValue ? maNguoiDung.Value : (int)Session["NguoiDung"], phamVi, maDoiTuong);
+                KetQua ketQua = QuyenDAO.layTheoMaNguoiDung_MaDoiTuong_ChuoiGiaTri(maNguoiDung, phamVi, maDoiTuong);
 
                 if (ketQua.trangThai == 0)
                 {
-                    ketQua.ketQua = ketQua.ketQua.ToString().Split(',');
+                    ketQua.ketQua = ketQua.ketQua.ToString().Split('|');
                 }
 
                 return ketQua;
@@ -77,15 +84,15 @@ namespace BUSLayer
 
             return new KetQua() 
             {
-                trangThai = 4
+                trangThai = 1
             };
         }
 
-        public static KetQua kiemTraQuyenNguoiDung(string giaTri, string phamVi, int? maNguoiDung = null, int maDoiTuong = 0)
+        public static KetQua kiemTraQuyenNguoiDung(int maNguoiDung, string giaTri, string phamVi, int maDoiTuong = 0)
         {
-            if (Session["NguoiDung"] != null || maNguoiDung.HasValue)
+            if (maNguoiDung > 0)
             {
-                KetQua ketQua = QuyenDAO.layTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra(maNguoiDung.HasValue ? maNguoiDung.Value : (int)Session["NguoiDung"], giaTri, phamVi, maDoiTuong);
+                KetQua ketQua = QuyenDAO.layTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra(giaTri, maNguoiDung, phamVi, maDoiTuong);
 
                 if (ketQua.trangThai > 1)
                 {
@@ -100,10 +107,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return new KetQua() 
-            { 
-                trangThai = 4
-            };
+            return new KetQua(0, false);
         }
     }
 }

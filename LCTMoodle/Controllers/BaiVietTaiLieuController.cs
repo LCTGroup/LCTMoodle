@@ -14,30 +14,69 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult _Khung(int maKhoaHoc)
         {
-            ViewData["MaKhoaHoc"] = maKhoaHoc;
+            #region Kiểm tra quyền
+            #region Lấy khóa học
+            KetQua ketQua = KhoaHocBUS.layTheoMa(maKhoaHoc);
+            if (ketQua.trangThai != 0)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Khóa học không tồn tại"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
+            #endregion
 
-            KetQua ketQua = BaiVietTaiLieuBUS.layTheoMaKhoaHoc(maKhoaHoc);
+            #region Lấy thành viên
+            KhoaHoc_NguoiDungDTO thanhVien = null;
+            if (Session["NguoiDung"] != null)
+            {
+                ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(khoaHoc.ma.Value, (int)Session["NguoiDung"]);
+                thanhVien = ketQua.trangThai == 0 ? ketQua.ketQua as KhoaHoc_NguoiDungDTO : null;
+            }
+            #endregion
+
+            #region Kiểm tra nếu thành viên bị chặn
+            if (thanhVien != null && thanhVien.trangThai == 3)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Bạn đã bị chặn"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            #region Kiểm tra trường hợp khóa học nội bộ
+            if (
+                    (khoaHoc.cheDoRiengTu == "NoiBo" &&
+                    (thanhVien == null || thanhVien.trangThai != 0)) ||
+                    thanhVien != null && thanhVien.trangThai == 3)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Đây là khóa học nội bộ, bạn cần tham gia để xem nội dung"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+            #endregion
+
+            ketQua = BaiVietTaiLieuBUS.layTheoMaKhoaHoc(maKhoaHoc);
             List<BaiVietTaiLieuDTO> danhSachBaiViet = 
                 ketQua.trangThai == 0 ?
                 (List<BaiVietTaiLieuDTO>)ketQua.ketQua :
                 null;
 
-            try
-            {
-                return Json(new KetQua()
-                    {
-                        trangThai = 0,
-                        ketQua =
-                            renderPartialViewToString(ControllerContext, "BaiVietTaiLieu/_Khung.cshtml", danhSachBaiViet, ViewData)
-                    }, JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                return Json(new KetQua()
-                    {
-                        trangThai = 2
-                    }, JsonRequestBehavior.AllowGet);
-            }
+            ViewData["MaKhoaHoc"] = maKhoaHoc;
+
+            return Json(new KetQua()
+                {
+                    trangThai = 0,
+                    ketQua =
+                        renderPartialViewToString(ControllerContext, "BaiVietTaiLieu/_Khung.cshtml", danhSachBaiViet, ViewData)
+                }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _Form(int ma = 0)
@@ -62,11 +101,16 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            Form form = chuyenForm(formCollection);
-            if (Session["NguoiDung"] != null)
+            if (Session["NguoiDung"] == null)
             {
-                form.Add("MaNguoiTao", ((int)Session["NguoiDung"]).ToString());
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
             }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+
             KetQua ketQua = BaiVietTaiLieuBUS.them(form);
 
             if (ketQua.trangThai == 0)
@@ -86,17 +130,33 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoa(int ma)
         {
-            return Json(
-                BaiVietTaiLieuDAO.xoaTheoMa(ma),
-                JsonRequestBehavior.AllowGet
-            );
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            return Json(BaiVietTaiLieuBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult XuLyCapNhat(FormCollection form)
+        public ActionResult XuLyCapNhat(FormCollection formCollection)
         {
-            KetQua ketQua = BaiVietTaiLieuBUS.capNhatTheoMa(chuyenForm(form));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+
+            KetQua ketQua = BaiVietTaiLieuBUS.capNhatTheoMa(form);
 
             if (ketQua.trangThai == 0)
             {

@@ -1,5 +1,5 @@
 ﻿@model DTOLayer.BinhLuanDTO
-@using LCTMoodle.LCTHtml
+@using LCTMoodle.LCTView
 
 <li data-doi-tuong="muc-binh-luan" class="muc-binh-luan" data-ma="@Model.ma" data-loai-doi-tuong="@Model.loaiDoiTuong">
     <section class="trai">
@@ -9,7 +9,7 @@
     </section>
     <section class="phai">
         <section class="nguoi-dung">
-            <a href="#">@NguoiDungHtml.link(Model.nguoiTao)</a>
+            <a href="#">@NguoiDungView.link(Model.nguoiTao)</a>
         </section>
         <section class="noi-dung">
             @Model.noiDung

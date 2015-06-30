@@ -127,5 +127,10 @@
     .khung-hien-thi .noi-dung.active {
         display: block;
     }
-
+    .khung-hien-thi .noi-dung .empty {
+        text-align: center;
+        border: 1px solid #ccc;
+        padding: 5px;
+        color: #888;
+    }    
 /*#endregion*/
