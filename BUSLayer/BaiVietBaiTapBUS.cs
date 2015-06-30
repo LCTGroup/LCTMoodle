@@ -26,6 +26,10 @@ namespace BUSLayer
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
+            if (coKiemTra("Loai", truong, kiemTra) && !baiViet.loai.HasValue)
+            {
+                loi.Add("Khóa học không được bỏ trống");
+            }
             if (coKiemTra("MaNguoiTao", truong, kiemTra) && baiViet.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
@@ -73,6 +77,9 @@ namespace BUSLayer
                     case "MaTapTin":
                         baiViet.tapTin = TapTinBUS.chuyen("BaiVietBaiTap_TapTin", form.layInt(key)).ketQua as TapTinDTO;
                         break;
+                    case "Loai":
+                        baiViet.loai = form.layInt(key);
+                        break;
                     case "CoThoiDiemHetHan":
                         baiViet.thoiDiemHetHan = form.layBool("CoThoiDiemHetHan") ? form.layDateTime("ThoiDiemHetHan") : null;
                         break;
@@ -88,7 +95,7 @@ namespace BUSLayer
             }
         }
 
-        public static BangCapNhat layBangCapNhat(BaiVietBaiTapDTO baiViet, string[] keys)
+        public static BangCapNhat layBangCapNhat(BaiVietBaiTapDTO baiTap, string[] keys)
         {
             BangCapNhat bangCapNhat = new BangCapNhat();
             foreach (string key in keys)
@@ -96,16 +103,19 @@ namespace BUSLayer
                 switch (key)
                 {
                     case "TieuDe":
-                        bangCapNhat.Add("TieuDe", baiViet.tieuDe, 2);
+                        bangCapNhat.Add("TieuDe", baiTap.tieuDe, 2);
                         break;
                     case "NoiDung":
-                        bangCapNhat.Add("NoiDung", baiViet.noiDung, 2);
+                        bangCapNhat.Add("NoiDung", baiTap.noiDung, 2);
                         break;
                     case "MaTapTin":
-                        bangCapNhat.Add("MaTapTin", baiViet.tapTin == null ? null : baiViet.tapTin.ma.ToString(), 1);
+                        bangCapNhat.Add("MaTapTin", baiTap.tapTin == null ? null : baiTap.tapTin.ma.ToString(), 1);
+                        break;
+                    case "Loai":
+                        bangCapNhat.Add("Loai", baiTap.loai.HasValue ? baiTap.loai.Value.ToString() : null, 1);
                         break;
                     case "CoThoiDiemHetHan":
-                        bangCapNhat.Add("ThoiDiemHetHan", baiViet.thoiDiemHetHan.HasValue ? baiViet.thoiDiemHetHan.Value.ToString("d/M/yyyy H:mm") : null, 3);
+                        bangCapNhat.Add("ThoiDiemHetHan", baiTap.thoiDiemHetHan.HasValue ? baiTap.thoiDiemHetHan.Value.ToString("d/M/yyyy H:mm") : null, 3);
                         break;
                     default:
                         break;
@@ -116,6 +126,35 @@ namespace BUSLayer
 
         public static KetQua them(Form form)
         {
+            #region Kiểm tra điều kiện
+            //Lấy mã người dùng
+            var maNguoiTao = form.layInt("MaNguoiTao");
+            if (!maNguoiTao.HasValue)
+            {
+                return new KetQua(3, "Người tạo không hợp lệ");
+            }
+
+            //Lấy mã khóa học
+            var maKhoaHoc = form.layInt("MaKhoaHoc");
+            if (!maKhoaHoc.HasValue)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Khóa học không hợp lệ"
+                };
+            }
+
+            if (coQuyen("BT_Them", "KH", maKhoaHoc.Value, maNguoiTao))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền đăng bài giảng"
+                };
+            }
+            #endregion
+
             BaiVietBaiTapDTO baiViet = new BaiVietBaiTapDTO();
             gan(ref baiViet, form);
 

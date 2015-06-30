@@ -41,6 +41,9 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "Loai":
+                        baiViet.loai = layInt(dong, i);
+                        break;
                     case "ThoiDiemHetHan":
                         baiViet.thoiDiemHetHan = layDateTime(dong, i);
                         break;
@@ -82,19 +85,20 @@ namespace DAOLayer
             return baiViet;
         }
 
-        public static KetQua them(BaiVietBaiTapDTO baiVietBaiTap, LienKet lienKet = null)
+        public static KetQua them(BaiVietBaiTapDTO baiTap, LienKet lienKet = null)
         {
             return layDong
             (
                 "themBaiVietBaiTap",
                 new object[] 
                 {
-                    baiVietBaiTap.tieuDe,
-                    baiVietBaiTap.noiDung,
-                    layMa(baiVietBaiTap.tapTin),
-                    baiVietBaiTap.thoiDiemHetHan,
-                    layMa(baiVietBaiTap.nguoiTao),
-                    layMa(baiVietBaiTap.khoaHoc)
+                    baiTap.tieuDe,
+                    baiTap.noiDung,
+                    layMa(baiTap.tapTin),
+                    baiTap.loai,
+                    baiTap.thoiDiemHetHan,
+                    layMa(baiTap.nguoiTao),
+                    layMa(baiTap.khoaHoc)
                 },
                 lienKet
             );

@@ -13,5 +13,8 @@ namespace DTOLayer
         public string moTa;
         public int? heSo;
         public DateTime? ngay;
+        public bool laDiemCong;
+        public string loaiDoiTuong;
+        public DTO doiTuong;
     }
 }

@@ -25,7 +25,7 @@
 {
     <section class="hop hop-2-vien">
         <section class="tieu-de">
-            Đăng tài liệu cho khóa học
+            Đăng tài liệu mới
         </section>
         @Html.Partial("~/Views/BaiVietTaiLieu/_Form.cshtml", null, new ViewDataDictionary() { { "MaKhoaHoc", ViewData["MaKhoaHoc"].ToString() } })
     </section>
@@ -33,7 +33,7 @@
 
 <section class="hop">
     <section class="tieu-de">
-        Danh sách tài liệu của khóa học
+        Danh sách tài liệu
     </section>
     <ul id="danh_sach_bai_viet" class="noi-dung">
         @if (Model != null)
