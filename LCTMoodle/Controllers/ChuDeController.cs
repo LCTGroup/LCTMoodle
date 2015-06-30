@@ -19,6 +19,12 @@ namespace LCTMoodle.Controllers
             ChuDeDTO chuDe = null;
 
             #region Kiểm tra quyền
+            var maNguoiDung = Session["NguoiDung"] as int?;
+            if (!maNguoiDung.HasValue)
+            {
+                return Redirect("/");
+            }
+
             if (ma != 0)
             {
                 ketQua = ChuDeBUS.layTheoMa(ma);
@@ -29,7 +35,7 @@ namespace LCTMoodle.Controllers
                 chuDe = ketQua.ketQua as ChuDeDTO;
             }
 
-            if (!BUS.coQuyen("QLQuyen", "CD", ma))
+            if (!BUS.coQuyen("QLQuyen", "CD", ma, maNguoiDung))
             {
                 return Redirect("/");
             }
@@ -106,6 +112,32 @@ namespace LCTMoodle.Controllers
 
         public ActionResult _FormTao(int maCha)
         {
+            KetQua ketQua;
+            ChuDeDTO chuDe = null;
+
+            #region Kiểm tra quyền
+            var maNguoiDung = Session["NguoiDung"] as int?;
+            if (!maNguoiDung.HasValue)
+            {
+                return Redirect("/");
+            }
+
+            if (maCha != 0)
+            {
+                ketQua = ChuDeBUS.layTheoMa(maCha);
+                if (ketQua.trangThai != 0)
+                {
+                    return Redirect("/");
+                }
+                chuDe = ketQua.ketQua as ChuDeDTO;
+            }
+
+            if (!BUS.coQuyen("QLNoiDung", "CD", maCha, maNguoiDung))
+            {
+                return Redirect("/");
+            }
+            #endregion
+
             ViewData["MaCha"] = maCha;
             return Json(new KetQua()
             {
@@ -116,14 +148,33 @@ namespace LCTMoodle.Controllers
 
         public ActionResult _FormSua(int ma)
         {
-            var ketQua = ChuDeBUS.layTheoMa(ma);
+            KetQua ketQua;
+            ChuDeDTO chuDe = null;
 
-            if (ketQua.trangThai == 0)
+            #region Kiểm tra quyền
+            var maNguoiDung = Session["NguoiDung"] as int?;
+            if (!maNguoiDung.HasValue)
             {
-                ketQua.ketQua = renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", ketQua.ketQua);
+                return Redirect("/");
             }
 
-            return Json(ketQua, JsonRequestBehavior.AllowGet);
+            if (ma != 0)
+            {
+                ketQua = ChuDeBUS.layTheoMa(ma);
+                if (ketQua.trangThai != 0)
+                {
+                    return Redirect("/");
+                }
+                chuDe = ketQua.ketQua as ChuDeDTO;
+            }
+
+            if (!BUS.coQuyen("QLNoiDung", "CD", ma, maNguoiDung))
+            {
+                return Redirect("/");
+            }
+            #endregion
+
+            return Json(new KetQua(0, renderPartialViewToString(ControllerContext, "ChuDe/_Form.cshtml", chuDe)), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

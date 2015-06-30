@@ -1,18 +1,42 @@
-﻿@{
+﻿@using LCTMoodle.LCTView
+@using Helpers
+@{
     Layout = "~/Views/LCT/Khung.cshtml";
 
-    
+
     var danhSachNhom = ViewData["DanhSachNhom"] as List<DTOLayer.NhomNguoiDungDTO>;
     var danhSachQuyen = ViewData["DanhSachQuyen"] as List<DTOLayer.QuyenDTO>;
 
     DTOLayer.KhoaHocDTO khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocDTO;
 
-    ViewData["TieuDe"] = "Quản lý quyền - " + khoaHoc.ten;
+    ViewData["TieuDe"] = "Quản lý quyền khóa học - " + khoaHoc.ten;
+
     ViewData["DieuHuong"] = new List<string>()
     {
         khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
         "Quản lý quyền", "/QuanLyQuyen/KH/" + khoaHoc.ma
-    };    
+    };
+
+    List<string> chucNang = new List<string>();
+
+    chucNang.Add("Danh sách thành viên");
+    chucNang.Add("href='/KhoaHoc/DanhSachThanhVien/" + khoaHoc.ma + "'");
+
+    var dsQuyen = QuyenView.layDSQuyen("KH", khoaHoc.ma.Value);
+
+    chucNang.Add("Chương trình khóa học");
+    chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + khoaHoc.ma + "'");
+
+    if (QuyenHelper.co(dsQuyen, "QLCotDiem"))
+    {
+        chucNang.Add("Quản lý bảng điểm");
+        chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + khoaHoc.ma + "'");
+    }
+
+    chucNang.Add("Xem điểm khóa học");
+    chucNang.Add("href='/KhoaHoc/Xem-BangDiem/" + khoaHoc.ma + "'");
+
+    ViewData["ChucNang"] = chucNang;
 }
 @section Styles {
     <link href="/QuanLy.css/Quyen" rel="stylesheet" />
@@ -53,7 +77,7 @@
                         </ul>
                     </section>
                 </section>
-                <section id="khung_nguoi" class="khung-nguoi tat">
+                <section id="khung_nguoi" class="khung-nguoi tat" data-chi-an>
                     <section class="khung-tim lct-form">
                         <article class="input">
                             <input id="tim_nguoi_input" type="text" placeholder="Tìm người dùng" />
@@ -65,7 +89,7 @@
                     </section>
                 </section>
             </section>
-            <section id="khung_quyen" class="khung-duoi tat">
+            <section id="khung_quyen" class="khung-duoi tat" data-chi-an>
                 <section class="khung-pham-vi">
                     <ul class="danh-sach">
                         <li class="item chon">
@@ -77,7 +101,7 @@
                     <section id="mo_ta_pham_vi" class="mo-ta">
                         Tùy chỉnh quyền cho nhóm
                     </section>
-                    <ul id="danh_sach_quyen" class="danh-sach lct-form">                        
+                    <ul id="danh_sach_quyen" class="danh-sach lct-form">
                         @Html.Partial("~/Views/Quyen/_DanhSach_Quyen.cshtml", danhSachQuyen)
                     </ul>
                     <section class="mo-ta-duoi">

@@ -1,15 +1,16 @@
 ﻿@model List<DTOLayer.CotDiemDTO>
 
 @{
-    var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocDTO;
-    ViewData["TieuDe"] = "Quản lý cột điểm - " + khoaHoc.ten;
     Layout = "~/Views/LCT/Khung.cshtml";
+    
+    var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocDTO;
+    
+    ViewData["TieuDe"] = "Quản lý cột điểm - " + khoaHoc.ten;
 
     ViewData["DieuHuong"] = new List<string>()
     {
-        "Khóa học của tôi", "/KhoaHoc",
         khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
-        "Quản lý cột điểm", "/BangDiem/Tao/" + khoaHoc.ma
+        "Quản lý cột điểm", "/KhoaHoc/Tao-BangDiem/" + khoaHoc.ma
     };
 
     ViewData["ChucNang"] = new List<string>()

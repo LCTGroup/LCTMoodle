@@ -1,11 +1,41 @@
-﻿@model DTOLayer.ChuDeDTO
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model DTOLayer.ChuDeDTO
 @{
-    ViewData["TieuDe"] = "Quản lý chủ đề";
+    ViewData["TieuDe"] = "Quản lý chủ đề" + (Model == null ? null : " - " + Model.ten);
     Layout = "~/Views/LCT/Khung.cshtml";
 
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Quản lý chủ đề", "/ChuDe/QuanLy" + (Model == null ? null : Model.ma)
+    };
+
     List<DTOLayer.ChuDeDTO> dsCon = ViewData["DSCon"] as List<DTOLayer.ChuDeDTO>;
-}
-@section Styles {
+
+    var maNguoiDung = Session["NguoiDung"] as int?;
+
+    string[] dsQuyen;
+    bool coQuyenQL;
+    
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("CD", Model == null ? 0 : Model.ma.Value, maNguoiDung);
+
+        coQuyenQL = QuyenHelper.co(dsQuyen, "QLQuyen");
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenQL = false;
+    }
+
+    if (coQuyenQL)
+    {
+        ViewData["ChucNang"] = new List<string>()
+        {
+            "Quản lý quyền", "href='/QuanLyQuyen/CD/" + (Model == null ? null : Model.ma) + "'"
+        };   
+    }
 }
 @section Scripts {
     <script src="/Khung.js/ChuDe/"></script>

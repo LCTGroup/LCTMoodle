@@ -11,22 +11,25 @@
         </p>
     </section>
     <a data-doi-tuong="ten" data-chuc-nang="mo-nut" class="ten">@Model.ten</a>
-    <section class="khung-chuc-nang-lct" style="top: 2px; right: 2px;">
-        <ul data-doi-tuong="cncd-@Model.ma">
-            <li>
-                <a data-chuc-nang="chuyen">Chuyển vị trí</a>
-            </li>
-            <li>
-                <a data-chuc-nang="sua">Sửa thông tin</a>
-            </li>
-            <li>
-                <a data-chuc-nang="xoa">Xóa chủ đề</a>
-            </li>
-        </ul>
-        <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cncd-@Model.ma">
-            <i class="pe-7f-config"></i>
-        </button>
-    </section>
+    @if (!coChon)
+    {
+        <section class="khung-chuc-nang-lct" style="top: 2px; right: 2px;">
+            <ul data-doi-tuong="cncd-@Model.ma">
+                <li>
+                    <a data-chuc-nang="chuyen">Chuyển vị trí</a>
+                </li>
+                <li>
+                    <a data-chuc-nang="sua">Sửa thông tin</a>
+                </li>
+                <li>
+                    <a data-chuc-nang="xoa">Xóa chủ đề</a>
+                </li>
+            </ul>
+            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cncd-@Model.ma">
+                <i class="pe-7f-config"></i>
+            </button>
+        </section>   
+    }
     @if (coChon)
     {
         <a class="nut-chon" data-chuc-nang="chon"></a>   

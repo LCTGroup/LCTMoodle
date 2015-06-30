@@ -73,7 +73,7 @@ namespace BUSLayer
             var nhomNguoiDung = ketQua.ketQua as NhomNguoiDungDTO;
 
             //Kiểm tra quyền
-            if (!coQuyen("QLQuyen", phamVi, nhomNguoiDung.doiTuong.ma.Value, maNguoiThem))
+            if (!coQuyen("QLQuyen", phamVi, nhomNguoiDung.doiTuong == null ? 0 : nhomNguoiDung.doiTuong.ma.Value, maNguoiThem))
             {
                 return new KetQua(3, "Bạn không có quyền thêm người dùng vào nhóm");
             }
@@ -95,7 +95,7 @@ namespace BUSLayer
             var nhomNguoiDung = ketQua.ketQua as NhomNguoiDungDTO;
 
             //Kiểm tra quyền
-            if (!coQuyen("QLQuyen", phamVi, nhomNguoiDung.doiTuong.ma.Value, maNguoiXoa))
+            if (!coQuyen("QLQuyen", phamVi, nhomNguoiDung.doiTuong == null ? 0 : nhomNguoiDung.doiTuong.ma.Value, maNguoiXoa))
             {
                 return new KetQua(3, "Bạn không có quyền xóa người dùng khỏi nhóm");
             }

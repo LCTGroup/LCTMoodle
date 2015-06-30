@@ -1,5 +1,8 @@
-﻿select * from khoahoc where ma = 1
+﻿select * from nhomnguoidung_ht 
+update nhomnguoidung_ht_nguoidung set manhomnguoidung = 10
+delete from nhomnguoidung_ht_nguoidung
 
+<<<<<<< HEAD
 select * from nhomnguoidung_HT_Quyen
 
 select * from nhomnguoidung_CD_quyen
@@ -35,3 +38,6 @@ select top 1 * from cauhoi
 order by ThoiDiemTao DESC
 
 select * from cauHoi
+=======
+select * from nhomnguoidung_ht_nguoidung
+>>>>>>> 3280e4ba9f478c413b4a5f2c81d4a0235af02982

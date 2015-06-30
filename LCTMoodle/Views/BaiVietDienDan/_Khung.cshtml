@@ -2,15 +2,15 @@
 @using LCTMoodle.LCTView
 @model List<DTOLayer.BaiVietDienDanDTO>
 @{
-    int maKhoaHoc = (int)Session["MaKhoaHoc"];
-    int? maNguoiDung = Session["MaNguoiDung"] as int?;
+    int maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+    int? maNguoiDung = Session["NguoiDung"] as int?;
 
     string[] dsQuyen;
     bool laThanhVien;
     
     if (maNguoiDung.HasValue)
     {
-        dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc);
+        dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc, maNguoiDung);
         
         var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
         if (ketQua.trangThai != 0)

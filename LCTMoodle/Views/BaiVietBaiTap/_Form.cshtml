@@ -36,18 +36,39 @@
                 </section>
             </li>
             <li data-an>
+                <section class="tieu-de">
+                    <label>
+                        Loại bài tập
+                    </label>
+                </section>
                 <section class="noi-dung">
                     <article class="input">
-                        @if (Model != null && Model.thoiDiemHetHan.HasValue)
-                        {
-                            <input data-chuc-nang="tat-mo" data-mo="thoi-han" type="checkbox" name="CoThoiDiemHetHan" data-text="Bài tập có thời hạn" data-mac-dinh />
-                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="ngay-gio" name="ThoiDiemHetHan" data-thoi-gian-placeholder="Chọn giờ" data-lich-placeholder="Chọn ngày" data-lich-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("d/M/yyyy")" data-thoi-gian-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("H:mm")" />
-                        }
-                        else
-                        {
-                            <input data-chuc-nang="tat-mo" data-mo="thoi-han" type="checkbox" name="CoThoiDiemHetHan" data-text="Bài tập có thời hạn" />
-                            <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="ngay-gio" name="ThoiDiemHetHan" data-thoi-gian-placeholder="Chọn giờ" data-lich-placeholder="Chọn ngày" />
-                        }
+                        <input style="width: auto;" data-chuc-nang="tat-mo" data-tat="co-diem" type="radio" name="Loai" value="0" data-text="Tham khảo" data-mac-dinh />
+                        <input style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem" data-tat="diem" type="radio" name="Loai" value="1" data-text="Cộng điểm" />
+                        <input style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem diem" type="radio" name="Loai" value="2" data-text="Lấy điểm" />
+                    </article>
+                </section>
+            </li>
+            <li data-an data-doi-tuong="co-diem">
+                <section class="tieu-de">
+                    <label>Thông tin cột điểm</label>
+                </section>
+                <section class="noi-dung">
+                    <article class="input">
+                        <input type="text" name="CD_Ten" placeholder="Tên cột điểm" />
+                        <input type="text" name="CD_HeSo" data-validate="so-nguyen" placeholder="Hệ số" data-doi-tuong="diem" />
+                    </article>
+                </section>
+            </li>
+            <li data-an data-doi-tuong="co-diem">
+                <section class="tieu-de">
+                    <label>Thời hạn nộp</label>
+                </section>
+                <section class="noi-dung">
+                    <article class="input">
+                        <input data-chuc-nang="tat-mo" data-mo="thoi-han" type="checkbox" name="CoThoiDiemHetHan" data-text="Bài tập có thời hạn" />
+                        <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="ngay-gio" name="ThoiDiemHetHan" data-gio-placeholder="Chọn giờ" data-ngay-placeholder="Chọn ngày"
+                               @(Model != null && Model.thoiDiemHetHan.HasValue ? "data-lich-mac-dinh='" + Model.thoiDiemHetHan.Value.ToString("d/M/yyyy") + "' data-thoi-gian-mac-dinh='" + Model.thoiDiemHetHan.Value.ToString("H:mm") + "'" : null) />
                     </article>
                 </section>
             </li>
