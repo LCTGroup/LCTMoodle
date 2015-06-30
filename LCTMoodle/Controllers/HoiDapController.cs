@@ -262,7 +262,16 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoaTraLoi(int ma)
         {
-            return Json(TraLoiBUS.xoaTheoMa(ma));
+            #region Kiểm tra điều kiện
+
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4, "Bạn chưa đăng nhập"));
+            }
+
+            #endregion
+
+            return Json(TraLoiBUS.xoaTheoMa(ma, (int?)Session["NguoiDung"]));
         }
 
         [HttpPost]

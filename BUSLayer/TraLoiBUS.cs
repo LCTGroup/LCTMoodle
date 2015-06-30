@@ -112,8 +112,24 @@ namespace BUSLayer
             return TraLoiDAO.them(traLoi, new LienKet() { "NguoiTao" });
         }
 
-        public static KetQua xoaTheoMa(int? ma)
+        public static KetQua xoaTheoMa(int? ma, int? maNguoiXoa)
         {
+            #region Kiểm tra điều kiện
+
+            var ketQua = TraLoiBUS.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+            var traLoi = ketQua.ketQua as TraLoiDTO;
+
+            if (traLoi.nguoiTao.ma != maNguoiXoa && !BUS.coQuyen("XoaTraLoi", "HD", 0, maNguoiXoa))
+            {
+                return new KetQua(3, "Bạn chưa đủ quyền để xóa trả lời");
+            }
+
+            #endregion
+            
             return TraLoiDAO.xoaTheoMa(ma);
         }
 
