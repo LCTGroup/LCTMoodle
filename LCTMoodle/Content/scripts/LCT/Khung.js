@@ -13,6 +13,10 @@ $(function () {
     $body.data('tai', 0);
     
     khoiTaoTatMoDoiTuong($('[data-mo-doi-tuong]'));
+
+    $('[data-chuc-nang="dang-nhap"]').on('click', function () {
+        moPopupDangNhap();
+    });
 });
 
 function moBieuTuongTai($item) {

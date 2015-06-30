@@ -8,10 +8,15 @@
         "Hỏi đáp", "/HoiDap",
     };
 
-    ViewData["ChucNang"] = new List<string>()
+    bool coQuyenThemCauHoi = Session["NguoiDung"] != null;
+    
+    if (coQuyenThemCauHoi)
     {
-        "Thêm câu hỏi", "href='/HoiDap/ThemCauHoi'"
-    };
+        ViewData["ChucNang"] = new List<string>()
+        {
+            "Thêm câu hỏi", "href='/HoiDap/ThemCauHoi'"
+        };
+    }
 }
 
 @section Styles {

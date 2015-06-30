@@ -1,32 +1,65 @@
-﻿@model DTOLayer.CauHoiDTO
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model DTOLayer.CauHoiDTO
 @{
+    //0: Chưa vote | 1: Vote cộng | -1: Vote trừ
     int trangThaiVote = 0;
     if (ViewData["TrangThaiVote"] != null)
     {
         trangThaiVote = (int)ViewData["TrangThaiVote"];
     }
-    //0: Chưa vote | 1: Vote cộng | -1: Vote trừ
+
+    int? maNguoiDung = Session["NguoiDung"] as int?;
+    string[] dsQuyen;
+    bool coQuyenSuaCauHoi, coQuyenXoaCauHoi;
+    
+    if (maNguoiDung.HasValue)
+    {
+        if (ViewData.ContainsKey("DSQuyen"))
+        {
+            dsQuyen = ViewData["DSQuyen"] as string[];
+        }
+        else
+        {
+            dsQuyen = QuyenView.layDSQuyen("HD", 0, maNguoiDung);
+        }
+
+        coQuyenSuaCauHoi = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "SuaCauHoi");
+        coQuyenXoaCauHoi = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "XoaCauHoi");
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenSuaCauHoi = coQuyenXoaCauHoi = false;
+    }
 }
 
 @if (Model != null)
 {
     <article class="muc-hoi-dap cau-hoi" data-doi-tuong="cau-hoi" data-ma="@Model.ma" data-trang-thai-vote="@trangThaiVote">
+        @if (coQuyenSuaCauHoi || coQuyenXoaCauHoi)
+        {
+            <section class="khung-chuc-nang-lct">
+                <ul data-doi-tuong="cauhoi-@Model.ma">
+                    @if (coQuyenSuaCauHoi)
+                    {
+                        <li>
+                            <a data-chuc-nang="sua-cau-hoi">Sửa câu hỏi</a>
+                        </li>    
+                    }
+                    @if (coQuyenXoaCauHoi)
+                    {
+                        <li>
+                            <a data-chuc-nang="xoa-cau-hoi">Xóa câu hỏi</a>
+                        </li>
+                    }
+                </ul>
+                <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cauhoi-@Model.ma">
+                    <i class="pe-7f-config"></i>
+                </button>
 
-        <section class="khung-chuc-nang-lct">
-            <ul data-doi-tuong="cauhoi-@Model.ma">
-                <li>
-                    <a data-chuc-nang="sua-cau-hoi">Sửa câu hỏi</a>
-                </li>
-                <li>
-                    <a data-chuc-nang="xoa-cau-hoi">Xóa câu hỏi</a>
-                </li>
-            </ul>
-            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cauhoi-@Model.ma">
-                <i class="pe-7f-config"></i>
-            </button>
-
-        </section>
-
+            </section>
+        }
         <section class="thong-tin">
             @if (Model.nguoiTao != null)
             {

@@ -41,9 +41,14 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 --403
 --	('HD', 4, 0,	N'','',0,1),		--|
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
-	('HD', 401, 1,	N'Chung',							'Chung',					0,		1),		--|
+	('HD', 401, 0,	N'Quản lý hỏi đáp',					'QLHoiDap',					0,		1),		--|
 
-	('HD', 402, 0,	N'Riêng',							'Rieng',					0,		1),		--|
+	('HD', 405, 0,	N'Duyệt câu hỏi',					'DuyetCauHoi',				401,	1),		--| |
+	('HD', 403, 0,	N'Sửa câu hỏi',						'SuaCauHoi',				401,	2),		--| |
+	('HD', 404, 0,	N'Xóa câu hỏi',						'XoaCauHoi',				401,	3),		--| |
+	('HD', 406, 0,	N'Duyệt trả lời',					'DuyetTraLoi',				401,	4),		--| |
+	('HD', 407, 0,	N'Sửa trả lời',						'SuaTraLoi',				401,	5),		--| |
+	('HD', 408, 0,	N'Xóa trả lời',						'XoaTraLoi',				401,	6),		--| |
 	
 --5xx: Khóa học
 --530
