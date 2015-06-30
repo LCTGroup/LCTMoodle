@@ -10,53 +10,39 @@ CREATE TABLE dbo.BaiVietBaiTap (
 	ThoiDiemHetHan DATETIME DEFAULT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
 	MaNguoiTao INT NOT NULL,
-	MaKhoaHoc INT NOT NULL
+	MaKhoaHoc INT NOT NULL,
+	Loai INT NOT NULL
 )
 
 GO
 --Thêm bài viết bài tập
-CREATE PROC dbo.themBaiVietBaiTap(
+ALTER PROC dbo.themBaiVietBaiTap(
 	@0 NVARCHAR(MAX), --TieuDe
 	@1 NVARCHAR(MAX), --NoiDung
 	@2 INT, --MaTapTin
-	@3 DATETIME, --ThoiDiemHetHan
-	@4 INT, --MaNguoiTao
-	@5 INT --MaKhoaHoc
+	@3 INT, --Loai
+	@4 DATETIME, --ThoiDiemHetHan
+	@5 INT, --MaNguoiTao
+	@6 INT --MaKhoaHoc
 )
 AS
 BEGIN
-	INSERT INTO dbo.BaiVietBaiTap(TieuDe, NoiDung, MaTapTin, ThoiDiemHetHan, MaNguoiTao, MaKhoaHoc)
-		VALUES (@0, @1, @2, @3, @4, @5)
+	INSERT INTO dbo.BaiVietBaiTap(TieuDe, NoiDung, MaTapTin, Loai, ThoiDiemHetHan, MaNguoiTao, MaKhoaHoc)
+		VALUES (@0, @1, @2, @3, @4, @5, @6)
 
-	SELECT 
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemHetHan,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietBaiTap
 		WHERE Ma = @@IDENTITY
 END
 
 GO
 --Lấy bài viết bài tập theo mã khóa học
-CREATE PROC dbo.layBaiVietBaiTapTheoMaKhoaHoc (
+ALTER PROC dbo.layBaiVietBaiTapTheoMaKhoaHoc (
 	@0 INT --MaKhoaHoc
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemHetHan,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietBaiTap
 		WHERE MaKhoaHoc = @0
 		ORDER BY ThoiDiemTao DESC
@@ -75,27 +61,19 @@ END
 
 GO
 --Lấy theo mã
-CREATE PROC dbo.layBaiVietBaiTapTheoMa (
+ALTER PROC dbo.layBaiVietBaiTapTheoMa (
 	@0 INT --Ma
 )
 AS
 BEGIN
-	SELECT TOP 1
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemHetHan,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT TOP 1 *
 		FROM dbo.BaiVietBaiTap
 		WHERE Ma = @0
 END
 
 GO
 --Cập nhật theo mã
-CREATE PROC dbo.capNhatBaiVietBaiTapTheoMa (
+ALTER PROC dbo.capNhatBaiVietBaiTapTheoMa (
 	@0 INT, --Mã
 	@1 dbo.BangCapNhat READONLY
 )
@@ -112,15 +90,7 @@ BEGIN
 		')
 	END	
 	
-	SELECT TOP 1
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemHetHan,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT TOP 1 *
 		FROM dbo.BaiVietBaiTap
 		WHERE Ma = @0
 END

@@ -1,4 +1,30 @@
-﻿@model DTOLayer.BaiVietBaiTapDTO
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model DTOLayer.BaiVietBaiTapDTO
+@{
+    var maNguoiDung = Session["NguoiDung"] as int?;
+    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+
+    string[] dsQuyen;
+    bool coQuyenQLDiem;
+
+    if (maNguoiDung.HasValue)
+    {
+        if (ViewData.ContainsKey("DSQuyen"))
+        {
+            dsQuyen = ViewData["DSQuyen"] as string[];
+        }
+        else
+        {
+            dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc, maNguoiDung);
+        }
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenQLDiem = false;
+    }
+}
 
 <form class="noi-dung lct-form" id="tao_bai_viet_form" @(Model != null ? "data-cap-nhat" : null) data-an-rang-buoc>
     @if (Model == null)

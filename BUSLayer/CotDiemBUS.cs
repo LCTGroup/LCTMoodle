@@ -78,6 +78,15 @@ namespace BUSLayer
                     case "MaKhoaHoc":
                         cotDiem.khoaHoc = form.layDTO<KhoaHocDTO>(key);
                         break;
+                    case "LaDiemCong":
+                        cotDiem.laDiemCong = form.layBool(key);
+                        break;
+                    case "LoaiDoiTuong":
+                        cotDiem.loaiDoiTuong = form.layString(key);
+                        break;
+                    case "MaDoiTuong":
+                        cotDiem.doiTuong = form.layDTO<DTO>(key);
+                        break;
                     default:
                         break;
                 }

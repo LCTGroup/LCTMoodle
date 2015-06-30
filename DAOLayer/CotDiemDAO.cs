@@ -48,6 +48,20 @@ namespace DAOLayer
                     case "Ngay":
                         cotDiem.ngay = layDateTime(dong, i);
                         break;
+                    case "LaDiemCong":
+                        cotDiem.laDiemCong = layBool(dong, i);
+                        break;
+                    case "LoaiDoiTuong":
+                        cotDiem.loaiDoiTuong = layString(dong, i);
+                        break;
+                    case "MaDoiTuong":
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
+                        {
+                            cotDiem.doiTuong = new DTO() { ma = maTam };
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -67,7 +81,10 @@ namespace DAOLayer
                     cotDiem.moTa,
                     cotDiem.heSo,
                     cotDiem.ngay,
-                    layMa(cotDiem.khoaHoc)
+                    layMa(cotDiem.khoaHoc),
+                    cotDiem.laDiemCong,
+                    cotDiem.loaiDoiTuong,
+                    layMa(cotDiem.doiTuong)
                 }
             );
         }

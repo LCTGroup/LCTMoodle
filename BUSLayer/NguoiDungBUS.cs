@@ -171,7 +171,7 @@ namespace BUSLayer
                 };
             }
 
-            string maKichHoat = NguoiDungHelper.PhatSinhMaKichHoat();
+            string maKichHoat = NguoiDungHelper.phatSinhMaKichHoat();
             NguoiDungDTO nguoiDung = new NguoiDungDTO() 
             {
                 maKichHoat = maKichHoat

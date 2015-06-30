@@ -795,6 +795,12 @@ function baoLoi($input, loai, noiDung) {
                 case 'email':
                     noiDung = 'Email không hợp lệ';
                     break;
+                case 'gio':
+                    noiDung = 'Giờ không hợp lệ';
+                    break;
+                case 'ngay':
+                    noiDung = 'Ngày không hợp lệ';
+                    break;
                 default:
                     noiDung = 'Nội dung không hợp lệ';
                     break;
@@ -1026,20 +1032,48 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
             }
         }
     });
-
+    
+    //Giờ
     $form.find('[data-input-type="gio"]').on({
         'focusout': function () {
-            this.value = this.value.replace(/ /g, '');
+            this.value = this.value.replace(/([^0-9,:])/g, '');
             var gio = this.value.split(':');
             if (
-                gio[0] < 0 || 23 < gio[0] ||
+                gio.length >= 2 &&
+                gio[0] >= 0 && gio[0] < 24 &&
+                gio[1] >= 0 && gio[1] < 60
+            ) {
+                this.value = gio[0] + ':' + gio[1];
+                tatLoi($(this), 'gio');
+            }
+            else {
+                this.value = '';
+            };
+        }
+    });
 
-                )
-            {
+    //Ngày
+    $form.find('[data-input-type="ngay"]').on({
+        'focusout': function () {
+            this.value = this.value.replace(/([^0-9,/])/g, '');
+            var ngay = this.value.split('/');
 
+            var mangThang = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+            if (
+                ngay.length >= 3 &&
+                ngay[0] > 0 &&
+                ngay[1] > 0 &&
+                ngay[0] <= mangThang[ngay[1]]
+            ) {
+                this.value = ngay[0] + '/' + ngay[1] + '/' + ngay[2];
+                tatLoi($(this), 'ngay');
+            }
+            else {
+                this.value = '';
             }
         }
-    })
+    });
 
     //Regex
     $form.find('[data-regex-validate]').each(function () {
@@ -1220,6 +1254,35 @@ function khoiTaoSubmit_LCT($form, thamSo) {
 
             if (this.value && !reg.test(this.value)) {
                 baoLoi($input, 'regex-' + name, tenLoi);
+
+                coLoi = true;
+            }
+        });
+        $form.find('[data-input-type="gio"]:not(:disabled):not([class^="loi-"],[class*=" loi-"])').each(function () {
+            var gio = this.value.replace(/([^0-9,:])/g, '').split(':');
+
+            if (!(
+                gio.length >= 2 &&
+                gio[0] >= 0 && gio[0] < 24 &&
+                gio[1] >= 0 && gio[1] < 60
+            )) {
+                baoLoi($(this), 'gio');
+
+                coLoi = true;
+            }
+        });
+        $form.find('[data-input-type="ngay"]:not(:disabled):not([class^="loi-"],[class*=" loi-"])').each(function () {
+            var ngay = this.value.replace(/([^0-9,/])/g, '').split('/');
+
+            var mangThang = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+            if (!(
+                ngay.length >= 3 &&
+                ngay[0] > 0 &&
+                ngay[1] > 0 &&
+                ngay[0] <= mangThang[ngay[1]]
+            )) {
+                baoLoi($(this), 'ngay');
 
                 coLoi = true;
             }

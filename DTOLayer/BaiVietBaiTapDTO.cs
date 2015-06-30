@@ -11,6 +11,7 @@ namespace DTOLayer
         public string tieuDe;
         public string noiDung;
         public TapTinDTO tapTin;
+        public int? loai;
         public DateTime? thoiDiemHetHan;
         public DateTime? thoiDiemTao;
         public NguoiDungDTO nguoiTao;
