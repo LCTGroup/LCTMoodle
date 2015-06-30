@@ -43,7 +43,7 @@
         </section>
         @Html.Partial("~/Views/BaiVietBaiTap/_Form.cshtml", null, new ViewDataDictionary() 
         { 
-            { "MaKhoaHoc", ViewData["MaKhoaHoc"].ToString() },
+            { "MaKhoaHoc", ViewData["MaKhoaHoc"] },
             { "DSQuyen", dsQuyen }
         })
     </section>

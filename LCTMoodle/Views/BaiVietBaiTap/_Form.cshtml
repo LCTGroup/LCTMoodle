@@ -6,7 +6,7 @@
     var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
 
     string[] dsQuyen;
-    bool coQuyenQLDiem;
+    bool coQuyenQLCotDiem;
 
     if (maNguoiDung.HasValue)
     {
@@ -18,11 +18,13 @@
         {
             dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc, maNguoiDung);
         }
+
+        coQuyenQLCotDiem = QuyenHelper.co(dsQuyen, "QLCotDiem");
     }
     else
     {
         dsQuyen = null;
-        coQuyenQLDiem = false;
+        coQuyenQLCotDiem = false;
     }
 }
 
@@ -64,14 +66,17 @@
             <li data-an>
                 <section class="tieu-de">
                     <label>
-                        Loại bài tập
+                        Loại bài tập @if (!coQuyenQLCotDiem)
+                        { 
+                            @:- Để sử dụng chức năng tạo bài tập có điểm, bạn <b>cần có quyền quản lý cột điểm</b>
+                        }
                     </label>
                 </section>
                 <section class="noi-dung">
                     <article class="input">
                         <input style="width: auto;" data-chuc-nang="tat-mo" data-tat="co-diem" type="radio" name="Loai" value="0" data-text="Tham khảo" data-mac-dinh />
-                        <input style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem" data-tat="diem" type="radio" name="Loai" value="1" data-text="Cộng điểm" />
-                        <input style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem diem" type="radio" name="Loai" value="2" data-text="Lấy điểm" />
+                        <input @(!coQuyenQLCotDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem" data-tat="diem" type="radio" name="Loai" value="1" data-text="Cộng điểm" />
+                        <input @(!coQuyenQLCotDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem diem" type="radio" name="Loai" value="2" data-text="Lấy điểm" />
                     </article>
                 </section>
             </li>
