@@ -9,7 +9,7 @@
 {
     foreach(var quyen in Model)
     {
-        <li data-doi-tuong="item-quyen" class="item input @(cap != 1 ? "an" : null)" data-cap="@cap" @(quyen.con == null ? "data-la" : null) data-ma="@quyen.ma" data-cha="@cha">
+        <li data-doi-tuong="item-quyen" class="item input @(cap != 1 ? "tat" : null)" data-cap="@cap" @(quyen.con == null ? "data-la" : null) data-ma="@quyen.ma" data-cha="@cha">
             @for (int i = 0; i < cap; i++)
             {
                 <u></u>
