@@ -87,8 +87,43 @@ function khoiTaoDangKy($form) {
                     });
                     return ketQua;
                 }
+            },
+            {
+                input: $('#email'),
+                thongBao: 'Email đã tồn tại',
+                validate: function () {
+                    var ketQua;
+                    $.ajax({
+                        url: '/NguoiDung/KiemTraEmail',
+                        data: { email: $('#email').val() },
+                        async: false
+                    }).done(function (data) {
+                        ketQua = !data;
+                    }).fail(function () {
+                        moPopupThongBao(data)
+                    });
+                    return ketQua;
+                }
             }]
     });
+
+    //#region khởi tạo nút điều khoản
+
+        $('#dieu_khoan').on('click', function () {
+            moPopupFull({
+                url: '/NguoiDung/_DieuKhoan'
+            });
+        })
+
+    //#endregion
+
+    //#region Khởi tạo nút reset
+
+        $('[data-chuc-nang="reset"]').on('click', function () {
+            khoiTaoLCTFormMacDinh($form);
+        });
+
+    //#endregion
 }
 
 //#endregion

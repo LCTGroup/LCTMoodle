@@ -14,7 +14,30 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult Xem(int? ma)
         {
-            if (ma != null)
+            #region Kiểm tra điều kiện
+
+            int? maNguoiDung = Session["NguoiDung"] as int?;
+            bool coQuyenXemKhoaHoc, coQuyenXemHoiDap;
+
+            if (maNguoiDung.HasValue)
+            {
+                if (maNguoiDung == ma)
+                {
+                    coQuyenXemHoiDap = coQuyenXemKhoaHoc = true;
+                }
+                else
+                {
+                    coQuyenXemHoiDap = coQuyenXemKhoaHoc = false;
+                }
+            }
+            else
+            {
+                coQuyenXemHoiDap = coQuyenXemKhoaHoc = false;
+            }
+
+            #endregion
+
+            if (ma != null && coQuyenXemHoiDap)
             {
                 ViewData["DanhSachCauHoi"] = null;
 
@@ -25,11 +48,12 @@ namespace LCTMoodle.Controllers
                 if (ketQua.trangThai == 0)
                 {
                     ViewData["DanhSachCauHoi"] = ketQua.ketQua as List<CauHoiDTO>;
-                }                               
-
-                return View(NguoiDungBUS.layTheoMa(ma).ketQua);
+                }
             }
-            return RedirectToAction("Index", "TrangChu");
+            return View(NguoiDungBUS.layTheoMa(ma, new LienKet() 
+                { 
+                    "HinhDaiDien"
+                }).ketQua);
         }
 
         public ActionResult DangNhap()
@@ -58,16 +82,57 @@ namespace LCTMoodle.Controllers
             return View();
         }
 
+        public ActionResult _DieuKhoan()
+        {
+            return Json(new KetQua(0, renderPartialViewToString(ControllerContext, "NguoiDung/_DieuKhoan.cshtml")), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Sua(int? ma)
         {
-            KetQua ketQua = NguoiDungBUS.layTheoMa(ma, new LienKet() { 
-                "HinhDaiDien"
-            });
-            return View(ketQua.ketQua);
+            #region Kiểm tra điều kiện
+
+            int? maNguoiDung = Session["NguoiDung"] as int?;
+            bool coQuyenSuaThongTin;
+
+            if (maNguoiDung.HasValue)
+            {
+                if (maNguoiDung == ma)
+                {
+                    coQuyenSuaThongTin = true;
+                }
+                else
+                {
+                    coQuyenSuaThongTin = false;
+                }
+            }
+            else
+            {
+                coQuyenSuaThongTin = false;
+            }
+
+            #endregion
+            
+            if (coQuyenSuaThongTin)
+            {
+                KetQua ketQua = NguoiDungBUS.layTheoMa(ma, new LienKet() { 
+                    "HinhDaiDien"
+                });
+                return View(ketQua.ketQua);
+            }
+            return Redirect("/NguoiDung/Xem/" + ma);
         }
 
         public ActionResult DoiMatKhau()
         {
+            #region Kiểm tra điều kiện
+            
+            if (Session["NguoiDung"] == null)
+            {
+                return Redirect("/");
+            }
+
+            #endregion
+
             NguoiDungDTO nguoiDung = NguoiDungBUS.layTheoMa((int?)Session["NguoiDung"]).ketQua as NguoiDungDTO;
             
             return View(nguoiDung); 
@@ -144,6 +209,11 @@ namespace LCTMoodle.Controllers
         public ActionResult KiemTraTenTaiKhoan(string tenTaiKhoan)
         {
             return Json(NguoiDungBUS.tonTaiTenTaiKhoan(tenTaiKhoan), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult KiemTraEmail(string email)
+        {
+            return Json(NguoiDungBUS.tonTaiEmail(email), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _GoiY_QuanLyKhoaHoc(string input)

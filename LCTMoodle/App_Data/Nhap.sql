@@ -29,3 +29,9 @@ WHEN
 END
 DESC
 >>>>>>> d14fb15ee7d26dac86c7cf8ea89feedd646f16f5
+
+
+select top 1 * from cauhoi
+order by ThoiDiemTao DESC
+
+select * from cauHoi

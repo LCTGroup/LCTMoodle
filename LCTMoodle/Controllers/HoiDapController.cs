@@ -37,7 +37,7 @@ namespace LCTMoodle.Controllers
                 return Json(ketQua);
             }
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
-            if (cauHoi.nguoiTao.ma.Value != (int)Session["NguoiDung"])
+            if (cauHoi.nguoiTao.ma.Value != (int)Session["NguoiDung"] && !BUS.coQuyen("SuaCauHoi", "HD"))
             {
                 return Json(new KetQua()
                 {
@@ -111,7 +111,11 @@ namespace LCTMoodle.Controllers
 
         public ActionResult XuLyXoaCauHoi(int ma)
         {
-            return Json(CauHoiBUS.xoaTheoMa(ma));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4, "Chưa đăng nhập"));
+            }
+            return Json(CauHoiBUS.xoaTheoMa(ma, (int?)Session["NguoiDung"]));
         }
 
         public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0, string cachHienThi = null)
@@ -146,9 +150,17 @@ namespace LCTMoodle.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult XuLyCapNhatCauHoi(FormCollection form)
+        public ActionResult XuLyCapNhatCauHoi(FormCollection formCollection)
         {
-            KetQua ketQua = CauHoiBUS.capNhat(chuyenForm(form), new LienKet() 
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4, "Bạn chưa đăng nhập"));
+            }
+
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+
+            KetQua ketQua = CauHoiBUS.capNhat(form, new LienKet() 
             {
                 "NguoiTao",
                 {
@@ -161,7 +173,7 @@ namespace LCTMoodle.Controllers
             });
             if (ketQua.trangThai != 0)
             {
-                return Json(ketQua.ketQua);
+                return Json(ketQua);
             }
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
 
