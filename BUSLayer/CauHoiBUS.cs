@@ -117,7 +117,6 @@ namespace BUSLayer
             gan(ref cauHoi, form);
 
             KetQua ketQua = kiemTra(cauHoi);
-            
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
@@ -172,7 +171,6 @@ namespace BUSLayer
             gan(ref cauHoi, form);
 
             ketQua = kiemTra(cauHoi, form.Keys.ToArray());
-
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
