@@ -1,7 +1,22 @@
 ﻿@{
     var ketQua = BUSLayer.BinhLuanBUS.layTheoDoiTuong((string)ViewData["LoaiDoiTuong"], (int)ViewData["MaDoiTuong"]);
     var danhSachBinhLuan = ketQua.trangThai == 0 ? ketQua.ketQua as List<DTOLayer.BinhLuanDTO> : null;
-    var coQuyenBinhLuan = Session["NguoiDung"] != null && (bool)ViewData["CoQuyenBinhLuan"];
+
+    bool coQuyenBinhLuan, coQuyenXoa, coQuyenSua;
+    
+    if (Session["NguoiDung"] != null)
+    {
+        coQuyenBinhLuan = ViewData.ContainsKey("CoQuyenBinhLuan") && (bool)ViewData["CoQuyenBinhLuan"];
+        coQuyenXoa = ViewData.ContainsKey("CoQuyenXoa") && (bool)ViewData["CoQuyenXoa"];
+        coQuyenSua = ViewData.ContainsKey("CoQuyenSua") && (bool)ViewData["CoQuyenSua"];
+    }
+    else
+    {
+        coQuyenXoa = coQuyenSua = coQuyenBinhLuan = false;
+    }
+    
+    ViewData["CoQuyenXoa"] = coQuyenXoa;
+    ViewData["CoQuyenSua"] = coQuyenSua;    
 }
 
 <section data-doi-tuong="khung-binh-luan" class="khung-binh-luan">
@@ -11,7 +26,7 @@
             {
                 foreach (var binhLuan in danhSachBinhLuan)
                 {
-                    @Html.Partial("~/Views/BinhLuan/_Item.cshtml", binhLuan);
+                    @Html.Partial("~/Views/BinhLuan/_Item.cshtml", binhLuan, ViewData);
                 }
             }
         </ul>

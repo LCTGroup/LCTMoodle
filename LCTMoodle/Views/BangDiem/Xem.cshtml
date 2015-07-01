@@ -32,6 +32,9 @@
 
     List<string> chucNang = new List<string>();
 
+    chucNang.Add("Nội dung khóa học");
+    chucNang.Add("href='/KhoaHoc/" + Model.ma + "'");
+
     if (QuyenHelper.co(dsQuyen, "QLQuyen"))
     {
         chucNang.Add("Quản lý quyền");

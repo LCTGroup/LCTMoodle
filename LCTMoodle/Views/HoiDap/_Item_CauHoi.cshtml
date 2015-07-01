@@ -65,15 +65,8 @@
             {
                 <a href="/NguoiDung/Xem/@Model.nguoiTao.ma">
                     <div class="nguoi-dung">
-                        <div class="hinh-dai-dien">
-                            @if (Model.nguoiTao.hinhDaiDien != null)
-                        {
-                    <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.nguoiTao.hinhDaiDien.ma" />
-                        }
-                        else
-                        {
-                    <img src="/avatarDefault.png/NguoiDung" />
-                        }
+                        <div class="hinh-dai-dien">                    
+                            @NguoiDungView.hinhDaiDien(Model.nguoiTao)
                         </div>
                         <span>@Model.nguoiTao.tenTaiKhoan</span>
                     </div>

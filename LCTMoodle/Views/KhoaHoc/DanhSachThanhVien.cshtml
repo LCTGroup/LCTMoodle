@@ -61,7 +61,11 @@
         }
     }
 
+    chucNang.Add("Nội dung khóa học");
+    chucNang.Add("href='/KhoaHoc/" + Model.ma + "'");
+
     var dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
+    bool coQuyenQLThanhVien = QuyenHelper.co(dsQuyen, "QLThanhVien");
 
     if (QuyenHelper.co(dsQuyen, "QLQuyen"))
     {
@@ -105,14 +109,17 @@
             <ul id="danh_sach_dang_ky" class="danh-sach">
                 @foreach (var nd in danhSachDangKy)
                 {
-                    <li class="item" data-ma="@nd.nguoiDung.ma">
-                        <img src="/boy.png/" />
-                        <a href="#">@NguoiDungView.link(nd.nguoiDung)</a>
-                        <section class="khung-chuc-nang">
-                            <a data-chuc-nang="dong-y" class="dong-y" title="Chấp nhận"><i></i></a>
-                            <a data-chuc-nang="tu-choi" class="tu-choi" title="Từ chối"><i></i></a>
-                            <a data-chuc-nang="chan" class="chan" title="Chặn"><i></i></a>
-                        </section>
+                    <li class="item" data-ma="@nd.nguoiDung.ma">                        
+                        @NguoiDungView.hinhDaiDien(nd.nguoiDung)
+                        @NguoiDungView.link(nd.nguoiDung)
+                        @if (coQuyenQLThanhVien)
+                        {
+                            <section class="khung-chuc-nang">
+                                <a data-chuc-nang="dong-y" class="dong-y" title="Chấp nhận"><i></i></a>
+                                <a data-chuc-nang="tu-choi" class="tu-choi" title="Từ chối"><i></i></a>
+                                <a data-chuc-nang="chan" class="chan" title="Chặn"><i></i></a>
+                            </section>   
+                        }
                     </li>
                 }
             </ul>
@@ -130,29 +137,32 @@
             <ul id="danh_sach_thanh_vien" class="danh-sach">
                 @foreach (var tv in danhSachThanhVien)
                 {
-                    <li class="item" data-ma="@tv.nguoiDung.ma">
-                        <img src="/boy.png/" />
-                        <a href="#">@NguoiDungView.link(tv.nguoiDung)</a>
-                        <section class="khung-chuc-nang-lct">
-                            <ul data-doi-tuong="cnnd-@tv.nguoiDung.ma">
-                                <li>
-                                    @if (tv.laHocVien)
-                                    {
-                                        <a data-chuc-nang="tat-hoc-vien">Xóa khỏi danh sách học viên</a>
-                                    }
-                                    else
-                                    {
-                                        <a data-chuc-nang="mo-hoc-vien">Đưa vào danh sách học viên</a>   
-                                    }
-                                </li>
-                                <li>
-                                    <a data-chuc-nang="xoa-thanh-vien">Loại bỏ thành viên</a>
-                                </li>
-                            </ul>
-                            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnnd-@tv.nguoiDung.ma">
-                                <i class="pe-7f-config"></i>
-                            </button>
-                        </section>
+                    <li class="item" data-ma="@tv.nguoiDung.ma">                        
+                        @NguoiDungView.hinhDaiDien(tv.nguoiDung)
+                        @NguoiDungView.link(tv.nguoiDung)
+                        @if (coQuyenQLThanhVien)
+                        {
+                            <section class="khung-chuc-nang-lct">
+                                <ul data-doi-tuong="cnnd-@tv.nguoiDung.ma">
+                                    <li>
+                                        @if (tv.laHocVien)
+                                        {
+                                            <a data-chuc-nang="tat-hoc-vien">Xóa khỏi danh sách học viên</a>
+                                        }
+                                        else
+                                        {
+                                            <a data-chuc-nang="mo-hoc-vien">Đưa vào danh sách học viên</a>   
+                                        }
+                                    </li>
+                                    <li>
+                                        <a data-chuc-nang="xoa-thanh-vien">Loại bỏ thành viên</a>
+                                    </li>
+                                </ul>
+                                <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnnd-@tv.nguoiDung.ma">
+                                    <i class="pe-7f-config"></i>
+                                </button>
+                            </section>
+                        }
                     </li>
                 }
             </ul>
@@ -170,12 +180,15 @@
             <ul id="danh_sach_bi_chan" class="danh-sach">
                 @foreach (var nd in danhSachBiChan)
                 {
-                    <li class="item" data-ma="@nd.nguoiDung.ma">
-                        <img src="/boy.png/" />
-                        <a href="#">@NguoiDungView.link(nd.nguoiDung)</a>
-                        <section class="khung-chuc-nang">
-                            <a data-chuc-nang="bo-chan" class="bo-chan" title="Bỏ chặn"><i></i></a>
-                        </section>
+                    <li class="item" data-ma="@nd.nguoiDung.ma">                        
+                        @NguoiDungView.hinhDaiDien(nd.nguoiDung)
+                        @NguoiDungView.link(nd.nguoiDung)
+                        @if (coQuyenQLThanhVien)
+                        {
+                            <section class="khung-chuc-nang">
+                                <a data-chuc-nang="bo-chan" class="bo-chan" title="Bỏ chặn"><i></i></a>
+                            </section>   
+                        }
                     </li>
                 }
             </ul>

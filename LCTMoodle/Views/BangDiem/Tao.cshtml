@@ -19,6 +19,9 @@
 
     var dsQuyen = QuyenView.layDSQuyen("KH", khoaHoc.ma.Value);
 
+    chucNang.Add("Nội dung khóa học");
+    chucNang.Add("href='/KhoaHoc/" + khoaHoc.ma + "'");
+
     if (QuyenHelper.co(dsQuyen, "QLQuyen"))
     {
         chucNang.Add("Quản lý quyền");

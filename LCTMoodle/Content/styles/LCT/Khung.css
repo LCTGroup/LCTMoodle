@@ -125,6 +125,10 @@ a[href]:hover {
     }
 }
 
+body.dang-tai-lct {
+    cursor: progress !important;
+}
+
 body.tai > .khung {
     display: none;
 }
@@ -540,6 +544,10 @@ body.tai > .khung {
 
 body.khong-scroll {
     overflow: hidden;
+}
+
+body.khong-scroll > .khung {
+    overflow-y: scroll;
 }
 
 .popup-full-container {

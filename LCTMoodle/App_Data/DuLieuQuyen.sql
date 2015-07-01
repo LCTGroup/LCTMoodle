@@ -71,10 +71,10 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('KH', 515, 0,	N'Thay đổi thứ tự bài giảng',		'BG_ThuTu',					507,	3),		--| | | |
 
 	('KH', 508, 0,	N'Tài liệu',						NULL,						505,	3),		--| | |
-	('KH', 526, 0,	N'Đăng tài liệu',					'TL_Them',					507,	1),		--| | | |
-	('KH', 527, 0,	N'Sửa tài liệu',					'TL_Sua',					507,	2),		--| | | |
-	('KH', 528, 0,	N'Xóa tài liệu',					'TL_Xoa',					507,	3),		--| | | |
-	('KH', 529, 0,	N'Thay đổi thứ tự bài giảng',		'TL_ThuTu',					507,	3),		--| | | |
+	('KH', 526, 0,	N'Đăng tài liệu',					'TL_Them',					508,	1),		--| | | |
+	('KH', 527, 0,	N'Sửa tài liệu',					'TL_Sua',					508,	2),		--| | | |
+	('KH', 528, 0,	N'Xóa tài liệu',					'TL_Xoa',					508,	3),		--| | | |
+	('KH', 529, 0,	N'Thay đổi thứ tự bài giảng',		'TL_ThuTu',					508,	3),		--| | | |
 
 	('KH', 509, 0,	N'Bài tập',							NULL,						505,	4),		--| | |
 	('KH', 525, 0,	N'Đăng bài tập',					'BT_Them',					509,	1),		--| | | |
