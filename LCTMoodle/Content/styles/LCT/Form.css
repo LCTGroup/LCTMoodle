@@ -18,9 +18,8 @@
                 width: 100%;
             }
 
-                .lct-form .tat {
-                    pointer-events: none;
-                    opacity: 0.2;
+                .lct-form ul > li.cot {
+                    flex-direction: column;
                 }
 
                 .lct-form ul > li.loi-dan {
@@ -31,7 +30,7 @@
                 }
                                 
                     .lct-form ul > li.loi-dan:not(:first-child) {
-                        margin-top: 30px;
+                        margin-top: 20px;
                     }
 
                 .lct-form ul > li.thong-bao {
@@ -94,6 +93,10 @@
         line-height: 20px;
         font-size: 13px;
     }
+
+        .lct-form .cot .tieu-de label {
+            text-align: left;
+        }
 
     .lct-form .input {
         border: 1px solid #ddd;
@@ -317,6 +320,12 @@
     position: absolute;
     left: -9999px;
 }
+
+    .lct-form input[type="checkbox"]:disabled ~ *,
+    .lct-form input[type="radio"]:disabled ~ * {
+        pointer-events: none;
+        opacity: .3;
+    }
 
     .lct-form input[type="checkbox"] + u,
     .lct-form input[type="radio"] + u {
@@ -2087,7 +2096,6 @@
     position: relative;
     padding: 10px;
     vertical-align: middle;
-    background-color: #fcfcfc;
 }
 
     .lct-bang .thead .th:not(.khong-vien):after,
@@ -2109,7 +2117,6 @@
     position: relative;
     padding: 5px 10px;
     vertical-align: middle;
-    background-color: #fcfcfc;
 }
 
     .lct-bang .tbody .th:not(.khong-vien):after,

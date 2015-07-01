@@ -360,11 +360,11 @@ function khoiTaoItem_Quyen($items) {
 
             if (anCon || $item.hasClass('mo')) {
                 $item.removeClass('mo');
-                $item.nextAll('[data-cha="' + $item.attr('data-ma') + '"]').addClass('an').trigger('chuyenAnHienCon', true);
+                $item.nextAll('[data-cha="' + $item.attr('data-ma') + '"]').addClass('tat').trigger('chuyenAnHienCon', true);
             }
             else {
                 $item.addClass('mo');
-                $item.nextAll('[data-cha="' + $item.attr('data-ma') + '"]').removeClass('an');
+                $item.nextAll('[data-cha="' + $item.attr('data-ma') + '"]').removeClass('tat');
             }
         }
     });

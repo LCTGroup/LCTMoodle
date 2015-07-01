@@ -5,11 +5,15 @@ GO
 CREATE TABLE dbo.CotDiem (
 	Ma INT PRIMARY KEY IDENTITY(1, 1),
 	Ten NVARCHAR(MAX) NOT NULL,
-	HeSo INT NOT NULL,
+	HeSo INT,
 	MaKhoaHoc INT NOT NULL,
 	MoTa NVARCHAR(MAX),
 	Ngay DATE,
-	ThuTu INT NOT NULL
+	ThuTu INT NOT NULL,
+	LaDiemCong BIT,
+	--Đối tượng phát sinh
+	LoaiDoiTuong NVARCHAR(MAX),
+	MaDoiTuong INT
 )
 
 GO
@@ -19,7 +23,10 @@ ALTER PROC dbo.themCotDiem (
 	@1 NVARCHAR(MAX), --MoTa
 	@2 INT, --HeSo
 	@3 DATE, --Ngay
-	@4 INT --MaKhoaHoc
+	@4 INT, --MaKhoaHoc
+	@5 BIT, --LaDiemCong
+	@6 NVARCHAR(MAX), --LoaiDoiTuong
+	@7 INT --MaDoiTuong
 )
 AS
 BEGIN
@@ -38,16 +45,10 @@ BEGIN
 			@thuTu + 1
 		END
 
-	INSERT INTO dbo.CotDiem (Ten, MoTa, HeSo, Ngay, MaKhoaHoc, ThuTu)
-		VALUES (@0, @1, @2, @3, @4, @thuTu)
+	INSERT INTO dbo.CotDiem (Ten, MoTa, HeSo, Ngay, MaKhoaHoc, LaDiemCong, LoaiDoiTuong, MaDoiTuong, ThuTu)
+		VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @thuTu)
 
-	SELECT TOP 1
-		Ma,
-		Ten,
-		MoTa,
-		HeSo,
-		Ngay,
-		MaKhoaHoc
+	SELECT TOP 1 *
 		FROM dbo.CotDiem
 		WHERE Ma = @@IDENTITY
 END
@@ -59,13 +60,7 @@ ALTER PROC dbo.layCotDiemTheoMaKhoaHoc(
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		Ten,
-		MoTa,
-		HeSo,
-		Ngay,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.CotDiem
 		WHERE MaKhoaHoc = @0
 		ORDER BY ThuTu
@@ -146,18 +141,27 @@ END
 
 GO
 --Lấy theo mã
-CREATE PROC dbo.layCotDiemTheoMa(
+ALTER PROC dbo.layCotDiemTheoMa(
 	@0 INT --Ma
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		Ten,
-		MoTa,
-		HeSo,
-		Ngay,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.CotDiem
 		WHERE Ma = @0
+END
+
+GO
+--Lấy theo đối tượng
+ALTER PROC dbo.layCotDiemTheoLoaiDoiTuongVaMaDoiTuong(
+	@0 NVARCHAR(MAX), --LoaiDoiTuong
+	@1 INT --MaDoiTuong
+)
+AS
+BEGIN
+	SELECT TOP 1 *
+		FROM dbo.CotDiem
+		WHERE 
+			LoaiDoiTuong = @0 AND 
+			MaDoiTuong = @1
 END

@@ -12,7 +12,7 @@
     
     if (maNguoiDung.HasValue)
     {
-        dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc);
+        dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc, maNguoiDung);
 
         coQuyenThem = QuyenHelper.co(dsQuyen, "BT_Them");
 
@@ -39,15 +39,19 @@
 {
     <section class="hop hop-2-vien">
         <section class="tieu-de">
-            Đăng bài tập cho các học viên
+            Đăng bài tập mới
         </section>
-        @Html.Partial("~/Views/BaiVietBaiTap/_Form.cshtml", null, new ViewDataDictionary() { { "MaKhoaHoc", ViewData["MaKhoaHoc"].ToString() } })
+        @Html.Partial("~/Views/BaiVietBaiTap/_Form.cshtml", null, new ViewDataDictionary() 
+        { 
+            { "MaKhoaHoc", ViewData["MaKhoaHoc"] },
+            { "DSQuyen", dsQuyen }
+        })
     </section>
 }
 
 <section class="hop">
     <section class="tieu-de">
-        Danh sách bài tập đã được giao
+        Danh sách bài tập
     </section>
     <ul id="danh_sach_bai_viet" class="noi-dung">
         @if (Model != null)
@@ -56,7 +60,6 @@
             {
                 @Html.Partial("~/Views/BaiVietBaiTap/_Item.cshtml", baiViet, new ViewDataDictionary() { 
                     { "DSQuyen", dsQuyen },
-                    { "MaKhoaHoc", maKhoaHoc },
                     { "LaHocVien", laHocVien },
                 });
             }

@@ -27,21 +27,25 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('ND', 202, 0,	N'Riêng',							'Rieng',					0,		1),		--|
 	
 --3xx: Chủ đề
---306
+--307
 --	('CD', 3, 0,	N'','',0,1),		--|
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
-	('CD', 305, 1,	N'Quản lý quyền',					'QLQuyen',					0,		1),		--|
-	
-	('CD', 303, 0,	N'Thêm, xóa, sửa chủ đề',			'QLNoiDung',				0,		1),		--|
-	('CD', 304, 0,	N'Duyệt chủ đề',					'Duyet',					0,		2),		--|
+	('CD', 301, 0,	N'Quản lý quyền',					'QLQuyen',					0,		1),		--|
+	('CD', 302, 0,	N'Thêm, xóa, sửa chủ đề',			'QLNoiDung',				0,		2),		--|
+	('CD', 303, 0,	N'Duyệt chủ đề',					'Duyet',					0,		3),		--|
 	
 --4xx: Hỏi đáp
 --403
 --	('HD', 4, 0,	N'','',0,1),		--|
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
-	('HD', 401, 1,	N'Chung',							'Chung',					0,		1),		--|
+	('HD', 401, 0,	N'Quản lý hỏi đáp',					NULL,					0,		1),		--|
 
-	('HD', 402, 0,	N'Riêng',							'Rieng',					0,		1),		--|
+	('HD', 405, 0,	N'Duyệt câu hỏi',					'DuyetCauHoi',				401,	1),		--| |
+	('HD', 403, 0,	N'Sửa câu hỏi',						'SuaCauHoi',				401,	2),		--| |
+	('HD', 404, 0,	N'Xóa câu hỏi',						'XoaCauHoi',				401,	3),		--| |
+	('HD', 406, 0,	N'Duyệt trả lời',					'DuyetTraLoi',				401,	4),		--| |
+	('HD', 407, 0,	N'Sửa trả lời',						'SuaTraLoi',				401,	5),		--| |
+	('HD', 408, 0,	N'Xóa trả lời',						'XoaTraLoi',				401,	6),		--| |
 	
 --5xx: Khóa học
 --530
@@ -53,7 +57,7 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('KH', 502, 0,	N'Quản lý',							NULL,						0,		1),		--|
 	('KH', 503,	0,	N'Quản lý quyền',					'QLQuyen',					502,	1),		--| |
 	('KH', 504,	0,	N'Quản lý thành viên',				'QLThanhVien',				502,	2),		--| |
-	('KH', 505, 0,	N'Quản lý bài viết',				NULL,						502,	3),		--| |
+	('KH', 505, 0,	N'Quản lý nội dung',				NULL,						502,	3),		--| |
 
 	('KH', 506, 0,	N'Diễn đàn',						NULL,						505,	1),		--| | |
 	('KH', 510, 0,	N'Sửa bài viết',					'DD_Sua',					506,	1),		--| | | |

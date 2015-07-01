@@ -3,7 +3,7 @@
 @model DTOLayer.BaiVietDienDanDTO
 
 @{
-    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+    var maKhoaHoc = Model.khoaHoc.ma.Value;
     var maNguoiDung = Session["NguoiDung"] as int?;
 
     string[] dsQuyen;

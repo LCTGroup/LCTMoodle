@@ -9,10 +9,22 @@
     padding: 0;
     min-width: 35px;
     width: 35px;
+    line-height: 1;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .khung-diem tbody .cot-diem {
     text-align: center;
+}
+
+.khung-diem tbody .cot-diem[data-loai="cong"] span:before,
+.khung-diem tbody td[data-cot="cong"] span:before {
+    content: '+';
+}
+
+.khung-diem tbody td[data-cot="tb"] {
+    font-weight: bold;
 }
 
 .khung-diem tbody th:nth-child(1) {

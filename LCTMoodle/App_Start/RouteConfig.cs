@@ -27,12 +27,6 @@ namespace LCTMoodle
             );
 
             routes.MapRoute(
-                name: "QuanLyChuDe",
-                url: "ChuDe/QuanLy/{phamVi}/{ma}",
-                defaults: new { controller = "ChuDe", action = "QuanLy", phamVi = UrlParameter.Optional, ma = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
                 name: "XemKhoaHoc",
                 url: "KhoaHoc/{ma}",
                 defaults: new { controller = "KhoaHoc", action = "Xem" },

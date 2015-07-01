@@ -1,6 +1,11 @@
 ﻿@{
-    ViewBag.Title = "QuanLy";
     Layout = "~/Views/LCT/Khung.cshtml";
+    ViewData["TieuDe"] = "Quản lý quyền hệ thống";
+
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Quản lý quyền hệ thống", "/QuanLyQuyen"
+    };
 
     var danhSachNhom = ViewData["DanhSachNhom"] as List<DTOLayer.NhomNguoiDungDTO>;
     var danhSachQuyen = ViewData["DanhSachQuyen"] as List<DTOLayer.QuyenDTO>;
@@ -45,7 +50,7 @@
                         </ul>
                     </section>
                 </section>
-                <section id="khung_nguoi" class="khung-nguoi tat">
+                <section id="khung_nguoi" class="khung-nguoi tat" data-chi-an>
                     <section class="khung-tim lct-form">
                         <article class="input">
                             <input id="tim_nguoi_input" type="text" placeholder="Tìm người dùng" />
@@ -57,7 +62,7 @@
                     </section>
                 </section>
             </section>
-            <section id="khung_quyen" class="khung-duoi tat">
+            <section id="khung_quyen" class="khung-duoi tat" data-chi-an>
                 <section class="khung-pham-vi">
                     <ul class="danh-sach">
                         <li class="item chon">
@@ -67,7 +72,7 @@
                             <a data-chuc-nang="chon-pham-vi" data-ma="ND">Người dùng</a>
                         </li>
                         <li class="item">
-                            <a data-chuc-nang="chon-pham-vi" data-ma="CD" data-chung>Chủ đề</a>
+                            <a data-chuc-nang="chon-pham-vi" data-ma="CD">Chủ đề</a>
                         </li>
                         <li class="item">
                             <a data-chuc-nang="chon-pham-vi" data-ma="HD">Hỏi đáp</a>
@@ -81,7 +86,7 @@
                     <section id="mo_ta_pham_vi" class="mo-ta">
                         Tùy chỉnh quyền cho nhóm
                     </section>
-                    <ul id="danh_sach_quyen" class="danh-sach lct-form">                        
+                    <ul id="danh_sach_quyen" class="danh-sach lct-form">
                         @Html.Partial("~/Views/Quyen/_DanhSach_Quyen.cshtml", danhSachQuyen)
                     </ul>
                     <section class="mo-ta-duoi">

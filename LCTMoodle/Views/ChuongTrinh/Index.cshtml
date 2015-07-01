@@ -3,6 +3,8 @@
 @model List<DTOLayer.ChuongTrinhDTO>
 
 @{
+    var maNguoiDung = Session["NguoiDung"] as int?;
+    
     var khoaHoc = ViewData["KhoaHoc"] as DTOLayer.KhoaHocDTO;
     ViewData["TieuDe"] = "Soạn chương trình - " + khoaHoc.ten;
     Layout = "~/Views/LCT/Khung.cshtml";
@@ -13,11 +15,21 @@
         khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
         "Soạn giáo trình", "/ChuongTrinh/" + khoaHoc.ma
     };
+
+    string[] dsQuyen;
+    bool coQuyenQLChuongTrinh;
     
-    var dsQuyen = QuyenView.layDSQuyen("KH", khoaHoc.ma.Value);
-    
-    bool
-        coQuyenQL = QuyenHelper.co(dsQuyen, "QLChuongTrinh");
+    if (!maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("KH", khoaHoc.ma.Value);
+        
+        coQuyenQLChuongTrinh = QuyenHelper.co(dsQuyen, "QLChuongTrinh");
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenQLChuongTrinh = false;
+    }
 }
 @section Styles {
     <link href="/Index.css/ChuongTrinh" rel="stylesheet" />
@@ -35,7 +47,7 @@
     </section>
     <section class="noi-dung">
         <article style="border: none;">
-            <article id="khung_giao_trinh" class="lct-bang khung-giao-trinh" style="@(coQuyenQL ? "margin-bottom: 38px;" : null)">
+            <article id="khung_giao_trinh" class="lct-bang khung-giao-trinh" style="@(coQuyenQLChuongTrinh ? "margin-bottom: 38px;" : null)">
                 <section class="thead">
                     <article class="tr">
                         <section class="th"></section>
@@ -49,11 +61,14 @@
                     {
                         foreach (var item in Model)
                         {
-                            @Html.Partial("~/Views/ChuongTrinh/_Item.cshtml", item)
+                            @Html.Partial("~/Views/ChuongTrinh/_Item.cshtml", item, new ViewDataDictionary()
+                            {
+                                { "DSQuyen", dsQuyen }
+                            });
                         }
                     }
                 </section>
-                @if (coQuyenQL)
+                @if (coQuyenQLChuongTrinh)
                 {
                     <form id="tao_giao_trinh_form" class="lct-form tao-giao-trinh-form tfoot" data-an-rang-buoc>
                         <section class="tr">

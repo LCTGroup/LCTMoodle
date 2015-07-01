@@ -131,7 +131,7 @@ BEGIN
 		(@1 = 'CD' OR @1 = 'HD' OR @1 = 'KH')
 	)
 	BEGIN
-		--Nếu là CD => Lấy mã chủ đề cha của chủ đề
+		--Nếu là CD => Lấy mã chủ đề cha của chủ đề & chính nó
 		--Nếu là HD => Lấy mã chủ đề của câu hỏi
 		--Nếu là KH => Lấy mã chủ đề của khóa học
 		DECLARE @maChuDe INT
@@ -151,7 +151,7 @@ BEGIN
 		BEGIN
 			SELECT @maChuDe = MaCha
 				FROM dbo.ChuDe
-				WHERE Ma = @2
+				WHERE Ma = 0
 
 			--Khi là chủ đề thì lấy quyền trong chính nó nữa
 			SELECT @giaTri += Q.GiaTri + '|'
@@ -193,7 +193,8 @@ BEGIN
 						NND_ND.MaNguoiDung = @0 AND
 						NND_ND.MaNhomNguoiDung = NND.Ma
 					INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
-						NND_Q.MaNhomNguoiDung = NND.Ma
+						NND_Q.MaNhomNguoiDung = NND.Ma AND
+						(NND_Q.MaDoiTuong = @2 OR NND_Q.MaDoiTuong = 0)
 					INNER JOIN dbo.Quyen Q ON
 						Q.PhamVi = @1 AND
 						Q.Ma = NND_Q.MaQuyen
@@ -339,7 +340,8 @@ BEGIN
 							NND_ND.MaNguoiDung = @0 AND
 							NND_ND.MaNhomNguoiDung = NND.Ma
 						INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
-							NND_Q.MaNhomNguoiDung = NND.Ma
+							NND_Q.MaNhomNguoiDung = NND.Ma AND
+							(NND_Q.MaDoiTuong = @2 OR NND_Q.MaDoiTuong = 0)
 						INNER JOIN dbo.Quyen Q ON
 							Q.PhamVi = @1 AND
 							Q.Ma = NND_Q.MaQuyen AND

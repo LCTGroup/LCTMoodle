@@ -1,48 +1,46 @@
-﻿.khung-cot-diem {
+﻿.khung-quan-ly {
+    padding: 5px;
+    background-color: #fff !important;
+}
+
+.khung-quan-ly .khung-cot-diem {
     position: relative;
-    margin-bottom: 38px;
 }
 
-.khung-cot-diem .td:nth-child(1) {
-    width: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.khung-cot-diem .td:nth-child(2) {
-    width: 35%;
-}
-
-.khung-cot-diem .td:nth-child(3) {
-    min-width: 30px;
-    padding-left: 10px;
-    padding-right: 10px;
-    text-align: center;
-}
-
-.khung-cot-diem .td:nth-child(4) {
-    width: 65%;
-}
-
-.khung-cot-diem .td:nth-child(5) {
-    min-width: 90px;
-    text-align: center;
-}
-
-    .khung-cot-diem.keo .item-cot-diem:not(.keo) {
-        color: #eee;
+    .khung-quan-ly .khung-cot-diem td:nth-child(1) {
+        width: auto;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
-    .khung-cot-diem .tao-cot-diem-form .khung-button {
-        padding: 0;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: transparent;
-        border: 0;
+    .khung-quan-ly .khung-cot-diem td:nth-child(2) {
+        width: 35%;
     }
-    
-        .khung-cot-diem .tao-cot-diem-form .khung-button button {
-            background-color: #fafafa;
+
+    .khung-quan-ly .khung-cot-diem td:nth-child(3) {
+        min-width: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
+        text-align: center;
+    }
+
+    .khung-quan-ly .khung-cot-diem td:nth-child(4) {
+        width: 65%;
+    }
+
+    .khung-quan-ly .khung-cot-diem td:nth-child(5) {
+        min-width: 90px;
+        text-align: center;
+    }
+
+        .khung-quan-ly .khung-cot-diem.keo .item-cot-diem:not(.keo) {
+            color: #eee;
         }
+
+.khung-quan-ly .khung-nut {
+    text-align: center;
+}
+    
+    .khung-quan-ly .khung-nut .button {
+        background-color: #fafafa;
+    }

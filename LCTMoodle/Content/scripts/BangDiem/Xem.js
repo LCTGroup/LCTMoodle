@@ -1,4 +1,4 @@
-﻿var $_KhungTieuDe, $_KhungDiem, htmlTruocKhiSua, $_Khung;
+﻿var $_KhungTieuDe, $_KhungDiem, htmlTruocKhiSua, $_Khung, tongHeSo;
 
 $(function () {
     $_Khung = $('#khung');
@@ -19,11 +19,11 @@ function khoiTaoNutCheDoSua($nuts) {
 
         htmlTruocKhiSua = $_KhungDiem.html();
 
-        var $dsODiem = $_KhungDiem.find('td:not(:last-child)');
+        var $dsODiem = $_KhungDiem.find('[data-la-cot-diem]');
 
         $dsODiem.each(function () {
             var $oDiem = $(this);
-            $oDiem.html('<article class="input"><input data-validate="so-thuc" class="diem-input" type="text" data-mac-dinh="' + ($oDiem.attr('data-diem') || '') + '" /></article>');
+            $oDiem.html('<article class="input"><input data-validate="so-thuc" class="diem-input" type="text" data-mac-dinh="' + ($oDiem.data('diem') || '') + '" /></article>');
         });
 
         khoiTaoLCTForm($_KhungDiem);
@@ -34,28 +34,15 @@ function khoiTaoNutCheDoSua($nuts) {
 
             if (value > 10 || value < 0 || isNaN(parseFloat(value))) {
                 $input.val('');
-                $input.closest('td').attr('data-diem', '');
+                $input.closest('td').data('diem', '');
             }
             else {
                 value = Math.round(value * 100) / 100;
-                $input.closest('td').attr('data-diem', value);
+                $input.closest('td').data('diem', value);
                 $input.val(value);
             }
 
-            var $row = $input.closest('tr');
-            var $oDiem = $row.find('td:not(:last-child)');
-            var diem = 0;
-
-            $oDiem.each(function () {
-                var $item = $(this);
-                if ($item.attr('data-diem')) {
-                    diem += parseFloat($(this).attr('data-diem'));
-                }
-            });
-
-            diem = Math.round((diem / $oDiem.length) * 100) / 100;
-
-            $row.find('td:last-child').text(diem);
+            capNhatDiemDong($input.closest('tr'));
         });
     });
 }
@@ -64,20 +51,14 @@ function khoiTaoNutHoanThanhSua($nuts) {
     $nuts.hide();
 
     $nuts.on('click', function () {
-        var mangMa = [];
-
-        $_KhungTieuDe.find('.ngay').each(function (index) {
-            mangMa.push($(this).attr('data-ma'));
-        })
-
         var dsCapNhat = [];
         $_KhungDiem.find('input:not([data-cu])').each(function () {
             var $o = $(this).closest('td');
 
             dsCapNhat.push({
-                maCotDiem: mangMa[$o.index() - 2],
-                maNguoiDung: $o.closest('tr').attr('data-ma'),
-                diem: $o.attr('data-diem')
+                maCotDiem: $o.data('ma'),
+                maNguoiDung: $o.closest('tr').data('ma'),
+                diem: $o.data('diem')
             });
         })
 
@@ -92,10 +73,10 @@ function khoiTaoNutHoanThanhSua($nuts) {
                 $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    $_KhungDiem.find('td:not(:last-child)').each(function () {
+                    $_KhungDiem.find('[data-la-cot-diem]').each(function () {
                         var $o = $(this);
                         
-                        $o.text($o.attr('data-diem') || '');
+                        $o.text($o.data('diem') || '');
 
                         chuyenCheDo(false);
                     });
@@ -108,10 +89,10 @@ function khoiTaoNutHoanThanhSua($nuts) {
             });
         }
         else {
-            $_KhungDiem.find('td:not(:last-child)').each(function () {
+            $_KhungDiem.find('[data-la-cot-diem]').each(function () {
                 var $o = $(this);
 
-                $o.text($o.attr('data-diem') || '');
+                $o.html('<span>' + ($o.data('diem') || '') + '</span>');
 
                 chuyenCheDo(false);
             });
@@ -150,6 +131,25 @@ function chuyenCheDo(sua) {
         //$('[data-chuc-nang="luu-sua"]').hide();
         $('[data-chuc-nang="huy-sua"]').hide();
     }
+}
+
+function capNhatDiemDong($dong) {
+    //Lấy điểm trung bình
+    var diem = 0;
+    $dong.find('[data-loai="diem"]').each(function () {
+        diem += parseFloat($(this).data('diem'));
+    })
+
+    diem = Math.round((diem / tongHeSo) * 100) / 100;
+    $dong.find('[data-cot="tb"] span').text(diem);
+
+    //Lấy điểm cộng
+    var diem = 0;
+    $dong.find('[data-loai="cong"]').each(function () {
+        diem += parseFloat($(this).data('diem'));
+    })
+    
+    dong.find('[data-loai="cong"] span').text(diem);
 }
 
 //#endregion

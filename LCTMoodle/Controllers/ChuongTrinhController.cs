@@ -74,6 +74,7 @@ namespace LCTMoodle.Controllers
 
             KetQua ketQua = ChuongTrinhBUS.them(form);
 
+            ViewData["MaKhoaHoc"] = form.layInt("MaKhoaHoc", 0).Value;
             if (ketQua.trangThai == 0)
             {
                 return Json(new KetQua()

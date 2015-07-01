@@ -7,6 +7,7 @@ CREATE TABLE dbo.CotDiem_NguoiDung (
 	MaNguoiDung INT NOT NULL,
 	Diem FLOAT(1) NOT NULL,
 	MaNguoiTao INT NOT NULL,
+	ThoiDiemTao DATETIME NOT NULL DEFAULT GETDATE(),
 	PRIMARY KEY (MaCotDiem, MaNguoiDung)
 )
 
@@ -62,7 +63,7 @@ END
 
 GO
 --Cập nhật điểm
-CREATE PROC dbo.capNhatCotDiem_NguoiDung (
+ALTER PROC dbo.capNhatCotDiem_NguoiDung (
 	@0 dbo.BangCotDiem_NguoiDung READONLY --Bảng cột điểm - người dùng
 )
 AS
@@ -74,9 +75,10 @@ BEGIN
 				INNER JOIN @0 B ON
 					B.MaNguoiDung = CD_ND.MaNguoiDung AND
 					B.MaCotDiem = CD_ND.MaCotDiem
-
+					
 	--Thêm điểm mới vào
-	INSERT INTO dbo.CotDiem_NguoiDung (MaCotDiem, MaNguoiDung, MaNguoiTao, Diem)
-		SELECT MaCotDiem, MaNguoiDung, MaNguoiTao, Diem
+	DECLARE @thoiDiemTao DATETIME = GETDATE()
+	INSERT INTO dbo.CotDiem_NguoiDung (MaCotDiem, MaNguoiDung, MaNguoiTao, Diem, ThoiDiemTao)
+		SELECT MaCotDiem, MaNguoiDung, MaNguoiTao, Diem, @thoiDiemTao
 			FROM @0
 END

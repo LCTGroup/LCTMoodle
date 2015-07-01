@@ -63,7 +63,7 @@ namespace Helpers
                 smtp.Send(mail);            
         }                
 
-        public static string PhatSinhMaKichHoat()
+        public static string phatSinhMaKichHoat()
         {
             Random rd = new Random();
             string maKichHoat = rd.Next(100000, 999999).ToString();

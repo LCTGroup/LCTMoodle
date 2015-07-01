@@ -1,11 +1,38 @@
-﻿@model DTOLayer.TraLoiDTO
-
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model DTOLayer.TraLoiDTO
 @{
     int trangThaiVoteTraLoi = 0;
     if (ViewData["TrangThaiVoteTraLoi"] != null)
     {
         trangThaiVoteTraLoi = (int)ViewData["TrangThaiVoteTraLoi"];
     }
+
+    int? maNguoiDung = Session["NguoiDung"] as int?;
+    string[] dsQuyen;
+    bool coQuyenSuaTraLoi, coQuyenXoaTraLoi, coQuyenDuyetTraLoi;
+    
+    if (maNguoiDung.HasValue)
+    {
+        if (ViewData.ContainsKey("DSQuyen"))
+        {
+            dsQuyen = ViewData["DSQuyen"] as string[];
+        }
+        else
+        {
+            dsQuyen = QuyenView.layDSQuyen("HD", 0, maNguoiDung);
+        }
+
+        coQuyenSuaTraLoi = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "SuaTraLoi");
+        coQuyenXoaTraLoi = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "XoaTraLoi");
+        coQuyenDuyetTraLoi = maNguoiDung != Model.nguoiTao.ma;
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenDuyetTraLoi = coQuyenSuaTraLoi = coQuyenXoaTraLoi = false;
+    }
+    
 }
 
 @if (Model != null)
@@ -13,24 +40,34 @@
     <li class="hop hop-1-vien tra-loi @(Model.duyet == true ? "duyet" : "binh-thuong")" data-doi-tuong="tra-loi" data-ma="@Model.ma">
         <section class="noi-dung">
             <article class="muc-hoi-dap" data-trang-thai-vote="@trangThaiVoteTraLoi" data-doi-tuong="muc-tra-loi">
-
-                <section class="khung-chuc-nang-lct">
-                    <ul data-doi-tuong="traloi-@Model.ma">
-                        <li>
-                            <a data-chuc-nang="sua-tra-loi">Sửa trả lời</a>
-                        </li>
-                        <li>
-                            <a data-chuc-nang="xoa-tra-loi">Xóa trả lời</a>
-                        </li>
-                        <li>
-                            <a data-chuc-nang="duyet-tra-loi">Duyệt trả lời</a>
-                        </li>
-                    </ul>
-                    <button data-chuc-nang="tat-mo" data-mo-doi-tuong="traloi-@Model.ma">
-                        <i class="pe-7f-config"></i>
-                    </button>
-                </section>
-
+                @if(coQuyenXoaTraLoi || coQuyenSuaTraLoi || coQuyenXoaTraLoi)
+                {
+                    <section class="khung-chuc-nang-lct">
+                        <ul data-doi-tuong="traloi-@Model.ma">
+                            @if (coQuyenSuaTraLoi)
+                            {
+                                <li>
+                                    <a data-chuc-nang="sua-tra-loi">Sửa trả lời</a>
+                                </li>
+                            }
+                            @if (coQuyenXoaTraLoi)
+                            {
+                                <li>
+                                    <a data-chuc-nang="xoa-tra-loi">Xóa trả lời</a>
+                                </li>
+                            }
+                            @if (coQuyenDuyetTraLoi)
+                            {
+                                <li>
+                                    <a data-chuc-nang="duyet-tra-loi">Duyệt trả lời</a>
+                                </li>
+                            }
+                        </ul>
+                        <button data-chuc-nang="tat-mo" data-mo-doi-tuong="traloi-@Model.ma">
+                            <i class="pe-7f-config"></i>
+                        </button>
+                    </section>
+                }
                 <section class="thong-tin">
                     @if (Model.nguoiTao != null)
                     {

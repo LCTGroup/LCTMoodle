@@ -80,6 +80,11 @@ namespace LCTMoodle.Controllers
 
         public ActionResult _Form(int ma = 0)
         {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
             KetQua ketQua = BaiVietBaiTapBUS.layTheoMa(ma);
 
             if (ketQua.trangThai != 0)
@@ -88,11 +93,12 @@ namespace LCTMoodle.Controllers
             }
             else
             {
+                ViewData["MaKhoaHoc"] = (ketQua.ketQua as BaiVietBaiTapDTO).khoaHoc.ma.Value;
                 return Json(new KetQua()
                 {
                     trangThai = 0,
                     ketQua =
-                        renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Form.cshtml", ketQua.ketQua)
+                        renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Form.cshtml", ketQua.ketQua, ViewData)
                 }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -100,12 +106,14 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            Form form = chuyenForm(formCollection);
-            if (Session["NguoiDung"] != null)
+            if (Session["NguoiDung"] == null)
             {
-                form.Add("MaNguoiTao", ((int)Session["NguoiDung"]).ToString());
+                return Json(new KetQua(4));
             }
-            KetQua ketQua = BaiVietBaiTapBUS.them(form);
+            var form = chuyenForm(formCollection);
+            form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+
+            var ketQua = BaiVietBaiTapBUS.them(form);
 
             if (ketQua.trangThai == 0)
             {

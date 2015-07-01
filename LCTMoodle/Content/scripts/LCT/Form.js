@@ -118,7 +118,7 @@ function khoiTaoHienThiInput_LCT($form) {
     $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
         $element = $(this);
         $element.wrap('<label class="checkbox-radio-label" style="' + $element.attr('style') + '"></label>');
-        $element.after('<u></u>' + $element.attr('data-text'));
+        $element.after('<u></u><span>' + $element.attr('data-text') + '</span>');
     });
 
     $form.find('input[type="file"]').each(function () {
@@ -714,37 +714,52 @@ function xuLyTatMo($form, $input, dangKhoiTao, tatHet) {
         doiTuongMo = $option.attr('data-mo');
         doiTuongTat = $option.attr('data-tat');
     }
+    
+    if (doiTuongMo)
+    {
+        var dsDoiTuongMo = '';
+        $(doiTuongMo.split(' ')).each(function () {
+            dsDoiTuongMo += ',[data-doi-tuong~="' + this + '"]';
+        });
 
-    $form.find('[data-doi-tuong~="' + doiTuongMo + '"]').each(function () {
-        var $doiTuong = $(this);
+        $form.find(dsDoiTuongMo.substr(1)).each(function () {
+            var $doiTuong = $(this);
 
-        xuLyTatMoDoiTuong($doiTuong, tatHet || false, dangKhoiTao)
+            xuLyTatMoDoiTuong($doiTuong, tatHet || false, dangKhoiTao)
 
-        if ($doiTuong.is('[data-chuc-nang="tat-mo"]')) {
-            xuLyTatMo($form, $doiTuong, dangKhoiTao);
-        }
-        $doiTuong.find('[data-chuc-nang="tat-mo"]').each(function () {
-            xuLyTatMo($form, $(this), dangKhoiTao);
-        })
-    });
+            if ($doiTuong.is('[data-chuc-nang="tat-mo"]')) {
+                xuLyTatMo($form, $doiTuong, dangKhoiTao);
+            }
+            $doiTuong.find('[data-chuc-nang="tat-mo"]').each(function () {
+                xuLyTatMo($form, $(this), dangKhoiTao);
+            })
+        });
+    }
 
-    $form.find('[data-doi-tuong~="' + doiTuongTat + '"]').each(function () {
-        var $doiTuong = $(this);
+    if (doiTuongTat) {
+        var dsDoiTuongTat = '';
+        $(doiTuongTat.split(' ')).each(function () {
+            dsDoiTuongTat += ',[data-doi-tuong~="' + this + '"]';
+        });
 
-        xuLyTatMoDoiTuong($doiTuong, !tatHet || true, dangKhoiTao);
+        $form.find(dsDoiTuongTat.substr(1)).each(function () {
+            var $doiTuong = $(this);
 
-        if ($doiTuong.is('[data-chuc-nang="tat-mo"]')) {
-            var khiAn = $doiTuong.attr('data-khi-tat');
+            xuLyTatMoDoiTuong($doiTuong, !tatHet || true, dangKhoiTao);
 
-            xuLyTatMo($form, $doiTuong, dangKhoiTao, khiAn != 'mo');
-        }
-        $doiTuong.find('[data-chuc-nang="tat-mo"]').each(function () {
-            var $input = $(this);
-            var khiAn = $input.attr('data-khi-tat');
+            if ($doiTuong.is('[data-chuc-nang="tat-mo"]')) {
+                var khiAn = $doiTuong.attr('data-khi-tat');
 
-            xuLyTatMo($form, $input, dangKhoiTao, khiAn != 'mo');
-        })
-    });
+                xuLyTatMo($form, $doiTuong, dangKhoiTao, khiAn != 'mo');
+            }
+            $doiTuong.find('[data-chuc-nang="tat-mo"]').each(function () {
+                var $input = $(this);
+                var khiAn = $input.attr('data-khi-tat');
+
+                xuLyTatMo($form, $input, dangKhoiTao, khiAn != 'mo');
+            })
+        });
+    }
 }
 
 function khoiTaoTatMo_LCT($form) {
@@ -779,6 +794,12 @@ function baoLoi($input, loai, noiDung) {
                     break;
                 case 'email':
                     noiDung = 'Email không hợp lệ';
+                    break;
+                case 'gio':
+                    noiDung = 'Giờ không hợp lệ';
+                    break;
+                case 'ngay':
+                    noiDung = 'Ngày không hợp lệ';
                     break;
                 default:
                     noiDung = 'Nội dung không hợp lệ';
@@ -1011,6 +1032,48 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
             }
         }
     });
+    
+    //Giờ
+    $form.find('[data-input-type="gio"]').on({
+        'focusout': function () {
+            this.value = this.value.replace(/([^0-9,:])/g, '');
+            var gio = this.value.split(':');
+            if (
+                gio.length >= 2 &&
+                gio[0] >= 0 && gio[0] < 24 &&
+                gio[1] >= 0 && gio[1] < 60
+            ) {
+                this.value = gio[0] + ':' + gio[1];
+                tatLoi($(this), 'gio');
+            }
+            else {
+                this.value = '';
+            };
+        }
+    });
+
+    //Ngày
+    $form.find('[data-input-type="ngay"]').on({
+        'focusout': function () {
+            this.value = this.value.replace(/([^0-9,/])/g, '');
+            var ngay = this.value.split('/');
+
+            var mangThang = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+            if (
+                ngay.length >= 3 &&
+                ngay[0] > 0 &&
+                ngay[1] > 0 &&
+                ngay[0] <= mangThang[ngay[1]]
+            ) {
+                this.value = ngay[0] + '/' + ngay[1] + '/' + ngay[2];
+                tatLoi($(this), 'ngay');
+            }
+            else {
+                this.value = '';
+            }
+        }
+    });
 
     //Regex
     $form.find('[data-regex-validate]').each(function () {
@@ -1191,6 +1254,35 @@ function khoiTaoSubmit_LCT($form, thamSo) {
 
             if (this.value && !reg.test(this.value)) {
                 baoLoi($input, 'regex-' + name, tenLoi);
+
+                coLoi = true;
+            }
+        });
+        $form.find('[data-input-type="gio"]:not(:disabled):not([class^="loi-"],[class*=" loi-"])').each(function () {
+            var gio = this.value.replace(/([^0-9,:])/g, '').split(':');
+
+            if (!(
+                gio.length >= 2 &&
+                gio[0] >= 0 && gio[0] < 24 &&
+                gio[1] >= 0 && gio[1] < 60
+            )) {
+                baoLoi($(this), 'gio');
+
+                coLoi = true;
+            }
+        });
+        $form.find('[data-input-type="ngay"]:not(:disabled):not([class^="loi-"],[class*=" loi-"])').each(function () {
+            var ngay = this.value.replace(/([^0-9,/])/g, '').split('/');
+
+            var mangThang = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+            if (!(
+                ngay.length >= 3 &&
+                ngay[0] > 0 &&
+                ngay[1] > 0 &&
+                ngay[0] <= mangThang[ngay[1]]
+            )) {
+                baoLoi($(this), 'ngay');
 
                 coLoi = true;
             }

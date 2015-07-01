@@ -138,7 +138,7 @@ namespace BUSLayer
             }
             var nhomNguoiDung = ketQua.ketQua as NhomNguoiDungDTO;
 
-            if (!coQuyen("QLQuyen", phamVi, nhomNguoiDung.doiTuong.ma.Value, maNguoiXoa))
+            if (!coQuyen("QLQuyen", phamVi, nhomNguoiDung.doiTuong == null ? 0 : nhomNguoiDung.doiTuong.ma.Value, maNguoiXoa))
             {
                 return new KetQua(3, "Bạn không có quyền xóa nhóm người dùng");
             }

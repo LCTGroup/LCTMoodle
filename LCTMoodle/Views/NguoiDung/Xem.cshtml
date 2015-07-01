@@ -2,21 +2,39 @@
 @{
     ViewData["Title"] = "Người Dùng";
     Layout = "~/Views/LCT/Khung.cshtml";
+
+    int? maNguoiDung = Session["NguoiDung"] as int?;
+    bool coQuyenCapNhatThongTin, coQuyenDoiMatKhau, coQuyenXemHoiDap, coQuyenXemKhoaHoc;
     
-    if (Model != null)
+    if (maNguoiDung.HasValue)
+    {
+        coQuyenCapNhatThongTin = maNguoiDung == Model.ma;
+        coQuyenDoiMatKhau = maNguoiDung == Model.ma;
+        coQuyenXemHoiDap = maNguoiDung == Model.ma;
+        coQuyenXemKhoaHoc = maNguoiDung == Model.ma;
+    }
+    else
+    {
+        coQuyenDoiMatKhau = coQuyenCapNhatThongTin = false;
+        coQuyenXemKhoaHoc = coQuyenXemHoiDap = false;
+    }
+    
+    if (coQuyenCapNhatThongTin || coQuyenDoiMatKhau)
     {
         List<string> chucNang = new List<string>();
-        
-        chucNang.Add("Cập nhật thông tin cá nhân");
-        chucNang.Add("href='/NguoiDung/Sua/" + Model.ma + "'");
-
-        chucNang.Add("Đổi mật khẩu");
-        chucNang.Add("href='/NguoiDung/DoiMatKhau/'");
-
+        if (coQuyenCapNhatThongTin)
+        {
+            chucNang.Add("Cập nhật thông tin cá nhân");
+            chucNang.Add("href='/NguoiDung/Sua/" + Model.ma + "'");
+        }
+        if (coQuyenDoiMatKhau)
+        {
+            chucNang.Add("Đổi mật khẩu");
+            chucNang.Add("href='/NguoiDung/DoiMatKhau/'");
+        }
         ViewData["ChucNang"] = chucNang;
-        
-        
     }
+    
     
 }
 @section Styles {
@@ -87,65 +105,71 @@
 
 <!--#region Thông tin khóa học -->
 
-<section class="hop hop-1-vien">
-    <section class="tieu-de">Thông tin khóa học</section>
-    <section id="khung_chon_hien_thi" class="khung-chon-hien-thi">
-        <ul>
-            <li class="nhiem-vu-moi active">
-                <a class="clicked" data-chuc-nang="hien-thi" data-value="nhiemvumoi">
-                    <i></i>
-                    <span>Nhiệm vụ mới</span>
-                </a>
-            </li>
-            <li class="bai-giang-moi">
-                <a data-chuc-nang="hien-thi" data-value="baigiangmoi">
-                    <i></i>
-                    <span>Bài giảng mới</span>
-                </a>
-            </li>
-            <li class="bai-tap-moi">
-                <a data-chuc-nang="hien-thi" data-value="baitapmoi">
-                    <i></i>
-                    <span>Bài tập mới</span>
-                </a>
-            </li>
-        </ul>
-    </section>
+@if (coQuyenXemKhoaHoc)
+{
+    <section class="hop hop-1-vien">
+        <section class="tieu-de">Thông tin khóa học</section>
+        <section id="khung_chon_hien_thi" class="khung-chon-hien-thi">
+            <ul>
+                <li class="nhiem-vu-moi active">
+                    <a class="clicked" data-chuc-nang="hien-thi" data-value="nhiemvumoi">
+                        <i></i>
+                        <span>Nhiệm vụ mới</span>
+                    </a>
+                </li>
+                <li class="bai-giang-moi">
+                    <a data-chuc-nang="hien-thi" data-value="baigiangmoi">
+                        <i></i>
+                        <span>Bài giảng mới</span>
+                    </a>
+                </li>
+                <li class="bai-tap-moi">
+                    <a data-chuc-nang="hien-thi" data-value="baitapmoi">
+                        <i></i>
+                        <span>Bài tập mới</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
     
-    <section id="khung_hien_thi" class="khung-hien-thi">
+        <section id="khung_hien_thi" class="khung-hien-thi">
 
-        <div id="nhiemvumoi" class="noi-dung active">           
-            <p class="empty">Chưa có nhiệm vụ mới</p>       
-        </div>
+            <div id="nhiemvumoi" class="noi-dung active">           
+                <p class="empty">Chưa có nhiệm vụ mới</p>       
+            </div>
 
-        <div id="baigiangmoi" class="noi-dung">
-            <p class="empty">Chưa có bài giảng mới</p>
-        </div>
+            <div id="baigiangmoi" class="noi-dung">
+                <p class="empty">Chưa có bài giảng mới</p>
+            </div>
 
-        <div id="baitapmoi" class="noi-dung">
-            <p class="empty">Chưa có bài tập mới</p>
-        </div>
+            <div id="baitapmoi" class="noi-dung">
+                <p class="empty">Chưa có bài tập mới</p>
+            </div>
 
+        </section>
     </section>
-</section>
+}
 
 <!--#endregion-->
 
 <!--#region Thông tin hỏi đáp-->
 
-<article class="hop">
-    <section class="tieu-de">Thông tin hỏi đáp</section>
-    <section class="noi-dung">
-        @if (ViewData["DanhSachCauHoi"] != null)
-        {
-            List<DTOLayer.CauHoiDTO> dsCauHoi = ViewData["DanhSachCauHoi"] as List<DTOLayer.CauHoiDTO>;
-            @Html.Partial("~/Views/HoiDap/_DanhSachCauHoi.cshtml", dsCauHoi)
-        }
-        else
-        {
-            <p align="center">Bạn chưa có câu hỏi nào</p>
-        }
-    </section>
-</article>
+@if (coQuyenXemHoiDap)
+{
+    <article class="hop">
+        <section class="tieu-de">Thông tin hỏi đáp</section>
+        <section class="noi-dung">
+            @if (ViewData["DanhSachCauHoi"] != null)
+            {
+                List<DTOLayer.CauHoiDTO> dsCauHoi = ViewData["DanhSachCauHoi"] as List<DTOLayer.CauHoiDTO>;
+                @Html.Partial("~/Views/HoiDap/_DanhSachCauHoi.cshtml", dsCauHoi)
+            }
+            else
+            {
+                <p align="center">Bạn chưa có câu hỏi nào</p>
+            }
+        </section>
+    </article>
+}
 
 <!--#endregion-->

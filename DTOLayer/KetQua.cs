@@ -30,6 +30,12 @@ namespace DTOLayer
             this.trangThai = trangThai;
         }
 
+        public KetQua(object ketQua)
+        {
+            this.trangThai = 0;
+            this.ketQua = ketQua;
+        }
+
         public KetQua(int trangThai, object ketQua)
         {
             this.trangThai = trangThai;
