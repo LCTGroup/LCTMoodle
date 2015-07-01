@@ -93,14 +93,12 @@ namespace LCTMoodle.Controllers
             }
             else
             {
-                var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
-                ViewData["MaKhoaHoc"] = baiTap.khoaHoc.ma;
-
+                ViewData["MaKhoaHoc"] = (ketQua.ketQua as BaiVietBaiTapDTO).khoaHoc.ma.Value;
                 return Json(new KetQua()
                 {
                     trangThai = 0,
                     ketQua =
-                        renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Form.cshtml", baiTap)
+                        renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Form.cshtml", ketQua.ketQua, ViewData)
                 }, JsonRequestBehavior.AllowGet);
             }
         }

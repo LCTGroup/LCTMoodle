@@ -10,16 +10,18 @@
     var dsNguoiDung = ViewData["NguoiDung"] as List<DTOLayer.NguoiDungDTO>;
     var chuoiDiem = ViewData["Diem"] as string[];
     var slCotDiem = dsCotDiem.Count;
+    var tongHeSo = 0;
+    
 
     var maNguoiDung = Session["NguoiDung"] as int?;
     string[] dsQuyen;
 
     bool coQuyenQLDiem;
-    
+
     if (maNguoiDung.HasValue)
     {
         dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
-        
+
         coQuyenQLDiem = QuyenHelper.co(dsQuyen, "QLDiem");
     }
     else
@@ -27,13 +29,25 @@
         dsQuyen = null;
         coQuyenQLDiem = false;
     }
-    
+
     List<string> chucNang = new List<string>();
-    if (coQuyenQLDiem)
+
+    if (QuyenHelper.co(dsQuyen, "QLQuyen"))
+    {
+        chucNang.Add("Quản lý quyền");
+        chucNang.Add("href='/QuanlyQuyen/KH/" + Model.ma + "'");
+    }
+
+    chucNang.Add("Chương trình khóa học");
+    chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + Model.ma + "'");
+
+    if (QuyenHelper.co(dsQuyen, "QLCotDiem"))
     {
         chucNang.Add("Quản lý bảng điểm");
         chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + Model.ma + "'");
     }
+
+    ViewData["ChucNang"] = chucNang;
     
     if (chucNang.Count != 0)
     {
@@ -44,10 +58,7 @@
 @section Styles {
     <link href="/Xem.css/BangDiem" rel="stylesheet" />
 }
-
-@section Scripts {
-    <script src="/Xem.js/BangDiem"></script>
-}
+@*Script ở dưới*@
 
 <article class="hop hop-2-vien" style="text-align: center;">
     <section class="tieu-de" style="text-align: left;">
@@ -71,9 +82,14 @@
                             <th colspan="2">Họ tên</th>
                             @foreach (var cotDiem in dsCotDiem)
                             {
-                                <th data-ma="@cotDiem.ma" class="ngay">@(cotDiem.ngay.HasValue ? cotDiem.ngay.Value.ToString("d/M") : null)</th>
+                                if (!cotDiem.laDiemCong && cotDiem.heSo.HasValue)
+                                {
+                                    tongHeSo += cotDiem.heSo.Value;
+                                }
+                                <th class="ngay"><span>@(cotDiem.ngay.HasValue ? cotDiem.ngay.Value.ToString("d/M") : null)</span></th>
                             }
-                            <th>TB</th>
+                            <th data-cot="tb">TB</th>
+                            <th data-cot="cong">+</th>
                         </tr>
                     </thead>
                     <tbody id="khung_diem" class="lct-form" data-cap-nhat>
@@ -86,21 +102,32 @@
                                     <th class="khong-vien">@nguoiDung.ten</th>
                                     @{
                                 double trungBinh = 0;
+                                double diemCong = 0;
                                 int hangHienTai = slCotDiem * iNguoiDung++;
                                 for (int i = 0; i < slCotDiem; i++)
                                 {
                                     string strDiem = chuoiDiem[i + hangHienTai];
+                                    var cotDiem = dsCotDiem[i];
+                                    var laDiemCong = cotDiem.laDiemCong;
                                     if (strDiem.IsEmpty())
                                     {
-                                                <td class="cot-diem"></td>
+                                        <td data-ma="@cotDiem.ma" data-la-cot-diem data-he-so="@cotDiem.heSo" data-loai="@(laDiemCong ? "cong" : "diem")" class="cot-diem"></td>
                                     }
                                     else
                                     {
-                                        trungBinh += double.Parse(strDiem);
-                                                <td class="cot-diem" data-diem="@strDiem">@strDiem</td>
+                                        if (laDiemCong)
+                                        {
+                                            diemCong += double.Parse(strDiem);
+                                        }
+                                        else
+                                        {
+                                            trungBinh += double.Parse(strDiem);
+                                        }
+                                        <td data-ma="@cotDiem.ma" data-la-cot-diem data-he-so="@cotDiem.heSo" data-loai="@(laDiemCong ? "cong" : "diem")" class="cot-diem" data-diem="@strDiem"><span>@strDiem</span></td>
                                     }
                                 }
-                                        <td>@((trungBinh / slCotDiem).ToString("#.##"))</td>
+                                        <td data-cot="tb"><span>@((trungBinh / tongHeSo).ToString("0.##"))</span></td>
+                                        <td data-cot="cong"><span>@diemCong</span></td>
                                     }
                                 </tr>
                             }
@@ -120,3 +147,10 @@
         </section>
     }
 </article>
+
+@section Scripts {
+    <script src="/Xem.js/BangDiem"></script>
+    <script>
+        tongHeSo = '@tongHeSo';
+    </script>
+}

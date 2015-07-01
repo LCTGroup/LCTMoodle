@@ -2,43 +2,55 @@
 
 $(function () {
     $_Khung = $('#khung_cot_diem');
-    $_DanhSach = $_Khung.find('.tbody');
+    $_DanhSach = $_Khung.find('tbody');
 
-    khoiTaoForm($_Khung.find('#tao_cot_diem_form'));
     khoiTaoItem($_DanhSach.children());
+    khoiTaoNutTao($_Khung.find('[data-chuc-nang="tao"]'));
 
     capNhatThuTu();
 })
 
-function khoiTaoForm($form) {
-    khoiTaoLCTForm($form, {
-        submit: function () {
-            var $tai = moBieuTuongTai($form);
-            $.ajax({
-                url: '/BangDiem/XuLyThemCotDiem',
-                type: 'POST',
-                data: $form.serialize(),
-                dataType: 'JSON'
-            }).always(function () {
-                $tai.tat();
-            }).done(function (data) {
-                if (data.trangThai == 0) {
-                    var $item = $(data.ketQua);
-                    khoiTaoItem($item);
+function khoiTaoNutTao($nuts) {
+    $nuts.on('click', function () {
+        moPopupFull({
+            url: '/BangDiem/_Form',
+            data: {
+                maKhoaHoc: maKhoaHoc
+            },
+            width: '500px',
+            thanhCong: function ($popup) {
+                var $form = $popup.find('#tao_cot_diem_form');
 
-                    $_DanhSach.append($item);
-                    $item.find('.td:eq(0)').text($item.index() + 1);
+                khoiTaoLCTForm($form, {
+                    submit: function () {
+                        var $tai = moBieuTuongTai($form);
+                        $.ajax({
+                            url: '/BangDiem/XuLyThemCotDiem',
+                            type: 'POST',
+                            data: layDataLCTForm($form),
+                            dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $popup.tat();
+                                var $item = $(data.ketQua);
+                                khoiTaoItem($item);
 
-                    khoiTaoLCTFormMacDinh($form);
-                }
-                else {
-                    moPopupThongBao(data);
-                }
-            }).fail(function () {
-                moPopupThongBao('Thêm cột thất bại');
-            });
-        }
-    });
+                                $_DanhSach.append($item);
+                                $item.find('.td:eq(0)').text($item.index() + 1);
+                            }
+                            else {
+                                moPopupThongBao(data);
+                            }
+                        }).fail(function () {
+                            moPopupThongBao('Thêm cột thất bại');
+                        });
+                    }
+                });
+            }
+        });
+    })
 }
 
 function khoiTaoItem($item) {
@@ -180,8 +192,8 @@ function khoiTaoItem($item) {
 //#region Hỗ trợ
 
 function capNhatThuTu() {
-    $_DanhSach.find('.tr').each(function (index) {
-        $(this).find('.td:eq(0)').text(index + 1);
+    $_DanhSach.find('tr').each(function (index) {
+        $(this).find('td:eq(0)').text(index + 1);
     });
 }
 

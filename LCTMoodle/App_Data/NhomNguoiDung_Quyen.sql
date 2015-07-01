@@ -64,7 +64,7 @@ BEGIN
 		END
 		ELSE
 		BEGIN
-			DECLARE @chuoiMaLa VARCHAR(MAX) = dbo.layQuyenLa_FUNCTION(' + @2 + ')
+			DECLARE @chuoiMaLa VARCHAR(MAX) = ''|'' + dbo.layQuyenLa_FUNCTION(' + @2 + ')
 
 			DELETE FROM dbo.NhomNguoiDung_' + @0 + '_Quyen
 			WHERE

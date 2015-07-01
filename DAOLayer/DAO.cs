@@ -67,7 +67,7 @@ namespace DAOLayer
                 return new KetQua()
                 {
                     trangThai = 2,
-                    ketQua = "Lỗi truy vấn\r\n" + e.Message
+                    ketQua = "Lỗi truy vấn: " + e.Message
                 };
             }
             finally
@@ -177,7 +177,7 @@ namespace DAOLayer
                 return new KetQua()
                 {
                     trangThai = 2,
-                    ketQua = "Lỗi truy vấn\r\n" + e.Message
+                    ketQua = "Lỗi truy vấn: " + e.Message
                 };
             }
             finally
@@ -230,7 +230,7 @@ namespace DAOLayer
                 return new KetQua()
                 {
                     trangThai = 2,
-                    ketQua = "Lỗi truy vấn\r\n" + e.Message
+                    ketQua = "Lỗi truy vấn: " + e.Message
                 };
             }
             finally

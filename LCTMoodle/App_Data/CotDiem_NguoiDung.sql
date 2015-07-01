@@ -7,7 +7,7 @@ CREATE TABLE dbo.CotDiem_NguoiDung (
 	MaNguoiDung INT NOT NULL,
 	Diem FLOAT(1) NOT NULL,
 	MaNguoiTao INT NOT NULL,
-	ThoiDiemTao DATETIME DEFAULT GETDATE(),
+	ThoiDiemTao DATETIME NOT NULL DEFAULT GETDATE(),
 	PRIMARY KEY (MaCotDiem, MaNguoiDung)
 )
 

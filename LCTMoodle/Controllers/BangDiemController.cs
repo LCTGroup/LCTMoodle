@@ -33,6 +33,15 @@ namespace LCTMoodle.Controllers
             return View(model: ketQua.trangThai == 0 ? ketQua.ketQua : null);
         }
 
+        public ActionResult _Form(int maKhoaHoc)
+        {
+            ViewData["MaKhoaHoc"] = maKhoaHoc;
+
+            return Json(
+                new KetQua(renderPartialViewToString(ControllerContext, "BangDiem/_Form.cshtml", null, ViewData)),
+                JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult XuLyThemCotDiem(FormCollection formCollection)
         {

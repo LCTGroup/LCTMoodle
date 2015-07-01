@@ -62,21 +62,25 @@
                                 } />
                     </article>
                 </section>
-            </li>
+            </li>            
+            @if (!coQuyenQLCotDiem)
+            {
+                <li data-an class="loi-dan">
+                    Để sử dụng chức năng tạo bài tập có điểm, bạn&nbsp;<b>cần có quyền quản lý cột điểm.</b>
+                </li>
+            }
             <li data-an>
                 <section class="tieu-de">
                     <label>
-                        Loại bài tập @if (!coQuyenQLCotDiem)
-                        { 
-                            @:- Để sử dụng chức năng tạo bài tập có điểm, bạn <b>cần có quyền quản lý cột điểm</b>
-                        }
+                        Loại bài tập
                     </label>
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <input style="width: auto;" data-chuc-nang="tat-mo" data-tat="co-diem" type="radio" name="Loai" value="0" data-text="Tham khảo" data-mac-dinh />
-                        <input @(!coQuyenQLCotDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem" data-tat="diem" type="radio" name="Loai" value="1" data-text="Cộng điểm" />
-                        <input @(!coQuyenQLCotDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem diem" type="radio" name="Loai" value="2" data-text="Lấy điểm" />
+                        <input @(Model != null && Model.loai == 0 ? "data-mac-dinh" : null) style="width: auto;" data-chuc-nang="tat-mo" data-tat="co-diem" type="radio" name="Loai" value="0" data-text="Tham khảo" data-mac-dinh />
+                        <input @(Model != null && Model.loai == 1 ? "data-mac-dinh" : null) @(!coQuyenQLCotDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem" data-tat="diem" type="radio" name="Loai" value="1" data-text="Cộng điểm" />
+                        <input @(Model != null && Model.loai == 2 ? "data-mac-dinh" : null) @(!coQuyenQLCotDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem diem" type="radio" name="Loai" value="2" data-text="Lấy điểm" />
+                        @*<input @(!coQuyenQLCotDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem" type="radio" name="Loai" value="3" data-text="Có điểm. Sử dụng cột đã có" />*@
                     </article>
                 </section>
             </li>
@@ -86,8 +90,7 @@
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <input type="text" name="CD_Ten" placeholder="Tên cột điểm" />
-                        <input type="text" name="CD_HeSo" data-validate="so-nguyen" placeholder="Hệ số" data-doi-tuong="diem" />
+                        <input @(Model != null ) type="text" name="CD_HeSo" data-validate="so-nguyen" placeholder="Hệ số" data-doi-tuong="diem" />
                     </article>
                 </section>
             </li>

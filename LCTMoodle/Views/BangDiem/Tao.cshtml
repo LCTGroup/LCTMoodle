@@ -1,4 +1,6 @@
-﻿@model List<DTOLayer.CotDiemDTO>
+﻿@using LCTMoodle.LCTView
+@using Helpers
+@model List<DTOLayer.CotDiemDTO>
 
 @{
     Layout = "~/Views/LCT/Khung.cshtml";
@@ -13,11 +15,23 @@
         "Quản lý cột điểm", "/KhoaHoc/Tao-BangDiem/" + khoaHoc.ma
     };
 
-    ViewData["ChucNang"] = new List<string>()
+    List<string> chucNang = new List<string>();
+
+    var dsQuyen = QuyenView.layDSQuyen("KH", khoaHoc.ma.Value);
+
+    if (QuyenHelper.co(dsQuyen, "QLQuyen"))
     {
-        "Xem bảng điểm",
-        "href='/KhoaHoc/Xem-BangDiem/" + khoaHoc.ma + "'"
-    };
+        chucNang.Add("Quản lý quyền");
+        chucNang.Add("href='/QuanlyQuyen/KH/" + khoaHoc.ma + "'");
+    }
+
+    chucNang.Add("Chương trình khóa học");
+    chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + khoaHoc.ma + "'");
+
+    chucNang.Add("Xem điểm khóa học");
+    chucNang.Add("href='/KhoaHoc/Xem-BangDiem/" + khoaHoc.ma + "'");
+
+    ViewData["ChucNang"] = chucNang;
 }
 @section Styles {
     <link href="/Tao.css/BangDiem" rel="stylesheet" />
@@ -29,71 +43,41 @@
     </script>
 }
 
-<article class="hop hop-2-vien">
+<section class="hop hop-1-vien">
     <section class="tieu-de">
         Quản lý cột điểm
     </section>
-    <section class="noi-dung">
-        <article style="border: none;">
-            <article id="khung_cot_diem" class="lct-bang khung-cot-diem">
-                <section class="thead">
-                    <section class="tr">
-                        <section class="th"></section>
-                        <section class="th">
-                            Tên
-                        </section>
-                        <section class="th">
-                            Hệ số
-                        </section>
-                        <section class="th">
-                            Mô tả
-                        </section>
-                        <section class="th">
-                            Ngày
-                        </section>
-                    </section>
-                </section>
-                <section class="tbody">
-                    @if (Model != null)
+    <section id="khung_cot_diem" class=" noi-dung khung-quan-ly">
+        <table class="khung-cot-diem lct-bang">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Tên
+                    </th>
+                    <th>
+                        Hệ số
+                    </th>
+                    <th>
+                        Mô tả
+                    </th>
+                    <th>
+                        Ngày
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+                @if (Model != null)
+                {
+                    foreach (var cotDiem in Model)
                     {
-                        foreach (var cotDiem in Model)
-                        {
-                            @Html.Partial("~/Views/BangDiem/_Item.cshtml", cotDiem);
-                        }
+                        @Html.Partial("~/Views/BangDiem/_Item.cshtml", cotDiem);
                     }
-                </section>
-                <form id="tao_cot_diem_form" class="lct-form tao-cot-diem-form tfoot" data-an-rang-buoc>
-                    <section class="tr">
-                        <section class="td"></section>
-                        <section class="td">
-                            <input type="hidden" name="MaKhoaHoc" value="@khoaHoc.ma" />
-                            <article class="input">
-                                <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Tên cột điểm" />
-                            </article>
-                        </section>
-                        <section class="td">
-                            <article class="input">
-                                <input data-doi-tuong="he-so" data-validate="bat-buoc" type="text" name="HeSo" data-mac-dinh="1" style="text-align: center" placeholder="Hệ số" />
-                            </article>
-                        </section>
-                        <section class="td">
-                            <article class="input">
-                                <textarea name="MoTa" placeholder="Mô tả" style="height: 20px;"></textarea>
-                            </article>
-                        </section>
-                        <section class="td">
-                            <article class="input">
-                                <input data-input-type="ngay" name="Ngay" placeholder="Ngày" style="text-align: center" />
-                            </article>
-                            <section class="khung-button">
-                                <button type="submit" class="chap-nhan">
-                                    Thêm
-                                </button>
-                            </section>
-                        </section>
-                    </section>
-                </form>
-            </article>
-        </article>
+                }
+            </tbody>
+            </table>
+            <section class="lct-form khung-nut" style="text-align: center;">
+                <a data-chuc-nang="tao" class="button">Thêm cột điểm mới</a>
+            </section>
     </section>
-</article>
+</section>

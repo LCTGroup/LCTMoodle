@@ -106,11 +106,19 @@ function layQueryString(key) {
 */
 //Popup full
 function layPopupFull(thamSo) {
-    $popupFull = $('#popup_full');
+    if (typeof (thamSo) === 'undefined')
+    {
+        thamSo = {};
+    }
+    var id = ('id' in thamSo) ? thamSo.id : 'popup_full';
+    var zIndex = ('z-index' in thamSo) ? thamSo['z-index'] : '19';
+    var esc = 'esc' in thamSo && !thamSo.esc
+
+    var $popupFull = $('#' + id);
 
     if ($popupFull.length == 0) {
         $popupFull = $(
-            '<article id="popup_full" class="popup-full-container">\
+            '<article id="' + id + '" style="z-index: ' + zIndex + ';" class="popup-full-container">\
                 <section class="khung-tat"></section>\
                 <section class="popup-full">\
                     <article id="noi_dung_popup" class="khung-noi-dung">\
@@ -127,7 +135,7 @@ function layPopupFull(thamSo) {
         $body.prepend($popupFull);
     }
 
-    if ('esc' in thamSo && !thamSo.esc) {
+    if (esc) {
         $popupFull.removeAttr('data-esc');
     }
     else {
@@ -138,7 +146,6 @@ function layPopupFull(thamSo) {
         $popupFull.show();
         $(document).on('keydown.tat_popup', function (e) {
             if ($popupFull.is('[data-esc]')) {
-                e = e || window.event;
                 if (e.keyCode == 27) {
                     $popupFull.tat();
                 }
@@ -293,6 +300,8 @@ function moPopup(thamSo) {
     }
 
     $popup = layPopupFull({
+        id: 'popup_thong_bao',
+        'z-index': '20',
         esc: 'esc' in thamSo ? thamSo.esc : true
     });
 

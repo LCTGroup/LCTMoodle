@@ -145,31 +145,76 @@ namespace BUSLayer
                 };
             }
 
-            if (coQuyen("BT_Them", "KH", maKhoaHoc.Value, maNguoiTao))
+            if (!coQuyen("BT_Them", "KH", maKhoaHoc.Value, maNguoiTao))
             {
                 return new KetQua()
                 {
                     trangThai = 3,
-                    ketQua = "Bạn không có quyền đăng bài giảng"
+                    ketQua = "Bạn không có quyền đăng bài tập"
                 };
+            }
+
+            //Loại bài tập
+            var loai = form.layInt("Loai", 1).Value;
+            if (!(loai == 0 || loai == 1 || loai == 2))
+            {
+                return new KetQua(3, "Loại không được bỏ trống");
             }
             #endregion
 
             BaiVietBaiTapDTO baiViet = new BaiVietBaiTapDTO();
             gan(ref baiViet, form);
 
-            KetQua ketQua = kiemTra(baiViet);
+            var ketQua = kiemTra(baiViet, new string[] { "MaKhoaHoc", "Loai", "MaNguoiTao" }, false);
 
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            return BaiVietBaiTapDAO.them(baiViet, new LienKet()
+            ketQua = BaiVietBaiTapDAO.them(baiViet, new LienKet()
                 {
                     "NguoiTao",
                     "TapTin"
                 });
+
+            if (loai == 0)
+            {
+                return ketQua;
+            }
+            else
+            {
+                if (ketQua.trangThai != 0)
+                {
+                    return ketQua;
+                }
+
+                //Thêm cột điểm
+                var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
+
+                Form formCotDiem = new Form()
+                {
+                    { "MaKhoaHoc", maKhoaHoc.ToString() },
+                    { "Ten", "Bài tập " + baiTap.thoiDiemTao.Value.ToString("d/M") },
+                    { "LaDiemCong", loai == 1 ? "1" : "0" },
+                    { "MaNguoiTao", maNguoiTao.Value.ToString() }
+                };
+
+                if (loai == 2)
+                {
+                    form.Add("HeSo", form.layString("HeSo"));
+                }
+
+                ketQua = CotDiemBUS.them(formCotDiem);
+
+                if (ketQua.trangThai != 0)
+                {
+                    BaiVietBaiTapDAO.xoaTheoMa(baiTap.ma);
+                    return ketQua;
+                }
+
+                return new KetQua(baiTap);
+            }
         }
 
         public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)

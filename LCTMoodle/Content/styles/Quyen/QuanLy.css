@@ -259,7 +259,7 @@
         .khung-chua .khung-duoi .khung-quyen .item {
             border: 0;
             border-bottom: 1px solid #eee;
-            width: 50%;
+            width: 100%;
             transition: background-color 0.5s;
             background-color: #fcfcfc;
             flex-wrap: nowrap;
@@ -269,17 +269,12 @@
                 background-color: #fafafa;
             }
 
-            .khung-chua .khung-duoi .khung-quyen .item:nth-child(odd) {
-                border-right: 1px solid #eee;
-                width: calc(50% - 1px);
-            }
-
             .khung-chua .khung-duoi .khung-quyen .item > u {
                 display: block;
                 min-height: 100%;
                 min-width: 3px;
                 max-width: 3px;
-                margin-left: 3px;
+                margin-left: 5px;
                 background-color: #eee;
                 transition: 0.5s;
             }

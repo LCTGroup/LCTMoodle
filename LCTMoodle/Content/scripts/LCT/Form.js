@@ -118,7 +118,7 @@ function khoiTaoHienThiInput_LCT($form) {
     $form.find('input[type="checkbox"], input[type="radio"]').each(function () {
         $element = $(this);
         $element.wrap('<label class="checkbox-radio-label" style="' + $element.attr('style') + '"></label>');
-        $element.after('<u></u>' + $element.attr('data-text'));
+        $element.after('<u></u><span>' + $element.attr('data-text') + '</span>');
     });
 
     $form.find('input[type="file"]').each(function () {
