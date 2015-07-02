@@ -58,6 +58,8 @@ namespace DAOLayer
                         nguoiDung.maKichHoat = layString(dong, i); break;
                     case "MatKhauCap2":
                         nguoiDung.matKhauCap2 = layString(dong, i); break;
+                    case "DiemHoiDap":
+                        nguoiDung.diemHoiDap = layInt(dong, i); break;
                     default:
                         break;
                 }

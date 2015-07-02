@@ -1,43 +1,18 @@
-﻿select * from nhomnguoidung_ht 
-update nhomnguoidung_ht_nguoidung set manhomnguoidung = 10
-delete from nhomnguoidung_ht_nguoidung
+﻿select * from cauHOi_diem
+select * from nguoidung
 
-<<<<<<< HEAD
-select * from nhomnguoidung_HT_Quyen
+alter table nguoidung
+add DiemHoiDap INT DEFAULT 0
 
-select * from nhomnguoidung_CD_quyen
+update dbo.nguoiDung
+set DiemHoiDap = 8
+where ma=2
 
-exec layNhomnguoiDung_QuyenTheoMaNhomNguoiDungVaMaDoiTuong 'KH', , 0
+select TenTaiKhoan, MatKhau, DiemHoiDap from nguoidung where ma = 2
 
-<<<<<<< HEAD
-exec layQuyenTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra 1, 'KH', 1, 'BT_QLBaiNop'
-select top 1 * from nguoidung 
+select * from dbo.CauHOi_DIEM
+select * from dbo.CauHOi
 
-update nguoidung set coquyennhomkh = 1 where ma = 1
-
-layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri 1, 'KH', 1
-=======
-exec layQuyenTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra 1, 'HT', 0, 'QLaQuyen'
-select top 1 * from nguoidung 
-
-declare @cachSapXep NVARCHAR(MAX) = 'TraLoiNhieuNhat'
-select *
-from dbo.cauhoi
-order by case @cachSapXep = 'TraLoiNhieuNhat'
-WHEN
-	SoLuongTraLoi
-END
-WHEN
-	order by ThoiDiemTao
-END
-DESC
->>>>>>> d14fb15ee7d26dac86c7cf8ea89feedd646f16f5
-
-
-select top 1 * from cauhoi
-order by ThoiDiemTao DESC
-
-select * from cauHoi
-=======
-select * from nhomnguoidung_ht_nguoidung
->>>>>>> 3280e4ba9f478c413b4a5f2c81d4a0235af02982
+update dbo.cauhoi
+set diem = 0
+where ma = 9

@@ -106,7 +106,7 @@ namespace BUSLayer
             #region Kiểm tra điều kiện
 
             int? maNguoiTao = form.layInt("MaNguoiTao");
-            if (maNguoiTao.HasValue)
+            if (!maNguoiTao.HasValue)
             {
                 return new KetQua(4);
             }

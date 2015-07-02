@@ -88,14 +88,13 @@ namespace LCTMoodle.Controllers
                 return RedirectToAction("Index", "HoiDap");
             }
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
+            
+            ViewData["TrangThaiVote"] = CauHoi_DiemBUS.trangThaiVoteCuaNguoiDungTrongCauHoi(ma, (int?)Session["NguoiDung"]);
 
             #region Kiểm tra trạng thái Vote trả lời
 
             if (cauHoi.danhSachTraLoi != null)
             {
-                ViewData["MaCauHoi"] = ma;
-                ViewData["TrangThaiVote"] = CauHoi_DiemBUS.trangThaiVoteCuaNguoiDungTrongCauHoi(ma, (int?)Session["NguoiDung"]);
-
                 Dictionary<int, int> trangThaiVoteTraLoi = new Dictionary<int, int>();
                 foreach (var traLoi in cauHoi.danhSachTraLoi)
                 {
@@ -278,6 +277,7 @@ namespace LCTMoodle.Controllers
         [ValidateInput(false)]
         public ActionResult XuLyCapNhatTraLoi(FormCollection form)
         {
+            
             #region Kiểm tra điều kiện
             
             if (Session["NguoiDung"] != null)

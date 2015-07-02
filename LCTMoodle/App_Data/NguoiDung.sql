@@ -16,14 +16,15 @@ CREATE TABLE dbo.NguoiDung
 	DiaChi NVARCHAR(MAX),
 	SoDienThoai NVARCHAR(MAX),
 	MaHinhDaiDien INT,
+	DaKichHoat BIT DEFAULT 0,
+	MaKichHoat NVARCHAR(MAX),
+	MatKhauCap2 NVARCHAR(MAX),
 	CoQuyenHT BIT,
 	CoQuyenND BIT,
 	CoQuyenCD BIT,
 	CoQuyenHD BIT,
 	CoQuyenKH BIT,
-	DaKichHoat BIT DEFAULT 0,
-	MaKichHoat NVARCHAR(MAX),
-	MatKhauCap2 NVARCHAR(MAX)
+	DiemHoiDap INT DEFAULT 0
 )
 
 GO

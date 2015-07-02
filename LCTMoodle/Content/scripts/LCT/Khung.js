@@ -17,6 +17,7 @@ $(function () {
     $('[data-chuc-nang="dang-nhap"]').on('click', function () {
         moPopupDangNhap();
     });
+    khoiTaoDangXuat($('[data-chuc-nang="dang-xuat"]'));
 });
 
 function moBieuTuongTai($item) {
@@ -458,13 +459,8 @@ function moPopupThongBao(ketQua) {
 /*
     Xử lý đăng xuất
 */
-function xuLyDangXuat($btnDangXuat) {
-    $btnDangXuat.on('click', function () {
-        $.ajax({
-            url: '/NguoiDung/XuLyDangXuat/'
-        });
-        window.location = "/TrangChu/";
-    });
+function khoiTaoDangXuat($btnDangXuat) {
+   
 }
 
 function moPopupDangNhap(thamSo) {
