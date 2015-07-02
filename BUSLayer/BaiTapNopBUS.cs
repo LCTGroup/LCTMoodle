@@ -113,12 +113,13 @@ namespace BUSLayer
 
             //Kiểm tra người dùng là thành viên của khóa học
             ketQua = KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(baiTap.khoaHoc.ma, maNguoiTao);
-            if (ketQua.trangThai != 0 || (ketQua.ketQua as KhoaHoc_NguoiDungDTO).trangThai != 0)
+            var thanhVien = ketQua.ketQua as KhoaHoc_NguoiDungDTO;
+            if (ketQua.trangThai != 0 || thanhVien.trangThai != 0 || !thanhVien.laHocVien)
             {
                 return new KetQua()
                 {
                     trangThai = 3,
-                    ketQua = "Bạn cần là thành viên chính thức của khóa học để nộp bài"
+                    ketQua = "Bạn cần là học viên của khóa học để nộp bài"
                 };
             }
             #endregion

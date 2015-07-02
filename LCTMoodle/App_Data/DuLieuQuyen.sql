@@ -82,11 +82,8 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('KH', 517, 0,	N'Xóa bài tập',						'BT_Xoa',					509,	3),		--| | | |
 	('KH', 518, 0,	N'Quản lý bài nộp',					'BT_QLBaiNop',				509,	4),		--| | | |
 
-	('KH', 519, 0,	N'Quản lý bảng điểm',				NULL,						502,	4),		--| |
-	('KH', 521, 0,	N'Quản lý cột điểm',				'QLCotDiem',				519,	1),		--| | |
-	('KH', 522, 0,	N'Quản lý điểm',					'QLDiem',					519,	2),		--| | |
+	('KH', 519, 0,	N'Quản lý bảng điểm',				'QLBangDiem',				502,	4),		--| |
 
 	('KH', 523, 0,	N'Quản lý chương trình',			'QLChuongTrinh',			502,	5)		--| |
 
 GO
-SELECT * FROM dbo.Quyen

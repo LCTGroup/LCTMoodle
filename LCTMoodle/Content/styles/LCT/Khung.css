@@ -557,13 +557,28 @@ body.khong-scroll > .khung {
     top: 0;
     left: 0;
     z-index: 19;
+    display: none;
 }
+
+    .popup-full-container.popup-mo {
+        display: block;
+    }
 
     .popup-full-container .khung-tat {
         position: absolute;
         width: 100%;
         height: 100%;
     }
+    
+
+@keyframes mo-popup-full { 
+    0% {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+}
 
     .popup-full-container .popup-full {
         background-color: rgba(0, 0, 0, 0.3);
@@ -575,6 +590,21 @@ body.khong-scroll > .khung {
         align-items: center;
         justify-content: center;
     }
+
+        .popup-full-container.popup-mo .popup-full {
+            animation: mo-popup-full 0.5s;
+        }
+
+@keyframes mo-popup-noi-dung { 
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-50%);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 
         .popup-full-container .popup-full .khung-noi-dung {
             text-align: left;
@@ -588,6 +618,10 @@ body.khong-scroll > .khung {
             overflow-y: auto;
             overflow-x: hidden;
         }
+
+            .popup-full-container.popup-mo .popup-full .khung-noi-dung {
+                animation: mo-popup-noi-dung 0.5s;
+            }
 
 /*#endregion */
 

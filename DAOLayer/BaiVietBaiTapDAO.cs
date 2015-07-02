@@ -79,7 +79,7 @@ namespace DAOLayer
             }
 
             baiViet.danhSachBaiTapNop = LienKet.co(lienKet, "BaiTapNop") && baiViet.ma.HasValue ?
-                layDanhSachDTO<BaiTapNopDTO>(BaiTapNopDAO.layTheoMaBaiVietBaiTap(baiViet.ma.Value)) :
+                layDanhSachDTO<BaiTapNopDTO>(BaiTapNopDAO.layTheoMaBaiVietBaiTap(baiViet.ma.Value, lienKet["BaiTapNop"])) :
                 null;
 
             return baiViet;

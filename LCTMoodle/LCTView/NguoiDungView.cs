@@ -48,7 +48,7 @@ namespace LCTMoodle.LCTView
                 (thamSo.ContainsKey("class") ? thamSo["class"] : null) + " style=" + 
                 (thamSo.ContainsKey("style") ? thamSo["style"] : null) + " href='/NguoiDung/Xem/' alt='" +
                 nguoiDung.ho + " " + nguoiDung.tenLot + " " + nguoiDung.ten + "' src='" +
-                (nguoiDung.hinhDaiDien == null ? "/HinhDaiDienMacDinh.png/NguoiDung" : "/LayTapTin/NguoiDung_HinhDaiDien/" + nguoiDung.hinhDaiDien.ma) + "'></img>");
+                (nguoiDung.hinhDaiDien == null ? "/HinhDaiDienMacDinh.png/NguoiDung" : "/LayHinh/NguoiDung_HinhDaiDien/" + nguoiDung.hinhDaiDien.ma) + "'></img>");
             
         }
     }

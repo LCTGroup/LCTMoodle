@@ -121,7 +121,7 @@ namespace BUSLayer
             }
 
             //Kiểm tra quyền
-            if (!coQuyen("QLCotDiem", "KH", maKhoaHoc.Value, maNguoiTao))
+            if (!coQuyen("QLBangDiem", "KH", maKhoaHoc.Value, maNguoiTao))
             {
                 return new KetQua()
                 {
@@ -166,7 +166,7 @@ namespace BUSLayer
             var cotDiem = ketQua.ketQua as CotDiemDTO;
 
             //Kiểm tra quyền
-            if (!coQuyen("QLCotDiem", "KH", cotDiem.khoaHoc.ma.Value, maNguoiXoa))
+            if (!coQuyen("QLBangDiem", "KH", cotDiem.khoaHoc.ma.Value, maNguoiXoa))
             {
                 return new KetQua()
                 {
@@ -183,7 +183,7 @@ namespace BUSLayer
         {
             #region Kiểm tra điều kiện
             //Kiểm tra quyền
-            if (!coQuyen("QLCotDiem", "KH", maKhoaHoc, maNguoiSua))
+            if (!coQuyen("QLBangDiem", "KH", maKhoaHoc, maNguoiSua))
             {
                 return new KetQua()
                 {

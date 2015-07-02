@@ -178,14 +178,12 @@
     <Content Include="Content\images\HeThong\HeThong.png" />
     <Content Include="Content\images\HoiDap\HoiDap.png" />
     <Content Include="Content\images\KhoaHoc\KhoaHoc.png" />
-    <Content Include="Content\images\LCT\AllSiteImages.png" />
-    <Content Include="Content\images\LCT\AllSiteImages_temp.png" />
-    <Content Include="Content\images\LCT\ChuDe\he-thong.png" />
-    <Content Include="Content\images\LCT\ChuDe\khoa-hoc.png" />
     <Content Include="Content\images\LCT\mini_logo.png" />
     <Content Include="Content\images\NguoiDung\HinhDaiDienMacDinh.png" />
     <Content Include="Content\images\NguoiDung\NguoiDung.png" />
     <Content Include="Content\images\Quyen\Quyen.png" />
+    <Content Include="Content\images\TapTin\file.png" />
+    <Content Include="Content\scripts\BaiVietBaiTap\ChamDiem.js" />
     <Content Include="Content\scripts\BangDiem\Xem.js" />
     <Content Include="Content\scripts\BinhLuan\Khung.js" />
     <Content Include="Content\scripts\ChuDe\Khung.js" />
@@ -211,6 +209,7 @@
     <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
     <Content Include="Content\scripts\NguoiDung\Xem.js" />
     <Content Include="Content\scripts\Quyen\QuanLy.js" />
+    <Content Include="Content\styles\BaiVietBaiTap\ChamDiem.css" />
     <Content Include="Content\styles\BangDiem\Xem.css" />
     <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\BangDiem\Tao.css" />
@@ -388,6 +387,8 @@
     <Content Include="Plugin\ckeditor\skins\office2013\images\lock.png" />
     <Content Include="Plugin\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="Plugin\ckeditor\styles.js" />
+    <Content Include="Plugin\highlight\highlight.js" />
+    <Content Include="Plugin\highlight\hightlight.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -497,6 +498,7 @@
     <Content Include="Views\Quyen\QuyenChuDe.cshtml" />
     <Content Include="Views\NguoiDung\_DieuKhoan.cshtml" />
     <Content Include="Views\BangDiem\_Form.cshtml" />
+    <Content Include="Views\BaiVietBaiTap\ChamDiem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

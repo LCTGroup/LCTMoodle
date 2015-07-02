@@ -13,5 +13,7 @@ namespace DTOLayer
         public DateTime? thoiDiemTao;
         public NguoiDungDTO nguoiTao;
         public BaiVietBaiTapDTO baiVietBaiTap;
+        public DateTime? thoiDiemCham;
+        public double? diem;
     }
 }

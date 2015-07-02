@@ -87,7 +87,7 @@ function khoiTaoNutMacDinh_LCT($form) {
             var loaiMacDinh = $phanTu.attr('data-loai-mac-dinh');
             if (maMacDinh) {
                 $phanTu.addClass('co');
-                $phanTu.find('~ img').attr('src', '/LayTapTin/' + loaiMacDinh + '/' + maMacDinh);
+                $phanTu.find('~ img').attr('src', '/LayHinh/' + loaiMacDinh + '/' + maMacDinh);
             }
             else {
                 $phanTu.removeClass('co');
@@ -129,7 +129,7 @@ function khoiTaoHienThiInput_LCT($form) {
         var loaiMacDinh = $phanTu.attr('data-loai-mac-dinh');
         $phanTu.removeAttr('name');
 
-        $phanTu.after('<input type="hidden" name="' + name + '" value="' + maMacDinh + '"><img src="' + (maMacDinh ? '/LayTapTin/' + loaiMacDinh + '/' + maMacDinh : '') + '" /><i></i><u></u>');
+        $phanTu.after('<input type="hidden" name="' + name + '" value="' + maMacDinh + '"><img src="' + (maMacDinh ? '/LayHinh/' + loaiMacDinh + '/' + maMacDinh : '') + '" /><i></i><u></u>');
         if (maMacDinh) {
             $phanTu.addClass('co');
         }
@@ -262,7 +262,7 @@ function khoiTaoTapTinInput_LCT($form) {
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $phanTu.addClass('co');
-                $phanTu.find('~ img').attr('src', '/LayTapTin/Tam/' + data.ketQua.ma);
+                $phanTu.find('~ img').attr('src', '/LayHinh/Tam/' + data.ketQua.ma);
                 $phanTu.find('~ input[type="hidden"]').val(data.ketQua.ma).change();
             }
             else {
@@ -619,7 +619,7 @@ function khoiTaoLCTFormMacDinh($form) {
         var loaiMacDinh = $phanTu.attr('data-loai-mac-dinh');
         if (maMacDinh) {
             $phanTu.addClass('co');
-            $phanTu.find('~ img').attr('src', '/LayTapTin/' + loaiMacDinh + '/' + maMacDinh);
+            $phanTu.find('~ img').attr('src', '/LayHinh/' + loaiMacDinh + '/' + maMacDinh);
         }
         else {
             $phanTu.removeClass('co');

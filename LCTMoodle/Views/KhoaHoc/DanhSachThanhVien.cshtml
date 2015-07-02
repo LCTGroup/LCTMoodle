@@ -20,47 +20,6 @@
      */
     List<string> chucNang = new List<string>();
 
-    /*
-        Kiểm tra thành viên để hiển thị các nút chức năng tham gia/rời nhóm
-     */
-    var thanhVien = ViewData["ThanhVien"] as DTOLayer.KhoaHoc_NguoiDungDTO;
-    if (thanhVien == null)
-    {
-        if (Model.canDangKy)
-        {
-            if (!Model.hanDangKy.HasValue || Model.hanDangKy > DateTime.Now)
-            {
-                chucNang.Add("Đăng ký");
-                chucNang.Add("data-chuc-nang='dang-ky'");
-            }
-        }
-        else
-        {
-            chucNang.Add("Tham gia");
-            chucNang.Add("data-chuc-nang='tham-gia'");
-        }
-    }
-    else
-    {
-        switch (thanhVien.trangThai)
-        {
-            case 0:
-                chucNang.Add("Rời khóa học");
-                chucNang.Add("data-chuc-nang='roi-kh'");
-                break;
-            case 1:
-                chucNang.Add("Hủy đăng ký");
-                chucNang.Add("data-chuc-nang='huy-dang-ky'");
-                break;
-            case 2:
-                chucNang.Add("Xác nhận lời mời");
-                chucNang.Add("data-chuc-nang='xac-nhan-moi'");
-                chucNang.Add("Từ chối lời mời");
-                chucNang.Add("data-chuc-nang='tu-choi-moi'");
-                break;
-        }
-    }
-
     chucNang.Add("Nội dung khóa học");
     chucNang.Add("href='/KhoaHoc/" + Model.ma + "'");
 
@@ -76,7 +35,7 @@
     chucNang.Add("Chương trình khóa học");
     chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + Model.ma + "'");
 
-    if (QuyenHelper.co(dsQuyen, "QLCotDiem"))
+    if (QuyenHelper.co(dsQuyen, "QLBangDiem"))
     {
         chucNang.Add("Quản lý bảng điểm");
         chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + Model.ma + "'");

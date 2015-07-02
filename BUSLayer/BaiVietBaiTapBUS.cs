@@ -160,6 +160,15 @@ namespace BUSLayer
             {
                 return new KetQua(3, "Loại không được bỏ trống");
             }
+
+            if (!coQuyen("QLBangDiem", "KH", maKhoaHoc.Value, maNguoiTao))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền tạo bài tập có điểm"
+                };
+            }
             #endregion
 
             BaiVietBaiTapDTO baiViet = new BaiVietBaiTapDTO();
@@ -227,9 +236,9 @@ namespace BUSLayer
             });
         }
 
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
         {
-            return BaiVietBaiTapDAO.layTheoMa(ma);
+            return BaiVietBaiTapDAO.layTheoMa(ma, lienKet);
         }
 
         public static KetQua xoaTheoMa(int ma)
