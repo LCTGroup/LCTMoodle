@@ -1,0 +1,68 @@
+﻿@{
+    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+}
+
+<article class="hop hop-1-vien">
+    <section class="tieu-de">
+        Thêm bảng điểm
+    </section>
+    <form id="tao_cot_diem_form" class="noi-dung lct-form" >
+        <input type="hidden" name="MaKhoaHoc" value="@maKhoaHoc" />
+        <ul>
+            <li>
+                <section class="tieu-de">
+                    <label>
+                        Tên cột điểm
+                    </label>
+                </section>
+                <section class="noi-dung">
+                    <article class="input">
+                        <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Tên cột điểm" />
+                    </article>
+                </section>
+            </li>
+            <li>
+                <section class="tieu-de">
+                    <label>
+                        Loại cột điểm, hệ số
+                    </label>
+                </section>
+                <section class="noi-dung">
+                    <article class="input">
+                        <input type="checkbox" name="LaDiemCong" data-mac-dinh data-chuc-nang="tat-mo" data-tat="he-so" data-text="Cột điểm cộng" value="1" />
+                        <input data-chi-an data-doi-tuong="he-so" type="text" data-validate="so-nguyen bat-buoc" name="HeSo" data-mac-dinh="1" placeholder="Hệ số điểm" />
+                    </article>
+                </section>
+            </li>
+            <li>
+                <section class="tieu-de">
+                    <label>
+                        Mô tả
+                    </label>
+                </section>
+                <section class="noi-dung">
+                    <article class="input">
+                        <textarea name="MoTa" placeholder="Mô tả cột điểm"></textarea>
+                    </article>
+                </section>
+            </li>
+            <li>
+                <section class="tieu-de">
+                    <label>
+                        Ngày
+                    </label>
+                </section>
+                <section class="noi-dung">
+                    <article class="input">
+                        <input data-validate="bat-buoc" data-input-type="ngay" name="Ngay" placeholder="Ngày thực hiện" />
+                    </article>
+                </section>
+            </li>
+        </ul>
+        <section class="khung-button">
+            <button type="submit">
+                Hoàn tất
+            </button>
+        </section>
+    </form>
+</article>

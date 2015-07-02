@@ -10,45 +10,44 @@
         coQuyenQLBaiNop = QuyenHelper.co(dsQuyen, "BT_QLBaiNop");
         
 }
-
 <section class="danh-sach-nop">
     @if (Model != null)
-{
-
-    if (Session["NguoiDung"] != null)
     {
-        int maNguoiDung = (int)Session["NguoiDung"];
-        daNop = Model.Exists(x => x.nguoiTao.ma == maNguoiDung);
-    }
-
-    if (daNop)
-    {
-        if (Model.Count != 1)
+        if (Session["NguoiDung"] != null)
         {
-            <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang='xem-danh-sach-nop'" : null) data-type="4">
-                <span><b>Bạn</b></span><span>và <b>@(Model.Count - 1)</b> người khác đã nộp</span>
-            </a>
+            int maNguoiDung = (int)Session["NguoiDung"];
+            daNop = Model.Exists(x => x.nguoiTao.ma == maNguoiDung);
         }
-        else
+
+        if (daNop)
         {
-                <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang='xem-danh-sach-nop'" : null) data-type="2">
+            if (Model.Count > 1)
+            {
+                <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="4">
+                    <span><b>Bạn</b></span><span>và <b>@(Model.Count - 1)</b> người khác đã nộp</span>
+                </a>
+            }
+            else
+            {
+                <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="2">
                     <span><b>Bạn</b> đã nộp</span>
                 </a>
             }
         }
         else
         {
-            <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang='xem-danh-sach-nop'" : null) data-type="3">
+            <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="3">
                 <span><b>@Model.Count</b> người đã nộp</span>
             </a>
         }
     }
     else
     {
-        <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang='xem-danh-sach-nop'" : null) data-type="1">                      
+        <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="1">                      
             <span>Chưa ai nộp</span>
         </a>
     }
+    
 </section>
 @if (coQuyenNopBai)
 {

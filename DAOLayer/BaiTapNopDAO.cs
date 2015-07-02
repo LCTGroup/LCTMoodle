@@ -68,6 +68,12 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "ThoiDiemCham":
+                        baiTapNop.thoiDiemCham = layDateTime(dong, i);
+                        break;
+                    case "Diem":
+                        baiTapNop.diem = layDouble(dong, i);
+                        break;
                     default:
                         break;
                 }

@@ -1,17 +1,17 @@
 ﻿@model DTOLayer.CotDiemDTO
 
-<section class="tr item-cot-diem" data-doi-tuong="item-cot-diem" data-ma="@Model.ma">
-    <section class="td"></section>
-    <section class="td">
+<tr class="item-cot-diem" data-doi-tuong="item-cot-diem" data-ma="@Model.ma">
+    <td></td>
+    <td>
         @Model.ten
-    </section>
-    <section class="td">
-        @Model.heSo
-    </section>
-    <section class="td">
+    </td>
+    <td>
+        @(Model.laDiemCong ? "+" : Model.heSo.ToString())
+    </td>
+    <td>
         @Model.moTa
-    </section>
-    <section class="td" style="position: relative">
+    </td>
+    <td style="position: relative">
         @(Model.ngay.HasValue ? Model.ngay.Value.ToString("d/M/yyyy") : null)
         <section class="khung-chuc-nang-lct ben-trai" style="top: 1px; right: 1px;">
             <ul data-doi-tuong="cncd-@Model.ma">
@@ -23,5 +23,5 @@
                 <i class="pe-7f-config"></i>
             </button>
         </section>
-    </section>
-</section>
+    </td>
+</tr>

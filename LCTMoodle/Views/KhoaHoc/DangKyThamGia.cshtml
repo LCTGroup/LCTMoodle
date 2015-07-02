@@ -1,6 +1,6 @@
 ﻿@model DTOLayer.KhoaHocDTO
 @{
-    Layout = "~/Views/LCT/Khung.cshtml";
+    Layout = "/Views/LCT/Khung.cshtml";
 
     var thanhVien = ViewData["ThanhVien"] as DTOLayer.KhoaHoc_NguoiDungDTO;
 
@@ -83,29 +83,36 @@
 
 <article style="text-align: center; padding:20px;">
     <article style="text-align: center; display: inline-block; padding: 10px; border: 1px solid #eee; background-color: #fafafa;">
-        @if (Model.canDangKy)
+        @if (Session["NguoiDung"] == null)
+        {
+            <p style="color: #555;">Đây là khóa học nội bộ. Nếu bạn cần <a data-chuc-nang="dang-nhap"><b>đăng nhập</b></a> để xác định thành viên trước khi vào khóa học</p>
+            <section class="lct-form">
+                <a class="button chap-nhan" data-chuc-nang="dang-nhap">Đăng nhập</a>
+            </section>
+        }
+        else if (Model.canDangKy)
         {
             if (thanhVien != null)
             {
                 switch (thanhVien.trangThai)
                 {
                     case 1:
-                        <p style="color: #555;">Bạn đã đăng ký vào khóa học, bạn có thể <a href="~/"><b>quay lại</b></a> sau khi được quản lý xác nhận</p>
+                        <p style="color: #555;">Bạn đã đăng ký vào khóa học, bạn có thể <a href="/"><b>quay lại</b></a> sau khi được quản lý xác nhận</p>
                         <section class="lct-form">
-                            <a class="button chap-nhan" href="~/">Quay lại</a>
+                            <a class="button chap-nhan" href="/">Quay lại</a>
                         </section>
                         break;
                     case 2:
-                        <p style="color: #555;">Bạn đã được mời vào nhóm, bạn cần <a href="javascript:void(0)" data-chuc-nang="xac-nhan"><b>xác nhận</b></a> để vào khóa học. Hoặc bạn có thể <a href="javascript:void(0)" data-chuc-nang="tu-choi"><b>từ chối</b></a> lời mời nếu không muốn tham gia</p>
+                        <p style="color: #555;">Bạn đã được mời vào nhóm, bạn cần <a data-chuc-nang="xac-nhan"><b>xác nhận</b></a> để vào khóa học. Hoặc bạn có thể <a data-chuc-nang="tu-choi"><b>từ chối</b></a> lời mời nếu không muốn tham gia</p>
                         <section class="lct-form">
                             <a class="button chap-nhan" data-chuc-nang="xac-nhan">Xác nhận</a>
                             <a class="button chap-nhan" data-chuc-nang="tu-choi">Từ chối</a>
                         </section>
                         break;
                     case 3:
-                        <p style="color: #555;">Bạn không thể tham gia khóa học này vì đã bị chặn bởi quản lý, bạn có thể <a href="~/"><b>quay lại</b></a> để tìm một khóa học khác</p>
+                        <p style="color: #555;">Bạn không thể tham gia khóa học này vì đã bị chặn bởi quản lý, bạn có thể <a href="/"><b>quay lại</b></a> để tìm một khóa học khác</p>
                         <section class="lct-form">
-                            <a class="button chap-nhan" href="~/">Quay lại</a>
+                            <a class="button chap-nhan" href="/">Quay lại</a>
                         </section>
                         break;
                     default:
@@ -114,14 +121,14 @@
             }
             else if (Model.hanDangKy < DateTime.Now)
             {
-                <p style="color: #555;">Khóa học đã hết hạn đăng ký, bạn có thể <a href="~/"><b>quay lại</b></a> để tìm kiếm một khóa học khác</p>
+                <p style="color: #555;">Khóa học đã hết hạn đăng ký, bạn có thể <a href="/"><b>quay lại</b></a> để tìm kiếm một khóa học khác</p>
                 <section class="lct-form">
-                    <a class="button chap-nhan" href="~/">Quay lại</a>
+                    <a class="button chap-nhan" href="/">Quay lại</a>
                 </section>
             }
             else
             {
-                <p style="color: #555;">Đây là khóa học nội bộ, để xem nội dung, bạn cần <a href="javascript:void(0)" data-chuc-nang="tham-gia"><b>đăng ký</b></a> vào khóa học</p>
+                <p style="color: #555;">Đây là khóa học nội bộ, để xem nội dung, bạn cần <a data-chuc-nang="tham-gia"><b>đăng ký</b></a> vào khóa học</p>
                 <section class="lct-form">
                     <a class="button chap-nhan" data-chuc-nang="dang-ky">Đăng ký</a>
                 </section>
@@ -129,7 +136,7 @@
         }
         else
         {
-            <p style="color: #555;">Đây là khóa học nội bộ, để xem nội dung, bạn cần <a href="javascript:void(0)" data-chuc-nang="tham-gia"><b>tham gia</b></a> vào khóa học</p>
+            <p style="color: #555;">Đây là khóa học nội bộ, để xem nội dung, bạn cần <a data-chuc-nang="tham-gia"><b>tham gia</b></a> vào khóa học</p>
             <section class="lct-form">
                 <a class="button chap-nhan" data-chuc-nang="tham-gia">Tham gia</a>
             </section>

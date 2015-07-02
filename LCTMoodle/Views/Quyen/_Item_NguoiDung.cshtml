@@ -1,8 +1,8 @@
 ﻿@using LCTMoodle.LCTView
 @model DTOLayer.NguoiDungDTO
 
-<li data-doi-tuong="item-nguoi-dung" class="item" data-ma="@Model.ma">
-    <img src="/boy.png/" />
+<li data-doi-tuong="item-nguoi-dung" class="item" data-ma="@Model.ma">    
+    @NguoiDungView.hinhDaiDien(Model)
     @NguoiDungView.link(Model)
     <section class="khung-chuc-nang-lct">
         <ul data-doi-tuong="cnnd-@Model.ma">

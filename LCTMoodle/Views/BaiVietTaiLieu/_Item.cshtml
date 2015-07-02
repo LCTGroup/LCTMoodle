@@ -2,7 +2,7 @@
 @using LCTMoodle.LCTView
 @model DTOLayer.BaiVietTaiLieuDTO
 @{
-    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+    var maKhoaHoc = Model.khoaHoc.ma.Value;
     var maNguoiDung = Session["NguoiDung"] as int?;
 
     string[] dsQuyen;
@@ -42,7 +42,7 @@
         {
             <section class="tap-tin">
                 <a href="/LayTapTin/BaiVietTaiLieu_TapTin/@Model.tapTin.ma">
-                    <img src="/LayTapTin/BaiVietTaiLieu_TapTin/@Model.tapTin.ma" />
+                    <img src="/LayHinh/BaiVietTaiLieu_TapTin/@Model.tapTin.ma" />
                     <span>@Model.tapTin.ten</span>
                 </a>
             </section>

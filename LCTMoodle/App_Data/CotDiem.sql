@@ -5,7 +5,7 @@ GO
 CREATE TABLE dbo.CotDiem (
 	Ma INT PRIMARY KEY IDENTITY(1, 1),
 	Ten NVARCHAR(MAX) NOT NULL,
-	HeSo INT NOT NULL,
+	HeSo INT,
 	MaKhoaHoc INT NOT NULL,
 	MoTa NVARCHAR(MAX),
 	Ngay DATE,
@@ -149,4 +149,19 @@ BEGIN
 	SELECT *
 		FROM dbo.CotDiem
 		WHERE Ma = @0
+END
+
+GO
+--Lấy theo đối tượng
+ALTER PROC dbo.layCotDiemTheoLoaiDoiTuongVaMaDoiTuong(
+	@0 NVARCHAR(MAX), --LoaiDoiTuong
+	@1 INT --MaDoiTuong
+)
+AS
+BEGIN
+	SELECT TOP 1 *
+		FROM dbo.CotDiem
+		WHERE 
+			LoaiDoiTuong = @0 AND 
+			MaDoiTuong = @1
 END

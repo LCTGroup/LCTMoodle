@@ -1,0 +1,112 @@
+﻿.khung-danh-sach-nop {
+    padding: 10px;
+}
+
+.khung-danh-sach-nop .so-luong {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: right;
+    color: #555;
+}
+
+.khung-danh-sach-nop .khung-danh-sach {
+
+}
+
+.khung-danh-sach-nop ul {
+
+}
+
+.khung-danh-sach-nop li {
+    margin-top: 10px;
+    border-top: 1px dashed #DDD;
+    padding-top: 10px;
+}
+
+/*#region Khung thông tin */
+
+.khung-danh-sach-nop .khung-thong-tin {
+    display: flex;
+}
+
+    .khung-danh-sach-nop .khung-thong-tin .trai {
+        min-width: 40px;
+        max-width: 40px;
+        margin-right: 5px;
+    }
+
+    .khung-danh-sach-nop .khung-thong-tin .hinh-dai-dien {
+        width: 40px;
+        height: 40px;
+    }
+
+        .khung-danh-sach-nop .khung-thong-tin .hinh-dai-dien img {
+            width: 40px;
+            height: 40px;
+        }
+
+    .khung-danh-sach-nop .khung-thong-tin .thong-tin {
+    }
+
+    .khung-danh-sach-nop .khung-thong-tin .nguoi-nop {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .khung-danh-sach-nop .khung-thong-tin .thoi-gian {
+        font-size: 11px;
+        color: #555;
+    }
+
+    .khung-danh-sach-nop .khung-thong-tin .bai-nop {
+        margin-top: 5px;
+    }
+
+        .khung-danh-sach-nop .khung-thong-tin .bai-nop a {
+            display: block;
+        }
+
+        .khung-danh-sach-nop .khung-thong-tin .bai-nop img {
+            height: 20px;
+            width: 20px;
+            vertical-align: bottom;
+        }
+
+        .khung-danh-sach-nop .khung-thong-tin .bai-nop span {
+            color: #555;
+            font-size: 12px;
+        }
+
+/*#endregion */
+
+/*#region Khung chấm điểm */
+
+.khung-danh-sach-nop .khung-cham-diem {
+
+}
+
+    .khung-danh-sach-nop .khung-cham-diem .khung-diem {
+        color: #08c;
+        font-family: berlin;
+        font-size: 50px;
+        text-align: center;
+    }
+
+        .khung-danh-sach-nop .khung-cham-diem .khung-diem span {
+            
+        }
+
+    .khung-danh-sach-nop .khung-cham-diem .khung-nut {
+        text-align: center;
+    }
+
+    .khung-danh-sach-nop .khung-cham-diem .khung-noi-dung {
+        border: 1px solid #eee;
+    }
+
+        .khung-danh-sach-nop .khung-cham-diem .khung-noi-dung:empty {
+            display: none;
+        }
+
+/*#endregion */

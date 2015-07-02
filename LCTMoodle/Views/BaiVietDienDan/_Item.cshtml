@@ -3,7 +3,7 @@
 @model DTOLayer.BaiVietDienDanDTO
 
 @{
-    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+    var maKhoaHoc = Model.khoaHoc.ma.Value;
     var maNguoiDung = Session["NguoiDung"] as int?;
 
     string[] dsQuyen;
@@ -53,8 +53,8 @@
     <section class="khung-bai-viet">
         <section class="khung-thong-tin">
             <section class="trai">
-                <article class="hinh-dai-dien">
-                    <img src="/boy.png/" />
+                <article class="hinh-dai-dien">                    
+                    @NguoiDungView.hinhDaiDien(Model.nguoiTao)
                 </article>
             </section>
             <section class="phai">
@@ -79,7 +79,7 @@
             {
                 <section class="tap-tin">
                     <a href="/LayTapTin/BaiVietDienDan_TapTin/@Model.tapTin.ma">
-                        <img src="/LayTapTin/BaiVietDienDan_TapTin/@Model.tapTin.ma" />
+                        <img src="/LayHinh/BaiVietDienDan_TapTin/@Model.tapTin.ma" />
                         <span>@Model.tapTin.ten</span>
                     </a>
                 </section>

@@ -61,7 +61,17 @@
     chucNang.Add("Danh sách thành viên");
     chucNang.Add("href='/KhoaHoc/DanhSachThanhVien/" + Model.ma + "'");
 
-    var dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
+    var maNguoiDung = Session["NguoiDung"] as int?;
+    string[] dsQuyen;
+
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
+    }
+    else
+    {
+        dsQuyen = null;
+    }
 
     if (QuyenHelper.co(dsQuyen, "QLQuyen"))
     {
@@ -72,7 +82,7 @@
     chucNang.Add("Chương trình khóa học");
     chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + Model.ma + "'");
 
-    if (QuyenHelper.co(dsQuyen, "QLCotDiem"))
+    if (QuyenHelper.co(dsQuyen, "QLBangDiem"))
     {
         chucNang.Add("Quản lý bảng điểm");
         chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + Model.ma + "'");

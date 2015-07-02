@@ -1,4 +1,5 @@
-﻿@model DTOLayer.CauHoiDTO
+﻿@using LCTMoodle.LCTView
+@model DTOLayer.CauHoiDTO
 
 <article class="cau-hoi">
 
@@ -14,15 +15,8 @@
             @if (Model.nguoiTao != null)
             {
                 <div class="nguoi-dang">
-                    <a href="/NguoiDung/Xem/@Model.nguoiTao.ma">
-                        @if (Model.nguoiTao.hinhDaiDien != null)
-                        {
-                            <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.nguoiTao.hinhDaiDien.ma" />
-                        }
-                        else
-                        {
-                            <img src="/avatarDefault.png/NguoiDung" />
-                        }
+                    <a href="/NguoiDung/Xem/@Model.nguoiTao.ma">                        
+                        @NguoiDungView.hinhDaiDien(Model.nguoiTao)
                         <span>@Model.nguoiTao.tenTaiKhoan</span>
                     </a>
                 </div>

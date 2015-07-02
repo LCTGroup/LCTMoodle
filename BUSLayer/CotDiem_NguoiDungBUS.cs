@@ -135,7 +135,7 @@ namespace BUSLayer
                 if (!dsMaKhoaHoc.Exists(x => x == cotDiem.khoaHoc.ma.Value))
                 {
                     dsMaKhoaHoc.Add(cotDiem.khoaHoc.ma.Value);
-                    if (!coQuyen("QLDiem", "KH", cotDiem.khoaHoc.ma.Value))
+                    if (!coQuyen("QLBangDiem", "KH", cotDiem.khoaHoc.ma.Value))
                     {
                         return new KetQua()
                         {

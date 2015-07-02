@@ -25,9 +25,10 @@ namespace BUSLayer
             {
                 loi.Add("Tên không được bỏ trống");
             }
-            if (coKiemTra("HeSo", truong, kiemTra) && (cotDiem.heSo == null || cotDiem.heSo < 1))
+            //Nếu không phải là điểm cộng thì phải có hệ số
+            if (coKiemTra("HeSo", truong, kiemTra) && !cotDiem.laDiemCong && (!cotDiem.heSo.HasValue || cotDiem.heSo < 1))
             {
-                loi.Add("Hệ số không được bỏ trống");
+                loi.Add("Hệ số không hợp lệ");
             }
             if (coKiemTra("Ngay", truong, kiemTra) && cotDiem.ngay == null)
             {
@@ -69,9 +70,6 @@ namespace BUSLayer
                     case "MoTa":
                         cotDiem.moTa = form.layString(key);
                         break;
-                    case "HeSo":
-                        cotDiem.heSo = form.layInt(key);
-                        break;
                     case "Ngay":
                         cotDiem.ngay = form.layDate(key);
                         break;
@@ -80,6 +78,10 @@ namespace BUSLayer
                         break;
                     case "LaDiemCong":
                         cotDiem.laDiemCong = form.layBool(key);
+                        if (!cotDiem.laDiemCong)
+                        {
+                            cotDiem.heSo = form.layInt("HeSo");
+                        }
                         break;
                     case "LoaiDoiTuong":
                         cotDiem.loaiDoiTuong = form.layString(key);
@@ -119,7 +121,7 @@ namespace BUSLayer
             }
 
             //Kiểm tra quyền
-            if (!coQuyen("QLCotDiem", "HT", maKhoaHoc.Value, maNguoiTao))
+            if (!coQuyen("QLBangDiem", "KH", maKhoaHoc.Value, maNguoiTao))
             {
                 return new KetQua()
                 {
@@ -164,7 +166,7 @@ namespace BUSLayer
             var cotDiem = ketQua.ketQua as CotDiemDTO;
 
             //Kiểm tra quyền
-            if (!coQuyen("QLCotDiem", "KH", cotDiem.khoaHoc.ma.Value, maNguoiXoa))
+            if (!coQuyen("QLBangDiem", "KH", cotDiem.khoaHoc.ma.Value, maNguoiXoa))
             {
                 return new KetQua()
                 {
@@ -181,7 +183,7 @@ namespace BUSLayer
         {
             #region Kiểm tra điều kiện
             //Kiểm tra quyền
-            if (!coQuyen("QLCotDiem", "KH", maKhoaHoc, maNguoiSua))
+            if (!coQuyen("QLBangDiem", "KH", maKhoaHoc, maNguoiSua))
             {
                 return new KetQua()
                 {

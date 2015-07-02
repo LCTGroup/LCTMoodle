@@ -140,5 +140,19 @@ namespace DAOLayer
                     lienKet
                 );
         }
+
+        public static KetQua layTheoLoaiDoiTuongVaMaDoiTuong(string loaiDoiTuong, int? maDoiTuong, LienKet lienKet = null)
+        {
+            return layDong
+                (
+                    "layCotDiemTheoLoaiDoiTuongVaMaDoiTuong",
+                    new object[] 
+                    { 
+                        loaiDoiTuong,
+                        maDoiTuong
+                    },
+                    lienKet
+                );
+        }
     }
 }

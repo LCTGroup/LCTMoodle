@@ -93,14 +93,12 @@ namespace LCTMoodle.Controllers
             }
             else
             {
-                var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
-                ViewData["MaKhoaHoc"] = baiTap.khoaHoc.ma;
-
+                ViewData["MaKhoaHoc"] = (ketQua.ketQua as BaiVietBaiTapDTO).khoaHoc.ma.Value;
                 return Json(new KetQua()
                 {
                     trangThai = 0,
                     ketQua =
-                        renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Form.cshtml", baiTap)
+                        renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Form.cshtml", ketQua.ketQua, ViewData)
                 }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -161,6 +159,38 @@ namespace LCTMoodle.Controllers
                     ketQua
                 );
             }
+        }
+
+        public ActionResult ChamDiem(int ma)
+        {
+            #region Kiểm tra điều kiện
+            var ketQua = BaiVietBaiTapBUS.layTheoMa(ma, new LienKet()
+                {
+                    { 
+                        "BaiTapNop", 
+                        new LienKet()
+                        {
+                            "NguoiTao",
+                            "TapTin"
+                        }
+                    },
+                    "KhoaHoc"
+                });
+            if (ketQua.trangThai != 0)
+            {
+                return View("/");
+            }
+
+            var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
+            
+            //Quản lý quyền
+            if (!BUS.coQuyen("QLBangDiem", "KH", baiTap.khoaHoc.ma.Value))
+            {
+                return View("/");
+            }
+            #endregion
+
+            return View(baiTap);
         }
 	}
 }

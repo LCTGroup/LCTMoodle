@@ -85,8 +85,10 @@ function khoiTaoTimKiemNguoiDung($inputs) {
                 else {
                     $_DanhSachNguoi.empty();
                 }
-            }).fail(function () {
-                $_DanhSachNguoi.empty();
+            }).fail(function (xhr, status) {
+                if (status !== 'abort') {
+                    $_DanhSachNguoi.empty();
+                }
             });
         }, 500)
     })
@@ -420,39 +422,63 @@ function khoiTaoItem_Nhom($items) {
     });
 
     $items.find('[data-chuc-nang="chon-nhom"]').on('click', function () {
-        var $item = $(this).closest('[data-doi-tuong="item-nhom"]');
+        chonNhom($(this).closest('[data-doi-tuong="item-nhom"]'));
+    });
 
+    function chonNhom($item) {
         $item.addClass('chon').siblings().removeClass('chon');
 
         _NhomHienTai = $item.attr('data-ma');
 
+        hienThiQuyen();
+        hienThiNguoiDung();
+
+        capNhatTatMoKhung(true);
+    }
+
+    function hienThiQuyen() {
         if (!(_NhomHienTai in _MangQuyenNhom)) {
             var $tai = moBieuTuongTai($_DanhSachQuyen);
-            $.ajax({
+
+            if ('LayQuyen' in mangTam) {
+                mangTam["LayQuyen"].abort();
+            }
+            mangTam["LayQuyen"] = $.ajax({
                 url: '/Quyen/XulyLayQuyenNhom',
                 data: { phamVi: _PhamViQuanLy, maNhom: _NhomHienTai },
-                dataType: 'JSON',
-                async: false
+                dataType: 'JSON'
             }).always(function () {
                 $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     _MangQuyenNhom[_NhomHienTai] = data.ketQua;
+                    hienThiQuyen();
                 }
                 else if (data.trangThai == 1) {
                     _MangQuyenNhom[_NhomHienTai] = {};
+                    hienThiQuyen();
                 }
                 else {
                     moPopupThongBao(data);
                 }
-            }).fail(function () {
-                moPopupThongBao('Lấy quyền của nhóm thất bại');
+            }).fail(function (xhr, status) {
+                if (status !== 'abort') {
+                    moPopupThongBao('Lấy quyền của nhóm thất bại');
+                }
             });
         }
-
+        else {
+            capNhatDanhSachQuyen();
+        }
+    }
+    
+    function hienThiNguoiDung() {
         if (!(_NhomHienTai in _MangHtmlNguoi)) {
             var $tai = moBieuTuongTai($_DanhSachNguoi.parent());
-            $.ajax({
+            if ('LayNguoi' in mangTam) {
+                mangTam["LayNguoi"].abort();
+            }
+            mangTam["LayNguoi"] = $.ajax({
                 url: '/Quyen/_DanhSachNguoiDung',
                 data: { phamVi: _PhamViQuanLy, maNhom: _NhomHienTai },
                 dataType: 'JSON',
@@ -460,22 +486,20 @@ function khoiTaoItem_Nhom($items) {
                 $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    var $items = $(data.ketQua);
-
-                    khoiTaoItem_NguoiDung($items);
-
                     _MangHtmlNguoi[_NhomHienTai] = data.ketQua;
-                    $_DanhSachNguoi.html($items);
+                    hienThiNguoiDung();
                 }
                 else if (data.trangThai == 1) {
                     _MangHtmlNguoi[_NhomHienTai] = '';
-                    $_DanhSachNguoi.empty();
+                    hienThiNguoiDung();
                 }
                 else {
                     moPopupThongBao(data);
                 }
-            }).fail(function () {
-                moPopupThongBao('Lấy danh sách người dùng thất bại');
+            }).fail(function (xhr, status) {
+                if (status !== 'abort') {
+                    moPopupThongBao('Lấy danh sách người dùng thất bại');
+                }
             })
         }
         else {
@@ -483,10 +507,7 @@ function khoiTaoItem_Nhom($items) {
             khoiTaoItem_NguoiDung($items);
             $_DanhSachNguoi.html($items);
         }
-
-        capNhatDanhSachQuyen();
-        capNhatTatMoKhung(true);
-    });
+    }
 }
 
 function khoiTaoItem_NguoiDung($items) {

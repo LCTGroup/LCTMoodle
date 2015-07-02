@@ -1,10 +1,25 @@
 ﻿@model DTOLayer.BinhLuanDTO
 @using LCTMoodle.LCTView
 
+@{
+    var maNguoiDung = Session["NguoiDung"] as int?;
+    bool coQuyenXoa, coQuyenSua;
+
+    if (maNguoiDung.HasValue)
+    {
+        coQuyenXoa = Model.nguoiTao.ma == maNguoiDung || ViewData.ContainsKey("CoQuyenXoa") && (bool)ViewData["CoQuyenXoa"];
+        coQuyenSua = Model.nguoiTao.ma == maNguoiDung || ViewData.ContainsKey("CoQuyenSua") && (bool)ViewData["CoQuyenSua"];
+    }
+    else
+    {
+        coQuyenXoa = coQuyenSua = false;
+    }
+}
+
 <li data-doi-tuong="muc-binh-luan" class="muc-binh-luan" data-ma="@Model.ma" data-loai-doi-tuong="@Model.loaiDoiTuong">
     <section class="trai">
-        <article class="hinh-dai-dien">
-            <img src="/boy.png/" />
+        <article class="hinh-dai-dien">            
+            @NguoiDungView.hinhDaiDien(Model.nguoiTao)
         </article>
     </section>
     <section class="phai">
@@ -18,7 +33,7 @@
         {
             <section class="tap-tin">
                 <a href="/LayTapTin/BinhLuan_@(Model.loaiDoiTuong)_TapTin/@Model.tapTin.ma">
-                    <img src="/LayTapTin/BinhLuan_@(Model.loaiDoiTuong)_TapTin/@Model.tapTin.ma" />
+                    <img src="/LayHinh/BinhLuan_@(Model.loaiDoiTuong)_TapTin/@Model.tapTin.ma" />
                     <span>@Model.tapTin.ten</span>
                 </a>
             </section>
@@ -29,17 +44,26 @@
             </span>
         </section>
     </section>
-    <section class="khung-chuc-nang-lct ben-trai" style="top: 0; right: 0;">
-        <ul data-doi-tuong="cnbl-@Model.ma">
-            <li>
-                <a data-chuc-nang="sua-binh-luan">Sửa bình luận</a>
-            </li>
-            <li>
-                <a data-chuc-nang="xoa-binh-luan">Xóa bình luận</a>
-            </li>
-        </ul>
-        <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbl-@Model.ma">
-            <i class="pe-7f-config"></i>
-        </button>
-    </section>
+    @if (coQuyenSua || coQuyenXoa)
+    {
+        <section class="khung-chuc-nang-lct ben-trai" style="top: 0; right: 0;">
+            <ul data-doi-tuong="cnbl-@Model.ma">
+                @if (coQuyenSua)
+                {
+                    <li>
+                        <a data-chuc-nang="sua-binh-luan">Sửa bình luận</a>
+                    </li>   
+                }
+                @if (coQuyenXoa)
+                {
+                    <li>
+                        <a data-chuc-nang="xoa-binh-luan">Xóa bình luận</a>
+                    </li>   
+                }
+            </ul>
+            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbl-@Model.ma">
+                <i class="pe-7f-config"></i>
+            </button>
+        </section>
+    }
 </li>

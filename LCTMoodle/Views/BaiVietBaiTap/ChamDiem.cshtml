@@ -1,0 +1,148 @@
+﻿@using LCTMoodle.LCTView
+@using Helpers
+@model DTOLayer.BaiVietBaiTapDTO
+@{
+    Layout = "~/Views/LCT/Khung.cshtml";
+    
+    ViewData["TieuDe"] = "Chấm bài tập - " + Model.tieuDe;
+
+    var khoaHoc = Model.khoaHoc;
+    var dsNop = Model.danhSachBaiTapNop;
+
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma.Value,
+        "Chấm bài tập - " + Model.tieuDe, "/KhoaHoc/Cham-BaiTap/" + Model.ma.Value
+    };
+
+    /*
+        Chức năng
+     */
+    List<string> chucNang = new List<string>();
+
+    chucNang.Add("Danh sách bài tập");
+    chucNang.Add("href='/KhoaHoc/" + khoaHoc.ma.Value + "?hienthi=baitap'");
+
+    chucNang.Add("Danh sách thành viên");
+    chucNang.Add("href='/KhoaHoc/DanhSachThanhVien/" + khoaHoc.ma.Value + "'");
+
+    var maNguoiDung = Session["NguoiDung"] as int?;
+    string[] dsQuyen;
+
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("KH", khoaHoc.ma.Value);
+    }
+    else
+    {
+        dsQuyen = null;
+    }
+
+    if (QuyenHelper.co(dsQuyen, "QLQuyen"))
+    {
+        chucNang.Add("Quản lý quyền");
+        chucNang.Add("href='/QuanlyQuyen/KH/" + khoaHoc.ma.Value + "'");
+    }
+
+    chucNang.Add("Chương trình khóa học");
+    chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + khoaHoc.ma.Value + "'");
+
+    if (QuyenHelper.co(dsQuyen, "QLBangDiem"))
+    {
+        chucNang.Add("Quản lý bảng điểm");
+        chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + khoaHoc.ma.Value + "'");
+    }
+
+    chucNang.Add("Xem điểm khóa học");
+    chucNang.Add("href='/KhoaHoc/Xem-BangDiem/" + khoaHoc.ma.Value + "'");
+
+    ViewData["ChucNang"] = chucNang;
+}
+@section Styles {
+    <link href="/ChamDiem.css/BaiVietBaiTap" rel="stylesheet" />
+    <link href="/Plugin/highlight/hightlight.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="/ChamDiem.js/BaiVietBaiTap"></script>
+    <script src="/Plugin/highlight/highlight.js"></script>
+    <script></script>
+}
+
+<article class="hop hop-1-vien">
+    <section class="tieu-de">Chấm điểm bài tập: @Model.tieuDe</section>
+    <section class="noi-dung khung-danh-sach-nop">
+        <section class="so-luong">
+            <span>
+                @if (Model == null)
+                {
+                    @:Chưa có ai nộp
+                }
+                else
+                {
+                    @:Đã có @dsNop.Count người nộp bài
+                }
+            </span>
+        </section>
+        <section class="khung-danh-sach">
+            <ul>
+                @if (Model != null)
+                {
+                    foreach (var baiNop in dsNop)
+                    {
+                        <li>
+                            <section class="khung-thong-tin">
+                                <section class="trai">
+                                    <article class="hinh-dai-dien">
+                                        @NguoiDungView.hinhDaiDien(baiNop.nguoiTao)
+                                    </article>
+                                </section>
+                                <section class="phai">
+                                    <section class="thong-tin">
+                                        @NguoiDungView.link(baiNop.nguoiTao, new Dictionary<string, string>() { { "class", "nguoi-nop" } })
+                                        <span class="thoi-gian">
+                                            @baiNop.thoiDiemTao.Value.ToString("H:mm d/M/yyyy")
+                                        </span>
+                                    </section>
+                                    <section class="bai-nop">
+                                        @if (baiNop.tapTin == null)
+                                        {
+                                            <a href="@baiNop.duongDan">
+                                                <span>@baiNop.duongDan</span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma">
+                                                <img src="/LayHinh/BaiTapNop_TapTin/@baiNop.tapTin.ma" />
+                                                <span>@baiNop.tapTin.ten</span>
+                                            </a>
+                                        }
+                                    </section>
+                                </section>
+                            </section>
+                            <section class="khung-cham-diem">
+                                <section class="khung-diem"><span data-doi-tuong="diem">9</span></section>
+                                <section class="khung-nut lct-form">
+                                    @if (baiNop.tapTin == null)
+                                    {
+                                        <a class="button" href="@baiNop.duongDan" target="_blank">Xem</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="button" href="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma">Tải về</a>
+                                        if (TapTinHelper.coHoTroXem(baiNop.tapTin.duoi))
+                                        {
+                                            <a class="button" data-chuc-nang="xem" data-ma-tap-tin="@baiNop.tapTin.ma">Xem</a>   
+                                        }
+                                    }
+                                    <a class="button" data-chuc-nang="cham-diem">Chấm điểm</a>
+                                </section>
+                                <section data-doi-tuong="noi-dung-bai-nop" class="khung-noi-dung"></section>
+                            </section>
+                        </li>
+                    }
+                }
+            </ul>
+        </section>
+    </section>
+</article>

@@ -9,6 +9,8 @@ CREATE TABLE dbo.BaiTapNop (
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
 	MaNguoiTao INT NOT NULL,
 	MaBaiVietBaiTap INT NOT NULL,
+	Diem FLOAT(1),
+	ThoiDiemCham DATETIME
 )
 
 GO

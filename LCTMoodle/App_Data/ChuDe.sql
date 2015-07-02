@@ -9,8 +9,9 @@ CREATE TABLE dbo.ChuDe (
 	MaNguoiTao INT NOT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
 	MaCha INT DEFAULT 0 NOT NULL,
-	MaHinhDaiDien INT
-);
+	MaHinhDaiDien INT,
+	Cay NVARCHAR(MAX) NOT NULL DEFAULT '|0|'
+)
 
 GO
 --Thêm chủ đề

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿select * from cauHOi_diem
 select * from nguoidung
 
@@ -16,3 +17,7 @@ select * from dbo.CauHOi
 update dbo.cauhoi
 set diem = 0
 where ma = 9
+=======
+﻿UPDATE cotdiem
+	set heso = 1
+>>>>>>> 99ff389b2dc3703f1f3f6efd01d18cb5e668eb77

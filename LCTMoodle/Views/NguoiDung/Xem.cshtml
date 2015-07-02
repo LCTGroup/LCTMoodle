@@ -1,4 +1,5 @@
-﻿@model DTOLayer.NguoiDungDTO
+﻿@using LCTMoodle.LCTView
+@model DTOLayer.NguoiDungDTO
 @{
     ViewData["Title"] = "Người Dùng";
     Layout = "~/Views/LCT/Khung.cshtml";
@@ -52,11 +53,8 @@
     <article class="noi-dung">
         <section>
             <article class="khung-tren">
-                <div class="hinh-dai-dien">
-                    @if (Model.hinhDaiDien != null) 
-                    {
-                        <img src="/LayTapTin/NguoiDung_HinhDaiDien/@Model.hinhDaiDien.ma" />
-                    }                   
+                <div class="hinh-dai-dien">                    
+                    @NguoiDungView.hinhDaiDien(Model)
                 </div>
                 <div class="thong-tin-nguoi-dung">
                     <div class="ten-nguoi-dung">@(Model.ho + " " + Model.tenLot + " " + Model.ten)</div>

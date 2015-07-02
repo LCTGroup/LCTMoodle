@@ -41,8 +41,7 @@
             foreach (var baiViet in Model)
             {
                 @Html.Partial("~/Views/BaiVietBaiGiang/_Item.cshtml", baiViet, new ViewDataDictionary() { 
-                    { "DSQuyen", dsQuyen },
-                    { "MaKhoaHoc", maKhoaHoc }
+                    { "DSQuyen", dsQuyen }
                 });
             }    
         }

@@ -21,7 +21,7 @@ namespace LCTMoodle.Controllers
             }
             var khoaHoc = ketQua.ketQua as KhoaHocDTO;
 
-            if (!BUS.coQuyen("QLCotDiem", "KH", maKhoaHoc))
+            if (!BUS.coQuyen("QLBangDiem", "KH", maKhoaHoc))
             {
                 return Redirect("/");
             }
@@ -31,6 +31,15 @@ namespace LCTMoodle.Controllers
             ketQua = CotDiemBUS.layTheoMaKhoaHoc(maKhoaHoc);
 
             return View(model: ketQua.trangThai == 0 ? ketQua.ketQua : null);
+        }
+
+        public ActionResult _Form(int maKhoaHoc)
+        {
+            ViewData["MaKhoaHoc"] = maKhoaHoc;
+
+            return Json(
+                new KetQua(renderPartialViewToString(ControllerContext, "BangDiem/_Form.cshtml", null, ViewData)),
+                JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
