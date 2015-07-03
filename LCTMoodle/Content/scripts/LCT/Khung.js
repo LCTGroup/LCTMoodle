@@ -549,13 +549,10 @@ function moPopupDangNhap(thamSo) {
             });
         }
     });
-<<<<<<< HEAD
-=======
 }
 
 function hienThiCode($khungCode) {
     $khungCode.each(function () {
         hljs.highlightBlock(this);
     })
->>>>>>> 99ff389b2dc3703f1f3f6efd01d18cb5e668eb77
 }

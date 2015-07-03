@@ -15,12 +15,15 @@ $(function () {
 function khoiTaoDangKy($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
+            var $tai = moBieuTuongTai('.lct-form');
             $.ajax({
                 url: $form.attr('action'),
                 method: $form.attr('method'),            
                 data: layDataLCTForm($form),
                 dataType: 'JSON',
                 async: false
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     moPopup({
