@@ -63,7 +63,7 @@ END
 
 GO
 --Cập nhật điểm
-ALTER PROC dbo.capNhatCotDiem_NguoiDung (
+ALTER PROC dbo.capNhatCotDiem_NguoiDung_Nhieu (
 	@0 dbo.BangCotDiem_NguoiDung READONLY --Bảng cột điểm - người dùng
 )
 AS
@@ -77,8 +77,34 @@ BEGIN
 					B.MaCotDiem = CD_ND.MaCotDiem
 					
 	--Thêm điểm mới vào
-	DECLARE @thoiDiemTao DATETIME = GETDATE()
-	INSERT INTO dbo.CotDiem_NguoiDung (MaCotDiem, MaNguoiDung, MaNguoiTao, Diem, ThoiDiemTao)
-		SELECT MaCotDiem, MaNguoiDung, MaNguoiTao, Diem, @thoiDiemTao
+	INSERT INTO dbo.CotDiem_NguoiDung (MaCotDiem, MaNguoiDung, Diem, MaNguoiTao)
+		SELECT MaCotDiem, MaNguoiDung, Diem, MaNguoiTao
 			FROM @0
 END
+
+GO
+--Cập nhật điểm
+CREATE PROC dbo.capNhatCotDiem_NguoiDung_Mot (
+	@0 INT, --MaCotDiem
+	@1 INT, --ManguoiDung
+	@2 INT, --Diem
+	@3 INT --MaNguoiTao
+)
+AS
+BEGIN
+	--Cập nhật điểm cũ nếu có
+	UPDATE dbo.CotDiem_NguoiDung
+		SET 
+			Diem = @2,
+			MaNguoiTao = @3
+		WHERE 
+			MaCotDiem = @0 AND
+			MaNguoiDung = @1
+
+	IF (@@ROWCOUNT = 0)
+	BEGIN
+		INSERT INTO dbo.CotDiem_NguoiDung (MaCotDiem, MaNguoiDung, Diem, MaNguoiTao) VALUES
+			(@0, @1, @2, @3)
+	END
+END
+

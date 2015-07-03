@@ -18,7 +18,7 @@ namespace BUSLayer
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrEmpty(nhomNguoiDung.ten))
+            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrWhiteSpace(nhomNguoiDung.ten))
             {
                 loi.Add("Tên không được bỏ trống");
             }

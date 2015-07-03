@@ -18,11 +18,11 @@ namespace BUSLayer
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (coKiemTra("TieuDe", truong, kiemTra) && string.IsNullOrEmpty(baiViet.tieuDe))
+            if (coKiemTra("TieuDe", truong, kiemTra) && string.IsNullOrWhiteSpace(baiViet.tieuDe))
             {
                 loi.Add("Tiêu đề không được bỏ trống");
             }
-            if (coKiemTra("NoiDung", truong, kiemTra) && string.IsNullOrEmpty(baiViet.noiDung))
+            if (coKiemTra("NoiDung", truong, kiemTra) && string.IsNullOrWhiteSpace(baiViet.noiDung))
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
@@ -205,13 +205,17 @@ namespace BUSLayer
                 {
                     { "MaKhoaHoc", maKhoaHoc.ToString() },
                     { "Ten", "Bài tập " + baiTap.thoiDiemTao.Value.ToString("d/M") },
+                    { "MoTa", "Bài tập: " + baiTap.tieuDe },
                     { "LaDiemCong", loai == 1 ? "1" : "0" },
-                    { "MaNguoiTao", maNguoiTao.Value.ToString() }
+                    { "MaNguoiTao", maNguoiTao.Value.ToString() },
+                    { "Ngay", DateTime.Now.ToString("d/M/yyyy") },
+                    { "LoaiDoiTuong", "BaiTap" },
+                    { "MaDoiTuong", baiTap.ma.ToString() }
                 };
 
                 if (loai == 2)
                 {
-                    form.Add("HeSo", form.layString("HeSo"));
+                    formCotDiem.Add("HeSo", form.layString("CD_HeSo"));
                 }
 
                 ketQua = CotDiemBUS.them(formCotDiem);

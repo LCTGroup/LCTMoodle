@@ -33,7 +33,7 @@ namespace DTOLayer
             bang.Rows.Add(new object[]
             {
                 tenTruong,
-                string.IsNullOrEmpty(giaTri) ? null : giaTri,
+                string.IsNullOrWhiteSpace(giaTri) ? null : giaTri,
                 loai
             });
         }

@@ -65,84 +65,97 @@
 @section Scripts {
     <script src="/ChamDiem.js/BaiVietBaiTap"></script>
     <script src="/Plugin/highlight/highlight.js"></script>
-    <script></script>
+    <script>
+        maBaiTap = '@Model.ma.Value';
+    </script>
 }
 
-<article class="hop hop-1-vien">
+<article class="hop hop-2-vien">
     <section class="tieu-de">Chấm điểm bài tập: @Model.tieuDe</section>
-    <section class="noi-dung khung-danh-sach-nop">
-        <section class="so-luong">
-            <span>
-                @if (Model == null)
-                {
-                    @:Chưa có ai nộp
-                }
-                else
-                {
-                    @:Đã có @dsNop.Count người nộp bài
-                }
-            </span>
+    <section class="khung-nut lct-form">
+        <section>
+            <a class="button" data-chuc-nang="chuyen-diem">Cập nhật vào bảng</a>
         </section>
-        <section class="khung-danh-sach">
-            <ul>
-                @if (Model != null)
-                {
-                    foreach (var baiNop in dsNop)
+        <section>
+            <a class="button nguy-hiem">Xóa bài nộp</a>
+            <a class="button">Tải tập tin</a>
+            <a class="button">Chọn hết</a>
+            <a class="button">Bỏ chọn hết</a>
+        </section>
+    </section>
+    <section class="noi-dung">
+        <article style="border: 0; background-color: transparent;">
+            <table class="khung-danh-sach-nop lct-bang">
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            Họ tên
+                        </th>
+                        <th>
+                            Bài nộp
+                        </th>
+                        <th>
+                            Điểm
+                        </th>
+                        <th>
+                            Chức năng
+                        </th>
+                        <th>
+                            Chọn
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="ds_bai_nop">
+                    @foreach (var baiNop in dsNop)
                     {
-                        <li>
-                            <section class="khung-thong-tin">
-                                <section class="trai">
-                                    <article class="hinh-dai-dien">
-                                        @NguoiDungView.hinhDaiDien(baiNop.nguoiTao)
-                                    </article>
+                        <tr data-ma="@baiNop.ma" 
+                            @if (!string.IsNullOrWhiteSpace(baiNop.ghiChu)) 
+                            {
+                                @:data-co-ghi-chu data-ghi-chu="@baiNop.ghiChu"
+                            }
+                        >
+                            <th class="khong-vien"><a href="/NguoiDung/Xem/@baiNop.nguoiTao.ma">@baiNop.nguoiTao.ho @baiNop.nguoiTao.tenLot</a></th>
+                            <th class="khong-vien"><a href="/NguoiDung/Xem/@baiNop.nguoiTao.ma">@baiNop.nguoiTao.ten</a><a class="nut-ghi-chu" data-chuc-nang="ghi-chu"></a></th>
+                            <td>
+                            @if (baiNop.tapTin == null)
+                            {
+                                <a href="@baiNop.duongDan" target="_blank"><span>@baiNop.duongDan</span></a>
+                            }
+                            else
+                            {
+                                <a class="tap-tin" href="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma">
+                                    <i></i>
+                                    <span>@baiNop.tapTin.ten</span>
+                                </a>
+                            }
+                            </td>
+                            <td><span data-doi-tuong="diem">@baiNop.diem</span></td>
+                            <td>
+                                <section>
+                                    <a data-chuc-nang="xem" class="button xem" title="Xem trước"></a>
+                                    <a data-chuc-nang="ghi-chu" class="button ghi-chu" title="Ghi chú"></a>
                                 </section>
-                                <section class="phai">
-                                    <section class="thong-tin">
-                                        @NguoiDungView.link(baiNop.nguoiTao, new Dictionary<string, string>() { { "class", "nguoi-nop" } })
-                                        <span class="thoi-gian">
-                                            @baiNop.thoiDiemTao.Value.ToString("H:mm d/M/yyyy")
-                                        </span>
-                                    </section>
-                                    <section class="bai-nop">
-                                        @if (baiNop.tapTin == null)
-                                        {
-                                            <a href="@baiNop.duongDan">
-                                                <span>@baiNop.duongDan</span>
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <a href="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma">
-                                                <img src="/LayHinh/BaiTapNop_TapTin/@baiNop.tapTin.ma" />
-                                                <span>@baiNop.tapTin.ten</span>
-                                            </a>
-                                        }
-                                    </section>
+                                <section>
+                                    <a data-chuc-nang="cham-diem" class="button diem" title="Cho điểm"></a>
+                                    <a data-chuc-nang="xoa" class="button xoa" title="Xóa"></a>
                                 </section>
-                            </section>
-                            <section class="khung-cham-diem">
-                                <section class="khung-diem"><span data-doi-tuong="diem">9</span></section>
-                                <section class="khung-nut lct-form">
-                                    @if (baiNop.tapTin == null)
-                                    {
-                                        <a class="button" href="@baiNop.duongDan" target="_blank">Xem</a>
-                                    }
-                                    else
-                                    {
-                                        <a class="button" href="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma">Tải về</a>
-                                        if (TapTinHelper.coHoTroXem(baiNop.tapTin.duoi))
-                                        {
-                                            <a class="button" data-chuc-nang="xem" data-ma-tap-tin="@baiNop.tapTin.ma">Xem</a>   
-                                        }
-                                    }
-                                    <a class="button" data-chuc-nang="cham-diem">Chấm điểm</a>
-                                </section>
-                                <section data-doi-tuong="noi-dung-bai-nop" class="khung-noi-dung"></section>
-                            </section>
-                        </li>
+                            </td>
+                            <td class="lct-checkbox"><label class="checkbox-radio-label"><input type="checkbox"><u></u></label></td>
+                        </tr>
                     }
-                }
-            </ul>
+                </tbody>
+            </table>
+        </article>
+    </section>
+    <section class="khung-nut lct-form">
+        <section>
+            <a class="button nguy-hiem">Xóa bài nộp</a>
+            <a class="button">Tải tập tin</a>
+            <a class="button">Chọn hết</a>
+            <a class="button">Bỏ chọn hết</a>
+        </section>
+        <section>
+            <a class="button" data-chuc-nang="chuyen-diem">Cập nhật vào bảng</a>
         </section>
     </section>
 </article>

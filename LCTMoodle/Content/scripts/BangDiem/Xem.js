@@ -31,7 +31,7 @@ function khoiTaoNutCheDoSua($nuts) {
         $dsODiem.find('input').on('change', function () {
             var $input = $(this);
             var value = $input.val();
-
+            
             if (value > 10 || value < 0 || isNaN(parseFloat(value))) {
                 $input.val('');
                 $input.closest('td').data('diem', '');
@@ -135,9 +135,10 @@ function chuyenCheDo(sua) {
 
 function capNhatDiemDong($dong) {
     //Lấy điểm trung bình
-    var diem = 0;
+    var diem = 0, $o;
     $dong.find('[data-loai="diem"]').each(function () {
-        diem += parseFloat($(this).data('diem'));
+        $o = $(this);
+        diem += (parseFloat($o.data('diem')) || 0) * $o.data('he-so');
     })
 
     diem = Math.round((diem / tongHeSo) * 100) / 100;
@@ -146,10 +147,10 @@ function capNhatDiemDong($dong) {
     //Lấy điểm cộng
     var diem = 0;
     $dong.find('[data-loai="cong"]').each(function () {
-        diem += parseFloat($(this).data('diem'));
+        diem += parseFloat($(this).data('diem')) || 0;
     })
     
-    dong.find('[data-loai="cong"] span').text(diem);
+    $dong.find('[data-loai="cong"] span').text(diem);
 }
 
 //#endregion

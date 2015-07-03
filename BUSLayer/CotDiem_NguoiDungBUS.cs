@@ -13,6 +13,46 @@ namespace BUSLayer
 {
     public class CotDiem_NguoiDungBUS : BUS
     {
+        public static KetQua kiemTra(CotDiem_NguoiDungDTO diem)
+        {
+            List<string> loi = new List<string>();
+
+            #region Bắt lỗi
+            if (diem.cotDiem == null)
+            {
+                loi.Add("Cột điểm không được bỏ trống");
+            }
+            if (diem.nguoiDung == null)
+            {
+                loi.Add("Người dùng không được bỏ trống");
+            }
+            if (!diem.diem.HasValue && (diem.diem.Value < 0 || 10 < diem.diem.Value))
+            {
+                loi.Add("Điểm không hợp lệ");
+            }
+            if (diem.nguoiTao == null)
+            {
+                loi.Add("Người chấm không được bỏ trống");
+            }
+            #endregion
+
+            if (loi.Count > 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = loi
+                };
+            }
+            else
+            {
+                return new KetQua()
+                {
+                    trangThai = 0
+                };
+            }
+        }
+
         public static DataTable toDataTable(List<CotDiem_NguoiDungDTO> dsDiem)
         {
             DataTable bang = new DataTable();
@@ -118,9 +158,15 @@ namespace BUSLayer
                 {
                     cotDiem = layDTO<CotDiemDTO>(Convert.ToInt32(item.maCotDiem)),
                     nguoiDung = layDTO<NguoiDungDTO>(Convert.ToInt32(item.maNguoiDung)),
-                    diem = Convert.ToDouble(item.diem),
+                    diem = Math.Round(Convert.ToDouble(item.diem), 2),
                     nguoiTao = layDTO<NguoiDungDTO>(maNguoiSua)
                 };
+
+                ketQua = kiemTra(diem);
+                if (ketQua.trangThai != 0)
+                {
+                    return ketQua;
+                }
 
                 ketQua = CotDiemDAO.layTheoMa(diem.cotDiem.ma);
                 if (ketQua.trangThai != 0)
@@ -131,6 +177,7 @@ namespace BUSLayer
                         ketQua = "Có cột điểm không tồn tại"
                     };
                 }
+
                 cotDiem = ketQua.ketQua as CotDiemDTO;
                 if (!dsMaKhoaHoc.Exists(x => x == cotDiem.khoaHoc.ma.Value))
                 {
@@ -148,7 +195,87 @@ namespace BUSLayer
                 dsDiem.Add(diem);
             }
 
-            return CotDiem_NguoiDungDAO.capNhat(toDataTable(dsDiem));
+            return CotDiem_NguoiDungDAO.capNhat_Nhieu(toDataTable(dsDiem));
+        }
+
+        public static KetQua chuyenDiemBaiTapNop(int maBaiTap, int maNguoiSua)
+        {
+            #region Kiểm tra điều kiện
+            //Lấy bài tập
+            var ketQua = BaiVietBaiTapDAO.layTheoMa(maBaiTap);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Bài tập không tồn tại");
+            }
+            var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
+
+            //Kiểm tra bài tập
+            if (baiTap.loai != 1 && baiTap.loai != 2)
+            {
+                return new KetQua(3, "Bài tập không phù hợp");
+            }
+
+            //Lấy cột điểm
+            ketQua = CotDiemDAO.layTheoLoaiDoiTuongVaMaDoiTuong("BaiTap", baiTap.ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Không có cột điểm phù hợp");
+            }
+            var cotDiem = ketQua.ketQua as CotDiemDTO;
+
+            //Kiểm tra quyền
+            if (!coQuyen("QLBangDiem", "KH", baiTap.khoaHoc.ma.Value, maNguoiSua))
+            {
+                return new KetQua(3, "Bạn không có quyền chuyển điểm vào bảng điểm");
+            }
+            #endregion
+
+            //Lấy danh sách bài nộp chưa chuyển điểm
+            ketQua = BaiTapNopDAO.layTheoMaBaiVietBaiTapVaDaChuyenDiem(baiTap.ma, false);
+            if (ketQua.trangThai == 1)
+            {
+                return new KetQua(0);
+            }
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Không tồn tại bài nộp");
+            }
+            var dsBaiNop = ketQua.ketQua as List<BaiTapNopDTO>;
+
+            //Tạo danh sách điểm từ danh sách bài nộp
+            var dsDiem = new List<CotDiem_NguoiDungDTO>();
+            CotDiem_NguoiDungDTO diem;
+            var nguoiSua = layDTO<NguoiDungDTO>(maNguoiSua);
+
+            foreach (var baiNop in dsBaiNop)
+            {
+                
+                diem = new CotDiem_NguoiDungDTO()
+                {
+                    cotDiem = cotDiem,
+                    nguoiDung = baiNop.nguoiTao,
+                    diem = baiNop.diem,
+                    nguoiTao = nguoiSua
+                };
+
+                ketQua = kiemTra(diem);
+                if (ketQua.trangThai != 0)
+                {
+                    return ketQua;
+                }
+
+                dsDiem.Add(diem);
+            }
+
+            ketQua = CotDiem_NguoiDungDAO.capNhat_Nhieu(toDataTable(dsDiem));
+            
+            if (ketQua.trangThai == 0)
+            {
+                //Cập nhật trạng thái
+                BaiTapNopDAO.capNhatTheoMaBaiVietBaiTap_DaChuyenDiem(baiTap.ma);
+            }
+
+            return ketQua;
         }
     }
 }

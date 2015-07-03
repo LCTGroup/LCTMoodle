@@ -150,10 +150,9 @@ BEGIN
 		FROM dbo.CotDiem
 		WHERE Ma = @0
 END
-
 GO
 --Lấy theo đối tượng
-ALTER PROC dbo.layCotDiemTheoLoaiDoiTuongVaMaDoiTuong(
+CREATE PROC dbo.layCotDiemTheoLoaiDoiTuongVaMaDoiTuong (
 	@0 NVARCHAR(MAX), --LoaiDoiTuong
 	@1 INT --MaDoiTuong
 )

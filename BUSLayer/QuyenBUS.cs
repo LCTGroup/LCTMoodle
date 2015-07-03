@@ -43,7 +43,7 @@ namespace BUSLayer
 
         private static List<QuyenDTO> layCon(QuyenDTO quyen)
         {
-            if (quyen == null || !string.IsNullOrEmpty(quyen.giaTri))
+            if (quyen == null || !string.IsNullOrWhiteSpace(quyen.giaTri))
             {
                 return null;
             }

@@ -76,15 +76,15 @@ namespace BUSLayer
             {
                 thongBao.Add("Tên tài khoản bị trùng");
             }
-            if (coKiemTra("TenTaiKhoan", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.tenTaiKhoan))
+            if (coKiemTra("TenTaiKhoan", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.tenTaiKhoan))
             {
                 thongBao.Add("Tên tài khoản không được bỏ trống");
             }
-            if (coKiemTra("MatKhau", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.matKhau))
+            if (coKiemTra("MatKhau", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.matKhau))
             {
                 thongBao.Add("Mật khẩu không được bỏ trống");
             }
-            if (coKiemTra("Email", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.email))
+            if (coKiemTra("Email", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.email))
             {
                 thongBao.Add("Email không được bỏ trống");
             }
@@ -96,15 +96,15 @@ namespace BUSLayer
             {
                 thongBao.Add("Email đã tồn tại. Vui lòng chọn email khác");
             }
-            if (coKiemTra("Ho", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.ho))
+            if (coKiemTra("Ho", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.ho))
             {
                 thongBao.Add("Họ không được bỏ trống");
             }
-            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.ho))
+            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.ho))
             {
                 thongBao.Add("Tên không được bỏ trống");
             }
-            if (coKiemTra("MatKhauCap2", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.matKhau))
+            if (coKiemTra("MatKhauCap2", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.matKhau))
             {
                 thongBao.Add("Mật khẩu cấp 2 không được bỏ trống");
             }
