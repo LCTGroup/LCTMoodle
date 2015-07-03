@@ -57,9 +57,6 @@ namespace BUSLayer
                     case "MaHinhDaiDien":
                         nguoiDung.hinhDaiDien = TapTinBUS.chuyen("NguoiDung_HinhDaiDien", form.layInt(key)).ketQua as TapTinDTO;
                         break;
-                    case "MatKhauCap2":
-                        nguoiDung.matKhauCap2 = NguoiDungHelper.layMaMD5(form.layString(key));
-                        break;
                     default: 
                         break;
                 }
@@ -103,10 +100,6 @@ namespace BUSLayer
             if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.ho))
             {
                 thongBao.Add("Tên không được bỏ trống");
-            }
-            if (coKiemTra("MatKhauCap2", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.matKhau))
-            {
-                thongBao.Add("Mật khẩu cấp 2 không được bỏ trống");
             }
             #endregion
 
@@ -288,7 +281,7 @@ namespace BUSLayer
             }
 
             NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
-            if (nguoiDung.email == email && nguoiDung.matKhauCap2 == NguoiDungHelper.layMaMD5(matKhauCap2))
+            if (nguoiDung.email == email)
             {
                 string matKhauMoi = NguoiDungHelper.phatSinhMatKhauMoi(6);
 

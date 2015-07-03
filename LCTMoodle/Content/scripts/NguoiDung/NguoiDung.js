@@ -51,7 +51,7 @@ function khoiTaoDangKy($form) {
         },
         custom: [
             {
-                input: $('#NhapLaiMatKhau'),
+                input: $('#nhap_lai_mat_khau'),
                 thongBao: 'Mật khẩu chưa khớp',
                 validate: function () {
                     if ($('#NhapLaiMatKhau').val() != $('#MatKhau').val()) {
@@ -60,16 +60,7 @@ function khoiTaoDangKy($form) {
                 }            
             },
             {
-                input: $('#MatKhauCap2'),
-                thongBao: 'Mật khẩu cấp 2 không được trùng với Mật khẩu cấp 1',
-                validate: function () {
-                    if ($('#MatKhauCap2').val() == $('#MatKhau').val() && $('#MatKhauCap2').val() != "") {
-                        return false;
-                    }
-                }            
-            },
-            {
-                input: $('#TenTaiKhoan'),
+                input: $('#ten_tai_khoan'),
                 thongBao: 'Tài khoản đã tồn tại',
                 validate: function () {
                     var ketQua;
@@ -104,6 +95,9 @@ function khoiTaoDangKy($form) {
                     });
                     return ketQua;
                 }
+            },
+            {
+                input: $('#ngay_sinh')
             }]
     });
 
