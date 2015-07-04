@@ -10,6 +10,7 @@ using LCTMoodle.WebServices.Client_Model;
 using DTOLayer;
 using BUSLayer;
 using Helpers;
+using System.Threading.Tasks;
 
 namespace LCTMoodle.WebServices
 {
@@ -182,6 +183,5 @@ namespace LCTMoodle.WebServices
             }
             return lst_KhoaHoc;
         }
-
     }
 }

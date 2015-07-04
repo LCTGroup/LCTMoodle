@@ -67,6 +67,11 @@ namespace DAOLayer
                         }
                         break;
                     default:
+                        if (chuDe.duLieuThem == null)
+                        {
+                            chuDe.duLieuThem = new Dictionary<string, object>();
+                        }
+                        chuDe.duLieuThem.Add(dong.GetName(i), dong[i]);
                         break;
                 }
             }

@@ -1,5 +1,5 @@
 ﻿var htmlNhapDiem =
-'<article class="hop hop-1-vien"><article class="noi-dung"><form id="diem_form"class="lct-form" data-an-rang-buoc>' +
+'<article class="hop hop-1-vien"><article class="noi-dung"><form id="nhap_form"class="lct-form">' +
     '<ul><li>' +
         '<section class="noi-dung">' +
             '<article class="input" style="width: 50px; margin: 0 auto;">' +
@@ -13,12 +13,12 @@
     '</section>' +
 '</form></aritcle></aritcle>';
 
-var htmlNhapGhiChu =
-'<article class="hop hop-1-vien"><article class="noi-dung"><form id="ghi_chu_form"class="lct-form">' +
+var htmlNhap =
+'<article class="hop hop-1-vien"><article class="noi-dung"><form id="nhap_form"class="lct-form">' +
     '<ul><li>' +
         '<section class="noi-dung">' +
             '<article class="input">' +
-                '<textarea placeholder="Ghi chú"></textarea>' +
+                '<textarea placeholder=""></textarea>' +
             '</article>' +
         '</section>' +
     '</li></ul>' +
@@ -28,15 +28,20 @@ var htmlNhapGhiChu =
     '</section>' +
 '</form></aritcle></aritcle>';
 
-var $_khungDSBaiNop, maBaiTap;
+var $_khungDSBaiNop, maBaiTap, $_khungChamDiem;
 
 $(function () {
-    $_khungDSBaiNop = $('#ds_bai_nop');
+    $_khungChamDiem = $('#khung_cham_diem');
+    $_khungDSBaiNop = $_khungChamDiem.find('#ds_bai_nop');
 
-    khoiTaoNutXem($('[data-chuc-nang="xem"]'));
-    khoiTaoNutChamDiem($('[data-chuc-nang="cham-diem"]'));
-    khoiTaoNutChuyenDiem($('[data-chuc-nang="chuyen-diem"]'));
-    khoiTaoNutGhiChu($('[data-chuc-nang="ghi-chu"]'));
+    khoiTaoNutXem($_khungDSBaiNop.find('[data-chuc-nang="xem"]'));
+    khoiTaoNutChamDiem($_khungDSBaiNop.find('[data-chuc-nang="cham-diem"]'));
+    khoiTaoNutGhiChu($_khungDSBaiNop.find('[data-chuc-nang="ghi-chu"]'));
+    khoiTaoNutXoa($_khungDSBaiNop.find('[data-chuc-nang="xoa"]'));
+
+    khoiTaoNutChuyenDiem($_khungChamDiem.find('[data-chuc-nang="chuyen-diem"]'));
+    khoiTaoNutChonHet_Checkbox($_khungChamDiem.find('[data-chuc-nang="chon-het"]'));
+    khoiTaoNutXoa_Nhieu($_khungChamDiem.find('[data-chuc-nang="xoa-nhieu"]'))
 });
 
 //#region Khởi tạo nút
@@ -99,7 +104,7 @@ function khoiTaoNutChamDiem($dsNut) {
             html: htmlNhapDiem,
             width: '300px',
             thanhCong: function ($popup) {
-                var $form = $popup.find('#diem_form');
+                var $form = $popup.find('#nhap_form');
 
                 khoiTaoLCTForm($form, {
                     khoiTao: function () {
@@ -165,21 +170,22 @@ function khoiTaoNutGhiChu($dsNut) {
         var $item = $(this).closest('tr');
 
         moPopupFull({
-            html: htmlNhapGhiChu,
+            html: htmlNhap,
             width: '400px',
             thanhCong: function ($popup) {
-                var $form = $popup.find('#ghi_chu_form');
+                var $form = $popup.find('#nhap_form');
 
                 khoiTaoLCTForm($form, {
                     khoiTao: function () {
-                        $form.find('textarea').attr('data-mac-dinh', $item.data('ghi-chu'));
+                        $form.find('textarea').attr({
+                            'data-mac-dinh': $item.data('ghi-chu'),
+                            'placeholder': 'Ghi chú'
+                        });
                     },
                     submit: function () {
                         $popup.tat();
                         var ghiChu = $form.find('textarea').val();
                         var ma = $item.data('ma');
-
-                        $item.data('ghi-chu', ghiChu);
 
                         var $tai = moBieuTuongTai($item);
                         $.ajax({
@@ -203,7 +209,156 @@ function khoiTaoNutGhiChu($dsNut) {
                                 moPopupThongBao(data);
                             }
                         }).fail(function () {
-                            moPopupThongBao('Chấm điểm thất bại');
+                            moPopupThongBao('Ghi chú thất bại');
+                        });
+                    },
+                    custom: [
+                        {
+                            input: $form.find('[data-chuc-nang="huy"]'),
+                            event: {
+                                'click': function () {
+                                    $popup.tat();
+                                }
+                            }
+                        }
+                    ]
+                });
+            }
+        })
+    })
+}
+
+function khoiTaoNutXoa($dsNut) {
+    $dsNut.on('click', function () {
+        var $item = $(this).closest('tr');
+
+        moPopupFull({
+            html: htmlNhap,
+            width: '400px',
+            thanhCong: function ($popup) {
+                var $form = $popup.find('#nhap_form');
+
+                khoiTaoLCTForm($form, {
+                    khoiTao: function () {
+                        $form.find('textarea').attr({
+                            'data-mac-dinh': $item.data('ghi-chu'),
+                            'placeholder': 'Lý do'
+                        });
+                    },
+                    submit: function () {
+                        $popup.tat();
+                        var lyDo = $form.find('textarea').val();
+                        var ma = $item.data('ma');
+
+                        var $tai = moBieuTuongTai($item);
+                        $.ajax({
+                            url: '/BaiTapNop/XuLyXoa_Mot/' + ma,
+                            method: 'POST',
+                            data: { lyDo: lyDo },
+                            dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $item.data('ghi-chu', lyDo);
+                                $item.attr('data-da-xoa', '');
+                                if (lyDo) {
+                                    $item.attr('data-co-ghi-chu', '');
+                                }
+                                else {
+                                    $item.removeAttr('data-co-ghi-chu');
+                                }
+                            }
+                            else {
+                                moPopupThongBao(data);
+                            }
+                        }).fail(function () {
+                            moPopupThongBao('Xóa thất bại');
+                        });
+                    },
+                    custom: [
+                        {
+                            input: $form.find('[data-chuc-nang="huy"]'),
+                            event: {
+                                'click': function () {
+                                    $popup.tat();
+                                }
+                            }
+                        }
+                    ]
+                });
+            }
+        })
+    })
+}
+
+function khoiTaoNutChonHet_Checkbox($dsNut) {
+    $dsNut.on('change', function () {
+        $($_khungDSBaiNop.find('tr:not([data-da-xoa]) [data-doi-tuong="nut-chon"]')).prop('checked', this.checked);
+    });
+}
+
+function khoiTaoNutXoa_Nhieu($dsNut) {
+    $dsNut.on('click', function () {
+        //Lấy danh sách chọn
+        var $dsChon = $_khungDSBaiNop.find('tr:not([data-da-xoa]):has([data-doi-tuong="nut-chon"]:checked)');
+        if ($dsChon.length == 0) {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Hãy chọn bài nộp mà bạn muốn xóa',
+                bieuTuong: 'thong-tin'
+            });
+            return;
+        }
+
+        moPopupFull({
+            html: htmlNhap,
+            width: '400px',
+            thanhCong: function ($popup) {
+                var $form = $popup.find('#nhap_form');
+
+                khoiTaoLCTForm($form, {
+                    khoiTao: function () {
+                        $form.find('textarea').attr({
+                            'data-mac-dinh': '',
+                            'placeholder': 'Lý do'
+                        });
+                    },
+                    submit: function () {
+                        $popup.tat();
+                        var lyDo = $form.find('textarea').val();
+                        
+                        //Lấy danh sách mã chọn
+                        var dsMaChon = '';
+                        $dsChon.each(function () {
+                            dsMaChon += ',' + $(this).data('ma');
+                        });
+                        dsMaChon = dsMaChon.substr(1);
+
+                        var $tai = moBieuTuongTai($dsChon.add($dsNut));
+                        $.ajax({
+                            url: '/BaiTapNop/XuLyXoa_Nhieu/',
+                            method: 'POST',
+                            data: { dsMa: dsMaChon, lyDo: lyDo },
+                            dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $dsChon.data('ghi-chu', lyDo);
+                                $dsChon.attr('data-da-xoa', '');
+                                if (lyDo) {
+                                    $dsChon.attr('data-co-ghi-chu', '');
+                                }
+                                else {
+                                    $dsChon.removeAttr('data-co-ghi-chu');
+                                }
+                            }
+                            else {
+                                moPopupThongBao(data);
+                            }
+                        }).fail(function () {
+                            moPopupThongBao('Xóa thất bại');
                         });
                     },
                     custom: [
@@ -239,6 +394,7 @@ function chamDiem(maBaiNop, diem) {
     }).done(function (data) {
         if (data.trangThai == 0) {
             $item.find('[data-doi-tuong="diem"]').text(diem);
+            $item.removeAttr('data-da-xoa');
         }
         else {
             moPopupThongBao(data);

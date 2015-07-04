@@ -24,39 +24,60 @@ ALTER PROC dbo.themChuDe (
 )
 AS
 BEGIN
-	INSERT INTO dbo.ChuDe (Ten, MoTa, MaNguoiTao, MaCha, MaHinhDaiDien)
-		VALUES (@0, @1, @2, @3, @4);
+	--Lấy cây của chủ đề cha
+	DECLARE @cay NVARCHAR(MAX)
+	IF (@3 = 0)
+	BEGIN
+		SET @cay = '|0|'
+	END
+	ELSE
+	BEGIN
+		SELECT @cay = Cay
+			FROM dbo.ChuDe
+			WHERE Ma = @3
+		
+		SET @cay += CAST(@3 AS NVARCHAR(MAX)) + '|'
+	END
 
-	SELECT
-		Ma,
-		Ten,
-		MoTa,
-		MaNguoiTao,
-		ThoiDiemTao,
-		MaCha,
-		MaHinhDaiDien
-		FROM dbo.ChuDe
-		WHERE Ma = @@IDENTITY;
+	INSERT INTO dbo.ChuDe (Ten, MoTa, MaNguoiTao, MaCha, MaHinhDaiDien, Cay)
+		VALUES (@0, @1, @2, @3, @4, @cay);
+
+	EXEC layChuDeTheoMa @@IDENTITY
 END
 
 GO
 --Lấy chủ đề theo mã chủ đề cha và phạm vi
-CREATE PROC dbo.layChuDeTheoMaCha (
+ALTER PROC dbo.layChuDeTheoMaCha (
 	@0 INT --MaCha
 )
 AS
 BEGIN
 	SELECT 
-		Ma,
-		Ten,
-		MoTa,
-		MaNguoiTao,
-		ThoiDiemTao,
-		MaCha,
-		MaHinhDaiDien
-		FROM dbo.ChuDe
+		CD.Ma,
+		CD.Ten,
+		CD.MoTa,
+		CD.MaNguoiTao,
+		CD.ThoiDiemTao,
+		CD.MaCha,
+		CD.MaHinhDaiDien,
+		COUNT(DISTINCT CD_Con.Ma) 'SLChuDeCon',
+		COUNT(DISTINCT KH.Ma) 'SLKhoaHocCon'
+		FROM 
+			dbo.ChuDe CD 
+				LEFT JOIN dbo.ChuDe CD_Con ON
+					CD_Con.MaCha = CD.Ma
+				LEFT JOIN dbo.KhoaHoc KH ON
+					KH.MaChuDe = CD.Ma
 		WHERE 
-			MaCha = @0
+			CD.MaCha = @0
+		GROUP BY 
+			CD.Ma,
+			CD.Ten,
+			CD.MoTa,
+			CD.MaNguoiTao,
+			CD.ThoiDiemTao,
+			CD.MaCha,
+			CD.MaHinhDaiDien
 END
 
 GO
@@ -66,16 +87,32 @@ ALTER PROC dbo.layChuDeTheoMa (
 )
 AS
 BEGIN
-	SELECT TOP 1
-		Ma,
-		Ten,
-		MoTa,
-		MaNguoiTao,
-		ThoiDiemTao,
-		MaCha,
-		MaHinhDaiDien
-		FROM dbo.ChuDe
-		WHERE Ma = @0
+	SELECT 
+		CD.Ma,
+		CD.Ten,
+		CD.MoTa,
+		CD.MaNguoiTao,
+		CD.ThoiDiemTao,
+		CD.MaCha,
+		CD.MaHinhDaiDien,
+		COUNT(DISTINCT CD_Con.Ma) 'SLChuDeCon',
+		COUNT(DISTINCT KH.Ma) 'SLKhoaHocCon'
+		FROM 
+			dbo.ChuDe CD 
+				LEFT JOIN dbo.ChuDe CD_Con ON
+					CD_Con.MaCha = CD.Ma
+				LEFT JOIN dbo.KhoaHoc KH ON
+					KH.MaChuDe = CD.Ma
+		WHERE 
+			CD.Ma = @0
+		GROUP BY 
+			CD.Ma,
+			CD.Ten,
+			CD.MoTa,
+			CD.MaNguoiTao,
+			CD.ThoiDiemTao,
+			CD.MaCha,
+			CD.MaHinhDaiDien
 END
 
 GO
@@ -141,13 +178,30 @@ END
 
 GO
 --Cập nhật chủ đề - mã cha
-CREATE PROC dbo.capNhatChuDeTheoMa_MaCha (
+ALTER PROC dbo.capNhatChuDeTheoMa_MaCha (
 	@0 INT, --Ma
 	@1 INT --MaCha
 )
 AS
 BEGIN
+	--Lấy cây của chủ đề cha
+	DECLARE @cay NVARCHAR(MAX)
+	IF (@1 = 0)
+	BEGIN
+		SET @cay = '|0|'
+	END
+	ELSE
+	BEGIN
+		SELECT @cay = Cay
+			FROM dbo.ChuDe
+			WHERE Ma = @1
+		
+		SET @cay += CAST(@1 AS NVARCHAR(MAX)) + '|'
+	END
+
 	UPDATE dbo.ChuDe
-		SET MaCha = @1
+		SET 
+			MaCha = @1,
+			Cay = @cay
 		WHERE Ma = @0
 END

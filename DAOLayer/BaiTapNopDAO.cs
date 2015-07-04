@@ -77,6 +77,9 @@ namespace DAOLayer
                     case "GhiChu":
                         baiTapNop.ghiChu = layString(dong, i);
                         break;
+                    case "DaXoa":
+                        baiTapNop.daXoa = layBool(dong, i);
+                        break;
                     default:
                         break;
                 }
@@ -186,6 +189,19 @@ namespace DAOLayer
                     new object[]
                     {
                         ma, 
+                        ghiChu
+                    }
+                );
+        }
+
+        public static KetQua capNhatTheoMa_DaXoa_Nhieu(string dsMa, string ghiChu)
+        {
+            return khongTruyVan
+                (
+                    "capNhatBaiTapNopTheoMa_DaXoa_Nhieu",
+                    new object[]
+                    {
+                        dsMa,
                         ghiChu
                     }
                 );

@@ -92,7 +92,8 @@ BEGIN
 	UPDATE dbo.BaiTapNop
 		SET 
 			Diem = @1,
-			DaChuyenDiem = 0
+			DaChuyenDiem = 0,
+			DaXoa = 0
 		WHERE Ma = @0
 END
 
@@ -149,4 +150,21 @@ BEGIN
 			DaXoa = 1,
 			GhiChu = @1
 		WHERE Ma = @0
+END
+
+GO
+--Cập nhật xóa
+ALTER PROC dbo.capNhatBaiTapNopTheoMa_DaXoa_Nhieu (
+	@0 VARCHAR(MAX), --Danh sach ma
+	@1 NVARCHAR(MAX) --GhiChu
+)
+AS
+BEGIN
+	EXEC('
+	UPDATE dbo.BaiTapNop
+		SET 
+			DaXoa = 1,
+			GhiChu = N''' + @1 + '''
+		WHERE Ma IN (' + @0 + ')
+	')
 END

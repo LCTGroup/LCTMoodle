@@ -1,9 +1,10 @@
-﻿@model DTOLayer.ChuDeDTO
+﻿@using Helpers
+@model DTOLayer.ChuDeDTO
 @{
     bool coChon = ViewData["CoChon"] != null && (bool)ViewData["CoChon"];
 }
 
-<li data-doi-tuong="muc" data-loai="ds-nut" data-ma="@Model.ma">
+<li data-doi-tuong="muc" data-loai="ds-nut" data-ma="@Model.ma" title="Có @LCTHelper.layString(Model.duLieuThem, "SLChuDeCon", "0") chủ đề và @LCTHelper.layString(Model.duLieuThem, "SLKhoaHocCon", "0") khóa học thuộc chủ đề này">
     <section class="mo-ta">
         <img src="@(Model.hinhDaiDien != null ? "/LayHinh/chude_hinhdaidien/" + Model.hinhDaiDien.ma : "#")">
         <p>
@@ -28,10 +29,10 @@
             <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cncd-@Model.ma">
                 <i class="pe-7f-config"></i>
             </button>
-        </section>   
+        </section>
     }
     @if (coChon)
     {
-        <a class="nut-chon" data-chuc-nang="chon"></a>   
+        <a class="nut-chon" data-chuc-nang="chon"></a>
     }
 </li>

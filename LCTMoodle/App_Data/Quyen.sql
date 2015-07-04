@@ -79,6 +79,7 @@ BEGIN
 	RETURN @chuoiMaLa
 END
 
+EXEC layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri 1, 'CD', 60
 GO
 --Lấy danh sách quyền theo mã người dùng và đối tượng
 ALTER PROC dbo.layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri (
@@ -88,7 +89,7 @@ ALTER PROC dbo.layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri (
 )
 AS
 BEGIN
-	--Lấy các quyền mà người dùng có
+	--Lấy nhóm mà người dùng thuộc
 	DECLARE 
 		@coQuyenNhomHT BIT, 
 		@coQuyenNhomCD BIT,
@@ -102,38 +103,47 @@ BEGIN
 		WHERE Ma = @0
 
 	--Chuỗi giá trị chứa danh sách quyền
-	DECLARE @giaTri VARCHAR(MAX) = ''
-	
-	--Quyền khóa học chỉ xác định phạm vi quyền khóa học
+	DECLARE @dsGiaTri TABLE (
+		GiaTri VARCHAR(MAX)
+	)
+
+	--Kiểm tra ở phạm vi nhóm người dùng khóa học
+	--Nhóm khóa học chỉ có quyền khóa học nên nếu cần lấy quyền ở khóa học
+	--thì mới cần thực hiện block này
 	IF (
 		@coQuyenNhomKH = 1 AND
 		@1 = 'KH'
 	)
 	BEGIN
-		SELECT @giaTri += Q.GiaTri + '|'
-			FROM 
-				dbo.NhomNguoiDung_KH NND
-					INNER JOIN dbo.NhomNguoiDung_KH_NguoiDung NND_ND ON
-						NND_ND.MaNguoiDung = @0 AND
-						NND_ND.MaNhomNguoiDung = NND.Ma
-					INNER JOIN dbo.NhomNguoiDung_KH_Quyen NND_Q ON
-						NND_Q.MaNhomNguoiDung = NND.Ma AND
-						(NND_Q.MaDoiTuong = @2 OR 
-							NND_Q.MaDoiTuong = 0)
-					INNER JOIN dbo.Quyen Q ON
-						Q.PhamVi = @1 AND
-						Q.Ma = NND_Q.MaQuyen
-			GROUP BY Q.GiaTri
+		INSERT @dsGiaTri (GiaTri)
+			SELECT Q.GiaTri
+				FROM 
+					--Để lấy nhóm cần kiểm tra
+					dbo.NhomNguoiDung_KH NND
+						--Để lấy nhóm mà người đó thuộc
+						INNER JOIN dbo.NhomNguoiDung_KH_NguoiDung NND_ND ON
+							NND.Ma = NND_ND.MaNhomNguoiDung AND
+							NND.MaDoiTuong = @2 AND
+							NND_ND.MaNguoiDung = @0
+						--Để lấy quyền mà nhóm quyền đó có
+						INNER JOIN dbo.NhomNguoiDung_KH_Quyen NND_Q ON
+							NND_Q.MaNhomNguoiDung = NND_ND.MaNhomNguoiDung AND
+							--Quyền tác động đến đối tượng đó
+							NND_Q.MaDoiTuong = @2
+						--Để lấy quyền theo phạm vi
+						INNER JOIN dbo.Quyen Q ON
+							NND_Q.MaQuyen = Q.Ma AND
+							--Phạm vi cần tìm
+							Q.PhamVi = @1
 	END
-	--Phạm vi chủ đề chỉ kiểm soát chủ đề, khóa học, hỏi đáp
-	IF (
-		@coQuyenNhomCD = 1 AND
-		(@1 = 'CD' OR @1 = 'HD' OR @1 = 'KH')
-	)
+
+	IF (@coQuyenNhomCD = 1 AND
+		(@1 = 'KH' OR
+			@1 = 'HD' OR
+			@1 = 'CD'))
 	BEGIN
-		--Nếu là CD => Lấy mã chủ đề cha của chủ đề & chính nó
-		--Nếu là HD => Lấy mã chủ đề của câu hỏi
-		--Nếu là KH => Lấy mã chủ đề của khóa học
+		--Lấy cây để kiểm tra đối tượng nhóm người dùng thuộc đối với chủ đề
+		--Lấy mã chủ đề bị tác động
 		DECLARE @maChuDe INT
 		IF (@1 = 'KH')
 		BEGIN
@@ -149,57 +159,74 @@ BEGIN
 		END
 		ELSE
 		BEGIN
-			SELECT @maChuDe = MaCha
-				FROM dbo.ChuDe
-				WHERE Ma = 0
-
-			--Khi là chủ đề thì lấy quyền trong chính nó nữa
-			SELECT @giaTri += Q.GiaTri + '|'
-			FROM 
-				dbo.NhomNguoiDung_CD NND
-					INNER JOIN dbo.NhomNguoiDung_CD_NguoiDung NND_ND ON
-						NND_ND.MaNguoiDung = @0 AND
-						NND_ND.MaNhomNguoiDung = NND.Ma
-					INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
-						NND_Q.MaNhomNguoiDung = NND.Ma AND
-						NND_Q.MaDoiTuong = @2
-					INNER JOIN dbo.Quyen Q ON
-						Q.PhamVi = @1 AND
-						Q.Ma = NND_Q.MaQuyen
-			GROUP BY Q.GiaTri
+			SET @maChuDe = @2
 		END
+			
+		--Lấy cây của chủ đề
+		DECLARE @cay VARCHAR(MAX)
+		SELECT @cay = Cay
+			FROM dbo.ChuDe
+			WHERE Ma = @maChuDe
 
-		SELECT @giaTri += Q.GiaTri + '|'
-			FROM 
-				dbo.NhomNguoiDung_CD NND
-					INNER JOIN dbo.NhomNguoiDung_CD_NguoiDung NND_ND ON
-						NND.MaDoiTuong = @maChuDe AND
-						NND_ND.MaNguoiDung = @0 AND
-						NND_ND.MaNhomNguoiDung = NND.Ma
-					INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
-						NND_Q.MaNhomNguoiDung = NND.Ma
-					INNER JOIN dbo.Quyen Q ON
-						Q.PhamVi = @1 AND
-						Q.Ma = NND_Q.MaQuyen
-			GROUP BY Q.GiaTri
+		--Cộng thêm chủ đề hiện tại
+		SET @cay += CAST(@maChuDe AS VARCHAR(MAX)) + '|'
+
+		--Kiểm tra ở phạm vi chủ đề
+		--Phạm vi chủ đề chỉ quản lý khóa hoc, hỏi đáp, chủ đề
+		IF (@coQuyenNhomCD = 1)
+		BEGIN
+			--Lấy giá trị quyền tác động đến nó
+			INSERT @dsGiaTri (GiaTri)
+				SELECT Q.GiaTri
+					FROM 
+						--Để lấy nhóm cần kiểm tra
+						dbo.NhomNguoiDung_CD NND
+							--Để lấy nhóm mà người đó thuộc
+							INNER JOIN dbo.NhomNguoiDung_CD_NguoiDung NND_ND ON
+								NND.Ma = NND_ND.MaNhomNguoiDung AND
+								--Những nhóm trong cây
+								@cay LIKE '%|' + CAST(NND.MaDoiTuong AS VARCHAR(MAX)) + '|%' AND
+								NND_ND.MaNguoiDung = @0
+							--Để lấy quyền mà nhóm quyền đó có
+							INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
+								NND_Q.MaNhomNguoiDung = NND_ND.MaNhomNguoiDung AND
+								--Quyền tác động đến đối tượng đó
+								(NND_Q.MaDoiTuong = @2 OR 
+									NND_Q.MaDoiTuong = 0)
+							--Để lấy quyền theo phạm vi
+							INNER JOIN dbo.Quyen Q ON
+								NND_Q.MaQuyen = Q.Ma AND
+								--Phạm vi cần tìm
+								Q.PhamVi = @1
+		END
 	END
-	--Phạm vi hệ thống kiểm soát tất cả phạm vi quyền
-	IF (@coQuyenNhomHT = 1)
+	
+	--Kiểm tra ở phạm vi hệ thống
+	IF (
+		@coQuyenNhomHT = 1
+	)
 	BEGIN
-		SELECT @giaTri += Q.GiaTri + '|'
-			FROM 
-				dbo.NhomNguoiDung_HT NND
-					INNER JOIN dbo.NhomNguoiDung_HT_NguoiDung NND_ND ON
-						NND_ND.MaNguoiDung = @0 AND
-						NND_ND.MaNhomNguoiDung = NND.Ma
-					INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
-						NND_Q.MaNhomNguoiDung = NND.Ma AND
-						(NND_Q.MaDoiTuong = @2 OR NND_Q.MaDoiTuong = 0)
-					INNER JOIN dbo.Quyen Q ON
-						Q.PhamVi = @1 AND
-						Q.Ma = NND_Q.MaQuyen
-			GROUP BY Q.GiaTri
+		--Lấy giá trị quyền tác động đến nó
+		INSERT @dsGiaTri (GiaTri)
+			SELECT Q.GiaTri
+				FROM 
+					--Để lấy nhóm mà người đó thuộc
+					dbo.NhomNguoiDung_HT_NguoiDung NND_ND
+						--Để lấy quyền mà nhóm quyền đó có
+						INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
+							NND_ND.MaNguoiDung = @0 AND
+							NND_Q.MaNhomNguoiDung = NND_ND.MaNhomNguoiDung
+						--Để lấy quyền theo phạm vi
+						INNER JOIN dbo.Quyen Q ON
+							NND_Q.MaQuyen = Q.Ma AND
+							--Phạm vi cần tìm
+							Q.PhamVi = @1
 	END
+
+	DECLARE @giaTri VARCHAR(MAX) = ''
+	SELECT @giaTri += GiaTri + ','
+		FROM @dsGiaTri
+		GROUP BY GiaTri
 
 	SELECT CASE
 		WHEN @giaTri = '' THEN
@@ -209,6 +236,7 @@ BEGIN
 		END
 END
 
+EXEC layQuyenTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra 1, 'CD', 63, 'QQ'
 GO
 --Lấy quyền theo mã người dùng và mã đối tượng và giá trị
 ALTER PROC dbo.layQuyenTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra (
@@ -219,7 +247,7 @@ ALTER PROC dbo.layQuyenTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra (
 )
 AS
 BEGIN
-	--Lấy các quyền mà người dùng có
+	--Lấy nhóm mà người dùng thuộc
 	DECLARE 
 		@coQuyenNhomHT BIT, 
 		@coQuyenNhomCD BIT,
@@ -231,43 +259,49 @@ BEGIN
 		@coQuyenNhomKH = CoQuyenNhomKH
 		FROM dbo.NguoiDung
 		WHERE Ma = @0
-	
-	--Quyền khóa học chỉ xác định phạm vi quyền khóa học
+
+	--Kiểm tra ở phạm vi nhóm người dùng khóa học
+	--Nhóm khóa học chỉ có quyền khóa học nên nếu cần lấy quyền ở khóa học
+	--thì mới cần thực hiện block này
 	IF (
 		@coQuyenNhomKH = 1 AND
 		@1 = 'KH'
 	)
 	BEGIN
-		IF EXISTS(
-			SELECT TOP 1 1
+		IF (EXISTS(
+			SELECT 1
 				FROM 
+					--Để lấy nhóm cần kiểm tra
 					dbo.NhomNguoiDung_KH NND
+						--Để lấy nhóm mà người đó thuộc
 						INNER JOIN dbo.NhomNguoiDung_KH_NguoiDung NND_ND ON
-							NND_ND.MaNguoiDung = @0 AND
-							NND_ND.MaNhomNguoiDung = NND.Ma
+							NND.Ma = NND_ND.MaNhomNguoiDung AND
+							NND.MaDoiTuong = @2 AND
+							NND_ND.MaNguoiDung = @0
+						--Để lấy quyền mà nhóm quyền đó có
 						INNER JOIN dbo.NhomNguoiDung_KH_Quyen NND_Q ON
-							NND_Q.MaNhomNguoiDung = NND.Ma AND
-							(NND_Q.MaDoiTuong = @2 OR 
-								NND_Q.MaDoiTuong = 0)
+							NND_Q.MaNhomNguoiDung = NND_ND.MaNhomNguoiDung AND
+							--Quyền tác động đến đối tượng đó
+							NND_Q.MaDoiTuong = @2
+						--Để lấy quyền theo phạm vi
 						INNER JOIN dbo.Quyen Q ON
-							Q.PhamVi = @1 AND
-							Q.Ma = NND_Q.MaQuyen AND
-							Q.GiaTri = @3
-		)
+							NND_Q.MaQuyen = Q.Ma AND
+							--Phạm vi, giá trị cần tìm
+							Q.GiaTri = @3 AND
+							Q.PhamVi = @1))
 		BEGIN
 			SELECT 1
 			RETURN
 		END
 	END
-	--Phạm vi chủ đề chỉ kiểm soát chủ đề, khóa học, hỏi đáp
-	IF (
-		@coQuyenNhomCD = 1 AND
-		(@1 = 'CD' OR @1 = 'HD' OR @1 = 'KH')
-	)
+
+	IF (@coQuyenNhomCD = 1 AND
+		(@1 = 'KH' OR
+			@1 = 'HD' OR
+			@1 = 'CD'))
 	BEGIN
-		--Nếu là CD => Mã đối tượng là mã chủ đề => khỏi xử lý
-		--Nếu là HD => Lấy mã chủ đề của câu hỏi
-		--Nếu là KH => Lấy mã chủ đề của khóa học
+		--Lấy cây để kiểm tra đối tượng nhóm người dùng thuộc đối với chủ đề
+		--Lấy mã chủ đề bị tác động
 		DECLARE @maChuDe INT
 		IF (@1 = 'KH')
 		BEGIN
@@ -283,70 +317,74 @@ BEGIN
 		END
 		ELSE
 		BEGIN
-			SELECT @maChuDe = MaCha
-				FROM dbo.ChuDe
-				WHERE Ma = @2
+			SET @maChuDe = @2
+		END
+			
+		--Lấy cây của chủ đề
+		DECLARE @cay VARCHAR(MAX)
+		SELECT @cay = Cay
+			FROM dbo.ChuDe
+			WHERE Ma = @maChuDe
 
-			--Khi là chủ đề thì lấy quyền trong chính nó nữa
-			IF EXISTS(
-				SELECT TOP 1 1
+		--Cộng thêm chủ đề hiện tại
+		SET @cay += CAST(@maChuDe AS VARCHAR(MAX)) + '|'
+
+		--Kiểm tra ở phạm vi chủ đề
+		--Phạm vi chủ đề chỉ quản lý khóa hoc, hỏi đáp, chủ đề
+		IF (@coQuyenNhomCD = 1)
+		BEGIN
+			--Lấy giá trị quyền tác động đến nó
+			IF (EXISTS(
+				SELECT 1
 					FROM 
+						--Để lấy nhóm cần kiểm tra
 						dbo.NhomNguoiDung_CD NND
+							--Để lấy nhóm mà người đó thuộc
 							INNER JOIN dbo.NhomNguoiDung_CD_NguoiDung NND_ND ON
-								NND_ND.MaNguoiDung = @0 AND
-								NND_ND.MaNhomNguoiDung = NND.Ma
+								NND.Ma = NND_ND.MaNhomNguoiDung AND
+								--Những nhóm trong cây
+								@cay LIKE '%|' + CAST(NND.MaDoiTuong AS VARCHAR(MAX)) + '|%' AND
+								NND_ND.MaNguoiDung = @0
+							--Để lấy quyền mà nhóm quyền đó có
 							INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
-								NND_Q.MaNhomNguoiDung = NND.Ma AND
-								NND_Q.MaDoiTuong = @2
+								NND_Q.MaNhomNguoiDung = NND_ND.MaNhomNguoiDung AND
+								--Quyền tác động đến đối tượng đó
+								(NND_Q.MaDoiTuong = @2 OR 
+									NND_Q.MaDoiTuong = 0)
+							--Để lấy quyền theo phạm vi
 							INNER JOIN dbo.Quyen Q ON
-								Q.PhamVi = @1 AND
-								Q.Ma = NND_Q.MaQuyen AND
-								Q.GiaTri = @3
-			)
+								NND_Q.MaQuyen = Q.Ma AND
+								--Phạm vi cần tìm
+								Q.GiaTri = @3 AND
+								Q.PhamVi = @1))
 			BEGIN
 				SELECT 1
 				RETURN
 			END
 		END
-
-		IF EXISTS(
-			SELECT TOP 1 1
-				FROM 
-					dbo.NhomNguoiDung_CD NND
-						INNER JOIN dbo.NhomNguoiDung_CD_NguoiDung NND_ND ON
-							NND.MaDoiTuong = @maChuDe AND
-							NND_ND.MaNguoiDung = @0 AND
-							NND_ND.MaNhomNguoiDung = NND.Ma
-						INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
-							NND_Q.MaNhomNguoiDung = NND.Ma
-						INNER JOIN dbo.Quyen Q ON
-							Q.PhamVi = @1 AND
-							Q.Ma = NND_Q.MaQuyen AND
-							Q.GiaTri = @3
-		)
-		BEGIN
-			SELECT 1
-			RETURN
-		END
 	END
-	--Phạm vi hệ thống kiểm soát tất cả phạm vi quyền
-	IF (@coQuyenNhomHT = 1)
+	
+	--Kiểm tra ở phạm vi hệ thống
+	IF (
+		@coQuyenNhomHT = 1
+	)
 	BEGIN
-		IF EXISTS(
-			SELECT TOP 1 1
+		--Lấy giá trị quyền tác động đến nó
+		IF (EXISTS(
+			SELECT 1
 				FROM 
-					dbo.NhomNguoiDung_HT NND
-						INNER JOIN dbo.NhomNguoiDung_HT_NguoiDung NND_ND ON
-							NND_ND.MaNguoiDung = @0 AND
-							NND_ND.MaNhomNguoiDung = NND.Ma
+					--Để lấy nhóm mà người đó thuộc
+					dbo.NhomNguoiDung_HT_NguoiDung NND_ND
+						--Để lấy quyền mà nhóm quyền đó có
 						INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
-							NND_Q.MaNhomNguoiDung = NND.Ma AND
-							(NND_Q.MaDoiTuong = @2 OR NND_Q.MaDoiTuong = 0)
+							NND_ND.MaNguoiDung = @0 AND
+							NND_Q.MaNhomNguoiDung = NND_ND.MaNhomNguoiDung
+						--Để lấy quyền theo phạm vi
 						INNER JOIN dbo.Quyen Q ON
-							Q.PhamVi = @1 AND
-							Q.Ma = NND_Q.MaQuyen AND
-							Q.GiaTri = @3
-		)
+							NND_Q.MaQuyen = Q.Ma AND
+							--Phạm vi cần tìm
+							Q.GiaTri = @3 AND
+							Q.PhamVi = @1))
 		BEGIN
 			SELECT 1
 			RETURN

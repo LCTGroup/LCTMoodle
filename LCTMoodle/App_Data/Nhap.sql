@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 select * from nguoidung
 
 update nguoidung
@@ -8,3 +9,5 @@ update cauhoi
 set DuyetHienThi = 0
 
 select * from cauhoi
+=======
+>>>>>>> 9c44da6d7a31231ecb00d9e9922ebd619d289fb0

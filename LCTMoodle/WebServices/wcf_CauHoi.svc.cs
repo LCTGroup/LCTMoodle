@@ -17,7 +17,7 @@ namespace LCTMoodle.WebServices
     // NOTE: In order to launch WCF Test Client for testing this service, please select wcf_CauHoi.svc or wcf_CauHoi.svc.cs at the Solution Explorer and start debugging.
     public class wcf_CauHoi : Iwcf_CauHoi
     {
-        private const string _Loai = "CauHoi_HinhDaiDien";
+        private const string _Loai = "NguoiDung_HinhDaiDien";
 
         /// <summary>
         /// Webservice lấy hình ảnh
@@ -40,6 +40,12 @@ namespace LCTMoodle.WebServices
             return null;
         }
 
+        /// <summary>
+        /// Webservice lấy ảnh và chỉ số
+        /// </summary>
+        /// <param name="_ChiSo"></param>
+        /// <param name="_Ten"></param>
+        /// <returns>clientmodel_HinhAnh</returns>
         public clientmodel_HinhAnh layHinhAnhChiSo(int _ChiSo, string _Ten)
         {
             string _DuongDan = TapTinHelper.layDuongDan(_Loai, _Ten);
@@ -83,7 +89,7 @@ namespace LCTMoodle.WebServices
         /// <returns>List<CauHoiDTO></returns>
         public List<CauHoiDTO> lay(int _SoDong)
         {
-            KetQua ketQua = CauHoiBUS.layDanhSach(_SoDong, new LienKet { "NguoiTao", "HinhDaiDien" });
+            KetQua ketQua = CauHoiBUS.layDanhSach(_SoDong, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
             List<CauHoiDTO> lst_CauHoi = new List<CauHoiDTO>();
 
             if(ketQua.trangThai == 0)

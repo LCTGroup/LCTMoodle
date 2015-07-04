@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using LCTMoodle.WebServices.Client_Model;
 using DTOLayer;
+using System.Threading.Tasks;
 
 namespace LCTMoodle.WebServices
 {

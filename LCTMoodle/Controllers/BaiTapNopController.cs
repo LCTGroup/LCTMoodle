@@ -100,5 +100,23 @@ namespace LCTMoodle.Controllers
             }
             return Json(BaiTapNopBUS.ghiChu(ma, ghiChu, (int)Session["NguoiDung"]));
         }
+
+        public ActionResult XuLyXoa_Mot(int ma, string lyDo)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+            return Json(BaiTapNopBUS.xoa(ma, lyDo, (int)Session["NguoiDung"]));
+        }
+
+        public ActionResult XuLyXoa_Nhieu(string dsMa, string lyDo)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+            return Json(BaiTapNopBUS.xoa(dsMa, lyDo, (int)Session["NguoiDung"]));
+        }
 	}
 }
