@@ -17,6 +17,28 @@ namespace Helpers
             }
         }
 
+        public static string layString(Dictionary<string, object> duLieu, string key, string macDinh = null)
+        {
+            object item;
+            if (duLieu.TryGetValue(key, out item))
+            {
+                return item.ToString();
+            }
+
+            return macDinh;
+        }
+
+        public static T layGiaTri<T>(Dictionary<string, object> duLieu, string key, T macDinh)
+        {
+            object item;
+            if (duLieu.TryGetValue(key, out item))
+            {
+                return (T)Convert.ChangeType(item, typeof(T));
+            }
+
+            return macDinh;
+        }
+
         #region Kiểm tra email
         /// <summary>
         /// Kiểm tra email
