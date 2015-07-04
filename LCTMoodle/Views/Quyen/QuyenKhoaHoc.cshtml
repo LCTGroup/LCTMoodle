@@ -19,6 +19,9 @@
 
     List<string> chucNang = new List<string>();
 
+    chucNang.Add("Nội dung khóa học");
+    chucNang.Add("href='/KhoaHoc/" + khoaHoc.ma + "'");
+
     chucNang.Add("Danh sách thành viên");
     chucNang.Add("href='/KhoaHoc/DanhSachThanhVien/" + khoaHoc.ma + "'");
 
@@ -27,7 +30,7 @@
     chucNang.Add("Chương trình khóa học");
     chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + khoaHoc.ma + "'");
 
-    if (QuyenHelper.co(dsQuyen, "QLCotDiem"))
+    if (QuyenHelper.co(dsQuyen, "QLBangDiem"))
     {
         chucNang.Add("Quản lý bảng điểm");
         chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + khoaHoc.ma + "'");

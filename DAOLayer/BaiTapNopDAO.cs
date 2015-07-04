@@ -61,12 +61,21 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             baiTapNop.baiVietBaiTap = LienKet.co(lienKet, "BaiVietBaiTap") ?
-                                null : //Tạm -- Nhớ đổi ko lỗi
+                                layDTO<BaiVietBaiTapDTO>(BaiVietBaiTapDAO.layTheoMa(maTam, lienKet["BaiVietBaiTap"])) : //Tạm -- Nhớ đổi ko lỗi
                                 new BaiVietBaiTapDTO()
                                 {
                                     ma = maTam
                                 };
                         }
+                        break;
+                    case "DaChuyenDiem":
+                        baiTapNop.daChuyenDiem = layBool(dong, i);
+                        break;
+                    case "Diem":
+                        baiTapNop.diem = layDouble(dong, i);
+                        break;
+                    case "GhiChu":
+                        baiTapNop.ghiChu = layString(dong, i);
                         break;
                     default:
                         break;
@@ -102,6 +111,84 @@ namespace DAOLayer
                 },
                 lienKet
             );
+        }
+
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
+        {
+            return layDong
+                (
+                    "layBaiTapNopTheoMa",
+                    new object[]
+                    {
+                        ma
+                    },
+                    lienKet
+                );
+        }
+
+        public static KetQua capNhatTheoMa_Diem(int? ma, double? diem)
+        {
+            return khongTruyVan
+                (
+                    "capNhatBaiTapNopTheoMa_Diem",
+                    new object[] 
+                    { 
+                        ma,
+                        diem
+                    }
+                );
+        }
+
+        public static KetQua capNhatTheoMa_GhiChu(int? ma, string ghiChu)
+        {
+            return khongTruyVan
+                (
+                    "capNhatBaiTapNopTheoMa_GhiChu",
+                    new object[] 
+                    { 
+                        ma,
+                        ghiChu
+                    }
+                );
+        }
+
+        public static KetQua layTheoMaBaiVietBaiTapVaDaChuyenDiem(int? maBaiVietBaiTap, bool daChuyenDiem, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layBaiTapNopTheoMaBaiVietBaiTapVaDaChuyenDiem",
+                    new object[]
+                    {
+                        maBaiVietBaiTap,
+                        daChuyenDiem
+                    },
+                    lienKet
+                );
+        }
+
+        public static KetQua capNhatTheoMaBaiVietBaiTap_DaChuyenDiem(int? maBaiVietBaiTap)
+        {
+            return khongTruyVan
+                (
+                    "capNhatBaiTapNopTheoMaBaiVietBaiTap_DaChuyenDiem",
+                    new object[]
+                    {
+                        maBaiVietBaiTap
+                    }
+                );
+        }
+
+        public static KetQua capNhatTheoMa_DaXoa(int? ma, string ghiChu)
+        {
+            return khongTruyVan
+                (
+                    "capNhatBaiTapNopTheoMa_DaXoa",
+                    new object[]
+                    {
+                        ma, 
+                        ghiChu
+                    }
+                );
         }
     }
 }

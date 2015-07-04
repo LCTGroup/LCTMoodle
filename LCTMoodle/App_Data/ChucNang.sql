@@ -36,3 +36,6 @@ DBCC CHECKIDENT('dbo.ChuDe', RESEED, 1)
 --Tiếng việt
 ALTER DATABASE rtcmfraf_Moodle
 	COLLATE Vietnamese_CI_A
+	
+--Đổi tên
+EXEC sp_rename 'dbo.BaiTapNop.ThoiDiemCham', 'ThoiDiemChuyenDiem', 'COLUMN';

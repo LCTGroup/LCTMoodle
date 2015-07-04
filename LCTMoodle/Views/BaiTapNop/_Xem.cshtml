@@ -1,0 +1,81 @@
+﻿@using LCTMoodle.LCTView
+@model DTOLayer.BaiTapNopDTO
+
+<article class="hop-1-vien">
+    <section class="noi-dung khung-xem" data-doi-tuong="bai-nop-item" data-ma="@Model.ma">
+        <section class="khung-thong-tin">
+            <section class="cot-1">
+                <article class="hinh-dai-dien">
+                    @NguoiDungView.hinhDaiDien(Model.nguoiTao)
+                </article>
+            </section>
+            <section class="cot-2">
+                <section class="thong-tin">
+                    @NguoiDungView.link(Model.nguoiTao, new Dictionary<string, string>() { { "class", "nguoi-nop" } })
+                    <span class="thoi-gian">
+                        @Model.thoiDiemTao.Value.ToString("H:mm d/M/yyyy")
+                    </span>
+                </section>
+                <section class="bai-nop">
+                    @if (Model.tapTin == null)
+                    {
+                        <a href="@Model.duongDan">
+                            <span>@Model.duongDan</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/LayTapTin/BaiTapNop_TapTin/@Model.tapTin.ma">
+                            <img src="/LayHinh/BaiTapNop_TapTin/@Model.tapTin.ma" />
+                            <span>@Model.tapTin.ten</span>
+                        </a>
+                    }
+                </section>
+            </section>
+        </section>
+        <form class="khung-chuc-nang lct-form" data-doi-tuong="diem-form" data-an-rang-buoc data-popup-loi>
+            <article class="input">
+                <input data-doi-tuong="diem" type="text" placeholder="10" data-validate="so-thuc bat-buoc" data-mac-dinh="@Model.diem" />
+                <a data-chuc-nang="diem" class="button diem"><i></i></a>
+            </article>
+            <a data-chuc-nang="ghi-chu" class="button">Ghi chú</a>
+            <a data-chuc-nang="xoa" class="button nguy-hiem">Xóa</a>
+        </form>
+        <section class="khung-noi-dung" data-doi-tuong="khung-noi-dung">
+            <article class="noi-dung">                
+                @{
+                    if (Model.tapTin == null)
+                    {
+                        return;
+                    }
+                        
+                    string duongDan = Helpers.TapTinHelper.layDuongDan("BaiTapNop_TapTin", Model.tapTin.ma + Model.tapTin.duoi);
+
+                    var kq = BUSLayer.TapTinBUS.doc(duongDan);
+
+                    if (kq.trangThai != 0)
+                    {
+                        <span>Đọc tập tin thất bại <br /> @kq.ketQua;</span>
+                    }
+
+                    var ketQua = kq.ketQua as string[];
+                    switch (ketQua[0])
+                    {
+                        case "image":
+                            <img src="/LayHinh/BaiTapNop_TapTin/@Model.tapTin.ma" />
+                        break;
+                        case "text":
+                            <p>@ketQua[1]</p>
+                        break;
+                        case "code":
+                            <pre><code>@ketQua[1]</code></pre>
+                        break;
+                        default:
+                            <span>Không nhận dạng tập tin</span>
+                        break;
+                    }
+                }
+            </article>
+        </section>
+    </section>
+</article>

@@ -1,0 +1,288 @@
+﻿.khung-danh-sach-nop {
+
+}
+
+/*#region Cột */
+
+.khung-danh-sach-nop tbody tr > :nth-child(1) {
+    text-align: right;
+    width: 1%;
+    white-space: nowrap;
+}
+
+.khung-danh-sach-nop tbody tr > :nth-child(2) {
+    text-align: left;
+    width: 1%;
+    white-space: nowrap;
+}
+
+.khung-danh-sach-nop tbody tr > :nth-child(3) {
+    word-break: break-all;
+}
+
+.khung-danh-sach-nop tbody tr > :nth-child(4) {
+    text-align: center;
+    font-family: Berlin;
+    font-size: 20px;
+    width: 20px;
+}
+
+.khung-danh-sach-nop tbody tr > :nth-child(5) {
+    text-align: center;
+    cursor: default;
+    width: 50px;
+}
+
+.khung-danh-sach-nop tbody tr > :nth-child(6) {
+    text-align: center;
+    width: 18px;
+}
+
+/*#endregion */
+
+/*#region Nút */
+
+.khung-danh-sach-nop tbody .button {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-image: url('/KhoaHoc.png/KhoaHoc');
+    opacity: 0.5;
+    transition: 0.5s;
+}
+
+    .khung-danh-sach-nop .button.xem {
+        background-position: -72px -48px;
+    }
+
+    .khung-danh-sach-nop .button.ghi-chu {
+        background-position: -72px -64px;
+    }
+
+    .khung-danh-sach-nop .button.xoa {
+        background-position: -72px -80px;
+    }
+
+    .khung-danh-sach-nop .button.diem {
+        background-position: -72px -96px;
+    }
+
+        .khung-danh-sach-nop tbody .button:hover {
+            opacity: 1;
+        }
+        
+.khung-danh-sach-nop tbody .tap-tin:hover {
+    text-decoration: none;
+}
+        
+    .khung-danh-sach-nop tbody .tap-tin i {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        vertical-align: middle;
+        background: url('/KhoaHoc.png/KhoaHoc') -72px -112px;
+    }
+        
+    .khung-danh-sach-nop tbody .tap-tin:hover span {
+        text-decoration: underline;
+    }
+
+.khung-danh-sach-nop tr[data-co-ghi-chu] .nut-ghi-chu {
+    display: block;
+    position: absolute;
+    border: 15px solid transparent;
+    border-left-color: #f90;
+    transform: rotate(-45deg);
+    top: -15px;
+    right: -15px;
+    opacity: 0.7;
+    transition: opacity 0.5s;
+}
+
+    .khung-danh-sach-nop tr[data-co-ghi-chu] .nut-ghi-chu:hover {
+        opacity: 1;
+    }
+
+.khung-nut {
+    text-align: right;
+}
+
+.khung-nut a.button {
+    background-color: #fcfcfc;
+}
+
+/*#endregion */
+
+/*#region Checkbox */
+
+.lct-checkbox .checkbox-radio-label {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.lct-checkbox input[type="checkbox"] {
+    position: absolute;
+    left: -9999px;
+}
+
+    .lct-checkbox input[type="checkbox"] + u {
+        display: inline-block;
+        vertical-align: top;
+        width: 14px;
+        height: 14px;
+        padding: 1px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+    }
+
+        .lct-checkbox input[type="checkbox"] + u:before {
+            content: '';
+            height: 14px;
+            display: block;
+            background-color: #eee;
+            transition: 0.5s;
+            width: 3px;
+        }
+        
+.lct-checkbox label > input[type="checkbox"]:focus + u:before,
+.lct-checkbox label:hover > input[type="checkbox"] + u:before {
+    width: 5px;
+    background-color: #08c;
+}
+
+.lct-checkbox input[type="checkbox"]:checked + u:before {
+    background-color: #08c;
+}
+
+.lct-checkbox input[type="checkbox"]:checked + u:before {
+    width: 14px;
+}
+
+.lct-checkbox label > input[type="checkbox"]:checked:focus + u:before,
+.lct-checkbox label:hover > input[type="checkbox"]:checked + u:before {
+    width: 11px;
+}
+
+/*#endregion */
+
+/*#region Khung xem */
+
+.khung-xem {
+    padding: 10px;
+}
+
+.khung-xem .khung-thong-tin {
+    display: flex;
+}
+
+    .khung-xem .khung-thong-tin .cot-1 {
+        min-width: 40px;
+        max-width: 40px;
+        margin-right: 5px;
+    }
+
+    .khung-xem .khung-thong-tin .hinh-dai-dien {
+        width: 40px;
+        height: 40px;
+    }
+
+        .khung-xem .khung-thong-tin .hinh-dai-dien img {
+            width: 40px;
+            height: 40px;
+        }
+
+    .khung-xem .khung-thong-tin .cot-2 {
+        width: 100%;
+    }
+
+    .khung-xem .khung-thong-tin .thong-tin {
+    }
+
+    .khung-xem .khung-thong-tin .nguoi-nop {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .khung-xem .khung-thong-tin .thoi-gian {
+        font-size: 11px;
+        color: #555;
+    }
+
+    .khung-xem .khung-thong-tin .bai-nop {
+        margin-top: 5px;
+    }
+
+        .khung-xem .khung-thong-tin .bai-nop a {
+            display: inline-block;
+        }
+
+        .khung-xem .khung-thong-tin .bai-nop img {
+            height: 20px;
+            width: 20px;
+            vertical-align: bottom;
+        }
+
+        .khung-xem .khung-thong-tin .bai-nop span {
+            color: #555;
+            font-size: 12px;
+        }
+
+    .khung-xem .khung-chuc-nang {
+        text-align: center;
+    }
+
+        .khung-xem .khung-chuc-nang .input {
+            width: 60px;
+            height: 33px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+            .khung-xem .khung-chuc-nang .input input {
+                height: 23px;
+                text-align: center;
+                font-family: Berlin;
+                font-size: 20px;
+            }
+
+        .khung-xem .khung-chuc-nang .button.diem {
+            margin: 0;
+            width: 16px;
+            height: 16px;
+            padding: 5px;
+            position: absolute;
+            top: 100%;
+            left: calc(50% - 14px);
+            display: none;
+            border-top: 1px solid #fff;
+        }
+
+            .khung-xem .khung-chuc-nang input:focus + .button,
+            .khung-xem .khung-chuc-nang .button.diem:hover {
+                display: block;
+            }
+
+            .khung-xem .khung-chuc-nang .button.diem i {
+                width: 16px;
+                height: 16px;
+                display: block;
+                background: url('/KhoaHoc.png/KhoaHoc') -72px -96px;
+                opacity: 0.5;
+                transition: 0.5s;
+            }
+
+                .khung-xem .khung-chuc-nang .button.diem:hover i {
+                    opacity: 1;
+                }
+
+.khung-xem .khung-noi-dung {
+    margin-top: 10px;
+}
+
+    .khung-xem .khung-noi-dung .noi-dung {
+        padding: 10px;
+        border: 1px solid #eee;
+        background-color: #fff;
+    }
+
+/*#endregion */

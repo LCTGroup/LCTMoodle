@@ -6,7 +6,7 @@
     var maNguoiDung = Session["NguoiDung"] as int?;
     
     string[] dsQuyen;    
-    bool coQuyenSua, coQuyenXoa, coQuyenQLBaiNop, coQuyenNopBai;
+    bool coQuyenSua, coQuyenXoa, coQuyenQLBaiNop, coQuyenNopBai, coQuyenChamDiem;
     
     if (maNguoiDung.HasValue)
     {
@@ -22,6 +22,7 @@
         coQuyenSua = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BT_Sua");
         coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BT_Xoa");
         coQuyenQLBaiNop = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BT_QLBaiNop");
+        coQuyenChamDiem = QuyenHelper.co(dsQuyen, "QLBangDiem");
         
         //Kiểm tra người dùng có phải là thành viên không để sử dụng chức năng nộp bài
         if (ViewData.ContainsKey("LaHocVien"))
@@ -44,7 +45,7 @@
     }
     else 
     {
-        coQuyenSua = coQuyenXoa = coQuyenQLBaiNop = coQuyenNopBai = false;
+        coQuyenSua = coQuyenXoa = coQuyenQLBaiNop = coQuyenNopBai = coQuyenChamDiem = false;
         dsQuyen = null;
     }
 }
@@ -54,7 +55,7 @@
         <section class="khung-thong-tin">
             <section class="trai">
                 <article class="hinh-dai-dien">
-                    <img src="/boy.png/" />
+                    @NguoiDungView.hinhDaiDien(Model.nguoiTao)
                 </article>
             </section>
             <section class="phai">
@@ -85,7 +86,7 @@
             {
                 <section class="tap-tin">
                     <a href="/LayTapTin/BaiVietBaiTap_TapTin/@Model.tapTin.ma">
-                        <img src="/LayTapTin/BaiVietBaiTap_TapTin/@Model.tapTin.ma" />
+                        <img src="/LayHinh/BaiVietBaiTap_TapTin/@Model.tapTin.ma" />
                         <span>@Model.tapTin.ten</span>
                     </a>
                 </section>
@@ -115,6 +116,10 @@
         }
     </section>
     <section data-doi-tuong="khung-nop-bai" class="khung-nop-bai">
+        @if (coQuyenChamDiem)
+        {
+            <a class="cham-diem" href="/KhoaHoc/Cham-BaiTap/@Model.ma"><i class="pe-7s-pen"></i>Chấm điểm</a>
+        }
         @Html.Partial("~/Views/BaiTapNop/_Khung.cshtml", Model.danhSachBaiTapNop, new ViewDataDictionary()
         {
             { "MaKhoaHoc", maKhoaHoc },

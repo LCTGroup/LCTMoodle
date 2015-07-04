@@ -33,18 +33,23 @@ END
 
 GO
 --Tăng số lượng trả lời trong Câu hỏi khi thêm trả lời
-CREATE TRIGGER dbo.themTraLoi_TRIGGER
+ALTER TRIGGER dbo.themTraLoi_TRIGGER
 ON dbo.TraLoi
 AFTER INSERT
 AS
 BEGIN
 	DECLARE @maCauHoi INT
+	DECLARE @maNguoiTao INT
 	
-	SELECT @maCauHoi = MaCauHoi	FROM inserted
+	SELECT @maCauHoi = MaCauHoi, @maNguoiTao = MaNguoiTao FROM inserted
 
 	UPDATE dbo.CauHoi
 	SET SoLuongTraLoi += 1
 	WHERE Ma = @maCauHoi
+
+	UPDATE dbo.NguoiDung
+	SET DiemHoiDap += 1
+	WHERE Ma = @maNguoiTao
 END
 
 GO
@@ -58,19 +63,25 @@ BEGIN
 	DELETE FROM dbo.TraLoi WHERE Ma = @0
 END
 
+GO
 --Giảm số lượng trả lời trong Câu hỏi khi thêm trả lời
-CREATE TRIGGER dbo.xoaTraLoi_TRIGGER
+ALTER TRIGGER dbo.xoaTraLoi_TRIGGER
 ON dbo.TraLoi
 AFTER DELETE
 AS
 BEGIN
 	DECLARE @maCauHoi INT
+	DECLARE @maNguoiTao INT
 
-	SELECT @maCauHoi = MaCauHoi From DELETED
+	SELECT @maCauHoi = MaCauHoi, @maNguoiTao = MaNguoiTao From DELETED
 
 	UPDATE dbo.CauHoi
 	SET SoLuongTraLoi -= 1
 	WHERE Ma = @maCauHoi
+
+	UPDATE dbo.NguoiDung
+	SET DiemHoiDap -= 1
+	WHERE Ma = @maNguoiTao
 END
 
 GO

@@ -47,11 +47,11 @@ namespace BUSLayer
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (coKiemTra("TieuDe", truong, kiemTra) && string.IsNullOrEmpty(cauHoi.tieuDe))
+            if (coKiemTra("TieuDe", truong, kiemTra) && string.IsNullOrWhiteSpace(cauHoi.tieuDe))
             {
                 loi.Add("Tiêu đề không được bỏ trống");
             }
-            if (coKiemTra("NoiDung", truong, kiemTra) && string.IsNullOrEmpty(cauHoi.noiDung))
+            if (coKiemTra("NoiDung", truong, kiemTra) && string.IsNullOrWhiteSpace(cauHoi.noiDung))
             {
                 loi.Add("Nội dung không được bỏ trống");                
             }
@@ -106,7 +106,7 @@ namespace BUSLayer
             #region Kiểm tra điều kiện
 
             int? maNguoiTao = form.layInt("MaNguoiTao");
-            if (maNguoiTao.HasValue)
+            if (!maNguoiTao.HasValue)
             {
                 return new KetQua(4);
             }
@@ -117,7 +117,6 @@ namespace BUSLayer
             gan(ref cauHoi, form);
 
             KetQua ketQua = kiemTra(cauHoi);
-            
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
@@ -172,7 +171,6 @@ namespace BUSLayer
             gan(ref cauHoi, form);
 
             ketQua = kiemTra(cauHoi, form.Keys.ToArray());
-
             if (ketQua.trangThai != 0)
             {
                 return ketQua;

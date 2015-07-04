@@ -1,0 +1,161 @@
+﻿@using LCTMoodle.LCTView
+@using Helpers
+@model DTOLayer.BaiVietBaiTapDTO
+@{
+    Layout = "~/Views/LCT/Khung.cshtml";
+    
+    ViewData["TieuDe"] = "Chấm bài tập - " + Model.tieuDe;
+
+    var khoaHoc = Model.khoaHoc;
+    var dsNop = Model.danhSachBaiTapNop;
+
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma.Value,
+        "Chấm bài tập - " + Model.tieuDe, "/KhoaHoc/Cham-BaiTap/" + Model.ma.Value
+    };
+
+    /*
+        Chức năng
+     */
+    List<string> chucNang = new List<string>();
+
+    chucNang.Add("Danh sách bài tập");
+    chucNang.Add("href='/KhoaHoc/" + khoaHoc.ma.Value + "?hienthi=baitap'");
+
+    chucNang.Add("Danh sách thành viên");
+    chucNang.Add("href='/KhoaHoc/DanhSachThanhVien/" + khoaHoc.ma.Value + "'");
+
+    var maNguoiDung = Session["NguoiDung"] as int?;
+    string[] dsQuyen;
+
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("KH", khoaHoc.ma.Value);
+    }
+    else
+    {
+        dsQuyen = null;
+    }
+
+    if (QuyenHelper.co(dsQuyen, "QLQuyen"))
+    {
+        chucNang.Add("Quản lý quyền");
+        chucNang.Add("href='/QuanlyQuyen/KH/" + khoaHoc.ma.Value + "'");
+    }
+
+    chucNang.Add("Chương trình khóa học");
+    chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + khoaHoc.ma.Value + "'");
+
+    if (QuyenHelper.co(dsQuyen, "QLBangDiem"))
+    {
+        chucNang.Add("Quản lý bảng điểm");
+        chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + khoaHoc.ma.Value + "'");
+    }
+
+    chucNang.Add("Xem điểm khóa học");
+    chucNang.Add("href='/KhoaHoc/Xem-BangDiem/" + khoaHoc.ma.Value + "'");
+
+    ViewData["ChucNang"] = chucNang;
+}
+@section Styles {
+    <link href="/ChamDiem.css/BaiVietBaiTap" rel="stylesheet" />
+    <link href="/Plugin/highlight/hightlight.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="/ChamDiem.js/BaiVietBaiTap"></script>
+    <script src="/Plugin/highlight/highlight.js"></script>
+    <script>
+        maBaiTap = '@Model.ma.Value';
+    </script>
+}
+
+<article class="hop hop-2-vien">
+    <section class="tieu-de">Chấm điểm bài tập: @Model.tieuDe</section>
+    <section class="khung-nut lct-form">
+        <section>
+            <a class="button" data-chuc-nang="chuyen-diem">Cập nhật vào bảng</a>
+        </section>
+        <section>
+            <a class="button nguy-hiem">Xóa bài nộp</a>
+            <a class="button">Tải tập tin</a>
+            <a class="button">Chọn hết</a>
+            <a class="button">Bỏ chọn hết</a>
+        </section>
+    </section>
+    <section class="noi-dung">
+        <article style="border: 0; background-color: transparent;">
+            <table class="khung-danh-sach-nop lct-bang">
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            Họ tên
+                        </th>
+                        <th>
+                            Bài nộp
+                        </th>
+                        <th>
+                            Điểm
+                        </th>
+                        <th>
+                            Chức năng
+                        </th>
+                        <th>
+                            Chọn
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="ds_bai_nop">
+                    @foreach (var baiNop in dsNop)
+                    {
+                        <tr data-ma="@baiNop.ma" 
+                            @if (!string.IsNullOrWhiteSpace(baiNop.ghiChu)) 
+                            {
+                                @:data-co-ghi-chu data-ghi-chu="@baiNop.ghiChu"
+                            }
+                        >
+                            <th class="khong-vien"><a href="/NguoiDung/Xem/@baiNop.nguoiTao.ma">@baiNop.nguoiTao.ho @baiNop.nguoiTao.tenLot</a></th>
+                            <th class="khong-vien"><a href="/NguoiDung/Xem/@baiNop.nguoiTao.ma">@baiNop.nguoiTao.ten</a><a class="nut-ghi-chu" data-chuc-nang="ghi-chu"></a></th>
+                            <td>
+                            @if (baiNop.tapTin == null)
+                            {
+                                <a href="@baiNop.duongDan" target="_blank"><span>@baiNop.duongDan</span></a>
+                            }
+                            else
+                            {
+                                <a class="tap-tin" href="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma">
+                                    <i></i>
+                                    <span>@baiNop.tapTin.ten</span>
+                                </a>
+                            }
+                            </td>
+                            <td><span data-doi-tuong="diem">@baiNop.diem</span></td>
+                            <td>
+                                <section>
+                                    <a data-chuc-nang="xem" class="button xem" title="Xem trước"></a>
+                                    <a data-chuc-nang="ghi-chu" class="button ghi-chu" title="Ghi chú"></a>
+                                </section>
+                                <section>
+                                    <a data-chuc-nang="cham-diem" class="button diem" title="Cho điểm"></a>
+                                    <a data-chuc-nang="xoa" class="button xoa" title="Xóa"></a>
+                                </section>
+                            </td>
+                            <td class="lct-checkbox"><label class="checkbox-radio-label"><input type="checkbox"><u></u></label></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </article>
+    </section>
+    <section class="khung-nut lct-form">
+        <section>
+            <a class="button nguy-hiem">Xóa bài nộp</a>
+            <a class="button">Tải tập tin</a>
+            <a class="button">Chọn hết</a>
+            <a class="button">Bỏ chọn hết</a>
+        </section>
+        <section>
+            <a class="button" data-chuc-nang="chuyen-diem">Cập nhật vào bảng</a>
+        </section>
+    </section>
+</article>

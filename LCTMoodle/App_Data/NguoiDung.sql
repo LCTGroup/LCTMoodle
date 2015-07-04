@@ -16,14 +16,15 @@ CREATE TABLE dbo.NguoiDung
 	DiaChi NVARCHAR(MAX),
 	SoDienThoai NVARCHAR(MAX),
 	MaHinhDaiDien INT,
+	DaKichHoat BIT DEFAULT 0,
+	MaKichHoat NVARCHAR(MAX),
+	MatKhauCap2 NVARCHAR(MAX),
 	CoQuyenHT BIT,
 	CoQuyenND BIT,
 	CoQuyenCD BIT,
 	CoQuyenHD BIT,
 	CoQuyenKH BIT,
-	DaKichHoat BIT DEFAULT 0,
-	MaKichHoat NVARCHAR(MAX),
-	MatKhauCap2 NVARCHAR(MAX)
+	DiemHoiDap INT DEFAULT 0
 )
 
 GO
@@ -134,13 +135,11 @@ ALTER PROC dbo.layNguoiDung_TimKiem
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		Ho,
-		Ten
+	SET @0 = '%' + REPLACE(@0, ' ', '%') + '%'
+	SELECT TOP 20 *
 		FROM dbo.NguoiDung
 		WHERE 
-			Ho + ' ' + TenLot + ' ' + Ten LIKE '%' + REPLACE(@0, ' ', '%') + '%'
+			Ho + ' ' + TenLot + ' ' + Ten LIKE @0
 END
 
 GO
@@ -151,16 +150,14 @@ ALTER PROC dbo.layNguoiDungTheoMaKhoaHoc_TimKiem (
 )
 AS
 BEGIN
-	SELECT
-		ND.Ma,
-		ND.Ho,
-		ND.Ten
+	SET @1 = '%' + REPLACE(@1, ' ', '%') + '%'
+	SELECT TOP 20 *
 		FROM 
 			dbo.KhoaHoc_NguoiDung KH_ND INNER JOIN
 				dbo.NguoiDung ND ON
 					KH_ND.MaKhoaHoc = @0 AND
 					KH_ND.MaNguoiDung = ND.Ma AND
-					ND.Ho + ' ' + ND.Ten LIKE '%' + REPLACE(@1, ' ', '%') + '%'
+					ND.Ho + ' ' + ND.TenLot + ' ' + ND.Ten LIKE @1
 END
 
 GO
@@ -172,10 +169,7 @@ ALTER PROC dbo.layNguoiDungTheoMaNhomNguoiDung (
 AS
 BEGIN
 	EXEC('
-		SELECT
-			ND.Ma,
-			ND.Ho,
-			ND.Ten
+		SELECT *
 			FROM
 				dbo.NguoiDung ND 
 					INNER JOIN dbo.NhomNguoiDung_' + @0 + '_NguoiDung NND_ND

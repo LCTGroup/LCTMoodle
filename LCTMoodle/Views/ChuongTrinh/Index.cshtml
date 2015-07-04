@@ -11,18 +11,18 @@
 
     ViewData["DieuHuong"] = new List<string>()
     {
-        "Khóa học của tôi", "/KhoaHoc",
         khoaHoc.ten, "/KhoaHoc/" + khoaHoc.ma,
-        "Soạn giáo trình", "/ChuongTrinh/" + khoaHoc.ma
+        "Chương trình khóa học", "/ChuongTrinh/" + khoaHoc.ma
     };
 
+    List<string> chucNang = new List<string>();
     string[] dsQuyen;
     bool coQuyenQLChuongTrinh;
-    
-    if (!maNguoiDung.HasValue)
+
+    if (maNguoiDung.HasValue)
     {
         dsQuyen = QuyenView.layDSQuyen("KH", khoaHoc.ma.Value);
-        
+
         coQuyenQLChuongTrinh = QuyenHelper.co(dsQuyen, "QLChuongTrinh");
     }
     else
@@ -30,6 +30,26 @@
         dsQuyen = null;
         coQuyenQLChuongTrinh = false;
     }
+
+    chucNang.Add("Nội dung khóa học");
+    chucNang.Add("href='/KhoaHoc/" + khoaHoc.ma + "'");
+
+    if (QuyenHelper.co(dsQuyen, "QLQuyen"))
+    {
+        chucNang.Add("Quản lý quyền");
+        chucNang.Add("href='/QuanlyQuyen/KH/" + khoaHoc.ma + "'");
+    }
+
+    if (QuyenHelper.co(dsQuyen, "QLBangDiem"))
+    {
+        chucNang.Add("Quản lý bảng điểm");
+        chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + khoaHoc.ma + "'");
+    }
+
+    chucNang.Add("Xem điểm khóa học");
+    chucNang.Add("href='/KhoaHoc/Xem-BangDiem/" + khoaHoc.ma + "'");
+
+    ViewData["ChucNang"] = chucNang;
 }
 @section Styles {
     <link href="/Index.css/ChuongTrinh" rel="stylesheet" />
@@ -63,7 +83,8 @@
                         {
                             @Html.Partial("~/Views/ChuongTrinh/_Item.cshtml", item, new ViewDataDictionary()
                             {
-                                { "DSQuyen", dsQuyen }
+                                { "DSQuyen", dsQuyen },
+                                { "MaKhoaHoc", khoaHoc.ma.Value }
                             });
                         }
                     }

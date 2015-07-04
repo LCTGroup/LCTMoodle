@@ -125,6 +125,10 @@ a[href]:hover {
     }
 }
 
+body.dang-tai-lct {
+    cursor: progress !important;
+}
+
 body.tai > .khung {
     display: none;
 }
@@ -542,6 +546,10 @@ body.khong-scroll {
     overflow: hidden;
 }
 
+body.khong-scroll > .khung {
+    overflow-y: scroll;
+}
+
 .popup-full-container {
     width: 100%;
     height: 100%;
@@ -549,13 +557,31 @@ body.khong-scroll {
     top: 0;
     left: 0;
     z-index: 19;
+    display: none;
 }
+
+    .popup-full-container.popup-mo {
+        display: block;
+    }
 
     .popup-full-container .khung-tat {
         position: absolute;
         width: 100%;
         height: 100%;
     }
+    
+
+@keyframes mo-popup-full {
+    0% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+}
 
     .popup-full-container .popup-full {
         background-color: rgba(0, 0, 0, 0.3);
@@ -568,9 +594,23 @@ body.khong-scroll {
         justify-content: center;
     }
 
-        .popup-full-container .popup-full .khung-noi-dung {
+        .popup-full-container.popup-mo .popup-full {
+            animation: mo-popup-full 0.3s;
+        }
+
+@keyframes mo-popup-noi-dung { 
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-50%);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+        .popup-full-container > .popup-full > .khung-noi-dung {
             text-align: left;
-            display: inline-block;
             max-width: 90vw;
             max-height: 90vh;
             background-color: #f5f5f5;
@@ -580,6 +620,10 @@ body.khong-scroll {
             overflow-y: auto;
             overflow-x: hidden;
         }
+
+            .popup-full-container.popup-mo  > .popup-full > .khung-noi-dung {
+                animation: mo-popup-noi-dung 0.3s;
+            }
 
 /*#endregion */
 

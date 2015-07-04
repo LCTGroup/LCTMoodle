@@ -8,17 +8,20 @@
     //Khung danh sách bài viết
     $_DanhSach,
     //Khung chưa toàn bộ
-    $_KhungChua;
+    $_KhungChua,
+    //Khung chọn hiển thị
+    $_KhungChonHienThi;
 
 //#region Khởi tạo
 
 $(function () {
     $_KhungHienThi = $('#khung_hien_thi');
+    $_KhungChonHienThi = $('#khung_chon_hien_thi')
     $_KhungChua = $_KhungHienThi.parent();
 
     hienThi(layQueryString('hienthi').toLowerCase());
 
-    khoiTaoNutHienThi($_KhungChua.find('[data-chuc-nang="hien-thi"]'));
+    khoiTaoNutHienThi($_KhungChonHienThi.find('[data-chuc-nang="hien-thi"]'));
     khoiTaoQuayLai();
 
     //Khởi tạo nút
@@ -188,23 +191,21 @@ function khoiTaoNutTuChoiMoi() {
 //#region Khung
 
 function hienThi_Khung() {
-    var $khung = layKhung_Khung();
-
-    $_KhungHienThi.html($khung);
-    $_KhungChua.attr('data-hien-thi', 'khung');
-}
-
-function layKhung_Khung() {
-    var $khung;
-
+    var $tai = moBieuTuongTai($_KhungChonHienThi);
     $.ajax({
         url: '/KhoaHoc/_Khung',
         data: { ma: maKhoaHoc },
-        dataType: 'JSON',
-        async: false
+        dataType: 'JSON'
+    }).always(function () {
+        $tai.tat();
     }).done(function (data) {
         if (data.trangThai == 0) {
-            $khung = $(data.ketQua);
+            var $khung = $(data.ketQua);
+
+            khoiTaoKhung($khung);
+
+            $_KhungHienThi.html($khung);
+            $_KhungChua.attr('data-hien-thi', 'khung');
         }
         else {
             moPopupThongBao(data);
@@ -212,10 +213,6 @@ function layKhung_Khung() {
     }).fail(function () {
         moPopupThongBao('Lấy khung thất bại');
     });
-
-    khoiTaoKhung($khung);
-
-    return $khung;
 }
 
 function khoiTaoKhung($khung) {
@@ -226,47 +223,33 @@ function khoiTaoKhung($khung) {
 
 //#region Diễn đàn
 
-function hienThi_DienDan() {
-    var $khung = layKhung_DienDan();
-
-    $_KhungHienThi.html($khung);
-    $_KhungChua.attr('data-hien-thi', 'dien-dan');
-    document.title = 'Diễn đàn - ' + tieuDe;
-
-    $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
-
-    khoiTaoForm_DienDan($_KhungHienThi.find('#tao_bai_viet_form'));
-    khoiTaoItem_DienDan($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
-}
-
-function layKhung_DienDan() {
-    var $khung;
-
+function hienThi_DienDan()   {
+    var $tai = moBieuTuongTai($_KhungChonHienThi);
     $.ajax({
         url: '/BaiVietDienDan/_Khung',
         data: { maKhoaHoc: maKhoaHoc },
-        dataType: 'JSON',
-        async: false
+        dataType: 'JSON'
+    }).always(function () {
+        $tai.tat();
     }).done(function (data) {
         if (data.trangThai == 0) {
-            $khung = $(data.ketQua);
+            var $khung = $(data.ketQua);
+
+            $_KhungHienThi.html($khung);
+            $_KhungChua.attr('data-hien-thi', 'dien-dan');
+            document.title = 'Diễn đàn - ' + tieuDe;
+
+            $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
+
+            khoiTaoForm_DienDan($_KhungHienThi.find('#tao_bai_viet_form'));
+            khoiTaoItem_DienDan($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
         }
         else {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Lấy diễn đàn thất bại',
-                bieuTuong: 'nguy-hiem'
-            })
+            moPopupThongBao(data);
         }
     }).fail(function () {
-        moPopup({
-            tieuDe: 'Thông báo',
-            thongBao: 'Lấy diễn đàn thất bại',
-            bieuTuong: 'nguy-hiem'
-        })
+        moPopupThongBao('Lấy diễn đàn thất bại');
     });
-
-    return $khung;
 }
 
 function khoiTaoForm_DienDan($form) {
@@ -449,46 +432,32 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
 //#region Bài giảng
 
 function hienThi_BaiGiang() {
-    var $khung = layKhung_BaiGiang();
-
-    $_KhungHienThi.html($khung);
-    $_KhungChua.attr('data-hien-thi', 'bai-giang');
-    document.title = 'Bài giảng - ' + tieuDe;
-
-    $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
-
-    khoiTaoForm_BaiGiang($_KhungHienThi.find('#tao_bai_viet_form'));
-    khoiTaoItem_BaiGiang($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
-}
-
-function layKhung_BaiGiang() {
-    var $khung;
-
+    var $tai = moBieuTuongTai($_KhungChonHienThi);
     $.ajax({
         url: '/BaiVietBaiGiang/_Khung',
         data: { maKhoaHoc: maKhoaHoc },
-        dataType: 'JSON',
-        async: false
+        dataType: 'JSON'
+    }).always(function () {
+        $tai.tat();
     }).done(function (data) {
         if (data.trangThai == 0) {
-            $khung = $(data.ketQua);
+            var $khung = $(data.ketQua);
+
+            $_KhungHienThi.html($khung);
+            $_KhungChua.attr('data-hien-thi', 'bai-giang');
+            document.title = 'Bài giảng - ' + tieuDe;
+
+            $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
+
+            khoiTaoForm_BaiGiang($_KhungHienThi.find('#tao_bai_viet_form'));
+            khoiTaoItem_BaiGiang($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
         }
         else {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Lấy bài giảng thất bại',
-                bieuTuong: 'nguy-hiem'
-            })
+            moPopupThongBao(data);
         }
     }).fail(function () {
-        moPopup({
-            tieuDe: 'Thông báo',
-            thongBao: 'Lấy bài giảng thất bại',
-            bieuTuong: 'nguy-hiem'
-        })
+        moPopupThongBao('Lấy bài giảng thất bại');
     });
-
-    return $khung;
 }
 
 function khoiTaoForm_BaiGiang($form) {
@@ -654,46 +623,32 @@ function moItem_BaiGiang($baiGiang) {
 //#region Tài liệu
 
 function hienThi_TaiLieu() {
-    var $khung = layKhung_TaiLieu();
-
-    $_KhungHienThi.html($khung);
-    $_KhungChua.attr('data-hien-thi', 'tai-lieu');
-    document.title = 'Bài giảng - ' + tieuDe;
-
-    $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
-
-    khoiTaoForm_TaiLieu($_KhungHienThi.find('#tao_bai_viet_form'));
-    khoiTaoItem_TaiLieu($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
-}
-
-function layKhung_TaiLieu() {
-    var $khung;
-
+    var $tai = moBieuTuongTai($_KhungChonHienThi);
     $.ajax({
         url: '/BaiVietTaiLieu/_Khung',
         data: { maKhoaHoc: maKhoaHoc },
-        dataType: 'JSON',
-        async: false
+        dataType: 'JSON'
+    }).always(function () {
+        $tai.tat();
     }).done(function (data) {
         if (data.trangThai == 0) {
-            $khung = $(data.ketQua);
+            var $khung = $(data.ketQua);
+
+            $_KhungHienThi.html($khung);
+            $_KhungChua.attr('data-hien-thi', 'tai-lieu');
+            document.title = 'Bài giảng - ' + tieuDe;
+
+            $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
+
+            khoiTaoForm_TaiLieu($_KhungHienThi.find('#tao_bai_viet_form'));
+            khoiTaoItem_TaiLieu($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
         }
         else {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Lấy bài giảng thất bại',
-                bieuTuong: 'nguy-hiem'
-            })
+            moPopupThongBao(data);
         }
     }).fail(function () {
-        moPopup({
-            tieuDe: 'Thông báo',
-            thongBao: 'Lấy bài giảng thất bại',
-            bieuTuong: 'nguy-hiem'
-        })
+        moPopupThongBao('Lấy bài giảng thất bại');
     });
-
-    return $khung;
 }
 
 function khoiTaoForm_TaiLieu($form) {
@@ -833,11 +788,7 @@ function khoiTaoItem_TaiLieu($danhSachTaiLieu) {
                 $baiViet.html($form);
             }
             else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Sửa bài viết thất bại',
-                    bieuTuong: 'nguy-hiem'
-                });
+                moPopupThongBao(data);
             }
         }).fail(function () {
             moPopupThongBao('Sửa bài viết thất bại');
@@ -863,46 +814,32 @@ function moItem_TaiLieu($baiGiang) {
 //#region Bài tập
 
 function hienThi_BaiTap() {
-    var $khung = layKhung_BaiTap();
-
-    $_KhungHienThi.html($khung);
-    $_KhungChua.attr('data-hien-thi', 'bai-tap');
-    document.title = 'Bài tập - ' + tieuDe;
-
-    $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
-
-    khoiTaoForm_BaiTap($_KhungHienThi.find('#tao_bai_viet_form'));
-    khoiTaoItem_BaiTap($_DanhSach.find('[data-doi-tuong="muc-bai-viet"]'));
-}
-
-function layKhung_BaiTap() {
-    var $khung;
-
+    var $tai = moBieuTuongTai($_KhungChonHienThi);
     $.ajax({
         url: '/BaiVietBaiTap/_Khung',
         data: { maKhoaHoc: maKhoaHoc },
-        dataType: 'JSON',
-        async: false
+        dataType: 'JSON'
+    }).always(function () {
+        $tai.tat();
     }).done(function (data) {
         if (data.trangThai == 0) {
-            $khung = $(data.ketQua);
+            var $khung = $(data.ketQua);
+
+            $_KhungHienThi.html($khung);
+            $_KhungChua.attr('data-hien-thi', 'bai-tap');
+            document.title = 'Bài tập - ' + tieuDe;
+
+            $_DanhSach = $_KhungHienThi.find('#danh_sach_bai_viet');
+
+            khoiTaoForm_BaiTap($_KhungHienThi.find('#tao_bai_viet_form'));
+            khoiTaoItem_BaiTap($_DanhSach.find('[data-doi-tuong="muc-bai-viet"]'));
         }
         else {
-            moPopup({
-                tieuDe: 'Thông báo',
-                thongBao: 'Lấy bài tập thất bại',
-                bieuTuong: 'nguy-hiem'
-            })
+            moPopupThongBao(data);
         }
     }).fail(function () {
-        moPopup({
-            tieuDe: 'Thông báo',
-            thongBao: 'Lấy bài tập thất bại',
-            bieuTuong: 'nguy-hiem'
-        })
+        moPopupThongBao('Lấy bài tập thất bại');
     });
-
-    return $khung;
 }
 
 function khoiTaoForm_BaiTap($form) {

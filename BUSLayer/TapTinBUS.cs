@@ -90,5 +90,58 @@ namespace BUSLayer
 
             return ketQua;
         }
+
+        public static KetQua doc(string duongDan)
+        {
+            if (System.IO.File.Exists(duongDan))
+            {
+                string duoi = Path.GetExtension(duongDan);
+                switch (duoi.Substring(1))
+                {
+                    case "jpg":
+                    case "jpeg":
+                    case "png":
+                        return new KetQua
+                            (
+                                new string[]
+                                {
+                                    "image"
+                                }
+                            );
+                    case "txt":
+                        return new KetQua
+                            (
+                                new string[]
+                                {
+                                    "text",
+                                    TapTinHelper.doc_string(duongDan)
+                                }
+                            );
+                    case "cs":
+                    case "css":
+                    case "js":
+                    case "rb":
+                    case "php":
+                    case "cshtml":
+                    case "cpp":
+                    case "html":
+                    case "haml":
+                        return new KetQua
+                            (
+                                new string[]
+                                {
+                                    "code",
+                                    TapTinHelper.doc_string(duongDan)
+                                }
+                            );
+                    default:
+                        return new KetQua(3, "Không hỗ trợ đọc tập tin này");
+                }
+            }
+            else
+            {
+                return new KetQua(1, "Tập tin không tồn tại");
+            }
+        }
     }
 }

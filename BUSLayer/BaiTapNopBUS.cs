@@ -17,7 +17,7 @@ namespace BUSLayer
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (baiNop.tapTin == null && string.IsNullOrEmpty(baiNop.duongDan))
+            if (baiNop.tapTin == null && string.IsNullOrWhiteSpace(baiNop.duongDan))
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
@@ -113,12 +113,13 @@ namespace BUSLayer
 
             //Kiểm tra người dùng là thành viên của khóa học
             ketQua = KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(baiTap.khoaHoc.ma, maNguoiTao);
-            if (ketQua.trangThai != 0 || (ketQua.ketQua as KhoaHoc_NguoiDungDTO).trangThai != 0)
+            var thanhVien = ketQua.ketQua as KhoaHoc_NguoiDungDTO;
+            if (ketQua.trangThai != 0 || thanhVien.trangThai != 0 || !thanhVien.laHocVien)
             {
                 return new KetQua()
                 {
                     trangThai = 3,
-                    ketQua = "Bạn cần là thành viên chính thức của khóa học để nộp bài"
+                    ketQua = "Bạn cần là học viên của khóa học để nộp bài"
                 };
             }
             #endregion
@@ -144,6 +145,107 @@ namespace BUSLayer
                 "NguoiTao",
                 "TapTin"
             });
+        }
+
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
+        {
+            return BaiTapNopDAO.layTheoMa(ma, lienKet);
+        }
+
+        public static KetQua chamDiem(int ma, double diem, int maNguoiCham)
+        {
+            #region Kiểm tra điều kiện
+            //Lấy bài nộp
+            var ketQua = BaiTapNopDAO.layTheoMa(ma, new LienKet() { "BaiVietBaiTap" });
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Bài nộp không tồn tại");
+            }
+            var baiNop = ketQua.ketQua as BaiTapNopDTO;
+
+            //Lấy bài tập
+            var baiTap = baiNop.baiVietBaiTap;
+            if (baiTap == null)
+            {
+                return new KetQua(1, "Bài tập không tồn tại");
+            }
+
+            //Kiểm tra bài tập
+            if (baiTap.loai != 1 && baiTap.loai != 2)
+            {
+                return new KetQua(3, "Bài tập không phù hợp");
+            }
+
+            //Kiểm tra quyền
+            if (!coQuyen("BT_QLBaiNop", "KH", baiTap.khoaHoc.ma.Value, maNguoiCham))
+            {
+                return new KetQua(3, "Bạn không có quyền chấm điểm bài nộp");
+            }
+            #endregion
+
+            return BaiTapNopDAO.capNhatTheoMa_Diem(ma, diem);
+        }
+
+        public static KetQua ghiChu(int ma, string ghiChu, int maNguoiGhiChu)
+        {
+            #region Kiểm tra điều kiện
+            //Lấy bài nộp
+            var ketQua = BaiTapNopDAO.layTheoMa(ma, new LienKet() { "BaiVietBaiTap" });
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Bài nộp không tồn tại");
+            }
+            var baiNop = ketQua.ketQua as BaiTapNopDTO;
+
+            //Lấy bài tập
+            var baiTap = baiNop.baiVietBaiTap;
+            if (baiTap == null)
+            {
+                return new KetQua(1, "Bài tập không tồn tại");
+            }
+
+            //Kiểm tra quyền
+            if (!coQuyen("BT_QLBaiNop", "KH", baiTap.khoaHoc.ma.Value, maNguoiGhiChu))
+            {
+                return new KetQua(3, "Bạn không có quyền sửa ghi chú");
+            }
+            #endregion
+
+            return BaiTapNopDAO.capNhatTheoMa_GhiChu(ma, ghiChu);
+        }
+
+        public static KetQua xoa_Mot(int ma, string lyDo, int maNguoiXoa)
+        {
+            #region Kiểm tra điều kiện
+            //Lý do
+            if (string.IsNullOrWhiteSpace(lyDo))
+            {
+                
+            }
+
+            //Lấy bài nộp
+            var ketQua = BaiTapNopDAO.layTheoMa(ma, new LienKet() { "BaiVietBaiTap" });
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Bài nộp không tồn tại");
+            }
+            var baiNop = ketQua.ketQua as BaiTapNopDTO;
+
+            //Lấy bài tập
+            var baiTap = baiNop.baiVietBaiTap;
+            if (baiTap == null)
+            {
+                return new KetQua(1, "Bài tập không tồn tại");
+            }
+
+            //Kiểm tra quyền
+            if (!coQuyen("BT_QLBaiNop", "KH", baiTap.khoaHoc.ma.Value, maNguoiXoa))
+            {
+                return new KetQua(3, "Bạn không có quyền xóa bài nộp");
+            }
+            #endregion
+
+            return BaiTapNopDAO.capNhatTheoMa_GhiChu(ma, lyDo);
         }
     }
 }

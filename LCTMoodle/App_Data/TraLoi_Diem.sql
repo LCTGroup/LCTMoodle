@@ -34,6 +34,7 @@ AS
 BEGIN
 	DECLARE @maTraLoi INT
 	DECLARE @diem BIT
+	DECLARE @maNguoiTaoTraLoiDuocVote INT
 
 	SELECT @maTraLoi = MaTraLoi, @diem = Diem FROM INSERTED	
 
@@ -45,6 +46,19 @@ BEGIN
 			(-1)
 		END
 	WHERE Ma = @maTraLoi
+
+	SELECT  @maNguoiTaoTraLoiDuocVote = MaNguoiTao
+	FROM dbo.TraLoi
+	WHERE Ma = @maTraLoi
+
+	UPDATE dbo.NguoiDung
+	SET DiemHoiDap += CASE
+		WHEN @diem = 1 THEN
+			3
+		ELSE
+			(-3)
+		END
+	WHERE Ma = @maNguoiTaoTraLoiDuocVote
 END
 
 GO
@@ -69,6 +83,7 @@ AS
 BEGIN
 	DECLARE @maTraLoi INT
 	DECLARE @diem BIT
+	DECLARE @maNguoiTaoTraLoiDuocVote INT
 		
 	SELECT @maTraLoi = MaTraLoi, @diem = Diem FROM DELETED
 
@@ -80,6 +95,19 @@ BEGIN
 			(-1)
 		END
 	WHERE Ma = @maTraLoi
+
+	SELECT  @maNguoiTaoTraLoiDuocVote = MaNguoiTao
+	FROM dbo.TraLoi
+	WHERE Ma = @maTraLoi
+
+	UPDATE dbo.NguoiDung
+	SET DiemHoiDap -= CASE
+		WHEN @diem = 1 THEN
+			3
+		ELSE
+			(-3)
+		END
+	WHERE Ma = @maNguoiTaoTraLoiDuocVote
 END
 
 GO

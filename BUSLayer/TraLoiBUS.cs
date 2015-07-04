@@ -19,7 +19,7 @@ namespace BUSLayer
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (coKiemTra("NoiDung", truong, kiemTra) && string.IsNullOrEmpty(traLoi.noiDung))
+            if (coKiemTra("NoiDung", truong, kiemTra) && string.IsNullOrWhiteSpace(traLoi.noiDung))
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
@@ -91,6 +91,16 @@ namespace BUSLayer
         
         public static KetQua them(Form form)
         {
+            #region Kiểm tra điều kiện
+
+            int? maNguoiDung = form.layInt("MaNguoiTao");
+            if (maNguoiDung == null)
+            {
+                return new KetQua(4, "Bạn chưa đăng nhập");
+            }
+
+            #endregion
+            
             TraLoiDTO traLoi = new TraLoiDTO();            
             gan(ref traLoi, form);
 
@@ -102,8 +112,24 @@ namespace BUSLayer
             return TraLoiDAO.them(traLoi, new LienKet() { "NguoiTao" });
         }
 
-        public static KetQua xoaTheoMa(int? ma)
+        public static KetQua xoaTheoMa(int? ma, int? maNguoiXoa)
         {
+            #region Kiểm tra điều kiện
+
+            var ketQua = TraLoiBUS.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+            var traLoi = ketQua.ketQua as TraLoiDTO;
+
+            if (traLoi.nguoiTao.ma != maNguoiXoa && !BUS.coQuyen("XoaTraLoi", "HD", 0, maNguoiXoa))
+            {
+                return new KetQua(3, "Bạn chưa đủ quyền để xóa trả lời");
+            }
+
+            #endregion
+            
             return TraLoiDAO.xoaTheoMa(ma);
         }
 
@@ -124,22 +150,25 @@ namespace BUSLayer
 
         public static KetQua capNhat(Form form, LienKet lienKet = null)
         {
+            #region Kiểm tra điều kiện
+
+            int? maNguoiSua = form.layInt("MaNguoiSua");
             int? maTraLoi = form.layInt("Ma");
-            if (!maTraLoi.HasValue)
-            {
-                return new KetQua()
-                {
-                    trangThai = 1
-                };
-            }
 
             KetQua ketQua = TraLoiBUS.layTheoMa(maTraLoi.Value);
-            if (ketQua.trangThai != 0) 
+            if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
-
             TraLoiDTO traLoi = ketQua.ketQua as TraLoiDTO;
+
+            if (traLoi.nguoiTao.ma != maNguoiSua && !BUS.coQuyen("SuaTraLoi", "HD", 0, maNguoiSua))
+            {
+                return new KetQua(3, "Bạn không có đủ quyền để sửa trả lời này");
+            }
+
+            #endregion
+
             gan(ref traLoi, form);
 
             ketQua = TraLoiBUS.kiemTra(traLoi, form.Keys.ToArray());

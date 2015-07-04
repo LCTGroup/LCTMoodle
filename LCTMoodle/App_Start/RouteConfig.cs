@@ -27,6 +27,20 @@ namespace LCTMoodle
             );
 
             routes.MapRoute(
+                name: "LayHinh",
+                url: "LayHinh/{loai}/{ma}",
+                defaults: new { controller = "TapTin", action = "LayHinh" },
+                constraints: new { ma = @"\d+" }
+            );
+
+            routes.MapRoute(
+                name: "DocTapTin",
+                url: "DocTapTin/{loai}/{ma}",
+                defaults: new { controller = "TapTin", action = "Doc" },
+                constraints: new { ma = @"\d+" }
+            );
+
+            routes.MapRoute(
                 name: "XemKhoaHoc",
                 url: "KhoaHoc/{ma}",
                 defaults: new { controller = "KhoaHoc", action = "Xem" },
@@ -43,6 +57,12 @@ namespace LCTMoodle
                 name: "BangDiem",
                 url: "KhoaHoc/{action}-BangDiem/{maKhoaHoc}",
                 defaults: new { controller = "BangDiem", action = "Index", maKhoaHoc = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "ChamDiemBaiTap",
+                url: "KhoaHoc/Cham-BaiTap/{ma}",
+                defaults: new { controller = "BaiVietBaiTap", action = "ChamDiem", ma = UrlParameter.Optional }
             );
 
             routes.MapRoute(

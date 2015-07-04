@@ -21,7 +21,7 @@ namespace LCTMoodle.Controllers
             }
             var khoaHoc = ketQua.ketQua as KhoaHocDTO;
 
-            if (!BUS.coQuyen("QLCotDiem", "KH", maKhoaHoc))
+            if (!BUS.coQuyen("QLBangDiem", "KH", maKhoaHoc))
             {
                 return Redirect("/");
             }

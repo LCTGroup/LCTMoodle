@@ -32,6 +32,22 @@ BEGIN
 END
 
 GO
+--Trigger thêm điểm Hỏi-đáp cho người đăng câu hỏi
+CREATE TRIGGER dbo.themCauHoi_TRIGGER
+ON dbo.CauHoi
+AFTER INSERT
+AS
+BEGIN
+	DECLARE @maNguoiTao INT
+	
+	SELECT @maNguoiTao = MaNguoiTao FROM INSERTED	
+
+	UPDATE dbo.NguoiDung
+	SET DiemHoiDap += 1
+	WHERE Ma = @maNguoiTao	
+END
+
+GO
 --Xóa Câu Hỏi
 CREATE PROC dbo.xoaCauHoiTheoMa
 (
@@ -40,6 +56,25 @@ CREATE PROC dbo.xoaCauHoiTheoMa
 AS
 BEGIN
 	DELETE FROM dbo.CauHoi WHERE Ma = @0
+END
+
+GO
+--Xóa Trả Lời thuộc Câu Hỏi
+ALTER TRIGGER dbo.xoaCauHoi_TRIGGER
+ON dbo.CauHoi
+AFTER DELETE
+AS
+BEGIN
+	DECLARE @maCauHoi INT
+	DECLARE @maNguoiTao INT
+	
+	SELECT @maCauHoi = Ma, @maNguoiTao = MaNguoiTao FROM deleted
+
+	EXEC dbo.xoaTraLoiTheoMaCauHoi @maCauHoi	
+
+	UPDATE dbo.NguoiDung
+	SET DiemHoiDap -= 1
+	WHERE Ma = @maNguoiTao
 END
 
 GO
@@ -190,14 +225,3 @@ BEGIN
 	END DESC
 END
 
-GO
---Xóa Trả Lời thuộc Câu Hỏi
-CREATE TRIGGER dbo.xoaCauHoi_TRIGGER
-ON dbo.CauHoi
-AFTER DELETE
-AS
-	DECLARE @a INT
-	
-	SELECT @a = Ma FROM deleted
-
-	EXEC dbo.xoaTraLoiTheoMaCauHoi @a	

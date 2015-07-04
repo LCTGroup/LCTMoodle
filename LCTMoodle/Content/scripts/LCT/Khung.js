@@ -17,6 +17,7 @@ $(function () {
     $('[data-chuc-nang="dang-nhap"]').on('click', function () {
         moPopupDangNhap();
     });
+    khoiTaoDangXuat($('[data-chuc-nang="dang-xuat"]'));
 });
 
 function moBieuTuongTai($item) {
@@ -110,9 +111,10 @@ function layPopupFull(thamSo) {
     {
         thamSo = {};
     }
+
     var id = ('id' in thamSo) ? thamSo.id : 'popup_full';
     var zIndex = ('z-index' in thamSo) ? thamSo['z-index'] : '19';
-    var esc = 'esc' in thamSo && !thamSo.esc
+    var esc = !('esc' in thamSo) || thamSo.esc
 
     var $popupFull = $('#' + id);
 
@@ -136,14 +138,14 @@ function layPopupFull(thamSo) {
     }
 
     if (esc) {
-        $popupFull.removeAttr('data-esc');
+        $popupFull.attr('data-esc', '');
     }
     else {
-        $popupFull.attr('data-esc', '');
+        $popupFull.removeAttr('data-esc');
     }
 
     $popupFull.mo = function () {
-        $popupFull.show();
+        $popupFull.addClass('popup-mo');
         $(document).on('keydown.tat_popup', function (e) {
             if ($popupFull.is('[data-esc]')) {
                 if (e.keyCode == 27) {
@@ -155,7 +157,7 @@ function layPopupFull(thamSo) {
     }
 
     $popupFull.tat = function () {
-        $popupFull.hide();
+        $popupFull.removeClass('popup-mo');
         $(document).off('keydown.tat_popup');
         $body.removeClass('khong-scroll');
         $(this).trigger('tat');
@@ -194,23 +196,46 @@ function layPopupFull(thamSo) {
             Chiều cao của nội dung popup
         esc: Mặc định: true
             Cho phép bấm ra ngoài là tắt popup
+        id, z-index: Trường hợp muốn trùng
 */
 function moPopupFull(thamSo) {
     if (typeof thamSo === 'undefined') {
         thamSo = {};
     }
 
-    if ('html' in thamSo) {
-        $popup = layPopupFull({
-            esc: 'esc' in thamSo ? thamSo.esc : true
-        });
+    var popupData = {}
+    if ('esc' in thamSo) {
+        popupData.esc = thamSo.esc;
+    }
+    if ('id' in thamSo) {
+        popupData.id = thamSo.id;
+    }
+    if ('z-index' in thamSo) {
+        popupData.id = thamSo['z-index'];
+    }    
 
-        $noiDungPopup = $popup.find('#noi_dung');
+    if ('html' in thamSo) {
+        $popup = layPopupFull(popupData);
+
+        if ('tat' in thamSo) {
+            $popup.one('tat', function () {
+                thamSo.tat();
+            });
+        }
+
+        $noiDungPopup = $popup.find('#noi_dung_popup');
 
         $noiDungPopup.css('width', 'width' in thamSo ? thamSo.width : '90vw');
         $noiDungPopup.css('height', 'height' in thamSo ? thamSo.height : 'auto');
 
         $noiDungPopup.html(thamSo.html);
+
+        $noiDungPopup.tat = $popup.tat;
+        $noiDungPopup.mo = $popup.mo;
+
+        if ('thanhCong' in thamSo) {
+            thamSo.thanhCong($noiDungPopup);
+        }
 
         $popup.mo();
     }
@@ -245,6 +270,12 @@ function moPopupFull(thamSo) {
                 }
 
                 $popup.mo();
+
+                if ('tat' in thamSo) {
+                    $popup.one('tat', function () {
+                        thamSo.tat();
+                    });
+                }
             }
             else {
                 if ('thatBai' in thamSo) {
@@ -276,7 +307,7 @@ function moPopupFull(thamSo) {
         Đoạn thông báo
     bieuTuong: Không bắt buộc (chỉ sử dụng được khi có thông báo)
         Biểu tượng trước thông báo
-        Gồm: thanh-cong, nguy-hiem, thong-tin, can-than, hoi
+        Gồm: thanh-cong, nguy-hiem, thong-tin, canh-bao, hoi
     nut: Mặc định: Nút thoát
         Danh sách nút xử lý ở thông báo
         Gồm:
@@ -293,17 +324,19 @@ function moPopupFull(thamSo) {
                     Trả về false nếu muốn chặn tắt popup
     esc: Mặc định: true
         Cho phép bấm ra ngoài là tắt popup
+    id, z-index: Trường hợp muốn trùng
 */
 function moPopup(thamSo) {
     if (typeof thamSo === 'undefined') {
         thamSo = {};
     }
 
-    $popup = layPopupFull({
-        id: 'popup_thong_bao',
-        'z-index': '20',
-        esc: 'esc' in thamSo ? thamSo.esc : true
-    });
+    var popupData = {}
+    popupData.esc = 'esc' in thamSo ? thamSo.esc : true;
+    popupData.id = 'id' in thamSo ? thamSo.id : 'popup_thong_bao';
+    popupData['z-index'] = 'z-index' in thamSo ? thamSo['z-index'] : '20';
+
+    $popup = layPopupFull(popupData);
 
     if ('tat' in thamSo) {
         $popup.one('tat', function () {
@@ -347,7 +380,7 @@ function moPopup(thamSo) {
         var htmlBieuTuong = '';
 
         if ('bieuTuong' in thamSo &&
-            $.inArray(thamSo.bieuTuong, ['thanh-cong', 'nguy-hiem', 'thong-tin', 'can-than', 'hoi']) !== -1) {
+            $.inArray(thamSo.bieuTuong, ['thanh-cong', 'nguy-hiem', 'thong-tin', 'canh-bao', 'hoi']) !== -1) {
             htmlBieuTuong = '<span class="bieu-tuong ' + thamSo.bieuTuong + '"></span>';
         }
 
@@ -426,7 +459,7 @@ function moPopupThongBao(ketQua) {
                 moPopup({
                     tieuDe: 'Thông báo',
                     thongBao: xuatKetQua(ketQua.ketQua, 'Thực hiện thất bại. Không có dữ liệu trùng khớp'),
-                    bieuTuong: 'can-than'
+                    bieuTuong: 'canh-bao'
                 });
                 break;
             case 2:
@@ -467,13 +500,8 @@ function moPopupThongBao(ketQua) {
 /*
     Xử lý đăng xuất
 */
-function xuLyDangXuat($btnDangXuat) {
-    $btnDangXuat.on('click', function () {
-        $.ajax({
-            url: '/NguoiDung/XuLyDangXuat/'
-        });
-        window.location = "/TrangChu/";
-    });
+function khoiTaoDangXuat($btnDangXuat) {
+   
 }
 
 function moPopupDangNhap(thamSo) {
@@ -488,10 +516,13 @@ function moPopupDangNhap(thamSo) {
             var $form = $popup.find('.lct-form');
             khoiTaoLCTForm($form, {
                 submit: function (e) {
+                    var $tai = moBieuTuongTai($form);
                     $.ajax({
                         url: $form.attr('action'),
                         method: $form.attr('method'),
                         data: layDataLCTForm($form)
+                    }).always(function () {
+                        $tai.tat();
                     }).done(function (data) {
                         if (data.trangThai == 0) {
                             if ('thanhCong' in thamSo) {
@@ -534,4 +565,10 @@ function moPopupDangNhap(thamSo) {
             });
         }
     });
+}
+
+function hienThiCode($khungCode) {
+    $khungCode.each(function () {
+        hljs.highlightBlock(this);
+    })
 }

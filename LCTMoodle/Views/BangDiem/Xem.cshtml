@@ -16,21 +16,24 @@
     var maNguoiDung = Session["NguoiDung"] as int?;
     string[] dsQuyen;
 
-    bool coQuyenQLDiem;
+    bool coQuyenQLBangDiem;
 
     if (maNguoiDung.HasValue)
     {
         dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
 
-        coQuyenQLDiem = QuyenHelper.co(dsQuyen, "QLDiem");
+        coQuyenQLBangDiem = QuyenHelper.co(dsQuyen, "QLBangDiem");
     }
     else
     {
         dsQuyen = null;
-        coQuyenQLDiem = false;
+        coQuyenQLBangDiem = false;
     }
 
     List<string> chucNang = new List<string>();
+
+    chucNang.Add("Nội dung khóa học");
+    chucNang.Add("href='/KhoaHoc/" + Model.ma + "'");
 
     if (QuyenHelper.co(dsQuyen, "QLQuyen"))
     {
@@ -41,7 +44,7 @@
     chucNang.Add("Chương trình khóa học");
     chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + Model.ma + "'");
 
-    if (QuyenHelper.co(dsQuyen, "QLCotDiem"))
+    if (QuyenHelper.co(dsQuyen, "QLBangDiem"))
     {
         chucNang.Add("Quản lý bảng điểm");
         chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + Model.ma + "'");
@@ -64,7 +67,7 @@
     <section class="tieu-de" style="text-align: left;">
         Bảng điểm
     </section>
-    @if (coQuyenQLDiem)
+    @if (coQuyenQLBangDiem)
     {
         <section class="khung-chuc-nang lct-form">
             <a data-chuc-nang="sua-bang-diem" class="button">Chuyển chế độ sửa</a>
@@ -137,7 +140,7 @@
             </section>
         </article>
     </section>   
-    @if (coQuyenQLDiem)
+    @if (coQuyenQLBangDiem)
     {
         <section class="khung-chuc-nang lct-form">
             <a data-chuc-nang="sua-bang-diem" class="button">Chuyển chế độ sửa</a>

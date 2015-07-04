@@ -605,6 +605,23 @@
         border-top: 1px solid #f5f5f5;
     }
 
+        [data-hien-thi="bai-tap"] .khung-nop-bai a.cham-diem {
+            font-weight: bold;
+            display: block;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #555;
+            transition: 0.5s;
+        }
+
+            [data-hien-thi="bai-tap"] .khung-nop-bai a.cham-diem:hover {
+                color: #08c;
+            }
+
+            [data-hien-thi="bai-tap"] .khung-nop-bai a.cham-diem i {
+                font-size: 20px;
+            }
+
         [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop {
             padding: 5px 10px;
         }
@@ -646,7 +663,7 @@
 }
 
 .khung-danh-sach-nop .trai {
-    min-width: 4px;
+    min-width: 40px;
     max-width: 40px;
     margin-right: 5px;
 }

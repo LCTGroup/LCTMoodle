@@ -18,7 +18,7 @@ namespace BUSLayer
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (coKiemTra("NoiDung", truong, kiemTra) && string.IsNullOrEmpty(binhLuan.noiDung))
+            if (coKiemTra("NoiDung", truong, kiemTra) && string.IsNullOrWhiteSpace(binhLuan.noiDung))
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
@@ -30,7 +30,7 @@ namespace BUSLayer
             {
                 loi.Add("Đối tượng bình luận không được bỏ trống");
             }
-            if (coKiemTra("LoaiDoiTuong", truong, kiemTra) && string.IsNullOrEmpty(binhLuan.loaiDoiTuong))
+            if (coKiemTra("LoaiDoiTuong", truong, kiemTra) && string.IsNullOrWhiteSpace(binhLuan.loaiDoiTuong))
             {
                 loi.Add("Loại đối tượng bình luận không được bỏ trống");
             }

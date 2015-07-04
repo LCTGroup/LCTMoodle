@@ -75,6 +75,10 @@ namespace LCTMoodle.Controllers
 
         public ActionResult DangKy()
         {
+            if (Session["NguoiDung"] != null)
+            {
+                return Redirect("/NguoiDung/DangNhap");
+            }
             //Tắt hiển thị cột trái, cột phải
             ViewData["CotTrai"] = false;
             ViewData["CotPhai"] = false;

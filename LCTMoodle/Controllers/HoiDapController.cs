@@ -88,14 +88,13 @@ namespace LCTMoodle.Controllers
                 return RedirectToAction("Index", "HoiDap");
             }
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
+            
+            ViewData["TrangThaiVote"] = CauHoi_DiemBUS.trangThaiVoteCuaNguoiDungTrongCauHoi(ma, (int?)Session["NguoiDung"]);
 
             #region Kiểm tra trạng thái Vote trả lời
 
             if (cauHoi.danhSachTraLoi != null)
             {
-                ViewData["MaCauHoi"] = ma;
-                ViewData["TrangThaiVote"] = CauHoi_DiemBUS.trangThaiVoteCuaNguoiDungTrongCauHoi(ma, (int?)Session["NguoiDung"]);
-
                 Dictionary<int, int> trangThaiVoteTraLoi = new Dictionary<int, int>();
                 foreach (var traLoi in cauHoi.danhSachTraLoi)
                 {
@@ -210,16 +209,15 @@ namespace LCTMoodle.Controllers
             {
                 return Json(new KetQua(4));
             }
-
-            #endregion
-
+            
             KetQua ketQua = TraLoiBUS.layTheoMa(ma);
             if (ketQua.trangThai != 0)
             {
-                return Json(ketQua);
+                return Json(new KetQua(1, "Trả lời không tồn tại"));
             }
             TraLoiDTO traLoi = ketQua.ketQua as TraLoiDTO;
-            if (traLoi.nguoiTao.ma.Value != (int)Session["NguoiDung"])
+            
+            if (traLoi.nguoiTao.ma != (int?)Session["NguoiDung"] && !BUS.coQuyen("SuaTraLoi", "HD", 0, (int?)Session["NguoiDung"]))
             {
                 return Json(new KetQua()
                 {
@@ -227,6 +225,8 @@ namespace LCTMoodle.Controllers
                     ketQua = "Bạn không có quyền sửa trả lời này"
                 });
             }
+
+            #endregion
 
             return Json(new KetQua()
             {
@@ -244,6 +244,7 @@ namespace LCTMoodle.Controllers
             {
                 form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
             }
+
             KetQua ketQua = TraLoiBUS.them(chuyenForm(form));
             if (ketQua.trangThai != 0)
             {
@@ -260,13 +261,36 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoaTraLoi(int ma)
         {
-            return Json(TraLoiBUS.xoaTheoMa(ma));
+            #region Kiểm tra điều kiện
+
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4, "Bạn chưa đăng nhập"));
+            }
+
+            #endregion
+
+            return Json(TraLoiBUS.xoaTheoMa(ma, (int?)Session["NguoiDung"]));
         }
 
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult XuLyCapNhatTraLoi(FormCollection form)
         {
+            
+            #region Kiểm tra điều kiện
+            
+            if (Session["NguoiDung"] != null)
+            {
+                form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+            }
+            else
+            {
+                return Json(new KetQua(4, "Bạn chưa đăng nhập"));
+            }
+
+            #endregion
+            
             KetQua ketQua = TraLoiBUS.capNhat(chuyenForm(form), new LienKet() { 
                 "NguoiTao",
                 "CauHoi"

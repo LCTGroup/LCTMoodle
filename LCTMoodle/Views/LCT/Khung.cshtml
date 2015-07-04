@@ -1,4 +1,5 @@
-﻿@using DTOLayer
+﻿@using LCTMoodle.LCTView
+@using DTOLayer
 @{                                 
     bool CotTrai = ViewData["CotTrai"] == null ? true : (bool)ViewData["CotTrai"];
     bool CotPhai = ViewData["CotPhai"] == null ? true : (bool)ViewData["CotPhai"];
@@ -69,22 +70,15 @@
                         <li><a href="#"><i class="pe-7s-chat"></i></a></li>
                         <li><a href="#"><i class="pe-7s-global"></i></a></li>
                         <li>
-                            <a href="javascript:void(0)" data-mo-doi-tuong="HopDieuKhien">
-                                @if (nguoiDung.hinhDaiDien != null)
-                                {
-                                    <img src="/LayTapTin/NguoiDung_HinhDaiDien/@nguoiDung.hinhDaiDien.ma" />    
-                                }
-                                else
-                                {
-                                    <img src="/HinhDaiDienMacDinh.png/NguoiDung" />    
-                                }
+                            <a href="javascript:void(0)" data-mo-doi-tuong="HopDieuKhien">                                
+                                @NguoiDungView.hinhDaiDien(nguoiDung)
                                 <span>@nguoiDung.tenTaiKhoan</span>
                             </a>
                             <div class="hop-dieu-khien" data-doi-tuong="HopDieuKhien">
                                 <ul>
                                     <li><a href="/NguoiDung/Xem/@Session["NguoiDung"]"><i class="pe-7s-user"></i><span>Thông tin cá nhân</span></a></li>
                                     <li><a href="#"><i class="pe-7s-config"></i><span>Cài đặt</span></a></li>
-                                    <li><a href="/NguoiDung/xuLyDangXuat"><i class="pe-7s-power"></i><span>Thoát</span></a></li>
+                                    <li><a href="/NguoiDung/XuLyDangXuat"><i class="pe-7s-power"></i><span>Thoát</span></a></li>
                                 </ul>
                             </div>
                         </li>
@@ -151,15 +145,8 @@
                         {
                             <a href="/NguoiDung/Xem/@nguoiDung.ma">
                                 <section class="khung-thong-tin">
-                                    <div class="hinh-dai-dien">
-                                        @if (nguoiDung.hinhDaiDien != null)
-                                        {
-                                            <img src="/LayTapTin/NguoiDung_HinhDaiDien/@nguoiDung.hinhDaiDien.ma" />
-                                        }
-                                        else
-                                        {
-                                            <img src="/HinhDaiDienMacDinh.png/NguoiDung" />
-                                        }
+                                    <div class="hinh-dai-dien">                                        
+                                        @NguoiDungView.hinhDaiDien(nguoiDung)
                                     </div>
                                     <div class="thong-tin-nguoi-dung">
                                         <div class="ten-nguoi-dung">@nguoiDung.ho @nguoiDung.tenLot @nguoiDung.ten</div>
@@ -206,7 +193,7 @@
             {
                 <aside class="cot-phai">
                     <article class="khung-chuc-nang">
-                        @if (ViewData.ContainsKey("ChucNang") && Session["NguoiDung"] != null)
+                        @if (ViewData.ContainsKey("ChucNang"))
                         {
                             <article class="hop-chuc-nang">
                                 <section class="ten-chuc-nang">
@@ -243,8 +230,8 @@
                                                 <div class="tieu-de">
                                                     <a href="/HoiDap/@cauHoi.ma" title="@cauHoi.tieuDe">@cauHoi.tieuDe</a>
                                                 </div>
-                                                <div class="thong-tin">
-                                                    <img src="/LayTapTin/NguoiDung_HinhDaiDien/@cauHoi.nguoiTao.hinhDaiDien.ma" />
+                                                <div class="thong-tin">                                                    
+                                                    @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
                                                     <span>@cauHoi.nguoiTao.tenTaiKhoan - @cauHoi.thoiDiemTao.Value.ToString("hh:mm tt")</span>
                                                 </div>
                                             </li>

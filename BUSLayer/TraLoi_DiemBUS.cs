@@ -15,19 +15,18 @@ namespace BUSLayer
     {
         public static KetQua them(int maTraLoi, int? maNguoiTao, bool diem)
         {
+            #region Kiểm tra điều kiện
+
             if (!maNguoiTao.HasValue)
             {
-                return new KetQua()
-                {
-                    trangThai = 4
-                };
+                return new KetQua(4);
             }
 
-            KetQua ketQua = TraLoiDAO.layTheoMa(maTraLoi);
+            var ketQua = TraLoiDAO.layTheoMa(maTraLoi);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
-            }            
+            }
 
             TraLoiDTO traLoi = ketQua.ketQua as TraLoiDTO;
             if (traLoi.nguoiTao.ma == maNguoiTao)
@@ -35,22 +34,63 @@ namespace BUSLayer
                 return new KetQua()
                 {
                     trangThai = 3,
-                    ketQua = "Bạn không có quyền cho điểm trả lời của mình"
+                    ketQua = "Bạn không được cho điểm trả lời của mình"
                 };
             }
+
+            ketQua = NguoiDungBUS.layTheoMa(maNguoiTao);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(4, "Người dùng không tồn tại");
+            }
+            var nguoiVote = ketQua.ketQua as NguoiDungDTO;
+            if (nguoiVote.diemHoiDap < 10)
+            {
+                return new KetQua(3, "Tham gia tạo hoặc trả lời " + (10 - nguoiVote.diemHoiDap) + " câu hỏi nữa, bạn mới đủ quyền cho điểm");
+            }
+
+            #endregion
             
             return TraLoi_DiemDAO.them(maTraLoi, maNguoiTao, diem);
         }
 
         public static KetQua xoa(int? maTraLoi, int? maNguoiTao)
         {
+            #region Kiểm tra điều kiện
+
             if (!maNguoiTao.HasValue)
+            {
+                return new KetQua(4);
+            }
+
+            var ketQua = TraLoiDAO.layTheoMa(maTraLoi);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            TraLoiDTO traLoi = ketQua.ketQua as TraLoiDTO;
+            if (traLoi.nguoiTao.ma == maNguoiTao)
             {
                 return new KetQua()
                 {
-                    trangThai = 4
+                    trangThai = 3,
+                    ketQua = "Bạn không được cập nhật điểm trả lời của mình"
                 };
             }
+
+            ketQua = NguoiDungBUS.layTheoMa(maNguoiTao);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(4, "Người dùng không tồn tại");
+            }
+            var nguoiVote = ketQua.ketQua as NguoiDungDTO;
+            if (nguoiVote.diemHoiDap < 10)
+            {
+                return new KetQua(3, "Tham gia tạo hoặc trả lời " + (10 - nguoiVote.diemHoiDap) + " câu hỏi nữa, bạn mới đủ quyền cho điểm");
+            }
+
+            #endregion
 
             return TraLoi_DiemDAO.xoaTheoMaTraLoiVaMaNguoiTao(maTraLoi, maNguoiTao);
         }
