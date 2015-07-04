@@ -16,5 +16,6 @@ namespace DTOLayer
         public bool daChuyenDiem;
         public double? diem;
         public string ghiChu;
+        public bool daXoa;
     }
 }

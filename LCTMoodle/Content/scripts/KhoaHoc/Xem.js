@@ -941,7 +941,7 @@ function khoiTaoItem_BaiTap($danhSachBaiTap) {
                                 $hienThi.html('<span><b>Bạn</b></span> <span>đã nộp</span>').attr('data-type', '2');
                                 break;
                             case '3':
-                                $hienThi.html('<span><b>Bạn</b></span>' + $hienThi.html()).attr('data-type', '4');
+                                $hienThi.html('<span><b>Bạn</b></span> và ' + $hienThi.html()).attr('data-type', '4');
                                 break;
                             default:
                                 break;

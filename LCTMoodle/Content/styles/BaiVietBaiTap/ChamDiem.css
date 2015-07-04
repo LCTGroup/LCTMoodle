@@ -113,6 +113,22 @@
 
 /*#endregion */
 
+/*#region Item */
+
+.khung-danh-sach-nop tbody tr[data-da-xoa] {
+    opacity: 0.5;
+}
+
+    .khung-danh-sach-nop tbody tr[data-da-xoa]:hover {
+        opacity: 1;
+    }
+
+    .khung-danh-sach-nop tbody tr[data-da-xoa] [data-chuc-nang="xoa"] {
+        display: none;
+    }
+
+/*#endregion */
+
 /*#region Checkbox */
 
 .lct-checkbox .checkbox-radio-label {

@@ -70,17 +70,15 @@
     </script>
 }
 
-<article class="hop hop-2-vien">
+<article class="hop hop-2-vien" id="khung_cham_diem">
     <section class="tieu-de">Chấm điểm bài tập: @Model.tieuDe</section>
     <section class="khung-nut lct-form">
         <section>
             <a class="button" data-chuc-nang="chuyen-diem">Cập nhật vào bảng</a>
         </section>
         <section>
-            <a class="button nguy-hiem">Xóa bài nộp</a>
+            <a class="button nguy-hiem" data-chuc-nang="xoa-nhieu">Xóa bài nộp</a>
             <a class="button">Tải tập tin</a>
-            <a class="button">Chọn hết</a>
-            <a class="button">Bỏ chọn hết</a>
         </section>
     </section>
     <section class="noi-dung">
@@ -100,8 +98,8 @@
                         <th>
                             Chức năng
                         </th>
-                        <th>
-                            Chọn
+                        <th class="lct-checkbox">
+                            <label class="checkbox-radio-label"><input type="checkbox" data-chuc-nang="chon-het"><u></u></label>
                         </th>
                     </tr>
                 </thead>
@@ -112,6 +110,10 @@
                             @if (!string.IsNullOrWhiteSpace(baiNop.ghiChu)) 
                             {
                                 @:data-co-ghi-chu data-ghi-chu="@baiNop.ghiChu"
+                            }
+                            @if (baiNop.daXoa)
+                            {
+                                @:data-da-xoa
                             }
                         >
                             <th class="khong-vien"><a href="/NguoiDung/Xem/@baiNop.nguoiTao.ma">@baiNop.nguoiTao.ho @baiNop.nguoiTao.tenLot</a></th>
@@ -140,7 +142,7 @@
                                     <a data-chuc-nang="xoa" class="button xoa" title="Xóa"></a>
                                 </section>
                             </td>
-                            <td class="lct-checkbox"><label class="checkbox-radio-label"><input type="checkbox"><u></u></label></td>
+                            <td class="lct-checkbox"><label class="checkbox-radio-label"><input type="checkbox" data-doi-tuong="nut-chon"><u></u></label></td>
                         </tr>
                     }
                 </tbody>
@@ -149,10 +151,8 @@
     </section>
     <section class="khung-nut lct-form">
         <section>
-            <a class="button nguy-hiem">Xóa bài nộp</a>
+            <a class="button nguy-hiem" data-chuc-nang="xoa-nhieu">Xóa bài nộp</a>
             <a class="button">Tải tập tin</a>
-            <a class="button">Chọn hết</a>
-            <a class="button">Bỏ chọn hết</a>
         </section>
         <section>
             <a class="button" data-chuc-nang="chuyen-diem">Cập nhật vào bảng</a>
