@@ -1,0 +1,25 @@
+﻿.khung-quan-ly-cau-hoi {
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+
+    .khung-quan-ly-cau-hoi .lct-bang {
+
+    }
+
+        .khung-quan-ly-cau-hoi .lct-bang tbody td:nth-child(1) {
+            width: 1%;
+        }
+        .khung-quan-ly-cau-hoi .lct-bang tbody td:nth-child(2) {
+        }
+        .khung-quan-ly-cau-hoi .lct-bang tbody td:nth-child(3) {
+            text-align: center;
+            width: 33%;
+        }
+
+.empty {
+    padding: 5px;
+    border: 1px solid #ddd;
+    color: #888;
+    text-align: center;
+}

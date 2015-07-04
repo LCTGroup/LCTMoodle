@@ -38,7 +38,7 @@ function khoiTaoNutTao($nuts) {
                                 khoiTaoItem($item);
 
                                 $_DanhSach.append($item);
-                                $item.find('.td:eq(0)').text($item.index() + 1);
+                                $item.find('td:eq(0)').text($item.index() + 1);
                             }
                             else {
                                 moPopupThongBao(data);
@@ -71,6 +71,7 @@ function khoiTaoItem($item) {
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $item.remove();
+                capNhatThuTu();
             }
             else {
                 moPopupThongBao(data);

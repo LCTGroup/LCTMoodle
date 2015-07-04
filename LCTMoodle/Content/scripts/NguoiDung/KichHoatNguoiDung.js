@@ -13,10 +13,13 @@ $(function () {
 function khoiTaoKichHoatTaiKhoan($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
+            var $tai = moBieuTuongTai($form);
             $.ajax({
                 url: '/NguoiDung/XuLyKichHoatTaiKhoan',
                 method: 'POST',
                 data: layDataLCTForm($form)
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     moPopup({

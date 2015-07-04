@@ -24,7 +24,8 @@ CREATE TABLE dbo.NguoiDung
 	CoQuyenCD BIT,
 	CoQuyenHD BIT,
 	CoQuyenKH BIT,
-	DiemHoiDap INT DEFAULT 0
+	DiemHoiDap INT DEFAULT 0,
+	ThoiDiemPhucHoiMatKhau DATETIME DEFAULT GETDATE()
 )
 
 GO
@@ -85,6 +86,19 @@ BEGIN
 	UPDATE dbo.NguoiDung
 	SET MaKichHoat = @1
 	WHERE TenTaiKhoan = @0
+END
+
+GO
+--Cập nhật thời điểm phục hồi mật khẩu
+CREATE PROC dbo.capNhatNguoiDungTheoMaNguoiDung_ThoiDiemPhucHoiMatKhau
+(
+	@0 INT --Mã người phục hồi
+)
+AS
+BEGIN
+	UPDATE dbo.NguoiDung
+	SET ThoiDiemPhucHoiMatKhau = GETDATE()
+	WHERE Ma = @0
 END
 
 GO

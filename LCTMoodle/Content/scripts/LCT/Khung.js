@@ -111,9 +111,10 @@ function layPopupFull(thamSo) {
     {
         thamSo = {};
     }
+
     var id = ('id' in thamSo) ? thamSo.id : 'popup_full';
     var zIndex = ('z-index' in thamSo) ? thamSo['z-index'] : '19';
-    var esc = 'esc' in thamSo && !thamSo.esc
+    var esc = !('esc' in thamSo) || thamSo.esc
 
     var $popupFull = $('#' + id);
 
@@ -137,10 +138,10 @@ function layPopupFull(thamSo) {
     }
 
     if (esc) {
-        $popupFull.removeAttr('data-esc');
+        $popupFull.attr('data-esc', '');
     }
     else {
-        $popupFull.attr('data-esc', '');
+        $popupFull.removeAttr('data-esc');
     }
 
     $popupFull.mo = function () {
@@ -195,16 +196,26 @@ function layPopupFull(thamSo) {
             Chiều cao của nội dung popup
         esc: Mặc định: true
             Cho phép bấm ra ngoài là tắt popup
+        id, z-index: Trường hợp muốn trùng
 */
 function moPopupFull(thamSo) {
     if (typeof thamSo === 'undefined') {
         thamSo = {};
     }
 
+    var popupData = {}
+    if ('esc' in thamSo) {
+        popupData.esc = thamSo.esc;
+    }
+    if ('id' in thamSo) {
+        popupData.id = thamSo.id;
+    }
+    if ('z-index' in thamSo) {
+        popupData.id = thamSo['z-index'];
+    }    
+
     if ('html' in thamSo) {
-        $popup = layPopupFull({
-            esc: 'esc' in thamSo ? thamSo.esc : true
-        });
+        $popup = layPopupFull(popupData);
 
         if ('tat' in thamSo) {
             $popup.one('tat', function () {
@@ -313,17 +324,19 @@ function moPopupFull(thamSo) {
                     Trả về false nếu muốn chặn tắt popup
     esc: Mặc định: true
         Cho phép bấm ra ngoài là tắt popup
+    id, z-index: Trường hợp muốn trùng
 */
 function moPopup(thamSo) {
     if (typeof thamSo === 'undefined') {
         thamSo = {};
     }
 
-    $popup = layPopupFull({
-        id: 'popup_thong_bao',
-        'z-index': '20',
-        esc: 'esc' in thamSo ? thamSo.esc : true
-    });
+    var popupData = {}
+    popupData.esc = 'esc' in thamSo ? thamSo.esc : true;
+    popupData.id = 'id' in thamSo ? thamSo.id : 'popup_thong_bao';
+    popupData['z-index'] = 'z-index' in thamSo ? thamSo['z-index'] : '20';
+
+    $popup = layPopupFull(popupData);
 
     if ('tat' in thamSo) {
         $popup.one('tat', function () {
@@ -503,10 +516,13 @@ function moPopupDangNhap(thamSo) {
             var $form = $popup.find('.lct-form');
             khoiTaoLCTForm($form, {
                 submit: function (e) {
+                    var $tai = moBieuTuongTai($form);
                     $.ajax({
                         url: $form.attr('action'),
                         method: $form.attr('method'),
                         data: layDataLCTForm($form)
+                    }).always(function () {
+                        $tai.tat();
                     }).done(function (data) {
                         if (data.trangThai == 0) {
                             if ('thanhCong' in thamSo) {

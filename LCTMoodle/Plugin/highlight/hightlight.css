@@ -5,9 +5,7 @@ Visual Studio-like style based on original C# coloring by Jason Diamond <jason@d
 */
 .hljs {
   display: block;
-  overflow: auto;
-  height: 500px;
-  padding: 0.5em;
+  overflow-x: auto;
   background: white;
   color: black;
   -webkit-text-size-adjust: none;

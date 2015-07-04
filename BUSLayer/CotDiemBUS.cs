@@ -21,7 +21,7 @@ namespace BUSLayer
             {
                 loi.Add("Khóa học không được bỏ trống");
             }
-            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrEmpty(cotDiem.ten))
+            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrWhiteSpace(cotDiem.ten))
             {
                 loi.Add("Tên không được bỏ trống");
             }

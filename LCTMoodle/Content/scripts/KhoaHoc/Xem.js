@@ -223,7 +223,7 @@ function khoiTaoKhung($khung) {
 
 //#region Diễn đàn
 
-function hienThi_DienDan() {
+function hienThi_DienDan()   {
     var $tai = moBieuTuongTai($_KhungChonHienThi);
     $.ajax({
         url: '/BaiVietDienDan/_Khung',

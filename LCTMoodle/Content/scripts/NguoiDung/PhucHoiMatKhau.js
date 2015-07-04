@@ -13,10 +13,13 @@ $(function () {
 function khoiTaoPhucHoiMatKhau() {
     khoiTaoLCTForm($form, {
         submit: function () {
+            var $tai = moBieuTuongTai($form);
             $.ajax({
                 url: '/NguoiDung/XuLyPhucHoiMatKhau/',
                 method: 'POST',
                 data: layDataLCTForm($form)
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     moPopup({
@@ -28,13 +31,12 @@ function khoiTaoPhucHoiMatKhau() {
                             href: '/TrangChu/'
                         }]
                     });
+                } 
+                else if (data.trangThai == 1) {
+                    moPopupThongBao("Email không tồn tại trong hệ thống.");
                 }
                 else {
-                    moPopup({
-                        tieuDe: 'Thông báo',
-                        thongBao: data.ketQua,
-                        bieuTuong: 'nguy-hiem'
-                    });
+                    moPopupThongBao(data);
                 }
             });
         }

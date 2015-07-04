@@ -834,6 +834,7 @@ function tatLoi($input, loai) {
 
 function khoiTaoSukienInput_LCT($form, thamSo) {
     var auto = $form.is('[data-validate-auto]');
+    var popup = $form.is('[data-popup-loi]');
 
     //Bắt buộc
     $form.find('[data-validate~="bat-buoc"]').each(function () {
@@ -850,6 +851,7 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
                 CKEDITOR.instances[name].on('blur', function () {
                     if (this.getData()) {
                         tatLoi($input, 'bat-buoc');
+                        
                     }
                     else {
                         if (auto) {
@@ -904,8 +906,11 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
 
             if (
                     //Số
-                    48 <= keyCode &&
-                    keyCode <= 57
+                    (48 <= keyCode &&
+                    keyCode <= 57) ||
+
+                    //enter
+                        keyCode == 13
                 ) {
                 return;
             }
@@ -944,7 +949,10 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
                     keyCode <= 57) ||
 
                     //dấu chấm thập phân
-                    (keyCode == 46 && this.value.indexOf('.') === -1)
+                    (keyCode == 46 && this.value.indexOf('.') === -1) ||
+                    
+                    //enter
+                    keyCode == 13
                 ) {
                 return;
             }
@@ -989,11 +997,13 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
     $form.find('[data-validate~="chu"]').on({
         'keypress': function (e) {
             var keyCode = e.which;
-            console.log(e.which);
 
             if (
                 (97 <= keyCode && keyCode <= 122) ||
-                (65 <= keyCode && keyCode <= 90)) {
+                (65 <= keyCode && keyCode <= 90) ||
+
+                //enter
+                keyCode == 13) {
                 return;
             }
 
@@ -1101,7 +1111,6 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
     });
 
     //Custom
-        /*  */
     if ('custom' in thamSo) {
         $(thamSo.custom).each(function (index) {
             var $input = this.input;

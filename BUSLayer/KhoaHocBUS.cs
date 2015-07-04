@@ -18,11 +18,11 @@ namespace BUSLayer
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrEmpty(khoaHoc.ten))
+            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrWhiteSpace(khoaHoc.ten))
             {
                 loi.Add("Tên không được bỏ trống");
             }
-            if (coKiemTra("MoTa", truong, kiemTra) && string.IsNullOrEmpty(khoaHoc.moTa))
+            if (coKiemTra("MoTa", truong, kiemTra) && string.IsNullOrWhiteSpace(khoaHoc.moTa))
             {
                 loi.Add("Mô tả không được bỏ trống");
             }
@@ -38,7 +38,7 @@ namespace BUSLayer
             {
                 loi.Add("Người tạo không được bỏ trống");
             }
-            if (coKiemTra("CheDoRiengTu", truong, kiemTra) && string.IsNullOrEmpty(khoaHoc.cheDoRiengTu))
+            if (coKiemTra("CheDoRiengTu", truong, kiemTra) && string.IsNullOrWhiteSpace(khoaHoc.cheDoRiengTu))
             {
                 loi.Add("Chế độ riêng tư không được bỏ trống");
             }

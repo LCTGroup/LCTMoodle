@@ -15,13 +15,12 @@ $(function () {
 function khoiTaoDangKy($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
-            var $tai = moBieuTuongTai('.lct-form');
+            var $tai = moBieuTuongTai($form);
             $.ajax({
                 url: $form.attr('action'),
                 method: $form.attr('method'),            
                 data: layDataLCTForm($form),
-                dataType: 'JSON',
-                async: false
+                dataType: 'JSON'
             }).always(function () {
                 $tai.tat();
             }).done(function (data) {
@@ -100,7 +99,19 @@ function khoiTaoDangKy($form) {
                 }
             },
             {
-                input: $('#ngay_sinh')
+                input: $('#ngay_sinh'),
+                thongBao: 'Bạn chưa đủ tuổi để tham gia LCTMoodle',
+                validate: function () {
+                    var $ngaySinh = $('#ngay_sinh').val();
+                    var $giaTriNgaySinh = $ngaySinh.split('/');
+                    var $namHienTai = new Date().getFullYear();
+                   
+                    if ($namHienTai - $giaTriNgaySinh[2] >= 13)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
             }]
     });
 

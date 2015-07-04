@@ -11,7 +11,8 @@ CREATE TABLE dbo.BaiVietBaiTap (
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
 	MaNguoiTao INT NOT NULL,
 	MaKhoaHoc INT NOT NULL,
-	Loai INT NOT NULL
+	Loai INT NOT NULL,
+	ThoiDiemCapNhat DATETIME
 )
 
 GO

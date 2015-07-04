@@ -73,15 +73,26 @@ namespace BUSLayer
             {
                 thongBao.Add("Tên tài khoản bị trùng");
             }
-            if (coKiemTra("TenTaiKhoan", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.tenTaiKhoan))
+            if (coKiemTra("TenTaiKhoan", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.tenTaiKhoan))
             {
                 thongBao.Add("Tên tài khoản không được bỏ trống");
             }
-            if (coKiemTra("MatKhau", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.matKhau))
+            if (coKiemTra("MatKhau", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.matKhau))
             {
                 thongBao.Add("Mật khẩu không được bỏ trống");
             }
-            if (coKiemTra("Email", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.email))
+            if (coKiemTra("NgaySinh", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.ngaySinh.ToString()))
+            {
+                thongBao.Add("Ngày sinh không được bỏ trống");
+
+                var namSinh = Convert.ToDateTime(nguoiDung.ngaySinh).Year;
+                var namHienTai = DateTime.Now.Year;
+                if (namHienTai - namSinh < 13)
+                {
+                    thongBao.Add("Bạn chưa đủ tuổi để trở thành viên LCTMoodle");
+                }
+            }
+            if (coKiemTra("Email", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.email))
             {
                 thongBao.Add("Email không được bỏ trống");
             }
@@ -93,11 +104,11 @@ namespace BUSLayer
             {
                 thongBao.Add("Email đã tồn tại. Vui lòng chọn email khác");
             }
-            if (coKiemTra("Ho", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.ho))
+            if (coKiemTra("Ho", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.ho))
             {
                 thongBao.Add("Họ không được bỏ trống");
             }
-            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrEmpty(nguoiDung.ho))
+            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.ho))
             {
                 thongBao.Add("Tên không được bỏ trống");
             }
@@ -270,29 +281,47 @@ namespace BUSLayer
 
         public static KetQua phucHoiMatKhau(Form form)
         {
-            string tenTaiKhoan = form.layString("TenTaiKhoan");
-            string email = form.layString("Email");
-            string matKhauCap2 = form.layString("MatKhauCap2");
+            string email = form.layString("Email");            
 
-            KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenTaiKhoan);
+            KetQua ketQua = NguoiDungDAO.layTheoEmail(email);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
+            if (ketQua.trangThai == 1)
+            {
+                return new KetQua(1, "Email không tồn tại trong hệ thống");
+            }
 
             NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
+
+            DateTime ngayHienTai = DateTime.Now;
+            DateTime ngayPhucHoi = Convert.ToDateTime(nguoiDung.thoiDiemPhucHoiMatKhau);
+            TimeSpan NgayConLai = ngayHienTai.Subtract(ngayPhucHoi);
+
+            if (Math.Floor(NgayConLai.TotalDays) < 10)
+            {
+                return new KetQua(3, "Còn " + (10 - Math.Floor(NgayConLai.TotalDays)) + " ngày nữa bạn mới có thể phục hồi mật khẩu.");
+            }
+            
             if (nguoiDung.email == email)
             {
-                string matKhauMoi = NguoiDungHelper.phatSinhMatKhauMoi(6);
+                string matKhauMoi = NguoiDungHelper.phatSinhMatKhauMoi(6);                
 
-                ketQua = NguoiDungBUS.xuLyDoiMatKhau(tenTaiKhoan, nguoiDung.matKhau, matKhauMoi, false);
+                ketQua = NguoiDungBUS.xuLyDoiMatKhau(nguoiDung.tenTaiKhoan, nguoiDung.matKhau, matKhauMoi, false);
                 if (ketQua.trangThai != 0)
                 {
                     return ketQua;
                 }
 
+                ketQua = NguoiDungDAO.capNhatTheoMaNguoiDung_ThoiDiemPhucHoiMatKhau(nguoiDung.ma);
+                if (ketQua.trangThai != 0)
+                {
+                    return new KetQua("Không thể cập nhật thời điểm phục hồi mật khẩu");
+                }
+
                 string tieuDe = "Phục hồi mật khẩu tài khoản LCTMoodle";
-                string noiDung = "Mật khẩu mới của tài khoản <b>" + nguoiDung.tenTaiKhoan + "</b> là: " + matKhauMoi;
+                string noiDung = "Thông tin tài khoản được phục hồi:<br> Tên tài khoản: " + nguoiDung.tenTaiKhoan + "<br>Mật khẩu mới: " + matKhauMoi;
                 NguoiDungHelper.guiEmail(tieuDe, noiDung, email);
 
                 return ketQua;

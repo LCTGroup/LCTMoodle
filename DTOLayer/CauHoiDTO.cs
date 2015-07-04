@@ -17,5 +17,6 @@ namespace DTOLayer
         public int? diem;
         public int? soLuongTraLoi;
         public List<TraLoiDTO> danhSachTraLoi;
+        public bool DuyetHienThi;
     }
 }

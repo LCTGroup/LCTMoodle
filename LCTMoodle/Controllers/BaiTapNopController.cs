@@ -59,5 +59,46 @@ namespace LCTMoodle.Controllers
                 ketQua = renderPartialViewToString(ControllerContext, "BaiTapNop/_DanhSachNop.cshtml", danhSachBaiTapNop)
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult _Xem(int ma)
+        {
+            #region MyRegion
+            //Lấy bài nộp, bài tập
+            var ketQua = BaiTapNopBUS.layTheoMa(ma, new LienKet() { "BaiVietBaiTap", "NguoiTao", "TapTin" });
+            if (ketQua.trangThai != 0)
+            {
+                return Json(new KetQua(1, "Bài nộp không tồn tại"), JsonRequestBehavior.AllowGet);
+            }
+            var baiNop = ketQua.ketQua as BaiTapNopDTO;
+
+            //Kiểm tra quyền
+            if (!BUS.coQuyen("BT_QLBaiNop", "KH", baiNop.baiVietBaiTap.khoaHoc.ma.Value))
+            {
+                return Json(new KetQua(3, "Bạn không có quyền xem bài nộp"), JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            return Json(new KetQua(renderPartialViewToString(ControllerContext, "BaiTapNop/_Xem.cshtml", baiNop)), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyChamDiem(int ma, double diem)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+            return Json(BaiTapNopBUS.chamDiem(ma, diem, (int)Session["NguoiDung"]));
+        }
+
+        [HttpPost]
+        public ActionResult XuLyGhiChu(int ma, string ghiChu)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+            return Json(BaiTapNopBUS.ghiChu(ma, ghiChu, (int)Session["NguoiDung"]));
+        }
 	}
 }

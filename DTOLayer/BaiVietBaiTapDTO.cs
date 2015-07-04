@@ -11,6 +11,9 @@ namespace DTOLayer
         public string tieuDe;
         public string noiDung;
         public TapTinDTO tapTin;
+        /// <summary>
+        /// 0: Tham khảo --- 1: Điểm cộng --- 2: Điểm
+        /// </summary>
         public int? loai;
         public DateTime? thoiDiemHetHan;
         public DateTime? thoiDiemTao;

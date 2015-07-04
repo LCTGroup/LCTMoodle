@@ -192,6 +192,7 @@
     <Content Include="Content\scripts\ChuongTrinh\Tao.js" />
     <Content Include="Content\scripts\HoiDap\Index.js" />
     <Content Include="Content\scripts\ChuongTrinh\Index.js" />
+    <Content Include="Content\scripts\HoiDap\QuanLyCauHoi.js" />
     <Content Include="Content\scripts\HoiDap\XemCauHoi.js" />
     <Content Include="Content\scripts\HoiDap\TaoCauHoi.js" />
     <Content Include="Content\scripts\KhoaHoc\DanhSachThanhVien.js" />
@@ -214,6 +215,7 @@
     <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\BangDiem\Tao.css" />
     <Content Include="Content\styles\ChuongTrinh\Index.css" />
+    <Content Include="Content\styles\HoiDap\QuanLyCauHoi.css" />
     <Content Include="Content\styles\HoiDap\XemCauHoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
     <Content Include="Content\styles\KhoaHoc\DanhSachThanhVien.css" />
@@ -499,6 +501,8 @@
     <Content Include="Views\NguoiDung\_DieuKhoan.cshtml" />
     <Content Include="Views\BangDiem\_Form.cshtml" />
     <Content Include="Views\BaiVietBaiTap\ChamDiem.cshtml" />
+    <Content Include="Views\BaiTapNop\_Xem.cshtml" />
+    <Content Include="Views\HoiDap\QuanLyCauHoi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

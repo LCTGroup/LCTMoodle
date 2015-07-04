@@ -182,8 +182,17 @@ namespace LCTMoodle.Controllers
             }
 
             var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
-            
+
+            if (baiTap.loai != 1 && baiTap.loai != 2)
+            {
+                return Redirect("/");
+            }
+
             //Quản lý quyền
+            if (!BUS.coQuyen("BT_QLBaiNop", "KH", baiTap.khoaHoc.ma.Value))
+            {
+                return View("/");
+            }
             if (!BUS.coQuyen("QLBangDiem", "KH", baiTap.khoaHoc.ma.Value))
             {
                 return View("/");
@@ -191,6 +200,17 @@ namespace LCTMoodle.Controllers
             #endregion
 
             return View(baiTap);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyChuyenDiem(int ma)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(CotDiem_NguoiDungBUS.chuyenDiemBaiTapNop(ma, (int)Session["NguoiDung"]));
         }
 	}
 }

@@ -21,5 +21,6 @@ namespace DTOLayer
         public TapTinDTO hinhDaiDien;
         public string maKichHoat;
         public int? diemHoiDap;
+        public DateTime? thoiDiemPhucHoiMatKhau;
     }
 }

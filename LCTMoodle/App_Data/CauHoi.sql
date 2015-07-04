@@ -12,7 +12,8 @@ CREATE TABLE dbo.CauHoi
 	MaNguoiTao INT NOT NULL,
 	MaChuDe INT DEFAULT 0,
 	Diem INT DEFAULT 0,
-	SoLuongTraLoi INT DEFAULT 0
+	SoLuongTraLoi INT DEFAULT 0,
+	DuyetHienThi BIT DEFAULT 0
 )
 
 GO
@@ -94,6 +95,20 @@ BEGIN
 END
 
 GO
+--Cập nhật Câu Hỏi theo mã - duyệt hiển thị
+CREATE PROC dbo.capNhatCauHoiTheoMa_DuyetHienThi
+(
+	@0 INT,--Mã câu hỏi
+	@1 BIT --Trạng thái
+)
+AS
+BEGIN
+	UPDATE dbo.CauHoi
+	SET DuyetHienThi = @1
+	WHERE Ma = @0
+END
+
+GO
 --Cập nhật Câu Hỏi theo mã
 ALTER PROC dbo.capNhatCauHoiTheoMa 
 (
@@ -170,6 +185,7 @@ BEGIN
 				''
 			END + ' *
 		FROM dbo.CauHoi
+		WHERE DuyetHienThi = 1
 		ORDER BY ' + CASE
 			WHEN @1 = 'MoiNhat' THEN 'ThoiDiemTao'
 			WHEN @1 = 'DiemCaoNhat' THEN 'Diem'
@@ -179,6 +195,16 @@ BEGIN
 	'
 
 	EXEC(@query)
+END
+
+GO
+--Lấy tất cả câu hỏi chưa được duyệt
+ALTER PROC dbo.layCauHoi_ChuaDuyet
+AS
+BEGIN
+	SELECT *
+	FROM dbo.CauHoi
+	WHERE DuyetHienThi = 0
 END
 
 GO

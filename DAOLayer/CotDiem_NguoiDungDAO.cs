@@ -82,14 +82,29 @@ namespace DAOLayer
                 );
         }
 
-        public static KetQua capNhat(System.Data.DataTable bang)
+        public static KetQua capNhat_Nhieu(System.Data.DataTable bang)
         {
             return khongTruyVan
                 (
-                    "capNhatCotDiem_NguoiDung",
+                    "capNhatCotDiem_NguoiDung_Nhieu",
                     new object[]
                     {
                         bang
+                    }
+                );
+        }
+
+        public static KetQua capNhat_Mot(CotDiem_NguoiDungDTO diem)
+        {
+            return khongTruyVan
+                (
+                    "capNhatCotDiem_NguoiDung_Mot",
+                    new object[]
+                    {
+                        layMa(diem.cotDiem),
+                        layMa(diem.nguoiDung),
+                        diem.diem,
+                        layMa(diem.nguoiTao)
                     }
                 );
         }

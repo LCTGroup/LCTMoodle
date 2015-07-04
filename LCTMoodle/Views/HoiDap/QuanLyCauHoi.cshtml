@@ -1,0 +1,53 @@
+﻿@using DTOLayer;
+
+@model List<CauHoiDTO>
+@{
+    Layout = "~/Views/LCT/Khung.cshtml";
+}
+@section Styles {
+    <link rel="stylesheet" href="/QuanLyCauHoi.css/HoiDap/" />
+    <link rel="stylesheet" href="/XemCauHoi.css/HoiDap/" />
+}
+@section Scripts {
+    <script src="/QuanLyCauHoi.js/HoiDap/"></script>
+}
+
+@if (Model != null)
+{
+    <article class="hop hop-1-vien">
+        <section class="tieu-de">Quản lý câu hỏi</section>
+        <section class="noi-dung khung-quan-ly-cau-hoi">
+            <table class="lct-bang">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Tiêu đề</th>
+                        <th>Chức năng</th>                   
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach(var cauHoi in Model)
+                        {
+                            <tr data-ma="@cauHoi.ma" data-doi-tuong="item-cau-hoi">
+                                <td>@cauHoi.ma</td>
+                                <td>@cauHoi.tieuDe</td>
+                                <td>
+                                    <form class="lct-form">                                    
+                                        <button type="button" class="thanh-cong" data-chuc-nang="duyet">Duyệt</button>
+                                        <button type="button" class="nguy-hiem" data-chuc-nang="xoa">Xóa</button>
+                                        <button type="button" class="thanh-cong" data-chuc-nang="xem">Xem</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </section>
+    </article>
+}
+else 
+{
+    <p class="empty">Tất cả câu hỏi đã được duyệt</p>
+}
