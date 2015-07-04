@@ -76,7 +76,7 @@ function khoiTaoNutHoanThanhSua($nuts) {
                     $_KhungDiem.find('[data-la-cot-diem]').each(function () {
                         var $o = $(this);
                         
-                        $o.text($o.data('diem') || '');
+                        $o.html('<span>' + ($o.data('diem') || '') + '</span>');
 
                         chuyenCheDo(false);
                     });
@@ -150,7 +150,7 @@ function capNhatDiemDong($dong) {
         diem += parseFloat($(this).data('diem')) || 0;
     })
     
-    $dong.find('[data-loai="cong"] span').text(diem);
+    $dong.find('[data-cot="cong"] span').text(diem);
 }
 
 //#endregion

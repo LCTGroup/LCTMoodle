@@ -151,7 +151,22 @@ namespace BUSLayer
             CotDiem_NguoiDungDTO diem;
             KetQua ketQua;
 
-            List<int> dsMaKhoaHoc = new List<int>();
+            //Lấy cột điểm đầu tiên để kiểm tra cột điểm khóa học
+            ketQua = CotDiemDAO.layTheoMa(Convert.ToInt32(ds[0].maCotDiem));
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(3, "Cột điểm không tồn tại");
+            }
+            int maKhoaHoc = (ketQua.ketQua as CotDiemDTO).khoaHoc.ma.Value;
+
+            //Lấy danh sách cột điểm của khóa học để kiểm tra
+            ketQua = CotDiemDAO.layTheoMaKhoaHoc(maKhoaHoc);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(3, "Cột điểm không hợp lệ");
+            }
+            var dsCotDiemCuaKH = ketQua.ketQua as List<CotDiemDTO>;
+
             foreach(var item in ds)
             {
                 diem = new CotDiem_NguoiDungDTO()
@@ -168,31 +183,21 @@ namespace BUSLayer
                     return ketQua;
                 }
 
-                ketQua = CotDiemDAO.layTheoMa(diem.cotDiem.ma);
-                if (ketQua.trangThai != 0)
+                if (!dsCotDiemCuaKH.Exists(x => x.ma == diem.cotDiem.ma))
                 {
-                    return new KetQua()
-                    {
-                        trangThai = 1,
-                        ketQua = "Có cột điểm không tồn tại"
-                    };
-                }
-
-                cotDiem = ketQua.ketQua as CotDiemDTO;
-                if (!dsMaKhoaHoc.Exists(x => x == cotDiem.khoaHoc.ma.Value))
-                {
-                    dsMaKhoaHoc.Add(cotDiem.khoaHoc.ma.Value);
-                    if (!coQuyen("QLBangDiem", "KH", cotDiem.khoaHoc.ma.Value))
-                    {
-                        return new KetQua()
-                        {
-                            trangThai = 3,
-                            ketQua = "Bạn không có quyền sửa điểm"
-                        };
-                    }
+                    return new KetQua(3, "Danh sách cột điểm không hợp lệ");
                 }
 
                 dsDiem.Add(diem);
+            }
+
+            if (!coQuyen("QLBangDiem", "KH", maKhoaHoc))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền sửa điểm"
+                };
             }
 
             return CotDiem_NguoiDungDAO.capNhat_Nhieu(toDataTable(dsDiem));

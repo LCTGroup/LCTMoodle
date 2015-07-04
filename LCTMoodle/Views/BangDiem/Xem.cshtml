@@ -104,7 +104,7 @@
                                     <th class="khong-vien">@nguoiDung.ho @nguoiDung.tenLot</th>
                                     <th class="khong-vien">@nguoiDung.ten</th>
                                     @{
-                                double trungBinh = 0;
+                                double tong = 0;
                                 double diemCong = 0;
                                 int hangHienTai = slCotDiem * iNguoiDung++;
                                 for (int i = 0; i < slCotDiem; i++)
@@ -124,12 +124,12 @@
                                         }
                                         else
                                         {
-                                            trungBinh += double.Parse(strDiem);
+                                            tong += double.Parse(strDiem) * cotDiem.heSo.Value;
                                         }
                                         <td data-ma="@cotDiem.ma" data-la-cot-diem data-he-so="@cotDiem.heSo" data-loai="@(laDiemCong ? "cong" : "diem")" class="cot-diem" data-diem="@strDiem"><span>@strDiem</span></td>
                                     }
                                 }
-                                        <td data-cot="tb"><span>@((trungBinh / tongHeSo).ToString("0.##"))</span></td>
+                                        <td data-cot="tb"><span>@((tong / tongHeSo).ToString("0.##"))</span></td>
                                         <td data-cot="cong"><span>@diemCong</span></td>
                                     }
                                 </tr>

@@ -214,15 +214,9 @@ namespace BUSLayer
             return BaiTapNopDAO.capNhatTheoMa_GhiChu(ma, ghiChu);
         }
 
-        public static KetQua xoa_Mot(int ma, string lyDo, int maNguoiXoa)
+        public static KetQua xoa(int ma, string lyDo, int maNguoiXoa)
         {
             #region Kiểm tra điều kiện
-            //Lý do
-            if (string.IsNullOrWhiteSpace(lyDo))
-            {
-                
-            }
-
             //Lấy bài nộp
             var ketQua = BaiTapNopDAO.layTheoMa(ma, new LienKet() { "BaiVietBaiTap" });
             if (ketQua.trangThai != 0)
@@ -245,7 +239,58 @@ namespace BUSLayer
             }
             #endregion
 
-            return BaiTapNopDAO.capNhatTheoMa_GhiChu(ma, lyDo);
+            return BaiTapNopDAO.capNhatTheoMa_DaXoa(ma, lyDo);
+        }
+
+        public static KetQua xoa(string dsMa_string, string lyDo, int maNguoiXoa)
+        {
+            int[] dsMa;
+            try
+            {
+                 dsMa = Array.ConvertAll<string, int>(dsMa_string.Split(','), int.Parse);
+            }
+            catch
+            {
+                return new KetQua(2, "Có lỗi xảy ra khi lấy bài nộp");
+            }
+
+            #region Kiểm tra điều kiện
+            //Lấy bài nộp đầu tiên để lấy thông tin bài tập, khóa học
+            var ketQua = BaiTapNopDAO.layTheoMa(dsMa[0], new LienKet() { "BaiVietBaiTap" });
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Bài nộp không tồn tại");
+            }
+
+            var baiTap = (ketQua.ketQua as BaiTapNopDTO).baiVietBaiTap;
+            if (baiTap == null)
+            {
+                return new KetQua(1, "Bài tập không tồn tại");
+            }
+
+            //Lấy danh sách bài nộp để kiểm tra danh sách bài nộp hợp lệ
+            ketQua = BaiTapNopDAO.layTheoMaBaiVietBaiTap(baiTap.ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(3, "Lấy bài nộp thất bại");
+            }
+            var dsBaiNop = ketQua.ketQua as List<BaiTapNopDTO>;
+            foreach(var ma in dsMa)
+            {
+                if (!dsBaiNop.Exists(x => x.ma == ma))
+                {
+                    return new KetQua(3, "Danh sách bài nộp không hợp lệ");
+                }
+            }
+
+            //Kiểm tra quyền
+            if (!coQuyen("BT_QLBaiNop", "KH", baiTap.khoaHoc.ma.Value, maNguoiXoa))
+            {
+                return new KetQua(3, "Bạn không có quyền xóa bài nộp");
+            }
+            #endregion
+
+            return BaiTapNopDAO.capNhatTheoMa_DaXoa_Nhieu(dsMa_string, lyDo);
         }
     }
 }

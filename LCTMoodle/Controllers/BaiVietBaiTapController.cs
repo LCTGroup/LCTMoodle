@@ -178,7 +178,7 @@ namespace LCTMoodle.Controllers
                 });
             if (ketQua.trangThai != 0)
             {
-                return View("/");
+                return Redirect("/");
             }
 
             var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
@@ -191,11 +191,11 @@ namespace LCTMoodle.Controllers
             //Quản lý quyền
             if (!BUS.coQuyen("BT_QLBaiNop", "KH", baiTap.khoaHoc.ma.Value))
             {
-                return View("/");
+                return Redirect("/");
             }
             if (!BUS.coQuyen("QLBangDiem", "KH", baiTap.khoaHoc.ma.Value))
             {
-                return View("/");
+                return Redirect("/");
             }
             #endregion
 

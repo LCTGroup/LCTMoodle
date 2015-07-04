@@ -27,36 +27,44 @@ BEGIN
 	INSERT INTO dbo.ChuDe (Ten, MoTa, MaNguoiTao, MaCha, MaHinhDaiDien)
 		VALUES (@0, @1, @2, @3, @4);
 
-	SELECT
-		Ma,
-		Ten,
-		MoTa,
-		MaNguoiTao,
-		ThoiDiemTao,
-		MaCha,
-		MaHinhDaiDien
+	SELECT *
 		FROM dbo.ChuDe
 		WHERE Ma = @@IDENTITY;
 END
 
 GO
 --Lấy chủ đề theo mã chủ đề cha và phạm vi
-CREATE PROC dbo.layChuDeTheoMaCha (
+ALTER PROC dbo.layChuDeTheoMaCha (
 	@0 INT --MaCha
 )
 AS
 BEGIN
 	SELECT 
-		Ma,
-		Ten,
-		MoTa,
-		MaNguoiTao,
-		ThoiDiemTao,
-		MaCha,
-		MaHinhDaiDien
-		FROM dbo.ChuDe
+		CD.Ma,
+		CD.Ten,
+		CD.MoTa,
+		CD.MaNguoiTao,
+		CD.ThoiDiemTao,
+		CD.MaCha,
+		CD.MaHinhDaiDien,
+		COUNT(DISTINCT CD_Con.Ma) 'SLChuDeCon',
+		COUNT(DISTINCT KH.Ma) 'SLKhoaHocCon'
+		FROM 
+			dbo.ChuDe CD 
+				LEFT JOIN dbo.ChuDe CD_Con ON
+					CD_Con.MaCha = CD.Ma
+				LEFT JOIN dbo.KhoaHoc KH ON
+					KH.MaChuDe = CD.Ma
 		WHERE 
-			MaCha = @0
+			CD.MaCha = @0
+		GROUP BY 
+			CD.Ma,
+			CD.Ten,
+			CD.MoTa,
+			CD.MaNguoiTao,
+			CD.ThoiDiemTao,
+			CD.MaCha,
+			CD.MaHinhDaiDien
 END
 
 GO
