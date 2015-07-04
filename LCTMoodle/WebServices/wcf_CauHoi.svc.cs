@@ -89,7 +89,7 @@ namespace LCTMoodle.WebServices
         /// <returns>List<CauHoiDTO></returns>
         public List<CauHoiDTO> lay(int _SoDong)
         {
-            KetQua ketQua = CauHoiBUS.layDanhSach(_SoDong, new LienKet { "NguoiTao", "HinhDaiDien" });
+            KetQua ketQua = CauHoiBUS.layDanhSach(_SoDong, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
             List<CauHoiDTO> lst_CauHoi = new List<CauHoiDTO>();
 
             if(ketQua.trangThai == 0)
