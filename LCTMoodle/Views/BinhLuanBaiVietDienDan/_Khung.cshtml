@@ -1,0 +1,59 @@
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@model List<DTOLayer.BinhLuanBaiVietDienDanDTO>
+@{
+    int maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+    int? maNguoiDung = Session["NguoiDung"] as int?;
+
+    string[] dsQuyen;
+    bool coQuyenBinhLuan, coQuyenQLNoiDung, coQuyenQLDiem;
+
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc, maNguoiDung);
+
+        coQuyenQLNoiDung = QuyenHelper.co(dsQuyen, "DD_QLNoiDung");
+        coQuyenQLDiem = QuyenHelper.co(dsQuyen, "DD_QLDiem");
+
+        var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
+        if (ketQua.trangThai != 0)
+        {
+            coQuyenBinhLuan = false;
+        }
+        else
+        {
+            coQuyenBinhLuan = (ketQua.ketQua as DTOLayer.KhoaHoc_NguoiDungDTO).trangThai == 0;
+        }
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenBinhLuan = coQuyenQLNoiDung = coQuyenQLDiem = false;
+    }
+
+    ViewData["CoQuyenQLNoiDung"] = coQuyenQLNoiDung;
+    ViewData["CoQuyenQLDiem"] = coQuyenQLDiem;
+}
+
+<section data-doi-tuong="khung-binh-luan" class="khung-binh-luan">
+    <section class="khung-danh-sach">
+        <ul data-doi-tuong="danh-sach">
+            @if (Model != null)
+            {
+                foreach (var binhLuan in Model)
+                {
+                    @Html.Partial("~/Views/BinhLuanBaiVietDienDan/_Item.cshtml", binhLuan, ViewData);
+                }
+            }
+        </ul>
+    </section>
+    @if (coQuyenBinhLuan)
+    {
+        <section class="khung-form">
+            @Html.Partial("~/Views/BinhLuanBaiVietDienDan/_Form.cshtml", null, new ViewDataDictionary()
+            {
+                { "MaBaiVietDienDan", ViewData["MaBaiVietDienDan"] }
+            })
+        </section>   
+    }
+</section>

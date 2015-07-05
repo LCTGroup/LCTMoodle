@@ -26,7 +26,7 @@ namespace BUSLayer
             {
                 loi.Add("Người dùng không được bỏ trống");
             }
-            if (!diem.diem.HasValue && (diem.diem.Value < 0 || 10 < diem.diem.Value))
+            if (diem.diem.HasValue && (diem.diem.Value < 0 || 10 < diem.diem.Value))
             {
                 loi.Add("Điểm không hợp lệ");
             }
@@ -69,7 +69,7 @@ namespace BUSLayer
                 {
                     layMa(diem.cotDiem),
                     layMa(diem.nguoiDung),
-                    diem.diem.Value,
+                    diem.diem,
                     layMa(diem.nguoiTao)
                 });
             }
@@ -147,7 +147,6 @@ namespace BUSLayer
             #endregion
 
             List<CotDiem_NguoiDungDTO> dsDiem = new List<CotDiem_NguoiDungDTO>();
-            CotDiemDTO cotDiem;
             CotDiem_NguoiDungDTO diem;
             KetQua ketQua;
 
@@ -167,15 +166,21 @@ namespace BUSLayer
             }
             var dsCotDiemCuaKH = ketQua.ketQua as List<CotDiemDTO>;
 
+            var nguoiTao = layDTO<NguoiDungDTO>(maNguoiSua);
             foreach(var item in ds)
             {
                 diem = new CotDiem_NguoiDungDTO()
                 {
-                    cotDiem = layDTO<CotDiemDTO>(Convert.ToInt32(item.maCotDiem)),
-                    nguoiDung = layDTO<NguoiDungDTO>(Convert.ToInt32(item.maNguoiDung)),
-                    diem = Math.Round(Convert.ToDouble(item.diem), 2),
-                    nguoiTao = layDTO<NguoiDungDTO>(maNguoiSua)
+                    cotDiem = layDTO<CotDiemDTO>((int)item.maCotDiem),
+                    nguoiDung = layDTO<NguoiDungDTO>((int)item.maNguoiDung),
+                    nguoiTao = nguoiTao
                 };
+
+                try
+                {
+                    diem.diem = Math.Round((double)item.diem, 2);
+                }
+                catch { }
 
                 ketQua = kiemTra(diem);
                 if (ketQua.trangThai != 0)

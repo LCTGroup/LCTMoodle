@@ -183,5 +183,16 @@ namespace LCTMoodle.Controllers
 
             return Json(BaiVietDienDanBUS.ghim(ma, ghim, (int)Session["NguoiDung"]));
         }
+
+        [HttpPost]
+        public ActionResult XuLyChoDiem(int ma, int diem)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(BaiVietDienDanBUS.capNhatDiem(ma, diem, (int)Session["NguoiDung"]));
+        }
 	}
 }

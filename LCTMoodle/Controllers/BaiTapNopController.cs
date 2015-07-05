@@ -118,5 +118,22 @@ namespace LCTMoodle.Controllers
             }
             return Json(BaiTapNopBUS.xoa(dsMa, lyDo, (int)Session["NguoiDung"]));
         }
+
+        public ActionResult LayDanhSachFile(string ds)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Redirect("/");
+            }
+
+            var ketQua = BaiTapNopBUS.nen(ds, (int)Session["NguoiDung"]);
+            if (ketQua.trangThai != 0)
+            {
+                return Redirect("/");
+            }
+
+            string[] thongTin = ketQua.ketQua as string[];
+            return File(thongTin[0], thongTin[1], thongTin[2]);
+        }
 	}
 }

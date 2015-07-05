@@ -82,7 +82,7 @@
             <section class="noi-dung noi-dung-ckeditor">
                 @Html.Raw(Model.noiDung)
             </section>            
-            @if (@Model.tapTin != null)
+            @if (Model.tapTin != null)
             {
                 <section class="tap-tin">
                     <a href="/LayTapTin/BaiVietBaiTap_TapTin/@Model.tapTin.ma">
@@ -116,7 +116,7 @@
         }
     </section>
     <section data-doi-tuong="khung-nop-bai" class="khung-nop-bai">
-        @if (coQuyenChamDiem)
+        @if (coQuyenChamDiem && (Model.loai == 1 || Model.loai == 2))
         {
             <a class="cham-diem" href="/KhoaHoc/Cham-BaiTap/@Model.ma"><i class="pe-7s-pen"></i>Chấm điểm</a>
         }

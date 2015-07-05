@@ -112,6 +112,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\" />
     <Folder Include="Plugin\ckeditor\adapters\" />
     <Folder Include="Plugin\ckeditor\samples\assets\inlineall\" />
     <Folder Include="Plugin\ckeditor\samples\assets\outputxhtml\" />
@@ -134,7 +135,7 @@
     <Compile Include="Controllers\BaiVietBaiTapController.cs" />
     <Compile Include="Controllers\BaiVietDienDanController.cs" />
     <Compile Include="Controllers\BangDiemController.cs" />
-    <Compile Include="Controllers\BinhLuanController.cs" />
+    <Compile Include="Controllers\BinhLuanBaiVietDienDanController.cs" />
     <Compile Include="Controllers\ChuDeController.cs" />
     <Compile Include="Controllers\ChuongTrinhController.cs" />
     <Compile Include="Controllers\HoiDapController.cs" />
@@ -437,8 +438,8 @@
     <Content Include="Views\KhoaHoc\Xem.cshtml" />
     <Content Include="Views\HoiDap\Index.cshtml" />
     <Content Include="Views\BaiVietDienDan\_Item.cshtml" />
-    <Content Include="Views\BinhLuan\_Khung.cshtml" />
-    <Content Include="Views\BinhLuan\_Item.cshtml" />
+    <Content Include="Views\BinhLuanBaiVietDienDan\_Khung.cshtml" />
+    <Content Include="Views\BinhLuanBaiVietDienDan\_Item.cshtml" />
     <Content Include="Views\BaiVietDienDan\_Khung.cshtml" />
     <Content Include="Views\BaiVietBaiGiang\_Khung.cshtml" />
     <Content Include="Views\BaiVietBaiGiang\_Item.cshtml" />
@@ -492,7 +493,7 @@
     <Content Include="Views\NguoiDung\QuenMatKhau.cshtml" />
     <Content Include="Views\HoiDap\_DanhSachCauHoi.cshtml" />
     <Content Include="Views\NguoiDung\_FormDangNhap.cshtml" />
-    <Content Include="Views\BinhLuan\_Form.cshtml" />
+    <Content Include="Views\BinhLuanBaiVietDienDan\_Form.cshtml" />
     <Content Include="Views\HoiDap\_Item_DanhSachCauHoi.cshtml" />
     <Content Include="Views\Quyen\QuyenHeThong.cshtml" />
     <Content Include="Views\Quyen\QuyenChuDe.cshtml" />

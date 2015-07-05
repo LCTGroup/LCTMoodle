@@ -292,5 +292,91 @@ namespace BUSLayer
 
             return BaiTapNopDAO.capNhatTheoMa_DaXoa_Nhieu(dsMa_string, lyDo);
         }
+
+        public static KetQua nen(string dsMa_string, int maNguoiTai)
+        {
+            int[] dsMa;
+            try
+            {
+                dsMa = Array.ConvertAll<string, int>(dsMa_string.Split(','), int.Parse);
+            }
+            catch
+            {
+                return new KetQua(2, "Có lỗi xảy ra khi lấy bài nộp");
+            }
+
+            #region Kiểm tra điều kiện
+            //Lấy bài nộp đầu tiên để lấy thông tin bài tập, khóa học
+            var ketQua = BaiTapNopDAO.layTheoMa(dsMa[0], new LienKet() 
+            { 
+                "BaiVietBaiTap"
+            });
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Bài nộp không tồn tại");
+            }
+
+            var baiTap = (ketQua.ketQua as BaiTapNopDTO).baiVietBaiTap;
+            if (baiTap == null)
+            {
+                return new KetQua(1, "Bài tập không tồn tại");
+            }
+
+            //Lấy danh sách bài nộp để kiểm tra danh sách bài nộp hợp lệ
+            ketQua = BaiTapNopDAO.layTheoMaBaiVietBaiTap(baiTap.ma, new LienKet() 
+            { 
+                "NguoiTao",
+                "TapTin"
+            });
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(3, "Lấy bài nộp thất bại");
+            }
+            var dsBaiNop = ketQua.ketQua as List<BaiTapNopDTO>;
+            foreach (var ma in dsMa)
+            {
+                if (!dsBaiNop.Exists(x => x.ma == ma))
+                {
+                    return new KetQua(3, "Danh sách bài nộp không hợp lệ");
+                }
+            }
+
+            //Kiểm tra quyền
+            if (!coQuyen("BT_QLBaiNop", "KH", baiTap.khoaHoc.ma.Value, maNguoiTai))
+            {
+                return new KetQua(3, "Bạn không có quyền xóa bài nộp");
+            }
+            #endregion
+
+            //Lấy tập tin
+            string duongDanGoc = Helpers.TapTinHelper.layDuongDanGoc();
+            List<string> dsDuongDan = new List<string>();
+            foreach(var baiNop in dsBaiNop)
+            {
+                dsDuongDan.Add(duongDanGoc + "BaiTapNop_TapTin/" + baiNop.tapTin.ma + baiNop.tapTin.duoi);
+                dsDuongDan.Add(
+                    Path.GetFileNameWithoutExtension(baiNop.tapTin.ten) + "_" + 
+                    Helpers.LCTHelper.boDau(baiNop.nguoiTao.ho + baiNop.nguoiTao.tenLot + baiNop.nguoiTao.ten).Replace(" ", "") + 
+                    baiNop.tapTin.duoi);
+            }
+
+            string duongDanTapTinNen;
+            //Nén
+            try
+            {
+                duongDanTapTinNen = Helpers.TapTinHelper.nen(dsDuongDan.ToArray(), "");
+            }
+            catch
+            {
+                return new KetQua(3, "Nén file lỗi");
+            }
+
+            return new KetQua(new string []
+                {
+                    duongDanTapTinNen,
+                    "application/zip",
+                    baiTap.ma.Value + "_" + Helpers.LCTHelper.boDau(baiTap.tieuDe).Replace(' ', '_') + ".zip"
+                });
+        }
     }
 }

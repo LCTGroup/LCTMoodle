@@ -278,7 +278,13 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return BaiVietBaiTapDAO.capNhatTheoMa(maBaiViet, layBangCapNhat(baiViet, form.Keys.ToArray()), new LienKet()
+            BangCapNhat bang = layBangCapNhat(baiViet, form.Keys.ToArray());
+            if (!bang.coDuLieu())
+            {
+                return new KetQua(baiViet);
+            }
+
+            return BaiVietBaiTapDAO.capNhatTheoMa(maBaiViet, bang, new LienKet()
             {
                 "NguoiTao",
                 "TapTin"

@@ -179,12 +179,14 @@
         margin: 5px 0;
     }
 
-    [data-hien-thi="khung"] .bai-viet .tieu-de {
+    [data-hien-thi="khung"] .bai-viet .tieu-de a {
         font-weight: bold;
         color: #333;
         max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
     }
 
     [data-hien-thi="khung"] .bai-viet .thong-tin-dang {
@@ -249,14 +251,10 @@
     border: 1px solid #eee;
     margin-bottom: 10px;
 }
+
     [data-hien-thi="dien-dan"] .muc-bai-viet[data-ghim] {
         border-color: #ddd;
     }
-
-[data-hien-thi="dien-dan"] .khung-binh-luan {
-    border-top: 1px solid #f5f5f5;
-    background-color: #fcfcfc;
-}
 
 /*#region Khung bài viết */
 
@@ -321,12 +319,29 @@
             position: absolute;
         }
 
-        [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung .tieu-de {
+        [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung .tieu-de h2 {
             font-weight: bold;
             font-size: 14px;
             line-height: 25px;
             margin-bottom: 5px;
+            display: inline-block;
         }
+        
+        [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung .tieu-de .diem {
+            font: bold 14px Berlin;
+            line-height: 0;
+            color: #fff;
+        }
+        
+            [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung .tieu-de .diem:not(:empty) {
+                padding: 0 5px;
+                border: 1px solid #eee;
+                background-color: #08c;
+            }
+        
+            [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung .tieu-de .diem:not(:empty):before {
+                content: '+';
+            }
 
         [data-hien-thi="dien-dan"] .khung-bai-viet .khung-noi-dung .tap-tin {
             padding: 5px;
@@ -347,6 +362,128 @@
                 align-self: center;
                 color: #555;
             }
+
+    [data-hien-thi="dien-dan"] .khung-bai-viet .khung-chuc-nang {
+        padding: 5px 10px;
+        border-top: 1px solid #eee;
+        background-color: #fcfcfc;
+    }
+
+        [data-hien-thi="dien-dan"] .khung-bai-viet .khung-chuc-nang:empty {
+            display: none;
+        }
+
+/*#endregion */
+
+/*#region Khung bình luận */
+
+[data-hien-thi="dien-dan"] .khung-binh-luan {
+    padding: 0 10px;
+    border-top: 1px solid #f5f5f5;
+    background-color: #fcfcfc;
+}
+
+    [data-hien-thi="dien-dan"] .khung-binh-luan:after {
+        content: '';
+        display: block;
+        clear: both;
+        margin-top: -10px;
+        height: 10px;
+    }
+
+    [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan {
+        display: flex;
+        position: relative;
+        margin: 10px 0;
+    }
+
+        [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .trai {
+            min-width: 35px;
+            max-width: 35px;
+            padding-right: 5px;
+        }
+
+            [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .trai .hinh-dai-dien,
+            [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .trai img {
+                height: 35px;
+                width: 35px;
+            }
+
+        [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan > .phai {
+            width: 100%;
+        }
+
+            [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .nguoi-dung {
+                font-weight: bold;
+                display: inline;
+                font-size: 12px;
+            }
+
+            [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .nguoi-dung a {
+                color: #333;
+            }
+
+            [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .noi-dung {
+                display: inline;
+                color: #333;
+                font-size: 12px;
+            }
+                
+            [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .tap-tin {
+                padding: 5px;
+                border: 1px dashed #eee;
+                background-color: #fff;
+                margin: 5px 0;
+            }
+            
+                [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .tap-tin a {
+                    display: flex;
+                }
+            
+                [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .tap-tin img {
+                    width: 25px;
+                    height: 25px;
+                    margin-right: 5px;
+                }
+            
+                [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .tap-tin span {
+                    align-self: center;
+                    color: #555;
+                }
+
+            [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .thong-tin {
+                display: block;
+            }
+
+                [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .thong-tin .thoi-gian {
+                    color: #888;
+                    font-size: 11px;
+                }
+        
+                [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .thong-tin .diem {
+                    font: bold 14px Berlin;
+                    line-height: 0;
+                    color: #fff;
+                }
+        
+                    [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .thong-tin .diem:not(:empty) {
+                        padding: 0 5px;
+                        border: 1px solid #eee;
+                        background-color: #08c;
+                    }
+        
+                    [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .thong-tin .diem:not(:empty):before {
+                        content: '+';
+                    }
+
+                [data-hien-thi="dien-dan"] .khung-binh-luan .khung-danh-sach .muc-binh-luan .phai .thong-tin .thoi-gian {
+                    color: #888;
+                    font-size: 11px;
+                }
+
+    [data-hien-thi="dien-dan"] .khung-binh-luan .khung-form {
+        margin: 10px 0;
+    }
 
 /*#endregion */
 
@@ -629,6 +766,24 @@
             [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop a {
                 cursor: pointer;
                 color: #555;
+            }
+
+            [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop .diem {
+                font: bold 17px Berlin;
+                line-height: 0;
+                color: #fff;
+                padding: 0 5px;
+                border: 1px solid #eee;
+                background-color: #08c;
+            }
+
+            [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop .xoa {
+                font: bold 17px Berlin;
+                line-height: 0;
+                color: #fff;
+                padding: 0 5px;
+                border: 1px solid #eee;
+                background-color: #e00;
             }
 
 /*#endregion */

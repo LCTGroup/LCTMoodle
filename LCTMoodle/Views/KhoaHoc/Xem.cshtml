@@ -66,7 +66,7 @@
 
     if (maNguoiDung.HasValue)
     {
-        dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
+        dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value, maNguoiDung);
     }
     else
     {
@@ -96,12 +96,10 @@
 
 @section Styles {
     <link href="/Xem.css/KhoaHoc/" rel="stylesheet" />
-    <link href="/Khung.css/BinhLuan/" rel="stylesheet" />
 }
 
 @section Scripts {
     <script src="/Xem.js/KhoaHoc/"></script>
-    <script src="/Khung.js/BinhLuan/"></script>
     <script>
         maKhoaHoc = '@Model.ma';
         tieuDe = '@Html.Raw(Model.ten)' + ' - LCTMoodle';

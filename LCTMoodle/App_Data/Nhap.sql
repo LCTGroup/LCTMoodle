@@ -1,0 +1,1 @@
+update dbo.baitapnop set daxoa = 0

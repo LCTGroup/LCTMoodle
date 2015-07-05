@@ -1,24 +1,24 @@
-﻿@model DTOLayer.BinhLuanDTO
+﻿@model DTOLayer.BinhLuanBaiVietDienDanDTO
 @using LCTMoodle.LCTView
 
 @{
     var maNguoiDung = Session["NguoiDung"] as int?;
-    bool coQuyenXoa, coQuyenSua;
+    bool coQuyenQLNoiDung, coQuyenQLDiem;
 
     if (maNguoiDung.HasValue)
     {
-        coQuyenXoa = Model.nguoiTao.ma == maNguoiDung || ViewData.ContainsKey("CoQuyenXoa") && (bool)ViewData["CoQuyenXoa"];
-        coQuyenSua = Model.nguoiTao.ma == maNguoiDung || ViewData.ContainsKey("CoQuyenSua") && (bool)ViewData["CoQuyenSua"];
+        coQuyenQLNoiDung = Model.nguoiTao.ma == maNguoiDung || (bool)ViewData["CoQuyenQLNoiDung"];
+        coQuyenQLDiem = (bool)ViewData["CoQuyenQLDiem"];
     }
     else
     {
-        coQuyenXoa = coQuyenSua = false;
+        coQuyenQLNoiDung = coQuyenQLDiem = false;
     }
 }
 
-<li data-doi-tuong="muc-binh-luan" class="muc-binh-luan" data-ma="@Model.ma" data-loai-doi-tuong="@Model.loaiDoiTuong">
+<li data-doi-tuong="muc-binh-luan" class="muc-binh-luan" data-ma="@Model.ma" data-diem="@Model.diem">
     <section class="trai">
-        <article class="hinh-dai-dien">            
+        <article class="hinh-dai-dien">
             @NguoiDungView.hinhDaiDien(Model.nguoiTao)
         </article>
     </section>
@@ -32,33 +32,38 @@
         @if (@Model.tapTin != null)
         {
             <section class="tap-tin">
-                <a href="/LayTapTin/BinhLuan_@(Model.loaiDoiTuong)_TapTin/@Model.tapTin.ma">
-                    <img src="/LayHinh/BinhLuan_@(Model.loaiDoiTuong)_TapTin/@Model.tapTin.ma" />
+                <a href="/LayTapTin/BinhLuanBaiVietDienDan_TapTin/@Model.tapTin.ma">
+                    <img src="/LayHinh/BinhLuanBaiVietDienDan_TapTin/@Model.tapTin.ma" />
                     <span>@Model.tapTin.ten</span>
                 </a>
             </section>
         }
         <section class="thong-tin">
+            <span data-doi-tuong="diem-binh-luan" class="diem">@if (Model.diem.HasValue && Model.diem.Value != 0)
+            { @Model.diem.Value }</span>
             <span class="thoi-gian">
                 @Model.thoiDiemTao.Value.ToString("H:mm d/M/yyyy")
             </span>
         </section>
     </section>
-    @if (coQuyenSua || coQuyenXoa)
+    @if (coQuyenQLNoiDung || coQuyenQLDiem)
     {
         <section class="khung-chuc-nang-lct ben-trai" style="top: 0; right: 0;">
             <ul data-doi-tuong="cnbl-@Model.ma">
-                @if (coQuyenSua)
+                @if (coQuyenQLDiem)
+                {
+                    <li>
+                        <a data-chuc-nang="cho-diem-binh-luan">Cho điểm bình luận</a>
+                    </li>
+                }
+                @if (coQuyenQLNoiDung)
                 {
                     <li>
                         <a data-chuc-nang="sua-binh-luan">Sửa bình luận</a>
-                    </li>   
-                }
-                @if (coQuyenXoa)
-                {
+                    </li>
                     <li>
                         <a data-chuc-nang="xoa-binh-luan">Xóa bình luận</a>
-                    </li>   
+                    </li>
                 }
             </ul>
             <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbl-@Model.ma">

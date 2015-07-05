@@ -8,7 +8,8 @@ CREATE TABLE dbo.KhoaHoc_NguoiDung (
 	TrangThai INT NOT NULL,
 	ThoiDiemThamGia DATETIME NOT NULL DEFAULT GETDATE(),
 	MaNguoiThem INT,
-	LaHocVien BIT DEFAULT 1
+	LaHocVien BIT DEFAULT 1,
+	DiemThaoLuan INT
 )
 
 GO
@@ -33,12 +34,7 @@ ALTER PROC dbo.layKhoaHoc_NguoiDungTheoMaKhoaHocVaMaNguoiDung (
 )
 AS
 BEGIN
-	SELECT TOP 1
-		MaKhoaHoc,
-		MaNguoiDung,
-		TrangThai,
-		MaNguoiThem,
-		LaHocVien
+	SELECT *
 		FROM dbo.KhoaHoc_NguoiDung
 		WHERE
 			MaNguoiDung = @1 AND
@@ -67,12 +63,7 @@ ALTER PROC dbo.layKhoaHoc_NguoiDungTheoMaKhoaHocVaTrangThai (
 )
 AS
 BEGIN
-	SELECT 
-		MaKhoaHoc,
-		MaNguoiDung,
-		TrangThai,
-		MaNguoiThem,
-		LaHocVien
+	SELECT *
 		FROM dbo.KhoaHoc_NguoiDung
 		WHERE
 			MaKhoaHoc = @0 AND
@@ -121,18 +112,12 @@ ALTER PROC dbo.layKhoaHoc_NguoiDungTheoMaNguoiDung (
 )
 AS
 BEGIN
-	SELECT 
-		MaKhoaHoc,
-		MaNguoiDung,
-		TrangThai,
-		MaNguoiThem,
-		LaHocVien
+	SELECT *
 		FROM dbo.KhoaHoc_NguoiDung
 		WHERE
 			MaNguoiDung = @0
 END
 
-exec layKhoaHoc_NguoiDungTheoMaNguoiDungVaTrangThai 1, 0
 GO
 --Lấy theo mã người dùng và trạng thái
 ALTER PROC dbo.layKhoaHoc_NguoiDungTheoMaNguoiDungVaTrangThai (
@@ -141,12 +126,7 @@ ALTER PROC dbo.layKhoaHoc_NguoiDungTheoMaNguoiDungVaTrangThai (
 )
 AS
 BEGIN
-	SELECT 
-		MaKhoaHoc,
-		MaNguoiDung,
-		TrangThai,
-		MaNguoiThem,
-		LaHocVien
+	SELECT *
 		FROM dbo.KhoaHoc_NguoiDung
 		WHERE
 			MaNguoiDung = @0 AND

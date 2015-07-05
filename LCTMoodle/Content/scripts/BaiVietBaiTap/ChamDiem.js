@@ -42,6 +42,7 @@ $(function () {
     khoiTaoNutChuyenDiem($_khungChamDiem.find('[data-chuc-nang="chuyen-diem"]'));
     khoiTaoNutChonHet_Checkbox($_khungChamDiem.find('[data-chuc-nang="chon-het"]'));
     khoiTaoNutXoa_Nhieu($_khungChamDiem.find('[data-chuc-nang="xoa-nhieu"]'))
+    khoiTaoNutTai_Nhieu($_khungChamDiem.find('[data-chuc-nang="tai-nhieu"]'))
 });
 
 //#region Khởi tạo nút
@@ -327,7 +328,7 @@ function khoiTaoNutXoa_Nhieu($dsNut) {
                     submit: function () {
                         $popup.tat();
                         var lyDo = $form.find('textarea').val();
-                        
+
                         //Lấy danh sách mã chọn
                         var dsMaChon = '';
                         $dsChon.each(function () {
@@ -374,6 +375,30 @@ function khoiTaoNutXoa_Nhieu($dsNut) {
                 });
             }
         })
+    })
+}
+
+function khoiTaoNutTai_Nhieu($dsNut) {
+    $dsNut.on('click', function () {
+        //Lấy danh sách chọn
+        var $dsChon = $_khungDSBaiNop.find('tr:not([data-da-xoa]):has([data-doi-tuong="nut-chon"]:checked)');
+        if ($dsChon.length == 0) {
+            moPopup({
+                tieuDe: 'Thông báo',
+                thongBao: 'Hãy chọn bài nộp mà bạn muốn tải',
+                bieuTuong: 'thong-tin'
+            });
+            return;
+        }
+
+        //Lấy danh sách mã chọn
+        var dsMaChon = '';
+        $dsChon.each(function () {
+            dsMaChon += ',' + $(this).data('ma');
+        });
+        dsMaChon = dsMaChon.substr(1);
+
+        window.open('/BaiTapNop/LayDanhSachFile?ds=' + dsMaChon, '_blank');
     })
 }
 

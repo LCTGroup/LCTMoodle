@@ -17,6 +17,6 @@ AS
 TABLE (
 	MaCotDiem INT NOT NULL,
 	MaNguoiDung INT NOT NULL,
-	Diem FLOAT(1) NOT NULL,
+	Diem FLOAT,
 	MaNguoiTao INT NOT NULL
 )

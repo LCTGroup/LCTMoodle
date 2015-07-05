@@ -96,7 +96,11 @@
             <ul id="danh_sach_thanh_vien" class="danh-sach">
                 @foreach (var tv in danhSachThanhVien)
                 {
-                    <li class="item" data-ma="@tv.nguoiDung.ma">                        
+                    <li class="item" data-ma="@tv.nguoiDung.ma">   
+                        @if (tv.diemThaoLuan.HasValue && tv.diemThaoLuan.Value != 0)
+                        {
+                            <section class="diem">10</section>   
+                        }
                         @NguoiDungView.hinhDaiDien(tv.nguoiDung)
                         @NguoiDungView.link(tv.nguoiDung)
                         @if (coQuyenQLThanhVien)

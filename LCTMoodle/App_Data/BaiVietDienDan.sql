@@ -10,7 +10,8 @@ CREATE TABLE dbo.BaiVietDienDan(
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
 	MaNguoiTao INT NOT NULL,
 	MaKhoaHoc INT NOT NULL,
-	Ghim BIT
+	Ghim BIT,
+	Diem INT
 )
 
 GO
@@ -27,14 +28,7 @@ BEGIN
 	INSERT INTO dbo.BaiVietDienDan(TieuDe, NoiDung, MaTapTin, MaNguoiTao, MaKhoaHoc)
 		VALUES (@0, @1, @2, @3, @4)
 
-	SELECT 
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietDienDan
 		WHERE Ma = @@IDENTITY
 END
@@ -46,15 +40,7 @@ ALTER PROC dbo.layBaiVietDienDanTheoMaKhoaHoc (
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc,
-		Ghim
+	SELECT *
 		FROM dbo.BaiVietDienDan
 		WHERE MaKhoaHoc = @0
 		ORDER BY Ghim DESC, ThoiDiemTao DESC
@@ -78,14 +64,7 @@ ALTER PROC dbo.layBaiVietDienDanTheoMa (
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietDienDan
 		WHERE Ma = @0
 END
@@ -109,15 +88,7 @@ BEGIN
 		')
 	END	
 	
-	SELECT TOP 1
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc,
-		Ghim
+	SELECT *
 		FROM dbo.BaiVietDienDan
 		WHERE Ma = @0
 END
@@ -145,4 +116,39 @@ BEGIN
 	UPDATE dbo.BaiVietDienDan
 		SET Ghim = null
 		WHERE MaKhoaHoc = @0
+END
+
+GO
+--Cập nhật điểm theo mã bài viết
+CREATE PROC dbo.capNhatBaiVietDienDanTheoMa_Diem (
+	@0 INT, --Ma
+	@1 INT --Diem
+)
+AS
+BEGIN
+	--Lấy điểm hiện tại, người tạo của bài viết, mã khóa học
+	DECLARE @diem INT, @maNguoiTao INT, @maKhoaHoc INT
+	SELECT 
+		@diem = Diem,
+		@maNguoiTao = MaNguoiTao,
+		@maKhoaHoc = MaKhoaHoc
+		FROM dbo.BaiVietDienDan
+		WHERE Ma = @0
+
+	IF (@diem IS NULL)
+	BEGIN
+		SET @diem = 0
+	END
+
+	--Cập nhật điểm của thành viên
+	UPDATE dbo.KhoaHoc_NguoiDung
+		SET DiemThaoLuan += @1 - @diem
+		WHERE
+			MaKhoaHoc = @maKhoaHoc AND
+			MaNguoiDung = @maNguoiTao
+
+	--Cập nhật điểm
+	UPDATE dbo.BaiVietDienDan
+		SET Diem = @1
+		WHERE Ma = @0
 END

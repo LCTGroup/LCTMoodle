@@ -1,7 +1,7 @@
 ﻿use rtcmfraf_Moodle;
 
 GO
-CREATE FUNCTION dbo.taoChuoiCapNhat (
+ALTER FUNCTION dbo.taoChuoiCapNhat (
 	@0 dbo.BangCapNhat READONLY
 )
 RETURNS NVARCHAR(MAX)
@@ -26,7 +26,12 @@ BEGIN
 		END + ','
 		FROM @0
 
-	RETURN LEFT(@query, LEN(@query) - 1)
+	RETURN CASE 
+		WHEN @query = '' THEN
+			''
+		ELSE
+			LEFT(@query, LEN(@query) - 1)
+		END
 END
 
 --Reset bảng

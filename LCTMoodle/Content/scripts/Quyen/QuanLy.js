@@ -103,7 +103,7 @@ function khoiTaoNutChonPhamVi($nuts) {
         var $nut = $(this);
         var phamVi = $nut.attr('data-ma');
 
-        if (phamVi != 'CD') {
+        if (phamVi != 'CD' || _PhamViQuanLy == 'HT') {
             thanhCong = true;
 
             if (!(phamVi in _MangHtmlQuyen)) {
@@ -511,7 +511,7 @@ function khoiTaoItem_Nhom($items) {
 }
 
 function khoiTaoItem_NguoiDung($items) {
-    khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'));
+    khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'), true);
 
     $items.find('[data-chuc-nang="them-vao-nhom"]').on('click', function () {
         var $item = $(this).closest('[data-doi-tuong="item-nguoi-dung"]');

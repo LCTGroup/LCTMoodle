@@ -68,6 +68,9 @@ namespace DAOLayer
                     case "LaHocVien":
                         thanhVien.laHocVien = layBool(dong, i);
                         break;
+                    case "DiemThaoLuan":
+                        thanhVien.diemThaoLuan = layInt(dong, i);
+                        break;
                     default:
                         break;
                 }
