@@ -59,6 +59,8 @@ namespace DAOLayer
                         cauHoi.diem = layInt(dong, i); break;
                     case "SoLuongTraLoi":
                         cauHoi.soLuongTraLoi = layInt(dong, i); break;
+                    case "DuyetHienThi":
+                        cauHoi.DuyetHienThi = layBool(dong, i); break;
                     default:
                         break;
                 }                
@@ -126,6 +128,19 @@ namespace DAOLayer
                 );
         }
 
+        public static KetQua capNhatTheoMa_DuyetHienThi(int? maCauHoi, bool trangThai)
+        {
+            return khongTruyVan
+                (
+                    "capNhatCauHoiTheoMa_DuyetHienThi",
+                    new object[]
+                    {
+                        maCauHoi,
+                        trangThai
+                    }
+                );
+        }
+
         public static KetQua layTheoMa(int? maCauHoi, LienKet lienKet = null)
         {
             return layDong
@@ -137,6 +152,15 @@ namespace DAOLayer
                 },
                 lienKet
             );
+        }
+
+        public static KetQua layCauHoi_ChuaDuyet()
+        {
+            return layDanhSachDong
+                (
+                    "layCauHoi_ChuaDuyet",
+                    new object[] { }
+                );
         }
         
         public static KetQua lay(int? soDong = null, string tieuChiHienThi = null, LienKet lienKet = null)

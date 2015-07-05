@@ -195,25 +195,28 @@
                     <article class="khung-chuc-nang">
                         @if (ViewData.ContainsKey("ChucNang"))
                         {
-                            <article class="hop-chuc-nang">
-                                <section class="ten-chuc-nang">
-                                    Chức năng
-                                </section>
-                                <section class="chuc-nang">
-                                    <ul id="danh_sach_chuc_nang_lct" class="danh-sach">
-                                        @{
-                                            List<string> danhSach = ViewData["ChucNang"] as List<string>;
-                                            int soLuong = danhSach.Count;
-                                        }
-                                        @for (int i = 0; i < soLuong; i += 2)
-                                        {
-                                            <li>
-                                                <a @Html.Raw(danhSach[i + 1])>@danhSach[i]</a>
-                                            </li>   
-                                        }
-                                    </ul>
-                                </section>
-                            </article>   
+                            if (ViewData["ChucNang"] != null)
+                            {
+                                <article class="hop-chuc-nang">
+                                    <section class="ten-chuc-nang">
+                                        Chức năng
+                                    </section>
+                                    <section class="chuc-nang">
+                                        <ul id="danh_sach_chuc_nang_lct" class="danh-sach">
+                                            @{
+                                                List<string> danhSach = ViewData["ChucNang"] as List<string>;
+                                                int soLuong = danhSach.Count;
+                                            }
+                                            @for (int i = 0; i < soLuong; i += 2)
+                                            {
+                                                <li>
+                                                    <a @Html.Raw(danhSach[i + 1])>@danhSach[i]</a>
+                                                </li>   
+                                            }
+                                        </ul>
+                                    </section>
+                                </article>
+                            }
                         }
                         
                         <article class="hop-cau-hoi">

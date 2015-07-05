@@ -15,26 +15,33 @@
     int? maNguoiDung = (int?)Session["NguoiDung"];
     string[] dsQuyen;
 
-    bool coQuyenThemCauHoi, coQuyenTraLoiCauHoi;
+    bool coQuyenThemCauHoi, coQuyenTraLoiCauHoi, coQuyenQuanLyCauHoi;
     
     if (maNguoiDung.HasValue)
     {
         dsQuyen = QuyenView.layDSQuyen("HD", 0, maNguoiDung);        
         coQuyenThemCauHoi = coQuyenTraLoiCauHoi = true;
+        coQuyenQuanLyCauHoi = QuyenHelper.co(dsQuyen, "DuyetCauHoi");
     }
     else
     {
         dsQuyen = null;
         coQuyenThemCauHoi = coQuyenTraLoiCauHoi = false;
+        coQuyenQuanLyCauHoi = false;
     }
-
+    
+    List<string> chucNang = new List<string>();    
     if (coQuyenThemCauHoi)
-    {
-        ViewData["ChucNang"] = new List<string>()
+    {       
+        chucNang.Add("Thêm câu hỏi");
+        chucNang.Add("href='/HoiDap/ThemCauHoi'");
+        if (coQuyenQuanLyCauHoi)
         {
-            "Thêm câu hỏi", "href='/HoiDap/ThemCauHoi'"
-        };
+            chucNang.Add("Quản lý câu hỏi");
+            chucNang.Add("href='/HoiDap/QuanLyCauHoi'");
+        }
     }
+    ViewData["ChucNang"] = chucNang.Count != 0 ? chucNang : null;
     <!---->
     
     Dictionary<int, int> trangThaiVoteTraLoi = ViewData["DSTrangThaiVoteTraLoi"] as Dictionary<int, int>;

@@ -58,6 +58,10 @@ namespace LCTMoodle.Controllers
 
         public ActionResult DangNhap()
         {
+            if (Session["NguoiDung"] != null)
+            {
+                return Redirect("/");
+            }
             //Tắt hiển thị cột trái, cột phải
             ViewData["CotTrai"] = false;
             ViewData["CotPhai"] = false;                        
@@ -77,7 +81,7 @@ namespace LCTMoodle.Controllers
         {
             if (Session["NguoiDung"] != null)
             {
-                return Redirect("/NguoiDung/DangNhap");
+                return Redirect("/");
             }
             //Tắt hiển thị cột trái, cột phải
             ViewData["CotTrai"] = false;

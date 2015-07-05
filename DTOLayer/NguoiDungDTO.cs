@@ -20,7 +20,7 @@ namespace DTOLayer
         public string soDienThoai;
         public TapTinDTO hinhDaiDien;
         public string maKichHoat;
-        public string matKhauCap2;
         public int? diemHoiDap;
+        public DateTime? thoiDiemPhucHoiMatKhau;
     }
 }
