@@ -56,6 +56,9 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "GiaTri":
+                        nhomNguoiDung.giaTri = layString(dong, i);
+                        break;
                     default:
                         break;
                 }
@@ -115,6 +118,19 @@ namespace DAOLayer
                     {
                         phamVi,
                         ma
+                    }
+                );
+        }
+
+        public static KetQua them_MacDinh(string phamVi, int? maDoiTuong)
+        {
+            return khongTruyVan
+                (
+                    "themNhomNguoiDung_MacDinh",
+                    new object[]
+                    {
+                        phamVi,
+                        maDoiTuong
                     }
                 );
         }

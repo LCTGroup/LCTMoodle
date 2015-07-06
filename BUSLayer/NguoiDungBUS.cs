@@ -536,5 +536,10 @@ namespace BUSLayer
 
             return NguoiDungBUS.xuLyDangNhap(formNguoiDung);
         }
+
+        public static KetQua timKiem(string tuKhoa)
+        {
+            return NguoiDungDAO.lay_TimKiem(tuKhoa);
+        }
     }
 }

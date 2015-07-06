@@ -13,9 +13,11 @@ truncate table dbo.Quyen
 GO
 INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALUES
 --1xx: Hệ thống
---102
+--103
 --	('HT', 1, 0,	N'','',0,1),		--|
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
+	('HT', 102, 1,	'',									'QLDacBiet',				0,		-1),
+
 	('HT', 101, 0,	N'Quản lý quyền',					'QLQuyen',					0,		1),		--|
 
 --2xx: Người dùng
@@ -27,9 +29,11 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('ND', 202, 0,	N'Riêng',							'Rieng',					0,		1),		--|
 	
 --3xx: Chủ đề
---307
+--305
 --	('CD', 3, 0,	N'','',0,1),		--|
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
+	('CD', 304, 1,	'',									'QLDacBiet',				0,		-1),	
+
 	('CD', 301, 0,	N'Quản lý quyền',					'QLQuyen',					0,		1),		--|
 	('CD', 302, 0,	N'Thêm, xóa, sửa chủ đề',			'QLNoiDung',				0,		2),		--|
 	('CD', 303, 0,	N'Duyệt chủ đề',					'Duyet',					0,		3),		--|
@@ -48,9 +52,11 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('HD', 408, 0,	N'Xóa trả lời',						'XoaTraLoi',				401,	6),		--| |
 	
 --5xx: Khóa học
---530
+--531
 --	('KH', 5, 0,	N'','',0,1),		--|
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
+	('KH', 530, 1,	'',									'QLDacBiet',				0,		-1),
+
 	('KH', 520, 1,	N'Thêm, xóa, sửa khóa học',			'QLNoiDung',				0,		1),		--|
 	('KH', 501, 1,	N'Quản lý quyền',					'QLQuyen',					0,		2),		--|
 
@@ -84,5 +90,3 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('KH', 519, 0,	N'Quản lý bảng điểm',				'QLBangDiem',				502,	4),		--| |
 
 	('KH', 523, 0,	N'Quản lý chương trình',			'QLChuongTrinh',			502,	5)		--| |
-
-GO

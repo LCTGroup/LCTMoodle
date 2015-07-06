@@ -15,25 +15,20 @@ CREATE TABLE dbo.Quyen (
 
 GO
 --Lấy theo phạm vi
-CREATE PROC dbo.layQuyenTheoPhamViVaMaChaVaLaQuyenChung (
+ALTER PROC dbo.layQuyenTheoPhamViVaMaChaVaLaQuyenChung (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT, --MaCha
 	@2 BIT --LaQuyenChung
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		Ten,
-		MoTa,
-		GiaTri,
-		PhamVi,
-		LaQuyenChung
+	SELECT *
 		FROM dbo.Quyen
 		WHERE 
 			PhamVi = @0 AND
 			MaCha = @1 AND
-			LaQuyenChung = @2
+			LaQuyenChung = @2 AND
+			ThuTu <> -1
 		ORDER BY ThuTu ASC
 END
 
@@ -44,16 +39,11 @@ ALTER PROC dbo.layQuyenTheoMa (
 )
 AS
 BEGIN
-	SELECT TOP 1
-		Ma,
-		Ten,
-		MoTa,
-		GiaTri,
-		PhamVi,
-		MaCha,
-		LaQuyenChung
+	SELECT *
 		FROM dbo.Quyen
-		WHERE Ma = @0
+		WHERE 
+			Ma = @0 AND
+			ThuTu <> -1
 END
 
 GO
