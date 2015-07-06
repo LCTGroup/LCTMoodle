@@ -87,9 +87,9 @@ namespace LCTMoodle.WebServices
         /// Webservice lấy danh sách câu hỏi
         /// </summary>
         /// <returns>List<CauHoiDTO></returns>
-        public List<clientmodel_CauHoi> lay()
+        public List<clientmodel_CauHoi> lay(int _SoPT)
         {
-            KetQua ketQua = CauHoiBUS.layDanhSach(10, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
+            KetQua ketQua = CauHoiBUS.layDanhSach(_SoPT, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
             List<clientmodel_CauHoi> lst_CauHoi = new List<clientmodel_CauHoi>();
 
             if (ketQua.trangThai == 0)
