@@ -87,14 +87,25 @@ namespace LCTMoodle.WebServices
         /// Webservice lấy danh sách câu hỏi
         /// </summary>
         /// <returns>List<CauHoiDTO></returns>
-        public List<CauHoiDTO> lay(int _SoDong)
+        public List<clientmodel_CauHoi> lay(int _SoPT)
         {
-            KetQua ketQua = CauHoiBUS.layDanhSach(_SoDong, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
-            List<CauHoiDTO> lst_CauHoi = new List<CauHoiDTO>();
+            KetQua ketQua = CauHoiBUS.layDanhSach(_SoPT, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
+            List<clientmodel_CauHoi> lst_CauHoi = new List<clientmodel_CauHoi>();
 
-            if(ketQua.trangThai == 0)
+            if (ketQua.trangThai == 0)
             {
-                lst_CauHoi = ketQua.ketQua as List<CauHoiDTO>;
+                foreach(var cauHoi in ketQua.ketQua as List<CauHoiDTO>)
+                {
+                    lst_CauHoi.Add(new clientmodel_CauHoi()
+                    {
+                        Ma = cauHoi.ma.Value,
+                        TieuDe = cauHoi.tieuDe,
+                        NoiDung = cauHoi.noiDung,
+                        NguoiTao = cauHoi.nguoiTao.ten,
+                        SoTraLoi = cauHoi.soLuongTraLoi.Value,
+                        HinhAnh = cauHoi.nguoiTao.hinhDaiDien.ma + cauHoi.nguoiTao.hinhDaiDien.duoi,
+                    });
+                }
             }
             return lst_CauHoi;
         }
