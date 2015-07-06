@@ -1,0 +1,29 @@
+﻿.khung-quan-ly-tra-loi {
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+
+    .khung-quan-ly-tra-loi .lct-bang {
+
+    }
+
+        .khung-quan-ly-tra-loi .lct-bang tbody td:nth-child(1) {
+            width: 2%;
+        }
+        .khung-quan-ly-tra-loi .lct-bang tbody td:nth-child(2) {
+            text-align: center;
+            width: 2%;
+        }
+        .khung-quan-ly-tra-loi .lct-bang tbody td:nth-child(3) {
+        }
+        .khung-quan-ly-tra-loi .lct-bang tbody td:nth-child(4) {
+            text-align: center;
+            width: 33%;
+        }
+
+.empty {
+    padding: 5px;
+    border: 1px solid #ddd;
+    color: #888;
+    text-align: center;
+}

@@ -1,13 +1,19 @@
-<<<<<<< HEAD
-select * from nguoidung
+select ThoiDiemCapNhat from traloi
+group by ThoiDiemCapNhat
 
-update nguoidung
-set ThoiDiemPhucHoiMatKhau = '6/1/2015'
-where Email = 'Funky_Hpio@yahoo.com'
+select * from traloi
 
-update cauhoi
-set DuyetHienThi = 0
+alter table dbo.TraLoi
+add DuyetHienThi BIT DEFAULT 0
 
-select * from cauhoi
-=======
->>>>>>> 9c44da6d7a31231ecb00d9e9922ebd619d289fb0
+update traloi set DuyetHienThi = 0
+
+update cauhoi set duyethienthi = 0 where ma = 318
+
+select * from NguoiDung where DaDuyet = 0
+
+alter table nguoidung
+add DaDuyet BIT DEFAULT 0
+
+update nguoidung set DaDuyet = 0 where ma=318
+

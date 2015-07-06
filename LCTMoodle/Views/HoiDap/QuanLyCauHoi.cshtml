@@ -3,6 +3,11 @@
 @model List<CauHoiDTO>
 @{
     Layout = "~/Views/LCT/Khung.cshtml";
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Hỏi đáp", "/HoiDap",
+        "Quản lý câu hỏi", "/HoiDap/QuanLyCauHoi"
+    };
 }
 @section Styles {
     <link rel="stylesheet" href="/QuanLyCauHoi.css/HoiDap/" />

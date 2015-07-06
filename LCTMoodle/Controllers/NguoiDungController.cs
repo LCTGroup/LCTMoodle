@@ -170,6 +170,38 @@ namespace LCTMoodle.Controllers
             return View(ketQua.ketQua);
         }
 
+        public ActionResult QuanLyNguoiDung()
+        {
+            var ketQua = NguoiDungDAO.lay();
+            if (ketQua.trangThai != 0)
+            {
+                return Redirect("/");
+            }
+            
+            List<NguoiDungDTO> nguoiDung = ketQua.ketQua as List<NguoiDungDTO>;
+            
+            return View(nguoiDung);
+        }
+
+        public ActionResult DanhSachNguoiDungBiChan()
+        {
+            var ketQua = NguoiDungDAO.layNguoiDungBiChan();
+            if (ketQua.trangThai != 0)
+            {
+                return Redirect("/");
+            }
+
+            List<NguoiDungDTO> nguoiDung = ketQua.ketQua as List<NguoiDungDTO>;
+
+            return View(nguoiDung);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyChanNguoiDung(int? maNguoiDung, bool trangThai)
+        {
+            return Json(NguoiDungDAO.capNhatTheoMa_Chan(maNguoiDung, trangThai));
+        }
+
         [HttpPost]
         public ActionResult XuLyPhucHoiMatKhau(FormCollection form)
         {

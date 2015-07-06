@@ -1,0 +1,60 @@
+﻿@using DTOLayer;
+
+@model List<TraLoiDTO>
+@{
+    Layout = "~/Views/LCT/Khung.cshtml";
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Hỏi đáp", "/HoiDap",
+        "Quản lý trả lời", "/HoiDap/QuanLyTraLoi"
+    };
+}
+@section Styles {
+    <link rel="stylesheet" href="/QuanLyTraLoi.css/HoiDap/" />
+    <link rel="stylesheet" href="/XemCauHoi.css/HoiDap/" />
+}
+@section Scripts {
+    <script src="/QuanLyTraLoi.js/HoiDap/"></script>
+}
+
+@if (Model != null)
+{
+    <article class="hop hop-1-vien">
+        <section class="tieu-de">Quản lý câu hỏi</section>
+        <section class="noi-dung khung-quan-ly-tra-loi">
+            <table class="lct-bang">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Mã câu hỏi</th>
+                        <th>Nội dung</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+    foreach (var traLoi in Model)
+    {
+        <tr data-ma="@traLoi.ma" data-ma-cau-hoi="@(traLoi.cauHoi != null ? traLoi.cauHoi.ma : null)" data-doi-tuong="item-tra-loi">
+            <td>@traLoi.ma</td>
+            <td>@(traLoi.cauHoi != null ? traLoi.cauHoi.ma : null)</td>
+            <td>@Html.Raw(traLoi.noiDung)</td>
+            <td>
+                <form class="lct-form">
+                    <button type="button" class="thanh-cong" data-chuc-nang="duyet">Duyệt</button>
+                    <button type="button" class="nguy-hiem" data-chuc-nang="xoa">Xóa</button>
+                    <button type="button" class="thanh-cong" data-chuc-nang="xem">Xem</button>
+                </form>
+            </td>
+        </tr>
+    }
+}
+                </tbody>
+            </table>
+        </section>
+    </article>
+}
+else
+{
+    <p class="empty">Tất cả trả lời đã được duyệt</p>
+}

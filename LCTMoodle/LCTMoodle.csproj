@@ -192,6 +192,7 @@
     <Content Include="Content\scripts\ChuongTrinh\Tao.js" />
     <Content Include="Content\scripts\HoiDap\Index.js" />
     <Content Include="Content\scripts\ChuongTrinh\Index.js" />
+    <Content Include="Content\scripts\HoiDap\QuanLyTraLoi.js" />
     <Content Include="Content\scripts\HoiDap\QuanLyCauHoi.js" />
     <Content Include="Content\scripts\HoiDap\XemCauHoi.js" />
     <Content Include="Content\scripts\HoiDap\TaoCauHoi.js" />
@@ -206,6 +207,7 @@
     <Content Include="Content\scripts\NguoiDung\PhucHoiMatKhau.js" />
     <Content Include="Content\scripts\NguoiDung\DoiMatKhau.js" />
     <Content Include="Content\scripts\NguoiDung\KichHoatNguoiDung.js" />
+    <Content Include="Content\scripts\NguoiDung\QuanLyNguoiDung.js" />
     <Content Include="Content\scripts\NguoiDung\SuaNguoiDung.js" />
     <Content Include="Content\scripts\NguoiDung\NguoiDung.js" />
     <Content Include="Content\scripts\NguoiDung\Xem.js" />
@@ -215,6 +217,7 @@
     <Content Include="Content\styles\BinhLuan\Khung.css" />
     <Content Include="Content\styles\BangDiem\Tao.css" />
     <Content Include="Content\styles\ChuongTrinh\Index.css" />
+    <Content Include="Content\styles\HoiDap\QuanLyTraLoi.css" />
     <Content Include="Content\styles\HoiDap\QuanLyCauHoi.css" />
     <Content Include="Content\styles\HoiDap\XemCauHoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
@@ -226,6 +229,7 @@
     <Content Include="Content\styles\LCT\Form.css" />
     <Content Include="Content\styles\LCT\Khung.css" />
     <Content Include="Content\styles\LCT\stroke-icons.css" />
+    <Content Include="Content\styles\NguoiDung\QuanLyNguoiDung.css" />
     <Content Include="Content\styles\NguoiDung\Index.css" />
     <Content Include="Content\styles\NguoiDung\Xem.css" />
     <Content Include="Content\styles\Quyen\QuanLy.css" />
@@ -503,6 +507,10 @@
     <Content Include="Views\BaiVietBaiTap\ChamDiem.cshtml" />
     <Content Include="Views\BaiTapNop\_Xem.cshtml" />
     <Content Include="Views\HoiDap\QuanLyCauHoi.cshtml" />
+    <Content Include="Views\HoiDap\QuanLyTraLoi.cshtml" />
+    <Content Include="Views\HoiDap\_Item_QuanLyHoiDap.cshtml" />
+    <Content Include="Views\NguoiDung\QuanLyNguoiDung.cshtml" />
+    <Content Include="Views\NguoiDung\DanhSachNguoiDungBiChan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

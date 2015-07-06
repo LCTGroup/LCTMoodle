@@ -15,5 +15,6 @@ namespace DTOLayer
         public NguoiDungDTO nguoiTao;
         public CauHoiDTO cauHoi;
         public int? diem;
+        public bool duyetHienThi;
     }
 }
