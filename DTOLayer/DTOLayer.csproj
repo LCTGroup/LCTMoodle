@@ -60,7 +60,7 @@
     <Compile Include="BaiVietBaiGiangDTO.cs" />
     <Compile Include="BaiVietBaiTapDTO.cs" />
     <Compile Include="BaiVietDienDanDTO.cs" />
-    <Compile Include="BinhLuanDTO.cs" />
+    <Compile Include="BinhLuanBaiVietDienDanDTO.cs" />
     <Compile Include="HoiDapDiemDTO.cs" />
     <Compile Include="ChuDeDTO.cs" />
     <Compile Include="TraLoiDTO.cs" />

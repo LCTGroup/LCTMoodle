@@ -222,7 +222,14 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return ChuDeDAO.capNhatTheoMa(ma, layBangCapNhat(chuDe, form.Keys.ToArray()));
+
+            BangCapNhat bang = layBangCapNhat(chuDe, form.Keys.ToArray());
+            if (!bang.coDuLieu())
+            {
+                return new KetQua(1);
+            }
+
+            return ChuDeDAO.capNhatTheoMa(ma, bang);
         }
 
         public static KetQua capNhatCha(int ma, int maCha, int maNguoiSua)

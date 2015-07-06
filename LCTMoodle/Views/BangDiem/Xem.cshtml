@@ -63,7 +63,7 @@
 }
 @*Script ở dưới*@
 
-<article class="hop hop-2-vien" style="text-align: center;">
+<article id="khung" class="hop hop-2-vien" style="text-align: center;">
     <section class="tieu-de" style="text-align: left;">
         Bảng điểm
     </section>
@@ -74,11 +74,11 @@
             <a data-chuc-nang="luu-sua" class="button">Lưu</a>
             <a data-chuc-nang="hoan-thanh-sua" class="button">Hoàn thành</a>
             <a data-chuc-nang="huy-sua" class="button">Hủy</a>
-        </section>   
+        </section>
     }
     <section class="noi-dung" style="display: inline-block; max-width: 100%;">
         <article style="border: 0; background-color: transparent;">
-            <section id="khung" class="khung-diem">
+            <section class="khung-diem">
                 <table class="lct-bang" style="width: auto;">
                     <thead id="khung_tieu_de">
                         <tr>
@@ -104,31 +104,31 @@
                                     <th class="khong-vien">@nguoiDung.ho @nguoiDung.tenLot</th>
                                     <th class="khong-vien">@nguoiDung.ten</th>
                                     @{
-                                double tong = 0;
-                                double diemCong = 0;
-                                int hangHienTai = slCotDiem * iNguoiDung++;
-                                for (int i = 0; i < slCotDiem; i++)
-                                {
-                                    string strDiem = chuoiDiem[i + hangHienTai];
-                                    var cotDiem = dsCotDiem[i];
-                                    var laDiemCong = cotDiem.laDiemCong;
-                                    if (strDiem.IsEmpty())
-                                    {
-                                        <td data-ma="@cotDiem.ma" data-la-cot-diem data-he-so="@cotDiem.heSo" data-loai="@(laDiemCong ? "cong" : "diem")" class="cot-diem"></td>
-                                    }
-                                    else
-                                    {
-                                        if (laDiemCong)
+                                        double tong = 0;
+                                        double diemCong = 0;
+                                        int hangHienTai = slCotDiem * iNguoiDung++;
+                                        for (int i = 0; i < slCotDiem; i++)
                                         {
-                                            diemCong += double.Parse(strDiem);
+                                            string strDiem = chuoiDiem[i + hangHienTai];
+                                            var cotDiem = dsCotDiem[i];
+                                            var laDiemCong = cotDiem.laDiemCong;
+                                            if (strDiem.IsEmpty())
+                                            {
+                                                <td data-ma="@cotDiem.ma" data-la-cot-diem data-he-so="@cotDiem.heSo" data-loai="@(laDiemCong ? "cong" : "diem")" class="cot-diem"></td>
+                                            }
+                                            else
+                                            {
+                                                if (laDiemCong)
+                                                {
+                                                    diemCong += double.Parse(strDiem);
+                                                }
+                                                else
+                                                {
+                                                    tong += double.Parse(strDiem) * cotDiem.heSo.Value;
+                                                }
+                                                <td data-ma="@cotDiem.ma" data-la-cot-diem data-he-so="@cotDiem.heSo" data-loai="@(laDiemCong ? "cong" : "diem")" class="cot-diem" data-diem="@strDiem"><span>@strDiem</span></td>
+                                            }
                                         }
-                                        else
-                                        {
-                                            tong += double.Parse(strDiem) * cotDiem.heSo.Value;
-                                        }
-                                        <td data-ma="@cotDiem.ma" data-la-cot-diem data-he-so="@cotDiem.heSo" data-loai="@(laDiemCong ? "cong" : "diem")" class="cot-diem" data-diem="@strDiem"><span>@strDiem</span></td>
-                                    }
-                                }
                                         <td data-cot="tb"><span>@((tong / tongHeSo).ToString("0.##"))</span></td>
                                         <td data-cot="cong"><span>@diemCong</span></td>
                                     }
@@ -139,7 +139,7 @@
                 </table>
             </section>
         </article>
-    </section>   
+    </section>
     @if (coQuyenQLBangDiem)
     {
         <section class="khung-chuc-nang lct-form">

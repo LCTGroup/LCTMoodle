@@ -7,7 +7,7 @@
     .khung-nguoi-dung .danh-sach {
         display: flex;
         justify-content: space-around;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
     }
 
     .khung-nguoi-dung .item {
@@ -31,6 +31,18 @@
             font-weight: bold;
             font-size: 11px;
             color: #333;
+            text-align: center;
+        }
+        
+        .khung-nguoi-dung .item .diem {
+            font: bold 14px Berlin;
+            color: #fff;
+            padding: 5px;
+            border: 1px solid #eee;
+            background-color: #08c;
+            position: absolute;
+            left: 1px;
+            top: 1px;
         }
     
         .khung-nguoi-dung .item .khung-chuc-nang {

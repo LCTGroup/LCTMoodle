@@ -1,9 +1,10 @@
 ﻿var
     _PhamViQuanLy,
     _DoiTuongQuanLy,
+    $_KhungQuanLy,
     $_DanhSachQuyen,
     $_DanhSachNhom,
-    $_MoTaPhamVi,
+    $_MoTaNhom,
     $_DanhSachNguoi,
     //Xác định = Mã phạm vi (HT, CD, ...)
     _MangHtmlQuyen = {},
@@ -20,16 +21,17 @@
     _DoiTuongHienTai;
 
 $(function () {
-    $_DanhSachQuyen = $('#danh_sach_quyen');
-    $_DanhSachNhom = $('#danh_sach_nhom');
-    $_MoTaPhamVi = $('#mo_ta_pham_vi');
-    $_DanhSachNguoi = $('#danh_sach_nguoi');
+    $_KhungQuanLy = $('#khung_quan_ly_quyen');
+    $_DanhSachQuyen = $_KhungQuanLy.find('#danh_sach_quyen');
+    $_DanhSachNhom = $_KhungQuanLy.find('#danh_sach_nhom');
+    $_MoTaNhom = $_KhungQuanLy.find('#mo_ta_nhom');
+    $_DanhSachNguoi = $_KhungQuanLy.find('#danh_sach_nguoi');
     _MangHtmlQuyen[_PhamViHienTai] = $_DanhSachQuyen.html();
 
-    khoiTaoTimKiemNguoiDung($('#tim_nguoi_input'));
+    khoiTaoTimKiemNguoiDung($_KhungQuanLy.find('#tim_nguoi_input'));
 
-    khoiTaoNutChonPhamVi($('[data-chuc-nang="chon-pham-vi"]'));
-    khoiTaoNutThemNhom($('[data-chuc-nang="them-nhom"]'));
+    khoiTaoNutChonPhamVi($_KhungQuanLy.find('[data-chuc-nang="chon-pham-vi"]'));
+    khoiTaoNutThemNhom($_KhungQuanLy.find('[data-chuc-nang="them-nhom"]'));
     
     khoiTaoItem_Nhom($_DanhSachNhom.find('[data-doi-tuong="item-nhom"]'));
     khoiTaoItem_Quyen($_DanhSachQuyen.find('[data-doi-tuong="item-quyen"]'));
@@ -103,7 +105,7 @@ function khoiTaoNutChonPhamVi($nuts) {
         var $nut = $(this);
         var phamVi = $nut.attr('data-ma');
 
-        if (phamVi != 'CD') {
+        if (phamVi != 'CD' || _PhamViQuanLy == 'HT') {
             thanhCong = true;
 
             if (!(phamVi in _MangHtmlQuyen)) {
@@ -136,7 +138,6 @@ function khoiTaoNutChonPhamVi($nuts) {
                 $_DanhSachQuyen.html(_MangHtmlQuyen[_PhamViHienTai]);
                 khoiTaoItem_Quyen($_DanhSachQuyen.find('[data-doi-tuong="item-quyen"]'));
 
-                $_MoTaPhamVi.text('Tùy chỉnh quyền cho nhóm');
                 _DoiTuongHienTai = '0';
 
                 capNhatDanhSachQuyen();
@@ -185,7 +186,6 @@ function khoiTaoNutChonPhamVi($nuts) {
                                     $_DanhSachQuyen.html(_MangHtmlQuyen[_PhamViHienTai]);
                                     khoiTaoItem_Quyen($_DanhSachQuyen.find('[data-doi-tuong="item-quyen"]'));
 
-                                    $_MoTaPhamVi.text('Tùy chỉnh quyền cho nhóm - ' + (data.ten || 'Gốc'));
                                     _DoiTuongHienTai = data.ma;
 
                                     capNhatDanhSachQuyen();
@@ -433,6 +433,8 @@ function khoiTaoItem_Nhom($items) {
         hienThiQuyen();
         hienThiNguoiDung();
 
+        $_MoTaNhom.text($item.data('mo-ta'));
+
         capNhatTatMoKhung(true);
     }
 
@@ -511,7 +513,7 @@ function khoiTaoItem_Nhom($items) {
 }
 
 function khoiTaoItem_NguoiDung($items) {
-    khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'));
+    khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'), true);
 
     $items.find('[data-chuc-nang="them-vao-nhom"]').on('click', function () {
         var $item = $(this).closest('[data-doi-tuong="item-nguoi-dung"]');

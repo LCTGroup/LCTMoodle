@@ -38,6 +38,40 @@ namespace Helpers
 
             return macDinh;
         }
+        
+        public static string boDau(string chuoi)
+        {
+            string[] quyDinh = new string[]
+            {
+                "aAeEoOuUiIdDyY",
+                "áàạảãâấầậẩẫăắằặẳẵ",
+                "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+                "éèẹẻẽêếềệểễ",
+                "ÉÈẸẺẼÊẾỀỆỂỄ",
+                "óòọỏõôốồộổỗơớờợởỡ",
+                "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+                "úùụủũưứừựửữ",
+                "ÚÙỤỦŨƯỨỪỰỬỮ",
+                "íìịỉĩ",
+                "ÍÌỊỈĨ",
+                "đ",
+                "Đ",
+                "ýỳỵỷỹ",
+                "ÝỲỴỶỸ"
+            };
+
+            //lọc bỏ dấu cho chuỗi
+            for (int i = 1; i < quyDinh.Length; i++)
+            {
+
+                for (int j = 0; j < quyDinh[i].Length; j++)
+                {
+                    chuoi = chuoi.Replace(quyDinh[i][j], quyDinh[0][i - 1]);
+                }
+            }
+
+            return chuoi;
+        }
 
         #region Kiểm tra email
         /// <summary>

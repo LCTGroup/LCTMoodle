@@ -42,7 +42,7 @@ function khoiTaoForm($form) {
 
 function khoiTaoItem($item) {
     //Nút tắt mở
-    khoiTaoTatMoDoiTuong($item.find('[data-chuc-nang="tat-mo"]'));
+    khoiTaoTatMoDoiTuong($item.find('[data-chuc-nang="tat-mo"]'), true);
 
     //Nút xóa
     $item.find('[data-chuc-nang="xoa"]').on('click', function () {

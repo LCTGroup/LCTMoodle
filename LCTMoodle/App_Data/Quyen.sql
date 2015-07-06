@@ -15,25 +15,20 @@ CREATE TABLE dbo.Quyen (
 
 GO
 --Lấy theo phạm vi
-CREATE PROC dbo.layQuyenTheoPhamViVaMaChaVaLaQuyenChung (
+ALTER PROC dbo.layQuyenTheoPhamViVaMaChaVaLaQuyenChung (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT, --MaCha
 	@2 BIT --LaQuyenChung
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		Ten,
-		MoTa,
-		GiaTri,
-		PhamVi,
-		LaQuyenChung
+	SELECT *
 		FROM dbo.Quyen
 		WHERE 
 			PhamVi = @0 AND
 			MaCha = @1 AND
-			LaQuyenChung = @2
+			LaQuyenChung = @2 AND
+			ThuTu <> -1
 		ORDER BY ThuTu ASC
 END
 
@@ -44,16 +39,11 @@ ALTER PROC dbo.layQuyenTheoMa (
 )
 AS
 BEGIN
-	SELECT TOP 1
-		Ma,
-		Ten,
-		MoTa,
-		GiaTri,
-		PhamVi,
-		MaCha,
-		LaQuyenChung
+	SELECT *
 		FROM dbo.Quyen
-		WHERE Ma = @0
+		WHERE 
+			Ma = @0 AND
+			ThuTu <> -1
 END
 
 GO
@@ -79,7 +69,6 @@ BEGIN
 	RETURN @chuoiMaLa
 END
 
-EXEC layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri 1, 'CD', 60
 GO
 --Lấy danh sách quyền theo mã người dùng và đối tượng
 ALTER PROC dbo.layQuyenTheoMaNguoiDungVaMaDoiTuong_ChuoiGiaTri (
@@ -164,12 +153,19 @@ BEGIN
 			
 		--Lấy cây của chủ đề
 		DECLARE @cay VARCHAR(MAX)
+		IF (@maChuDe = 0)
+		BEGIN
+			SET @cay = '|0|'
+		END
+		ELSE
+		BEGIN
 		SELECT @cay = Cay
 			FROM dbo.ChuDe
 			WHERE Ma = @maChuDe
 
-		--Cộng thêm chủ đề hiện tại
-		SET @cay += CAST(@maChuDe AS VARCHAR(MAX)) + '|'
+			--Cộng thêm chủ đề hiện tại
+			SET @cay += CAST(@maChuDe AS VARCHAR(MAX)) + '|'
+		END
 
 		--Kiểm tra ở phạm vi chủ đề
 		--Phạm vi chủ đề chỉ quản lý khóa hoc, hỏi đáp, chủ đề
@@ -191,8 +187,9 @@ BEGIN
 							INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
 								NND_Q.MaNhomNguoiDung = NND_ND.MaNhomNguoiDung AND
 								--Quyền tác động đến đối tượng đó
-								(NND_Q.MaDoiTuong = @2 OR 
-									NND_Q.MaDoiTuong = 0)
+								(NND_Q.MaDoiTuong = 0 OR 
+									(@1 = 'CD' AND 
+										@cay LIKE '%|' + CAST(NND_Q.MaDoiTuong AS VARCHAR(MAX)) + '|%'))
 							--Để lấy quyền theo phạm vi
 							INNER JOIN dbo.Quyen Q ON
 								NND_Q.MaQuyen = Q.Ma AND
@@ -224,7 +221,7 @@ BEGIN
 	END
 
 	DECLARE @giaTri VARCHAR(MAX) = ''
-	SELECT @giaTri += GiaTri + ','
+	SELECT @giaTri += GiaTri + '|'
 		FROM @dsGiaTri
 		GROUP BY GiaTri
 
@@ -236,7 +233,6 @@ BEGIN
 		END
 END
 
-EXEC layQuyenTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra 1, 'CD', 63, 'QQ'
 GO
 --Lấy quyền theo mã người dùng và mã đối tượng và giá trị
 ALTER PROC dbo.layQuyenTheoMaNguoiDungVaGiaTriVaMaDoiTuong_KiemTra (
@@ -322,9 +318,19 @@ BEGIN
 			
 		--Lấy cây của chủ đề
 		DECLARE @cay VARCHAR(MAX)
+		IF (@maChuDe = 0)
+		BEGIN
+			SET @cay = '|0|'
+		END
+		ELSE
+		BEGIN
 		SELECT @cay = Cay
 			FROM dbo.ChuDe
 			WHERE Ma = @maChuDe
+
+			--Cộng thêm chủ đề hiện tại
+			SET @cay += CAST(@maChuDe AS VARCHAR(MAX)) + '|'
+		END
 
 		--Cộng thêm chủ đề hiện tại
 		SET @cay += CAST(@maChuDe AS VARCHAR(MAX)) + '|'
@@ -349,8 +355,9 @@ BEGIN
 							INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
 								NND_Q.MaNhomNguoiDung = NND_ND.MaNhomNguoiDung AND
 								--Quyền tác động đến đối tượng đó
-								(NND_Q.MaDoiTuong = @2 OR 
-									NND_Q.MaDoiTuong = 0)
+								(NND_Q.MaDoiTuong = 0 OR 
+									(@1 = 'CD' AND 
+										@cay LIKE '%|' + CAST(NND_Q.MaDoiTuong AS VARCHAR(MAX)) + '|%'))
 							--Để lấy quyền theo phạm vi
 							INNER JOIN dbo.Quyen Q ON
 								NND_Q.MaQuyen = Q.Ma AND

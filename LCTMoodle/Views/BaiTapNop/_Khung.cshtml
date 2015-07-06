@@ -13,10 +13,29 @@
 <section class="danh-sach-nop">
     @if (Model != null)
     {
+        DTOLayer.BaiTapNopDTO baiNopCuaNguoiDung = null;
         if (Session["NguoiDung"] != null)
         {
             int maNguoiDung = (int)Session["NguoiDung"];
-            daNop = Model.Exists(x => x.nguoiTao.ma == maNguoiDung);
+            
+            foreach (var baiNop in Model)
+            {
+                if (baiNop.nguoiTao.ma.Value == maNguoiDung)
+                {
+                    baiNopCuaNguoiDung = baiNop;
+                    daNop = true;
+                    break;
+                }
+            }
+        }
+        
+        if (baiNopCuaNguoiDung.daXoa)
+        {
+            <a title="@baiNopCuaNguoiDung.ghiChu" class="xoa">!</a>
+        }
+        else if (baiNopCuaNguoiDung.diem.HasValue)
+        {
+            <a title="@baiNopCuaNguoiDung.ghiChu" class="diem">@baiNopCuaNguoiDung.diem.Value</a>
         }
 
         if (daNop)

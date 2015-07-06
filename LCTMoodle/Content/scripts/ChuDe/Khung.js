@@ -254,7 +254,7 @@
         khoiTaoNutChon($danhSachItem.find('[data-chuc-nang="chon"]'));
 
         //Khởi tạo nút tắt mở đối tương
-        khoiTaoTatMoDoiTuong($danhSachItem.find('[data-chuc-nang="tat-mo"]'));
+        khoiTaoTatMoDoiTuong($danhSachItem.find('[data-chuc-nang="tat-mo"]'), true);
 
         //Khởi tạo nút xóa
         $danhSachItem.find('[data-chuc-nang="xoa"]').on('click', function () {

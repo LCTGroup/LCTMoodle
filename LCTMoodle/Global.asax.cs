@@ -30,7 +30,7 @@ namespace LCTMoodle
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BaiVietBaiGiang_TapTin"));
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BaiVietTaiLieu_TapTin"));
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/NguoiDung_HinhDaiDien"));
-            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BinhLuan_BaiVietDienDan_TapTin"));
+            LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BinhLuanBaiVietDienDan_TapTin"));
             LCTHelper.taoThuMuc(Server.MapPath("~/Uploads/BaiTapNop_TapTin"));
         }
 

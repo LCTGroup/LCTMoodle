@@ -21,5 +21,6 @@ namespace DTOLayer
         public DateTime? thoiDiemThamGia;
         public NguoiDungDTO nguoiThem;
         public bool laHocVien;
+        public int? diemThaoLuan;
     }
 }

@@ -256,24 +256,31 @@ namespace LCTMoodle.Controllers
             return Json(NguoiDungBUS.tonTaiEmail(email), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult _GoiY_QuanLyKhoaHoc(string input)
+        public ActionResult _GoiY_QuanLyKhoaHoc(string tuKhoa)
         {
+            var ketQua = NguoiDungBUS.timKiem(tuKhoa);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(new KetQua(1), JsonRequestBehavior.AllowGet);
+            }
+
+            List<object> dsNguoiDung = new List<object>();
+            foreach (var nguoiDung in ketQua.ketQua as List<NguoiDungDTO>)
+            {
+                dsNguoiDung.Add(new
+                    {
+                        ma = nguoiDung.ma.Value,
+                        ten = nguoiDung.ho + " " + nguoiDung.tenLot + " " + nguoiDung.ten,
+                        moTa = "Tài khoản: " + nguoiDung.tenTaiKhoan + (nguoiDung.ngaySinh.HasValue ? ("\r\nNgày sinh: " + nguoiDung.ngaySinh.Value.ToString("d/M/yyyy")) : null)
+                    });
+            }
+
+
             return Json(new KetQua()
             {
                 trangThai = 0,
-                ketQua = new object[]
-                { 
-                    new 
-                    {
-                        ma = 1,
-                        ten = "Lê Bình Chiêu"
-                    },
-                    new 
-                    {
-                        ma = 1,
-                        ten = "Lê Bình Chiêu"
-                    }
-                }
+                ketQua = dsNguoiDung
             }, JsonRequestBehavior.AllowGet);
         }
 	}
