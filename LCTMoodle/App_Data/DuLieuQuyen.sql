@@ -24,9 +24,7 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 --203
 --	('ND', 2, 0,	N'','',0,1),		--|
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
-	('ND', 201, 1,	N'Chung',							'Chung',					0,		1),		--|
-
-	('ND', 202, 0,	N'Chặn người dùng',					'ChanNguoiDung',			0,		1),		--|
+	('ND', 202, 0,	N'Quản lý người dùng',				'QuanLyNguoiDung',			0,		1),		--|
 	
 --3xx: Chủ đề
 --305

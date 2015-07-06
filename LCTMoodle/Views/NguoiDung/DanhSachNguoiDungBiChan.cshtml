@@ -1,12 +1,42 @@
-﻿@using DTOLayer;
+﻿@using Helpers
+@using LCTMoodle.LCTView
+@using DTOLayer;
 
 @model List<NguoiDungDTO>
 @{
     Layout = "~/Views/LCT/Khung.cshtml";
+
     ViewData["DieuHuong"] = new List<string>()
     {
-        "Danh sách đen", "/NguoiDung/QuanLyNguoiDung"
+        "Người Dùng", "/NguoiDung/Xem/" + Session["NguoiDung"],
+        "Danh sách đen", "/NguoiDung/DanhSachNguoiDungBiChan"
     };
+    
+    int? maNguoiDung = Session["NguoiDung"] as int?;
+    bool coQuyenQuanLyNguoiDung;
+    string[] dsQuyen;
+
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("ND", 0, maNguoiDung);
+    }
+    else
+    {
+        dsQuyen = null;
+    }
+
+    coQuyenQuanLyNguoiDung = QuyenHelper.co(dsQuyen, "QuanLyNguoiDung");
+
+    List<string> chucNang = new List<string>();
+    if (coQuyenQuanLyNguoiDung)
+    {
+        chucNang.Add("Quản lý người dùng");
+        chucNang.Add("href='/NguoiDung/QuanLyNguoiDung/'");
+        chucNang.Add("Danh sách người dùng bị chặn");
+        chucNang.Add("href='/NguoiDung/DanhSachNguoiDungBiChan/'");
+    }
+    ViewData["ChucNang"] = chucNang;
+        
 }
 @section Styles {
     <link rel="stylesheet" href="/QuanLyNguoiDung.css/NguoiDung/" />
