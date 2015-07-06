@@ -1,8 +1,6 @@
 ﻿use rtcmfraf_Moodle;
 
 GO
---Bình luận
-	--BaiVietDienDan
 	
 CREATE TABLE dbo.BinhLuan_BaiVietDienDan (
 	Ma INT IDENTITY(1, 1) PRIMARY KEY NOT NULL,

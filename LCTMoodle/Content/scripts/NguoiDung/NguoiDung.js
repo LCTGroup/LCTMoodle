@@ -15,12 +15,14 @@ $(function () {
 function khoiTaoDangKy($form) {
     khoiTaoLCTForm($form, {
         submit: function () {
+            var $tai = moBieuTuongTai($form);
             $.ajax({
                 url: $form.attr('action'),
                 method: $form.attr('method'),            
                 data: layDataLCTForm($form),
-                dataType: 'JSON',
-                async: false
+                dataType: 'JSON'
+            }).always(function () {
+                $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     moPopup({
@@ -51,7 +53,7 @@ function khoiTaoDangKy($form) {
         },
         custom: [
             {
-                input: $('#NhapLaiMatKhau'),
+                input: $('#nhap_lai_mat_khau'),
                 thongBao: 'Mật khẩu chưa khớp',
                 validate: function () {
                     if ($('#NhapLaiMatKhau').val() != $('#MatKhau').val()) {
@@ -60,16 +62,7 @@ function khoiTaoDangKy($form) {
                 }            
             },
             {
-                input: $('#MatKhauCap2'),
-                thongBao: 'Mật khẩu cấp 2 không được trùng với Mật khẩu cấp 1',
-                validate: function () {
-                    if ($('#MatKhauCap2').val() == $('#MatKhau').val() && $('#MatKhauCap2').val() != "") {
-                        return false;
-                    }
-                }            
-            },
-            {
-                input: $('#TenTaiKhoan'),
+                input: $('#ten_tai_khoan'),
                 thongBao: 'Tài khoản đã tồn tại',
                 validate: function () {
                     var ketQua;
@@ -103,6 +96,21 @@ function khoiTaoDangKy($form) {
                         moPopupThongBao(data)
                     });
                     return ketQua;
+                }
+            },
+            {
+                input: $('#ngay_sinh'),
+                thongBao: 'Bạn chưa đủ tuổi để tham gia LCTMoodle',
+                validate: function () {
+                    var $ngaySinh = $('#ngay_sinh').val();
+                    var $giaTriNgaySinh = $ngaySinh.split('/');
+                    var $namHienTai = new Date().getFullYear();
+                   
+                    if ($namHienTai - $giaTriNgaySinh[2] >= 13)
+                    {
+                        return true;
+                    }
+                    return false;
                 }
             }]
     });

@@ -400,7 +400,7 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
         $.ajax({
             url: '/BaiVietDienDan/XuLyGhim/' + $item.attr('data-ma'),
             method: 'POST',
-            data: { ghim: ghim},
+            data: { ghim: ghim },
             dataType: 'JSON'
         }).always(function () {
             $tai.tat();
@@ -422,9 +422,282 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
         }).fail(function () {
             moPopupThongBao('Ghim thất bại');
         })
-    })
+    });
+    
+    $danhSachBaiViet.find('[data-chuc-nang="cho-diem-bai-viet"]').on('click', function () {
+        $item = $(this).closest('[data-doi-tuong="muc-bai-viet"]');
+
+        moPopupFull({
+            html: '<article class="hop hop-1-vien"><article class="noi-dung"><form id="nhap_form"class="lct-form">' +
+                        '<ul><li>' +
+                            '<section class="noi-dung">' +
+                                '<article class="input" style="width: 50px; margin: 0 auto;">' +
+                                    '<input data-validate="so-nguyen bat-buoc" type="text" style="text-align: center; font-size: 20px; font-family: Berlin" autofocus data-doi-tuong="diem" />' +
+                                '</article>' +
+                            '</section>' +
+                        '</li></ul>' +
+                        '<section class="khung-button">' +
+                            '<button type="submit">Xác nhận</button>' +
+                            '<button type="button" data-chuc-nang="huy">Hủy</button>' +
+                        '</section>' +
+                    '</form></aritcle></aritcle>',
+            width: '300px',
+            thanhCong: function ($popup) {
+                var diem = $item.data('diem') || '';
+                var $form = $popup.find('form');
+                
+                khoiTaoLCTForm($form, {
+                    khoiTao: function () {
+                        $form.find('input').attr('data-mac-dinh', diem);
+                    },
+                    submit: function () {
+                        $popup.tat();
+                        var diem = $form.find('input').val();
+
+                        var $tai = moBieuTuongTai($item);
+                        $.ajax({
+                            url: '/BaiVietDienDan/XuLyChoDiem/' + $item.data('ma'),
+                            method: 'POST',
+                            data: { diem: diem },
+                            dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $item.data('diem', diem);
+                                $item.find('[data-doi-tuong="diem"]').text(diem == 0 ? '' : diem);
+                            }
+                            else {
+                                moPopupThongBao(data);
+                            }
+                        }).fail(function () {
+                            moPopupThongBao('Cho điểm thất bại');
+                        });
+                    }
+                })
+            }
+        });
+    });
+
+    $danhSachBaiViet.find('[data-chuc-nang="binh-luan"]').on('click', function () {
+        var $nut = $(this);
+        var $item = $nut.closest('[data-doi-tuong="muc-bai-viet"]');
+
+        $tai = moBieuTuongTai($nut)
+        $.ajax({
+            url: '/BinhLuanBaiVietDienDan/_Khung',
+            data: { maBaiVietDienDan: $item.data('ma') },
+            dataType: 'JSON'
+        }).always(function () {
+            $tai.tat();
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                $nut.remove();
+                var $khung = $(data.ketQua);
+                khoiTaoKhungBinhLuan($khung);
+                $item.append($khung);
+            }
+            else {
+                moPopupThongBao(data);
+            }
+        }).fail(function () {
+            moPopupThongBao('Lấy bình luận thất bại');
+        });
+    });
 
     khoiTaoKhungBinhLuan($danhSachBaiViet.find('[data-doi-tuong="khung-binh-luan"]'));
+
+    function khoiTaoKhungBinhLuan($khung) {
+        khoiTaoForm($khung.find('[data-doi-tuong="binh-luan-form"]'));
+        khoiTaoItem($khung.find('[data-doi-tuong="muc-binh-luan"]'));
+
+        function khoiTaoForm($form) {
+            khoiTaoLCTForm($form, {
+                submit: function () {
+                    var $tai = moBieuTuongTai($form.closest('[data-doi-tuong="khung-binh-luan"]'));
+                    $.ajax({
+                        url: '/BinhLuanBaiVietDienDan/XuLyThem',
+                        type: 'POST',
+                        data: $form.serialize(),
+                        dataType: 'JSON'
+                    }).always(function () {
+                        $tai.tat();
+                    }).done(function (data) {
+                        if (data.trangThai == 0) {
+                            var $binhLuan = $(data.ketQua);
+                            khoiTaoItem($binhLuan);
+
+                            $form.closest('[data-doi-tuong="khung-binh-luan"]').find('[data-doi-tuong="danh-sach"]').append($binhLuan);
+
+                            khoiTaoLCTFormMacDinh($form);
+                        }
+                        else {
+                            moPopupThongBao(data);
+                        }
+                    }).fail(function () {
+                        moPopupThongBao('Thêm bình luận thất bại');
+                    });
+                }
+            });
+        }
+
+        function khoiTaoItem($items) {
+            khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'), true);
+
+            $items.find('[data-chuc-nang="xoa-binh-luan"]').on('click', function () {
+                var $item = $(this).closest('[data-doi-tuong="muc-binh-luan"]');
+
+                moPopup({
+                    tieuDe: 'Xác nhận',
+                    thongBao: 'Bạn có chắc muốn xóa bình luận này?',
+                    bieuTuong: 'hoi',
+                    nut: [
+                        {
+                            ten: 'Có',
+                            xuLy: function () {
+                                var $tai = moBieuTuongTai($item);
+                                $.ajax({
+                                    url: '/BinhLuanBaiVietDienDan/XuLyXoa/' + $item.attr('data-ma'),
+                                    type: 'POST',
+                                    dataType: 'JSON'
+                                }).always(function () {
+                                    $tai.tat();
+                                }).done(function (data) {
+                                    if (data.trangThai == 0) {
+                                        $item.remove();
+                                    }
+                                    else {
+                                        moPopupThongBao(data);
+                                    }
+                                }).fail(function () {
+                                    moPopupThongBao('Xóa bài viết thất bại');
+                                });
+                            }
+                        },
+                        {
+                            ten: 'Không',
+                        }
+                    ]
+                });
+            });
+
+            $items.find('[data-chuc-nang="sua-binh-luan"]').on('click', function () {
+                var $item = $(this).closest('[data-doi-tuong="muc-binh-luan"]');
+                var $khung = $item.closest('[data-doi-tuong="khung-binh-luan"]');
+
+                var $tai = moBieuTuongTai($item);
+                $.ajax({
+                    url: '/BinhLuanBaiVietDienDan/_Form',
+                    data: { ma: $item.data('ma') },
+                    dataType: 'JSON'
+                }).always(function () {
+                    $tai.tat();
+                }).done(function (data) {
+                    if (data.trangThai == 0) {
+                        var $form = $(data.ketQua);
+
+                        var htmlTam = $item.html();
+                        $item.html($form);
+                        khoiTaoLCTForm($form, {
+                            submit: function () {
+                                $tai = moBieuTuongTai($item);
+                                $.ajax({
+                                    url: '/BinhLuanBaiVietDienDan/XuLyCapNhat',
+                                    method: 'POST',
+                                    data: layDataLCTForm($form),
+                                    dataType: 'JSON'
+                                }).always(function () {
+                                    $tai.tat();
+                                }).done(function (data) {
+                                    if (data.trangThai == 0) {
+                                        var $newItem = $(data.ketQua);
+                                        khoiTaoItem($newItem);
+                                        $item.replaceWith($newItem);
+                                    }
+                                    else {
+                                        moPopupThongBao(data);
+                                    }
+                                }).fail(function () {
+                                    moPopupThongBao('Cập nhật thất bại');
+                                });
+                            },
+                            custom: [
+                                {
+                                    input: $form.find('[data-chuc-nang="huy"]'),
+                                    event: {
+                                        click: function () {
+                                            $item.html(htmlTam);
+                                            khoiTaoItem($item);
+                                        }
+                                    }
+                                }
+                            ]
+                        });
+                    }
+                    else {
+                        moPopupThongBao(data);
+                    }
+                }).fail(function () {
+                    moPopupThongBao('Lấy dữ liệu sửa thất bại');
+                });
+            });
+
+            $items.find('[data-chuc-nang="cho-diem-binh-luan"]').on('click', function () {
+                $item = $(this).closest('[data-doi-tuong="muc-binh-luan"]');
+
+                moPopupFull({
+                    html: '<article class="hop hop-1-vien"><article class="noi-dung"><form id="nhap_form"class="lct-form">' +
+                                '<ul><li>' +
+                                    '<section class="noi-dung">' +
+                                        '<article class="input" style="width: 50px; margin: 0 auto;">' +
+                                            '<input data-validate="so-nguyen bat-buoc" type="text" style="text-align: center; font-size: 20px; font-family: Berlin" autofocus data-doi-tuong="diem" />' +
+                                        '</article>' +
+                                    '</section>' +
+                                '</li></ul>' +
+                                '<section class="khung-button">' +
+                                    '<button type="submit">Xác nhận</button>' +
+                                    '<button type="button" data-chuc-nang="huy">Hủy</button>' +
+                                '</section>' +
+                            '</form></aritcle></aritcle>',
+                    width: '300px',
+                    thanhCong: function ($popup) {
+                        var diem = $item.data('diem') || '';
+                        var $form = $popup.find('form');
+
+                        khoiTaoLCTForm($form, {
+                            khoiTao: function () {
+                                $form.find('input').attr('data-mac-dinh', diem);
+                            },
+                            submit: function () {
+                                $popup.tat();
+                                var diem = $form.find('input').val();
+
+                                var $tai = moBieuTuongTai($item);
+                                $.ajax({
+                                    url: '/BinhLuanBaiVietDienDan/XuLyChoDiem/' + $item.data('ma'),
+                                    method: 'POST',
+                                    data: { diem: diem },
+                                    dataType: 'JSON'
+                                }).always(function () {
+                                    $tai.tat();
+                                }).done(function (data) {
+                                    if (data.trangThai == 0) {
+                                        $item.data('diem', diem);
+                                        $item.find('[data-doi-tuong="diem-binh-luan"]').text(diem == 0 ? '' : diem);
+                                    }
+                                    else {
+                                        moPopupThongBao(data);
+                                    }
+                                }).fail(function () {
+                                    moPopupThongBao('Cho điểm thất bại');
+                                });
+                            }
+                        })
+                    }
+                });
+            })
+        }
+    }
 }
 
 //#endregion

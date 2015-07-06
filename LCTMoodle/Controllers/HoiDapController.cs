@@ -25,6 +25,15 @@ namespace LCTMoodle.Controllers
             return View(ketQua.ketQua);
         }
 
+        public ActionResult QuanLyCauHoi()
+        {
+            var ketQua = CauHoiDAO.layCauHoi_ChuaDuyet();
+            
+            List<CauHoiDTO> dsCauHoi = ketQua.ketQua as List<CauHoiDTO>;
+
+            return View(dsCauHoi);
+        }
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult _Form_CauHoi(int? ma = 0)
@@ -89,6 +98,11 @@ namespace LCTMoodle.Controllers
             }
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
             
+            if (cauHoi.DuyetHienThi == false)
+            {
+                return Redirect("/HoiDap");
+            }
+
             ViewData["TrangThaiVote"] = CauHoi_DiemBUS.trangThaiVoteCuaNguoiDungTrongCauHoi(ma, (int?)Session["NguoiDung"]);
 
             #region Kiểm tra trạng thái Vote trả lời
@@ -108,6 +122,27 @@ namespace LCTMoodle.Controllers
             return View(cauHoi);
         }
 
+        [HttpPost]
+        public ActionResult XemChiTietCauHoi(int ma)
+        {
+            var ketQua = CauHoiBUS.layTheoMa(ma, new LienKet() { 
+                "NguoiTao",
+                "ChuDe"
+            });
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua);
+            }
+            else
+            {
+                return Json(new KetQua() { 
+                    trangThai = 0,
+                    ketQua = renderPartialViewToString(ControllerContext, "/HoiDap/_Item_CauHoi.cshtml", ketQua.ketQua, null)
+                });
+            }
+        }
+
+        [HttpPost]
         public ActionResult XuLyXoaCauHoi(int ma)
         {
             if (Session["NguoiDung"] == null)
@@ -183,6 +218,12 @@ namespace LCTMoodle.Controllers
                 trangThai = 0,
                 ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Item_CauHoi.cshtml", ketQua.ketQua, ViewData)
             });
+        }
+
+        [HttpPost]
+        public ActionResult XuLyDuyetHienThiCauHoi(int? maCauHoi, bool trangThai)
+        {
+            return Json(CauHoiBUS.DuyetHienThiCauHoi(maCauHoi, trangThai));
         }
 
         [HttpPost]

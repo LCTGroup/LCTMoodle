@@ -37,5 +37,10 @@ namespace DTOLayer
                 loai
             });
         }
+
+        public bool coDuLieu()
+        {
+            return bang.Rows.Count > 0;
+        }
     }
 }

@@ -146,5 +146,16 @@ namespace BUSLayer
 
             return NhomNguoiDungDAO.xoaTheoMa(phamVi, ma);
         }
+
+        public static KetQua themNhomMacDinh(string phamVi, int maDoiTuong)
+        {
+            var ketQua = NhomNguoiDungDAO.them_MacDinh(phamVi, maDoiTuong);
+            if (ketQua.trangThai > 1)
+            {
+                return new KetQua(3, "Thêm nhóm người dùng thất bại");
+            }
+
+            return NhomNguoiDungDAO.layTheoMaDoiTuong(phamVi, maDoiTuong);
+        }
     }
 }

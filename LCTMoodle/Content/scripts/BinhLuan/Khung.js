@@ -39,7 +39,7 @@ function khoiTaoForm($form) {
 }
 
 function khoiTaoItem($items) {
-    khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'));
+    khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'), true);
     
     $items.find('[data-chuc-nang="xoa-binh-luan"]').on('click', function () {
         var $item = $(this).closest('[data-doi-tuong="muc-binh-luan"]');

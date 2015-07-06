@@ -5,7 +5,7 @@ GO
 CREATE TABLE dbo.CotDiem_NguoiDung (
 	MaCotDiem INT NOT NULL,
 	MaNguoiDung INT NOT NULL,
-	Diem FLOAT(1) NOT NULL,
+	Diem FLOAT,
 	MaNguoiTao INT NOT NULL,
 	ThoiDiemTao DATETIME NOT NULL DEFAULT GETDATE(),
 	PRIMARY KEY (MaCotDiem, MaNguoiDung)
@@ -22,10 +22,13 @@ BEGIN
 
 	--Lấy chuỗi người dùng
 	SELECT @chuoiMa += CAST(MaNguoiDung AS VARCHAR) + ','
-		FROM KhoaHoc_NguoiDung
-		WHERE 
-			MaKhoaHoc = @0 AND
-			LaHocVien = 1
+		FROM 
+			KhoaHoc_NguoiDung KH_ND
+				INNER JOIN NguoiDung ND ON
+					KH_ND.MaKhoaHoc = @0 AND
+					LaHocVien = 1 AND
+					KH_ND.MaNguoiDung = ND.Ma
+		ORDER BY ND.Ten
 
 	--Nếu không tồn tại học viên thì dừng
 	IF (@chuoiMa = '')
@@ -56,14 +59,14 @@ BEGIN
 			LEFT JOIN CotDiem_NguoiDung CD_ND ON
 				CD.Ma = CD_ND.MaCotDiem AND
 				ND.Ma = CD_ND.MaNguoiDung
-	ORDER BY ND.Ma, CD.ThuTu
+	ORDER BY ND.Ten, CD.ThuTu
 
 	SELECT LEFT(@chuoiMa, LEN(@chuoiMa) - 1)
 END
 
 GO
 --Cập nhật điểm
-ALTER PROC dbo.capNhatCotDiem_NguoiDung_Nhieu (
+CREATE PROC dbo.capNhatCotDiem_NguoiDung_Nhieu (
 	@0 dbo.BangCotDiem_NguoiDung READONLY --Bảng cột điểm - người dùng
 )
 AS

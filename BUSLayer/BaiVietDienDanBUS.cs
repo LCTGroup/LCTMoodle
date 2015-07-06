@@ -191,7 +191,7 @@ namespace BUSLayer
 
             var baiViet = ketQua.ketQua as BaiVietDienDanDTO;
 
-            if (baiViet.nguoiTao.ma != maNguoiXoa && !coQuyen("DD_Xoa", "KH", baiViet.khoaHoc.ma.Value, maNguoiXoa))
+            if (baiViet.nguoiTao.ma != maNguoiXoa && !coQuyen("DD_QLNoiDung", "KH", baiViet.khoaHoc.ma.Value, maNguoiXoa))
             {
                 return new KetQua()
                 {
@@ -240,7 +240,7 @@ namespace BUSLayer
             var baiViet = ketQua.ketQua as BaiVietDienDanDTO;
 
             //Kiểm tra quyền
-            if (baiViet.nguoiTao.ma != maNguoiSua && !coQuyen("DD_Sua", "KH", baiViet.khoaHoc.ma.Value, maNguoiSua))
+            if (baiViet.nguoiTao.ma != maNguoiSua && !coQuyen("DD_QLNoiDung", "KH", baiViet.khoaHoc.ma.Value, maNguoiSua))
             {
                 return new KetQua()
                 {
@@ -259,7 +259,13 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return BaiVietDienDanDAO.capNhatTheoMa(ma, layBangCapNhat(baiViet, form.Keys.ToArray()), new LienKet()
+            BangCapNhat bang = layBangCapNhat(baiViet, form.Keys.ToArray());
+            if (!bang.coDuLieu())
+            {
+                return new KetQua(baiViet);
+            }
+
+            return BaiVietDienDanDAO.capNhatTheoMa(ma, bang, new LienKet()
             {
                 "NguoiTao",
                 "TapTin"
@@ -281,7 +287,7 @@ namespace BUSLayer
             }
 
             var baiViet = ketQua.ketQua as BaiVietDienDanDTO;
-            if (!coQuyen("DD_Ghim", "KH", baiViet.khoaHoc.ma.Value, maNguoiGhim))
+            if (!coQuyen("DD_QLNoiDung", "KH", baiViet.khoaHoc.ma.Value, maNguoiGhim))
             {
                 return new KetQua()
                 {
@@ -299,6 +305,27 @@ namespace BUSLayer
 
             //Cập nhật ghim
             return BaiVietDienDanDAO.capNhatTheoMa_Ghim(ma, ghim);
+        }
+
+        public static KetQua capNhatDiem(int ma, int diem, int maNguoiSua)
+        {
+            #region Kiểm tra điều kiện
+            //Lấy bài viết
+            var ketQua = BaiVietDienDanDAO.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Bài viết không tồn tại");
+            }
+            var baiViet = ketQua.ketQua as BaiVietDienDanDTO;
+
+            //Kiểm tra quyền
+            if (!coQuyen("DD_QLDiem", "KH", baiViet.khoaHoc.ma.Value, maNguoiSua))
+            {
+                return new KetQua(3, "Bạn không có quyền cho điểm bài viết");
+            }
+            #endregion
+
+            return BaiVietDienDanDAO.capNhatTheoMa_Diem(ma, diem);
         }
     }
 }

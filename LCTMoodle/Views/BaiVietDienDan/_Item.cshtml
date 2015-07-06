@@ -7,7 +7,7 @@
     var maNguoiDung = Session["NguoiDung"] as int?;
 
     string[] dsQuyen;
-    bool coQuyenSua, coQuyenXoa, coQuyenGhim, laThanhVien;
+    bool coQuyenSua, coQuyenXoa, coQuyenGhim, laThanhVien, coQuyenQLDiem;
 
     if (maNguoiDung.HasValue)
     {
@@ -20,9 +20,9 @@
             dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc, maNguoiDung);
         }
 
-        coQuyenSua = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "DD_Sua");
-        coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "DD_Xoa");
-        coQuyenGhim = QuyenHelper.co(dsQuyen, "DD_Ghim");
+        coQuyenXoa = coQuyenSua = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "DD_QLNoiDung");
+        coQuyenGhim = QuyenHelper.co(dsQuyen, "DD_QLNoiDung");
+        coQuyenQLDiem = QuyenHelper.co(dsQuyen, "DD_QLDiem");
 
         if (ViewData.ContainsKey("LaThanhVien"))
         {
@@ -44,12 +44,12 @@
     }
     else
     {
-        coQuyenSua = coQuyenXoa = coQuyenGhim = laThanhVien = false;
+        coQuyenQLDiem = coQuyenSua = coQuyenXoa = coQuyenGhim = laThanhVien = false;
         dsQuyen = null;
     }
 }
 
-<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma="@Model.ma" @(Model.ghim ? "data-ghim" : null) >
+<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-diem="@Model.diem" data-ma="@Model.ma" @(Model.ghim ? "data-ghim" : null) >
     <section class="khung-bai-viet">
         <section class="khung-thong-tin">
             <section class="trai">
@@ -69,9 +69,10 @@
             </section>            
         </section>
         <section data-doi-tuong="khung-noi-dung" class="khung-noi-dung">
-            <h2 class="tieu-de">
-                @Model.tieuDe
-            </h2>
+            <section class="tieu-de">
+                <span data-doi-tuong="diem" class="diem">@if(Model.diem.HasValue && Model.diem.Value != 0) { @Model.diem.Value }</span>
+                <h2>@Model.tieuDe</h2>
+            </section>
             <section class="noi-dung noi-dung-ckeditor">
                 @Html.Raw(Model.noiDung)
             </section>            
@@ -85,6 +86,7 @@
                 </section>
             }
         </section>
+        <section class="khung-chuc-nang"><a href="javascript:void(0)" data-chuc-nang="binh-luan">Bình luận</a></section>
         @if (coQuyenSua || coQuyenXoa || coQuyenGhim)
         {
             <section class="khung-chuc-nang-lct ben-trai" style="top: 10px; right: 10px;">
@@ -92,8 +94,14 @@
                     @if (coQuyenGhim)
                     {
                         <li>
-                            <a data-chuc-nang="ghim-bai-viet">Ghim bài viết</a>
+                            <a data-chuc-nang="ghim-bai-viet">@(Model.ghim ? "Bỏ ghim" : "Ghim") bài viết</a>
                         </li>   
+                    }
+                    @if (coQuyenQLDiem)
+                    {
+                        <li>
+                            <a data-chuc-nang="cho-diem-bai-viet">Cho điểm bài viết</a>
+                        </li>
                     }
                     @if (coQuyenSua)
                     {
@@ -114,10 +122,4 @@
             </section>
         }
     </section>
-    @Html.Partial("~/Views/BinhLuan/_Khung.cshtml", null, new ViewDataDictionary()
-        {
-            { "LoaiDoiTuong", "BaiVietDienDan" },
-            { "MaDoiTuong", Model.ma },
-            { "CoQuyenBinhLuan", laThanhVien }
-        })
 </li>

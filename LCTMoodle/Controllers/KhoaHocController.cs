@@ -54,11 +54,16 @@ namespace LCTMoodle.Controllers
             return View(khoaHoc);
         }
 
-        public ActionResult Tao()
+        public ActionResult Tao(int ma = 0)
         {
-            if (BUS.coQuyen("QLNoiDung", "KH"))
+            //Tạo mới
+            if (ma == 0)
             {
-                return View();
+                if (BUS.coQuyen("QLNoiDung", "KH"))
+                {
+                    return View();
+                }
+                return Redirect("/");
             }
 
             return Redirect("/");

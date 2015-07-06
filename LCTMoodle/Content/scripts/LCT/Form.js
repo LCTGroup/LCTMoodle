@@ -313,6 +313,11 @@ function khoiTaoGoiYInput_LCT($form) {
             focus: function () {
                 $dsHienTai = $danhSachGoiY;
                 $inputHienTai = $inputGoiY;
+
+                if ($inputGoiY.hasClass('focus')) {
+                    return;
+                }
+
                 $inputGoiY.addClass('focus');
                 $danhSachGoiY.empty().next().text('Nhập từ khóa để tìm kiếm');
                 mangTam[maTam + 'cu'] = $inputGoiY.val();
@@ -365,7 +370,7 @@ function khoiTaoGoiYInput_LCT($form) {
 
                             khoiTaoDanhSachGoiY_LCT($danhSachGoiY)
 
-                            $danhSachGoiY.find(':first-child').addClass('chon');
+                            $danhSachGoiY.children(':first-child').addClass('chon');
                         }
                     }).fail(function () {
                         $danhSachGoiY.empty().next().text('Không tìm thấy kết quả phù hợp');
@@ -380,15 +385,15 @@ function khoiTaoGoiYInput_LCT($form) {
 
                         var $goiYChon = $danhSachGoiY.children('.chon');
                         if ($goiYChon.length == 0) {
-                            chonGoiY_LCT($danhSachGoiY.children(':last-child'));
+                            chonGoiY_LCT($danhSachGoiY.children(':last-child'), 1);
                         }
                         else {
                             var $goiYTren = $goiYChon.prev();
                             if ($goiYTren.length == 0) {
-                                chonGoiY_LCT($danhSachGoiY.children(':last-child'));
+                                chonGoiY_LCT($danhSachGoiY.children(':last-child'), 1);
                             }
                             else {
-                                chonGoiY_LCT($goiYTren);
+                                chonGoiY_LCT($goiYTren, 1);
                             }
                         }
                         break;
@@ -398,15 +403,15 @@ function khoiTaoGoiYInput_LCT($form) {
 
                         var $goiYChon = $danhSachGoiY.children('.chon');
                         if ($goiYChon.length == 0) {
-                            chonGoiY_LCT($danhSachGoiY.children(':first-child'));
+                            chonGoiY_LCT($danhSachGoiY.children(':first-child'), -1);
                         }
                         else {
                             var $goiYDuoi = $goiYChon.next();
                             if ($goiYDuoi.length == 0) {
-                                chonGoiY_LCT($danhSachGoiY.children(':first-child'));
+                                chonGoiY_LCT($danhSachGoiY.children(':first-child'), -1);
                             }
                             else {
-                                chonGoiY_LCT($goiYDuoi);
+                                chonGoiY_LCT($goiYDuoi, -1);
                             }
                         }
                         break;
@@ -451,9 +456,23 @@ function khoiTaoGoiYInput_LCT($form) {
         });
     }
 
-    function chonGoiY_LCT($item) {
+    //len: 1 => len, -1 => xuong
+    function chonGoiY_LCT($item, len) {
         $item.siblings('.chon').removeClass('chon');
         $item.addClass('chon');
+
+        if (len == 1 || len == -1) {
+            var itemTop = $item.offset().top;
+            var itemHeight = $item.height();
+            var khungTop = $dsHienTai.offset().top;
+            var khungHeight = $dsHienTai.height();
+
+            if (itemTop <= khungTop || itemTop + itemHeight >= khungTop + khungHeight) {
+                $dsHienTai.animate({
+                    scrollTop: $dsHienTai.scrollTop() - khungTop + itemTop - (itemHeight * (2 + len)) - 2 - len
+                });
+            }
+        }
     }
 
     function huyGoiY_LCT() {
@@ -487,7 +506,7 @@ function khoiTaoGoiYInput_LCT($form) {
         var html = '', soLuong = data.length;
 
         for (var i = 0; i < soLuong; i++) {
-            html += '<li><span data-ma="' + data[i].ma + '">' + data[i].ten + '</span></li>';
+            html += '<li><span title="' + data[i].moTa + '" data-ma="' + data[i].ma + '">' + data[i].ten + '</span></li>';
         }
 
         return html;

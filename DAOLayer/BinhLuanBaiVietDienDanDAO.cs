@@ -8,11 +8,11 @@ using Data;
 
 namespace DAOLayer
 {
-    public class BinhLuanDAO : DAO<BinhLuanDAO, BinhLuanDTO>
+    public class BinhLuanBaiVietDienDanDAO : DAO<BinhLuanBaiVietDienDanDAO, BinhLuanBaiVietDienDanDTO>
     {
-        public static BinhLuanDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
+        public static BinhLuanBaiVietDienDanDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
-            BinhLuanDTO binhLuan = new BinhLuanDTO();
+            BinhLuanBaiVietDienDanDTO binhLuan = new BinhLuanBaiVietDienDanDTO();
 
             int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
@@ -21,9 +21,6 @@ namespace DAOLayer
                 {
                     case "Ma":
                         binhLuan.ma = layInt(dong, i);
-                        break;
-                    case "LoaiDoiTuong":
-                        binhLuan.loaiDoiTuong = layString(dong, i);
                         break;
                     case "NoiDung":
                         binhLuan.noiDung = layString(dong, i);
@@ -34,23 +31,24 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             binhLuan.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
-                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam.Value)) :
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam)) :
                                 new NguoiDungDTO()
                                 {
                                     ma = maTam
                                 };
                         }
                         break;
-                    case "MaDoiTuong":
+                    case "MaBaiVietDienDan":
                         maTam = layInt(dong, i);
 
                         if (maTam.HasValue)
                         {
-                            //Tạm - Bổ sung thêm truyền đối tượng DTO (xài <T>)
-                            binhLuan.doiTuong = new DTO()
-                            {
-                                ma = layInt(dong, i)
-                            };
+                            binhLuan.baiVietDienDan = LienKet.co(lienKet, "BaiVietDienDan") ?
+                                layDTO<BaiVietDienDanDTO>(BaiVietDienDanDAO.layTheoMa(maTam)) :
+                                new BaiVietDienDanDTO()
+                                {
+                                    ma = maTam
+                                };
                         }
                         break;
                     case "MaTapTin":
@@ -59,7 +57,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             binhLuan.tapTin = LienKet.co(lienKet, "TapTin") ?
-                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("BinhLuan_" + binhLuan.loaiDoiTuong + "_TapTin", maTam.Value)) :
+                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("BinhLuanBaiVietDienDan_TapTin", maTam)) :
                                 new TapTinDTO()
                                 {
                                     ma = layInt(dong, i)
@@ -69,6 +67,9 @@ namespace DAOLayer
                     case "ThoiDiemTao":
                         binhLuan.thoiDiemTao = layDateTime(dong, i);
                         break;
+                    case "Diem":
+                        binhLuan.diem = layInt(dong, i);
+                        break;
                     default:
                         break;
                 }
@@ -77,55 +78,51 @@ namespace DAOLayer
             return binhLuan;
         }
 
-        public static KetQua them(BinhLuanDTO binhLuan, LienKet lienKet = null)
+        public static KetQua them(BinhLuanBaiVietDienDanDTO binhLuan, LienKet lienKet = null)
         {
             return layDong
             (
-                "themBinhLuan",
+                "themBinhLuanBaiVietDienDan",
                 new object[] { 
                     binhLuan.noiDung,
                     layMa(binhLuan.tapTin),
-                    layMa(binhLuan.doiTuong),
+                    layMa(binhLuan.baiVietDienDan),
                     layMa(binhLuan.nguoiTao),
-                    binhLuan.loaiDoiTuong
                 },
                 lienKet
             );
         }
 
-        public static KetQua layTheoDoiTuong(string loaiDoiTuong, int? maDoiTuong, LienKet lienKet = null)
+        public static KetQua layTheoMaBaiVietDienDan(int? maBaiVietDienDan, LienKet lienKet = null)
         {
             return layDanhSachDong
             (
-                "layBinhLuanTheoDoiTuong",
+                "layBinhLuanBaiVietDienDanTheoMaBaiVietDienDan",
                 new object[] {
-                    loaiDoiTuong,
-                    maDoiTuong
+                    maBaiVietDienDan
                 },
                 lienKet
             );
         }
 
-        public static KetQua xoaTheoMa(string loaiDoiTuong, int? ma)
+        public static KetQua xoaTheoMa(int? ma)
         {
             return khongTruyVan(
-                "xoaBinhLuanTheoMa",
+                "xoaBinhLuanBaiVietDienDanTheoMa",
                 new object[] 
                 { 
-                    loaiDoiTuong,
                     ma
                 }
             );
         }
 
-        public static KetQua capNhatTheoMa(string loaiDoiTuong, int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)
+        public static KetQua capNhatTheoMa(int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)
         {
             return layDong
             (
-                "capNhatBinhLuanTheoMa",
+                "capNhatBinhLuanBaiVietDienDanTheoMa",
                 new object[]
                 {
-                    loaiDoiTuong,
                     ma,
                     bangCapNhat.bang
                 },
@@ -133,17 +130,29 @@ namespace DAOLayer
             );
         }
 
-        public static KetQua layTheoMa(string loaiDoiTuong, int? ma, LienKet lienKet = null)
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
             return layDong
                 (
-                    "layBinhLuanTheoMa",
+                    "layBinhLuanBaiVietDienDanTheoMa",
                     new object[]
                     {
-                        loaiDoiTuong,
                         ma
                     },
                     lienKet
+                );
+        }
+
+        public static KetQua capNhatTheoMa_Diem(int? ma, int? diem)
+        {
+            return khongTruyVan
+                (
+                    "capNhatBinhLuanBaiVietDienDanTheoMa_Diem",
+                    new object[]
+                    {
+                        ma,
+                        diem
+                    }
                 );
         }
     }

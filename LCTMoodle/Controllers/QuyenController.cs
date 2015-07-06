@@ -68,6 +68,10 @@ namespace LCTMoodle.Controllers
 
             #region Lấy nhóm người dùng
             ketQua = NhomNguoiDungBUS.layTheoMaDoiTuong(phamVi, maDoiTuong);
+            if (ketQua.trangThai == 1)
+            {
+                ketQua = NhomNguoiDungBUS.themNhomMacDinh(phamVi, maDoiTuong);
+            }
             if (ketQua.trangThai == 0)
             {
                 ViewData["DanhSachNhom"] = ketQua.ketQua;
@@ -192,6 +196,11 @@ namespace LCTMoodle.Controllers
 
                 foreach (var quyenNhom in ketQua.ketQua as List<NhomNguoiDung_QuyenDTO>)
                 {
+                    if (quyenNhom.quyen == null)
+                    {
+                        continue;
+                    }
+
                     string key = quyenNhom.quyen.phamVi + quyenNhom.doiTuong.ma.Value.ToString();
 
                     if (!danhSachQuyenNhom.ContainsKey(key))

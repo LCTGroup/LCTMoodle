@@ -54,7 +54,7 @@
     <Compile Include="BaiVietBaiGiangBUS.cs" />
     <Compile Include="BaiVietBaiTapBUS.cs" />
     <Compile Include="BaiVietDienDanBUS.cs" />
-    <Compile Include="BinhLuanBUS.cs" />
+    <Compile Include="BinhLuanBaiVietDienDanBUS.cs" />
     <Compile Include="BUS.cs" />
     <Compile Include="TraLoiBUS.cs" />
     <Compile Include="KhoaHocBUS.cs" />

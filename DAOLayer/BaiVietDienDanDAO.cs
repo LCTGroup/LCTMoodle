@@ -75,6 +75,9 @@ namespace DAOLayer
                     case "Ghim":
                         baiViet.ghim = layBool(dong, i);
                         break;
+                    case "Diem":
+                        baiViet.diem = layInt(dong, i);
+                        break;
                     default:
                         break;
                 }
@@ -172,6 +175,19 @@ namespace DAOLayer
                     new object[] 
                     {
                         maKhoaHoc
+                    }
+                );
+        }
+
+        public static KetQua capNhatTheoMa_Diem(int? ma, int? diem)
+        {
+            return khongTruyVan
+                (
+                    "capNhatBaiVietDienDanTheoMa_Diem",
+                    new object[]
+                    {
+                        ma,
+                        diem
                     }
                 );
         }

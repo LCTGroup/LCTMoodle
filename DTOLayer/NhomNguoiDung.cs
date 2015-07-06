@@ -13,5 +13,6 @@ namespace DTOLayer
         public string phamVi;
         public DTO doiTuong;
         public NguoiDungDTO nguoiTao;
+        public string giaTri;
     }
 }

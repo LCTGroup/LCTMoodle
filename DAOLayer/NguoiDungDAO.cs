@@ -56,10 +56,10 @@ namespace DAOLayer
                         break;
                     case "MaKichHoat":
                         nguoiDung.maKichHoat = layString(dong, i); break;
-                    case "MatKhauCap2":
-                        nguoiDung.matKhauCap2 = layString(dong, i); break;
                     case "DiemHoiDap":
                         nguoiDung.diemHoiDap = layInt(dong, i); break;
+                    case "ThoiDiemPhucHoiMatKhau":
+                        nguoiDung.thoiDiemPhucHoiMatKhau = layDateTime(dong, i); break;
                     default:
                         break;
                 }
@@ -86,8 +86,7 @@ namespace DAOLayer
                     nguoiDung.diaChi,
                     nguoiDung.soDienThoai,
                     layMa(nguoiDung.hinhDaiDien),
-                    nguoiDung.maKichHoat,
-                    nguoiDung.matKhauCap2
+                    nguoiDung.maKichHoat,                    
                 }
             );
         }
@@ -114,6 +113,18 @@ namespace DAOLayer
                     {
                         tenTaiKhoan,
                         maKichHoat
+                    }
+                );
+        }
+
+        public static KetQua capNhatTheoMaNguoiDung_ThoiDiemPhucHoiMatKhau(int? maNguoiDung)
+        {
+            return khongTruyVan
+                (
+                    "capNhatNguoiDungTheoMaNguoiDung_ThoiDiemPhucHoiMatKhau",
+                    new object[]
+                    {
+                        maNguoiDung
                     }
                 );
         }

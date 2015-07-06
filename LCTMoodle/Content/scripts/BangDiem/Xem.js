@@ -2,13 +2,13 @@
 
 $(function () {
     $_Khung = $('#khung');
-    $_KhungTieuDe = $('#khung_tieu_de');
-    $_KhungDiem = $('#khung_diem');
+    $_KhungTieuDe = $_Khung.find('#khung_tieu_de');
+    $_KhungDiem = $_Khung.find('#khung_diem');
 
-    khoiTaoNutCheDoSua($('[data-chuc-nang="sua-bang-diem"]'));
-    khoiTaoNutHoanThanhSua($('[data-chuc-nang="hoan-thanh-sua"]'));
-    khoiTaoNutLuuSua($('[data-chuc-nang="luu-sua"]'));
-    khoiTaoNutHuySua($('[data-chuc-nang="huy-sua"]'));
+    khoiTaoNutCheDoSua($_Khung.find('[data-chuc-nang="sua-bang-diem"]'));
+    khoiTaoNutHoanThanhSua($_Khung.find('[data-chuc-nang="hoan-thanh-sua"]'));
+    khoiTaoNutLuuSua($_Khung.find('[data-chuc-nang="luu-sua"]'));
+    khoiTaoNutHuySua($_Khung.find('[data-chuc-nang="huy-sua"]'));
 });
 
 //#region Chức năng
@@ -23,7 +23,9 @@ function khoiTaoNutCheDoSua($nuts) {
 
         $dsODiem.each(function () {
             var $oDiem = $(this);
-            $oDiem.html('<article class="input"><input data-validate="so-thuc" class="diem-input" type="text" data-mac-dinh="' + ($oDiem.data('diem') || '') + '" /></article>');
+            var diem = $oDiem.data('diem');
+
+            $oDiem.html('<article class="input"><input data-validate="so-thuc" class="diem-input" type="text" data-mac-dinh="' + (diem || diem == '0' ? diem : '') + '" /></article>');
         });
 
         khoiTaoLCTForm($_KhungDiem);
@@ -75,8 +77,9 @@ function khoiTaoNutHoanThanhSua($nuts) {
                 if (data.trangThai == 0) {
                     $_KhungDiem.find('[data-la-cot-diem]').each(function () {
                         var $o = $(this);
-                        
-                        $o.html('<span>' + ($o.data('diem') || '') + '</span>');
+                        var diem = $o.data('diem');
+
+                        $o.html(diem || diem == '0' ? '<span>' + diem + '</span>' : '');
 
                         chuyenCheDo(false);
                     });

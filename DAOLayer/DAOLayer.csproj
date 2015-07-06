@@ -56,7 +56,7 @@
     <Compile Include="BaiVietBaiGiangDAO.cs" />
     <Compile Include="BaiVietBaiTapDAO.cs" />
     <Compile Include="BaiVietDienDanDAO.cs" />
-    <Compile Include="BinhLuanDAO.cs" />
+    <Compile Include="BinhLuanBaiVietDienDanDAO.cs" />
     <Compile Include="TraLoiDAO.cs" />
     <Compile Include="CauHoiDAO.cs" />
     <Compile Include="KhoaHocDAO.cs" />
