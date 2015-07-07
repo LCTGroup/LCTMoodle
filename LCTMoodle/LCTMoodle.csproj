@@ -112,7 +112,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\" />
     <Folder Include="Plugin\ckeditor\adapters\" />
     <Folder Include="Plugin\ckeditor\samples\assets\inlineall\" />
     <Folder Include="Plugin\ckeditor\samples\assets\outputxhtml\" />
@@ -173,6 +172,7 @@
   <ItemGroup>
     <Content Include="App_Data\DuLieuQuyen.sql" />
     <Content Include="App_Data\Nhap.sql" />
+    <Content Include="bin\Ionic.Zip.dll" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\ChuDe\ChuDe.png" />
     <Content Include="Content\images\ChuDe\MacDinh\he-thong.png" />
