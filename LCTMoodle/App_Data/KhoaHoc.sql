@@ -129,3 +129,14 @@ BEGIN
 			MaChuDe = @0 AND
 			Ten LIKE '%' + REPLACE(@1, ' ', '%') + '%'
 END
+
+GO
+--Xóa theo mã
+CREATE PROC dbo.xoaKhoaHocTheoMa (
+	@0 INT --Ma
+)
+AS
+BEGIN
+	DELETE FROM dbo.KhoaHoc
+		WHERE Ma = @0
+END

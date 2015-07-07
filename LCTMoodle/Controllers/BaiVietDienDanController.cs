@@ -12,7 +12,7 @@ namespace LCTMoodle.Controllers
 {
     public class BaiVietDienDanController : LCTController
     {
-        public ActionResult _Khung(int maKhoaHoc)
+        public ActionResult _Khung(int maKhoaHoc, int ma = 0)
         {
             #region Kiểm tra quyền
             #region Lấy khóa học
@@ -63,14 +63,26 @@ namespace LCTMoodle.Controllers
             #endregion
             #endregion
 
-            ViewData["MaKhoaHoc"] = maKhoaHoc;
-            
-            ketQua = BaiVietDienDanBUS.layTheoMaKhoaHoc(maKhoaHoc);
+            List<BaiVietDienDanDTO> danhSachBaiViet;
 
-            List<BaiVietDienDanDTO> danhSachBaiViet =
-                ketQua.trangThai == 0 ?
-                ketQua.ketQua as List<BaiVietDienDanDTO> :
-                null;
+            if (ma == 0)
+            {
+                ketQua = BaiVietDienDanBUS.layTheoMaKhoaHoc(maKhoaHoc, new LienKet() { "TapTin", "NguoiTao" });
+                danhSachBaiViet =
+                    ketQua.trangThai == 0 ?
+                    ketQua.ketQua as List<BaiVietDienDanDTO> :
+                    null;
+            }
+            else
+            {
+                ketQua = BaiVietDienDanBUS.layTheoMa(ma, new LienKet() { "TapTin", "NguoiTao" });
+                danhSachBaiViet =
+                    ketQua.trangThai == 0 ?
+                    new List<BaiVietDienDanDTO>() { ketQua.ketQua as BaiVietDienDanDTO } :
+                    null;
+            }
+            
+            ViewData["MaKhoaHoc"] = maKhoaHoc;
 
             return Json(new KetQua()
             {

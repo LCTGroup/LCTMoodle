@@ -1,4 +1,5 @@
-﻿@model DTOLayer.KhoaHocDTO
+﻿@using LCTMoodle.LCTView
+@model DTOLayer.KhoaHocDTO
 @{
     var danhSachBaiGiang = ViewData["BaiGiang"] as List<DTOLayer.BaiVietBaiGiangDTO>;
     var danhSachBaiTap = ViewData["BaiTap"] as List<DTOLayer.BaiVietBaiTapDTO>;
@@ -22,7 +23,7 @@
                                 </section>
                                 <section class="khung-noi-dung">
                                     <section class="tieu-de">
-                                        <a href="#">
+                                        <a href="/KhoaHoc/@danhSachBaiGiang[0].khoaHoc.ma?hienthi=baigiang&ma=@danhSachBaiGiang[0].ma" data-chuc-nang="hien-thi" data-value="baigiang" data-ma="@danhSachBaiGiang[0].ma">
                                             @danhSachBaiGiang[0].tieuDe
                                         </a>
                                     </section>
@@ -31,7 +32,7 @@
                                     </section>
                                     <section class="thong-tin-dang">
                                         @danhSachBaiGiang[0].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
-                                        - Lê Bình Chiêu
+                                        - @NguoiDungView.link(danhSachBaiGiang[0].nguoiTao)
                                     </section>
                                 </section>
                             </li>
@@ -39,13 +40,13 @@
                             {
                                 <li class="bai-viet">
                                     <section class="tieu-de">
-                                        <a href="#">
+                                        <a href="/KhoaHoc/@danhSachBaiGiang[i].khoaHoc.ma?hienthi=baigiang&ma=@danhSachBaiGiang[i].ma" data-chuc-nang="hien-thi" data-value="baigiang" data-ma="@danhSachBaiGiang[i].ma">
                                             @danhSachBaiGiang[i].tieuDe
                                         </a>
                                     </section>
                                     <section class="thong-tin-dang">
                                         @danhSachBaiGiang[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
-                                        - Lê Bình Chiêu
+                                        - @NguoiDungView.link(danhSachBaiGiang[i].nguoiTao)
                                     </section>
                                 </li>
                             }
@@ -67,7 +68,7 @@
                                 </section>
                                 <section class="khung-noi-dung">
                                     <section class="tieu-de">
-                                        <a href="#">
+                                        <a href="/KhoaHoc/@danhSachBaiTap[0].khoaHoc.ma?hienthi=baitap&ma=@danhSachBaiTap[0].ma" data-chuc-nang="hien-thi" data-value="baitap" data-ma="@danhSachBaiTap[0].ma">
                                             @danhSachBaiTap[0].tieuDe
                                         </a>
                                     </section>
@@ -76,7 +77,7 @@
                                     </section>
                                     <section class="thong-tin-dang">
                                         @danhSachBaiTap[0].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
-                                        - Lê Bình Chiêu
+                                        - @NguoiDungView.link(danhSachBaiTap[0].nguoiTao)
                                     </section>
                                 </section>
                             </li>
@@ -84,13 +85,13 @@
                             {
                                 <li class="bai-viet">
                                     <section class="tieu-de">
-                                        <a href="#">
+                                        <a href="/KhoaHoc/@danhSachBaiTap[i].khoaHoc.ma?hienthi=baitap&ma=@danhSachBaiTap[i].ma" data-chuc-nang="hien-thi" data-value="baitap" data-ma="@danhSachBaiTap[i].ma">
                                             @danhSachBaiTap[i].tieuDe
                                         </a>
                                     </section>
                                     <section class="thong-tin-dang">
                                         @danhSachBaiTap[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
-                                        - Lê Bình Chiêu
+                                        - @NguoiDungView.link(danhSachBaiTap[i].nguoiTao)
                                     </section>
                                 </li>
                             }
@@ -112,7 +113,7 @@
                                 </section>
                                 <section class="khung-noi-dung">
                                     <section class="tieu-de">
-                                        <a href="#">
+                                        <a href="/KhoaHoc/@danhSachDienDan[0].khoaHoc.ma?hienthi=diendan&ma=@danhSachDienDan[0].ma" data-chuc-nang="hien-thi" data-value="diendan" data-ma="@danhSachDienDan[0].ma">
                                             @danhSachDienDan[0].tieuDe
                                         </a>
                                     </section>
@@ -121,7 +122,7 @@
                                     </section>
                                     <section class="thong-tin-dang">
                                         @danhSachDienDan[0].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
-                                        - Lê Bình Chiêu
+                                        - @NguoiDungView.link(danhSachDienDan[0].nguoiTao)
                                     </section>
                                 </section>
                             </li>
@@ -129,13 +130,13 @@
                             {
                                 <li class="bai-viet">
                                     <section class="tieu-de">
-                                        <a href="#">
+                                        <a href="/KhoaHoc/@danhSachDienDan[i].khoaHoc.ma?hienthi=diendan&ma=@danhSachDienDan[i].ma" data-chuc-nang="hien-thi" data-value="diendan" data-ma="@danhSachDienDan[i].ma">
                                             @danhSachDienDan[i].tieuDe
                                         </a>
                                     </section>
                                     <section class="thong-tin-dang">
                                         @danhSachDienDan[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
-                                        - Lê Bình Chiêu
+                                        - @NguoiDungView.link(danhSachDienDan[i].nguoiTao)
                                     </section>
                                 </li>
                             }

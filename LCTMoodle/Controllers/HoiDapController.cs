@@ -27,6 +27,22 @@ namespace LCTMoodle.Controllers
 
         public ActionResult QuanLyCauHoi()
         {
+
+            #region Kiểm tra điều kiện
+
+            int? maNguoiDung = Session["NguoiDung"] as int?;
+            
+            if (!maNguoiDung.HasValue)
+            {
+                return Redirect("/HoiDap");
+            }
+            else if (!QuyenBUS.coQuyen("DuyetCauHoi", "HD", 0, maNguoiDung))
+            {
+                return Redirect("/HoiDap");
+            }
+
+            #endregion
+
             var ketQua = CauHoiDAO.layCauHoi_ChuaDuyet();
             
             List<CauHoiDTO> dsCauHoi = ketQua.ketQua as List<CauHoiDTO>;
@@ -246,6 +262,22 @@ namespace LCTMoodle.Controllers
 
         public ActionResult QuanLyTraLoi()
         {
+
+            #region Kiểm tra điều kiện
+
+            int? maNguoiDung = Session["NguoiDung"] as int?;
+
+            if (!maNguoiDung.HasValue)
+            {
+                return Redirect("/HoiDap");
+            }
+            if (!QuyenBUS.coQuyen("DuyetTraLoi", "HD", 0, maNguoiDung))
+            {
+                return Redirect("/HoiDap");
+            }
+
+            #endregion
+
             var ketQua = TraLoiDAO.layTraLoiChuaDuyet();
 
             List<TraLoiDTO> dsTraLoi = ketQua.ketQua as List<TraLoiDTO>;

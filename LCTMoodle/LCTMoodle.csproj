@@ -170,6 +170,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DuLieuLoiNhan.sql" />
     <Content Include="App_Data\DuLieuQuyen.sql" />
     <Content Include="App_Data\Nhap.sql" />
     <Content Include="bin\Ionic.Zip.dll" />

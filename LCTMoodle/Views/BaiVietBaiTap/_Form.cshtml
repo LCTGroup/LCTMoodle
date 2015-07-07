@@ -63,14 +63,14 @@
                     </article>
                 </section>
             </li>            
-            @if (!coQuyenQLBangDiem)
-            {
-                <li data-an class="loi-dan">
-                    Để sử dụng chức năng tạo bài tập có điểm, bạn <b> cần có quyền quản lý bảng điểm.</b>
-                </li>
-            }
             @if (Model == null)
             {
+                if (!coQuyenQLBangDiem)
+                {
+                    <li data-an class="loi-dan">
+                        Để sử dụng chức năng tạo bài tập có điểm, bạn&nbsp;<b>cần có quyền quản lý bảng điểm.</b>
+                    </li>
+                }
                 <li data-an>
                     <section class="tieu-de">
                         <label>

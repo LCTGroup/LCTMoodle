@@ -164,17 +164,14 @@ namespace BUSLayer
             });
         }
 
-        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
+        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc, LienKet lienKet = null)
         {
-            return BaiVietBaiGiangDAO.layTheoMaKhoaHoc(maKhoaHoc, new LienKet()
-            {
-                "TapTin"
-            });
+            return BaiVietBaiGiangDAO.layTheoMaKhoaHoc(maKhoaHoc, lienKet);
         }
 
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
         {
-            return BaiVietBaiGiangDAO.layTheoMa(ma);
+            return BaiVietBaiGiangDAO.layTheoMa(ma, lienKet);
         }
 
         public static KetQua xoaTheoMa(int ma, int maNguoiXoa)

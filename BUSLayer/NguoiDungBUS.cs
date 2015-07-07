@@ -227,6 +227,25 @@ namespace BUSLayer
             return NguoiDungDAO.capNhat(ma, layBangCapNhat(nguoiDung, form.Keys.ToArray()));
         }
         
+        public static KetQua chanNguoiDung(int? maNguoiDung, bool trangThai, int? maNguoiChan)
+        {
+            #region Kiểm tra điều kiện
+
+            if (!maNguoiDung.HasValue)
+            {
+                return new KetQua(4, "Bạn chưa đăng nhập");
+            }
+
+            if (!QuyenBUS.coQuyen("QuanLyNguoiDung", "ND", 0, maNguoiChan))
+            {
+                return new KetQua(3, "Bạn không có quyền chặn người dùng");
+            }
+
+            #endregion
+
+            return NguoiDungDAO.capNhatTheoMa_Chan(maNguoiDung, trangThai);
+        }
+
         public static KetQua kichHoatTaiKhoan(Form form)
         {
             string tenTaiKhoan = form.layString("TenTaiKhoan");

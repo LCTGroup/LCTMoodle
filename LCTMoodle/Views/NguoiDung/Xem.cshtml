@@ -1,11 +1,17 @@
-﻿@using LCTMoodle.LCTView
+﻿@using Helpers
+@using LCTMoodle.LCTView
 @model DTOLayer.NguoiDungDTO
 @{
-    ViewData["Title"] = "Người Dùng";
+    ViewData["Title"] = "Người Dùng";    
     Layout = "~/Views/LCT/Khung.cshtml";
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Người Dùng", "/NguoiDung/Xem/" + Session["NguoiDung"],
+    };
 
     int? maNguoiDung = Session["NguoiDung"] as int?;
-    bool coQuyenCapNhatThongTin, coQuyenDoiMatKhau, coQuyenXemHoiDap, coQuyenXemKhoaHoc;
+    bool coQuyenCapNhatThongTin, coQuyenDoiMatKhau, coQuyenXemHoiDap, coQuyenXemKhoaHoc, coQuyenQuanLyNguoiDung;
+    string[] dsQuyen;
     
     if (maNguoiDung.HasValue)
     {
@@ -13,12 +19,18 @@
         coQuyenDoiMatKhau = maNguoiDung == Model.ma;
         coQuyenXemHoiDap = maNguoiDung == Model.ma;
         coQuyenXemKhoaHoc = maNguoiDung == Model.ma;
+        
+        dsQuyen = QuyenView.layDSQuyen("ND", 0, maNguoiDung);
     }
     else
     {
+        dsQuyen = null;
+        
         coQuyenDoiMatKhau = coQuyenCapNhatThongTin = false;
         coQuyenXemKhoaHoc = coQuyenXemHoiDap = false;
     }
+
+    coQuyenQuanLyNguoiDung = QuyenHelper.co(dsQuyen, "QuanLyNguoiDung");
     
     if (coQuyenCapNhatThongTin || coQuyenDoiMatKhau)
     {
@@ -32,6 +44,13 @@
         {
             chucNang.Add("Đổi mật khẩu");
             chucNang.Add("href='/NguoiDung/DoiMatKhau/'");
+        }
+        if (coQuyenQuanLyNguoiDung)
+        {
+            chucNang.Add("Quản lý người dùng");
+            chucNang.Add("href='/NguoiDung/QuanLyNguoiDung/'");
+            chucNang.Add("Danh sách người dùng bị chặn");
+            chucNang.Add("href='/NguoiDung/DanhSachNguoiDungBiChan/'");
         }
         ViewData["ChucNang"] = chucNang;
     }
@@ -93,6 +112,10 @@
         <div class="dong-noi-dung">
             <div class="tieu-de">Số điện thoại</div>
             <div class="noi-dung" data-change="SoDienThoai">@Model.soDienThoai</div>
+        </div>
+        <div class="dong-noi-dung">
+            <div class="tieu-de">Điểm hỏi đáp</div>
+            <div class="noi-dung">@Model.diemHoiDap</div>
         </div>
     </section>
 </section>

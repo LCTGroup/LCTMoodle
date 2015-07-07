@@ -1,4 +1,6 @@
-﻿@using DTOLayer;
+﻿@using Helpers;
+@using LCTMoodle.LCTView;
+@using DTOLayer;
 
 @model List<CauHoiDTO>
 @{
@@ -8,6 +10,39 @@
         "Hỏi đáp", "/HoiDap",
         "Quản lý câu hỏi", "/HoiDap/QuanLyCauHoi"
     };
+
+    int? maNguoiDung = Session["NguoiDung"] as int?;    
+    bool coQuyenThemCauHoi, coQuyenDuyetTraLoi;
+    string[] dsQuyen;
+    
+    if (!maNguoiDung.HasValue)
+    {
+        coQuyenThemCauHoi = coQuyenDuyetTraLoi = false;
+        dsQuyen = null;
+    }
+    else
+    {
+        coQuyenThemCauHoi = true;
+        dsQuyen = QuyenView.layDSQuyen("HD", 0, maNguoiDung);
+    }
+
+    coQuyenDuyetTraLoi = QuyenHelper.co(dsQuyen, "DuyetTraLoi");
+    
+    if (coQuyenThemCauHoi || coQuyenDuyetTraLoi)
+    {
+        List<string> chucNang = new List<string>();
+        if (coQuyenThemCauHoi)
+        {
+            chucNang.Add("Thêm câu hỏi");
+            chucNang.Add("href='/HoiDap/ThemCauHoi'");
+        }
+        if (coQuyenDuyetTraLoi)
+        {
+            chucNang.Add("Quản lý trả lời");
+            chucNang.Add("href='/HoiDap/QuanLyTraLoi'");
+        }
+        ViewData["ChucNang"] = chucNang;
+    }
 }
 @section Styles {
     <link rel="stylesheet" href="/QuanLyCauHoi.css/HoiDap/" />

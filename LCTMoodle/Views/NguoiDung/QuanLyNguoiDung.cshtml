@@ -5,6 +5,7 @@
     Layout = "~/Views/LCT/Khung.cshtml";
     ViewData["DieuHuong"] = new List<string>()
     {
+        "Người Dùng", "/NguoiDung/Xem/" + Session["NguoiDung"],
         "Quản lý người dùng", "/NguoiDung/QuanLyNguoiDung"
     };
 }

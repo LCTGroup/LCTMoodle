@@ -360,5 +360,17 @@ namespace BUSLayer
                 ketQua = dsKhoaHoc
             };
         }
+
+        public static KetQua xoaTheoMa(int ma, int maNguoiXoa)
+        {
+            #region Kiểm tra điều kiện
+            if (!coQuyen("QLNoiDung", "KH", ma, maNguoiXoa))
+            {
+                return new KetQua(3, "Bạn không có quyền xóa khóa học");
+            }
+            #endregion
+
+            return KhoaHocDAO.xoaTheoMa(ma);
+        }
     }
 }

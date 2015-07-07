@@ -172,10 +172,32 @@ namespace LCTMoodle.Controllers
 
         public ActionResult QuanLyNguoiDung()
         {
+
+            #region Kiểm tra
+
+            int? maNguoiDung = Session["NguoiDung"] as int?;
+            bool coQuyenQuanLyNguoiDung = false;
+
+            if (!maNguoiDung.HasValue)
+            {
+                return Redirect("/");
+            }
+            else
+            {
+                coQuyenQuanLyNguoiDung = QuyenBUS.coQuyen("QuanLyNguoiDung", "ND", 0, maNguoiDung);
+            }
+            
+            if (!coQuyenQuanLyNguoiDung)
+            {
+                return Redirect("/NguoiDung/Xem/" + maNguoiDung);
+            }
+
+            #endregion
+
             var ketQua = NguoiDungDAO.lay();
             if (ketQua.trangThai != 0)
             {
-                return Redirect("/");
+                return Redirect("/NguoiDung/Xem/" + maNguoiDung);
             }
             
             List<NguoiDungDTO> nguoiDung = ketQua.ketQua as List<NguoiDungDTO>;
@@ -185,10 +207,32 @@ namespace LCTMoodle.Controllers
 
         public ActionResult DanhSachNguoiDungBiChan()
         {
+
+            #region Kiểm tra
+
+            int? maNguoiDung = Session["NguoiDung"] as int?;
+            bool coQuyenQuanLyNguoiDung = false;
+
+            if (!maNguoiDung.HasValue)
+            {
+                return Redirect("/");
+            }
+            else
+            {
+                coQuyenQuanLyNguoiDung = QuyenBUS.coQuyen("QuanLyNguoiDung", "ND", 0, maNguoiDung);
+            }
+
+            if (!coQuyenQuanLyNguoiDung)
+            {
+                return Redirect("/NguoiDung/Xem/" + maNguoiDung);
+            }
+
+            #endregion
+
             var ketQua = NguoiDungDAO.layNguoiDungBiChan();
             if (ketQua.trangThai != 0)
             {
-                return Redirect("/");
+                return Redirect("/NguoiDung/Xem/" + maNguoiDung);
             }
 
             List<NguoiDungDTO> nguoiDung = ketQua.ketQua as List<NguoiDungDTO>;
@@ -199,7 +243,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyChanNguoiDung(int? maNguoiDung, bool trangThai)
         {
-            return Json(NguoiDungDAO.capNhatTheoMa_Chan(maNguoiDung, trangThai));
+            return Json(NguoiDungBUS.chanNguoiDung(maNguoiDung, trangThai, Session["NguoiDung"] as int?));
         }
 
         [HttpPost]

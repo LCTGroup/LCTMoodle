@@ -19,11 +19,9 @@ CREATE TABLE dbo.NguoiDung
 	DaKichHoat BIT DEFAULT 0,
 	MaKichHoat NVARCHAR(MAX),
 	MatKhauCap2 NVARCHAR(MAX),
-	CoQuyenHT BIT,
-	CoQuyenND BIT,
-	CoQuyenCD BIT,
-	CoQuyenHD BIT,
-	CoQuyenKH BIT,
+	CoQuyenNhomHT BIT,
+	CoQuyenNhomCD BIT,
+	CoQuyenNhomKH BIT,
 	DiemHoiDap INT DEFAULT 0,
 	ThoiDiemPhucHoiMatKhau DATETIME DEFAULT GETDATE(),
 	DaDuyet BIT DEFAULT 1
@@ -222,5 +220,27 @@ BEGIN
 						ON 
 							NND_ND.MaNhomNguoiDung = ' + @1 + ' AND
 							ND.Ma = NND_ND.MaNguoiDung
+	')
+END
+
+GO
+--Lấy người dùng theo giá trị nhóm người dùng
+CREATE PROC dbo.layNguoiDungTheoMaDoiTuongNhomNguoiDungVaGiaTriNhomNguoiDung (
+	@0 VARCHAR(MAX), --PhamVi
+	@1 INT, --MaDoiTuong
+	@2 VARCHAR(MAX) --GiaTri
+)
+AS
+BEGIN
+	EXEC('
+		SELECT ND.*
+			FROM
+				dbo.NhomNguoiDung_' + @0 + ' NND
+					INNER JOIN dbo.NhomNguoiDung_' + @0 + '_NguoiDung NND_ND ON
+						NND.MaDoiTuong = ' + @1 + ' AND
+						NND.GiaTri = ''' + @2 + ''' AND
+						NND.Ma = NND_ND.MaNhomNguoiDung
+					INNER JOIN dbo.NguoiDung ND ON
+						NND_ND.MaNguoiDung = ND.Ma
 	')
 END

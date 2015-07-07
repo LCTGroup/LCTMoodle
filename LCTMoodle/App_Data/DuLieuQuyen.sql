@@ -16,7 +16,7 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 --103
 --	('HT', 1, 0,	N'','',0,1),		--|
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
-	('HT', 102, 1,	'',									'QLDB',				0,		-1),
+	('HT', 102, 1,	'',									'QLDB',						0,		-1),
 
 	('HT', 101, 0,	N'Quản lý quyền',					'QLQuyen',					0,		1),		--|
 
@@ -24,9 +24,9 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 --203
 --	('ND', 2, 0,	N'','',0,1),		--|
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
-	('ND', 201, 1,	N'Chung',							'Chung',					0,		1),		--|
+	('ND', 201, 1,	'',									'QLDB',						0,		-1),
 
-	('ND', 202, 0,	N'Chặn người dùng',					'ChanNguoiDung',			0,		1),		--|
+	('ND', 202, 0,	N'Quản lý người dùng',				'QuanLyNguoiDung',			0,		1),		--|
 	
 --3xx: Chủ đề
 --305
@@ -42,6 +42,8 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 --403
 --	('HD', 4, 0,	N'','',0,1),		--|
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
+	('HD', 402, 1,	'',									'QLDB',						0,		-1),
+
 	('HD', 401, 0,	N'Quản lý hỏi đáp',					NULL,						0,		1),		--|
 
 	('HD', 405, 0,	N'Duyệt câu hỏi',					'DuyetCauHoi',				401,	1),		--| |
@@ -65,7 +67,7 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('KH', 504,	0,	N'Quản lý thành viên',				'QLThanhVien',				502,	2),		--| |
 	('KH', 505, 0,	N'Quản lý nội dung',				NULL,						502,	3),		--| |
 
-	('KH', 531, 0,	N'Quản lý thông tin',				'QLNoiDung',				505,	1),		--| | |
+	('KH', 531, 0,	N'Quản lý thông tin',				'QLThongTin',				505,	1),		--| | |
 
 	('KH', 506, 0,	N'Diễn đàn',						NULL,						505,	2),		--| | |
 	('KH', 510, 0,	N'Quản lý nội dung bài viết',		'DD_QLNoiDung',				506,	1),		--| | | |

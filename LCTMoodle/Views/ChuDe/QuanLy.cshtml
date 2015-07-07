@@ -61,7 +61,11 @@
             </ul>
         </section>
         <section class="con">
-            <ul id="khung_danh_sach" class="khung-danh-sach">@Html.Partial("~/Views/ChuDe/_DanhSach.cshtml", dsCon)</ul>   
+            <ul id="khung_danh_sach" class="khung-danh-sach">@Html.Partial("~/Views/ChuDe/_DanhSach.cshtml", dsCon, new ViewDataDictionary()
+                {
+                    { "Ma", Model == null ? 0 : Model.ma }
+                })
+            </ul>   
             <a data-chuc-nang="tao">
                 <i class="pe-7s-plus"></i>
                 Hiện chưa có nút con, hãy tạo một nút con mới

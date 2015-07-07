@@ -15,33 +15,42 @@
     int? maNguoiDung = (int?)Session["NguoiDung"];
     string[] dsQuyen;
 
-    bool coQuyenThemCauHoi, coQuyenTraLoiCauHoi, coQuyenQuanLyCauHoi;
+    bool coQuyenThemCauHoi, coQuyenTraLoiCauHoi, coQuyenDuyetCauHoi, coQuyenDuyetTraLoi;
     
     if (maNguoiDung.HasValue)
     {
-        dsQuyen = QuyenView.layDSQuyen("HD", 0, maNguoiDung);        
+        dsQuyen = QuyenView.layDSQuyen("HD", 0, maNguoiDung);
         coQuyenThemCauHoi = coQuyenTraLoiCauHoi = true;
-        coQuyenQuanLyCauHoi = QuyenHelper.co(dsQuyen, "DuyetCauHoi");
+        coQuyenDuyetCauHoi = QuyenHelper.co(dsQuyen, "DuyetCauHoi");
+        coQuyenDuyetTraLoi = QuyenHelper.co(dsQuyen, "DuyetTraLoi");
     }
     else
     {
         dsQuyen = null;
         coQuyenThemCauHoi = coQuyenTraLoiCauHoi = false;
-        coQuyenQuanLyCauHoi = false;
+        coQuyenDuyetTraLoi = coQuyenDuyetCauHoi = false;
     }
-    
-    List<string> chucNang = new List<string>();    
-    if (coQuyenThemCauHoi)
-    {       
-        chucNang.Add("Thêm câu hỏi");
-        chucNang.Add("href='/HoiDap/ThemCauHoi'");
-        if (coQuyenQuanLyCauHoi)
+
+    if (coQuyenThemCauHoi || coQuyenDuyetCauHoi || coQuyenDuyetTraLoi)
+    {
+        List<string> chucNang = new List<string>();
+        if (coQuyenThemCauHoi)
+        {
+            chucNang.Add("Thêm câu hỏi");
+            chucNang.Add("href='/HoiDap/ThemCauHoi'");
+        }
+        if (coQuyenDuyetCauHoi)
         {
             chucNang.Add("Quản lý câu hỏi");
             chucNang.Add("href='/HoiDap/QuanLyCauHoi'");
         }
+        if (coQuyenDuyetTraLoi)
+        {
+            chucNang.Add("Quản lý trả lời");
+            chucNang.Add("href='/HoiDap/QuanLyTraLoi'");
+        }
+        ViewData["ChucNang"] = chucNang;
     }
-    ViewData["ChucNang"] = chucNang.Count != 0 ? chucNang : null;
     <!---->
     
     Dictionary<int, int> trangThaiVoteTraLoi = ViewData["DSTrangThaiVoteTraLoi"] as Dictionary<int, int>;

@@ -97,14 +97,17 @@ namespace LCTMoodle.Controllers
                         chuDe.con,
                         new ViewDataDictionary()
                         {
-                            { "Ma", chuDe.ma },
+                            { "Ma", chuDe.ma.Value },
                             { "Ten", chuDe.ten }
                         }
                     ),
                     danhSach = renderPartialViewToString(ControllerContext,
                         "ChuDe/_DanhSach.cshtml",
                         chuDe.con,
-                        new ViewDataDictionary() { { "CoChon", coChon } }
+                        new ViewDataDictionary() { 
+                            { "Ma", chuDe.ma.Value }, 
+                            { "CoChon", coChon }
+                        }
                     )
                 }
             }, JsonRequestBehavior.AllowGet);

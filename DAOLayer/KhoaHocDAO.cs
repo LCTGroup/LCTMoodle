@@ -200,5 +200,17 @@ namespace DAOLayer
                     lienKet
                 );
         }
+
+        public static KetQua xoaTheoMa(int? ma)
+        {
+            return khongTruyVan
+                (
+                    "xoaKhoaHocTheoMa",
+                    new object[]
+                    {
+                        ma
+                    }
+                );
+        }
     }
 }

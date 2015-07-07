@@ -216,13 +216,13 @@ namespace LCTMoodle.Controllers
             #endregion
 
             #region Lấy dữ liệu bài viết
-            ketQua = DAOLayer.BaiVietBaiGiangDAO.layTheoMaKhoaHoc(ma);
+            ketQua = DAOLayer.BaiVietBaiGiangDAO.layTheoMaKhoaHoc(ma, new LienKet() { "NguoiTao" });
             ViewData["BaiGiang"] = ketQua.trangThai == 0 ? ketQua.ketQua : null;
 
-            ketQua = DAOLayer.BaiVietBaiTapDAO.layTheoMaKhoaHoc(ma);
+            ketQua = DAOLayer.BaiVietBaiTapDAO.layTheoMaKhoaHoc(ma, new LienKet() { "NguoiTao" });
             ViewData["BaiTap"] = ketQua.trangThai == 0 ? ketQua.ketQua : null;
 
-            ketQua = DAOLayer.BaiVietDienDanDAO.layTheoMaKhoaHoc(ma);
+            ketQua = DAOLayer.BaiVietDienDanDAO.layTheoMaKhoaHoc(ma, new LienKet() { "NguoiTao" });
             ViewData["DienDan"] = ketQua.trangThai == 0 ? ketQua.ketQua : null;
 
             return Json(new KetQua()
@@ -384,6 +384,17 @@ namespace LCTMoodle.Controllers
             }
 
             return Json(KhoaHoc_NguoiDungBUS.capNhatHocVien(ma, maNguoiDung, laHocVien, (int)Session["NguoiDung"]));
+        }
+
+        [HttpPost]
+        public ActionResult XuLyXoa(int ma)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(KhoaHocBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
 	}
 }

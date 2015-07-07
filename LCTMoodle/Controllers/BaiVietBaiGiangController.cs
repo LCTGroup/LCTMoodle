@@ -12,7 +12,7 @@ namespace LCTMoodle.Controllers
 {
     public class BaiVietBaiGiangController : LCTController
     {
-        public ActionResult _Khung(int maKhoaHoc)
+        public ActionResult _Khung(int maKhoaHoc, int ma = 0)
         {
             #region Kiểm tra quyền
             #region Lấy khóa học
@@ -63,20 +63,32 @@ namespace LCTMoodle.Controllers
             #endregion
             #endregion
 
-            ketQua = BaiVietBaiGiangBUS.layTheoMaKhoaHoc(maKhoaHoc);
-            List<BaiVietBaiGiangDTO> danhSachBaiViet = 
-                ketQua.trangThai == 0 ?
-                (List<BaiVietBaiGiangDTO>)ketQua.ketQua :
-                null;
+            List<BaiVietBaiGiangDTO> danhSachBaiViet;
+            if (ma == 0)
+            {
+                ketQua = BaiVietBaiGiangBUS.layTheoMaKhoaHoc(maKhoaHoc, new LienKet() { "TapTin" });
+                danhSachBaiViet =
+                    ketQua.trangThai == 0 ?
+                    ketQua.ketQua as List<BaiVietBaiGiangDTO> :
+                    null;
+            }
+            else
+            {
+                ketQua = BaiVietBaiGiangBUS.layTheoMa(ma, new LienKet() { "TapTin" });
+                danhSachBaiViet =
+                    ketQua.trangThai == 0 ?
+                    new List<BaiVietBaiGiangDTO>() { ketQua.ketQua as BaiVietBaiGiangDTO } :
+                    null;
+            }
 
             ViewData["MaKhoaHoc"] = maKhoaHoc;
 
             return Json(new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua =
-                        renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Khung.cshtml", danhSachBaiViet, ViewData)
-                }, JsonRequestBehavior.AllowGet);
+            {
+                trangThai = 0,
+                ketQua =
+                    renderPartialViewToString(ControllerContext, "BaiVietBaiGiang/_Khung.cshtml", danhSachBaiViet, ViewData)
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _Form(int ma = 0)

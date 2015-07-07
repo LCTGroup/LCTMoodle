@@ -11,13 +11,14 @@
     };
 
     <!--Kiểm tra điều kiện-->
-    bool coQuyenThemCauHoi, coQuyenQuanLyCauHoi;
+    bool coQuyenThemCauHoi, coQuyenQuanLyCauHoi, coQuyenQuanLyTraLoi;
     string[] dsQuyen;
     
     int? maNguoiDung = (int?)Session["NguoiDung"];
     if (!maNguoiDung.HasValue)
     {
         coQuyenQuanLyCauHoi = false;
+        coQuyenQuanLyTraLoi = false;
         dsQuyen = null;
     }
     else
@@ -25,23 +26,32 @@
         dsQuyen = QuyenView.layDSQuyen("HD", 0, maNguoiDung);
 
         coQuyenQuanLyCauHoi = QuyenHelper.co(dsQuyen, "DuyetCauHoi");
+        coQuyenQuanLyTraLoi = QuyenHelper.co(dsQuyen, "DuyetTraLoi");
     }
     
     coQuyenThemCauHoi = Session["NguoiDung"] != null;
     <!---->
 
-    List<string> chucNang = new List<string>();
-    if (coQuyenThemCauHoi)
+    if (coQuyenThemCauHoi || coQuyenQuanLyCauHoi || coQuyenQuanLyTraLoi)
     {
-        chucNang.Add("Thêm câu hỏi");
-        chucNang.Add("href='/HoiDap/ThemCauHoi'");
+        List<string> chucNang = new List<string>();
+        if (coQuyenThemCauHoi)
+        {
+            chucNang.Add("Thêm câu hỏi");
+            chucNang.Add("href='/HoiDap/ThemCauHoi'");
+        }
+        if (coQuyenQuanLyCauHoi)
+        {
+            chucNang.Add("Quản lý câu hỏi");
+            chucNang.Add("href='/HoiDap/QuanLyCauHoi'");
+        }
+        if (coQuyenQuanLyTraLoi)
+        {
+            chucNang.Add("Quản lý trả lời");
+            chucNang.Add("href='/HoiDap/QuanLyTraLoi'");
+        }
+        ViewData["ChucNang"] = chucNang;
     }
-    if (coQuyenQuanLyCauHoi)
-    {
-        chucNang.Add("Quản lý câu hỏi");
-        chucNang.Add("href='/HoiDap/QuanLyCauHoi'");
-    }
-    ViewData["ChucNang"] = chucNang;
 }
 
 @section Styles {
