@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LoiNhanHanhDongDAO.cs" />
+    <Compile Include="GiaTriHanhDongDAO.cs" />
+    <Compile Include="HoatDongDAO.cs" />
     <Compile Include="BaiVietTaiLieuDAO.cs" />
     <Compile Include="TraLoi_DiemDAO.cs" />
     <Compile Include="CauHoi_DiemDAO.cs" />

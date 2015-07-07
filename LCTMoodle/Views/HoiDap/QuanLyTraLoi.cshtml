@@ -73,7 +73,7 @@
         <tr data-ma="@traLoi.ma" data-ma-cau-hoi="@(traLoi.cauHoi != null ? traLoi.cauHoi.ma : null)" data-doi-tuong="item-tra-loi">
             <td>@traLoi.ma</td>
             <td>@(traLoi.cauHoi != null ? traLoi.cauHoi.ma : null)</td>
-            <td>@Html.Raw(traLoi.noiDung)</td>
+            <td class="noi-dung-ckeditor">@Html.Raw(traLoi.noiDung)</td>
             <td>
                 <form class="lct-form">
                     <button type="button" class="thanh-cong" data-chuc-nang="duyet">Duyệt</button>
