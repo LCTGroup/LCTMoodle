@@ -1203,7 +1203,7 @@ function khoiTaoSubmit_LCT($form, thamSo) {
                 return;
             }
 
-            $phanTu.val($thoiGian.val() + ' ' + $lich.val()).change();
+            $phanTu.val($lich.val() + ' ' + $thoiGian.val()).change();
         });
 
         //Validate
@@ -1485,36 +1485,36 @@ function layThoiGian($dongHo) {
 function khoiTaoForm_Lich(id) {
     $lich = $(
         '<article id="lich_form" class="lich" data-trang-thai="an" data-ngay data-thang data-nam data-thang-ht data-nam-ht>\
-		    <section class="thang-nam">\
-			    <a href="javascript:void(0)" class="thang-truoc"></a>\
-			    <span class="thang" data-value><i class="truoc"></i><i class="sau"></i></span>\
-			    -\
-			    <span class="nam" data-value><i class="truoc"></i><i class="sau"></i></span>\
-			    <a href="javascript:void(0)" class="thang-sau"></a>\
-		    </section>\
-		    <section class="khung-thang">\
-			    <table>\
-				    <thead>\
-					    <tr>\
-						    <th>T2</th>\
-						    <th>T3</th>\
-						    <th>T4</th>\
-						    <th>T5</th>\
-						    <th>T6</th>\
-						    <th>T7</th>\
-						    <th>C<span style="font-size: 0.8em">N</span></th>\
-					    </tr>\
-				    </thead>\
-				    <tbody>\
-                        <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>\
-                        <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>\
-                        <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>\
-                        <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>\
-                        <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>\
-				    </tbody>\
-			    </table>\
-		    </section>\
-	    </article>'
+		<section class="thang-nam">\
+			<a href="javascript:void(0)" class="thang-truoc"></a>\
+			<span class="thang" data-value><i class="truoc"></i><i class="sau"></i></span>\
+			-\
+			<span class="nam" data-value><i class="truoc"></i><i class="sau"></i></span>\
+			<a href="javascript:void(0)" class="thang-sau"></a>\
+		</section>\
+		<section class="khung-thang">\
+			<table>\
+				<thead>\
+					<tr>\
+						<th>T2</th>\
+						<th>T3</th>\
+						<th>T4</th>\
+						<th>T5</th>\
+						<th>T6</th>\
+						<th>T7</th>\
+						<th>C<span style="font-size: 0.8em">N</span></th>\
+					</tr>\
+				</thead>\
+				<tbody>\
+                    <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>\
+                    <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>\
+                    <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>\
+                    <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>\
+                    <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>\
+				</tbody>\
+			</table>\
+		</section>\
+	</article>'
     );
 
     $lich.find('.thang-nam .thang-truoc, .thang-nam .thang .truoc').on('click', function () {

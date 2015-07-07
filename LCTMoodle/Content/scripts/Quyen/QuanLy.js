@@ -205,7 +205,7 @@ function khoiTaoNutThemNhom($nuts) {
 
         moPopupFull({
             url: '/Quyen/_FormNhom',
-            data: { phamVi: _PhamViQuanLy, doiTuong: _DoiTuongQuanLy },
+            data: { phamVi: _PhamViQuanLy, maDoiTuong: _DoiTuongQuanLy },
             width: '400px',
             thanhCong: function ($khung) {
                 var $form = $khung.find('#them_nhom_form');
@@ -380,6 +380,44 @@ function khoiTaoItem_Quyen($items) {
 
 function khoiTaoItem_Nhom($items) {
     khoiTaoTatMoDoiTuong($items.find('[data-chuc-nang="tat-mo"]'), true);
+
+    $items.find('[data-chuc-nang="sua-nhom"]').on('click', function () {
+        $item = $(this).closest('[data-doi-tuong="item-nhom"]');
+
+        moPopupFull({
+            url: '/Quyen/_FormNhom_Sua',
+            data: { phamVi: _PhamViQuanLy, ma: $item.attr('data-ma') },
+            width: '400px',
+            thanhCong: function ($khung) {
+                var $form = $khung.find('#them_nhom_form');
+                khoiTaoLCTForm($form, {
+                    submit: function () {
+                        var $tai = moBieuTuongTai($khung);
+                        $.ajax({
+                            url: '/Quyen/XuLyCapNhatNhom',
+                            type: 'POST',
+                            data: layDataLCTForm($form),
+                            dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $khung.tat();
+
+                                $item.children('[data-doi-tuong="ten"]').text(data.ketQua.ten);
+                                $item.attr('data-mo-ta', data.ketQua.moTa);
+                            }
+                            else {
+                                moPopupThongBao(data);
+                            }
+                        }).fail(function () {
+                            moPopupThongBao('Cập nhật nhóm thất bại');
+                        });
+                    }
+                });
+            }
+        })
+    });
 
     $items.find('[data-chuc-nang="xoa-nhom"]').on('click', function () {
         $item = $(this).closest('[data-doi-tuong="item-nhom"]');

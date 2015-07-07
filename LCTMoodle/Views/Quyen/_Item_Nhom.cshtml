@@ -4,21 +4,21 @@
 }
 
 <li class="item" data-doi-tuong="item-nhom" data-ma="@Model.ma" data-mo-ta="@Model.moTa">
-    <a data-chuc-nang="chon-nhom">@Model.ten</a>
-    @if (coTheXoa)
-    {
-        <section class="khung-chuc-nang-lct ben-trai" style="right: 3px; top: 3px;">
-            <ul data-doi-tuong="cnn-@Model.ma">
-                @if (coTheXoa)
-                {
-                    <li>
-                        <a data-chuc-nang="xoa-nhom">Xóa nhóm</a>
-                    </li>   
-                }
-            </ul>
-            <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnn-@Model.ma">
-                <i class="pe-7f-config"></i>
-            </button>
-        </section>   
-    }
+    <a data-chuc-nang="chon-nhom" data-doi-tuong="ten">@Model.ten</a>
+    <section class="khung-chuc-nang-lct ben-trai" style="right: 3px; top: 3px;">
+        <ul data-doi-tuong="cnn-@Model.ma">
+            <li>
+                <a data-chuc-nang="sua-nhom">Sửa nhóm</a>
+            </li>   
+            @if (coTheXoa)
+            {
+                <li>
+                    <a data-chuc-nang="xoa-nhom">Xóa nhóm</a>
+                </li>   
+            }
+        </ul>
+        <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnn-@Model.ma">
+            <i class="pe-7f-config"></i>
+        </button>
+    </section>   
 </li>

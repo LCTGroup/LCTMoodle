@@ -66,51 +66,62 @@
             @if (!coQuyenQLBangDiem)
             {
                 <li data-an class="loi-dan">
-                    Để sử dụng chức năng tạo bài tập có điểm, bạn&nbsp;<b>cần có quyền quản lý bảng điểm.</b>
+                    Để sử dụng chức năng tạo bài tập có điểm, bạn <b> cần có quyền quản lý bảng điểm.</b>
                 </li>
             }
-            <li data-an>
-                <section class="tieu-de">
-                    <label>
-                        Loại bài tập
-                    </label>
-                </section>
-                <section class="noi-dung">
-                    <article class="input">
-                        <input @(Model != null && Model.loai == 0 ? "data-mac-dinh" : null) style="width: auto;" data-chuc-nang="tat-mo" data-tat="co-diem" type="radio" name="Loai" value="0" data-text="Tham khảo" data-mac-dinh />
-                        <input @(Model != null && Model.loai == 1 ? "data-mac-dinh" : null) @(!coQuyenQLBangDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem" data-tat="diem" type="radio" name="Loai" value="1" data-text="Cộng điểm" />
-                        <input @(Model != null && Model.loai == 2 ? "data-mac-dinh" : null) @(!coQuyenQLBangDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem diem" type="radio" name="Loai" value="2" data-text="Lấy điểm" />
-                        @*<input @(!coQuyenQLBangDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem" type="radio" name="Loai" value="3" data-text="Có điểm. Sử dụng cột đã có" />*@
-                    </article>
-                </section>
-            </li>
-            <li data-an data-doi-tuong="co-diem">
-                <section class="tieu-de">
-                    <label>Thông tin cột điểm</label>
-                </section>
-                <section class="noi-dung">
-                    <article class="input" data-chi-an data-doi-tuong="diem">
-                        <input type="text" name="CD_HeSo" data-validate="so-nguyen" placeholder="Hệ số" />
-                    </article>
-                </section>
-            </li>
+            @if (Model == null)
+            {
+                <li data-an>
+                    <section class="tieu-de">
+                        <label>
+                            Loại bài tập
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input data-mac-dinh style="width: auto;" data-chuc-nang="tat-mo" data-tat="co-diem" type="radio" name="Loai" value="0" data-text="Tham khảo" data-mac-dinh />
+                            <input @(!coQuyenQLBangDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem" data-tat="diem" type="radio" name="Loai" value="1" data-text="Cộng điểm" />
+                            <input @(!coQuyenQLBangDiem ? "disabled" : null) style="width: auto;" data-chuc-nang="tat-mo" data-mo="co-diem diem" type="radio" name="Loai" value="2" data-text="Lấy điểm" />
+                        </article>
+                    </section>
+                </li>
+                <li data-an data-doi-tuong="diem">
+                    <section class="tieu-de">
+                        <label>Hệ số</label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input" data-chi-an>
+                            <input data-mac-dinh="1" type="text" name="CD_HeSo" data-validate="so-nguyen" placeholder="Hệ số" />
+                        </article>
+                    </section>
+                </li>
+            }
             <li data-an data-doi-tuong="co-diem">
                 <section class="tieu-de">
                     <label>Thời hạn nộp</label>
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <input data-chuc-nang="tat-mo" data-mo="thoi-han" type="checkbox" name="CoThoiDiemHetHan" data-text="Bài tập có thời hạn" />
+                        <input @(Model != null && Model.thoiDiemHetHan.HasValue ? "data-mac-dinh" : null) data-chuc-nang="tat-mo" data-mo="thoi-han" type="checkbox" name="CoThoiDiemHetHan" data-text="Bài tập có thời hạn" />
                         <input data-doi-tuong="thoi-han" data-validate="bat-buoc" data-input-type="ngay-gio" name="ThoiDiemHetHan" data-gio-placeholder="Chọn giờ" data-ngay-placeholder="Chọn ngày"
-                               @(Model != null && Model.thoiDiemHetHan.HasValue ? "data-lich-mac-dinh='" + Model.thoiDiemHetHan.Value.ToString("d/M/yyyy") + "' data-thoi-gian-mac-dinh='" + Model.thoiDiemHetHan.Value.ToString("H:mm") + "'" : null) />
+                            @if (Model != null && Model.thoiDiemHetHan.HasValue) 
+                            {  
+                                @:data-ngay-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("d/M/yyyy")" data-gio-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("H:mm")"
+                            } />
                     </article>
                 </section>
             </li>
         </ul>
         <section data-an class="khung-button">
-            <button type="submit" class="chap-nhan">
-                @(Model == null ? "Đăng" : "Cập nhật")
-            </button>
+            @if (Model == null)
+            {
+                <button type="submit" class="chap-nhan">Đăng</button>
+            }
+            else
+            {
+                <button type="submit" class="chap-nhan">Cập nhật</button>
+                <button type="button" class="chap-nhan" data-chuc-nang="huy">Hủy</button>
+            }
         </section>
     </article>
 </form>

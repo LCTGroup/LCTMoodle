@@ -94,6 +94,20 @@ namespace BUSLayer
 
             var nhomNguoiDung = ketQua.ketQua as NhomNguoiDungDTO;
 
+            //Kiểm tra nếu đây là nhóm đặc biệt và chỉ còn 1 người thì không cho xóa
+            if (nhomNguoiDung.giaTri != null)
+            {
+                ketQua = NguoiDungDAO.layTheoMaNhomNguoiDung(phamVi, nhomNguoiDung.ma);
+                if (ketQua.trangThai != 0)
+                {
+                    return new KetQua(3, "Nhóm người dùng không hợp lệ");
+                }
+                if ((ketQua.ketQua as List<NguoiDungDTO>).Count <= 1)
+                {
+                    return new KetQua(3, "Nhóm này cần có tối thiểu một người");
+                }
+            }
+
             //Kiểm tra quyền
             if (!coQuyen("QLQuyen", phamVi, nhomNguoiDung.doiTuong == null ? 0 : nhomNguoiDung.doiTuong.ma.Value, maNguoiXoa))
             {

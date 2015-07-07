@@ -78,29 +78,48 @@ namespace LCTMoodle.Controllers
                 }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult _Form(int ma = 0)
+        public ActionResult _Form(int ma)
         {
-            if (Session["NguoiDung"] == null)
+            #region Kiểm tra điều kiện
+            //Kiểm tra người dùng
+            var maNguoiDung = Session["NguoiDung"] as int?;
+            if (!maNguoiDung.HasValue)
             {
-                return Json(new KetQua(4));
+                return Json(new KetQua(4), JsonRequestBehavior.AllowGet);
             }
 
-            KetQua ketQua = BaiVietBaiTapBUS.layTheoMa(ma);
-
+            //Lấy bài tập
+            var ketQua = BaiVietBaiTapBUS.layTheoMa(ma);
             if (ketQua.trangThai != 0)
             {
-                return Json(ketQua, JsonRequestBehavior.AllowGet);
+                return Json(new KetQua(1, "Bài tập không tồn tại"), JsonRequestBehavior.AllowGet);
             }
-            else
+            var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
+
+            //Kiểm tra quyền
+            if (maNguoiDung == baiTap.nguoiTao.ma && !BUS.coQuyen("BT_Sua", "KH", baiTap.khoaHoc.ma.Value, maNguoiDung))
             {
-                ViewData["MaKhoaHoc"] = (ketQua.ketQua as BaiVietBaiTapDTO).khoaHoc.ma.Value;
-                return Json(new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua =
-                        renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Form.cshtml", ketQua.ketQua, ViewData)
-                }, JsonRequestBehavior.AllowGet);
+                return Json(new KetQua(3, "Bạn không có quyền sửa"));
             }
+            #endregion
+
+            if (baiTap.loai != 0)
+            {
+                //Lấy cột điểm
+                ketQua = CotDiemBUS.layTheoLoaiDoiTuongVaMaDoiTuong("BaiTap", baiTap.ma.Value);
+                if (ketQua.trangThai == 0)
+                {
+                    ViewData["CotDiem"] = ketQua.ketQua;
+                }
+            }
+
+            ViewData["MaKhoaHoc"] = baiTap.khoaHoc.ma.Value;
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua =
+                    renderPartialViewToString(ControllerContext, "BaiVietBaiTap/_Form.cshtml", baiTap, ViewData)
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [ValidateInput(false)]

@@ -39,7 +39,33 @@ BEGIN
 	INSERT INTO dbo.KhoaHoc (Ten, MoTa, MaHinhDaiDien, MaChuDe, MaNguoiTao, ThoiDiemHetHan, CanDangKy, HanDangKy, PhiThamGia, CheDoRiengTu)
 		VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9)
 		
-	SELECT @@IDENTITY
+	SELECT *
+		FROM dbo.KhoaHoc
+		WHERE Ma = @@IDENTITY
+END
+
+GO
+--Cập nhật theo mã
+ALTER PROC dbo.capNhatKhoaHocTheoMa (
+	@0 INT, --Mã
+	@1 dbo.BangCapNhat READONLY
+)
+AS
+BEGIN
+	--Tạo chuỗi gán
+	DECLARE @query NVARCHAR(MAX) = dbo.taoChuoiCapNhat(@1)
+	IF (@query <> '')
+	BEGIN
+		EXEC('
+			UPDATE dbo.KhoaHoc
+				SET ' + @query + '
+				WHERE Ma = ' + @0 + '
+		')
+	END	
+	
+	SELECT *
+		FROM dbo.KhoaHoc
+		WHERE Ma = @0
 END
 
 GO
@@ -49,22 +75,7 @@ ALTER PROC dbo.layKhoaHocTheoMa (
 )
 AS
 BEGIN
-	SELECT TOP 1
-		Ma,
-		Ten,
-		MoTa,
-		MaHinhDaiDien,
-		MaChuDe,
-		MaNguoiTao,
-		ThoiDiemTao,
-		ThoiDiemHetHan,
-		CanDangKy,
-		HanDangKy,
-		PhiThamGia,
-		CheDoRiengTu,
-		CoBangDiem,
-		CoBangDiemDanh,
-		CanDuyetBaiViet
+	SELECT *
 		FROM dbo.KhoaHoc
 		WHERE Ma = @0
 END
@@ -74,22 +85,7 @@ GO
 ALTER PROC dbo.layKhoaHoc
 AS
 BEGIN
-	SELECT
-		Ma,
-		Ten,
-		MoTa,
-		MaHinhDaiDien,
-		MaChuDe,
-		MaNguoiTao,
-		ThoiDiemTao,
-		ThoiDiemHetHan,
-		CanDangKy,
-		HanDangKy,
-		PhiThamGia,
-		CheDoRiengTu,
-		CoBangDiem,
-		CoBangDiemDanh,
-		CanDuyetBaiViet
+	SELECT *
 		FROM dbo.KhoaHoc
 		ORDER BY ThoiDiemTao DESC
 END
@@ -101,22 +97,7 @@ ALTER PROC dbo.layKhoaHoc_TimKiem (
 )
 AS
 BEGIN
-	SELECT
-		Ma,
-		Ten,
-		MoTa,
-		MaHinhDaiDien,
-		MaChuDe,
-		MaNguoiTao,
-		ThoiDiemTao,
-		ThoiDiemHetHan,
-		CanDangKy,
-		HanDangKy,
-		PhiThamGia,
-		CheDoRiengTu,
-		CoBangDiem,
-		CoBangDiemDanh,
-		CanDuyetBaiViet
+	SELECT *
 		FROM dbo.KhoaHoc
 		WHERE Ten LIKE '%' + REPLACE(@0, ' ', '%') + '%'
 END
@@ -128,22 +109,7 @@ ALTER PROC dbo.layKhoaHocTheoMaChuDe (
 )
 AS
 BEGIN
-	SELECT
-		Ma,
-		Ten,
-		MoTa,
-		MaHinhDaiDien,
-		MaChuDe,
-		MaNguoiTao,
-		ThoiDiemTao,
-		ThoiDiemHetHan,
-		CanDangKy,
-		HanDangKy,
-		PhiThamGia,
-		CheDoRiengTu,
-		CoBangDiem,
-		CoBangDiemDanh,
-		CanDuyetBaiViet
+	SELECT *
 		FROM dbo.KhoaHoc
 		WHERE MaChuDe = @0
 		ORDER BY ThoiDiemTao DESC
@@ -157,22 +123,7 @@ CREATE PROC dbo.layKhoaHocTheoMaChuDe_TimKiem (
 )
 AS
 BEGIN
-	SELECT
-		Ma,
-		Ten,
-		MoTa,
-		MaHinhDaiDien,
-		MaChuDe,
-		MaNguoiTao,
-		ThoiDiemTao,
-		ThoiDiemHetHan,
-		CanDangKy,
-		HanDangKy,
-		PhiThamGia,
-		CheDoRiengTu,
-		CoBangDiem,
-		CoBangDiemDanh,
-		CanDuyetBaiViet
+	SELECT *
 		FROM dbo.KhoaHoc
 		WHERE 
 			MaChuDe = @0 AND

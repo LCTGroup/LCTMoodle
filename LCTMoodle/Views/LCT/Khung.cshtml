@@ -1,12 +1,12 @@
 ﻿@using LCTMoodle.LCTView
 @using DTOLayer
-@{                                 
+@{
     bool CotTrai = ViewData["CotTrai"] == null ? true : (bool)ViewData["CotTrai"];
     bool CotPhai = ViewData["CotPhai"] == null ? true : (bool)ViewData["CotPhai"];
-    
+
     KetQua ketQua;
     NguoiDungDTO nguoiDung = null;
-    
+
     if (Session["NguoiDung"] != null)
     {
         ketQua = BUSLayer.NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]);
@@ -17,7 +17,7 @@
     }
 
     List<CauHoiDTO> dsCauHoi = null;
-    ketQua = BUSLayer.CauHoiBUS.layDanhSach(5, new LienKet() { 
+    ketQua = BUSLayer.CauHoiBUS.layDanhSach(5, new LienKet() {
         "NguoiTao",
         "HinhDaiDien"
     }, "MoiNhat");
@@ -25,7 +25,7 @@
     {
         dsCauHoi = ketQua.ketQua as List<CauHoiDTO>;
     }
-    
+
 }
 <!DOCTYPE html>
 
@@ -56,34 +56,34 @@
             </section>
             <section class="top-header">
                 <article class="hop-nguoi-dung">
-                @if (nguoiDung == null)
-                {                    
-                    <ul class="chua-dang-nhap">
-                        <li><a data-chuc-nang="dang-nhap">Đăng nhập</a></li>
-                        <li><a href="/NguoiDung/DangKy">Đăng ký</a></li>
-                    </ul>
-                }
-                else
-                {
-                        
-                    <ul class="da-dang-nhap">
-                        <li><a href="#"><i class="pe-7s-chat"></i></a></li>
-                        <li><a href="#"><i class="pe-7s-global"></i></a></li>
-                        <li>
-                            <a href="javascript:void(0)" data-mo-doi-tuong="HopDieuKhien">                                
-                                @NguoiDungView.hinhDaiDien(nguoiDung)
-                                <span>@nguoiDung.tenTaiKhoan</span>
-                            </a>
-                            <div class="hop-dieu-khien" data-doi-tuong="HopDieuKhien">
-                                <ul>
-                                    <li><a href="/NguoiDung/Xem/@Session["NguoiDung"]"><i class="pe-7s-user"></i><span>Thông tin cá nhân</span></a></li>
-                                    <li><a href="#"><i class="pe-7s-config"></i><span>Cài đặt</span></a></li>
-                                    <li><a href="/NguoiDung/XuLyDangXuat"><i class="pe-7s-power"></i><span>Thoát</span></a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                }
+                    @if (nguoiDung == null)
+                    {
+                        <ul class="chua-dang-nhap">
+                            <li><a data-chuc-nang="dang-nhap">Đăng nhập</a></li>
+                            <li><a href="/NguoiDung/DangKy">Đăng ký</a></li>
+                        </ul>
+                    }
+                    else
+                    {
+
+                        <ul class="da-dang-nhap">
+                            <li><a href="#"><i class="pe-7s-chat"></i></a></li>
+                            <li><a href="#"><i class="pe-7s-global"></i></a></li>
+                            <li>
+                                <a href="javascript:void(0)" data-mo-doi-tuong="HopDieuKhien">
+                                    @NguoiDungView.hinhDaiDien(nguoiDung)
+                                    <span>@nguoiDung.tenTaiKhoan</span>
+                                </a>
+                                <div class="hop-dieu-khien" data-doi-tuong="HopDieuKhien">
+                                    <ul>
+                                        <li><a href="/NguoiDung/Xem/@Session["NguoiDung"]"><i class="pe-7s-user"></i><span>Thông tin cá nhân</span></a></li>
+                                        <li><a href="#"><i class="pe-7s-config"></i><span>Cài đặt</span></a></li>
+                                        <li><a href="/NguoiDung/XuLyDangXuat"><i class="pe-7s-power"></i><span>Thoát</span></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    }
                 </article>
             </section>
             <section class="buffer-top-header"></section>
@@ -121,14 +121,14 @@
                 {
                     List<string> danhSach = ViewData["DieuHuong"] as List<string>;
                     int soLuong = danhSach.Count;
-                    
+
                     for (int i = 0; i < soLuong; i += 2)
                     {
                         <li>
                             <a href="@danhSach[i + 1]">
                                 @danhSach[i]
-                            </a>                            
-                        </li>   
+                            </a>
+                        </li>
                     }
                 }
             </ul>
@@ -145,7 +145,7 @@
                         {
                             <a href="/NguoiDung/Xem/@nguoiDung.ma">
                                 <section class="khung-thong-tin">
-                                    <div class="hinh-dai-dien">                                        
+                                    <div class="hinh-dai-dien">
                                         @NguoiDungView.hinhDaiDien(nguoiDung)
                                     </div>
                                     <div class="thong-tin-nguoi-dung">
@@ -157,30 +157,30 @@
                         <nav>
                             <ul>
                                 @{
-                                    ketQua = BUSLayer.KhoaHocBUS.layTheoMaNguoiDungVaTrangThai(nguoiDung.ma.Value, 0);
-                                    if (ketQua.trangThai == 0)
+                        ketQua = BUSLayer.KhoaHocBUS.layTheoMaNguoiDungVaTrangThai(nguoiDung.ma.Value, 0);
+                        if (ketQua.trangThai == 0)
+                        {
+                            <li>
+                                <a href="/KhoaHoc/DanhSachCuaToi">
+                                    Khóa học của tôi
+                                </a>
+                                <ul>
+                                    @foreach (var khoaHoc in ketQua.ketQua as List<DTOLayer.KhoaHocDTO>)
                                     {
                                         <li>
-                                            <a href="/KhoaHoc/DanhSachCuaToi">
-                                                Khóa học của tôi
+                                            <a href="/KhoaHoc/@khoaHoc.ma">
+                                                @khoaHoc.ten
                                             </a>
-                                            <ul>
-                                                @foreach (var khoaHoc in ketQua.ketQua as List<DTOLayer.KhoaHocDTO>)
-                                                {
-                                                    <li>
-                                                        <a href="/KhoaHoc/@khoaHoc.ma">
-                                                            @khoaHoc.ten
-                                                        </a>
-                                                    </li>   
-                                                }
-                                            </ul>
                                         </li>
                                     }
+                                </ul>
+                            </li>
+                        }
                                 }
                             </ul>
                         </nav>
                     </article>
-                </aside>   
+                </aside>
             }
 
             <!-- Cột giữa -->
@@ -204,54 +204,99 @@
                                     <section class="chuc-nang">
                                         <ul id="danh_sach_chuc_nang_lct" class="danh-sach">
                                             @{
-                                                List<string> danhSach = ViewData["ChucNang"] as List<string>;
-                                                int soLuong = danhSach.Count;
+                                List<string> danhSach = ViewData["ChucNang"] as List<string>;
+                                int soLuong = danhSach.Count;
                                             }
                                             @for (int i = 0; i < soLuong; i += 2)
                                             {
                                                 <li>
                                                     <a @Html.Raw(danhSach[i + 1])>@danhSach[i]</a>
-                                                </li>   
+                                                </li>
                                             }
                                         </ul>
                                     </section>
                                 </article>
                             }
                         }
-                        
-                        <article class="hop-cau-hoi">
+
+                        <article class="hop-chuc-nang">
                             <section class="ten-chuc-nang">
                                 Câu hỏi mới trong ngày
                             </section>
                             <section class="noi-dung-hop-cau-hoi">
-                                <ul>@{
-                                    if (dsCauHoi != null)
-                                    {
-                                        foreach(var cauHoi in dsCauHoi)
+                                <ul>
+                                    @{
+                                        if (dsCauHoi != null)
                                         {
-                                            <li>
-                                                <div class="tieu-de">
-                                                    <a href="/HoiDap/@cauHoi.ma" title="@cauHoi.tieuDe">@cauHoi.tieuDe</a>
-                                                </div>
-                                                <div class="thong-tin">                                                    
-                                                    @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
-                                                    <span>@cauHoi.nguoiTao.tenTaiKhoan - @cauHoi.thoiDiemTao.Value.ToString("hh:mm tt")</span>
-                                                </div>
-                                            </li>
+                                            foreach (var cauHoi in dsCauHoi)
+                                            {
+                                                <li>
+                                                    <div class="tieu-de">
+                                                        <a href="/HoiDap/@cauHoi.ma" title="@cauHoi.tieuDe">@cauHoi.tieuDe</a>
+                                                    </div>
+                                                    <div class="thong-tin">
+                                                        @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
+                                                        <span>@cauHoi.nguoiTao.tenTaiKhoan - @cauHoi.thoiDiemTao.Value.ToString("hh:mm tt")</span>
+                                                    </div>
+                                                </li>
+                                            }
                                         }
                                     }
-                                    
-                                }</ul>
-                                <section>Chưa có câu hỏi mới</section>                             
+                                </ul>
+                                <section>Chưa có câu hỏi mới</section>
                             </section>
                         </article>
-
-                        @*<article class="chuc-nang">
+                        <article class="hop-chuc-nang">
+                            <section class="ten-chuc-nang">
+                                Lịch
+                            </section>
+                            <section class="chuc-nang">
+                                <article id="lich_aside" class="lich aside">
+                                    <section class="thang-nam">
+                                        <a class="thang-truoc"></a>
+                                        <span class="thang">
+                                            <i class="truoc"></i>
+                                            <i class="sau"></i>
+                                        </span>			    -
+                                        <span class="nam">
+                                            <i class="truoc"></i>
+                                            <i class="sau"></i>
+                                        </span>
+                                        <a class="thang-sau"></a>
+                                    </section>
+                                    <section class="khung-thang">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>T2</th>
+                                                    <th>T3</th>
+                                                    <th>T4</th>
+                                                    <th>T5</th>
+                                                    <th>T6</th>
+                                                    <th>T7</th>
+                                                    <th>
+                                                        C<span style="font-size: 0.8em">N</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>
+                                                <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>
+                                                <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>
+                                                <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>
+                                                <tr><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td><td><i></i></td></tr>
+                                            </tbody>
+                                        </table>
+                                    </section>
+                                </article>
+                            </section>
+                        </article>
+                        @*<article class="hop-chuc-nang">
                             <section class="ten-chuc-nang"></section>
                             <section class="chuc-nang"></section>
                         </article>*@
                     </article>
-                </aside>                
+                </aside>
             }
         </main>
 

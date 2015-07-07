@@ -85,6 +85,26 @@ namespace BUSLayer
             }
         }
 
+        public static BangCapNhat layBangCapNhat(NhomNguoiDungDTO nhom, string[] keys)
+        {
+            BangCapNhat bangCapNhat = new BangCapNhat();
+            foreach (string key in keys)
+            {
+                switch (key)
+                {
+                    case "Ten":
+                        bangCapNhat.Add(key, nhom.ten, 2);
+                        break;
+                    case "MoTa":
+                        bangCapNhat.Add(key, nhom.moTa, 2);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return bangCapNhat;
+        }
+
         public static KetQua them(Form form)
         {
             #region Kiểm tra điều kiện
@@ -122,6 +142,46 @@ namespace BUSLayer
             return NhomNguoiDungDAO.them(nhomNguoiDung);
         }
 
+        public static KetQua capNhat(Form form)
+        {
+            #region Kiểm tra điều kiện
+            var maNguoiSua = form.layInt("MaNguoiSua");
+            var ma = form.layInt("Ma");
+            var phamVi = form.layString("PhamVi");
+
+            //Lấy nhóm
+            var ketQua = NhomNguoiDungDAO.layTheoMa(phamVi, ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Nhóm người dùng không tồn tại");
+            }
+            var nhom = ketQua.ketQua as NhomNguoiDungDTO;
+
+            //Kiểm tra quyền
+            if (!coQuyen("QLQuyen", phamVi, phamVi == "HT" ? 0 : nhom.doiTuong.ma.Value, maNguoiSua))
+            {
+                return new KetQua(3, "Bạn không có quyền sửa nhóm người dùng");
+            }
+            #endregion
+
+            gan(ref nhom, form);
+
+            ketQua = kiemTra(nhom, form.Keys.ToArray());
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            var bang = layBangCapNhat(nhom, form.Keys.ToArray());
+
+            if (!bang.coDuLieu())
+            {
+                return new KetQua(nhom);
+            }
+
+            return NhomNguoiDungDAO.capNhatTheoMa(phamVi, ma, bang);
+        }
+
         public static KetQua layTheoMaDoiTuong(string phamVi, int maDoiTuong)
         {
             return NhomNguoiDungDAO.layTheoMaDoiTuong(phamVi, maDoiTuong);
@@ -137,6 +197,12 @@ namespace BUSLayer
                 return new KetQua(1, "Nhóm người dùng không tồn tại");
             }
             var nhomNguoiDung = ketQua.ketQua as NhomNguoiDungDTO;
+
+            //Kiểm tra nhóm người dùng có phải nhóm người dùng đặc biệt không
+            if (nhomNguoiDung.giaTri != null)
+            {
+                return new KetQua(3, "Khôn thể xóa nhóm người dùng này");
+            }
 
             if (!coQuyen("QLQuyen", phamVi, nhomNguoiDung.doiTuong == null ? 0 : nhomNguoiDung.doiTuong.ma.Value, maNguoiXoa))
             {
@@ -156,6 +222,11 @@ namespace BUSLayer
             }
 
             return NhomNguoiDungDAO.layTheoMaDoiTuong(phamVi, maDoiTuong);
+        }
+
+        public static KetQua layTheoMa(string phamVi, int ma)
+        {
+            return NhomNguoiDungDAO.layTheoMa(phamVi, ma);
         }
     }
 }

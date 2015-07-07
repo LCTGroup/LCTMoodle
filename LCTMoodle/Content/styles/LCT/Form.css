@@ -1278,6 +1278,12 @@
     z-index: 20;
 }
 
+    .lich.aside {
+        width: calc(100% - 12px);
+        background-color: #fff;
+        position: static;
+    }
+
     .lich[data-trang-thai="an"] {
         left: -9999px !important;
         opacity: 0;
@@ -1405,7 +1411,6 @@
     .lich .khung-thang {
         border: 1px solid #eee;
         border-top: none;
-        width: 210px;
         background-color: #fcfcfc;
     }
 

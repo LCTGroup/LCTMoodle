@@ -59,14 +59,25 @@ namespace LCTMoodle.Controllers
             //Tạo mới
             if (ma == 0)
             {
-                if (BUS.coQuyen("QLNoiDung", "KH"))
+                if (!BUS.coQuyen("QLNoiDung", "KH"))
                 {
-                    return View();
+                    return Redirect("/");
                 }
+
+                return View();
+            }
+
+            //Sửa
+            var ketQua = KhoaHocBUS.layTheoMa(ma, new LienKet()
+                {
+                    "ChuDe"
+                });
+            if (ketQua.trangThai != 0)
+            {
                 return Redirect("/");
             }
 
-            return Redirect("/");
+            return View(ketQua.ketQua);
         }       
 
         public ActionResult DanhSach()
@@ -126,14 +137,31 @@ namespace LCTMoodle.Controllers
             return Json(ketQua, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            Form form = chuyenForm(formCollection);
-            if (Session["NguoiDung"] != null)
+            if (Session["NguoiDung"] == null)
             {
-                form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+                return Json(new KetQua(4));
             }
+
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+
             return Json(KhoaHocBUS.them(form));
+        }
+
+        [HttpPost]
+        public ActionResult XuLyCapNhat(FormCollection formCollection)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+
+            return Json(KhoaHocBUS.capNhat(form));
         }
 
         public ActionResult _Khung(int ma)

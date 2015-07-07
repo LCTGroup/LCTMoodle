@@ -1,23 +1,28 @@
-﻿@{
-    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
-}
+﻿@model DTOLayer.CotDiemDTO
 
 <article class="hop hop-1-vien">
     <section class="tieu-de">
-        Thêm bảng điểm
+        @(Model == null ? "Thêm" : "Sửa") cột điểm
     </section>
-    <form id="tao_cot_diem_form" class="noi-dung lct-form" >
-        <input type="hidden" name="MaKhoaHoc" value="@maKhoaHoc" />
+    <form id="tao_cot_diem_form" class="noi-dung lct-form" @(Model != null ? "data-cap-nhat" : null)>
+        @if (Model == null)
+        {
+            <input type="hidden" name="MaKhoaHoc" value="@ViewData["MaKhoaHoc"]" />   
+        }
+        else
+        {
+            <input type="hidden" name="Ma" value="@Model.ma" />   
+        }
         <ul>
             <li>
                 <section class="tieu-de">
                     <label>
-                        Tên cột điểm
+                        Tên
                     </label>
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Tên cột điểm" />
+                        <input data-mac-dinh="@(Model != null ? Model.ten : null)" data-validate="bat-buoc" type="text" name="Ten" placeholder="Tên cột điểm" />
                     </article>
                 </section>
             </li>
@@ -29,8 +34,8 @@
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <input type="checkbox" name="LaDiemCong" data-mac-dinh data-chuc-nang="tat-mo" data-tat="he-so" data-text="Cột điểm cộng" value="1" />
-                        <input data-chi-an data-doi-tuong="he-so" type="text" data-validate="so-nguyen bat-buoc" name="HeSo" data-mac-dinh="1" placeholder="Hệ số điểm" />
+                        <input @(Model != null && Model.laDiemCong ? "data-mac-dinh" : null) type="checkbox" name="LaDiemCong" data-chuc-nang="tat-mo" data-tat="he-so" data-text="Cột điểm cộng" value="1" />
+                        <input data-mac-dinh="@(Model != null ? Model.heSo : null)" data-doi-tuong="he-so" type="text" data-validate="so-nguyen bat-buoc" name="HeSo" data-mac-dinh="1" placeholder="Hệ số điểm" />
                     </article>
                 </section>
             </li>
@@ -42,7 +47,7 @@
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <textarea name="MoTa" placeholder="Mô tả cột điểm"></textarea>
+                        <textarea data-mac-dinh="@(Model != null ? Model.moTa : null)" name="MoTa" placeholder="Mô tả cột điểm"></textarea>
                     </article>
                 </section>
             </li>
@@ -54,7 +59,7 @@
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <input data-validate="bat-buoc" data-input-type="ngay" name="Ngay" placeholder="Ngày thực hiện" />
+                        <input data-mac-dinh="@(Model != null && Model.ngay.HasValue ? Model.ngay.Value.ToString("d/M/yyyy") : null)" data-validate="bat-buoc" data-input-type="ngay" name="Ngay" placeholder="Ngày thực hiện" />
                     </article>
                 </section>
             </li>

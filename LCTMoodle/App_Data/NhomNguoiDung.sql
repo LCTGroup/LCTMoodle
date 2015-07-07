@@ -44,11 +44,38 @@ BEGIN
 
 			SELECT
 				*,
-				N''' + @2 + ''' PhamVi,
+				N''' + @2 + ''' PhamVi
 				FROM dbo.NhomNguoiDung_' + @2 + '
 				WHERE Ma = @@IDENTITY
 		')
 	END
+END
+
+GO
+--Cập nhật theo mã
+CREATE PROC dbo.capNhatNhomNguoiDungTheoMa (
+	@0 VARCHAR(MAX), --PhamVi
+	@1 INT, --Mã
+	@2 dbo.BangCapNhat READONLY
+)
+AS
+BEGIN
+	--Tạo chuỗi gán
+	DECLARE @query NVARCHAR(MAX) = dbo.taoChuoiCapNhat(@2)
+	IF (@query <> '')
+	BEGIN
+		EXEC('
+			UPDATE dbo.NhomNguoiDung_' + @0 + '
+				SET ' + @query + '
+				WHERE Ma = ' + @1 + '
+		')
+	END	
+	
+	EXEC('
+		SELECT *
+			FROM dbo.NhomNguoiDung_' + @0 + '
+			WHERE Ma = ' + @1 + '
+	')
 END
 
 GO
@@ -137,7 +164,6 @@ BEGIN
 			
 			SET @maNhom = @@IDENTITY
 			INSERT INTO NhomNguoiDung_KH_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong) VALUES
-				(@maNhom, 530, @1), --Đặc biệt
 				(@maNhom, 503, @1),
 				(@maNhom, 504, @1),
 				(@maNhom, 510, @1),
@@ -156,7 +182,7 @@ BEGIN
 				(@maNhom, 518, @1),
 				(@maNhom, 519, @1),
 				(@maNhom, 523, @1)
-
+				
 		INSERT INTO NhomNguoiDung_KH (Ten, MoTa, MaDoiTuong, MaNguoiTao, GiaTri) VALUES
 			(N'Quản lý thành viên', N'Quản lý thành viên', @1, 0, NULL)
 
@@ -175,7 +201,7 @@ BEGIN
 	ELSE IF (@0 = 'CD')
 	BEGIN
 		INSERT INTO NhomNguoiDung_CD (Ten, MoTa, MaDoiTuong, MaNguoiTao, GiaTri) VALUES
-			(N'Quản lý', N'Quản lý chủ đề', @1, 0, 'QLChuDe')
+			(N'Quản lý', N'Quản lý chủ đề', @1, 0, NULL)
 			
 			SET @maNhom = @@IDENTITY
 			INSERT INTO NhomNguoiDung_CD_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong) VALUES
@@ -185,7 +211,7 @@ BEGIN
 				(@maNhom, 303, 0)
 
 		INSERT INTO NhomNguoiDung_CD (Ten, MoTa, MaDoiTuong, MaNguoiTao, GiaTri) VALUES
-			(N'Quản lý nội dung', N'Quản lý nội dung chủ đề', @1, 0, 'QLNoiDung')
+			(N'Quản lý nội dung', N'Quản lý nội dung chủ đề', @1, 0, NULL)
 
 			SET @maNhom = @@IDENTITY
 			INSERT INTO NhomNguoiDung_CD_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong) VALUES
@@ -196,10 +222,10 @@ BEGIN
 				(@maNhom, 501, 0)
 
 		INSERT INTO NhomNguoiDung_CD (Ten, MoTa, MaDoiTuong, MaNguoiTao, GiaTri) VALUES
-			(N'Quản lý hỏi đáp', N'Quản lý hỏi đáp', @1, 0, 'QLHoiDap')
+			(N'Quản lý hỏi đáp', N'Quản lý hỏi đáp', @1, 0, NULL)
 
 		INSERT INTO NhomNguoiDung_CD (Ten, MoTa, MaDoiTuong, MaNguoiTao, GiaTri) VALUES
-			(N'Quản lý khóa học', N'Quản lý khóa học', @1, 0, 'QLKhoaHoc')
+			(N'Quản lý khóa học', N'Quản lý khóa học', @1, 0, NULL)
 
 			SET @maNhom = @@IDENTITY
 			INSERT INTO NhomNguoiDung_CD_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong) VALUES
@@ -216,19 +242,21 @@ BEGIN
 			INSERT INTO NhomNguoiDung_HT_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong) VALUES
 				(@maNhom, 102, 0), --Đặc biệt
 				(@maNhom, 101, 0)
-
 		INSERT INTO NhomNguoiDung_HT (Ten, MoTa, MaNguoiTao, GiaTri) VALUES
-			(N'Quản lý chức năng hệ thống', N'Quản lý chức năng hệ thống', 0, 'QLHeThong')
+			(N'Giảng viên', N'Giảng viên của hệ thống', 0, 'GiangVien')
+			
+		INSERT INTO NhomNguoiDung_HT (Ten, MoTa, MaNguoiTao, GiaTri) VALUES
+			(N'Quản lý chức năng hệ thống', N'Quản lý chức năng hệ thống', 0, NULL)
 
 			SET @maNhom = @@IDENTITY
 			INSERT INTO NhomNguoiDung_HT_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong) VALUES
 				(@maNhom, 101, 0)
 
 		INSERT INTO NhomNguoiDung_HT (Ten, MoTa, MaNguoiTao, GiaTri) VALUES
-			(N'Quản lý chức năng người dùng', N'Quản lý chức năng người dùng', 0, 'QLNguoiDung')
+			(N'Quản lý chức năng người dùng', N'Quản lý chức năng người dùng', 0, NULL)
 			
 		INSERT INTO NhomNguoiDung_HT (Ten, MoTa, MaNguoiTao, GiaTri) VALUES
-			(N'Quản lý chức năng chủ đề', N'Quản lý chức năng chủ đề', 0, 'QLChuDe')
+			(N'Quản lý chức năng chủ đề', N'Quản lý chức năng chủ đề', 0, NULL)
 
 			SET @maNhom = @@IDENTITY
 			INSERT INTO NhomNguoiDung_HT_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong) VALUES
@@ -238,10 +266,10 @@ BEGIN
 				(@maNhom, 303, 0)
 
 		INSERT INTO NhomNguoiDung_HT (Ten, MoTa, MaNguoiTao, GiaTri) VALUES
-			(N'Quản lý chức năng hỏi đáp', N'Quản lý chức năng hỏi đáp', 0, 'QLHoiDap')
+			(N'Quản lý chức năng hỏi đáp', N'Quản lý chức năng hỏi đáp', 0, NULL)
 
 		INSERT INTO NhomNguoiDung_HT (Ten, MoTa, MaNguoiTao, GiaTri) VALUES
-			(N'Quản lý chức năng khóa học', N'Quản lý chức năng khóa học', 0, 'QLKhoaHoc')
+			(N'Quản lý chức năng khóa học', N'Quản lý chức năng khóa học', 0, NULL)
 
 			SET @maNhom = @@IDENTITY
 			INSERT INTO NhomNguoiDung_HT_Quyen (MaNhomNguoiDung, MaQuyen, MaDoiTuong) VALUES

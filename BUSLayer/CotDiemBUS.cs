@@ -95,6 +95,36 @@ namespace BUSLayer
             }
         }
 
+        public static BangCapNhat layBangCapNhat(CotDiemDTO cotDiem, string[] keys)
+        {
+            BangCapNhat bangCapNhat = new BangCapNhat();
+            foreach (string key in keys)
+            {
+                switch (key)
+                {
+                    case "Ten":
+                        bangCapNhat.Add(key, cotDiem.ten, 2);
+                        break;
+                    case "MoTa":
+                        bangCapNhat.Add(key, cotDiem.moTa, 2);
+                        break;
+                    case "Ngay":
+                        bangCapNhat.Add(key, cotDiem.ngay.HasValue ? cotDiem.ngay.Value.ToString("d/M/yyyy") : null, 3);
+                        break;
+                    case "LaDiemCong":
+                        bangCapNhat.Add(key, cotDiem.laDiemCong ? "1" : "0", 1);
+                        if (!cotDiem.laDiemCong)
+                        {
+                            bangCapNhat.Add("HeSo", cotDiem.heSo.ToString(), 1);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return bangCapNhat;
+        }
+
         public static KetQua them(Form form)
         {
             #region Kiểm tra điều kiện
@@ -150,6 +180,11 @@ namespace BUSLayer
             return CotDiemDAO.layTheoMaKhoaHoc(maKhoaHoc);
         }
 
+        public static KetQua layTheoMa(int ma)
+        {
+            return CotDiemDAO.layTheoMa(ma);
+        }
+
         public static KetQua xoaTheoMa(int ma, int maNguoiXoa)
         {
             #region Kiểm tra điều kiện
@@ -194,6 +229,50 @@ namespace BUSLayer
             #endregion
 
             return CotDiemDAO.capNhatThuTu(thuTuCu, thuTuMoi, maKhoaHoc);
+        }
+
+        public static KetQua capNhat(Form form)
+        {
+            #region Kiểm tra điều kiện
+            //Lấy mã người sửa, mã
+            var maNguoiSua = form.layInt("MaNguoiSua");
+            var ma = form.layInt("Ma");
+            
+            //Lấy cột điểm
+            var ketQua = CotDiemDAO.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Cột điểm không tồn tại");
+            }
+            var cotDiem = ketQua.ketQua as CotDiemDTO;
+
+            //Kiểm tra quyền
+            if (!coQuyen("QLBangDiem", "KH", cotDiem.khoaHoc.ma.Value, maNguoiSua))
+            {
+                return new KetQua(3, "Bạn không có quyền sửa bảng điểm");
+            }
+            #endregion
+
+            gan(ref cotDiem, form);
+
+            ketQua = kiemTra(cotDiem, form.Keys.ToArray());
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            var bang = layBangCapNhat(cotDiem, form.Keys.ToArray());
+            if (!bang.coDuLieu())
+            {
+                return new KetQua(cotDiem);
+            }
+
+            return CotDiemDAO.capNhatTheoMa(ma, bang);
+        }
+
+        public static KetQua layTheoLoaiDoiTuongVaMaDoiTuong(string loaiDoiTuong, int maDoiTuong)
+        {
+            return CotDiemDAO.layTheoLoaiDoiTuongVaMaDoiTuong(loaiDoiTuong, maDoiTuong);
         }
     }
 }

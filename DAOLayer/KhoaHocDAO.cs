@@ -115,9 +115,9 @@ namespace DAOLayer
                 );
         }
 
-        public static KetQua them(KhoaHocDTO khoaHoc)
+        public static KetQua them(KhoaHocDTO khoaHoc, LienKet lienKet = null)
         {
-            return layGiaTri<int>
+            return layDong
             (
                 "themKhoaHoc",
                 new object[] 
@@ -132,7 +132,22 @@ namespace DAOLayer
                     khoaHoc.hanDangKy,
                     khoaHoc.phiThamGia,
                     khoaHoc.cheDoRiengTu
-                }
+                },
+                lienKet
+            );
+        }
+
+        public static KetQua capNhatTheoMa(int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)
+        {
+            return layDong
+            (
+                "capNhatKhoaHocTheoMa",
+                new object[]
+                {
+                    ma,
+                    bangCapNhat.bang
+                },
+                lienKet
             );
         }
 

@@ -287,7 +287,8 @@ namespace BUSLayer
             return BaiVietBaiTapDAO.capNhatTheoMa(maBaiViet, bang, new LienKet()
             {
                 "NguoiTao",
-                "TapTin"
+                "TapTin",
+                "BaiTapNop"
             });
         }
     }

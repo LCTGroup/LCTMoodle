@@ -129,15 +129,47 @@ namespace LCTMoodle.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult _FormNhom(string phamVi, int doiTuong)
+        public ActionResult _FormNhom(string phamVi, int maDoiTuong)
         {
             ViewData["PhamVi"] = phamVi;
-            ViewData["DoiTuong"] = doiTuong;
+            ViewData["MaDoiTuong"] = maDoiTuong;
             return Json(new KetQua()
-                {
-                    trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "Quyen/_Form_Nhom.cshtml", null, ViewData)
-                }, JsonRequestBehavior.AllowGet);
+            {
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "Quyen/_Form_Nhom.cshtml", null, ViewData)
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult _FormNhom_Sua(string phamVi, int ma)
+        {
+            #region Kiểm tra điều kiện
+            //Lấy người dùng
+            var maNguoiDung = Session["NguoiDung"] as int?;
+            if (!maNguoiDung.HasValue)
+            {
+                return Json(new KetQua(4), JsonRequestBehavior.AllowGet);
+            }
+
+            //Lấy nhóm
+            var ketQua = NhomNguoiDungBUS.layTheoMa(phamVi, ma);
+            if (ketQua.trangThai != 0)
+            {
+                return Json(new KetQua(1, "Nhóm người dùng không tồn tại"), JsonRequestBehavior.AllowGet);
+            }
+            var nhom = ketQua.ketQua as NhomNguoiDungDTO;
+
+            //Kiểm tra quyền
+            if (!BUS.coQuyen("QLQuyen", phamVi, phamVi == "HT" ? 0 : nhom.doiTuong.ma.Value, maNguoiDung))
+            {
+                return Json(new KetQua(3, "Bạn không có quyền sửa nhóm"));
+            }
+            #endregion
+
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "Quyen/_Form_Nhom.cshtml", nhom)
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -162,6 +194,19 @@ namespace LCTMoodle.Controllers
                     trangThai = 0,
                     ketQua = renderPartialViewToString(ControllerContext, "Quyen/_Item_Nhom.cshtml", ketQua.ketQua)
                 });
+        }
+
+        [HttpPost]
+        public ActionResult XuLyCapNhatNhom(FormCollection formCollection)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+            var form = chuyenForm(formCollection);
+            form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+
+            return Json(NhomNguoiDungBUS.capNhat(form));
         }
 
         [HttpPost]
