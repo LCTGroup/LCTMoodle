@@ -47,7 +47,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             nguoiDung.hinhDaiDien = LienKet.co(lienKet, "HinhDaiDien") ?
-                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("NguoiDung_HinhDaiDien", maTam.Value)) :
+                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("NguoiDung_HinhDaiDien", maTam)) :
                                 new TapTinDTO()
                                 {
                                     ma = maTam
@@ -60,6 +60,8 @@ namespace DAOLayer
                         nguoiDung.diemHoiDap = layInt(dong, i); break;
                     case "ThoiDiemPhucHoiMatKhau":
                         nguoiDung.thoiDiemPhucHoiMatKhau = layDateTime(dong, i); break;
+                    case "DaDuyet":
+                        nguoiDung.daDuyet = layBool(dong, i); break;
                     default:
                         break;
                 }
@@ -104,6 +106,19 @@ namespace DAOLayer
                 );
         }
         
+        public static KetQua capNhatTheoMa_Chan(int? maNguoiDung, bool trangThai)
+        {
+            return khongTruyVan
+                (
+                    "capNhatNguoiDungTheoMa_Chan",
+                    new object[] 
+                    { 
+                        maNguoiDung,
+                        trangThai
+                    }
+                );
+        }
+
         public static KetQua capNhatTheoTenTaiKhoan_KichHoat(string tenTaiKhoan, string maKichHoat)
         {
             return khongTruyVan
@@ -126,6 +141,24 @@ namespace DAOLayer
                     {
                         maNguoiDung
                     }
+                );
+        }
+
+        public static KetQua lay()
+        {
+            return layDanhSachDong
+                (
+                    "layNguoiDung",
+                    new object[] { }
+                );
+        }
+
+        public static KetQua layNguoiDungBiChan()
+        {
+            return layDanhSachDong
+                (
+                    "layNguoiDungBiChan",
+                    new object[] { }
                 );
         }
 

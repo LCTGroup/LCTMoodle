@@ -355,6 +355,11 @@ namespace BUSLayer
             }
             
             NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
+            if (nguoiDung.daDuyet == false)
+            {
+                return new KetQua(3, "Tài khoản đã bị chặn");
+            }
+
             if (nguoiDung.maKichHoat != null)
             {
                 return new KetQua()

@@ -11,7 +11,8 @@ CREATE TABLE dbo.TraLoi
 	Duyet BIT DEFAULT 0,
 	MaNguoiTao INT NOT NULL,
 	MaCauHoi INT NOT NULL,
-	Diem INT DEFAULT 0
+	Diem INT DEFAULT 0,
+	DuyetHienThi BIT DEFAULT 0
 )	
 
 GO
@@ -143,6 +144,30 @@ BEGIN
 END
 
 GO
+--Cập nhật duyệt hiển thị Trả Lời
+CREATE PROC dbo.capNhatTraLoiTheoMa_DuyetHienThi
+(
+	@0 INT, --Mã trả lời
+	@1 BIT --Trạng thái
+)
+AS
+BEGIN
+	UPDATE dbo.TraLoi
+	SET DuyetHienThi = 1
+	WHERE Ma = @0
+END
+
+GO
+--Lấy danh sách trả lời chưa duyệt
+CREATE PROC dbo.layTraLoiChuaDuyet
+AS
+BEGIN
+	SELECT *
+	FROM dbo.TraLoi
+	WHERE DuyetHienThi=0
+END
+
+GO
 --Lấy toàn bộ trả lời của câu hỏi
 ALTER PROC dbo.layDanhSachTraLoiTheoMaCauHoi
 (
@@ -152,7 +177,7 @@ AS
 BEGIN
 	SELECT *
 	FROM dbo.TraLoi 
-	WHERE MaCauHoi=@0
+	WHERE MaCauHoi=@0 AND DuyetHienThi = 1
 	ORDER BY Duyet DESC
 END
 

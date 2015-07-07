@@ -48,7 +48,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             traLoi.cauHoi = LienKet.co(lienKet, "CauHoi") ?
-                                layDTO<CauHoiDTO>(CauHoiDAO.layTheoMa(maTam.Value)) :
+                                layDTO<CauHoiDTO>(CauHoiDAO.layTheoMa(maTam.Value, lienKet["CauHoi"])) :
                                 new CauHoiDTO()
                                 {
                                     ma = maTam
@@ -58,6 +58,8 @@ namespace DAOLayer
                     case "Diem":
                         traLoi.diem = layInt(dong, i);
                         break;
+                    case "DuyetHienThi":
+                        traLoi.duyetHienThi = layBool(dong, i); break;
                     default:
                         break;
                 }
@@ -93,6 +95,15 @@ namespace DAOLayer
             );
         }
         
+        public static KetQua layTraLoiChuaDuyet()
+        {
+            return layDanhSachDong
+                (
+                    "layTraLoiChuaDuyet",
+                    new object[] { }
+                );
+        }
+
         public static KetQua layTheoMaCauHoi (int? maCauHoi, LienKet lienKet = null)
         {
             return layDanhSachDong
@@ -158,6 +169,19 @@ namespace DAOLayer
                     {
                         ma,
                         duyet
+                    }
+                );
+        }
+
+        public static KetQua capNhatTheoMa_DuyetHienThi(int? maTraLoi, bool trangThai)
+        {
+            return khongTruyVan
+                (
+                    "capNhatTraLoiTheoMa_DuyetHienThi",
+                    new object[] 
+                    {
+                        maTraLoi,
+                        trangThai
                     }
                 );
         }

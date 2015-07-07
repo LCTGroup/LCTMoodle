@@ -25,7 +25,8 @@ CREATE TABLE dbo.NguoiDung
 	CoQuyenHD BIT,
 	CoQuyenKH BIT,
 	DiemHoiDap INT DEFAULT 0,
-	ThoiDiemPhucHoiMatKhau DATETIME DEFAULT GETDATE()
+	ThoiDiemPhucHoiMatKhau DATETIME DEFAULT GETDATE(),
+	DaDuyet BIT DEFAULT 1
 )
 
 GO
@@ -51,6 +52,20 @@ BEGIN
 	VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11);
 
 	SELECT @@IDENTITY Ma
+END
+
+GO
+--Cập nhật người dùng - chặn
+CREATE PROC dbo.capNhatNguoiDungTheoMa_Chan
+(
+	@0 INT, --Mã người dùng
+	@1 BIT --Trạng Thái
+)
+AS
+BEGIN
+	UPDATE dbo.NguoiDung
+	SET DaDuyet = @1
+	WHERE Ma = @0
 END
 
 GO
@@ -112,6 +127,24 @@ BEGIN
 	SELECT *
 	FROM dbo.NguoiDung
 	WHERE Ma = @0
+END
+
+GO
+--Lấy danh sách người dùng
+CREATE PROC dbo.layNguoiDung
+AS
+BEGIN
+	SELECT * FROM dbo.NguoiDung
+END
+
+GO
+--Lấy danh sách người dùng bị chặn
+CREATE PROC dbo.layNguoiDungBiChan
+AS
+BEGIN
+	SELECT * 
+	FROM dbo.NguoiDung
+	WHERE DaDuyet = 0
 END
 
 GO

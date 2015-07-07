@@ -1,0 +1,56 @@
+﻿@using DTOLayer;
+
+@model List<NguoiDungDTO>
+@{
+    Layout = "~/Views/LCT/Khung.cshtml";
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Danh sách đen", "/NguoiDung/QuanLyNguoiDung"
+    };
+}
+@section Styles {
+    <link rel="stylesheet" href="/QuanLyNguoiDung.css/NguoiDung/" />
+}
+@section Scripts {
+    <script src="/QuanLyNguoiDung.js/NguoiDung/"></script>
+}
+
+@if (Model != null)
+{
+    <article class="hop hop-1-vien">
+        <section class="tieu-de">Quản lý người dùng</section>
+        <section class="noi-dung khung-quan-ly-nguoi-dung">
+            <table class="lct-bang">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Tên tài khoản</th>
+                        <th>Họ và tên</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var nguoiDung in Model)
+                        {
+                            <tr data-ma="@nguoiDung.ma" data-doi-tuong="item-nguoi-dung">
+                                <td>@nguoiDung.ma</td>
+                                <td>@nguoiDung.tenTaiKhoan</td>
+                                <td>@nguoiDung.ho @nguoiDung.tenLot @nguoiDung.ten</td>
+                                <td>
+                                    <form class="lct-form">
+                                        <button type="button" class="nguy-hiem" data-chuc-nang="bo-chan">Bỏ Chặn</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </section>
+    </article>
+}
+else
+{
+    <p class="empty">Chưa có người dùng</p>
+}

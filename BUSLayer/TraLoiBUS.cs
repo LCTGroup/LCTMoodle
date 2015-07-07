@@ -138,9 +138,9 @@ namespace BUSLayer
             return TraLoiDAO.layTheoMaCauHoi(maCauHoi, new LienKet() { "NguoiTao" });
         }
 
-        public static KetQua layTheoMa(int? ma)
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
-            return TraLoiDAO.layTheoMa(ma);
+            return TraLoiDAO.layTheoMa(ma, lienKet);
         }
 
         public static KetQua laySoLuongTraLoiTrongCauHoi(int maCauHoi)
@@ -184,6 +184,11 @@ namespace BUSLayer
         {
 
             return TraLoiDAO.capNhatDuyetTheoMa(ma, duyet);
+        }
+
+        public static KetQua duyetHienThiTraLoi(int? maTraLoi, bool trangThai)
+        {
+            return TraLoiDAO.capNhatTheoMa_DuyetHienThi(maTraLoi, trangThai);
         }
     }
 }

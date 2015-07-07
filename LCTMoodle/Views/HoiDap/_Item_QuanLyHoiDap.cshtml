@@ -1,0 +1,157 @@
+﻿@using DTOLayer;
+@using LCTMoodle.LCTView;
+
+@{
+    CauHoiDTO cauHoi = null;
+    TraLoiDTO traLoi = null;
+    
+    if (ViewData["CauHoi"] != null)
+    {
+        cauHoi = ViewData["CauHoi"] as CauHoiDTO;
+    }
+    if (ViewData["TraLoi"] != null)
+    {
+        traLoi = ViewData["TraLoi"] as TraLoiDTO;
+    }
+}
+
+@if (cauHoi != null)
+{
+    
+    <article class="muc-hoi-dap cau-hoi" data-doi-tuong="cau-hoi">
+    
+        <section class="thong-tin">
+            @if (cauHoi.nguoiTao != null)
+            {
+                <a href="/NguoiDung/Xem/@cauHoi.nguoiTao.ma">
+                    <div class="nguoi-dung">
+                        <div class="hinh-dai-dien">
+                            @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
+                        </div>
+                        <span>@cauHoi.nguoiTao.tenTaiKhoan</span>
+                    </div>
+                </a>
+            }
+            <div class="diem-so">
+                <i class="arrow-up" data-chuc-nang="cong-diem"></i>
+                <span class="so" data-doi-tuong="diem-so">@cauHoi.diem</span>
+                <i class="arrow-down" data-chuc-nang="tru-diem"></i>
+            </div>
+
+            <div class="thoi-gian">@cauHoi.thoiDiemCapNhat</div>
+        </section>
+
+        <section class="chi-tiet">
+
+            <div class="tieu-de">@cauHoi.tieuDe</div>
+
+            <div class="noi-dung noi-dung-ckeditor">
+                @Html.Raw(cauHoi.noiDung)
+            </div>
+
+            @if (cauHoi.chuDe != null)
+            {
+                <ul class="chu-de">
+                    <li>
+                        <a href="#">@cauHoi.chuDe.ten</a>
+                    </li>
+                </ul>
+            }
+
+        </section>
+
+    </article>
+    
+}
+
+@if (traLoi != null)
+{    
+    if (traLoi.cauHoi != null)
+    {
+        <article class="hop hop-1-vien">
+            <section class="noi-dung">
+                <article class="muc-hoi-dap cau-hoi">
+
+                    <section class="thong-tin">
+                        @if (traLoi.cauHoi.nguoiTao != null)
+                        {
+                            <a href="/NguoiDung/Xem/@traLoi.cauHoi.nguoiTao.ma">
+                                <div class="nguoi-dung">
+                                    <div class="hinh-dai-dien">
+                                        @NguoiDungView.hinhDaiDien(traLoi.cauHoi.nguoiTao)
+                                    </div>
+                                    <span>@traLoi.cauHoi.nguoiTao.tenTaiKhoan</span>
+                                </div>
+                            </a>
+                        }
+                        <div class="diem-so">
+                            <i class="arrow-up" data-chuc-nang="cong-diem"></i>
+                            <span class="so" data-doi-tuong="diem-so">@traLoi.cauHoi.diem</span>
+                            <i class="arrow-down" data-chuc-nang="tru-diem"></i>
+                        </div>
+
+                        <div class="thoi-gian">@traLoi.cauHoi.thoiDiemCapNhat</div>
+                    </section>
+
+                    <section class="chi-tiet">
+
+                        <div class="tieu-de">@traLoi.cauHoi.tieuDe</div>
+
+                        <div class="noi-dung noi-dung-ckeditor">
+                            @Html.Raw(traLoi.cauHoi.noiDung)
+                        </div>
+
+                        @if (traLoi.cauHoi.chuDe != null)
+                        {
+                            <ul class="chu-de">
+                                <li>
+                                    <a href="#">@traLoi.cauHoi.chuDe.ten</a>
+                                </li>
+                            </ul>
+                        }
+
+                    </section>
+
+                </article>
+            </section>
+        </article>
+    }
+
+    <article class="hop hop-1-vien">
+        <section class="tieu-de">Trả lời đang duyệt</section>
+        <section class="noi-dung">
+            <article class="muc-hoi-dap" data-doi-tuong="tra-loi">
+
+                <section class="thong-tin">
+                    @if (traLoi.nguoiTao != null)
+                    {
+                        <a href="/NguoiDung/Xem/@traLoi.nguoiTao.ma">
+                            <div class="nguoi-dung">
+                                <div class="hinh-dai-dien">
+                                    @NguoiDungView.hinhDaiDien(traLoi.nguoiTao)
+                                </div>
+                                <span>@traLoi.nguoiTao.tenTaiKhoan</span>
+                            </div>
+                        </a>
+                    }
+
+                    <div class="diem-so">
+                        <i class="arrow-up" data-chuc-nang="cong-diem"></i>
+                        <span class="so" data-doi-tuong="diem-so">@traLoi.diem</span>
+                        <i class="arrow-down" data-chuc-nang="tru-diem"></i>
+                    </div>
+
+                    <div class="thoi-gian" data-chuc-nang="tru-diem">@traLoi.thoiDiemCapNhat</div>
+                </section>
+
+                <section class="chi-tiet">
+                    <div class="noi-dung noi-dung-ckeditor">
+                        @Html.Raw(traLoi.noiDung)
+                    </div>
+                </section>
+
+            </article>
+        </section>
+    </article>
+    
+}

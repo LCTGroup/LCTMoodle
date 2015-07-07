@@ -123,23 +123,26 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
-        public ActionResult XemChiTietCauHoi(int ma)
+        public ActionResult XemChiTietCauHoi(int? ma)
         {
             var ketQua = CauHoiBUS.layTheoMa(ma, new LienKet() { 
                 "NguoiTao",
                 "ChuDe"
             });
-            if (ketQua.trangThai != 0)
+            if (ketQua.trangThai == 0)
             {
-                return Json(ketQua);
+                ViewData["CauHoi"] = ketQua.ketQua;
             }
             else
             {
-                return Json(new KetQua() { 
-                    trangThai = 0,
-                    ketQua = renderPartialViewToString(ControllerContext, "/HoiDap/_Item_CauHoi.cshtml", ketQua.ketQua, null)
-                });
+                return Json(ketQua);
             }
+
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "/HoiDap/_Item_QuanLyHoiDap.cshtml", null, new ViewDataDictionary() { { "CauHoi", ViewData["CauHoi"] } })
+            });
         }
 
         [HttpPost]
@@ -241,6 +244,20 @@ namespace LCTMoodle.Controllers
 
         #region Trả Lời
 
+        public ActionResult QuanLyTraLoi()
+        {
+            var ketQua = TraLoiDAO.layTraLoiChuaDuyet();
+
+            List<TraLoiDTO> dsTraLoi = ketQua.ketQua as List<TraLoiDTO>;
+
+            return View(dsTraLoi);
+        }
+
+        public ActionResult XuLyDuyetHienThiTraLoi(int? maTraLoi, bool trangThai)
+        {
+            return Json(TraLoiBUS.duyetHienThiTraLoi(maTraLoi, trangThai));
+        }
+
         [HttpPost]
         public ActionResult _Form_TraLoi(int ma = 0)
         {
@@ -273,6 +290,27 @@ namespace LCTMoodle.Controllers
             {
                 trangThai = 0,
                 ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_Form_TraLoi.cshtml", traLoi)
+            });
+        }
+
+        public ActionResult XemChiTietTraLoi(int maTraLoi = 0)
+        {
+            var ketQua = TraLoiBUS.layTheoMa(maTraLoi, new LienKet() { 
+                { "CauHoi", new LienKet() { "NguoiTao", "ChuDe" } },
+                "NguoiTao"
+            });
+            if (ketQua.trangThai == 0)
+            {
+                ViewData["TraLoi"] = ketQua.ketQua;
+            }
+            else
+            {
+                return Json(ketQua);
+            }
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "/HoiDap/_Item_QuanLyHoiDap.cshtml", null, new ViewDataDictionary() { { "TraLoi", ViewData["TraLoi"] } })
             });
         }
 
