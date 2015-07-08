@@ -627,6 +627,55 @@ body.khong-scroll > .khung {
 
 /*#endregion */
 
+/*#region Phân trang */
+
+ul.phan-trang-lct {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+    ul.phan-trang-lct li {
+        margin: 2px;
+        border: 1px solid #eee;
+    }
+
+        ul.phan-trang-lct li a {
+            display: block;
+            padding: 5px;
+            background-color: #fff;
+            font-family: Berlin;
+            font-size: 15px;
+            min-width: 15px;
+            text-align: center;
+            color: #555;
+            transition: 0.5s;
+            position: relative;
+        }
+
+            ul.phan-trang-lct li a:after {
+                content: '';
+                background-color: transparent;
+                width: 100%;
+                bottom: 0;
+                left: 0;
+                display: block;
+                position: absolute;
+                height: 3px;
+                transition: 0.5s;
+            }
+
+            ul.phan-trang-lct li a:hover:after {
+                background-color: #08c;
+            }
+
+            ul.phan-trang-lct li a.chon {
+                background-color: #08c;
+                color: #fff;
+            }
+
+/*#endregion */
+
 /*#region Header */
 
 header {
@@ -1016,16 +1065,16 @@ main > .cot-trai {
 }
 
 /*#region Khung thông tin */
+
 .menu a:hover {
     text-decoration: none;
-    cursor: pointer;
 }
 
-.khung-thong-tin {
+.khung-thong-tin-lct {
     display: flex;
 }
 
-    .khung-thong-tin .hinh-dai-dien {
+    .khung-thong-tin-lct .hinh-dai-dien {
         max-height: 40px;    
         min-height: 40px;
         max-width: 40px;
@@ -1033,23 +1082,24 @@ main > .cot-trai {
         position: relative;        
     }
 
-        .khung-thong-tin .hinh-dai-dien img {
+        .khung-thong-tin-lct .hinh-dai-dien img {
             height: 100%;
             width: 100%;
             position: absolute;
         }
 
-    .khung-thong-tin .thong-tin-nguoi-dung {
+    .khung-thong-tin-lct .thong-tin-nguoi-dung {
         margin-left: 10px;
         width: 100%;
     }
 
-        .khung-thong-tin .thong-tin-nguoi-dung .ten-nguoi-dung {
+        .khung-thong-tin-lct .thong-tin-nguoi-dung .ten-nguoi-dung {
             line-height: 40px;
             color: #555;
             font-size: 12px;
             font-weight: bold;
         }
+
 /*#endregion */
 
 /*#region Thông tin người dùng */

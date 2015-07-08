@@ -34,7 +34,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             khoaHoc.chuDe = LienKet.co(lienKet, "ChuDe") ?
-                                layDTO<ChuDeDTO>(ChuDeDAO.layTheoMa(maTam)) :
+                                layDTO<ChuDeDTO>(ChuDeDAO.layTheoMa(maTam, lienKet["ChuDe"])) :
                                 new ChuDeDTO()
                                 {
                                     ma = maTam
@@ -47,7 +47,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             khoaHoc.hinhDaiDien = LienKet.co(lienKet, "HinhDaiDien") ?
-                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("KhoaHoc_HinhDaiDien", maTam.Value)) :
+                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("KhoaHoc_HinhDaiDien", maTam.Value, lienKet["HinhDaiDien"])) :
                                 new TapTinDTO()
                                 {
                                     ma = maTam
@@ -60,7 +60,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             khoaHoc.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
-                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam.Value)) :
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam.Value, lienKet["NguoiTao"])) :
                                 new NguoiDungDTO()
                                 {
                                     ma = maTam
@@ -95,8 +95,18 @@ namespace DAOLayer
                         khoaHoc.canDuyetBaiViet = layBool(dong, i);
                         break;
                     default:
+                        if (khoaHoc.duLieuThem == null)
+                        {
+                            khoaHoc.duLieuThem = new Dictionary<string, object>();
+                        }
+                        khoaHoc.duLieuThem.Add(dong.GetName(i), dong[i]);
                         break;
                 }
+            }
+
+            if (LienKet.co(lienKet, "GiangVien"))
+            {
+                khoaHoc.danhSachGiangVien = layDanhSachDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMaDoiTuongNhomNguoiDungVaGiaTriNhomNguoiDung("KH", khoaHoc.ma, "GiangVien", lienKet["GiangVien"]));
             }
 
             return khoaHoc;
@@ -210,6 +220,22 @@ namespace DAOLayer
                     {
                         ma
                     }
+                );
+        }
+
+        public static KetQua lay_TimKiemPhanTrang(string where = null, string orderBy = null, int? trang = null, int? soDongMoiTrang = null, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layKhoaHoc_TimKiemPhanTrang",
+                    new object[]
+                    {
+                        where,
+                        orderBy,
+                        trang,
+                        soDongMoiTrang
+                    },
+                    lienKet
                 );
         }
     }

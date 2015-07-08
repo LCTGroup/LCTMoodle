@@ -517,6 +517,7 @@
     <Content Include="Views\HoiDap\_Item_QuanLyHoiDap.cshtml" />
     <Content Include="Views\NguoiDung\QuanLyNguoiDung.cshtml" />
     <Content Include="Views\NguoiDung\DanhSachNguoiDungBiChan.cshtml" />
+    <Content Include="Views\LCT\_PhanTrang.cshtml" />
     <Content Include="Views\KhoaHoc\ThongTinKhoaHoc.cshtml" />
     <Content Include="Views\NguoiDung\TinNhan.cshtml" />
     <Content Include="Views\NguoiDung\ChiTietTinNhan.cshtml" />

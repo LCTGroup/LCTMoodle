@@ -140,3 +140,41 @@ BEGIN
 	DELETE FROM dbo.KhoaHoc
 		WHERE Ma = @0
 END
+
+GO
+--Lấy phân trang
+ALTER PROC dbo.layKhoaHoc_TimKiemPhanTrang (
+	@0 NVARCHAR(MAX), --WHERE
+	@1 NVARCHAR(MAX), --ORDER
+	@2 INT, --Trang
+	@3 INT --Số lượng mỗi trang
+)
+AS
+BEGIN
+	SET @0 = CASE WHEN @0 IS NULL THEN '' ELSE 'WHERE ' + @0 END
+	SET @1 = CASE WHEN @1 IS NULL THEN 'ThoiDiemTao' ELSE @1 END
+	
+	DECLARE @trang VARCHAR(MAX)
+	IF (@2 IS NULL OR @3 IS NULL)
+	BEGIN
+		SET @trang = ''
+	END
+	ELSE
+	BEGIN
+		SET @trang = 'WHERE ' + CAST((@2 - 1) * @3 AS VARCHAR(MAX)) + ' < Dong AND Dong <= ' + CAST(@2 * @3 AS VARCHAR(MAX))
+	END
+
+	EXEC('
+		SELECT *
+			FROM (
+				SELECT
+					*,
+					ROW_NUMBER() OVER (ORDER BY ' + @1 + ') AS Dong,
+					COUNT(1) OVER () AS TongSoDong
+					FROM dbo.KhoaHoc
+					' + @0 + '
+			) AS KH
+			' + @trang + '
+			ORDER BY ' + @1 + '
+	')
+END

@@ -26,7 +26,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             thanhVien.nguoiDung = LienKet.co(lienKet, "NguoiDung") ?
-                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam)) :
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam, lienKet["NguoiDung"])) :
                                 new NguoiDungDTO()
                                 {
                                     ma = maTam
@@ -39,7 +39,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             thanhVien.khoaHoc = LienKet.co(lienKet, "KhoaHoc") ?
-                                layDTO<KhoaHocDTO>(KhoaHocDAO.layTheoMa(maTam)) :
+                                layDTO<KhoaHocDTO>(KhoaHocDAO.layTheoMa(maTam, lienKet["KhoaHoc"])) :
                                 new KhoaHocDTO()
                                 {
                                     ma = maTam
@@ -58,7 +58,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             thanhVien.nguoiThem = LienKet.co(lienKet, "NguoiThem") ?
-                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam)) :
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam, lienKet["NguoiThem"])) :
                                 new NguoiDungDTO()
                                 {
                                     ma = maTam

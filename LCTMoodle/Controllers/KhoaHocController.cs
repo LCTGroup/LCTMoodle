@@ -88,7 +88,7 @@ namespace LCTMoodle.Controllers
 
         public ActionResult DanhSach()
         {
-            KetQua ketQua = KhoaHocBUS.lay();
+            var ketQua = KhoaHocBUS.timKiemPhanTrang(1, 20);
 
             return View(ketQua.trangThai == 0 ? ketQua.ketQua : null);
         }
@@ -123,17 +123,14 @@ namespace LCTMoodle.Controllers
             return View();
         }
 
-        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0)
+        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0, int trang = 1)
         {
-            KetQua ketQua;
-            if (maChuDe == 0)
-            {
-                ketQua = KhoaHocBUS.lay_TimKiem(tuKhoa);
-            }
-            else
-            {
-                ketQua = KhoaHocBUS.layTheoMaChuDe_TimKiem(maChuDe, tuKhoa);
-            }
+            //Sửa số dòng mỗi trang nhớ sửa ở view
+            var ketQua = KhoaHocBUS.timKiemPhanTrang(trang, 20,
+                "Ten LIKE '%" + tuKhoa + "%'" +
+                (maChuDe != 0 ?
+                "AND MaChuDe = " + maChuDe :
+                null));
 
             if (ketQua.trangThai == 0)
             {

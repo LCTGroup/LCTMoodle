@@ -31,7 +31,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             binhLuan.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
-                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam)) :
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam, lienKet["NguoiTao"])) :
                                 new NguoiDungDTO()
                                 {
                                     ma = maTam
@@ -44,7 +44,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             binhLuan.baiVietDienDan = LienKet.co(lienKet, "BaiVietDienDan") ?
-                                layDTO<BaiVietDienDanDTO>(BaiVietDienDanDAO.layTheoMa(maTam)) :
+                                layDTO<BaiVietDienDanDTO>(BaiVietDienDanDAO.layTheoMa(maTam, lienKet["BaiVietDienDan"])) :
                                 new BaiVietDienDanDTO()
                                 {
                                     ma = maTam
@@ -57,7 +57,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             binhLuan.tapTin = LienKet.co(lienKet, "TapTin") ?
-                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("BinhLuanBaiVietDienDan_TapTin", maTam)) :
+                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("BinhLuanBaiVietDienDan_TapTin", maTam, lienKet["TapTin"])) :
                                 new TapTinDTO()
                                 {
                                     ma = layInt(dong, i)
