@@ -28,3 +28,16 @@ BEGIN
 	INSERT INTO dbo.HoatDong (MaNguoiTacDong, LoaiDoiTuongTacDong, MaDoiTuongTacDong, LoaiDoiTuongBiTacDong, MaDoiTuongBiTacDong, MaHanhDong)
 	VALUES (@0, @1, @2, @3, @4, @5)
 END
+
+GO
+--Lấy hoạt động theo mã
+CREATE PROC dbo.layTheoMaHoatDong
+(
+	@0 INT --Mã 
+)
+AS
+BEGIN
+	SELECT *
+	FROM dbo.HoatDong
+	WHERE Ma = @0
+END

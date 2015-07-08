@@ -62,7 +62,7 @@ namespace LCTMoodle.Controllers
                 return Json(ketQua);
             }
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
-            if (cauHoi.nguoiTao.ma.Value != (int)Session["NguoiDung"] && !BUS.coQuyen("SuaCauHoi", "HD"))
+            if (cauHoi.nguoiTao.ma.Value != (int)Session["NguoiDung"] && !BUS.coQuyen("SuaCauHoi", "HD", cauHoi.ma.Value, (int?)Session["NguoiDung"]))
             {
                 return Json(new KetQua()
                 {
