@@ -84,7 +84,7 @@ namespace LCTMoodle.Controllers
 
             if (Session["NguoiDung"] == null)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng nhập để thực hiện chức năng này"));
             }
 
             #endregion

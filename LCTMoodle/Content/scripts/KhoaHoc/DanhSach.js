@@ -1,3 +1,3 @@
 ﻿$(function () {
-    khoiTaoKhungTimKiemLCT($('#danh_sach'), $('#khung_tim'), '/KhoaHoc/_DanhSach_Tim');
+    khoiTaoKhungTimKiemLCT2($('#danh_sach'), $('#khung_tim'), $('[data-doi-tuong="phan-trang"]'), '/KhoaHoc/_DanhSach_Tim');
 });

@@ -22,7 +22,7 @@ namespace LCTMoodle.Controllers
             var maNguoiDung = Session["NguoiDung"] as int?;
             if (!maNguoiDung.HasValue)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng nhập để sử dụng chức năng này."));
             }
 
             if (ma != 0)
@@ -30,21 +30,21 @@ namespace LCTMoodle.Controllers
                 ketQua = ChuDeBUS.layTheoMa(ma);
                 if (ketQua.trangThai != 0)
                 {
-                    return Redirect("/");
+                    return Redirect("/?tb=" + HttpUtility.UrlEncode("Chủ đề không tồn tại."));
                 }
                 chuDe = ketQua.ketQua as ChuDeDTO;
             }
 
             if (!BUS.coQuyen("QLQuyen", "CD", ma, maNguoiDung))
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần có quyền quản lý để thực hiện chức năng này."));
             }
             #endregion
 
             ketQua = ChuDeBUS.layTheoMaCha(ma);
             if (ketQua.trangThai > 1)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Có lỗi xảy ra."));
             }
             ViewData["DSCon"] = ketQua.ketQua;
 
@@ -122,7 +122,7 @@ namespace LCTMoodle.Controllers
             var maNguoiDung = Session["NguoiDung"] as int?;
             if (!maNguoiDung.HasValue)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng nhập để sử dụng chức năng này."));
             }
 
             if (maCha != 0)
@@ -130,14 +130,14 @@ namespace LCTMoodle.Controllers
                 ketQua = ChuDeBUS.layTheoMa(maCha);
                 if (ketQua.trangThai != 0)
                 {
-                    return Redirect("/");
+                    return Redirect("/?tb=" + HttpUtility.UrlEncode("Chủ đề không tồn tại."));
                 }
                 chuDe = ketQua.ketQua as ChuDeDTO;
             }
 
             if (!BUS.coQuyen("QLNoiDung", "CD", maCha, maNguoiDung))
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần có quyền quản lý nội dung để thực hiện chức năng này."));
             }
             #endregion
 
@@ -158,7 +158,7 @@ namespace LCTMoodle.Controllers
             var maNguoiDung = Session["NguoiDung"] as int?;
             if (!maNguoiDung.HasValue)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng nhập để sử dụng chức năng này."));
             }
 
             if (ma != 0)
@@ -166,14 +166,14 @@ namespace LCTMoodle.Controllers
                 ketQua = ChuDeBUS.layTheoMa(ma);
                 if (ketQua.trangThai != 0)
                 {
-                    return Redirect("/");
+                    return Redirect("/?tb=" + HttpUtility.UrlEncode("Chủ đề không tồn tại."));
                 }
                 chuDe = ketQua.ketQua as ChuDeDTO;
             }
 
             if (!BUS.coQuyen("QLNoiDung", "CD", ma, maNguoiDung))
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần có quyền quản lý nội dung để thực hiện chức năng này."));
             }
             #endregion
 

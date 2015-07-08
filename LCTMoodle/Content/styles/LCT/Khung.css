@@ -1066,40 +1066,6 @@ main > .cot-trai {
 
 /*#region Khung thông tin */
 
-.menu a:hover {
-    text-decoration: none;
-}
-
-.khung-thong-tin-lct {
-    display: flex;
-}
-
-    .khung-thong-tin-lct .hinh-dai-dien {
-        max-height: 40px;    
-        min-height: 40px;
-        max-width: 40px;
-        min-width: 40px;    
-        position: relative;        
-    }
-
-        .khung-thong-tin-lct .hinh-dai-dien img {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-        }
-
-    .khung-thong-tin-lct .thong-tin-nguoi-dung {
-        margin-left: 10px;
-        width: 100%;
-    }
-
-        .khung-thong-tin-lct .thong-tin-nguoi-dung .ten-nguoi-dung {
-            line-height: 40px;
-            color: #555;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
 /*#endregion */
 
 /*#region Thông tin người dùng */
@@ -1108,7 +1074,34 @@ main > .cot-trai {
     background-color: #fbfbfb;
     padding: 10px;
     height: 40px;
+    display: flex;
 }
+
+    .cot-trai .menu .khung-thong-tin .hinh-dai-dien {
+        max-height: 40px;    
+        min-height: 40px;
+        max-width: 40px;
+        min-width: 40px;    
+        position: relative;        
+    }
+    
+        .cot-trai .menu .khung-thong-tin .hinh-dai-dien img {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+        
+    .cot-trai .menu .khung-thong-tin .thong-tin-nguoi-dung {
+        margin-left: 10px;
+        width: 100%;
+    }
+    
+        .cot-trai .menu .khung-thong-tin .thong-tin-nguoi-dung .ten-nguoi-dung {
+            line-height: 40px;
+            color: #555;
+            font-size: 12px;
+            font-weight: bold;
+        }
 
 /*#endregion */
 

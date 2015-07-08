@@ -289,10 +289,16 @@ namespace BUSLayer
             return KhoaHocDAO.layTheoMaChuDe_TimKiem(maChuDe, tuKhoa, lienKet);
         }
 
-        public static KetQua layTheoMaNguoiDung(int maNguoiDung)
+        public static KetQua layTheoMaNguoiDung(int maNguoiDung, LienKet lienKet = null)
         {
+            if (lienKet == null)
+            {
+                lienKet = new LienKet();
+            }
+            lienKet.Add("KhoaHoc");
+                
             //Lấy toàn bộ khóa học mà người dùng liên quan
-            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDung(maNguoiDung, new LienKet() { "KhoaHoc" });
+            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDung(maNguoiDung, lienKet);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
