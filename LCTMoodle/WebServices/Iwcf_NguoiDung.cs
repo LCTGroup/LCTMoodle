@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using DTOLayer;
 
 namespace LCTMoodle.WebServices
 {
@@ -12,6 +13,6 @@ namespace LCTMoodle.WebServices
     public interface Iwcf_NguoiDung
     {
         [OperationContract]
-        int kiemTraDangNhap(string _TenDN, string _MatKhau);
+        KetQua kiemTraDangNhap(string _TenDN, string _MatKhau);
     }
 }
