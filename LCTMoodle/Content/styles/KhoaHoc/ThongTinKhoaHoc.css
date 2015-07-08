@@ -1,0 +1,48 @@
+﻿/*#region Khung trên */
+
+.khung-tren {
+    display: flex;    
+    padding: 5px;
+}
+
+    .khung-tren .hinh-dai-dien {
+        max-height: 100px;
+        min-height: 100px;
+        max-width: 100px;
+        min-width: 100px;
+        position: relative;
+    }
+
+    .khung-tren .ten-khoa-hoc {
+        line-height: 50px;
+        color: #555;
+        font-size: 2em;
+    }
+
+/*#endregion */
+
+/*#region Khung dưới */
+
+.khung-duoi {
+
+}
+
+    .khung-duoi .dong-noi-dung {
+        display: flex;
+        position: relative;
+        padding: 5px;
+        margin: 5px 0;
+    }
+
+        .khung-duoi .dong-noi-dung .tieu-de {
+            color: #888;
+            min-width: 150px;
+            max-width: 150px;
+        }
+        .khung-duoi .dong-noi-dung .noi-dung {
+            font-weight: bold;
+            width: 100%;
+            color: #555;
+        }
+
+/*#endregion */

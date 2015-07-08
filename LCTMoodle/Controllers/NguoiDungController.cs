@@ -56,6 +56,16 @@ namespace LCTMoodle.Controllers
                 }).ketQua);
         }
 
+        public ActionResult TinNhan(int? maNguoiDung)
+        {
+            return View();
+        }
+
+        public ActionResult ChiTietTinNhan(string tenTaiKhoanNguoiGui)
+        {
+            return View();
+        }
+
         public ActionResult DangNhap()
         {
             if (Session["NguoiDung"] != null)

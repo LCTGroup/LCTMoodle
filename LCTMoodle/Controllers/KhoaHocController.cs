@@ -12,6 +12,12 @@ namespace LCTMoodle.Controllers
 {
     public class KhoaHocController : LCTController
     {
+
+        public ActionResult ThongTinKhoaHoc()
+        {
+            return View();
+        }
+
         public ActionResult Xem(int ma)
         {
             #region Lấy khóa học

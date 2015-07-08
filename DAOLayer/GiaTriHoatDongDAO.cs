@@ -8,11 +8,11 @@ using Data;
 
 namespace DAOLayer
 {
-    public class GiaTriHanhDongDAO : DAO<GiaTriHanhDongDAO, GiaTriHanhDongDTO>
+    public class GiaTriHoatDongDAO : DAO<GiaTriHoatDongDAO, GiaTriHoatDongDTO>
     {
-        public static GiaTriHanhDongDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
+        public static GiaTriHoatDongDTO gan(System.Data.SqlClient.SqlDataReader dong, LienKet lienKet)
         {
-            GiaTriHanhDongDTO giaTriHoatDong = new GiaTriHanhDongDTO();
+            GiaTriHoatDongDTO giaTriHoatDong = new GiaTriHoatDongDTO();
 
             int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
@@ -20,7 +20,7 @@ namespace DAOLayer
                 switch (dong.GetName(i))
                 {
                     case "MaHoatDong":
-                        giaTriHoatDong.maHanhDong = layInt(dong, i); break;
+                        giaTriHoatDong.maHoatDong = layInt(dong, i); break;
                     case "GiaTriCu":
                         giaTriHoatDong.giaTriCu = layString(dong, i); break;
                     case "GiaTriMoi":
@@ -34,31 +34,32 @@ namespace DAOLayer
             return giaTriHoatDong;
         }
 
-        public static KetQua themGiaTriHanhDong(GiaTriHanhDongDTO giaTriHanhDong)
+        public static KetQua them(GiaTriHoatDongDTO giaTriHoatDong)
         {
             return khongTruyVan
                 (
-                    "ThemGiaTriHanhDong",
+                    "ThemGiaTriHoatDong",
                     new object[] 
                     {
-                        giaTriHanhDong.maHanhDong,
-                        giaTriHanhDong.giaTriCu,
-                        giaTriHanhDong.giaTriMoi,
-                        giaTriHanhDong.giaTri
+                        giaTriHoatDong.maHoatDong,
+                        giaTriHoatDong.giaTriCu,
+                        giaTriHoatDong.giaTriMoi,
+                        giaTriHoatDong.giaTri
                     }
                 );
         }
 
-        public static KetQua layTheoMaHanhDong(int? maHanhDong)
+        public static KetQua layTheoMaHoatDong(int? maHoatDong)
         {
             return layDanhSachDong
                 (
-                    "layGiaTriHanhDongTheoMaHanhDong",
+                    "layGiaTriHoatDongTheoMaHoatDong",
                     new object[]
                     {
-                        maHanhDong
+                        maHoatDong
                     }
                 );
         }
+        
     }
 }
