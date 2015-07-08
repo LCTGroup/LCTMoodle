@@ -230,14 +230,9 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc)
+        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc, LienKet lienKet = null)
         {
-            return BaiVietBaiTapDAO.layTheoMaKhoaHoc(maKhoaHoc, new LienKet()
-            {
-                "NguoiTao",
-                "TapTin",
-                "BaiTapNop"
-            });
+            return BaiVietBaiTapDAO.layTheoMaKhoaHoc(maKhoaHoc, lienKet);
         }
 
         public static KetQua layTheoMa(int ma, LienKet lienKet = null)
@@ -287,7 +282,8 @@ namespace BUSLayer
             return BaiVietBaiTapDAO.capNhatTheoMa(maBaiViet, bang, new LienKet()
             {
                 "NguoiTao",
-                "TapTin"
+                "TapTin",
+                "BaiTapNop"
             });
         }
     }

@@ -1,10 +1,19 @@
-﻿<article class="hop hop-1-vien">
+﻿@model DTOLayer.NhomNguoiDungDTO
+<article class="hop hop-1-vien">
     <section class="tieu-de">
-        Thêm nhóm người dùng
+        @(Model == null ? "Thêm" : "Sửa") nhóm người dùng
     </section>
     <form id="them_nhom_form" class="noi-dung lct-form">
-        <input type="hidden" name="PhamVi" value="@ViewData["PhamVi"]" />
-        <input type="hidden" name="MaDoiTuong" value="@ViewData["DoiTuong"]" />
+        @if (Model == null)
+        {
+            <input type="hidden" name="PhamVi" value="@ViewData["PhamVi"]" />
+            <input type="hidden" name="MaDoiTuong" value="@ViewData["MaDoiTuong"]" />   
+        }
+        else
+        {
+            <input type="hidden" name="PhamVi" value="@Model.phamVi" />
+            <input type="hidden" name="Ma" value="@Model.ma.Value" />  
+        }
         <ul>
             <li>
                 <section class="tieu-de">
@@ -14,7 +23,7 @@
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Tên của nhóm là gì?" />
+                        <input data-mac-dinh="@(Model != null ? Model.ten : null)" data-validate="bat-buoc" type="text" name="Ten" placeholder="Tên của nhóm là gì?" />
                     </article>
                 </section>
             </li>
@@ -26,14 +35,14 @@
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <textarea name="MoTa" placeholder="Nhóm cho phép thực hiện những gì?"></textarea>
+                        <textarea data-mac-dinh="@(Model != null ? Model.moTa : null)" name="MoTa" placeholder="Nhóm cho phép thực hiện những gì?"></textarea>
                     </article>
                 </section>
             </li>
         </ul>
         <section class="khung-button">
             <button type="submit" class="chap-nhan">
-                Tạo
+                @(Model == null ? "Tạo" : "Sửa")
             </button>
         </section>
     </form>

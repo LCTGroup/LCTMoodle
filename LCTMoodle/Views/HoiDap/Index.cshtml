@@ -30,7 +30,6 @@
     }
     
     coQuyenThemCauHoi = Session["NguoiDung"] != null;
-    <!---->
 
     if (coQuyenThemCauHoi || coQuyenQuanLyCauHoi || coQuyenQuanLyTraLoi)
     {
@@ -88,9 +87,9 @@
                 <section class="tieu-de"><label style="font-weight: bold;">Tiêu chí hiển thị</label></section>
                 <section class="noi-dung" style="width: auto;">
                     <section class="input">
-                        <input type="radio" style="width:auto;" name="cachHienThi" value="MoiNhat" data-text="Mới nhất" data-mac-dinh />
-                        <input type="radio" style="width:auto;" name="cachHienThi" value="DiemCaoNhat" data-text="Điểm cao nhất" />
-                        <input type="radio" style="width:auto;" name="cachHienThi" value="TraLoiNhieuNhat" data-text="Trả lời nhiều nhất" />
+                        <input type="radio" style="width:auto;" name="TieuChi" data-doi-tuong="tieu-chi" value="MoiNhat" data-text="Mới nhất" data-mac-dinh />
+                        <input type="radio" style="width:auto;" name="TieuChi" data-doi-tuong="tieu-chi" value="DiemCaoNhat" data-text="Điểm cao nhất" />
+                        <input type="radio" style="width:auto;" name="TieuChi" data-doi-tuong="tieu-chi" value="TraLoiNhieuNhat" data-text="Trả lời nhiều nhất" />
                     </section>
                 </section>
             </li>

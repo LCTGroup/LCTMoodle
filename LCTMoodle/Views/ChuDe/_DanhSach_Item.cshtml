@@ -2,6 +2,7 @@
 @model DTOLayer.ChuDeDTO
 @{
     bool coChon = ViewData["CoChon"] != null && (bool)ViewData["CoChon"];
+    bool coQuyenQL = (bool)ViewData["CoQuyenQL"];
 }
 
 <li data-doi-tuong="muc" data-loai="ds-nut" data-ma="@Model.ma" title="Có @LCTHelper.layString(Model.duLieuThem, "SLChuDeCon", "0") chủ đề và @LCTHelper.layString(Model.duLieuThem, "SLKhoaHocCon", "0") khóa học thuộc chủ đề này">
@@ -16,6 +17,12 @@
     {
         <section class="khung-chuc-nang-lct" style="top: 2px; right: 2px;">
             <ul data-doi-tuong="cncd-@Model.ma">
+                @if (coQuyenQL)
+                {
+                    <li>
+                        <a href="/QuanLyQuyen/CD/@Model.ma">Quản lý quyền</a>
+                    </li>
+                }
                 <li>
                     <a data-chuc-nang="chuyen">Chuyển vị trí</a>
                 </li>

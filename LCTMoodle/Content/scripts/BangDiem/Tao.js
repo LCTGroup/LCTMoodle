@@ -57,6 +57,58 @@ function khoiTaoItem($item) {
     //Nút tắt mở
     khoiTaoTatMoDoiTuong($item.find('[data-chuc-nang="tat-mo"]'), true);
 
+    //Nút Sửa
+    $item.find('[data-chuc-nang="sua"]').on('click', function () {
+        var $item = $(this).closest('[data-doi-tuong="item-cot-diem"]');
+
+        moPopupFull({
+            url: '/BangDiem/_Form_Sua/' + $item.attr('data-ma'),
+            width: '500px',
+            thanhCong: function ($popup) {
+                var $form = $popup.find('#tao_cot_diem_form');
+
+                khoiTaoLCTForm($form, {
+                    submit: function () {
+                        var $tai = moBieuTuongTai($form);
+                        $.ajax({
+                            url: '/BangDiem/XuLyCapNhatCotDiem',
+                            type: 'POST',
+                            data: layDataLCTForm($form),
+                            dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                $popup.tat();
+
+                                var item = data.ketQua;
+                                console.log(item.laDiemCong);
+                                $item.find('[data-doi-tuong="ten"]').text(item.ten);
+                                $item.find('[data-doi-tuong="mo-ta"]').text(item.moTa);
+                                $item.find('[data-doi-tuong="he-so"]').text(item.laDiemCong ? '+' : item.heSo);
+
+                                if (item.ngay)
+                                {
+                                    var d = new Date(parseInt(item.ngay.substr(6)));
+
+                                    $item.find('[data-doi-tuong="ngay"]').text(d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear());
+                                }
+                                else {
+                                    $item.find('[data-doi-tuong="ngay"]').text('');
+                                }
+                            }
+                            else {
+                                moPopupThongBao(data);
+                            }
+                        }).fail(function () {
+                            moPopupThongBao('Thêm cột thất bại');
+                        });
+                    }
+                });
+            }
+        });
+    });
+
     //Nút xóa
     $item.find('[data-chuc-nang="xoa"]').on('click', function () {
         var $item = $(this).closest('[data-doi-tuong="item-cot-diem"]');

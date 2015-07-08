@@ -18,6 +18,8 @@ $(function () {
         moPopupDangNhap();
     });
     khoiTaoDangXuat($('[data-chuc-nang="dang-xuat"]'));
+
+    khoiTaoLCTKhung_Lich($('#lich_aside'));
 });
 
 function moBieuTuongTai($item) {
@@ -134,7 +136,7 @@ function layPopupFull(thamSo) {
             }
         });
 
-        $body.prepend($popupFull);
+        $body.append($popupFull);
     }
 
     if (esc) {
@@ -211,7 +213,7 @@ function moPopupFull(thamSo) {
         popupData.id = thamSo.id;
     }
     if ('z-index' in thamSo) {
-        popupData.id = thamSo['z-index'];
+        popupData['z-index'] = thamSo['z-index'];
     }    
 
     if ('html' in thamSo) {
@@ -571,4 +573,128 @@ function hienThiCode($khungCode) {
     $khungCode.each(function () {
         hljs.highlightBlock(this);
     })
+}
+
+function khoiTaoLCTKhung_Lich($lich) {
+    $lich.find('.thang-nam .thang-truoc, .thang-nam .thang .truoc').on('click', function () {
+        var thang = parseInt($lich.attr('data-thang-ht'));
+        if (thang == 1) {
+            $lich.attr('data-thang-ht', '12');
+            $lich.attr('data-nam-ht', parseInt($lich.attr('data-nam-ht')) - 1);
+        }
+        else {
+            $lich.attr('data-thang-ht', thang - 1);
+        }
+        capNhatLich($lich);
+    });
+    $lich.find('.thang-nam .thang-sau, .thang-nam .thang .sau').on('click', function () {
+        var thang = parseInt($lich.attr('data-thang-ht'));
+        if (thang == 12) {
+            $lich.attr('data-thang-ht', '1');
+            $lich.attr('data-nam-ht', parseInt($lich.attr('data-nam-ht')) + 1);
+        }
+        else {
+            $lich.attr('data-thang-ht', thang + 1);
+        }
+        capNhatLich($lich);
+    });
+    $lich.find('.thang-nam .nam .truoc').on('click', function () {
+        $lich.attr('data-nam-ht', parseInt($lich.attr('data-nam-ht')) - 1);
+        capNhatLich($lich);
+    });
+    $lich.find('.thang-nam .nam .sau').on('click', function () {
+        $lich.attr('data-nam-ht', parseInt($lich.attr('data-nam-ht')) + 1);
+        capNhatLich($lich);
+    });
+    $lich.find('.khung-thang i').on('click', function () {
+        var
+            ngay = $(this).attr('data-value'),
+            thang = $lich.attr('data-thang-ht'),
+            nam = $lich.attr('data-nam-ht');
+
+        $inputVuaFocus.val(ngay + '/' + thang + '/' + nam).change();
+        $lich.attr('data-ngay', ngay);
+        $lich.attr('data-thang', thang);
+        $lich.attr('data-nam', nam);
+
+        $lich.find('i.chon').removeClass('chon');
+        $lich.find('i[data-value="' + ngay + '"]').addClass('chon');
+    });
+
+    var date = new Date();
+    var ngayHienTai = date.getDate();
+    var thangHienTai = date.getMonth() + 1;
+    var namHienTai = date.getFullYear();
+
+    $lich.attr('data-thang-ht', thangHienTai);
+    $lich.attr('data-nam-ht', namHienTai);
+    capNhatLich($lich);
+
+    function capNhatLich($lich) {
+        var
+            thang = $lich.attr('data-thang-ht'),
+            nam = $lich.attr('data-nam-ht');
+        $lich.find('.thang-nam .thang').attr('data-value', thang);
+        $lich.find('.thang-nam .nam').attr('data-value', nam);
+        // Chọn ngày 1 -> thứ bắt đầu & xử lý để thứ bắt đầu là 2 (0), kết thúc là chủ nhật (6)
+        var thuBatDau = new Date(nam, thang - 1, 1).getDay() - 1;
+        if (thuBatDau == -1) {
+            // Chủ nhật
+            thuBatDau = 6
+        }
+
+        // Ngày âm 1 của tháng sau (0) là ngày cuối cùng của tháng cần tìm
+        var soNgayTrongThang = new Date(nam, thang, 0).getDate();
+
+        var
+            viTri = 0, // Lưu vi trí
+            ngay = 1, // Lưu ngày xuất ra
+            mangNgay = []; // Lưu mảng ngày
+
+        // Lấy dòng đầu
+        // Kiểm tra số dòng dư ở dòng cuối
+        // Nếu tổng số ô chiếm trên 5 dòng
+        var soOChiem = (thuBatDau + soNgayTrongThang);
+        if (soOChiem / 7 > 5) {
+            // Xuất ngày dư ra ở hàng đầu
+            // Lấy ngày bắt đầu ở dòng dư
+            ngayBatDauDu = soNgayTrongThang - (soOChiem % 7) + 1;
+            // Xuất các ngày dư
+            for (var i = ngayBatDauDu; i <= soNgayTrongThang; i++) {
+                mangNgay.push(i);
+                viTri++;
+            }
+            // Thay thế số ngày trong tháng = (ngày bắt đầu dư - 1)
+            // để phần còn lại chỉ xuất tới phần dư
+            soNgayTrongThang = ngayBatDauDu - 1;
+        }
+        // Xuất phần còn lại của dòng
+        // Xuất phần không có trong tháng
+        while (viTri < thuBatDau) {
+            mangNgay.push(0);
+            viTri++;
+        }
+
+        // Xuất toàn bộ cho đến khi hết ngày
+        while (ngay <= soNgayTrongThang) {
+            mangNgay.push(ngay++);
+        }
+
+        viTri = 0;
+        $lich.find('tbody i').each(function () {
+            if (mangNgay[viTri] > 0) {
+                this.setAttribute('data-value', mangNgay[viTri]);
+            }
+            else {
+                this.removeAttribute('data-value');
+            }
+            viTri++;
+        });
+
+        $lich.find('i').removeClass('chon');
+
+        if (thang == thangHienTai && nam == namHienTai) {
+            $lich.find('i[data-value="' + ngayHienTai + '"]').addClass('chon');
+        }
+    }
 }

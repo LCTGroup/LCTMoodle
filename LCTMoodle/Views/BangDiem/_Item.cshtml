@@ -2,19 +2,22 @@
 
 <tr class="item-cot-diem" data-doi-tuong="item-cot-diem" data-ma="@Model.ma">
     <td></td>
-    <td>
+    <td data-doi-tuong="ten">
         @Model.ten
     </td>
-    <td>
+    <td data-doi-tuong="he-so">
         @(Model.laDiemCong ? "+" : Model.heSo.ToString())
     </td>
-    <td>
+    <td data-doi-tuong="mo-ta">
         @Model.moTa
     </td>
     <td style="position: relative">
-        @(Model.ngay.HasValue ? Model.ngay.Value.ToString("d/M/yyyy") : null)
+        <span data-doi-tuong="ngay">@(Model.ngay.HasValue ? Model.ngay.Value.ToString("d/M/yyyy") : null)</span>        
         <section class="khung-chuc-nang-lct ben-trai" style="top: 1px; right: 1px;">
             <ul data-doi-tuong="cncd-@Model.ma">
+                <li>
+                    <a data-chuc-nang="sua">Sửa cột điểm</a>
+                </li>
                 <li>
                     <a data-chuc-nang="xoa">Xóa cột điểm</a>
                 </li>

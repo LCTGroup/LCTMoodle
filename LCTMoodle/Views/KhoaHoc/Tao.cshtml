@@ -1,5 +1,8 @@
-﻿@{
-    ViewData["TieuDe"] = "Tạo khóa học";
+﻿@model DTOLayer.KhoaHocDTO
+@{
+    ViewData["TieuDe"] = Model == null ? 
+        "Tạo khóa học" :
+        "Sửa khóa học - " + Model.ten;
     Layout = "~/Views/LCT/Khung.cshtml";
 }
 
@@ -13,9 +16,13 @@
 
 <article class="hop hop-2-vien">
     <section class="tieu-de">
-        Tạo khóa học
+        @(Model == null ? "Tạo khóa học" : "Sửa khóa học - " + Model.ten)
     </section>
-    <form id="tao_khoa_hoc_form" class="noi-dung lct-form" data-validate-auto>
+    <form id="tao_khoa_hoc_form" class="noi-dung lct-form" data-validate-auto @(Model != null ? "data-cap-nhat" : null)>
+        @if (Model != null)
+        {
+            <input type="hidden" name="Ma" value="@Model.ma.Value" />
+        }
         <article>
             <ul>
                 <li>
@@ -26,7 +33,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" type="text" name="Ten" placeholder="Tên khóa học của bạn là gì?" />
+                            <input data-mac-dinh="@(Model != null ? Model.ten : null)" data-validate="bat-buoc" type="text" name="Ten" placeholder="Tên khóa học của bạn là gì?" />
                         </article>
                     </section>
                 </li>
@@ -38,7 +45,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <textarea data-validate="bat-buoc" name="MoTa" placeholder="Hãy mô tả về khóa học của bạn"></textarea>
+                            <textarea data-mac-dinh="@(Model != null ? Model.moTa : null)" data-validate="bat-buoc" name="MoTa" placeholder="Hãy mô tả về khóa học của bạn"></textarea>
                         </article>
                     </section>
                 </li>
@@ -50,7 +57,10 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" data-input-type="chu-de" name="MaChuDe" placeholder="Khóa học của bạn thuộc chủ đề nào?" />
+                            <input @if (Model != null && Model.chuDe != null) 
+                                   {
+                                       @: data-ma-mac-dinh="@Model.chuDe.ma" data-ten-mac-dinh="@Model.chuDe.ten"
+                                   } data-validate="bat-buoc" data-input-type="chu-de" name="MaChuDe" placeholder="Khóa học của bạn thuộc chủ đề nào?" />
                         </article>
                     </section>
                 </li>
@@ -62,22 +72,29 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" type="file" name="MaHinhDaiDien" />
+                            <input 
+                                @if (Model != null && Model.hinhDaiDien != null) { 
+                                    @: data-ma-mac-dinh="@Model.hinhDaiDien.ma" data-loai-mac-dinh="KhoaHoc_HinhDaiDien"
+                                } data-validate="bat-buoc" type="file" name="MaHinhDaiDien" />
+
                         </article>
                     </section>
                 </li>
-                <li>
-                    <section class="tieu-de">
-                        <label>
-                            Quản lý khóa học
-                        </label>
-                    </section>
-                    <section class="noi-dung">
-                        <article class="input">
-                            <input data-validate="bat-buoc" data-input-type="goi-y" data-url="/NguoiDung/_GoiY_QuanLyKhoaHoc" name="MaNguoiQuanLy" placeholder="Ai là người quản lý khóa học này?" />
-                        </article>
-                    </section>
-                </li>
+                @if (Model == null)
+                {
+                    <li>
+                        <section class="tieu-de">
+                            <label>
+                                Giảng viên khóa học
+                            </label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input data-validate="bat-buoc" name="MaGiangVien" data-input-type="goi-y" data-url="/NguoiDung/_GoiY_QuanLyKhoaHoc" placeholder="Ai là giảng viên của khóa học này?" />
+                            </article>
+                        </section>
+                    </li>
+                }
                 <li>
                     <section class="tieu-de">
                         <label>
@@ -86,7 +103,7 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-chuc-nang="tat-mo" data-mo="khoa-hoc-thoi-han" name="CoHan" type="checkbox" value="" data-text="Khóa học có thời hạn" />
+                            <input @(Model != null && Model.thoiDiemHetHan.HasValue ? "data-mac-dinh" : null) data-chuc-nang="tat-mo" data-mo="khoa-hoc-thoi-han" name="CoHan" type="checkbox" data-text="Khóa học có thời hạn" />
                         </article>
                     </section>
                 </li>
@@ -98,7 +115,10 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" data-input-type="ngay-gio" name="ThoiDiemHetHan" data-gio-placeholder="Giờ" data-ngay-placeholder="Ngày" />
+                            <input 
+                                @if (Model != null && Model.thoiDiemHetHan.HasValue) {
+                                    @:data-gio-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("H:mm")" data-ngay-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("d/M/yyyy")"
+                                } data-validate="bat-buoc" data-input-type="ngay-gio" name="ThoiDiemHetHan" data-gio-placeholder="Giờ" data-ngay-placeholder="Ngày" />
                         </article>
                     </section>
                 </li>
@@ -110,8 +130,8 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-chuc-nang="tat-mo" data-mo="khoa-hoc-dang-ky" name="CanDangKy" type="checkbox" value="" data-text="Khóa học đăng ký" />
-                            <input data-chuc-nang="tat-mo" data-mo="khoa-hoc-thoi-han-dang-ky" data-doi-tuong="khoa-hoc-dang-ky" name="CoHanDangKy" type="checkbox" value="" data-text="Đăng ký có thời hạn" />
+                            <input @(Model != null && Model.canDangKy ? "data-mac-dinh" : null) data-chuc-nang="tat-mo" data-mo="khoa-hoc-dang-ky" name="CanDangKy" type="checkbox" value="" data-text="Khóa học đăng ký" />
+                            <input @(Model != null && Model.hanDangKy.HasValue ? "data-mac-dinh" : null) data-chuc-nang="tat-mo" data-mo="khoa-hoc-thoi-han-dang-ky" data-doi-tuong="khoa-hoc-dang-ky" name="CoHanDangKy" type="checkbox" value="" data-text="Đăng ký có thời hạn" />
                         </article>
                     </section>
                 </li>
@@ -123,7 +143,9 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="bat-buoc" data-input-type="ngay-gio" name="HanDangKy" data-gio-placeholder="Giờ" data-ngay-placeholder="Ngày" />
+                            <input @if (Model != null && Model.hanDangKy.HasValue) {
+                                       @:data-gio-mac-dinh="@Model.hanDangKy.Value.ToString("H:mm")" data-ngay-mac-dinh="@Model.hanDangKy.Value.ToString("d/M/yyyy")"
+                                   } data-validate="bat-buoc" data-input-type="ngay-gio" name="HanDangKy" data-gio-placeholder="Giờ" data-ngay-placeholder="Ngày" />
                         </article>
                     </section>
                 </li>
@@ -135,7 +157,9 @@
                     </section>
                     <section class="noi-dung">
                         <article class="input">
-                            <input data-validate="so-nguyen" type="text" name="PhiThamGia" placeholder="Phí tham gia khóa học (bỏ qua nếu không có phí)" />
+                            <input @if (Model != null ) { 
+                                        @:data-mac-dinh="@Model.phiThamGia"  
+                                   } data-validate="so-nguyen" type="text" name="PhiThamGia" placeholder="Phí tham gia khóa học (bỏ qua nếu không có phí)" />
                         </article>
                     </section>
                 </li>
@@ -150,7 +174,7 @@
                             <select name="CheDoRiengTu">
                                 @foreach (var cheDoRiengTu in Data.CheDoRiengTu.layDanhSach())
                                 {
-                                    <option value="@cheDoRiengTu.ma" @(cheDoRiengTu.macDinh ? "data-mac-dinh" : null) >@cheDoRiengTu.ten</option>
+                                    <option value="@cheDoRiengTu.ma" @((Model == null && cheDoRiengTu.macDinh) || (Model != null && Model.cheDoRiengTu == cheDoRiengTu.ma) ? "data-mac-dinh" : null) >@cheDoRiengTu.ten</option>
                                 }
                             </select>
                         </section>
@@ -159,7 +183,7 @@
             </ul>
             <section class="khung-button">
                 <button type="submit" class="chap-nhan">
-                    Tạo khóa học
+                    @(Model == null ? "Tạo" : "Sửa") khóa học
                 </button>
             </section>
         </article>

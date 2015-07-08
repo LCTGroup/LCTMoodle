@@ -55,6 +55,14 @@ function khoiTaoNutXem($dsNut) {
         moPopupFull({
             url: '/BaiTapNop/_Xem/' + ma,
             thanhCong: function ($popup) {
+                $popup.find('[data-chuc-nang="ghi-chu"]').on('click', function () {
+                    $item.find('[data-chuc-nang="ghi-chu"]').click();
+                });
+
+                $popup.find('[data-chuc-nang="xoa"]').on('click', function () {
+                    $item.find('[data-chuc-nang="xoa"]').click();
+                });
+
                 var $khungNoiDung = $popup.find('.khung-noi-dung');
                 hienThiCode($khungNoiDung.find('pre code'));
 
@@ -173,6 +181,8 @@ function khoiTaoNutGhiChu($dsNut) {
         moPopupFull({
             html: htmlNhap,
             width: '400px',
+            'z-index': 21,
+            'id': 'ghi_chu_popup',
             thanhCong: function ($popup) {
                 var $form = $popup.find('#nhap_form');
 
@@ -236,6 +246,8 @@ function khoiTaoNutXoa($dsNut) {
         moPopupFull({
             html: htmlNhap,
             width: '400px',
+            'z-index': 21,
+            'id': 'xoa_popup',
             thanhCong: function ($popup) {
                 var $form = $popup.find('#nhap_form');
 

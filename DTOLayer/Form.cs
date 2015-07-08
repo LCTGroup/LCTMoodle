@@ -81,7 +81,7 @@ namespace DTOLayer
         {
             try
             {
-                return DateTime.ParseExact(this[key], "H:mm d/M/yyyy", null);
+                return DateTime.ParseExact(this[key], "d/M/yyyy H:mm", null);
             }
             catch
             {

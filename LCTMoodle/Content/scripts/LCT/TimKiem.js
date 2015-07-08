@@ -19,7 +19,7 @@
                     maChuDeTim = this.value || 0;
 
                     if (maChuDeTim != 0) {
-                        timKiem();
+                        $khungTim.tim();
                     }
                     else if (tuKhoaTim == '') {
                         $danhSach.html(htmlDanhSach);
@@ -42,7 +42,7 @@
                             $danhSach.html(htmlDanhSach);
                         }
                         else {
-                            timKiem();
+                            $khungTim.tim();
                         }
                         return;
                     }
@@ -55,7 +55,7 @@
                     clearTimeout(mangTam[maTam + 'to']);
                     mangTam[maTam + 'to'] = setTimeout(function () {
                         tuKhoaTim = mangTam[maTam + 'gt'] = giaTriTam;
-                        timKiem();
+                        $khungTim.tim();
                     }, 500)
                 }
             }
@@ -81,7 +81,7 @@
                                             maChuDeTim = data.ma || 0;
 
                                             if (maChuDeTim != 0) {
-                                                timKiem();
+                                                $khungTim.tim();
                                             }
                                             else if (tuKhoaTim == '') {
                                                 $danhSach.html(htmlDanhSach);
@@ -114,7 +114,7 @@
 
     //#region Hàm xử lý
 
-    function timKiem() {
+    $khungTim.tim = function () {
         var data;
         if ('data' in thamSo) {
             if (typeof (thamSo.data) === 'function') {
@@ -133,10 +133,17 @@
             data.maChuDe = maChuDeTim;
         }
 
-        $.ajax({
+        if ('Tim_Ajax' in mangTam) {
+            mangTam['Tim_Ajax'].abort();
+        }
+
+        var $tai = moBieuTuongTai($danhSach);
+        mangTam['Tim_Ajax'] = $.ajax({
             url: duongDan,
             data: data,
             dataType: 'JSON'
+        }).always(function () {
+            $tai.tat();
         }).done(function (data) {
             if (data.trangThai == 0) {
                 $danhSach.html(data.ketQua);
@@ -144,8 +151,10 @@
             else {
                 $danhSach.empty();
             }
-        }).fail(function () {
-            $danhSach.empty();
+        }).fail(function (xhr, status) {
+            if (status !== 'abort') {
+                $danhSach.empty();
+            }
         });
     }
 

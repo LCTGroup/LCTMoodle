@@ -133,9 +133,9 @@ namespace BUSLayer
             return TraLoiDAO.xoaTheoMa(ma);
         }
 
-        public static KetQua layTheoMaCauHoi(int maCauHoi)
+        public static KetQua layTheoMaCauHoi(int maCauHoi, LienKet lienKet = null)
         {
-            return TraLoiDAO.layTheoMaCauHoi(maCauHoi, new LienKet() { "NguoiTao" });
+            return TraLoiDAO.layTheoMaCauHoi(maCauHoi, lienKet);
         }
 
         public static KetQua layTheoMa(int? ma, LienKet lienKet = null)

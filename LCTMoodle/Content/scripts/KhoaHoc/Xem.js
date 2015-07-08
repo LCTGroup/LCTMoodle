@@ -19,7 +19,7 @@ $(function () {
     $_KhungChonHienThi = $('#khung_chon_hien_thi')
     $_KhungChua = $_KhungHienThi.parent();
 
-    hienThi(layQueryString('hienthi').toLowerCase());
+    hienThi(layQueryString('hienthi').toLowerCase(), layQueryString('ma'));
 
     khoiTaoNutHienThi($_KhungChonHienThi.find('[data-chuc-nang="hien-thi"]'));
     khoiTaoQuayLai();
@@ -29,21 +29,22 @@ $(function () {
     khoiTaoNutThamGia($('[data-chuc-nang="tham-gia"]'));
     khoiTaoNutHuyDangKy($('[data-chuc-nang="huy-dang-ky"]'));
     khoiTaoNutRoiKhoaHoc($('[data-chuc-nang="roi-kh"]'));
+    khoiTaoNutXoaKhoaHoc($('[data-chuc-nang="xoa-kh"]'))
 });
 
-function hienThi(nhom) {
+function hienThi(nhom, ma) {
     switch (nhom) {
         case 'diendan':
-            hienThi_DienDan();
+            hienThi_DienDan(ma);
             break;
         case 'baigiang':
-            hienThi_BaiGiang();
+            hienThi_BaiGiang(ma);
             break;
         case 'tailieu':
-            hienThi_TaiLieu();
+            hienThi_TaiLieu(ma);
             break;
         case 'baitap':
-            hienThi_BaiTap();
+            hienThi_BaiTap(ma);
             break;
         default:
             hienThi_Khung();
@@ -68,11 +69,15 @@ function khoiTaoQuayLai() {
 }
 
 function khoiTaoNutHienThi($nut) {
-    $nut.on('click', function () {
-        var nhom = $(this).attr('data-value');
-        hienThi(nhom);
+    $nut.on('click', function (e) {
+        e.preventDefault();
 
-        history.pushState({ hienThi: nhom }, '', '?hienthi=' + nhom);
+        var $nut = $(this);
+        var nhom = $nut.attr('data-value');
+        var ma = $nut.attr('data-ma');
+        hienThi(nhom, ma);
+
+        history.pushState({ hienThi: nhom }, '', '?hienthi=' + nhom + (ma ? '&ma=' + ma : ''));
     });
 }
 
@@ -186,6 +191,43 @@ function khoiTaoNutTuChoiMoi() {
 
 }
 
+function khoiTaoNutXoaKhoaHoc($nuts) {
+    $nuts.on('click', function () {
+        moPopup({
+            tieuDe: 'Xác nhận',
+            thongBao: 'Bạn có chắc muốn xóa khóa học này?',
+            bieuTuong: 'hoi',
+            nut: [
+                {
+                    ten: 'Có',
+                    loai: 'nguy-hiem',
+                    xuLy: function () {
+                        var $tai = moBieuTuongTai();
+                        $.ajax({
+                            url: '/KhoaHoc/XuLyXoa/' + maKhoaHoc,
+                            method: 'POST',
+                            dataType: 'JSON'
+                        }).always(function () {
+                            $tai.tat();
+                        }).done(function (data) {
+                            if (data.trangThai == 0) {
+                                location = '/KhoaHoc/DanhSach'
+                            }
+                            else {
+                                moPopupThongBao(data);
+                            }
+                        }).fail(function () {
+                            moPopupThongBao('Xóa khóa học thất bại');
+                        });
+                    }
+                }, {
+                    ten: 'Không'
+                }
+            ]
+        })
+    });
+}
+
 //#endregion
 
 //#region Khung
@@ -206,6 +248,8 @@ function hienThi_Khung() {
 
             $_KhungHienThi.html($khung);
             $_KhungChua.attr('data-hien-thi', 'khung');
+
+            khoiTaoNutHienThi($_KhungHienThi.find('[data-chuc-nang="hien-thi"]'));
         }
         else {
             moPopupThongBao(data);
@@ -223,10 +267,10 @@ function khoiTaoKhung($khung) {
 
 //#region Diễn đàn
 
-function hienThi_DienDan()   {
+function hienThi_DienDan(ma)   {
     var $tai = moBieuTuongTai($_KhungChonHienThi);
     $.ajax({
-        url: '/BaiVietDienDan/_Khung',
+        url: '/BaiVietDienDan/_Khung/' + (ma ? ma : ''),
         data: { maKhoaHoc: maKhoaHoc },
         dataType: 'JSON'
     }).always(function () {
@@ -704,10 +748,10 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
 
 //#region Bài giảng
 
-function hienThi_BaiGiang() {
+function hienThi_BaiGiang(ma) {
     var $tai = moBieuTuongTai($_KhungChonHienThi);
     $.ajax({
-        url: '/BaiVietBaiGiang/_Khung',
+        url: '/BaiVietBaiGiang/_Khung/' + (ma ? ma : ''),
         data: { maKhoaHoc: maKhoaHoc },
         dataType: 'JSON'
     }).always(function () {
@@ -886,7 +930,7 @@ function moItem_BaiGiang($baiGiang) {
         $_DanhSach.find('.mo[data-doi-tuong="muc-bai-viet"]').removeClass('mo');
         $baiGiang.addClass('mo');
         $body.animate({
-            scrollTop: $baiGiang.offset().top
+            scrollTop: $baiGiang.offset().top - 50
         }, 200);
     }
 }
@@ -895,10 +939,10 @@ function moItem_BaiGiang($baiGiang) {
 
 //#region Tài liệu
 
-function hienThi_TaiLieu() {
+function hienThi_TaiLieu(ma) {
     var $tai = moBieuTuongTai($_KhungChonHienThi);
     $.ajax({
-        url: '/BaiVietTaiLieu/_Khung',
+        url: '/BaiVietTaiLieu/_Khung/' + (ma ? ma : ''),
         data: { maKhoaHoc: maKhoaHoc },
         dataType: 'JSON'
     }).always(function () {
@@ -1086,10 +1130,10 @@ function moItem_TaiLieu($baiGiang) {
 
 //#region Bài tập
 
-function hienThi_BaiTap() {
+function hienThi_BaiTap(ma) {
     var $tai = moBieuTuongTai($_KhungChonHienThi);
     $.ajax({
-        url: '/BaiVietBaiTap/_Khung',
+        url: '/BaiVietBaiTap/_Khung/' + (ma ? ma : ''),
         data: { maKhoaHoc: maKhoaHoc },
         dataType: 'JSON'
     }).always(function () {

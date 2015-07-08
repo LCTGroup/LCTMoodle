@@ -89,6 +89,20 @@ namespace DAOLayer
             );
         }
 
+        public static KetQua capNhatTheoMa(int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)
+        {
+            return layDong
+            (
+                "capNhatCotDiemTheoMa",
+                new object[]
+                {
+                    ma,
+                    bangCapNhat.bang
+                },
+                lienKet
+            );
+        }
+
         public static KetQua layTheoMaKhoaHoc(int? maKhoaHoc, LienKet lienKet = null)
         {
             return layDanhSachDong

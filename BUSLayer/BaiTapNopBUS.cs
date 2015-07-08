@@ -356,7 +356,8 @@ namespace BUSLayer
                 dsDuongDan.Add(duongDanGoc + "BaiTapNop_TapTin/" + baiNop.tapTin.ma + baiNop.tapTin.duoi);
                 dsDuongDan.Add(
                     Path.GetFileNameWithoutExtension(baiNop.tapTin.ten) + "_" + 
-                    Helpers.LCTHelper.boDau(baiNop.nguoiTao.ho + baiNop.nguoiTao.tenLot + baiNop.nguoiTao.ten).Replace(" ", "") + 
+                    Helpers.LCTHelper.boDau(baiNop.nguoiTao.ho + baiNop.nguoiTao.tenLot + baiNop.nguoiTao.ten).Replace(" ", "") + "_" +
+                    baiNop.nguoiTao.tenTaiKhoan +
                     baiNop.tapTin.duoi);
             }
 

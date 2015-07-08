@@ -240,5 +240,19 @@ namespace DAOLayer
                 );
         }
         
+        public static KetQua layTheoMaDoiTuongNhomNguoiDungVaGiaTriNhomNguoiDung(string phamVi, int? maDoiTuong, string giaTri, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layNguoiDungTheoMaDoiTuongNhomNguoiDungVaGiaTriNhomNguoiDung",
+                    new object[] 
+                    { 
+                        phamVi,
+                        maDoiTuong,
+                        giaTri
+                    },
+                    lienKet
+                );
+        }
     }
 }

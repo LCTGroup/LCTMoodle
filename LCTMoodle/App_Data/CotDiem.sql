@@ -54,6 +54,30 @@ BEGIN
 END
 
 GO
+--Cập nhật theo mã
+CREATE PROC dbo.capNhatCotDiemTheoMa (
+	@0 INT, --Mã
+	@1 dbo.BangCapNhat READONLY
+)
+AS
+BEGIN
+	--Tạo chuỗi gán
+	DECLARE @query NVARCHAR(MAX) = dbo.taoChuoiCapNhat(@1)
+	IF (@query <> '')
+	BEGIN
+		EXEC('
+			UPDATE dbo.CotDiem
+				SET ' + @query + '
+				WHERE Ma = ' + @0 + '
+		')
+	END	
+	
+	SELECT *
+		FROM dbo.CotDiem
+		WHERE Ma = @0
+END
+
+GO
 --Lấy theo mã khóa học
 ALTER PROC dbo.layCotDiemTheoMaKhoaHoc(
 	@0 INT --MaKhoaHoc

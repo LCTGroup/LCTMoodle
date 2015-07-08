@@ -283,7 +283,8 @@ BEGIN
 						INNER JOIN dbo.Quyen Q ON
 							NND_Q.MaQuyen = Q.Ma AND
 							--Phạm vi, giá trị cần tìm
-							Q.GiaTri = @3 AND
+							(Q.GiaTri = @3 OR
+								Q.GiaTri = 'QLDB') AND
 							Q.PhamVi = @1))
 		BEGIN
 			SELECT 1
@@ -362,7 +363,8 @@ BEGIN
 							INNER JOIN dbo.Quyen Q ON
 								NND_Q.MaQuyen = Q.Ma AND
 								--Phạm vi cần tìm
-								Q.GiaTri = @3 AND
+								(Q.GiaTri = @3 OR
+									Q.GiaTri = 'QLDB') AND
 								Q.PhamVi = @1))
 			BEGIN
 				SELECT 1
@@ -390,7 +392,8 @@ BEGIN
 						INNER JOIN dbo.Quyen Q ON
 							NND_Q.MaQuyen = Q.Ma AND
 							--Phạm vi cần tìm
-							Q.GiaTri = @3 AND
+							(Q.GiaTri = @3 OR
+								Q.GiaTri = 'QLDB') AND
 							Q.PhamVi = @1))
 		BEGIN
 			SELECT 1

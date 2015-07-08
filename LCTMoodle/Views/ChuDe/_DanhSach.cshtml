@@ -1,5 +1,12 @@
 ﻿@model List<DTOLayer.ChuDeDTO>
 
+@{
+    if (ViewData.ContainsKey("Ma"))
+    {
+        ViewData["CoQuyenQL"] = (!ViewData.ContainsKey("CoChon") || !(bool)ViewData["CoChon"]) && BUSLayer.BUS.coQuyen("QLQuyen", "CD", (int)ViewData["Ma"]);   
+    }
+}
+
 @if (Model != null)
 {
     foreach (DTOLayer.ChuDeDTO chuDe in Model)

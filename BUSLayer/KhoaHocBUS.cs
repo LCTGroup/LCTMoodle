@@ -109,24 +109,63 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua them(Form form, int? maNguoiDung = null)
+        public static BangCapNhat layBangCapNhat(KhoaHocDTO khoaHoc, string[] keys)
+        {
+            BangCapNhat bangCapNhat = new BangCapNhat();
+            foreach (string key in keys)
+            {
+                switch (key)
+                {
+                    case "Ten":
+                        bangCapNhat.Add(key, khoaHoc.ten, 2);
+                        break;
+                    case "MoTa":
+                        bangCapNhat.Add(key, khoaHoc.moTa, 2);
+                        break;
+                    case "MaChuDe":
+                        bangCapNhat.Add(key, khoaHoc.chuDe != null ? khoaHoc.chuDe.ma.ToString() : null, 2);
+                        break;
+                    case "MaHinhDaiDien":
+                        bangCapNhat.Add(key, khoaHoc.hinhDaiDien == null ? null : khoaHoc.hinhDaiDien.ma.ToString(), 1);
+                        break;
+                    case "CanDangKy":
+                        bangCapNhat.Add(key, khoaHoc.canDangKy ? "1" : "0", 1);
+                        if (khoaHoc.canDangKy)
+                        {
+                            bangCapNhat.Add("HanDangKy", khoaHoc.hanDangKy.HasValue ? khoaHoc.hanDangKy.Value.ToString("d/M/yyyy H:mm") : null, 3);
+                        }
+                        break;
+                    case "PhiThamGia":
+                        bangCapNhat.Add(key, khoaHoc.phiThamGia.ToString(), 1);
+                        break;
+                    case "CheDoRiengTu":
+                        bangCapNhat.Add(key, khoaHoc.cheDoRiengTu, 2);
+                        break;
+                    case "CoHan":
+                        bangCapNhat.Add("ThoiDiemHetHan", khoaHoc.thoiDiemHetHan.HasValue ? khoaHoc.thoiDiemHetHan.Value.ToString("d/M/yyyy H:mm") : null, 3);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return bangCapNhat;
+        }
+
+        public static KetQua them(Form form)
         {
             #region Kiểm tra điều kiện
-            //Lấy người dùng
-            if (!maNguoiDung.HasValue)
+            //Kiểm tra có thuộc tính giảng viên không
+            var maGiangVien = form.layInt("MaGiangVien");
+            if (!maGiangVien.HasValue)
             {
-                maNguoiDung = Session["NguoiDung"] as int?;
-            }
-            if (!maNguoiDung.HasValue)
-            {
-                return new KetQua()
-                {
-                    trangThai = 4
-                };
+                return new KetQua(3, "Khóa học cần có giảng viên");
             }
 
+            //Lấy người tạo
+            var maNguoiTao = form.layInt("MaNguoiTao");
+
             //Lấy quyền tạo khóa học của người dùng
-            if (!coQuyen("QLNoiDung", "KH", 0, maNguoiDung))
+            if (!coQuyen("QLNoiDung", "KH", 0, maNguoiTao))
             {
                 return new KetQua()
                 {
@@ -147,8 +186,82 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return KhoaHocDAO.them(khoaHoc); 
+            ketQua = KhoaHocDAO.them(khoaHoc);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
 	        #endregion
+
+            #region Tạo nhóm cho khóa học
+            khoaHoc = ketQua.ketQua as KhoaHocDTO;
+            ketQua = NhomNguoiDungBUS.themNhomMacDinh("KH", khoaHoc.ma.Value);
+            if (ketQua.trangThai > 1)
+            {
+                return new KetQua(2, "Tạo nhóm người dùng thất bại");
+            }
+
+            //Thêm giảng viên vào nhóm giảng viên
+            foreach (var nhom in ketQua.ketQua as List<NhomNguoiDungDTO>) 
+            {
+                if (nhom.giaTri == "GiangVien")
+                {
+                    ketQua = NhomNguoiDung_NguoiDungDAO.them("KH", nhom.ma, maGiangVien);
+                    if (ketQua.trangThai != 0)
+                    {
+                        return new KetQua(3, "Đưa giảng viên vào nhóm thất bại");
+                    }
+                    break;
+                }
+            }
+            #endregion
+
+            return new KetQua(khoaHoc);
+        }
+        
+        public static KetQua capNhat(Form form)
+        {
+            #region Kiểm tra điều kiện
+            //Lấy người tạo, mã khóa học
+            var maNguoiSua = form.layInt("MaNguoiSua");
+            var ma = form.layInt("Ma");
+
+            //Lấy quyền tạo khóa học của người dùng
+            if (!coQuyen("QLNoiDung", "KH", ma.Value, maNguoiSua))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền sửa khóa học"
+                };
+            }
+            #endregion
+
+            //Lấy khóa học
+            var ketQua = KhoaHocDAO.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1);
+            }
+
+            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
+
+            gan(ref khoaHoc, form);
+
+            kiemTra(khoaHoc, form.Keys.ToArray());
+
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            BangCapNhat bang = layBangCapNhat(khoaHoc, form.Keys.ToArray());
+            if (!bang.coDuLieu())
+            {
+                return new KetQua(khoaHoc);
+            }
+
+            return KhoaHocDAO.capNhatTheoMa(ma, bang);
         }
 
         public static KetQua layTheoMa(int ma, LienKet lienKet = null)
@@ -246,6 +359,18 @@ namespace BUSLayer
                 trangThai = 0,
                 ketQua = dsKhoaHoc
             };
+        }
+
+        public static KetQua xoaTheoMa(int ma, int maNguoiXoa)
+        {
+            #region Kiểm tra điều kiện
+            if (!coQuyen("QLNoiDung", "KH", ma, maNguoiXoa))
+            {
+                return new KetQua(3, "Bạn không có quyền xóa khóa học");
+            }
+            #endregion
+
+            return KhoaHocDAO.xoaTheoMa(ma);
         }
     }
 }

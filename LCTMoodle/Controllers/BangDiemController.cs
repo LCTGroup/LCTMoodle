@@ -42,15 +42,40 @@ namespace LCTMoodle.Controllers
                 JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult _Form_Sua(int ma)
+        {
+            #region Kiểm tra quyền
+            //Lấy cột điểm
+            var ketQua = CotDiemBUS.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return Json(new KetQua(1), JsonRequestBehavior.AllowGet);
+            }
+            var cotDiem = ketQua.ketQua as CotDiemDTO;
+
+            //Kiểm tra quyền
+            if (!BUS.coQuyen("QLBangDiem", "KH", cotDiem.khoaHoc.ma.Value))
+            {
+                return Json(new KetQua(3, "Bạn không có quyền sửa cột điểm"), JsonRequestBehavior.AllowGet);
+            }
+            #endregion
+
+            return Json
+                (
+                    new KetQua(renderPartialViewToString(ControllerContext, "BangDiem/_Form.cshtml", cotDiem)),
+                    JsonRequestBehavior.AllowGet
+                );
+        }
+
         [HttpPost]
         public ActionResult XuLyThemCotDiem(FormCollection formCollection)
         {
             if (Session["NguoiDung"] == null)
             {
                 return Json(new KetQua()
-                    {
-                        trangThai = 4
-                    });
+                {
+                    trangThai = 4
+                });
             }
             Form form = chuyenForm(formCollection);
             form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
@@ -63,6 +88,22 @@ namespace LCTMoodle.Controllers
             }
 
             return Json(ketQua);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyCapNhatCotDiem(FormCollection formCollection)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua()
+                {
+                    trangThai = 4
+                });
+            }
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+
+            return Json(CotDiemBUS.capNhat(form));
         }
 
         [HttpPost]

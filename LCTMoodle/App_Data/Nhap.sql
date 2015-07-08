@@ -1,0 +1,1 @@
+delete from nhomnguoidung_cd_quyen
