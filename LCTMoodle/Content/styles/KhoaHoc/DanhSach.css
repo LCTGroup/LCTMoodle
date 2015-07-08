@@ -69,6 +69,7 @@
 
                     .khung-khoa-hoc .danh-sach .thong-tin .khung-giang-vien .giang-vien {
                         display: flex;
+                        align-items: center;
                     }
 
                         .khung-khoa-hoc .danh-sach .thong-tin .khung-giang-vien .giang-vien img {

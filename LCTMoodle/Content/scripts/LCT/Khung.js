@@ -20,7 +20,20 @@ $(function () {
     khoiTaoDangXuat($('[data-chuc-nang="dang-xuat"]'));
 
     khoiTaoLCTKhung_Lich($('#lich_aside'));
+
+    thongBaoTrang_LCT();
 });
+
+function thongBaoTrang_LCT() {
+    var tb = layQueryString('tb');
+    
+    if (tb) {
+        moPopup({
+            tieuDe: 'Thông báo',
+            thongBao: decodeURIComponent(tb.replace(/\+/g, ' '))
+        });
+    }
+}
 
 function moBieuTuongTai($item) {
     var offset, bottom, left, $khungTai;
@@ -91,7 +104,7 @@ function khoiTaoTatMoDoiTuong($danhSachNut, laChucNang) {
     Lấy giá trị querystring
 */
 function layQueryString(key) {
-    var danhSach = window.location.search.substr(1).split('&');
+    var danhSach = location.search.substr(1).split('&');
     
     var soLuong = danhSach.length;
     for (var i = 0; i < soLuong; i++) {
@@ -101,7 +114,7 @@ function layQueryString(key) {
             return query[1] || null;
         }
     }
-    return 'undefined';
+    return;
 }
 
 /*

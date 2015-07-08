@@ -18,8 +18,8 @@ $(function () {
     $_KhungHienThi = $('#khung_hien_thi');
     $_KhungChonHienThi = $('#khung_chon_hien_thi')
     $_KhungChua = $_KhungHienThi.parent();
-
-    hienThi(layQueryString('hienthi').toLowerCase(), layQueryString('ma'));
+    
+    hienThi(layQueryString('hienthi') || 'khung', layQueryString('ma'));
 
     khoiTaoNutHienThi($_KhungChonHienThi.find('[data-chuc-nang="hien-thi"]'));
     khoiTaoQuayLai();
@@ -54,7 +54,7 @@ function hienThi(nhom, ma) {
 
 function khoiTaoQuayLai() {
     history.replaceState({
-        hienThi: layQueryString('hienthi').toLowerCase()
+        hienThi: layQueryString('hienthi') || 'khung'
     }, document.title, window.location.href);
 
     window.onpopstate = function (e) {

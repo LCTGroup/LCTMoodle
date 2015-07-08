@@ -21,11 +21,11 @@ namespace LCTMoodle.Controllers
                 case "KH":
                     if (maDoiTuong == 0)
                     {
-                        return Redirect("/");
+                        return Redirect("/?tb=" + HttpUtility.UrlEncode("Trang không hợp lệ"));
                     }
                     break;
                 default:
-                    return Redirect("/");
+                    return Redirect("/?tb=" + HttpUtility.UrlEncode("Trang không hợp lệ"));
             }
             #endregion
 
@@ -33,7 +33,7 @@ namespace LCTMoodle.Controllers
             #region Kiểm tra quyền
             if (!BUS.coQuyen("QLQuyen", phamVi, maDoiTuong))
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần có quyền quản lý để thực hiện chức năng này."));
             }
             #endregion
 
@@ -44,7 +44,7 @@ namespace LCTMoodle.Controllers
                     ketQua = KhoaHocBUS.layTheoMa(maDoiTuong);
                     if (ketQua.trangThai != 0)
                     {
-                        return Redirect("/");
+                        return Redirect("/?tb=" + HttpUtility.UrlEncode("Khóa học không tồn tại."));
                     }
 
                     ViewData["KhoaHoc"] = ketQua.ketQua;
@@ -55,7 +55,7 @@ namespace LCTMoodle.Controllers
                         ketQua = ChuDeBUS.layTheoMa(maDoiTuong);
                         if (ketQua.trangThai != 0)
                         {
-                            return Redirect("/");
+                            return Redirect("/?tb=" + HttpUtility.UrlEncode("Chủ đề không tồn tại."));
                         }
 
                         ViewData["ChuDe"] = ketQua.ketQua;
