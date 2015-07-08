@@ -1,6 +1,6 @@
 ﻿var $_danhSach;
 var $_khungTim;
-var $_cachHienThi = "MoiNhat";
+var _cachHienThi = "MoiNhat";
 
 //#region Khởi tạo
 
@@ -10,25 +10,17 @@ $(function () {
 
     khoiTaoLCTForm($('#tieu_chi_hien_thi'));
 
-    capNhatCachHienThi();
-
     khoiTaoKhungTimKiemLCT($_danhSach, $_khungTim, '/HoiDap/_DanhSach_Tim', {
         data: function () {
-            return { cachHienThi: $_cachHienThi };
+            return { cachHienThi: _cachHienThi };
         }
-    })
-});
-
-//#endregion
-
-//#region Cập nhật cách hiển thị
-
-function capNhatCachHienThi() {
-    $doiTuongRadio = $('input[name="cachHienThi"]:radio');
-    
-    $doiTuongRadio.on('click', function () {
-        $_cachHienThi = $(this).val();
     });
-}
+    
+    $('[data-doi-tuong="tieu-chi"]').on('change', function () {
+        _cachHienThi = this.value;
+        $_khungTim.tim();
+    });
+
+});
 
 //#endregion
