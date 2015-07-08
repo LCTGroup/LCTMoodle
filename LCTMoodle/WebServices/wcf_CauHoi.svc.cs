@@ -83,10 +83,21 @@ namespace LCTMoodle.WebServices
             return dto_CauHoi;
         }
 
+        /// <summary>
+        /// Webservice lấy danh sách trả lời của câu hỏi
+        /// </summary>
+        /// <param name="_Ma"></param>
+        /// <returns>List<TraLoiDTO></returns>
         public List<TraLoiDTO> layTraLoiTheoMaCauHoi(int _Ma)
         {
             KetQua ketQua = TraLoiBUS.layTheoMaCauHoi(_Ma, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
+            List<TraLoiDTO> lst_CauHoi = new List<TraLoiDTO>();
 
+            if(ketQua.trangThai == 0)
+            {
+                lst_CauHoi = ketQua.ketQua as List<TraLoiDTO>;
+            }
+            return lst_CauHoi;
         }
 
         /// <summary>

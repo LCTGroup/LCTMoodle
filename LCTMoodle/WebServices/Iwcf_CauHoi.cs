@@ -23,6 +23,9 @@ namespace LCTMoodle.WebServices
         CauHoiDTO layTheoMa(int _Ma);
 
         [OperationContract]
+        List<TraLoiDTO> layTraLoiTheoMaCauHoi(int _Ma);
+
+        [OperationContract]
         List<clientmodel_CauHoi> lay(int _SoPT);
 
         [OperationContract]
