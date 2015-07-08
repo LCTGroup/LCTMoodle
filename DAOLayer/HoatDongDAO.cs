@@ -42,21 +42,30 @@ namespace DAOLayer
 
             if (LienKet.co(lienKet, "GiaTriHoatDong"))
             {
-                var ketQua = GiaTriHanhDongDAO.layTheoMaHanhDong(hoatDong.maHanhDong);
+                var ketQua = GiaTriHoatDongDAO.layTheoMaHoatDong(hoatDong.ma);
                 if (ketQua.trangThai != 0)
                 {
                     hoatDong.giaTriHoatDong = null;
                 }
                 else
                 {
-                    List<GiaTriHanhDongDTO> giaTriHanhDong = ketQua.ketQua as List<GiaTriHanhDongDTO>;
-                    hoatDong.giaTriHoatDong = giaTriHanhDong;
+                    List<GiaTriHoatDongDTO> giaTriHoatDong = ketQua.ketQua as List<GiaTriHoatDongDTO>;
+                    hoatDong.giaTriHoatDong = giaTriHoatDong;
                 }
             }
+            if (LienKet.co(lienKet, "LoiNhanHanhDong"))
+            {
+                var ketQua = GiaTriHoatDongDAO.layTheoMaHoatDong(hoatDong.ma);
+                if (ketQua.trangThai != 0)
+                {
+                    hoatDong.loiNhanHanhDong = null;
+                }
+            }
+
             return hoatDong;
         }
 
-        public static KetQua themHoatDong(HoatDongDTO hoatDong)
+        public static KetQua them(HoatDongDTO hoatDong)
         {
             return khongTruyVan
                 (
@@ -70,6 +79,19 @@ namespace DAOLayer
                         hoatDong.maDoiTuongBiTacDong,
                         hoatDong.maHanhDong
                     }
+                );
+        }
+
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layTheoMaHoatDong",
+                    new object[]
+                    {
+                        ma
+                    },
+                    lienKet
                 );
         }
     }

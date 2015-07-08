@@ -8,3 +8,16 @@ CREATE TABLE dbo.LoiNhanHanhDong
 	ChuDongNgoai NVARCHAR(MAX) NOT NULL,
 	BiDongNgoai NVARCHAR(MAX) NOT NULL
 )
+
+GO
+--Lấy lời nhắn hành động theo mã hành động
+CREATE PROC dbo.layLoiNhanHanhDongTheoMaHanhDong
+(
+	@0 INT --Mã hành động
+)
+AS
+BEGIN
+	SELECT *
+	FROM dbo.LoiNhanHanhDong
+	WHERE MaHanhDong = @0
+END

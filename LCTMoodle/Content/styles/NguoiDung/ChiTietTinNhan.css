@@ -1,0 +1,19 @@
+﻿.khung-chi-tiet-tin-nhan {
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+    .dong-tin {
+        display: flex;
+        flex-direction: row;
+    }
+        .dong-tin .hinh-dai-dien {
+            width: 42px;
+            height: 42px;
+            max-height: 42px;
+            max-width: 42px;
+        }
+        .dong-tin .chi-tiet {
+
+        }

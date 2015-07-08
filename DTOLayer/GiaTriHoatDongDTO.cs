@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DTOLayer
 {
-    public class GiaTriHanhDongDTO : DTO
+    public class GiaTriHoatDongDTO : DTO
     {
-        public int? maHanhDong;
+        public int? maHoatDong;
         public string giaTriCu;
         public string giaTriMoi;
         public string giaTri;

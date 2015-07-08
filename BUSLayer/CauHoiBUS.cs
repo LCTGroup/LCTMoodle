@@ -137,7 +137,7 @@ namespace BUSLayer
             }
 
             var cauHoi = ketQua.ketQua as CauHoiDTO;
-            if (cauHoi.nguoiTao.ma != maNguoiXoa && !coQuyen("XoaCauHoi", "HD", 0, maNguoiXoa))
+            if (cauHoi.nguoiTao.ma != maNguoiXoa && !coQuyen("XoaCauHoi", "HD", cauHoi.ma.Value, maNguoiXoa))
             {
                 return new KetQua(3, "Bạn không có quyền xóa câu hỏi");
             }
@@ -161,7 +161,7 @@ namespace BUSLayer
             }
 
             var cauHoi = ketQua.ketQua as CauHoiDTO;
-            if (cauHoi.nguoiTao.ma != maNguoiSua && !coQuyen("SuaCauHoi", "HD", 0, maNguoiSua))
+            if (cauHoi.nguoiTao.ma != maNguoiSua && !coQuyen("SuaCauHoi", "HD", cauHoi.ma.Value, maNguoiSua))
             {
                 return new KetQua(3, "Bạn không có quyền sửa câu hỏi này");
             }

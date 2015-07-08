@@ -224,6 +224,7 @@
     <Content Include="Content\styles\HoiDap\QuanLyCauHoi.css" />
     <Content Include="Content\styles\HoiDap\XemCauHoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
+    <Content Include="Content\styles\KhoaHoc\ThongTinKhoaHoc.css" />
     <Content Include="Content\styles\KhoaHoc\DanhSachThanhVien.css" />
     <Content Include="Content\styles\KhoaHoc\DanhSach.css" />
     <Content Include="Content\styles\KhoaHoc\Xem.css" />
@@ -234,6 +235,8 @@
     <Content Include="Content\styles\LCT\stroke-icons.css" />
     <Content Include="Content\styles\NguoiDung\QuanLyNguoiDung.css" />
     <Content Include="Content\styles\NguoiDung\Index.css" />
+    <Content Include="Content\styles\NguoiDung\ChiTietTinNhan.css" />
+    <Content Include="Content\styles\NguoiDung\TinNhan.css" />
     <Content Include="Content\styles\NguoiDung\Xem.css" />
     <Content Include="Content\styles\Quyen\QuanLy.css" />
     <Content Include="Content\styles\TrangChu\Index.css" />
@@ -515,6 +518,9 @@
     <Content Include="Views\NguoiDung\QuanLyNguoiDung.cshtml" />
     <Content Include="Views\NguoiDung\DanhSachNguoiDungBiChan.cshtml" />
     <Content Include="Views\LCT\_PhanTrang.cshtml" />
+    <Content Include="Views\KhoaHoc\ThongTinKhoaHoc.cshtml" />
+    <Content Include="Views\NguoiDung\TinNhan.cshtml" />
+    <Content Include="Views\NguoiDung\ChiTietTinNhan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

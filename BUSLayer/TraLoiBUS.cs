@@ -116,14 +116,14 @@ namespace BUSLayer
         {
             #region Kiểm tra điều kiện
 
-            var ketQua = TraLoiBUS.layTheoMa(ma);
+            var ketQua = TraLoiBUS.layTheoMa(ma, new LienKet() { "CauHoi" });
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
             var traLoi = ketQua.ketQua as TraLoiDTO;
 
-            if (traLoi.nguoiTao.ma != maNguoiXoa && !BUS.coQuyen("XoaTraLoi", "HD", 0, maNguoiXoa))
+            if (traLoi.nguoiTao.ma != maNguoiXoa && !BUS.coQuyen("XoaTraLoi", "HD", traLoi.cauHoi.ma.Value, maNguoiXoa))
             {
                 return new KetQua(3, "Bạn chưa đủ quyền để xóa trả lời");
             }
@@ -133,9 +133,9 @@ namespace BUSLayer
             return TraLoiDAO.xoaTheoMa(ma);
         }
 
-        public static KetQua layTheoMaCauHoi(int maCauHoi)
+        public static KetQua layTheoMaCauHoi(int maCauHoi, LienKet lienKet = null)
         {
-            return TraLoiDAO.layTheoMaCauHoi(maCauHoi, new LienKet() { "NguoiTao" });
+            return TraLoiDAO.layTheoMaCauHoi(maCauHoi, lienKet);
         }
 
         public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
@@ -155,14 +155,14 @@ namespace BUSLayer
             int? maNguoiSua = form.layInt("MaNguoiSua");
             int? maTraLoi = form.layInt("Ma");
 
-            KetQua ketQua = TraLoiBUS.layTheoMa(maTraLoi.Value);
+            KetQua ketQua = TraLoiBUS.layTheoMa(maTraLoi.Value, new LienKet(){ "CauHoi" });
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
             TraLoiDTO traLoi = ketQua.ketQua as TraLoiDTO;
 
-            if (traLoi.nguoiTao.ma != maNguoiSua && !BUS.coQuyen("SuaTraLoi", "HD", 0, maNguoiSua))
+            if (traLoi.nguoiTao.ma != maNguoiSua && !BUS.coQuyen("SuaTraLoi", "HD", traLoi.cauHoi.ma.Value, maNguoiSua))
             {
                 return new KetQua(3, "Bạn không có đủ quyền để sửa trả lời này");
             }

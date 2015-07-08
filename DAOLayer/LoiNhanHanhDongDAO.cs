@@ -36,5 +36,16 @@ namespace DAOLayer
             return loiNhanHanhDong;
         }
 
+        public static KetQua layTheoMaHanhDong(int? maHanhDong)
+        {
+            return layDong
+                (
+                    "layLoiNhanHanhDongTheoMaHanhDong",
+                    new object[]
+                    {
+                        maHanhDong
+                    }
+                );
+        }
     }
 }

@@ -1,0 +1,29 @@
+﻿.khung-tin-nhan {
+    padding: 5px;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    margin-bottom: 5px;
+}
+
+    .khung-tin-nhan .hinh-dai-dien {
+        width: 42px;
+        height: 42px;
+        max-height: 42px;
+        max-width: 42px;
+    }
+
+    .khung-tin-nhan .noi-dung {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+        .khung-tin-nhan .chi-tiet {
+
+        }
+        .khung-tin-nhan .nguoi-gui {
+            font-size: 11px;
+            color: #888;
+            margin-top: 5px;
+        }

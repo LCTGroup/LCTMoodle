@@ -15,7 +15,7 @@ namespace DTOLayer
         public int? maDoiTuongBiTacDong;
         public int? maHanhDong;
         public DateTime? thoiDiem;
-        public List<GiaTriHanhDongDTO> giaTriHoatDong;
-        public LoiNhanHanhDongDTO loiNhanHoatDong;
+        public List<GiaTriHoatDongDTO> giaTriHoatDong;
+        public LoiNhanHanhDongDTO loiNhanHanhDong;
     }
 }
