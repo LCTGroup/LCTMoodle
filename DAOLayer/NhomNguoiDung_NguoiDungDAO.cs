@@ -26,18 +26,13 @@ namespace DAOLayer
 
                         if (maTam.HasValue && phamViNhomNguoiDung != null)
                         {
-                            if (LienKet.co(lienKet, "NhomNguoiDung"))
-                            {
-                                nhomNguoiDung_NguoiDung.nhomNguoiDung = layDTO<NhomNguoiDungDTO>(NhomNguoiDungDAO.layTheoMa(phamViNhomNguoiDung, maTam));
-                            }
-                            else
-                            {
-                                nhomNguoiDung_NguoiDung.nhomNguoiDung = new NhomNguoiDungDTO()
+                            nhomNguoiDung_NguoiDung.nhomNguoiDung = LienKet.co(lienKet, "NhomNguoiDung") ?
+                                layDTO<NhomNguoiDungDTO>(NhomNguoiDungDAO.layTheoMa(phamViNhomNguoiDung, maTam, lienKet["NhomNguoiDung"])) :
+                                new NhomNguoiDungDTO()
                                 {
                                     ma = maTam,
                                     phamVi = phamViNhomNguoiDung
                                 };
-                            }
                         }
                         break;
                     case "MaNguoiDung":
@@ -45,17 +40,12 @@ namespace DAOLayer
 
                         if (maTam.HasValue)
                         {
-                            if (LienKet.co(lienKet, "NguoiDung"))
-                            {
-                                nhomNguoiDung_NguoiDung.nguoiDung = layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam));
-                            }
-                            else
-                            {
-                                nhomNguoiDung_NguoiDung.nguoiDung = new NguoiDungDTO()
+                            nhomNguoiDung_NguoiDung.nguoiDung = LienKet.co(lienKet, "NguoiDung") ?
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam, lienKet["NguoiDung"])) :
+                                new NguoiDungDTO()
                                 {
                                     ma = maTam
                                 };
-                            }
                         }
                         break;
                     default:

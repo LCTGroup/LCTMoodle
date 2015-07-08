@@ -40,7 +40,12 @@ namespace DAOLayer
 
                         if (maTam.HasValue)
                         {
-                            quyen.cha = layDTO<QuyenDTO>(QuyenDAO.layTheoMa(maTam));
+                            quyen.cha = LienKet.co(lienKet, "Cha") ?
+                                layDTO<QuyenDTO>(QuyenDAO.layTheoMa(maTam, lienKet["Cha"])) :
+                                new QuyenDTO()
+                                {
+                                    ma = maTam
+                                };
                         }
                         break;
                     case "LaQuyenChung":
@@ -68,7 +73,7 @@ namespace DAOLayer
                 );
         }
 
-        public static KetQua layTheoMa(int? ma)
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
             return layDong
                 (
@@ -76,7 +81,8 @@ namespace DAOLayer
                     new object[]
                     {
                         ma
-                    }
+                    },
+                    lienKet
                 );
         }
 

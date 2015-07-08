@@ -1,1 +1,2 @@
-delete from nhomnguoidung_cd_quyen
+select * from khoahoc
+

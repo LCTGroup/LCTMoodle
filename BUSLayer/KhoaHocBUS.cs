@@ -372,5 +372,10 @@ namespace BUSLayer
 
             return KhoaHocDAO.xoaTheoMa(ma);
         }
+
+        public static KetQua timKiemPhanTrang(int trang, int soDongMoiTrang, string where = null, string orderBy = null, LienKet lienKet = null)
+        {
+            return KhoaHocDAO.lay_TimKiemPhanTrang(where, orderBy, trang, soDongMoiTrang, lienKet);
+        }
     }
 }

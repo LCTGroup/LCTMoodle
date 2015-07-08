@@ -25,17 +25,12 @@ namespace DAOLayer
 
                         if (maTam.HasValue)
                         {
-                            if (LienKet.co(lienKet, "Quyen"))
-                            {
-                                nhomNguoiDung_Quyen.quyen = layDTO<QuyenDTO>(QuyenDAO.layTheoMa(maTam));
-                            }
-                            else
-                            {
-                                nhomNguoiDung_Quyen.quyen = new QuyenDTO()
+                            nhomNguoiDung_Quyen.quyen = LienKet.co(lienKet, "Quyen") ?
+                                layDTO<QuyenDTO>(QuyenDAO.layTheoMa(maTam, lienKet["Quyen"])) : 
+                                new QuyenDTO()
                                 {
                                     ma = maTam
                                 };
-                            }
                         }
                         break;
                     case "MaNhomNguoiDung":
@@ -44,18 +39,13 @@ namespace DAOLayer
 
                         if (maTam.HasValue && phamViNhomNguoiDung != null)
                         {
-                            if (LienKet.co(lienKet, "NhomNguoiDung"))
-                            {
-                                nhomNguoiDung_Quyen.nhomNguoiDung = layDTO<NhomNguoiDungDTO>(NhomNguoiDungDAO.layTheoMa(phamViNhomNguoiDung, maTam));
-                            }
-                            else
-                            {
-                                nhomNguoiDung_Quyen.nhomNguoiDung = new NhomNguoiDungDTO()
+                            nhomNguoiDung_Quyen.nhomNguoiDung = LienKet.co(lienKet, "NhomNguoiDung") ?
+                                layDTO<NhomNguoiDungDTO>(NhomNguoiDungDAO.layTheoMa(phamViNhomNguoiDung, maTam, lienKet["NhomNguoiDung"])) : 
+                                new NhomNguoiDungDTO()
                                 {
                                     ma = maTam,
                                     phamVi = phamViNhomNguoiDung
                                 };
-                            }
                         }
                         break;
                     case "MaDoiTuong":

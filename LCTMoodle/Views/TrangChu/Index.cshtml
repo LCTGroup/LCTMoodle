@@ -1,6 +1,22 @@
 ﻿@{    
     Layout = "~/Views/LCT/Khung.cshtml";
+
+    var dsKhoaHoc = ViewData["KhoaHoc"] as List<DTOLayer.KhoaHocDTO>;
 }
 
 @section Styles {
+    <link href="/DanhSach.css/KhoaHoc" rel="stylesheet" />
 }
+
+@section Scripts {
+
+}
+
+<article class="hop">
+    <a href="/KhoaHoc/DanhSach" class="tieu-de">
+        Danh sách khóa học
+    </a>
+    <section class="noi-dung khung-khoa-hoc">
+        <ul id="danh_sach" class="danh-sach">@Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", dsKhoaHoc)</ul>
+    </section>
+</article>

@@ -1,0 +1,16 @@
+﻿@{
+    var soLuongMoiTrang = (int)ViewData["SoLuongMoiTrang"];
+    var tongSoLuong = (int)ViewData["TongSoLuong"];
+
+    int tongSoTrang = tongSoLuong / soLuongMoiTrang + (tongSoLuong % soLuongMoiTrang > 0 ? 1 : 0);
+}
+<ul data-doi-tuong="phan-trang" class="phan-trang-lct">
+    @for (var i = 1; i <= tongSoTrang; i++)
+    {
+        <li>
+            <a data-trang="@i" data-chuc-nang="chuyen-trang">
+                @i
+            </a>
+        </li>
+    }
+</ul>

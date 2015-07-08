@@ -35,7 +35,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             tapTin.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
-                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam)) :
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam, lienKet["NguoiTao"])) :
                                 new NguoiDungDTO()
                                 {
                                     ma = maTam
@@ -78,7 +78,7 @@ namespace DAOLayer
                 );
         }
        
-        public static KetQua layTheoMa(string loai, int? ma)
+        public static KetQua layTheoMa(string loai, int? ma, LienKet lienKet = null)
         {
             return layDong
                 (
@@ -87,7 +87,8 @@ namespace DAOLayer
                     { 
                         loai,
                         ma
-                    }
+                    },
+                    lienKet
                 );
         }
     }

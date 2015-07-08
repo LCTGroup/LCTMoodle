@@ -698,3 +698,14 @@ function khoiTaoLCTKhung_Lich($lich) {
         }
     }
 }
+
+function khoiTaoPhanTrang($khungPhanTrang) {
+    $khungPhanTrang.find('[data-chuc-nang="phan-trang"]').on('click', function () {
+        $khungPhanTrang.find('.chon').removeClass('chon');
+
+        var $nut = $(this);
+        $nut.addClass('chon');
+
+        $khungPhanTrang.trigger('chon', $nut.attr('data-trang'));
+    });
+}

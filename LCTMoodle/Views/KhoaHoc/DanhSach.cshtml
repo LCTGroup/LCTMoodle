@@ -62,7 +62,12 @@
         </section>
         <section class="noi-dung khung-khoa-hoc">
             <ul id="danh_sach" class="danh-sach">@Html.Partial("~/Views/KhoaHoc/_DanhSach.cshtml", Model)</ul>
-            <section class="thong-bao">Không có khóa học phù hợp</section>
+            <section class="thong-bao">Không có khóa học phù hợp</section>           
+            @*@Html.Partial("~/Views/LCT/_PhanTrang.cshtml", null, new ViewDataDictionary()
+            {
+                { "TongSoLuong", LCTHelper.layGiaTri<int>(Model[0].duLieuThem, "TongSoDong", 0) },
+                { "SoLuongMoiTrang", 1 }
+            })*@
         </section>
     </section>
 }
