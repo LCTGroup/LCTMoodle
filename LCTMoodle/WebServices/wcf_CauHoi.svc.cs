@@ -73,7 +73,7 @@ namespace LCTMoodle.WebServices
         /// <returns>CauHoiDTO</returns>
         public CauHoiDTO layTheoMa(int _Ma)
         {
-            KetQua ketQua = CauHoiBUS.layTheoMa(_Ma, new LienKet() { "NguoiTao", "HinhDaiDien" });
+            KetQua ketQua = CauHoiBUS.layTheoMa(_Ma, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
             CauHoiDTO dto_CauHoi = new CauHoiDTO();
 
             if(ketQua.trangThai == 0)
@@ -81,6 +81,12 @@ namespace LCTMoodle.WebServices
                 dto_CauHoi= ketQua.ketQua as CauHoiDTO;
             }
             return dto_CauHoi;
+        }
+
+        public List<TraLoiDTO> layTraLoiTheoMaCauHoi(int _Ma)
+        {
+            KetQua ketQua = TraLoiBUS.layTheoMaCauHoi(_Ma, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
+
         }
 
         /// <summary>
@@ -117,7 +123,7 @@ namespace LCTMoodle.WebServices
         /// <returns>List<CauHoiDTO></returns>
         public List<CauHoiDTO> timKiem(string _TuKhoa)
         {
-            KetQua ketQua = CauHoiBUS.lay_TimKiem(_TuKhoa, new LienKet { "NguoiTao", "HinhDaiDien" });
+            KetQua ketQua = CauHoiBUS.lay_TimKiem(_TuKhoa, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
             List<CauHoiDTO> lst_CauHoi = new List<CauHoiDTO>();
 
             if(ketQua.trangThai == 0)
@@ -134,7 +140,7 @@ namespace LCTMoodle.WebServices
         /// <returns>List<CauHoiDTO></returns>
         public List<CauHoiDTO> timKiemTheoChuDe(int _MaChuDe, string _TuKhoa)
         {
-            KetQua ketQua = CauHoiBUS.layTheoMaChuDe_TimKiem(_MaChuDe, _TuKhoa, new LienKet { "NguoiTao", "HinhDaiDien" });
+            KetQua ketQua = CauHoiBUS.layTheoMaChuDe_TimKiem(_MaChuDe, _TuKhoa, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
             List<CauHoiDTO> lst_CauHoi = new List<CauHoiDTO>();
 
             if (ketQua.trangThai == 0)
