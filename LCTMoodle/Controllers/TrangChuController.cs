@@ -14,6 +14,20 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult Index()
         {
+            var ketQua = KhoaHocBUS.timKiemPhanTrang(1, 8, null, null, new LienKet() { "GiangVien" });
+            if (ketQua.trangThai == 0)
+            {
+                ViewData["KhoaHoc"] = ketQua.ketQua as List<KhoaHocDTO>;
+            }
+
+            ketQua = CauHoiBUS.layDanhSach(10);
+            if (ketQua.trangThai == 0)
+            {
+                ViewData["CauHoi"] = ketQua.ketQua as List<CauHoiDTO>;
+            }
+
+            ketQua = ChuDeBUS.timKiemPhanTrang(1, 20);
+
             return View();
         }
 
@@ -30,32 +44,6 @@ namespace LCTMoodle.Controllers
         public ActionResult TrangMau()
         {
             return View();
-        }
-
-        public ActionResult Test()
-        {
-            return Json(new KetQua()
-            {
-                trangThai = 0,
-                ketQua = new object[]
-                {
-                    new 
-                    {
-                        ma = "1",
-                        ten = "A1"
-                    },
-                    new 
-                    {
-                        ma = "2",
-                        ten = "A2"
-                    },
-                    new 
-                    {
-                        ma = "3",
-                        ten = "A3"
-                    }
-                }
-            }, JsonRequestBehavior.AllowGet);
         }
 	}
 }

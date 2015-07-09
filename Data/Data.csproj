@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GiaTri.cs" />
     <Compile Include="PhamVi.cs" />
     <Compile Include="CheDoRiengTu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

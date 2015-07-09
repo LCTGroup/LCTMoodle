@@ -29,7 +29,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             giaoTrinh.khoaHoc = LienKet.co(lienKet, "KhoaHoc") ?
-                                layDTO<KhoaHocDTO>(KhoaHocDAO.layTheoMa(maTam.Value)) :
+                                layDTO<KhoaHocDTO>(KhoaHocDAO.layTheoMa(maTam.Value, lienKet["KhoaHoc"])) :
                                 new KhoaHocDTO()
                                 {
                                     ma = maTam

@@ -17,13 +17,13 @@ namespace LCTMoodle.Controllers
             var ketQua = KhoaHocBUS.layTheoMa(maKhoaHoc);
             if (ketQua.trangThai != 0)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Khóa học không tồn tại."));
             }
             var khoaHoc = ketQua.ketQua as KhoaHocDTO;
 
             if (!BUS.coQuyen("QLBangDiem", "KH", maKhoaHoc))
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần có quyền quản lý bảng điểm để thực hiện chức năng này."));
             }
             #endregion
 
@@ -141,7 +141,7 @@ namespace LCTMoodle.Controllers
             KetQua ketQua = KhoaHocBUS.layTheoMa(maKhoaHoc);
             if (ketQua.trangThai != 0)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Khóa học không tồn tại."));
             }
             var khoaHoc = ketQua.ketQua as KhoaHocDTO;
             #endregion
@@ -158,7 +158,7 @@ namespace LCTMoodle.Controllers
             #region Kiểm tra nếu thành viên bị chặn
             if (thanhVien != null && thanhVien.trangThai == 3)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn đã bị chặn vào khóa học này."));
             }
             #endregion
 

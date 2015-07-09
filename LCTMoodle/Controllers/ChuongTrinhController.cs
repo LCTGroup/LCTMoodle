@@ -19,7 +19,7 @@ namespace LCTMoodle.Controllers
             KetQua ketQua = KhoaHocBUS.layTheoMa(maKhoaHoc);
             if (ketQua.trangThai != 0)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Khóa học không tồn tại."));
             }
             var khoaHoc = ketQua.ketQua as KhoaHocDTO;
             #endregion
@@ -36,7 +36,7 @@ namespace LCTMoodle.Controllers
             #region Kiểm tra nếu thành viên bị chặn
             if (thanhVien != null && thanhVien.trangThai == 3)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn đã bị chặn vào khóa học."));
             }
             #endregion
 

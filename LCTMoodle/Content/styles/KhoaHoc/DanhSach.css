@@ -18,15 +18,74 @@
         margin: 10px;
     }
 
-        .khung-khoa-hoc .danh-sach .hinh-dai-dien {
-            height: 150px;
-            padding: 10px 10px 0;
+        .khung-khoa-hoc .danh-sach .khung-thong-tin {
+            width: 340px;
+            height: 160px;
+            overflow: hidden;
+            display: flex;
+            position: relative;
+            left: 0;
+            transition: 0.5s;
         }
 
-            .khung-khoa-hoc .danh-sach .hinh-dai-dien img {
-                height: 150px;
-                width: 150px;
+            .khung-khoa-hoc .danh-sach .item:hover .khung-thong-tin {
+                left: -170px;
             }
+
+            .khung-khoa-hoc .danh-sach .hinh-dai-dien {
+                width: 150px;
+                height: 150px;
+                padding: 10px 10px 0;
+            }
+
+                .khung-khoa-hoc .danh-sach .hinh-dai-dien img {
+                    height: 150px;
+                    width: 150px;
+                }
+
+            .khung-khoa-hoc .danh-sach .thong-tin {
+                width: 150px;
+                height: 150px;
+                padding: 10px 10px 0;
+                position: relative;
+            }
+
+                .khung-khoa-hoc .danh-sach .thong-tin:after {
+                    content: '';
+                    display: block;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 15px;
+                    position: absolute;
+                    background-image: -webkit-linear-gradient(transparent, #fff);
+                    background-image: -moz-linear-gradient(transparent, #fff);
+                    background-image: linear-gradient(transparent, #fff);
+                }
+
+                .khung-khoa-hoc .danh-sach .thong-tin .khung-giang-vien {
+
+                }
+
+                    .khung-khoa-hoc .danh-sach .thong-tin .khung-giang-vien .giang-vien {
+                        display: flex;
+                        align-items: center;
+                    }
+
+                        .khung-khoa-hoc .danh-sach .thong-tin .khung-giang-vien .giang-vien img {
+                            min-width: 30px;
+                            height: 30px;
+                            margin-right: 4px;
+                        }
+
+                        .khung-khoa-hoc .danh-sach .thong-tin .khung-giang-vien .giang-vien a {
+                            font-weight: bold;
+                            color: #333;
+                        }
+
+                .khung-khoa-hoc .danh-sach .thong-tin .mo-ta {
+                    
+                }
 
         .khung-khoa-hoc .danh-sach .ten {
             padding: 5px;

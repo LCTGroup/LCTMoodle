@@ -224,7 +224,7 @@
     <Content Include="Content\styles\HoiDap\QuanLyCauHoi.css" />
     <Content Include="Content\styles\HoiDap\XemCauHoi.css" />
     <Content Include="Content\styles\HoiDap\Index.css" />
-    <Content Include="Content\styles\KhoaHoc\ThongTinKhoaHoc.css" />
+    <Content Include="Content\styles\KhoaHoc\ThongTin.css" />
     <Content Include="Content\styles\KhoaHoc\DanhSachThanhVien.css" />
     <Content Include="Content\styles\KhoaHoc\DanhSach.css" />
     <Content Include="Content\styles\KhoaHoc\Xem.css" />
@@ -517,7 +517,8 @@
     <Content Include="Views\HoiDap\_Item_QuanLyHoiDap.cshtml" />
     <Content Include="Views\NguoiDung\QuanLyNguoiDung.cshtml" />
     <Content Include="Views\NguoiDung\DanhSachNguoiDungBiChan.cshtml" />
-    <Content Include="Views\KhoaHoc\ThongTinKhoaHoc.cshtml" />
+    <Content Include="Views\LCT\_PhanTrang.cshtml" />
+    <Content Include="Views\KhoaHoc\ThongTin.cshtml" />
     <Content Include="Views\NguoiDung\TinNhan.cshtml" />
     <Content Include="Views\NguoiDung\ChiTietTinNhan.cshtml" />
   </ItemGroup>

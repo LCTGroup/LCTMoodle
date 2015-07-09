@@ -1,8 +1,28 @@
-﻿@model DTOLayer.KhoaHocDTO
+﻿@using LCTMoodle.LCTView
+@model DTOLayer.KhoaHocDTO
 
 <li class="item">
-    <section class="hinh-dai-dien">
-        <img src="@(@Model.hinhDaiDien != null ? "/LayHinh/KhoaHoc_HinhDaiDien/" + Model.hinhDaiDien.ma : "#")" />
+    <section class="khung-thong-tin">
+        <section class="hinh-dai-dien">
+            <img src="@(Model.hinhDaiDien != null ? "/LayHinh/KhoaHoc_HinhDaiDien/" + Model.hinhDaiDien.ma : "#")" />
+        </section>
+        <section class="thong-tin">
+            <section class="khung-giang-vien">
+                @if (Model.danhSachGiangVien != null)
+                {
+                    foreach (var giangVien in Model.danhSachGiangVien)
+                    {
+                        <article class="giang-vien">
+                            @NguoiDungView.hinhDaiDien(giangVien)
+                            @NguoiDungView.link(giangVien)
+                        </article>
+                    }
+                }
+            </section>
+            <section class="mo-ta">
+                @Model.moTa
+            </section>
+        </section>
     </section>
     <a href="/KhoaHoc/@Model.ma" class="ten">
         <h1>@Model.ten</h1>

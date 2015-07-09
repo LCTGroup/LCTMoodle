@@ -123,13 +123,13 @@ namespace LCTMoodle.Controllers
         {
             if (Session["NguoiDung"] == null)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng nhập để sử dụng chức năng này"));
             }
 
             var ketQua = BaiTapNopBUS.nen(ds, (int)Session["NguoiDung"]);
             if (ketQua.trangThai != 0)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Có lỗi xảy ra khi lấy danh sách tập tin"));
             }
 
             string[] thongTin = ketQua.ketQua as string[];

@@ -33,7 +33,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             chuDe.nguoiTao = LienKet.co(lienKet, "NguoiTao") ?
-                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam.Value)) :
+                                layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam.Value, lienKet["NguoiTao"])) :
                                 new NguoiDungDTO()
                                 {
                                     ma = maTam
@@ -59,7 +59,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             chuDe.hinhDaiDien = LienKet.co(lienKet, "HinhDaiDien") ?
-                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("ChuDe_HinhDaiDien", maTam.Value)) :
+                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("ChuDe_HinhDaiDien", maTam.Value, lienKet["HinhDaiDien"])) :
                                 new TapTinDTO()
                                 {
                                     ma = maTam
@@ -175,6 +175,22 @@ namespace DAOLayer
                         ma, 
                         maCha
                     }
+                );
+        }
+
+        public static KetQua lay_TimKiemPhanTrang(string where = null, string orderBy = null, int? trang = null, int? soDongMoiTrang = null, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layChuDe_TimKiemPhanTrang",
+                    new object[]
+                    {
+                        where,
+                        orderBy,
+                        trang,
+                        soDongMoiTrang
+                    },
+                    lienKet
                 );
         }
     }

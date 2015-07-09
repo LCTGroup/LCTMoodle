@@ -7,13 +7,14 @@ using BUSLayer;
 using DAOLayer;
 using DTOLayer;
 using Data;
+using Helpers;
 
 namespace LCTMoodle.Controllers
 {
     public class KhoaHocController : LCTController
     {
 
-        public ActionResult ThongTinKhoaHoc()
+        public ActionResult ThongTin()
         {
             return View();
         }
@@ -24,7 +25,7 @@ namespace LCTMoodle.Controllers
             KetQua ketQua = KhoaHocBUS.layTheoMa(ma);
             if (ketQua.trangThai != 0)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Khóa học không tồn tại."));
             }
             var khoaHoc = ketQua.ketQua as KhoaHocDTO; 
             #endregion
@@ -41,7 +42,7 @@ namespace LCTMoodle.Controllers
             #region Kiểm tra nếu thành viên bị chặn
             if (thanhVien != null && thanhVien.trangThai == 3)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn đã bị chặn."));
             } 
             #endregion
 
@@ -67,7 +68,7 @@ namespace LCTMoodle.Controllers
             {
                 if (!BUS.coQuyen("QLNoiDung", "KH"))
                 {
-                    return Redirect("/");
+                    return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn không có quyền tạo khóa học."));
                 }
 
                 return View();
@@ -80,7 +81,12 @@ namespace LCTMoodle.Controllers
                 });
             if (ketQua.trangThai != 0)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Khóa học không tồn tại"));
+            }
+
+            if (!BUS.coQuyen("QLNoiDung", "KH"))
+            {
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn không có quyền sửa khóa học."));
             }
 
             return View(ketQua.ketQua);
@@ -88,22 +94,21 @@ namespace LCTMoodle.Controllers
 
         public ActionResult DanhSach()
         {
-            KetQua ketQua = KhoaHocBUS.lay();
+            var ketQua = KhoaHocBUS.timKiemPhanTrang(1, Data.GiaTri.soLuongKhoaHocMoiTrang, null, null, new LienKet() { "GiangVien" });
 
             return View(ketQua.trangThai == 0 ? ketQua.ketQua : null);
         }
 
         public ActionResult DanhSachCuaToi()
         {
-            #region Nếu người dùng chưa đăng nhập => chuyển về trang danh sách
+            //Nếu người dùng chưa đăng nhập => chuyển về trang danh sách
             if (Session["NguoiDung"] == null)
             {
                 return RedirectToAction("DanhSach", "KhoaHoc");
             } 
-            #endregion
 
-            #region Lấy danh sách khóa học của người dùng
-            KetQua ketQua = KhoaHocBUS.layTheoMaNguoiDung((int)Session["NguoiDung"]);
+            //Lấy danh sách khóa học của người dùng
+            KetQua ketQua = KhoaHocBUS.layTheoMaNguoiDung((int)Session["NguoiDung"], new LienKet() { "GiangVien" });
             if (ketQua.trangThai > 1)
             {
                 //Nếu lấy thất bại => chuyển về trang danh sách
@@ -118,26 +123,32 @@ namespace LCTMoodle.Controllers
                 ViewData["DuocMoi"] = danhSachKhoaHoc[2];
                 ViewData["BiChan"] = danhSachKhoaHoc[3];
             } 
-            #endregion
 
             return View();
         }
 
-        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0)
+        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0, int trang = 1)
         {
-            KetQua ketQua;
-            if (maChuDe == 0)
-            {
-                ketQua = KhoaHocBUS.lay_TimKiem(tuKhoa);
-            }
-            else
-            {
-                ketQua = KhoaHocBUS.layTheoMaChuDe_TimKiem(maChuDe, tuKhoa);
-            }
+            //Sửa số dòng mỗi trang nhớ sửa ở view
+            var ketQua = KhoaHocBUS.timKiemPhanTrang(trang, Data.GiaTri.soLuongKhoaHocMoiTrang,
+                "Ten LIKE '%" + tuKhoa + "%'" +
+                (maChuDe != 0 ?
+                "AND MaChuDe = " + maChuDe :
+                null),
+                null,
+                new LienKet() { "GiangVien" });
 
             if (ketQua.trangThai == 0)
             {
-                ketQua.ketQua = renderPartialViewToString(ControllerContext, "KhoaHoc/_DanhSach.cshtml", ketQua.ketQua);
+                ketQua.ketQua = new
+                    {
+                        danhSach = renderPartialViewToString(ControllerContext, "KhoaHoc/_DanhSach.cshtml", ketQua.ketQua),
+                        phanTrang = renderPartialViewToString(ControllerContext, "LCT/_PhanTrang.cshtml", null, new ViewDataDictionary()
+                        {
+                            { "TongSoLuong", LCTHelper.layGiaTri<int>((ketQua.ketQua as List<KhoaHocDTO>)[0].duLieuThem, "TongSoDong", 0) },
+                            { "SoLuongMoiTrang", Data.GiaTri.soLuongKhoaHocMoiTrang }
+                        })
+                    };
             }
 
             return Json(ketQua, JsonRequestBehavior.AllowGet);
@@ -257,7 +268,7 @@ namespace LCTMoodle.Controllers
             KetQua ketQua = KhoaHocBUS.layTheoMa(ma);
             if (ketQua.trangThai != 0)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Khóa học không tồn tại."));
             }
             var khoaHoc = ketQua.ketQua as KhoaHocDTO;
             #endregion
@@ -274,7 +285,7 @@ namespace LCTMoodle.Controllers
             #region Kiểm tra nếu thành viên bị chặn
             if (thanhVien != null && thanhVien.trangThai == 3)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn đã bị chặn khỏi khóa học."));
             }
             #endregion
 

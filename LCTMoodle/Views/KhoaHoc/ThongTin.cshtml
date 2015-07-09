@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "ThongTinKhoaHoc";
+    Layout = "~/Views/LCT/Khung.cshtml";
+
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Khóa học", "/KhoaHoc/",
+        "Thông tin khóa học", "/KhoaHoc/ThongTinKhoaHoc/"
+    };
+}
+@section Styles {
+    <link rel="stylesheet" href="/ThongTin.css/KhoaHoc/" />
+}
+@section Scripts {
+}
+
+
+<!--#region Thông tin cơ bản -->
+
+<section class="hop hop-2-vien">
+    <article class="noi-dung">
+        <section>
+            <article class="khung-tren">
+                <div class="hinh-dai-dien">
+                    Hình của khóa học
+                </div>
+                <div class="thong-tin-khoa-hoc">
+                    <div class="ten-khoa-hoc">Tên khóa học</div>
+                </div>
+            </article>
+        </section>
+    </article>
+</section>
+
+<section class="hop hop-1-vien">
+    <section class="tieu-de">Thông tin cơ bản</section>
+    <section class="noi-dung khung-duoi">
+        <div class="dong-noi-dung">
+            <div class="tieu-de">Tiêu đề</div>
+            <div class="noi-dung">tiêu đề</div>
+        </div>
+        <div class="dong-noi-dung">
+            <div class="tieu-de">Tiêu đề</div>
+            <div class="noi-dung">tiêu đề</div>
+        </div>
+        <div class="dong-noi-dung">
+            <div class="tieu-de">Tiêu đề</div>
+            <div class="noi-dung">tiêu đề</div>
+        </div>
+        <div class="dong-noi-dung">
+            <div class="tieu-de">Tiêu đề</div>
+            <div class="noi-dung">tiêu đề</div>
+        </div>
+        <div class="dong-noi-dung">
+            <div class="tieu-de">Tiêu đề</div>
+            <div class="noi-dung">tiêu đề</div>
+        </div>
+        <div class="dong-noi-dung">
+            <div class="tieu-de">Tiêu đề</div>
+            <div class="noi-dung">tiêu đề</div>
+        </div>
+    </section>
+</section>
+
+<!--#endregion-->

@@ -30,6 +30,11 @@ namespace Helpers
 
         public static T layGiaTri<T>(Dictionary<string, object> duLieu, string key, T macDinh)
         {
+            if (duLieu == null)
+            {
+                return macDinh;
+            }
+
             object item;
             if (duLieu.TryGetValue(key, out item))
             {

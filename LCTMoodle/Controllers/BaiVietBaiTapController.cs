@@ -209,24 +209,24 @@ namespace LCTMoodle.Controllers
                 });
             if (ketQua.trangThai != 0)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Có xảy ra khi truy xuất dữ liệu."));
             }
 
             var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
 
             if (baiTap.loai != 1 && baiTap.loai != 2)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Loại bài tập không hợp lệ."));
             }
 
             //Quản lý quyền
             if (!BUS.coQuyen("BT_QLBaiNop", "KH", baiTap.khoaHoc.ma.Value))
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần có quyền quản lý bài tập để thực hiện chức năng này/"));
             }
             if (!BUS.coQuyen("QLBangDiem", "KH", baiTap.khoaHoc.ma.Value))
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần có quyền quản lý bảng điểm để thực hiện chức năng này."));
             }
             #endregion
 

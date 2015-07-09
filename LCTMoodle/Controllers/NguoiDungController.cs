@@ -70,7 +70,7 @@ namespace LCTMoodle.Controllers
         {
             if (Session["NguoiDung"] != null)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn đã đăng nhập."));
             }
             //Tắt hiển thị cột trái, cột phải
             ViewData["CotTrai"] = false;
@@ -91,7 +91,7 @@ namespace LCTMoodle.Controllers
         {
             if (Session["NguoiDung"] != null)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng xuất trước khi đăng ký tài khoản mới."));
             }
             //Tắt hiển thị cột trái, cột phải
             ViewData["CotTrai"] = false;
@@ -146,7 +146,7 @@ namespace LCTMoodle.Controllers
             
             if (Session["NguoiDung"] == null)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng nhập để thực hiện chức năng này"));
             }
 
             #endregion
@@ -195,7 +195,7 @@ namespace LCTMoodle.Controllers
 
             if (!maNguoiDung.HasValue)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng nhập để thực hiện chức năng này."));
             }
             else
             {
@@ -230,7 +230,7 @@ namespace LCTMoodle.Controllers
 
             if (!maNguoiDung.HasValue)
             {
-                return Redirect("/");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng nhập để thực hiện chức năng này."));
             }
             else
             {
