@@ -439,7 +439,6 @@
     <Content Include="Content\images\Quyen\Quyen.psd" />
     <Content Include="Content\images\NguoiDung\NguoiDung.psd" />
     <None Include="Project_Readme.html" />
-    <Content Include="Views\LCT\Khung.cshtml" />
     <Content Include="Views\TrangChu\Index.cshtml" />
     <Content Include="Views\KhoaHoc\Tao.cshtml" />
     <Content Include="Views\TrangChu\FormMau.cshtml" />
@@ -521,6 +520,7 @@
     <Content Include="Views\KhoaHoc\ThongTin.cshtml" />
     <Content Include="Views\NguoiDung\TinNhan.cshtml" />
     <Content Include="Views\NguoiDung\ChiTietTinNhan.cshtml" />
+    <Content Include="Views\LCT\Khung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">
