@@ -21,7 +21,7 @@ BEGIN
 	DECLARE @chuoiMa VARCHAR(MAX) = ''
 
 	--Lấy chuỗi người dùng
-	SELECT @chuoiMa += CAST(MaNguoiDung AS VARCHAR) + ','
+	SELECT @chuoiMa += CAST(ND.Ma AS VARCHAR) + ','
 		FROM 
 			KhoaHoc_NguoiDung KH_ND
 				INNER JOIN NguoiDung ND ON
@@ -53,8 +53,8 @@ BEGIN
 				KH_ND.MaKhoaHoc = @0 AND
 				KH_ND.MaNguoiDung = ND.Ma
 			--Lấy cột điểm của khóa học
-			RIGHT JOIN CotDiem CD ON
-				CD.MaKhoaHoc = @0
+			INNER JOIN CotDiem CD ON
+				CD.MaKhoaHoc = KH_ND.MaKhoaHoc
 			--Lấy điểm của cột điểm
 			LEFT JOIN CotDiem_NguoiDung CD_ND ON
 				CD.Ma = CD_ND.MaCotDiem AND

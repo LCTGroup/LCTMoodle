@@ -19,6 +19,11 @@ namespace Helpers
 
         public static string layString(Dictionary<string, object> duLieu, string key, string macDinh = null)
         {
+            if (duLieu == null)
+            {
+                return macDinh;
+            }
+
             object item;
             if (duLieu.TryGetValue(key, out item))
             {

@@ -1093,7 +1093,8 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
                 ngay.length >= 3 &&
                 ngay[0] > 0 &&
                 ngay[1] > 0 &&
-                ngay[0] <= mangThang[ngay[1]]
+                ngay[0] <= mangThang[ngay[1]] &&
+                ngay[2] < 3000
             ) {
                 this.value = ngay[0] + '/' + ngay[1] + '/' + ngay[2];
                 tatLoi($(this), 'ngay');
@@ -1168,8 +1169,26 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
 
     if ($form.is('[data-cap-nhat]')) {
         $form.find('.input :input').on('change', function () {
-            $(this).removeAttr('data-cu');
+            tatDataCu_LCT($form, $(this));
         })
+    }
+}
+
+function tatDataCu_LCT($form, $input) {
+    if ($input.is('[data-cu]')) {
+        $input.removeAttr('data-cu');
+        var doiTuong = $input.attr('data-doi-tuong');
+        if (doiTuong) {
+            dsDoiTuong = doiTuong.split(' ');
+            chuoiDoiTuong = '';
+
+            $(dsDoiTuong).each(function () {
+                chuoiDoiTuong += ',[data-tat="' + this + '"],[data-mo="' + this + '"]';
+            });
+
+
+            tatDataCu_LCT($form, $form.find(chuoiDoiTuong.substr(1)));
+        }
     }
 }
 

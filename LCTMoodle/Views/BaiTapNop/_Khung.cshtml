@@ -29,13 +29,16 @@
             }
         }
         
-        if (baiNopCuaNguoiDung.daXoa)
+        if (baiNopCuaNguoiDung != null)
         {
-            <a title="@baiNopCuaNguoiDung.ghiChu" class="xoa">!</a>
-        }
-        else if (baiNopCuaNguoiDung.diem.HasValue)
-        {
-            <a title="@baiNopCuaNguoiDung.ghiChu" class="diem">@baiNopCuaNguoiDung.diem.Value</a>
+            if (baiNopCuaNguoiDung.daXoa)
+            {
+                <a title="@baiNopCuaNguoiDung.ghiChu" class="xoa">!</a>
+            }
+            else if (baiNopCuaNguoiDung.diem.HasValue)
+            {
+                <a title="@baiNopCuaNguoiDung.ghiChu" class="diem">@baiNopCuaNguoiDung.diem.Value</a>
+            }
         }
 
         if (daNop)
