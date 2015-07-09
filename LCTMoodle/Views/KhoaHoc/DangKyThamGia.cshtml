@@ -11,6 +11,12 @@
         Model.ten, "/KhoaHoc/" + Model.ma
     };
 
+    var chucNang = new List<string>();
+    
+    chucNang.Add("Thông tin khóa học");
+    chucNang.Add("href='/KhoaHoc/ThongTin/" + Model.ma + "'");
+
+    ViewData["ChucNang"] = chucNang;
 }
 
 @section Scripts {

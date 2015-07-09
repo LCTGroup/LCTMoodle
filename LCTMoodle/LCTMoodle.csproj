@@ -147,11 +147,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LCTView\KhoaHocView.cs" />
     <Compile Include="LCTView\QuyenView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LCTView\NguoiDungView.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_CauHoi.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_ChuDe.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_HinhAnh.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_NguoiDung.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_TraLoi.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi.cs" />
     <Compile Include="WebServices\Iwcf_ChuDe.cs" />
     <Compile Include="WebServices\Iwcf_KhoaHoc.cs" />
@@ -439,7 +444,6 @@
     <Content Include="Content\images\Quyen\Quyen.psd" />
     <Content Include="Content\images\NguoiDung\NguoiDung.psd" />
     <None Include="Project_Readme.html" />
-    <Content Include="Views\LCT\Khung.cshtml" />
     <Content Include="Views\TrangChu\Index.cshtml" />
     <Content Include="Views\KhoaHoc\Tao.cshtml" />
     <Content Include="Views\TrangChu\FormMau.cshtml" />
@@ -521,6 +525,7 @@
     <Content Include="Views\KhoaHoc\ThongTin.cshtml" />
     <Content Include="Views\NguoiDung\TinNhan.cshtml" />
     <Content Include="Views\NguoiDung\ChiTietTinNhan.cshtml" />
+    <Content Include="Views\LCT\Khung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

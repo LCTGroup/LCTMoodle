@@ -10,7 +10,7 @@ $(function () {
 
 //#endregion
 
-//#region Khởi tạo quản lý câu hỏi
+//#region Khởi tạo quản lý người dùng
 
 function khoiTaoQuanLyCauHoi($dsNguoiDung) {
 

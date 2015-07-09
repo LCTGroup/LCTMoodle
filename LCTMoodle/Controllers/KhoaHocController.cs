@@ -14,9 +14,19 @@ namespace LCTMoodle.Controllers
     public class KhoaHocController : LCTController
     {
 
-        public ActionResult ThongTin()
+        public ActionResult ThongTin(int ma)
         {
-            return View();
+            #region Kiểm tra điều kiện
+            //Lấy khóa học
+            var ketQua = KhoaHocBUS.layTheoMa(ma, new LienKet() { "GiangVien", "ChuDe" });
+            if (ketQua.trangThai != 0)
+            {
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Khóa học không tồn tại"));
+            }
+            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
+            #endregion
+
+            return View(khoaHoc);
         }
 
         public ActionResult Xem(int ma)

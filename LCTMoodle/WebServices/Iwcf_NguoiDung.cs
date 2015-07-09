@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using DTOLayer;
+using LCTMoodle.WebServices.Client_Model;
 
 namespace LCTMoodle.WebServices
 {
@@ -13,5 +15,8 @@ namespace LCTMoodle.WebServices
     {
         [OperationContract]
         int kiemTraDangNhap(string _TenDN, string _MatKhau);
+
+        [OperationContract]
+        clientmodel_NguoiDung themNguoiDung(Dictionary<string, string> nguoiDung);
     }
 }

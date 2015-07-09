@@ -88,14 +88,33 @@ namespace LCTMoodle.WebServices
         /// </summary>
         /// <param name="_MaChuDeCha"></param>
         /// <returns>List<ChuDeDTO></returns>
-        public List<ChuDeDTO> layTheoMaCha(int _MaChuDeCha)
+        public List<clientmodel_ChuDe> layTheoMaCha(int _MaChuDeCha)
         {
             KetQua ketQua = ChuDeBUS.layTheoMaCha(_MaChuDeCha, new LienKet { "HinhDaiDien" });
-            List<ChuDeDTO> lst_ChuDe = new List<ChuDeDTO>();
+            List<clientmodel_ChuDe> lst_ChuDe = new List<clientmodel_ChuDe>();
 
             if(ketQua.trangThai == 0)
             {
-                lst_ChuDe = ketQua.ketQua as List<ChuDeDTO>;
+                foreach(var chuDe in ketQua.ketQua as List<ChuDeDTO>)
+                {
+                    lst_ChuDe.Add(new clientmodel_ChuDe()
+                    {
+                        Ma = chuDe.ma.Value,
+                        Ten = chuDe.ten,
+                        MoTa = chuDe.moTa,
+                        NgayTao = chuDe.thoiDiemTao.Value.ToString(),
+                        HinhAnh = chuDe.hinhDaiDien.ma + chuDe.hinhDaiDien.duoi,
+                    });
+
+                    if(chuDe.duLieuThem.ContainsKey("SLChuDeCon"))
+                    {
+                        lst_ChuDe[lst_ChuDe.Count - 1].SoChuDeCon = (int)chuDe.duLieuThem["SLChuDeCon"];
+                    }
+                    if (chuDe.duLieuThem.ContainsKey("SLKhoaHocCon"))
+                    {
+                        lst_ChuDe[lst_ChuDe.Count - 1].SoKhoaHocCon = (int)chuDe.duLieuThem["SLKhoaHocCon"];
+                    }
+                }
             }
             return lst_ChuDe;
         }

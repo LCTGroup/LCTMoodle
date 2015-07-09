@@ -24,7 +24,7 @@ CREATE TABLE dbo.NguoiDung
 	CoQuyenNhomKH BIT,
 	DiemHoiDap INT DEFAULT 0,
 	ThoiDiemPhucHoiMatKhau DATETIME DEFAULT GETDATE(),
-	DaDuyet BIT DEFAULT 1
+	TrangThaiHoatDong BIT DEFAULT 1
 )
 
 GO

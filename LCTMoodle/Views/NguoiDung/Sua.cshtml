@@ -1,8 +1,49 @@
 ﻿@model DTOLayer.NguoiDungDTO
-
+@using Helpers
+@using LCTMoodle.LCTView
 @{
-    ViewData["Title"] = "Người Dùng";
+    ViewData["Title"] = "Cập nhật thông tin Người dùng";
     Layout = "~/Views/LCT/Khung.cshtml";
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Người Dùng", "/NguoiDung/Xem/" + Session["NguoiDung"],
+        "Cập nhật thông tin cá nhân", "/NguoiDung/Sua/" + @Model.ma
+    };
+
+    int? maNguoiDung = Session["NguoiDung"] as int?;
+    bool coQuyenDoiMatKhau, coQuyenQuanLyNguoiDung;
+    string[] dsQuyen;
+
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("ND", 0, maNguoiDung);
+        coQuyenDoiMatKhau = true;
+    }
+    else
+    {
+        dsQuyen = null;
+        coQuyenDoiMatKhau = coQuyenQuanLyNguoiDung = false;
+    }
+
+    coQuyenQuanLyNguoiDung = QuyenHelper.co(dsQuyen, "QuanLyNguoiDung");
+
+    if (coQuyenDoiMatKhau || coQuyenQuanLyNguoiDung)
+    {
+        List<string> chucNang = new List<string>();
+        if (coQuyenDoiMatKhau)
+        {
+            chucNang.Add("Đổi mật khẩu");
+            chucNang.Add("href='/NguoiDung/DoiMatKhau/'");
+        }
+        if (coQuyenQuanLyNguoiDung)
+        {
+            chucNang.Add("Quản lý người dùng");
+            chucNang.Add("href='/NguoiDung/QuanLyNguoiDung/'");
+            chucNang.Add("Danh sách người dùng bị chặn");
+            chucNang.Add("href='/NguoiDung/DanhSachNguoiDungBiChan/'");
+        }
+        ViewData["ChucNang"] = chucNang;
+    }
 }
 @section Styles {
 }
