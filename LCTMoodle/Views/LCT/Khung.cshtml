@@ -207,8 +207,8 @@
                                     <section class="chuc-nang">
                                         <ul id="danh_sach_chuc_nang_lct" class="danh-sach">
                                             @{
-                                                List<string> danhSach = ViewData["ChucNang"] as List<string>;
-                                                int soLuong = danhSach.Count;
+                                List<string> danhSach = ViewData["ChucNang"] as List<string>;
+                                int soLuong = danhSach.Count;
                                             }
                                             @for (int i = 0; i < soLuong; i += 2)
                                             {
@@ -229,21 +229,21 @@
                             <section class="noi-dung-hop-cau-hoi">
                                 <ul>
                                     @{
-                                        if (dsCauHoi != null)
-                                        {
-                                            foreach (var cauHoi in dsCauHoi)
-                                            {
-                                                <li>
-                                                    <div class="tieu-de">
-                                                        <a href="/HoiDap/@cauHoi.ma" title="@cauHoi.tieuDe">@cauHoi.tieuDe</a>
-                                                    </div>
-                                                    <div class="thong-tin">
-                                                        @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
-                                                        <span>@cauHoi.nguoiTao.tenTaiKhoan - @cauHoi.thoiDiemTao.Value.ToString("hh:mm tt")</span>
-                                                    </div>
-                                                </li>
-                                            }
-                                        }
+                if (dsCauHoi != null)
+                {
+                    foreach (var cauHoi in dsCauHoi)
+                    {
+                        <li>
+                            <div class="tieu-de">
+                                <a href="/HoiDap/@cauHoi.ma" title="@cauHoi.tieuDe">@cauHoi.tieuDe</a>
+                            </div>
+                            <div class="thong-tin">
+                                @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
+                                <span>@cauHoi.nguoiTao.tenTaiKhoan - @cauHoi.thoiDiemTao.Value.ToString("hh:mm tt")</span>
+                            </div>
+                        </li>
+                    }
+                }
                                     }
                                 </ul>
                                 <section>Chưa có câu hỏi mới</section>
@@ -295,9 +295,9 @@
                             </section>
                         </article>
                         @*<article class="hop-chuc-nang">
-                            <section class="ten-chuc-nang"></section>
-                            <section class="chuc-nang"></section>
-                        </article>*@
+                                <section class="ten-chuc-nang"></section>
+                                <section class="chuc-nang"></section>
+                            </article>*@
                     </article>
                 </aside>
             }
