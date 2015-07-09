@@ -72,7 +72,7 @@
                             <li>
                                 <a href="javascript:void(0)" data-mo-doi-tuong="HopDieuKhien">
                                     @NguoiDungView.hinhDaiDien(nguoiDung)
-                                    <span>@nguoiDung.ho + @nguoiDung.tenLot + @nguoiDung.ten</span>
+                                    <span>@nguoiDung.ho @nguoiDung.tenLot @nguoiDung.ten</span>
                                 </a>
                                 <div class="hop-dieu-khien" data-doi-tuong="HopDieuKhien">
                                     <ul>
@@ -165,14 +165,14 @@
                                     Khóa học của tôi
                                 </a>
                                 <ul>
-                                    @foreach (var khoaHoc in ketQua.ketQua as List<DTOLayer.KhoaHocDTO>)
+                                    @*@foreach (var khoaHoc in ketQua.ketQua as List<DTOLayer.KhoaHocDTO>)
                                     {
                                         <li>
                                             <a href="/KhoaHoc/@khoaHoc.ma">
                                                 @khoaHoc.ten
                                             </a>
                                         </li>
-                                    }
+                                    }*@
                                 </ul>
                             </li>
                         }
