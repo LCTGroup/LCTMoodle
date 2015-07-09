@@ -1,1 +1,4 @@
-delete from nhomnguoidung_cd_quyen
+select * from nguoiDung
+
+alter table nguoiDung
+drop column DaDuyet

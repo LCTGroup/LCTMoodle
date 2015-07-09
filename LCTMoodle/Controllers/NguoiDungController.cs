@@ -160,6 +160,11 @@ namespace LCTMoodle.Controllers
         {
             ViewData["CotPhai"] = false;
 
+            if (Session["NguoiDung"] != null)
+            {
+                return Redirect("/");
+            }
+            
             return View();
         }
         

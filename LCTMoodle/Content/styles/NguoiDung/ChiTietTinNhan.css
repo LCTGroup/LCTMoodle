@@ -1,19 +1,84 @@
 ﻿.khung-chi-tiet-tin-nhan {
     border: 1px solid #ddd;
     display: flex;
+    padding: 5px;
     flex-direction: column;
 }
 
     .dong-tin {
         display: flex;
         flex-direction: row;
+        width: 100%;
+        margin: 10px 0;
     }
         .dong-tin .hinh-dai-dien {
             width: 42px;
             height: 42px;
             max-height: 42px;
             max-width: 42px;
+            min-width: 42px;
         }
+            .dong-tin .hinh-dai-dien img {
+                width: 100%;
+            }
+            .dong-tin .hinh-dai-dien span {
+                color: #888;
+                font-size: 11px;
+                text-align: center;
+                display: block;
+            }
         .dong-tin .chi-tiet {
+            width: 60%;
+            padding: 10px;
+            position: relative;
+        }            
 
+/*#region Tin nhắn chủ */
+
+.chu {
+    }
+        .chu .chi-tiet {
+            margin-left: 20px;
+            border: 1px solid #fcfcfc;
+            background-color: #fff;
+            border: 1px solid #ccc;
         }
+        .chu .chi-tiet:after {
+            content: '';
+            width: 0; 
+            height: 0; 
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent; 
+            border-right:10px solid #ccc; 
+            position: absolute;
+            left: -11px;
+            top: 11px;
+        }
+
+/*#endregion */
+
+/*#region Tin nhắn khách */
+
+.khach {
+        justify-content: flex-end;
+    }
+        .khach .chi-tiet {
+            margin-right: 20px;
+            border: 1px solid #004263;
+            background-color: #004263;
+            color: #fcfcfc;
+        }
+        .khach .chi-tiet:after {
+            content: '';
+            width: 0; 
+            height: 0; 
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent; 
+            border-left:10px solid #004263; 
+            position: absolute;
+            right: -11px;
+            top: 11px;
+        }
+
+/*#endregion */
+    

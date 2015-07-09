@@ -11,32 +11,44 @@
         "Người Dùng", "/NguoiDung/Xem/" + Session["NguoiDung"],
         "Danh sách đen", "/NguoiDung/DanhSachNguoiDungBiChan"
     };
-    
+
     int? maNguoiDung = Session["NguoiDung"] as int?;
-    bool coQuyenQuanLyNguoiDung;
+    bool coQuyenCapNhatThongTin, coQuyenDoiMatKhau, coQuyenQuanLyNguoiDung;
     string[] dsQuyen;
 
     if (maNguoiDung.HasValue)
     {
         dsQuyen = QuyenView.layDSQuyen("ND", 0, maNguoiDung);
+        coQuyenDoiMatKhau = coQuyenCapNhatThongTin = true;
     }
     else
     {
         dsQuyen = null;
+        coQuyenDoiMatKhau = coQuyenCapNhatThongTin = coQuyenQuanLyNguoiDung = false;
     }
 
     coQuyenQuanLyNguoiDung = QuyenHelper.co(dsQuyen, "QuanLyNguoiDung");
 
-    List<string> chucNang = new List<string>();
-    if (coQuyenQuanLyNguoiDung)
+    if (coQuyenCapNhatThongTin || coQuyenDoiMatKhau || coQuyenQuanLyNguoiDung)
     {
-        chucNang.Add("Quản lý người dùng");
-        chucNang.Add("href='/NguoiDung/QuanLyNguoiDung/'");
-        chucNang.Add("Danh sách người dùng bị chặn");
-        chucNang.Add("href='/NguoiDung/DanhSachNguoiDungBiChan/'");
+        List<string> chucNang = new List<string>();
+        if (coQuyenCapNhatThongTin)
+        {
+            chucNang.Add("Cập nhật thông tin cá nhân");
+            chucNang.Add("href='/NguoiDung/Sua/" + maNguoiDung + "'");
+        }
+        if (coQuyenDoiMatKhau)
+        {
+            chucNang.Add("Đổi mật khẩu");
+            chucNang.Add("href='/NguoiDung/DoiMatKhau/'");
+        }
+        if (coQuyenQuanLyNguoiDung)
+        {
+            chucNang.Add("Quản lý người dùng");
+            chucNang.Add("href='/NguoiDung/QuanLyNguoiDung/'");
+        }
+        ViewData["ChucNang"] = chucNang;
     }
-    ViewData["ChucNang"] = chucNang;
-        
 }
 @section Styles {
     <link rel="stylesheet" href="/QuanLyNguoiDung.css/NguoiDung/" />
