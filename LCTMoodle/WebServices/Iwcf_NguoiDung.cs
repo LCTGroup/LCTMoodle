@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using DTOLayer;
+using LCTMoodle.WebServices.Client_Model;
 
 namespace LCTMoodle.WebServices
 {
@@ -13,6 +14,9 @@ namespace LCTMoodle.WebServices
     public interface Iwcf_NguoiDung
     {
         [OperationContract]
-        KetQua kiemTraDangNhap(string _TenDN, string _MatKhau);
+        int kiemTraDangNhap(string _TenDN, string _MatKhau);
+
+        [OperationContract]
+        clientmodel_NguoiDung themNguoiDung(Dictionary<string, string> nguoiDung);
     }
 }

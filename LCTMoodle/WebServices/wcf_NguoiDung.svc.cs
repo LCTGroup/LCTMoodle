@@ -7,6 +7,7 @@ using System.Text;
 using Helpers;
 using DTOLayer;
 using BUSLayer;
+using LCTMoodle.WebServices.Client_Model;
 
 namespace LCTMoodle.WebServices
 {
@@ -20,7 +21,7 @@ namespace LCTMoodle.WebServices
         /// </summary>
         /// <param name="_TenDN"></param>
         /// <param name="_MatKhau"></param>
-        /// <returns>int</returns>
+        /// <returns>clientmodel_NguoiDung</returns>
         public int kiemTraDangNhap(string _TenDN, string _MatKhau)
         {
             KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(_TenDN);
@@ -41,6 +42,36 @@ namespace LCTMoodle.WebServices
                     return 2; //Sai Mật Khẩu
                 }
             }
+        }
+
+        public clientmodel_NguoiDung themNguoiDung(Dictionary<string,string> nguoiDung)
+        {
+            Form form = new Form()
+            {
+                {"TenTaiKhoan",nguoiDung["TenTaiKhoan"]},
+                {"MatKhau",nguoiDung["MatKhau"]},
+                {"Email",nguoiDung["Email"]},
+                {"Ho",nguoiDung["Ho"]},
+                {"TenLot",nguoiDung["TenLot"]},
+                {"Ten",nguoiDung["Ten"]},
+                {"NgaySinh",nguoiDung["NgaySinh"]},
+            };
+
+            KetQua ketQua = NguoiDungBUS.them(form);
+            clientmodel_NguoiDung cm_NguoiDung = new clientmodel_NguoiDung();
+
+            if(ketQua.trangThai == 0)
+            {
+                cm_NguoiDung.TrangThai = 0;
+                cm_NguoiDung.ThongBao = "Đăng ký thành công ! check mail để kích hoạt";
+            }
+            else
+            {
+                cm_NguoiDung.TrangThai = ketQua.trangThai;
+                cm_NguoiDung.ThongBao = ketQua.ketQua as string;
+            }
+
+            return cm_NguoiDung;
         }
     }
 }

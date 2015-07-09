@@ -71,16 +71,24 @@ namespace LCTMoodle.WebServices
         /// </summary>
         /// <param name="_Ma"></param>
         /// <returns>CauHoiDTO</returns>
-        public CauHoiDTO layTheoMa(int _Ma)
+        public clientmodel_CauHoi layTheoMa(int _Ma)
         {
             KetQua ketQua = CauHoiBUS.layTheoMa(_Ma, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
-            CauHoiDTO dto_CauHoi = new CauHoiDTO();
+            CauHoiDTO dto_CauHoi = ketQua.ketQua as CauHoiDTO;
+            clientmodel_CauHoi cm_CauHoi = new clientmodel_CauHoi();
 
             if(ketQua.trangThai == 0)
             {
-                dto_CauHoi= ketQua.ketQua as CauHoiDTO;
+                cm_CauHoi.Ma = dto_CauHoi.ma.Value;
+                cm_CauHoi.TieuDe = dto_CauHoi.tieuDe;
+                cm_CauHoi.NoiDung = dto_CauHoi.noiDung;
+                cm_CauHoi.NguoiTao = dto_CauHoi.nguoiTao.tenTaiKhoan;
+                cm_CauHoi.SoTraLoi = dto_CauHoi.soLuongTraLoi.Value;
+                cm_CauHoi.NgayTao = dto_CauHoi.thoiDiemTao.Value.ToString();
+                cm_CauHoi.NgayCapNhat = dto_CauHoi.thoiDiemCapNhat.Value.ToString();
+                cm_CauHoi.HinhAnh = dto_CauHoi.nguoiTao.hinhDaiDien.ma + dto_CauHoi.nguoiTao.hinhDaiDien.duoi;
             }
-            return dto_CauHoi;
+            return cm_CauHoi;
         }
 
         /// <summary>
@@ -88,14 +96,26 @@ namespace LCTMoodle.WebServices
         /// </summary>
         /// <param name="_Ma"></param>
         /// <returns>List<TraLoiDTO></returns>
-        public List<TraLoiDTO> layTraLoiTheoMaCauHoi(int _Ma)
+        public List<clientmodel_TraLoi> layTraLoiTheoMaCauHoi(int _Ma)
         {
             KetQua ketQua = TraLoiBUS.layTheoMaCauHoi(_Ma, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
-            List<TraLoiDTO> lst_CauHoi = new List<TraLoiDTO>();
+            List<clientmodel_TraLoi> lst_CauHoi = new List<clientmodel_TraLoi>();
 
             if(ketQua.trangThai == 0)
             {
-                lst_CauHoi = ketQua.ketQua as List<TraLoiDTO>;
+                foreach(var traLoi in ketQua.ketQua as List<TraLoiDTO>)
+                {
+                    lst_CauHoi.Add(new clientmodel_TraLoi()
+                    {
+                        Ma = traLoi.ma.Value,
+                        NguoiTao = traLoi.nguoiTao.tenTaiKhoan,
+                        NgayTao = traLoi.thoiDiemTao.Value.ToString(),
+                        NgayCapNhat = traLoi.thoiDiemCapNhat.Value.ToString(),
+                        Duyet = traLoi.duyet,
+                        NoiDung = traLoi.noiDung,
+                        HinhAnh = traLoi.nguoiTao.hinhDaiDien.ma + traLoi.nguoiTao.hinhDaiDien.duoi,
+                    });
+                }
             }
             return lst_CauHoi;
         }
@@ -118,8 +138,10 @@ namespace LCTMoodle.WebServices
                         Ma = cauHoi.ma.Value,
                         TieuDe = cauHoi.tieuDe,
                         NoiDung = cauHoi.noiDung,
-                        NguoiTao = cauHoi.nguoiTao.ten,
+                        NguoiTao = cauHoi.nguoiTao.tenTaiKhoan,
                         SoTraLoi = cauHoi.soLuongTraLoi.Value,
+                        NgayTao = cauHoi.thoiDiemTao.Value.ToString(),
+                        NgayCapNhat = cauHoi.thoiDiemCapNhat.Value.ToString(),
                         HinhAnh = cauHoi.nguoiTao.hinhDaiDien.ma + cauHoi.nguoiTao.hinhDaiDien.duoi,
                     });
                 }
@@ -132,14 +154,27 @@ namespace LCTMoodle.WebServices
         /// </summary>
         /// <param name="_TuKhoa"></param>
         /// <returns>List<CauHoiDTO></returns>
-        public List<CauHoiDTO> timKiem(string _TuKhoa)
+        public List<clientmodel_CauHoi> timKiem(string _TuKhoa)
         {
             KetQua ketQua = CauHoiBUS.lay_TimKiem(_TuKhoa, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
-            List<CauHoiDTO> lst_CauHoi = new List<CauHoiDTO>();
+            List<clientmodel_CauHoi> lst_CauHoi = new List<clientmodel_CauHoi>();
 
             if(ketQua.trangThai == 0)
             {
-                lst_CauHoi = ketQua.ketQua as List<CauHoiDTO>;
+                foreach(var cauHoi in ketQua.ketQua as List<CauHoiDTO>)
+                {
+                    lst_CauHoi.Add(new clientmodel_CauHoi()
+                    {
+                        Ma = cauHoi.ma.Value,
+                        TieuDe = cauHoi.tieuDe,
+                        NoiDung = cauHoi.noiDung,
+                        NguoiTao = cauHoi.nguoiTao.tenTaiKhoan,
+                        SoTraLoi = cauHoi.soLuongTraLoi.Value,
+                        NgayTao = cauHoi.thoiDiemTao.Value.ToString(),
+                        NgayCapNhat = cauHoi.thoiDiemCapNhat.Value.ToString(),
+                        HinhAnh = cauHoi.nguoiTao.hinhDaiDien.ma + cauHoi.nguoiTao.hinhDaiDien.duoi,
+                    });
+                }
             }
             return lst_CauHoi;
         }

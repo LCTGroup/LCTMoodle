@@ -26,7 +26,7 @@ namespace LCTMoodle.WebServices
         List<KhoaHocDTO> lay();
 
         [OperationContract]
-        List<KhoaHocDTO> layTheoMaChuDe(int _MaChuDe);
+        List<clientmodel_KhoaHoc> layTheoMaChuDe(int _MaChuDe);
 
         [OperationContract]
         List<KhoaHocDTO> layTheoMaNguoiDung(int _MaNguoiDung);
@@ -35,7 +35,7 @@ namespace LCTMoodle.WebServices
         List<KhoaHocDTO> layTheoMaNguoiDungVaTrangThai(int _MaNguoiDung, int _TrangThai);
 
         [OperationContract]
-        List<KhoaHocDTO> timKiem(string _TuKhoa);
+        List<clientmodel_KhoaHoc> timKiem(string _TuKhoa);
 
         [OperationContract]
         List<KhoaHocDTO> timKiemTheoMaChuDe(int _MaChuDe, string _TuKhoa);

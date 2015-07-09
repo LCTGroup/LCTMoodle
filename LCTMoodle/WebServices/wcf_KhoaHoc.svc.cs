@@ -103,14 +103,25 @@ namespace LCTMoodle.WebServices
         /// </summary>
         /// <param name="_MaChuDe"></param>
         /// <returns>List<KhoaHocDTO> </returns>
-        public List<KhoaHocDTO> layTheoMaChuDe(int _MaChuDe)
+        public List<clientmodel_KhoaHoc> layTheoMaChuDe(int _MaChuDe)
         {
             KetQua ketQua = KhoaHocBUS.layTheoMaChuDe(_MaChuDe, new LienKet { "HinhDaiDien" });
-            List<KhoaHocDTO> lst_KhoaHoc = new List<KhoaHocDTO>();
+            List<clientmodel_KhoaHoc> lst_KhoaHoc = new List<clientmodel_KhoaHoc>();
 
             if(ketQua.trangThai == 0)
             {
-                lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
+                foreach(var khoaHoc in ketQua.ketQua as List<KhoaHocDTO>)
+                {
+                    lst_KhoaHoc.Add(new clientmodel_KhoaHoc()
+                    {
+                        Ma = khoaHoc.ma.Value,
+                        Ten = khoaHoc.ten,
+                        MoTa = khoaHoc.moTa,
+                        //NgayTao = khoaHoc.thoiDiemTao.Value.ToString(),
+                        //NgayHetHan = khoaHoc.thoiDiemHetHan.Value.ToString(),
+                        HinhAnh = khoaHoc.hinhDaiDien.ma + khoaHoc.hinhDaiDien.duoi,
+                    });
+                }
             }
             return lst_KhoaHoc;
         }
@@ -155,16 +166,27 @@ namespace LCTMoodle.WebServices
         /// </summary>
         /// <param name="_TuKhoa"></param>
         /// <returns>List<KhoaHocDTO> </returns>
-        public List<KhoaHocDTO> timKiem(string _TuKhoa)
+        public List<clientmodel_KhoaHoc> timKiem(string _TuKhoa)
         {
             KetQua ketQua = KhoaHocBUS.lay_TimKiem(_TuKhoa, new LienKet { "HinhDaiDien" });
-            List<KhoaHocDTO> lst_KhoaHoc = new List<KhoaHocDTO>();
+            List<clientmodel_KhoaHoc> lst_KhoaHoc = new List<clientmodel_KhoaHoc>();
 
-            if(ketQua.trangThai == 0)
-            {
-                lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
-            }
-            return lst_KhoaHoc;
+           if(ketQua.trangThai == 0)
+           {
+               foreach(var khoaHoc in ketQua.ketQua as List<KhoaHocDTO>)
+               {
+                   lst_KhoaHoc.Add(new clientmodel_KhoaHoc()
+                   {
+                       Ma = khoaHoc.ma.Value,
+                       Ten = khoaHoc.ten,
+                       MoTa = khoaHoc.moTa,
+                       NgayTao = khoaHoc.thoiDiemTao.Value.ToString(),
+                       HinhAnh = khoaHoc.hinhDaiDien.ma + khoaHoc.hinhDaiDien.duoi,
+                   });
+               }
+           }
+
+           return lst_KhoaHoc;
         }
 
         /// <summary>

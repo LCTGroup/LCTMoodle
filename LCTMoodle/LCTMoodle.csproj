@@ -151,7 +151,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LCTView\NguoiDungView.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_CauHoi.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_ChuDe.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_HinhAnh.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_NguoiDung.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_TraLoi.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi.cs" />
     <Compile Include="WebServices\Iwcf_ChuDe.cs" />
     <Compile Include="WebServices\Iwcf_KhoaHoc.cs" />
