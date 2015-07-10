@@ -8,6 +8,8 @@ using Helpers;
 using DTOLayer;
 using BUSLayer;
 using LCTMoodle.WebServices.Client_Model;
+using System.Drawing;
+using System.IO;
 
 namespace LCTMoodle.WebServices
 {
@@ -44,18 +46,22 @@ namespace LCTMoodle.WebServices
             }
         }
 
-        public clientmodel_NguoiDung themNguoiDung(Dictionary<string,string> nguoiDung)
+        
+        public clientmodel_NguoiDung themNguoiDung()
         {
             Form form = new Form()
             {
-                {"TenTaiKhoan",nguoiDung["TenTaiKhoan"]},
-                {"MatKhau",nguoiDung["MatKhau"]},
-                {"Email",nguoiDung["Email"]},
-                {"Ho",nguoiDung["Ho"]},
-                {"TenLot",nguoiDung["TenLot"]},
-                {"Ten",nguoiDung["Ten"]},
-                {"NgaySinh",nguoiDung["NgaySinh"]},
+                {"TenTaiKhoan","hp94"},
+                {"MatKhau","huyphong"},
+                {"Email","benny9407@yahoo.com.vn"},
+                {"Ho","Nguyen"},
+                {"TenLot","Huy"},
+                {"Ten","Phong"},
+                {"NgaySinh","14/02/1994"},
+                {"ChapNhanQuyDinh","1"},
             };
+
+            
 
             KetQua ketQua = NguoiDungBUS.them(form);
             clientmodel_NguoiDung cm_NguoiDung = new clientmodel_NguoiDung();

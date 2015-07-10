@@ -17,6 +17,6 @@ namespace LCTMoodle.WebServices
         int kiemTraDangNhap(string _TenDN, string _MatKhau);
 
         [OperationContract]
-        clientmodel_NguoiDung themNguoiDung(Dictionary<string, string> nguoiDung);
+        clientmodel_NguoiDung themNguoiDung();
     }
 }

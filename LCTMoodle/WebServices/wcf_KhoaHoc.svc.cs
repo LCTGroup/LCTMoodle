@@ -5,12 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Text;
 using LCTMoodle.WebServices.Client_Model;
 using DTOLayer;
 using BUSLayer;
 using Helpers;
-using System.Threading.Tasks;
+
 
 namespace LCTMoodle.WebServices
 {
@@ -117,10 +118,9 @@ namespace LCTMoodle.WebServices
                         Ma = khoaHoc.ma.Value,
                         Ten = khoaHoc.ten,
                         MoTa = khoaHoc.moTa,
-                        //NgayTao = khoaHoc.thoiDiemTao.Value.ToString(),
-                        //NgayHetHan = khoaHoc.thoiDiemHetHan.Value.ToString(),
-                        HinhAnh = khoaHoc.hinhDaiDien.ma + khoaHoc.hinhDaiDien.duoi,
-                    });
+                        HinhAnh = khoaHoc.nguoiTao.hinhDaiDien.ma + khoaHoc.nguoiTao.hinhDaiDien.duoi,
+                        NgayTao = khoaHoc.thoiDiemTao.Value,
+                    })
                 }
             }
             return lst_KhoaHoc;

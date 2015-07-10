@@ -178,6 +178,10 @@
     <Content Include="App_Data\DuLieuLoiNhan.sql" />
     <Content Include="App_Data\DuLieuQuyen.sql" />
     <Content Include="App_Data\Nhap.sql" />
+    <Content Include="bin\BUS.pdb" />
+    <Content Include="bin\DAO.pdb" />
+    <Content Include="bin\DTO.pdb" />
+    <Content Include="bin\Helper.pdb" />
     <Content Include="bin\Ionic.Zip.dll" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\ChuDe\ChuDe.png" />
