@@ -129,7 +129,7 @@ function khoiTaoHienThiInput_LCT($form) {
         var loaiMacDinh = $phanTu.attr('data-loai-mac-dinh');
         $phanTu.removeAttr('name');
 
-        $phanTu.after('<input type="hidden" name="' + name + '" value="' + maMacDinh + '"><img src="' + (maMacDinh ? '/LayHinh/' + loaiMacDinh + '/' + maMacDinh : '') + '" /><i></i><u></u>');
+        $phanTu.after('<input type="hidden" name="' + name + '" value="' + maMacDinh + '"><img src="' + (maMacDinh ? '/LayHinh/' + loaiMacDinh + '/' + maMacDinh : '') + '" /><i ></i><u></u>');
         if (maMacDinh) {
             $phanTu.addClass('co');
         }
@@ -226,7 +226,30 @@ function khoiTaoTapTinInput_LCT($form) {
             return;
         }
 
+        var tapTin = this.files[0];
+
         $phanTu = $(this);
+
+        var duoiGioiHan = $phanTu.attr('data-duoi');
+        if (duoiGioiHan) {
+            var ten = tapTin.name;
+
+            //Lấy phần đuôi
+            var duoi = ten.split('.').pop();
+            if ($.inArray(duoi, duoiGioiHan.split(' ')) === -1) {
+                moPopupThongBao('Chỉ được phép sử dụng các tập tin ' + duoiGioiHan.replace(/ /g, ', '));
+                return;
+            }
+        }
+
+        var dungLuongGioiHan = $phanTu.attr('data-dung-luong');
+        console.log(dungLuongGioiHan);
+        console.log(tapTin.size);
+        console.log(tapTin.size > dungLuongGioiHan);
+        if (dungLuongGioiHan && tapTin.size > dungLuongGioiHan) {
+            moPopupThongBao('Dung lượng phải nhỏ hơn ' + (dungLuongGioiHan / 1024) + 'KB');
+            return;
+        }
 
         //Lấy, xử lý thanh thể hiện xử lý
         var thanhTheHien = $phanTu.find('~ u')[0];
@@ -235,7 +258,7 @@ function khoiTaoTapTinInput_LCT($form) {
 
         //Lấy data
         var data = new FormData();
-        data.append('TapTin', this.files[0]);
+        data.append('TapTin', tapTin);
 
         //post request
         $.ajax({
@@ -272,26 +295,34 @@ function khoiTaoTapTinInput_LCT($form) {
             alert('Thêm file thất bại')
         });
     });
+
+    $form.find('input[type="file"] ~ i').on('click', function (e) {
+        var $input = $(this).siblings('.co');
+        if ($input.length != 0) {
+            e.preventDefault();
+
+            $input.removeClass('co');
+            $input.find('~ img').removeAttr('src');
+            $input.find('~ input[type="hidden"]').val('').change();
+        }
+    });
 }
 
 //function khoiTaoChuDeInput_LCT($form) {
 //    $form.find('input[data-input-type="chu-de"]').on('focus', function (e, mo) {
 //        var $phanTu = $(this);
-//
-        //moPopupFull({
-        //    url: '/ChuDe/_Chon',
-        //    thanhCong: function ($popup) {
-        //        var $khung = $popup.find('#khung_quan_ly');
-
-        //        khoiTaoKhungChuDe($khung);
-
-        //        $khung.on('chon', function (e, data) {
-        //            $popup.tat();
-        //            $phanTu.val(data.ten).focusout();
-        //            $phanTu.next().val(data.ma).change();
-        //        });
-        //    }
-        //});
+//        moPopupFull({
+//            url: '/ChuDe/_Chon',
+//            thanhCong: function ($popup) {
+//                var $khung = $popup.find('#khung_quan_ly');
+//                khoiTaoKhungChuDe($khung);
+//                $khung.on('chon', function (e, data) {
+//                    $popup.tat();
+//                    $phanTu.val(data.ten).focusout();
+//                    $phanTu.next().val(data.ma).change();
+//                });
+//            }
+//        });
 //    });
 //}
 
@@ -1093,7 +1124,8 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
                 ngay.length >= 3 &&
                 ngay[0] > 0 &&
                 ngay[1] > 0 &&
-                ngay[0] <= mangThang[ngay[1]]
+                ngay[0] <= mangThang[ngay[1]] &&
+                ngay[2] < 3000
             ) {
                 this.value = ngay[0] + '/' + ngay[1] + '/' + ngay[2];
                 tatLoi($(this), 'ngay');
@@ -1168,8 +1200,27 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
 
     if ($form.is('[data-cap-nhat]')) {
         $form.find('.input :input').on('change', function () {
-            $(this).removeAttr('data-cu');
+            tatDataCu_LCT($form, $(this));
         })
+    }
+}
+
+function tatDataCu_LCT($form, $input) {
+    if ($input.is('[data-cu]')) {
+        $input.removeAttr('data-cu');
+
+        var doiTuong = $input.attr('data-doi-tuong');
+        if (doiTuong) {
+            dsDoiTuong = doiTuong.split(' ');
+            chuoiDoiTuong = '';
+
+            $(dsDoiTuong).each(function () {
+                chuoiDoiTuong += ',[data-tat="' + this + '"],[data-mo="' + this + '"]';
+            });
+
+
+            tatDataCu_LCT($form, $form.find(chuoiDoiTuong.substr(1)));
+        }
     }
 }
 

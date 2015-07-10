@@ -147,7 +147,7 @@ END
 
 GO
 --Cập nhật chủ đề
-CREATE PROC dbo.capNhatChuDeTheoMa (
+ALTER PROC dbo.capNhatChuDeTheoMa (
 	@0 INT, --Ma
 	@1 dbo.BangCapNhat READONLY
 )
@@ -164,16 +164,7 @@ BEGIN
 		')
 	END	
 
-	SELECT TOP 1
-		Ma,
-		Ten,
-		MoTa,
-		MaNguoiTao,
-		ThoiDiemTao,
-		MaCha,
-		MaHinhDaiDien
-		FROM dbo.ChuDe
-		WHERE Ma = @0
+	EXEC dbo.layChuDeTheoMa @0
 END
 
 GO

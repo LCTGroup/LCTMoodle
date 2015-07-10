@@ -111,6 +111,12 @@ namespace BUSLayer
             }
             var baiTap = ketQua.ketQua as BaiVietBaiTapDTO;
 
+            //Kiểm tra thời hạn nộp
+            if (baiTap.thoiDiemHetHan.HasValue && baiTap.thoiDiemHetHan.Value < DateTime.Now)
+            {
+                return new KetQua(3, "Bài tập đã hết hạn nộp");
+            }
+
             //Kiểm tra người dùng là thành viên của khóa học
             ketQua = KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(baiTap.khoaHoc.ma, maNguoiTao);
             var thanhVien = ketQua.ketQua as KhoaHoc_NguoiDungDTO;

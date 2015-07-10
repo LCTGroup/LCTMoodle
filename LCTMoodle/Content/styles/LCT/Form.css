@@ -422,13 +422,17 @@
     left: -9999px;
 }
 
-.lct-form .file-label input[type="file"].co ~ img {
+    .lct-form .file-label input[type="file"].co ~ img {
     display: inline-block;
 }
 
-.lct-form .file-label input[type="file"].co ~ i {
-    display: none;
-}
+    .lct-form .file-label input[type="file"].co ~ i {
+        font-size: 15px;
+    }
+
+        .lct-form .file-label input[type="file"].co ~ i:before {
+            content: '\e681';
+        }
 
 .lct-form .file-label img {
     display: none;
@@ -440,7 +444,7 @@
 .lct-form .file-label i {
     font: normal 20px 'Stroke Icon';
     color: #ddd;
-    transition: 0.5s;
+    transition: color 0.5s;
     align-self: center;
 }
     .lct-form .file-label i:before {
