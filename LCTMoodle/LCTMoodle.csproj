@@ -244,6 +244,7 @@
     <Content Include="Content\styles\NguoiDung\TinNhan.css" />
     <Content Include="Content\styles\NguoiDung\Xem.css" />
     <Content Include="Content\styles\Quyen\QuanLy.css" />
+    <Content Include="Content\styles\Quyen\QuyenNguoiDung.css" />
     <Content Include="Content\styles\TrangChu\Index.css" />
     <Content Include="Global.asax" />
     <Content Include="Plugin\ckeditor\build-config.js" />
@@ -526,6 +527,8 @@
     <Content Include="Views\NguoiDung\TinNhan.cshtml" />
     <Content Include="Views\NguoiDung\ChiTietTinNhan.cshtml" />
     <Content Include="Views\LCT\Khung.cshtml" />
+    <Content Include="Views\Quyen\_QuyenNguoiDung.cshtml" />
+    <Content Include="Views\Quyen\QuyenCuaToi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

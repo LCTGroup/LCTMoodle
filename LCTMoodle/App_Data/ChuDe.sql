@@ -60,6 +60,7 @@ BEGIN
 		CD.ThoiDiemTao,
 		CD.MaCha,
 		CD.MaHinhDaiDien,
+		CD.Cay,
 		COUNT(DISTINCT CD_Con.Ma) 'SLChuDeCon',
 		COUNT(DISTINCT KH.Ma) 'SLKhoaHocCon'
 		FROM 
@@ -77,7 +78,8 @@ BEGIN
 			CD.MaNguoiTao,
 			CD.ThoiDiemTao,
 			CD.MaCha,
-			CD.MaHinhDaiDien
+			CD.MaHinhDaiDien,
+			CD.Cay
 END
 
 GO
@@ -95,6 +97,7 @@ BEGIN
 		CD.ThoiDiemTao,
 		CD.MaCha,
 		CD.MaHinhDaiDien,
+		CD.Cay,
 		COUNT(DISTINCT CD_Con.Ma) 'SLChuDeCon',
 		COUNT(DISTINCT KH.Ma) 'SLKhoaHocCon'
 		FROM 
@@ -112,7 +115,8 @@ BEGIN
 			CD.MaNguoiTao,
 			CD.ThoiDiemTao,
 			CD.MaCha,
-			CD.MaHinhDaiDien
+			CD.MaHinhDaiDien,
+			CD.Cay
 END
 
 GO
@@ -128,19 +132,12 @@ END
 
 GO
 --Tìm kiếm chủ đề
-CREATE PROC dbo.layChuDe_TimKiem (
+ALTER PROC dbo.layChuDe_TimKiem (
 	@0 NVARCHAR(MAX) --Từ khóa
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		Ten,
-		MoTa,
-		MaNguoiTao,
-		ThoiDiemTao,
-		MaCha,
-		MaHinhDaiDien
+	SELECT *
 		FROM dbo.ChuDe
 		WHERE Ten LIKE '%' + REPLACE(@0, ' ', '%') + '%'
 END

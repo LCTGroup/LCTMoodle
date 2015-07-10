@@ -73,19 +73,39 @@ namespace LCTMoodle.Controllers
 
         public ActionResult Tao(int ma = 0)
         {
-            //Tạo mới
+            if (Session["NguoiDung"] == null)
+            {
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Cần đăng nhập để sử dụng chức năng này."));
+            }
+            int maNguoiDung = (int)Session["NguoiDung"];
+
+            KetQua ketQua;
+            #region Tạo
             if (ma == 0)
             {
-                if (!BUS.coQuyen("QLNoiDung", "KH"))
+                //Lấy chủ đề mà người dùng có thể tạo
+                //Ở hệ thống
+                ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("HT", maNguoiDung, "KH", "QLNoiDung");
+                if (ketQua.trangThai != 0)
                 {
-                    return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn không có quyền tạo khóa học."));
+                    //Ở chủ đề
+                    ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("CD", maNguoiDung, "KH", "QLNoiDung");
+
+                    if (ketQua.trangThai != 0)
+                    {
+                        //Nếu không tìm thấy ở 2 phạm vi tren => ko có quyền
+                        return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn không có quyền tạo khóa học."));
+                    }
                 }
 
-                return View();
-            }
+                ViewData["ChuDe"] = ketQua.ketQua as string;
 
-            //Sửa
-            var ketQua = KhoaHocBUS.layTheoMa(ma, new LienKet()
+                return View();
+            } 
+            #endregion
+
+            #region Sửa
+            ketQua = KhoaHocBUS.layTheoMa(ma, new LienKet()
                 {
                     "ChuDe"
                 });
@@ -93,13 +113,46 @@ namespace LCTMoodle.Controllers
             {
                 return Redirect("/?tb=" + HttpUtility.UrlEncode("Khóa học không tồn tại"));
             }
+            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
 
-            if (!BUS.coQuyen("QLNoiDung", "KH"))
+            //Lấy chủ đề mà người dùng có thể sửa
+            //Ở hệ thống
+            ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("HT", maNguoiDung, "KH", "QLNoiDung");
+            if (ketQua.trangThai != 0)
+            {
+                //Ở chủ đề
+                ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("CD", maNguoiDung, "KH", "QLNoiDung");
+
+                if (ketQua.trangThai != 0)
+                {
+                    //Nếu không tìm thấy ở 2 phạm vi trên => ko có quyền
+                    if (!BUS.coQuyen("QLThongTin", "KH", khoaHoc.ma.Value, maNguoiDung))
+                    {
+                        return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn không có quyền sửa khóa học."));
+                    }
+                    return View(khoaHoc);
+                }
+            }
+            string chuoiMaChuDe = ketQua.ketQua as string;
+
+            //Kiểm tra người dùng có thể sửa khóa học này không
+            foreach(var maChuDe in chuoiMaChuDe.Split('|').Select(int.Parse))
+            {
+                ketQua = ChuDeBUS.thuocCay(khoaHoc.chuDe, maChuDe);
+                if (ketQua.trangThai == 0 && (bool)ketQua.ketQua)
+                {
+                    //Trường hợp có quyền tạo trên chủ đề
+                    ViewData["ChuDe"] = chuoiMaChuDe;
+                    return View(khoaHoc);
+                }
+            }
+
+            if (!BUS.coQuyen("QLThongTin", "KH", khoaHoc.ma.Value, maNguoiDung))
             {
                 return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn không có quyền sửa khóa học."));
             }
-
-            return View(ketQua.ketQua);
+            return View(khoaHoc);
+            #endregion
         }       
 
         public ActionResult DanhSach()

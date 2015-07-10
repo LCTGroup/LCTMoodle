@@ -199,7 +199,7 @@ namespace LCTMoodle.Controllers
             }
             else
             {
-                coQuyenQuanLyNguoiDung = QuyenBUS.coQuyen("QuanLyNguoiDung", "ND", 0, maNguoiDung);
+                coQuyenQuanLyNguoiDung = QuyenBUS.coQuyen("QLNguoiDung", "ND", 0, maNguoiDung);
             }
             
             if (!coQuyenQuanLyNguoiDung)
@@ -234,7 +234,7 @@ namespace LCTMoodle.Controllers
             }
             else
             {
-                coQuyenQuanLyNguoiDung = QuyenBUS.coQuyen("QuanLyNguoiDung", "ND", 0, maNguoiDung);
+                coQuyenQuanLyNguoiDung = QuyenBUS.coQuyen("QLNguoiDung", "ND", 0, maNguoiDung);
             }
 
             if (!coQuyenQuanLyNguoiDung)

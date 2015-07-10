@@ -1,0 +1,157 @@
+﻿@using Helpers
+@{
+    if (Session["NguoiDung"] == null)
+    {
+        return;
+    }
+
+    var ketQua = BUSLayer.QuyenBUS.danhSachQuyenCuaNguoiDung((int)Session["NguoiDung"]);
+    if (ketQua.trangThai != 0)
+    {
+        return;
+    }
+
+    var dsQuyen = ketQua.ketQua as Dictionary<string, Dictionary<int, List<string>>>;
+}
+
+<article class="hop">
+    <section class="tieu-de">Chức năng có thể sử dụng</section>
+    <section class="noi-dung khung-quyen">
+        @* Hệ thống *@
+        @if (
+            dsQuyen.ContainsKey("HT") && dsQuyen["HT"].ContainsKey(0) &&
+            QuyenHelper.co(dsQuyen["HT"][0], "QLQuyen")
+            )
+        {
+            <article class="pham-vi">
+                <section class="ten">
+                    Hệ thống
+                </section>
+                <section class="ds-chuc-nang">
+                    <a href="/QuanLyQuyen">Quản lý quyền</a>
+                </section>
+            </article>
+        }
+
+        @* Người dùng *@
+        @if (
+            dsQuyen.ContainsKey("ND") && dsQuyen["ND"].ContainsKey(0) &&
+            QuyenHelper.co(dsQuyen["ND"][0], "QLNguoiDung")
+            )
+        {
+            <article class="pham-vi">
+                <section class="ten">
+                    Người dùng
+                </section>
+                <section class="ds-chuc-nang">
+                    <a href="/NguoiDung/QuanLyNguoiDung">Quản lý</a>
+                </section>
+            </article>
+        }
+
+        @* Chủ đề *@
+        @if (dsQuyen.ContainsKey("CD"))
+        {
+            if (dsQuyen["CD"].ContainsKey(0))
+            {
+                bool coQuyenQLQuyen = QuyenHelper.co(dsQuyen["CD"][0], "QLQuyen");
+                bool coQuyenQLNoiDung = QuyenHelper.co(dsQuyen["CD"][0], "QLNoiDung");
+                
+                if (coQuyenQLNoiDung || coQuyenQLQuyen)
+                {
+                    <section class="pham-vi">
+                        <section class="ten">
+                            Chủ đề
+                        </section>
+                        <section class="ds-chuc-nang">                        
+                            @if (coQuyenQLQuyen)
+                            {
+                                <a href="/QuanLyQuyen/CD">Quản lý quyền</a>
+                            }
+                            @if (coQuyenQLNoiDung)
+                            {
+                                <a href="/ChuDe/QuanLy">Quản lý nội dung</a>
+                            }
+                        </section>
+                    </section>   
+                }
+
+                dsQuyen["CD"].Remove(0);
+            }
+            
+            foreach (var pair in dsQuyen["CD"])
+            {
+                ketQua = BUSLayer.ChuDeBUS.layTheoMa(pair.Key);
+                if (ketQua.trangThai != 0)
+                {
+                    continue;
+                }
+                var chuDe = ketQua.ketQua as DTOLayer.ChuDeDTO;
+                    
+                bool coQuyenQLQuyen = QuyenHelper.co(pair.Value, "QLQuyen");
+                bool coQuyenQLNoiDung = QuyenHelper.co(pair.Value, "QLNoiDung");
+                
+                if (coQuyenQLNoiDung || coQuyenQLQuyen)
+                {
+                    <section class="pham-vi">
+                        <section class="ten">
+                            Chủ đề @chuDe.ten
+                        </section>
+                        <section class="ds-chuc-nang">                        
+                            @if (coQuyenQLQuyen)
+                            {
+                                <a href="/QuanLyQuyen/CD/@chuDe.ma">Quản lý quyền</a>
+                            }
+                            @if (coQuyenQLNoiDung)
+                            {
+                                <a href="/ChuDe/QuanLy/@chuDe.ma">Quản lý nội dung</a>
+                            }
+                        </section>
+                    </section>   
+                }
+            }
+        }
+
+        @* Hỏi đáp *@
+        @if (dsQuyen.ContainsKey("HD") && dsQuyen["HD"].ContainsKey(0))
+        {
+            bool coQuyenDuyetCH = QuyenHelper.co(dsQuyen["HD"][0], "DuyetCauHoi");
+            bool coQuyenDuyetTL = QuyenHelper.co(dsQuyen["HD"][0], "DuyetTraLoi");
+            
+            if (coQuyenDuyetTL || coQuyenDuyetCH)
+            {
+            <article class="pham-vi">
+                <section class="ten">
+                    Hỏi đáp
+                </section>
+                <section class="ds-chuc-nang">
+                    @if (coQuyenDuyetCH)
+                    {
+                        <a href="/HoiDap/QuanLyCauHoi">Quản lý câu hỏi</a>
+                    }
+                    @if (coQuyenDuyetTL)
+                    {
+                        <a href="/HoiDap/QuanLyTraLoi">Quản lý trả lời</a>
+                    }
+                </section>
+            </article>
+            }
+        }
+
+        @* Khóa học *@
+        @if (dsQuyen.ContainsKey("KH") && dsQuyen["KH"].ContainsKey(0))
+        {
+            if (QuyenHelper.co(dsQuyen["KH"][0], "QLNoiDung"))
+            {
+                <article class="pham-vi">
+                    <section class="ten">
+                        Khóa học
+                    </section>
+                    <section class="ds-chuc-nang">
+                            <a href="/KhoaHoc/Tao">Tạo khóa học</a>
+                    </section>
+                </article>
+            }
+        }
+    </section>
+</article>

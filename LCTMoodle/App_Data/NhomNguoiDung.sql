@@ -148,6 +148,101 @@ BEGIN
 END
 
 GO
+--Lấy đối tượng mà quyền chung tác động
+ALTER PROC dbo.layNhomNguoiDungTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong (
+	@0 VARCHAR(MAX), --Phạm vi
+	@1 INT, --MaNguoiDung
+	@2 VARCHAR(MAX), --PhamViQuyen
+	@3 VARCHAR(MAX) --GiaTriQuyen
+)
+AS
+BEGIN
+	IF (@0 = 'HT')
+	BEGIN
+		IF (EXISTS(
+			SELECT 1
+				FROM dbo.NguoiDung
+				WHERE
+					Ma = @1 AND
+					CoQuyenNhomHT = 1		
+		))
+		BEGIN
+			DECLARE @dsMaDoiTuong VARCHAR(MAX) = ''
+			SELECT @dsMaDoiTuong = '0'
+				FROM
+					--Lấy nhóm mà người dùng thuộc
+					dbo.NhomNguoiDung_HT_NguoiDung NND_ND
+						--Quyền mà nhóm có
+						INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
+							NND_ND.MaNguoiDung = @1 AND
+							NND_ND.MaNhomNguoiDung = NND_Q.MaNhomNguoiDung
+						--Chi tiết quyền
+						INNER JOIN dbo.Quyen Q ON
+							NND_Q.MaQuyen = Q.Ma AND						
+							(Q.GiaTri = @3 OR
+								Q.GiaTri = 'QLDB') AND
+							Q.PhamVi = @2
+						INNER JOIN dbo.NhomNguoiDung_HT NND ON
+							NND_ND.MaNhomNguoiDung = NND.Ma
+
+			SELECT CASE
+				WHEN @dsMaDoiTuong = '' THEN
+					NULL
+				ELSE
+					@dsMaDoiTuong
+				END
+		END
+		ELSE
+		BEGIN
+			SELECT NULL
+		END
+	END
+	ELSE
+	BEGIN
+		EXEC('
+			IF (EXISTS(
+				SELECT 1
+					FROM dbo.NguoiDung
+					WHERE
+						Ma = ' + @1 + ' AND
+						CoQuyenNhom' + @0 + ' = 1		
+			))
+			BEGIN
+				DECLARE @dsMaDoiTuong VARCHAR(MAX) = ''''
+				SELECT @dsMaDoiTuong += CAST(NND.MaDoiTuong AS VARCHAR(MAX)) + ''|''
+					FROM
+						--Lấy nhóm mà người dùng thuộc
+						dbo.NhomNguoiDung_' + @0 + '_NguoiDung NND_ND
+							--Quyền mà nhóm có
+							INNER JOIN dbo.NhomNguoiDung_' + @0 + '_Quyen NND_Q ON
+								NND_ND.MaNguoiDung = ' + @1 + ' AND
+								NND_ND.MaNhomNguoiDung = NND_Q.MaNhomNguoiDung
+							--Chi tiết quyền
+							INNER JOIN dbo.Quyen Q ON
+								NND_Q.MaQuyen = Q.Ma AND
+								(Q.GiaTri = ''' + @3 + ''' OR
+									Q.GiaTri = ''QLDB'') AND
+								Q.PhamVi = ''' + @2 + '''
+							INNER JOIN dbo.NhomNguoiDung_' + @0 + ' NND ON
+								NND_ND.MaNhomNguoiDung = NND.Ma
+					GROUP BY NND.MaDoiTuong
+
+				SELECT CASE
+					WHEN @dsMaDoiTuong = '''' THEN
+						NULL
+					ELSE
+						LEFT(@dsMaDoiTuong, LEN(@dsMaDoiTuong) - 1)
+					END
+			END
+			ELSE
+			BEGIN
+				SELECT NULL
+			END
+		')
+	END
+END
+
+GO
 --Tạo nhóm mặc định
 ALTER PROC themNhomNguoiDung_MacDinh (
 	@0 NVARCHAR(MAX), --PhamVi

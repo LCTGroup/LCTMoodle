@@ -15,5 +15,6 @@ namespace DTOLayer
         public ChuDeDTO cha;
         public TapTinDTO hinhDaiDien;
         public List<ChuDeDTO> con;
+        public string cay;
     }
 }

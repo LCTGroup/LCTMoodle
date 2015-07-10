@@ -35,7 +35,7 @@ namespace LCTMoodle.Controllers
                 chuDe = ketQua.ketQua as ChuDeDTO;
             }
 
-            if (!BUS.coQuyen("QLQuyen", "CD", ma, maNguoiDung))
+            if (!BUS.coQuyen("QLNoiDung", "CD", ma, maNguoiDung))
             {
                 return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần có quyền quản lý để thực hiện chức năng này."));
             }
@@ -311,25 +311,31 @@ namespace LCTMoodle.Controllers
             }
         }
 
-        public ActionResult _GoiY(string tuKhoa)
+        public ActionResult _GoiY(string tuKhoa, string chuoiMaChuDe)
         {
             KetQua ketQua = ChuDeBUS.lay_TimKiem(tuKhoa);
 
             if (ketQua.trangThai != 0)
             {
-                return Json(new KetQua()
-                {
-                    trangThai = 1
-                }, JsonRequestBehavior.AllowGet);
+                return Json(new KetQua(1), JsonRequestBehavior.AllowGet);
             }
 
             List<ChuDeDTO> chuDe = ketQua.ketQua as List<ChuDeDTO>;
 
-            return Json(new KetQua()
+            //Lọc chủ đề đc phép
+            if (!string.IsNullOrWhiteSpace(chuoiMaChuDe))
             {
-                trangThai = 0,
-                ketQua = chuDe.Select(x => new { ma = x.ma, ten = x.ten }).ToArray()
-            }, JsonRequestBehavior.AllowGet);
+                chuoiMaChuDe = "|" + chuoiMaChuDe + "|";
+
+                chuDe = chuDe.Where(x => x.cay.IndexOf(chuoiMaChuDe) != -1).ToList();
+                
+                if (chuDe.Count == 0)
+                {
+                    return Json(new KetQua(1), JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            return Json(new KetQua(chuDe.Select(x => new { ma = x.ma, ten = x.ten })), JsonRequestBehavior.AllowGet);
         }
 	}
 }

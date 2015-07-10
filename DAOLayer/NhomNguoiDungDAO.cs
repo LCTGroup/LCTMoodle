@@ -150,5 +150,20 @@ namespace DAOLayer
                     }
                 );
         }
+
+        public static KetQua layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong(string phamVi, int? maNguoiDung, string phamViQuyen, string giaTriQuyen)
+        {
+            return layGiaTri<string>
+                (
+                    "layNhomNguoiDungTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong",
+                    new object[]
+                    {
+                        phamVi,
+                        maNguoiDung,
+                        phamViQuyen,
+                        giaTriQuyen
+                    }
+                );
+        }
     }
 }

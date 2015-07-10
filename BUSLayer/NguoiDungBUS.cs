@@ -236,7 +236,7 @@ namespace BUSLayer
                 return new KetQua(4, "Bạn chưa đăng nhập");
             }
 
-            if (!QuyenBUS.coQuyen("QuanLyNguoiDung", "ND", 0, maNguoiChan))
+            if (!QuyenBUS.coQuyen("QLNguoiDung", "ND", 0, maNguoiChan))
             {
                 return new KetQua(3, "Bạn không có quyền chặn người dùng");
             }
