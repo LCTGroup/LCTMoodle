@@ -52,6 +52,11 @@ namespace DAOLayer
                         quyen.laQuyenChung = layBool(dong, i);
                         break;
                     default:
+                        if (quyen.duLieuThem == null)
+                        {
+                            quyen.duLieuThem = new Dictionary<string, object>();
+                        }
+                        quyen.duLieuThem.Add(dong.GetName(i), dong[i]);
                         break;
                 }
             }
@@ -112,6 +117,19 @@ namespace DAOLayer
                         maDoiTuong,
                         giaTri
                     }
+                );
+        }
+
+        public static KetQua layTheoMaNguoiDung_ToanBoQuyen(int? maNguoiDung, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layQuyenTheoMaNguoiDung_ToanBoQuyen",
+                    new object[]
+                    {
+                        maNguoiDung
+                    },
+                    lienKet
                 );
         }
     }

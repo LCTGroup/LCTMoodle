@@ -1,0 +1,27 @@
+﻿.khung-quyen {
+
+}
+
+    .khung-quyen .pham-vi {
+        margin-bottom: 10px;
+    }
+
+    .khung-quyen .ten {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .khung-quyen .ds-chuc-nang a {
+        display: inline-block;
+        padding: 5px;
+        background-color: #fff;
+        border: 1px solid #eee;
+        transition: 0.5s;
+        margin-bottom: 4px;
+    }
+
+        .khung-quyen .ds-chuc-nang a:hover {
+            border-color: #ddd;
+            text-decoration: none;
+            color: #000;
+        }

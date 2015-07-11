@@ -12,6 +12,8 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult QuanLy(string phamVi = "HT", int maDoiTuong = 0)
         {
+            phamVi = phamVi.ToUpper();
+
             #region Kiểm tra tham số
             switch(phamVi)
             {
@@ -338,6 +340,18 @@ namespace LCTMoodle.Controllers
                     trangThai = 0,
                     ketQua = renderPartialViewToString(ControllerContext, "Quyen/_DanhSach_NguoiDung.cshtml", ketQua.ketQua)
                 }, JsonRequestBehavior.AllowGet);
+        }
+        
+        public ActionResult QuyenCuaToi()
+        {
+            #region Kiểm tra quyền
+            if (Session["NguoiDung"] == null)
+            {
+                return Redirect("/tb=" + HttpUtility.UrlEncode("Bạn cần đăng nhập để sử dụng chức năng này."));
+            }
+	        #endregion
+
+            return View();
         }
 	}
 }

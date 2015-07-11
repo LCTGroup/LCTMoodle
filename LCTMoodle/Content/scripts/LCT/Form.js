@@ -1,4 +1,5 @@
-﻿// Lưu đối tượng vừa focus
+﻿
+// Lưu đối tượng vừa focus
 var $inputVuaFocus = {};
 var soLuongEditor = 0;
 
@@ -537,7 +538,7 @@ function khoiTaoGoiYInput_LCT($form) {
         var html = '', soLuong = data.length;
 
         for (var i = 0; i < soLuong; i++) {
-            html += '<li><span title="' + data[i].moTa + '" data-ma="' + data[i].ma + '">' + data[i].ten + '</span></li>';
+            html += '<li><span title="' + (data[i].moTa || '') + '" data-ma="' + data[i].ma + '">' + data[i].ten + '</span></li>';
         }
 
         return html;
