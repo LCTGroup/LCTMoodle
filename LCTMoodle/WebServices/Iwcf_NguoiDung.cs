@@ -17,12 +17,15 @@ namespace LCTMoodle.WebServices
         int kiemTraDangNhap(string _TenDN, string _MatKhau);
 
         [OperationContract]
-        clientmodel_NguoiDung themNguoiDung();
+        clientmodel_DangNhap themNguoiDung();
 
         [OperationContract]
-        clientmodel_NguoiDung dangNhap(string tenDN, string matKhau);
+        clientmodel_NguoiDung layNguoiDungTheoMa(int ma);
 
         [OperationContract]
-        clientmodel_NguoiDung dangKy(string tenDN, string matKhau, string email, string hoTen, DateTime ngaySinh, int maHinh);
+        clientmodel_DangNhap dangNhap(string tenDN, string matKhau);
+
+        [OperationContract]
+        clientmodel_DangNhap dangKy(string tenDN, string matKhau, string email, string hoTen, DateTime ngaySinh, int maHinh);
     }
 }
