@@ -51,7 +51,7 @@ namespace LCTMoodle.WebServices
             string _DuongDan = TapTinHelper.layDuongDan(_Loai, ten);
             clientmodel_HinhAnh cm_HinhAnh = new clientmodel_HinhAnh();
 
-            cm_HinhAnh._ChiSo = chiSo;
+            cm_HinhAnh.chiSo = chiSo;
 
             if (File.Exists(@_DuongDan))
             {
@@ -59,7 +59,7 @@ namespace LCTMoodle.WebServices
                 using (var ms = new MemoryStream())
                 {
                     img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                    cm_HinhAnh._HinhAnh = ms.ToArray();
+                    cm_HinhAnh.hinhAnh = ms.ToArray();
                 }
             }
 

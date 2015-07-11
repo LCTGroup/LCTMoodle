@@ -14,30 +14,33 @@ namespace LCTMoodle.WebServices
     public interface Iwcf_KhoaHoc
     {
         [OperationContract]
-        byte[] layHinhAnh(string _Ten);
+        byte[] layHinhAnh(string ten);
 
         [OperationContract]
-        clientmodel_HinhAnh layHinhAnhChiSo(int _ChiSo, string _Ten);
+        clientmodel_HinhAnh layHinhAnhChiSo(int chiSo, string ten);
 
         [OperationContract]
-        KhoaHocDTO layTheoMa(int _Ma);
+        KhoaHocDTO layTheoMa(int ma);
 
         [OperationContract]
         List<KhoaHocDTO> lay();
 
         [OperationContract]
-        List<clientmodel_KhoaHoc> layTheoMaChuDe(int _MaChuDe);
+        List<clientmodel_KhoaHoc> layTheoMaChuDe(int maChuDe);
 
         [OperationContract]
-        List<clientmodel_KhoaHoc> layTheoMaNguoiDung(int _MaNguoiDung);
+        List<clientmodel_KhoaHoc> layKhoaHocThamGiaTheoMaNguoiDung(int maNguoiDung);
 
         [OperationContract]
-        string layTheoMaNguoiDungVaTrangThai(int _MaNguoiDung, int _TrangThai);
+        string layTheoMaNguoiDungVaTrangThai(int maNguoiDung, int trangThai);
 
         [OperationContract]
-        List<clientmodel_KhoaHoc> timKiem(string _TuKhoa);
+        List<clientmodel_KhoaHoc> layTheoTieuChi(int soKhoaHoc, string tieuChi);
 
         [OperationContract]
-        List<KhoaHocDTO> timKiemTheoMaChuDe(int _MaChuDe, string _TuKhoa);
+        List<clientmodel_KhoaHoc> timKiem(string tuKhoa);
+
+        [OperationContract]
+        List<KhoaHocDTO> timKiemTheoMaChuDe(int maChuDe, string tuKhoa);
     }
 }

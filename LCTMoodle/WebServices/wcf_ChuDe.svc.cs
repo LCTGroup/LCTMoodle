@@ -22,11 +22,11 @@ namespace LCTMoodle.WebServices
         /// <summary>
         /// Webservice lấy hình ảnh
         /// </summary>
-        /// <param name="_Ten"></param>
+        /// <param name="ten"></param>
         /// <returns>byte[]</returns>
-        public byte[] layHinhAnh(string _Ten)
+        public byte[] layHinhAnh(string ten)
         {
-            string _DuongDan = TapTinHelper.layDuongDan(_Loai, _Ten);
+            string _DuongDan = TapTinHelper.layDuongDan(_Loai, ten);
 
             if(File.Exists(@_DuongDan))
             {
@@ -43,15 +43,15 @@ namespace LCTMoodle.WebServices
         /// <summary>
         /// Webservice lấy hình ảnh và trả về chỉ số
         /// </summary>
-        /// <param name="_ChiSo"></param>
-        /// <param name="_Ten"></param>
+        /// <param name="chiSo"></param>
+        /// <param name="ten"></param>
         /// <returns>clientmodel_HinhAnh</returns>
-        public clientmodel_HinhAnh layHinhAnhChiSo(int _ChiSo, string _Ten)
+        public clientmodel_HinhAnh layHinhAnhChiSo(int chiSo, string ten)
         {
-            string _DuongDan = TapTinHelper.layDuongDan(_Loai, _Ten);
+            string _DuongDan = TapTinHelper.layDuongDan(_Loai, ten);
             clientmodel_HinhAnh cm_HinhAnh = new clientmodel_HinhAnh();
 
-            cm_HinhAnh._ChiSo = _ChiSo;
+            cm_HinhAnh.chiSo = chiSo;
 
             if (File.Exists(@_DuongDan))
             {
@@ -59,7 +59,7 @@ namespace LCTMoodle.WebServices
                 using (var ms = new MemoryStream())
                 {
                     img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                    cm_HinhAnh._HinhAnh = ms.ToArray();
+                    cm_HinhAnh.hinhAnh = ms.ToArray();
                 }
             }
 
@@ -69,11 +69,11 @@ namespace LCTMoodle.WebServices
         /// <summary>
         /// Webservice lấy chủ đề theo mã
         /// </summary>
-        /// <param name="_Ma"></param>
+        /// <param name="ma"></param>
         /// <returns>ChuDeDTO</returns>
-        public ChuDeDTO layTheoMa(int _Ma)
+        public ChuDeDTO layTheoMa(int ma)
         {
-            KetQua ketQua = ChuDeBUS.layTheoMa(_Ma, new LienKet { "HinhDaiDien" });
+            KetQua ketQua = ChuDeBUS.layTheoMa(ma, new LienKet { "HinhDaiDien" });
             ChuDeDTO dto_ChuDe = new ChuDeDTO();
             
             if(ketQua.trangThai == 0)
@@ -86,11 +86,11 @@ namespace LCTMoodle.WebServices
         /// <summary>
         /// Webservice lấy chủ đề theo mã chủ đề cha
         /// </summary>
-        /// <param name="_MaChuDeCha"></param>
-        /// <returns>List<ChuDeDTO></returns>
-        public List<clientmodel_ChuDe> layTheoMaCha(int _MaChuDeCha)
+        /// <param name="maChuDeCha"></param>
+        /// <returns>List<clientmodel_ChuDe></returns>
+        public List<clientmodel_ChuDe> layTheoMaCha(int maChuDeCha)
         {
-            KetQua ketQua = ChuDeBUS.layTheoMaCha(_MaChuDeCha, new LienKet { "HinhDaiDien" });
+            KetQua ketQua = ChuDeBUS.layTheoMaCha(maChuDeCha, new LienKet { "HinhDaiDien" });
             List<clientmodel_ChuDe> lst_ChuDe = new List<clientmodel_ChuDe>();
 
             if(ketQua.trangThai == 0)
@@ -101,41 +101,41 @@ namespace LCTMoodle.WebServices
                     {
                         lst_ChuDe.Add(new clientmodel_ChuDe()
                         {
-                            Ma = chuDe.ma.Value,
+                            ma = chuDe.ma.Value,
                         });
                     }
 
                     if(chuDe.ten != null)
                     {
-                        lst_ChuDe[lst_ChuDe.Count - 1].Ten = chuDe.ten;
+                        lst_ChuDe[lst_ChuDe.Count - 1].ten = chuDe.ten;
                     }
 
                     if(chuDe.thoiDiemTao != null)
                     {
-                        lst_ChuDe[lst_ChuDe.Count - 1].NgayTao = chuDe.thoiDiemTao.Value;
+                        lst_ChuDe[lst_ChuDe.Count - 1].ngayTao = chuDe.thoiDiemTao.Value;
                     }
 
                     if(chuDe.moTa != null)
                     {
-                        lst_ChuDe[lst_ChuDe.Count - 1].MoTa = chuDe.moTa;
+                        lst_ChuDe[lst_ChuDe.Count - 1].moTa = chuDe.moTa;
                     }
 
                     if (chuDe.duLieuThem != null)
                     {
                         if (chuDe.duLieuThem.ContainsKey("SLChuDeCon"))
                         {
-                            lst_ChuDe[lst_ChuDe.Count - 1].SoChuDeCon = (int)chuDe.duLieuThem["SLChuDeCon"];
+                            lst_ChuDe[lst_ChuDe.Count - 1].soChuDeCon = (int)chuDe.duLieuThem["SLChuDeCon"];
                         }
 
                         if (chuDe.duLieuThem.ContainsKey("SLKhoaHocCon"))
                         {
-                            lst_ChuDe[lst_ChuDe.Count - 1].SoKhoaHocCon = (int)chuDe.duLieuThem["SLKhoaHocCon"];
+                            lst_ChuDe[lst_ChuDe.Count - 1].soKhoaHocCon = (int)chuDe.duLieuThem["SLKhoaHocCon"];
                         }
                     }
 
                     if(chuDe.hinhDaiDien.ma != null && chuDe.hinhDaiDien.duoi != null)
                     {
-                        lst_ChuDe[lst_ChuDe.Count - 1].HinhAnh = chuDe.hinhDaiDien.ma.Value + chuDe.hinhDaiDien.duoi;
+                        lst_ChuDe[lst_ChuDe.Count - 1].hinhAnh = chuDe.hinhDaiDien.ma.Value + chuDe.hinhDaiDien.duoi;
                     }
                 }
             }
@@ -145,11 +145,11 @@ namespace LCTMoodle.WebServices
         /// <summary>
         /// Webservice tìm kiếm chủ đề
         /// </summary>
-        /// <param name="_TuKhoa"></param>
-        /// <returns>List<ChuDeDTO></returns>
-        public List<clientmodel_ChuDe> timKiem(string _TuKhoa)
+        /// <param name="tuKhoa"></param>
+        /// <returns>List<clientmodel_ChuDe></returns>
+        public List<clientmodel_ChuDe> timKiem(string tuKhoa)
         {
-            KetQua ketQua = ChuDeBUS.lay_TimKiem(_TuKhoa, new LienKet { "HinhDaiDien" });
+            KetQua ketQua = ChuDeBUS.lay_TimKiem(tuKhoa, new LienKet { "HinhDaiDien" });
             List<clientmodel_ChuDe> lst_ChuDe = new List<clientmodel_ChuDe>();
 
             if(ketQua.trangThai == 0)
@@ -160,41 +160,41 @@ namespace LCTMoodle.WebServices
                     {
                         lst_ChuDe.Add(new clientmodel_ChuDe()
                         {
-                            Ma = chuDe.ma.Value,
+                           ma = chuDe.ma.Value,
                         });
                     }
 
                     if (chuDe.ten != null)
                     {
-                        lst_ChuDe[lst_ChuDe.Count - 1].Ten = chuDe.ten;
+                        lst_ChuDe[lst_ChuDe.Count - 1].ten = chuDe.ten;
                     }
 
                     if (chuDe.thoiDiemTao != null)
                     {
-                        lst_ChuDe[lst_ChuDe.Count - 1].NgayTao = chuDe.thoiDiemTao.Value;
+                        lst_ChuDe[lst_ChuDe.Count - 1].ngayTao = chuDe.thoiDiemTao.Value;
                     }
 
                     if (chuDe.moTa != null)
                     {
-                        lst_ChuDe[lst_ChuDe.Count - 1].MoTa = chuDe.moTa;
+                        lst_ChuDe[lst_ChuDe.Count - 1].moTa = chuDe.moTa;
                     }
 
                     if(chuDe.duLieuThem != null)
                     {
                         if (chuDe.duLieuThem.ContainsKey("SLChuDeCon"))
                         {
-                            lst_ChuDe[lst_ChuDe.Count - 1].SoChuDeCon = (int)chuDe.duLieuThem["SLChuDeCon"];
+                            lst_ChuDe[lst_ChuDe.Count - 1].soChuDeCon = (int)chuDe.duLieuThem["SLChuDeCon"];
                         }
 
                         if (chuDe.duLieuThem.ContainsKey("SLKhoaHocCon"))
                         {
-                            lst_ChuDe[lst_ChuDe.Count - 1].SoKhoaHocCon = (int)chuDe.duLieuThem["SLKhoaHocCon"];
+                            lst_ChuDe[lst_ChuDe.Count - 1].soKhoaHocCon = (int)chuDe.duLieuThem["SLKhoaHocCon"];
                         }
                     }
 
                     if (chuDe.hinhDaiDien.ma != null && chuDe.hinhDaiDien.duoi != null)
                     {
-                        lst_ChuDe[lst_ChuDe.Count - 1].HinhAnh = chuDe.hinhDaiDien.ma.Value + chuDe.hinhDaiDien.duoi;
+                        lst_ChuDe[lst_ChuDe.Count - 1].hinhAnh = chuDe.hinhDaiDien.ma.Value + chuDe.hinhDaiDien.duoi;
                     }
                 }
             }

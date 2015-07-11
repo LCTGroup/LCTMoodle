@@ -20,11 +20,11 @@ namespace LCTMoodle.WebServices
         /// <summary>
         /// Webservice lấy hình ảnh
         /// </summary>
-        /// <param name="_Ten"></param>
-        /// <returns>byte[]</returns>
-        public byte[] layHinhAnh(string _Ten)
+        /// <param name="ten"></param>
+        /// <returns>byte[] </returns>
+        public byte[] layHinhAnh(string ten)
         {
-            string _DuongDan = TapTinHelper.layDuongDan(_Loai, _Ten);
+            string _DuongDan = TapTinHelper.layDuongDan(_Loai, ten);
 
             if (File.Exists(@_DuongDan))
             {
@@ -44,12 +44,12 @@ namespace LCTMoodle.WebServices
         ///  - 2: mật khẩu không đúng
         ///  - 3: thành công
         /// </summary>
-        /// <param name="_TenDN"></param>
-        /// <param name="_MatKhau"></param>
-        /// <returns>clientmodel_NguoiDung</returns>
-        public int kiemTraDangNhap(string _TenDN, string _MatKhau)
+        /// <param name="tenDN"></param>
+        /// <param name="matKhau"></param>
+        /// <returns>int</returns>
+        public int kiemTraDangNhap(string tenDN, string matKhau)
         {
-            KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(_TenDN);
+            KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenDN);
             NguoiDungDTO dto_NguoiDung = ketQua.ketQua as NguoiDungDTO;
 
             if (ketQua.trangThai != 0)
@@ -58,7 +58,7 @@ namespace LCTMoodle.WebServices
             }
             else
             {
-                if (_MatKhau == dto_NguoiDung.matKhau || NguoiDungHelper.layMaMD5(_MatKhau) == dto_NguoiDung.matKhau)
+                if (matKhau == dto_NguoiDung.matKhau || NguoiDungHelper.layMaMD5(matKhau) == dto_NguoiDung.matKhau)
                 {
                     return 3; //Đúng
                 }
