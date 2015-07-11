@@ -152,6 +152,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LCTView\NguoiDungView.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_CauHoi.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_CauHoi_TraLoi.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_ChuDe.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_HinhAnh.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc.cs" />
@@ -159,11 +160,15 @@
     <Compile Include="WebServices\Client_Model\clientmodel_NguoiDung.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_TraLoi.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi.cs" />
+    <Compile Include="WebServices\Iwcf_CauHoi_TraLoi.cs" />
     <Compile Include="WebServices\Iwcf_ChuDe.cs" />
     <Compile Include="WebServices\Iwcf_KhoaHoc.cs" />
     <Compile Include="WebServices\Iwcf_NguoiDung.cs" />
     <Compile Include="WebServices\wcf_CauHoi.svc.cs">
       <DependentUpon>wcf_CauHoi.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\wcf_CauHoi_TraLoi.svc.cs">
+      <DependentUpon>wcf_CauHoi_TraLoi.svc</DependentUpon>
     </Compile>
     <Compile Include="WebServices\wcf_ChuDe.svc.cs">
       <DependentUpon>wcf_ChuDe.svc</DependentUpon>
@@ -423,6 +428,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="WebServices\wcf_CauHoi.svc" />
+    <Content Include="WebServices\wcf_CauHoi_TraLoi.svc" />
     <Content Include="WebServices\wcf_ChuDe.svc" />
     <Content Include="WebServices\wcf_KhoaHoc.svc" />
     <Content Include="WebServices\wcf_NguoiDung.svc" />

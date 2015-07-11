@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="LCTMoodle.WebServices.wcf_CauHoi_TraLoi" CodeBehind="wcf_CauHoi_TraLoi.svc.cs" %>
