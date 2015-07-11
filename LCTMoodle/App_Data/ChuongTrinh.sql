@@ -12,6 +12,26 @@ CREATE TABLE dbo.ChuongTrinh (
 )
 
 GO
+--Trigger xóa chương trình
+--Cập nhật thứ tự
+ALTER TRIGGER dbo.xoaChuongTrinh_TRIGGER
+ON dbo.ChuongTrinh
+AFTER DELETE
+AS
+BEGIN
+	--Cập nhật thứ tự
+	UPDATE GT
+		SET
+			GT.ThuTu = GT.ThuTu - 1
+		FROM
+			dbo.ChuongTrinh GT
+				INNER JOIN deleted d
+				ON 
+					GT.MaKhoaHoc = d.MaKhoaHoc AND
+					GT.ThuTu > d.ThuTu
+END
+
+GO
 --Lấy chương trình theo mã khóa học
 ALTER PROC dbo.layChuongTrinhTheoMaKhoaHoc (
 	@0 INT --MaKhoaHoc
@@ -77,24 +97,6 @@ AS
 BEGIN
 	DELETE FROM dbo.ChuongTrinh
 		WHERE Ma = @0
-END
-
-GO
---[Trigger] Xóa giáo trinh
-ALTER TRIGGER dbo.xoaChuongTrinh_TRIGGER
-	ON dbo.ChuongTrinh
-	AFTER DELETE
-AS
-BEGIN
-	UPDATE GT
-		SET
-			GT.ThuTu = GT.ThuTu - 1
-		FROM
-			dbo.ChuongTrinh GT
-				INNER JOIN deleted d
-				ON 
-					GT.MaKhoaHoc = d.MaKhoaHoc AND
-					GT.ThuTu > d.ThuTu
 END
 
 GO

@@ -157,28 +157,34 @@
                         <nav>
                             <ul>
                                 @{
-                        ketQua = BUSLayer.KhoaHocBUS.layTheoMaNguoiDungVaTrangThai(nguoiDung.ma.Value, 0);
-                        if (ketQua.trangThai == 0)
-                        {
-                            <li>
-                                <a href="/KhoaHoc/DanhSachCuaToi">
-                                    Khóa học của tôi
-                                </a>
-                                <ul>
-                                    @foreach (var khoaHoc in ketQua.ketQua as List<DTOLayer.KhoaHocDTO>)
+                                    ketQua = BUSLayer.KhoaHocBUS.layTheoMaNguoiDungVaTrangThai(nguoiDung.ma.Value, 0);
+                                    if (ketQua.trangThai == 0)
                                     {
-                                        if (khoaHoc != null)
-                                        {
-                                            <li>
-                                                <a href="/KhoaHoc/@khoaHoc.ma">
-                                                    @khoaHoc.ten
-                                                </a>
-                                            </li>
-                                        }
+                                        <li>
+                                            <a href="/KhoaHocCuaToi">
+                                                Khóa học của tôi
+                                            </a>
+                                            <ul>
+                                                @foreach (var khoaHoc in ketQua.ketQua as List<DTOLayer.KhoaHocDTO>)
+                                                {
+                                                    if (khoaHoc != null)
+                                                    {
+                                                        <li>
+                                                            <a href="/KhoaHoc/@khoaHoc.ma">
+                                                                @khoaHoc.ten
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </li>
                                     }
-                                </ul>
-                            </li>
-                        }
+                                    
+                                    <li>
+                                        <a href="/QuyenCuaToi">
+                                            Quyền của tôi
+                                        </a>
+                                    </li>
                                 }
                             </ul>
                         </nav>
@@ -229,21 +235,21 @@
                             <section class="noi-dung-hop-cau-hoi">
                                 <ul>
                                     @{
-                if (dsCauHoi != null)
-                {
-                    foreach (var cauHoi in dsCauHoi)
-                    {
-                        <li>
-                            <div class="tieu-de">
-                                <a href="/HoiDap/@cauHoi.ma" title="@cauHoi.tieuDe">@cauHoi.tieuDe</a>
-                            </div>
-                            <div class="thong-tin">
-                                @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
-                                <span>@cauHoi.nguoiTao.tenTaiKhoan - @cauHoi.thoiDiemTao.Value.ToString("hh:mm tt")</span>
-                            </div>
-                        </li>
-                    }
-                }
+                                        if (dsCauHoi != null)
+                                        {
+                                            foreach (var cauHoi in dsCauHoi)
+                                            {
+                                                <li>
+                                                    <div class="tieu-de">
+                                                        <a href="/HoiDap/@cauHoi.ma" title="@cauHoi.tieuDe">@cauHoi.tieuDe</a>
+                                                    </div>
+                                                    <div class="thong-tin">
+                                                        @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
+                                                        <span>@cauHoi.nguoiTao.tenTaiKhoan - @cauHoi.thoiDiemTao.Value.ToString("hh:mm tt")</span>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
                                     }
                                 </ul>
                                 <section>Chưa có câu hỏi mới</section>

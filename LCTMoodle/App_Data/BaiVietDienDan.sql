@@ -15,6 +15,30 @@ CREATE TABLE dbo.BaiVietDienDan(
 )
 
 GO
+--Trigger xóa
+--Xóa tập tin
+--Xóa bình luận
+CREATE TRIGGER dbo.xoaBaiVietDienDan_TRIGGER
+ON dbo.BaiVietDienDan
+AFTER DELETE
+AS
+BEGIN
+	--Xóa tập tin
+	DELETE TT
+		FROM 
+			dbo.TapTin_BaiVietDienDan_TapTin TT
+				INNER JOIN deleted d ON
+					TT.Ma = d.MaTapTin
+
+	--Xóa bình luận
+	DELETE BL
+		FROM
+			dbo.BinhLuanBaiVietDienDan BL
+				INNER JOIN deleted d ON
+					BL.MaBaiVietDienDan = d.Ma
+END
+
+GO
 --Thêm bài viết diễn đàn
 ALTER PROC dbo.themBaiVietDienDan(
 	@0 NVARCHAR(MAX), --TieuDe

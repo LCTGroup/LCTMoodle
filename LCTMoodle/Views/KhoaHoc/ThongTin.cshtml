@@ -1,5 +1,6 @@
 ﻿@using LCTMoodle.LCTView
 @using Helpers
+@using BUSLayer
 @model DTOLayer.KhoaHocDTO
 @{
     Layout = "~/Views/LCT/Khung.cshtml";
@@ -49,8 +50,36 @@
 
     if (QuyenHelper.co(dsQuyen, "QLThongTin"))
     {
-        chucNang.Add("Sửa thông tinc");
+        chucNang.Add("Sửa thông tin");
         chucNang.Add("href='/KhoaHoc/Tao/" + Model.ma + "'");
+    }
+    else if (maNguoiDung.HasValue)
+    {
+        //Lấy chủ đề mà người dùng có thể sửa
+        //Ở hệ thống
+        var ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("HT", maNguoiDung.Value, "KH", "QLNoiDung");
+        if (ketQua.trangThai != 0)
+        {
+            ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("CD", maNguoiDung.Value, "KH", "QLNoiDung");
+        }
+        
+        if (ketQua.trangThai == 0)
+        {
+            string chuoiMaChuDe = ketQua.ketQua as string;
+
+            //Kiểm tra người dùng có thể sửa khóa học này không
+            foreach (var maChuDe in chuoiMaChuDe.Split('|').Select(int.Parse))
+            {
+                ketQua = ChuDeBUS.thuocCay(Model.chuDe, maChuDe);
+                if (ketQua.trangThai == 0 && (bool)ketQua.ketQua)
+                {
+                    chucNang.Add("Sửa thông tin");
+                    chucNang.Add("href='/KhoaHoc/Tao/" + Model.ma + "'");
+
+                    break;
+                }
+            }
+        }
     }
     
     if (QuyenHelper.co(dsQuyen, "QLNoiDung"))
@@ -104,10 +133,13 @@
 <section class="hop hop-1-vien">
     <section class="tieu-de">Thông tin</section>
     <section class="noi-dung khung-duoi">
-        <article class="dong-noi-dung">
-            <section class="tieu-de">Chủ đề</section>
-            <section class="noi-dung">@Model.chuDe.ten</section>
-        </article>
+        @if (Model.chuDe != null)
+        {
+            <article class="dong-noi-dung">
+                <section class="tieu-de">Chủ đề</section>
+                <section class="noi-dung">@Model.chuDe.ten</section>
+            </article>   
+        }
         <article class="dong-noi-dung">
             <section class="tieu-de">Thời hạn khóa học</section>
             <section class="noi-dung">

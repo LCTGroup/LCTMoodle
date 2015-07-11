@@ -4,6 +4,9 @@
 {
     foreach(var khoaHoc in Model)
     {
-        @Html.Partial("~/Views/KhoaHoc/_Item.cshtml", khoaHoc)
+        if (khoaHoc != null)
+        {
+            @Html.Partial("~/Views/KhoaHoc/_Item.cshtml", khoaHoc)   
+        }
     }
 }

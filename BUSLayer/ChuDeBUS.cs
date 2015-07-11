@@ -325,7 +325,7 @@ namespace BUSLayer
 
         public static KetQua thuocCay(ChuDeDTO chuDeCon, int maChuDeCha)
         {
-            if (chuDeCon.ma.Value == maChuDeCha)
+            if (chuDeCon == null || chuDeCon.ma.Value == maChuDeCha)
             {
                 return new KetQua(true);
             }

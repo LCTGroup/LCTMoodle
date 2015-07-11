@@ -15,6 +15,30 @@ CREATE TABLE dbo.NhomNguoiDung_KH (
 )
 
 GO
+--Trigger xóa nhóm người dùng
+--Xóa nhóm người dùng _ người dùng
+--Xóa nhóm người dùng _ quyền
+CREATE TRIGGER dbo.xoaNhomNguoiDung_KH_TRIGGER
+ON dbo.NhomNguoiDung_KH
+AFTER DELETE
+AS
+BEGIN
+	--Xóa nhóm người dùng _ người dùng
+	DELETE NND_ND
+		FROM 
+			dbo.NhomNguoiDung_KH_NguoiDung NND_ND
+				INNER JOIN deleted d ON
+					NND_ND.MaNhomNguoiDung = d.Ma
+
+	--Xóa nhóm người dùng _ quyền
+	DELETE NND_Q
+		FROM
+			dbo.NhomNguoiDung_KH_Quyen NND_Q
+				INNER JOIN deleted d ON
+					NND_Q.MaNhomNguoiDung = d.Ma
+END
+
+GO
 --Thêm
 ALTER PROC dbo.themNhomNguoiDung (
 	@0 NVARCHAR(MAX), --Tên

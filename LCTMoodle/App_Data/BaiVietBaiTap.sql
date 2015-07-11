@@ -16,6 +16,30 @@ CREATE TABLE dbo.BaiVietBaiTap (
 )
 
 GO
+--Trigger xóa
+--Xóa tập tin
+--Xóa bài nộp
+CREATE TRIGGER dbo.xoaBaiVietBaiTap_TRIGGER
+ON dbo.BaiVietBaiTap
+AFTER DELETE
+AS
+BEGIN
+	--Xóa tập tin
+	DELETE TT
+		FROM 
+			dbo.TapTin_BaiVietBaiTap_TapTin TT
+				INNER JOIN deleted d ON
+					TT.Ma = d.MaTapTin
+
+	--Xóa bài nộp
+	DELETE BTN
+		FROM
+			dbo.BaiTapNop BTN
+				INNER JOIN deleted d ON
+					BTN.MaBaiVietBaiTap = d.Ma
+END
+
+GO
 --Thêm bài viết bài tập
 ALTER PROC dbo.themBaiVietBaiTap(
 	@0 NVARCHAR(MAX), --TieuDe
