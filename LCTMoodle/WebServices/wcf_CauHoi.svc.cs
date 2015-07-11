@@ -79,46 +79,48 @@ namespace LCTMoodle.WebServices
 
             if(ketQua.trangThai == 0)
             {
-                cm_CauHoi.Ma = dto_CauHoi.ma.Value;
-                cm_CauHoi.TieuDe = dto_CauHoi.tieuDe;
-                cm_CauHoi.NoiDung = dto_CauHoi.noiDung;
-                cm_CauHoi.NguoiTao = dto_CauHoi.nguoiTao.tenTaiKhoan;
-                cm_CauHoi.SoTraLoi = dto_CauHoi.soLuongTraLoi.Value;
-                cm_CauHoi.NgayTao = dto_CauHoi.thoiDiemTao.Value.ToString();
-                cm_CauHoi.NgayCapNhat = dto_CauHoi.thoiDiemCapNhat.Value.ToString();
-                cm_CauHoi.HinhAnh = dto_CauHoi.nguoiTao.hinhDaiDien.ma + dto_CauHoi.nguoiTao.hinhDaiDien.duoi;
-            }
-            return cm_CauHoi;
-        }
-
-        /// <summary>
-        /// Webservice lấy danh sách trả lời của câu hỏi
-        /// </summary>
-        /// <param name="_Ma"></param>
-        /// <returns>List<TraLoiDTO></returns>
-        public List<clientmodel_TraLoi> layTraLoiTheoMaCauHoi(int _Ma)
-        {
-            KetQua ketQua = TraLoiBUS.layTheoMaCauHoi(_Ma, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
-            List<clientmodel_TraLoi> lst_CauHoi = new List<clientmodel_TraLoi>();
-
-            if(ketQua.trangThai == 0)
-            {
-                foreach(var traLoi in ketQua.ketQua as List<TraLoiDTO>)
+                if(dto_CauHoi.ma != null)
                 {
-                    lst_CauHoi.Add(new clientmodel_TraLoi()
-                    {
-                        Ma = traLoi.ma.Value,
-                        NguoiTao = traLoi.nguoiTao.tenTaiKhoan,
-                        NgayTao = traLoi.thoiDiemTao.Value.ToString(),
-                        NgayCapNhat = traLoi.thoiDiemCapNhat.Value.ToString(),
-                        Duyet = traLoi.duyet,
-                        NoiDung = traLoi.noiDung,
-                        HinhAnh = traLoi.nguoiTao.hinhDaiDien.ma + traLoi.nguoiTao.hinhDaiDien.duoi,
-                    });
+                    cm_CauHoi.Ma = dto_CauHoi.ma.Value;
+                }
+
+                if(dto_CauHoi.tieuDe != null)
+                {
+                    cm_CauHoi.TieuDe = dto_CauHoi.tieuDe;
+                }
+
+                if(dto_CauHoi.noiDung != null)
+                {
+                    cm_CauHoi.NoiDung = dto_CauHoi.noiDung;
+                }
+
+                if(dto_CauHoi.nguoiTao.tenTaiKhoan != null)
+                {
+                    cm_CauHoi.NguoiTao = dto_CauHoi.nguoiTao.tenTaiKhoan;
+                }
+
+                if(dto_CauHoi.soLuongTraLoi != null)
+                {
+                    cm_CauHoi.SoTraLoi = dto_CauHoi.soLuongTraLoi.Value;
+                }
+
+                if(dto_CauHoi.thoiDiemTao != null)
+                {
+                    cm_CauHoi.NgayTao = dto_CauHoi.thoiDiemTao.Value;
+                }
+
+                if(dto_CauHoi.thoiDiemCapNhat != null)
+                {
+                    cm_CauHoi.NgayCapNhat = dto_CauHoi.thoiDiemCapNhat.Value;
+                }
+
+                if(dto_CauHoi.nguoiTao.hinhDaiDien.ma != null && dto_CauHoi.nguoiTao.hinhDaiDien.duoi != null)
+                {
+                    cm_CauHoi.HinhAnh = dto_CauHoi.nguoiTao.hinhDaiDien.ma.Value + dto_CauHoi.nguoiTao.hinhDaiDien.duoi;
                 }
             }
-            return lst_CauHoi;
-        }
+            return cm_CauHoi;
+        }       
 
         /// <summary>
         /// Webservice lấy danh sách câu hỏi
@@ -133,17 +135,48 @@ namespace LCTMoodle.WebServices
             {
                 foreach(var cauHoi in ketQua.ketQua as List<CauHoiDTO>)
                 {
-                    lst_CauHoi.Add(new clientmodel_CauHoi()
+                    if(cauHoi.ma != null)
                     {
-                        Ma = cauHoi.ma.Value,
-                        TieuDe = cauHoi.tieuDe,
-                        NoiDung = cauHoi.noiDung,
-                        NguoiTao = cauHoi.nguoiTao.tenTaiKhoan,
-                        SoTraLoi = cauHoi.soLuongTraLoi.Value,
-                        NgayTao = cauHoi.thoiDiemTao.Value.ToString(),
-                        NgayCapNhat = cauHoi.thoiDiemCapNhat.Value.ToString(),
-                        HinhAnh = cauHoi.nguoiTao.hinhDaiDien.ma + cauHoi.nguoiTao.hinhDaiDien.duoi,
-                    });
+                        lst_CauHoi.Add(new clientmodel_CauHoi()
+                        {
+                            Ma = cauHoi.ma.Value,
+                        });
+                    }
+
+                    if (cauHoi.tieuDe != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].TieuDe = cauHoi.tieuDe;
+                    }
+
+                    if (cauHoi.noiDung != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].NoiDung = cauHoi.noiDung;
+                    }
+
+                    if (cauHoi.nguoiTao.tenTaiKhoan != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].NguoiTao = cauHoi.nguoiTao.tenTaiKhoan;
+                    }
+
+                    if (cauHoi.soLuongTraLoi != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].SoTraLoi = cauHoi.soLuongTraLoi.Value;
+                    }
+
+                    if (cauHoi.thoiDiemTao != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].NgayTao = cauHoi.thoiDiemTao.Value;
+                    }
+
+                    if (cauHoi.thoiDiemCapNhat != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].NgayCapNhat = cauHoi.thoiDiemCapNhat.Value;
+                    }
+
+                    if (cauHoi.nguoiTao.hinhDaiDien.ma != null && cauHoi.nguoiTao.hinhDaiDien.duoi != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].HinhAnh = cauHoi.nguoiTao.hinhDaiDien.ma.Value + cauHoi.nguoiTao.hinhDaiDien.duoi;
+                    }
                 }
             }
             return lst_CauHoi;
@@ -163,17 +196,48 @@ namespace LCTMoodle.WebServices
             {
                 foreach(var cauHoi in ketQua.ketQua as List<CauHoiDTO>)
                 {
-                    lst_CauHoi.Add(new clientmodel_CauHoi()
+                    if (cauHoi.ma != null)
                     {
-                        Ma = cauHoi.ma.Value,
-                        TieuDe = cauHoi.tieuDe,
-                        NoiDung = cauHoi.noiDung,
-                        NguoiTao = cauHoi.nguoiTao.tenTaiKhoan,
-                        SoTraLoi = cauHoi.soLuongTraLoi.Value,
-                        NgayTao = cauHoi.thoiDiemTao.Value.ToString(),
-                        NgayCapNhat = cauHoi.thoiDiemCapNhat.Value.ToString(),
-                        HinhAnh = cauHoi.nguoiTao.hinhDaiDien.ma + cauHoi.nguoiTao.hinhDaiDien.duoi,
-                    });
+                        lst_CauHoi.Add(new clientmodel_CauHoi()
+                        {
+                            Ma = cauHoi.ma.Value,
+                        });
+                    }
+
+                    if (cauHoi.tieuDe != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].TieuDe = cauHoi.tieuDe;
+                    }
+
+                    if (cauHoi.noiDung != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].NoiDung = cauHoi.noiDung;
+                    }
+
+                    if (cauHoi.nguoiTao.tenTaiKhoan != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].NguoiTao = cauHoi.nguoiTao.tenTaiKhoan;
+                    }
+
+                    if (cauHoi.soLuongTraLoi != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].SoTraLoi = cauHoi.soLuongTraLoi.Value;
+                    }
+
+                    if (cauHoi.thoiDiemTao != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].NgayTao = cauHoi.thoiDiemTao.Value;
+                    }
+
+                    if (cauHoi.thoiDiemCapNhat != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].NgayCapNhat = cauHoi.thoiDiemCapNhat.Value;
+                    }
+
+                    if (cauHoi.nguoiTao.hinhDaiDien.ma != null && cauHoi.nguoiTao.hinhDaiDien.duoi != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].HinhAnh = cauHoi.nguoiTao.hinhDaiDien.ma.Value + cauHoi.nguoiTao.hinhDaiDien.duoi;
+                    }
                 }
             }
             return lst_CauHoi;

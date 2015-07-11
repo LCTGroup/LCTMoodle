@@ -13,8 +13,8 @@ namespace LCTMoodle.WebServices.Client_Model
         public string NoiDung { get; set; }
         public string NguoiTao { get; set; }
         public int SoTraLoi { get; set; }
-        public string NgayTao { get; set; }
-        public string NgayCapNhat { get; set; }
+        public DateTime NgayTao { get; set; }
+        public DateTime NgayCapNhat { get; set; }
         public string HinhAnh { get; set; }
     }
 }

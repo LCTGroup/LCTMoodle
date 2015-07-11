@@ -26,6 +26,6 @@ namespace LCTMoodle.WebServices
         List<clientmodel_ChuDe> layTheoMaCha(int _MaChuDeCha);
 
         [OperationContract]
-        List<ChuDeDTO> timKiem(string _TuKhoa);
+        List<clientmodel_ChuDe> timKiem(string _TuKhoa);
     }
 }
