@@ -15,6 +15,29 @@ namespace LCTMoodle.WebServices
 {
     public class wcf_NguoiDung : Iwcf_NguoiDung
     {
+        private const string _Loai = "NguoiDung_HinhDaiDien";
+
+        /// <summary>
+        /// Webservice lấy hình ảnh
+        /// </summary>
+        /// <param name="_Ten"></param>
+        /// <returns>byte[]</returns>
+        public byte[] layHinhAnh(string _Ten)
+        {
+            string _DuongDan = TapTinHelper.layDuongDan(_Loai, _Ten);
+
+            if (File.Exists(@_DuongDan))
+            {
+                Image img = Image.FromFile(@_DuongDan);
+                using (var ms = new MemoryStream())
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    return ms.ToArray();
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// Webservice kiểm tra đăng nhập đăng nhập
         ///  - 1: tên đăng nhập không tồn tại
@@ -217,5 +240,7 @@ namespace LCTMoodle.WebServices
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }
