@@ -29,10 +29,10 @@ namespace LCTMoodle.WebServices
         List<clientmodel_KhoaHoc> layTheoMaChuDe(int _MaChuDe);
 
         [OperationContract]
-        List<KhoaHocDTO> layTheoMaNguoiDung(int _MaNguoiDung);
+        List<clientmodel_KhoaHoc> layTheoMaNguoiDung(int _MaNguoiDung);
 
         [OperationContract]
-        List<KhoaHocDTO> layTheoMaNguoiDungVaTrangThai(int _MaNguoiDung, int _TrangThai);
+        string layTheoMaNguoiDungVaTrangThai(int _MaNguoiDung, int _TrangThai);
 
         [OperationContract]
         List<clientmodel_KhoaHoc> timKiem(string _TuKhoa);

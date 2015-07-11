@@ -10,7 +10,7 @@ namespace LCTMoodle.WebServices.Client_Model
         public int Ma { get; set; }
         public string Ten { get; set; }
         public string MoTa { get; set; }
-        public string NgayTao { get; set; }
+        public DateTime NgayTao { get; set; }
         public int SoChuDeCon { get; set; }
         public int SoKhoaHocCon { get; set; }
         public string HinhAnh { get; set; }

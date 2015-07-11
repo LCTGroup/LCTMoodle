@@ -46,8 +46,8 @@ namespace LCTMoodle.WebServices
             }
         }
 
-        
-        public clientmodel_NguoiDung themNguoiDung()
+
+        clientmodel_NguoiDung dangKy(string tenDN, string matKhau, string email, string hoTen, DateTime ngaySinh, int maHinh)
         {
             Form form = new Form()
             {
@@ -68,16 +68,88 @@ namespace LCTMoodle.WebServices
 
             if(ketQua.trangThai == 0)
             {
-                cm_NguoiDung.TrangThai = 0;
-                cm_NguoiDung.ThongBao = "Đăng ký thành công ! check mail để kích hoạt";
+
             }
             else
             {
-                cm_NguoiDung.TrangThai = ketQua.trangThai;
-                cm_NguoiDung.ThongBao = ketQua.ketQua as string;
+                
             }
 
             return cm_NguoiDung;
+        }
+
+        /// <summary>
+        /// Webservice kiểm tra đăng nhập va trả vê thông báo
+        /// </summary>
+        /// <param name="tenDN"></param>
+        /// <param name="matKhau"></param>
+        /// <returns>clientmodel_NguoiDung</returns>
+        public clientmodel_NguoiDung dangNhap(string tenDN, string matKhau)
+        {
+            KetQua ketQua = NguoiDungBUS.xuLyDangNhap(tenDN, matKhau);
+            clientmodel_NguoiDung cm_NguoiDung = new clientmodel_NguoiDung();
+
+            if(ketQua.trangThai == 0)
+            {
+                NguoiDungDTO dto_NguoiDung = ketQua.ketQua as NguoiDungDTO;
+                cm_NguoiDung.ma = dto_NguoiDung.ma.Value;
+                cm_NguoiDung.thongBao = "Đăng nhập thành công";
+            }
+            else
+            {
+                cm_NguoiDung.thongBao = ketQua.ketQua as string;
+            }
+
+            return cm_NguoiDung;
+        }
+
+
+        public int themAnhDaiDien(byte[] hinhAnh, string tenAnh, int nguoiTao, string contenttype)
+        {
+            KetQua ketQua = TapTinBUS.them(hinhAnh, tenAnh, 0, contenttype);
+            
+            if(ketQua.trangThai == 0)
+            {
+                TapTinDTO dtoTapTin = ketQua.ketQua as TapTinDTO;
+                return dtoTapTin.ma.Value;
+            }
+
+            return -1;
+        }
+
+        private string layTenLot(string hoTen)
+        {
+            if (hoTen.Split(' ').Count() > 2)
+            {
+                int dau = layHo(hoTen).Length + 1;
+                int cuoi = hoTen.Length - layTen(hoTen).Length - layHo(hoTen).Length - 2;
+                return hoTen.Substring(dau, cuoi);
+            }
+            return "";
+        }
+
+        private string layHo(string hoTen)
+        {
+            string[] chuoi = hoTen.Split(' ');
+            return chuoi[0];
+        }
+
+        private string layTen(string hoTen)
+        {
+            string[] chuoi = hoTen.Split(' ');
+            return chuoi[chuoi.Count() - 1];
+        }
+
+
+        public clientmodel_NguoiDung themNguoiDung()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        clientmodel_NguoiDung Iwcf_NguoiDung.dangKy(string tenDN, string matKhau, string email, string hoTen, DateTime ngaySinh, int maHinh)
+        {
+            throw new NotImplementedException();
         }
     }
 }

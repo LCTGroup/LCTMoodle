@@ -7,7 +7,7 @@ namespace LCTMoodle.WebServices.Client_Model
 {
     public class clientmodel_NguoiDung
     {
-        public int TrangThai { get; set; }
-        public string ThongBao { get; set; }
+        public int ma { get; set; }
+        public string thongBao { get; set; }
     }
 }

@@ -363,7 +363,7 @@ namespace BUSLayer
                 return new KetQua()
                 {
                     trangThai = 3,
-                    ketQua = "Tài khoản không tồn tài"
+                    ketQua = "Tài khoản không tồn tại"
                 };
             }
             

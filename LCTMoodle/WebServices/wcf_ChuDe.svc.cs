@@ -97,22 +97,45 @@ namespace LCTMoodle.WebServices
             {
                 foreach(var chuDe in ketQua.ketQua as List<ChuDeDTO>)
                 {
-                    lst_ChuDe.Add(new clientmodel_ChuDe()
+                    if(chuDe.ma != null)
                     {
-                        Ma = chuDe.ma.Value,
-                        Ten = chuDe.ten,
-                        MoTa = chuDe.moTa,
-                        NgayTao = chuDe.thoiDiemTao.Value.ToString(),
-                        HinhAnh = chuDe.hinhDaiDien.ma + chuDe.hinhDaiDien.duoi,
-                    });
-
-                    if(chuDe.duLieuThem.ContainsKey("SLChuDeCon"))
-                    {
-                        lst_ChuDe[lst_ChuDe.Count - 1].SoChuDeCon = (int)chuDe.duLieuThem["SLChuDeCon"];
+                        lst_ChuDe.Add(new clientmodel_ChuDe()
+                        {
+                            Ma = chuDe.ma.Value,
+                        });
                     }
-                    if (chuDe.duLieuThem.ContainsKey("SLKhoaHocCon"))
+
+                    if(chuDe.ten != null)
                     {
-                        lst_ChuDe[lst_ChuDe.Count - 1].SoKhoaHocCon = (int)chuDe.duLieuThem["SLKhoaHocCon"];
+                        lst_ChuDe[lst_ChuDe.Count - 1].Ten = chuDe.ten;
+                    }
+
+                    if(chuDe.thoiDiemTao != null)
+                    {
+                        lst_ChuDe[lst_ChuDe.Count - 1].NgayTao = chuDe.thoiDiemTao.Value;
+                    }
+
+                    if(chuDe.moTa != null)
+                    {
+                        lst_ChuDe[lst_ChuDe.Count - 1].MoTa = chuDe.moTa;
+                    }
+
+                    if (chuDe.duLieuThem != null)
+                    {
+                        if (chuDe.duLieuThem.ContainsKey("SLChuDeCon"))
+                        {
+                            lst_ChuDe[lst_ChuDe.Count - 1].SoChuDeCon = (int)chuDe.duLieuThem["SLChuDeCon"];
+                        }
+
+                        if (chuDe.duLieuThem.ContainsKey("SLKhoaHocCon"))
+                        {
+                            lst_ChuDe[lst_ChuDe.Count - 1].SoKhoaHocCon = (int)chuDe.duLieuThem["SLKhoaHocCon"];
+                        }
+                    }
+
+                    if(chuDe.hinhDaiDien.ma != null && chuDe.hinhDaiDien.duoi != null)
+                    {
+                        lst_ChuDe[lst_ChuDe.Count - 1].HinhAnh = chuDe.hinhDaiDien.ma.Value + chuDe.hinhDaiDien.duoi;
                     }
                 }
             }
@@ -124,14 +147,56 @@ namespace LCTMoodle.WebServices
         /// </summary>
         /// <param name="_TuKhoa"></param>
         /// <returns>List<ChuDeDTO></returns>
-        public List<ChuDeDTO> timKiem(string _TuKhoa)
+        public List<clientmodel_ChuDe> timKiem(string _TuKhoa)
         {
             KetQua ketQua = ChuDeBUS.lay_TimKiem(_TuKhoa, new LienKet { "HinhDaiDien" });
-            List<ChuDeDTO> lst_ChuDe = new List<ChuDeDTO>();
+            List<clientmodel_ChuDe> lst_ChuDe = new List<clientmodel_ChuDe>();
 
             if(ketQua.trangThai == 0)
             {
-                lst_ChuDe = ketQua.ketQua as List<ChuDeDTO>;
+                foreach (var chuDe in ketQua.ketQua as List<ChuDeDTO>)
+                {
+                    if (chuDe.ma != null)
+                    {
+                        lst_ChuDe.Add(new clientmodel_ChuDe()
+                        {
+                            Ma = chuDe.ma.Value,
+                        });
+                    }
+
+                    if (chuDe.ten != null)
+                    {
+                        lst_ChuDe[lst_ChuDe.Count - 1].Ten = chuDe.ten;
+                    }
+
+                    if (chuDe.thoiDiemTao != null)
+                    {
+                        lst_ChuDe[lst_ChuDe.Count - 1].NgayTao = chuDe.thoiDiemTao.Value;
+                    }
+
+                    if (chuDe.moTa != null)
+                    {
+                        lst_ChuDe[lst_ChuDe.Count - 1].MoTa = chuDe.moTa;
+                    }
+
+                    if(chuDe.duLieuThem != null)
+                    {
+                        if (chuDe.duLieuThem.ContainsKey("SLChuDeCon"))
+                        {
+                            lst_ChuDe[lst_ChuDe.Count - 1].SoChuDeCon = (int)chuDe.duLieuThem["SLChuDeCon"];
+                        }
+
+                        if (chuDe.duLieuThem.ContainsKey("SLKhoaHocCon"))
+                        {
+                            lst_ChuDe[lst_ChuDe.Count - 1].SoKhoaHocCon = (int)chuDe.duLieuThem["SLKhoaHocCon"];
+                        }
+                    }
+
+                    if (chuDe.hinhDaiDien.ma != null && chuDe.hinhDaiDien.duoi != null)
+                    {
+                        lst_ChuDe[lst_ChuDe.Count - 1].HinhAnh = chuDe.hinhDaiDien.ma.Value + chuDe.hinhDaiDien.duoi;
+                    }
+                }
             }
             return lst_ChuDe;
         }

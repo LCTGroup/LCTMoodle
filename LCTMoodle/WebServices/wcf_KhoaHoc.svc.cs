@@ -106,21 +106,50 @@ namespace LCTMoodle.WebServices
         /// <returns>List<KhoaHocDTO> </returns>
         public List<clientmodel_KhoaHoc> layTheoMaChuDe(int _MaChuDe)
         {
-            KetQua ketQua = KhoaHocBUS.layTheoMaChuDe(_MaChuDe, new LienKet { "HinhDaiDien" });
+            KetQua ketQua = KhoaHocBUS.layTheoMaChuDe(_MaChuDe, new LienKet { "HinhDaiDien" , "NguoiTao"});
             List<clientmodel_KhoaHoc> lst_KhoaHoc = new List<clientmodel_KhoaHoc>();
 
             if(ketQua.trangThai == 0)
             {
                 foreach(var khoaHoc in ketQua.ketQua as List<KhoaHocDTO>)
                 {
-                    lst_KhoaHoc.Add(new clientmodel_KhoaHoc()
+                    if(khoaHoc.ma != null)
                     {
-                        Ma = khoaHoc.ma.Value,
-                        Ten = khoaHoc.ten,
-                        MoTa = khoaHoc.moTa,
-                        HinhAnh = khoaHoc.nguoiTao.hinhDaiDien.ma + khoaHoc.nguoiTao.hinhDaiDien.duoi,
-                        NgayTao = khoaHoc.thoiDiemTao.Value,
-                    })
+                        lst_KhoaHoc.Add(new clientmodel_KhoaHoc()
+                        {
+                            Ma = khoaHoc.ma.Value,
+                        });
+                    }
+                    
+                    if(khoaHoc.ten != null)
+                    {
+                        lst_KhoaHoc[lst_KhoaHoc.Count - 1].Ten = khoaHoc.ten;
+                    }
+
+                    if(khoaHoc.moTa != null)
+                    {
+                        lst_KhoaHoc[lst_KhoaHoc.Count - 1].MoTa = khoaHoc.moTa;
+                    }
+
+                    if(khoaHoc.nguoiTao.ten != null)
+                    {
+                        lst_KhoaHoc[lst_KhoaHoc.Count - 1].NguoiTao = khoaHoc.nguoiTao.tenTaiKhoan;
+                    }
+
+                    if(khoaHoc.thoiDiemTao != null)
+                    {
+                        lst_KhoaHoc[lst_KhoaHoc.Count - 1].NgayTao = khoaHoc.thoiDiemTao.Value;
+                    }
+
+                    if(khoaHoc.thoiDiemHetHan != null)
+                    {
+                        lst_KhoaHoc[lst_KhoaHoc.Count - 1].NgayHetHan = khoaHoc.thoiDiemHetHan.Value;
+                    }
+
+                    if(khoaHoc.hinhDaiDien.ma != null && khoaHoc.hinhDaiDien.ten != null)
+                    {
+                        lst_KhoaHoc[lst_KhoaHoc.Count - 1].HinhAnh = khoaHoc.hinhDaiDien.ma.Value + khoaHoc.hinhDaiDien.duoi;
+                    }
                 }
             }
             return lst_KhoaHoc;
@@ -131,15 +160,13 @@ namespace LCTMoodle.WebServices
         /// </summary>
         /// <param name="_MaNguoiDung"></param>
         /// <returns>List<KhoaHocDTO> </returns>
-        public List<KhoaHocDTO> layTheoMaNguoiDung(int _MaNguoiDung)
+        public List<clientmodel_KhoaHoc> layTheoMaNguoiDung(int _MaNguoiDung)
         {
-            KetQua ketQua = KhoaHocBUS.layTheoMaNguoiDung(_MaNguoiDung);
-            List<KhoaHocDTO> lst_KhoaHoc = new List<KhoaHocDTO>();
+            KetQua ketQua = KhoaHocBUS.layTheoMaNguoiDung(_MaNguoiDung, new LienKet { "HinhDaiDien" });
+            List<clientmodel_KhoaHoc> lst_KhoaHoc = ketQua.ketQua as List<clientmodel_KhoaHoc>;
 
-            if(ketQua.trangThai == 0)
-            {
-                lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
-            }
+            
+
             return lst_KhoaHoc;
         }
 
@@ -149,16 +176,10 @@ namespace LCTMoodle.WebServices
         /// <param name="_MaNguoiDung"></param>
         /// <param name="_TrangThai"></param>
         /// <returns>List<KhoaHocDTO></returns>
-        public List<KhoaHocDTO> layTheoMaNguoiDungVaTrangThai(int _MaNguoiDung, int _TrangThai)
+        public string layTheoMaNguoiDungVaTrangThai(int _MaNguoiDung, int _TrangThai)
         {
             KetQua ketQua = KhoaHocBUS.layTheoMaNguoiDungVaTrangThai(_MaNguoiDung, _TrangThai);
-            List<KhoaHocDTO> lst_KhoaHoc = new List<KhoaHocDTO>();
-
-            if(ketQua.trangThai == 0)
-            {
-                lst_KhoaHoc = ketQua.ketQua as List<KhoaHocDTO>;
-            }
-            return lst_KhoaHoc;
+            return "123";
         }
 
         /// <summary>
@@ -168,21 +189,50 @@ namespace LCTMoodle.WebServices
         /// <returns>List<KhoaHocDTO> </returns>
         public List<clientmodel_KhoaHoc> timKiem(string _TuKhoa)
         {
-            KetQua ketQua = KhoaHocBUS.lay_TimKiem(_TuKhoa, new LienKet { "HinhDaiDien" });
+            KetQua ketQua = KhoaHocBUS.lay_TimKiem(_TuKhoa, new LienKet { "HinhDaiDien", "NguoiTao" });
             List<clientmodel_KhoaHoc> lst_KhoaHoc = new List<clientmodel_KhoaHoc>();
 
-           if(ketQua.trangThai == 0)
-           {
+            if(ketQua.trangThai == 0)
+            {
                foreach(var khoaHoc in ketQua.ketQua as List<KhoaHocDTO>)
                {
-                   lst_KhoaHoc.Add(new clientmodel_KhoaHoc()
+                   if (khoaHoc.ma != null)
                    {
-                       Ma = khoaHoc.ma.Value,
-                       Ten = khoaHoc.ten,
-                       MoTa = khoaHoc.moTa,
-                       NgayTao = khoaHoc.thoiDiemTao.Value.ToString(),
-                       HinhAnh = khoaHoc.hinhDaiDien.ma + khoaHoc.hinhDaiDien.duoi,
-                   });
+                       lst_KhoaHoc.Add(new clientmodel_KhoaHoc()
+                       {
+                           Ma = khoaHoc.ma.Value,
+                       });
+                   }
+
+                   if (khoaHoc.ten != null)
+                   {
+                       lst_KhoaHoc[lst_KhoaHoc.Count - 1].Ten = khoaHoc.ten;
+                   }
+
+                   if (khoaHoc.moTa != null)
+                   {
+                       lst_KhoaHoc[lst_KhoaHoc.Count - 1].MoTa = khoaHoc.moTa;
+                   }
+
+                   if (khoaHoc.nguoiTao.ten != null)
+                   {
+                       lst_KhoaHoc[lst_KhoaHoc.Count - 1].NguoiTao = khoaHoc.nguoiTao.tenTaiKhoan;
+                   }
+
+                   if (khoaHoc.thoiDiemTao != null)
+                   {
+                       lst_KhoaHoc[lst_KhoaHoc.Count - 1].NgayTao = khoaHoc.thoiDiemTao.Value;
+                   }
+
+                   if (khoaHoc.thoiDiemHetHan != null)
+                   {
+                       lst_KhoaHoc[lst_KhoaHoc.Count - 1].NgayHetHan = khoaHoc.thoiDiemHetHan.Value;
+                   }
+
+                   if (khoaHoc.hinhDaiDien.ma != null && khoaHoc.hinhDaiDien.ten != null)
+                   {
+                       lst_KhoaHoc[lst_KhoaHoc.Count - 1].HinhAnh = khoaHoc.hinhDaiDien.ma.Value + khoaHoc.hinhDaiDien.duoi;
+                   }
                }
            }
 
