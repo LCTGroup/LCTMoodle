@@ -14,10 +14,10 @@ namespace LCTMoodle.WebServices
     public interface Iwcf_NguoiDung
     {
         [OperationContract]
-        byte[] layHinhAnh(string _Ten);
+        byte[] layHinhAnh(string ten);
 
         [OperationContract]
-        int kiemTraDangNhap(string _TenDN, string _MatKhau);
+        int kiemTraDangNhap(string tenDN, string matKhau);
 
         [OperationContract]
         clientmodel_DangNhap themNguoiDung();

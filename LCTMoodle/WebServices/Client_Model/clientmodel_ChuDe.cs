@@ -7,12 +7,12 @@ namespace LCTMoodle.WebServices.Client_Model
 {
     public class clientmodel_ChuDe
     {
-        public int Ma { get; set; }
-        public string Ten { get; set; }
-        public string MoTa { get; set; }
-        public DateTime NgayTao { get; set; }
-        public int SoChuDeCon { get; set; }
-        public int SoKhoaHocCon { get; set; }
-        public string HinhAnh { get; set; }
+        public int ma { get; set; }
+        public string ten { get; set; }
+        public string moTa { get; set; }
+        public DateTime ngayTao { get; set; }
+        public int soChuDeCon { get; set; }
+        public int soKhoaHocCon { get; set; }
+        public string hinhAnh { get; set; }
     }
 }

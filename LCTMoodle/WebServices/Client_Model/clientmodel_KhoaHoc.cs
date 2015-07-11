@@ -8,12 +8,12 @@ namespace LCTMoodle.WebServices.Client_Model
 {
     public class clientmodel_KhoaHoc
     {
-        public int Ma { get; set; }
-        public string Ten { get; set; }
-        public string MoTa { get; set; }
-        public string NguoiTao { get; set; }
-        public DateTime NgayTao { get; set; }
-        public DateTime NgayHetHan { get; set; }
-        public string HinhAnh { get; set; }
+        public int ma { get; set; }
+        public string ten { get; set; }
+        public string moTa { get; set; }
+        public string nguoiTao { get; set; }
+        public DateTime ngayTao { get; set; }
+        public DateTime ngayHetHan { get; set; }
+        public string hinhAnh { get; set; }
     }
 }
