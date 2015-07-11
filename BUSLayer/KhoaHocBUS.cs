@@ -381,14 +381,13 @@ namespace BUSLayer
 
         public static KetQua layTheoMaNguoiDung(int maNguoiDung, LienKet lienKet = null)
         {
-            if (lienKet == null)
+            LienKet lk = new LienKet() 
             {
-                lienKet = new LienKet();
-            }
-            lienKet.Add("KhoaHoc");
+                { "KhoaHoc", lienKet }
+            };
                 
             //Lấy toàn bộ khóa học mà người dùng liên quan
-            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDung(maNguoiDung, lienKet);
+            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDung(maNguoiDung, lk);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
