@@ -7,12 +7,12 @@ namespace LCTMoodle.WebServices.Client_Model
 {
     public class clientmodel_TraLoi
     {
-        public int Ma { get; set; }
-        public string NoiDung { get; set; }
-        public string NguoiTao { get; set; }
-        public string NgayTao { get; set; }
-        public string NgayCapNhat { get; set; }
-        public bool Duyet { get; set; }
-        public string HinhAnh { get; set; }
+        public int ma { get; set; }
+        public string noiDung { get; set; }
+        public string nguoiTao { get; set; }
+        public DateTime ngayTao { get; set; }
+        public DateTime ngayCapNhat { get; set; }
+        public bool duyet { get; set; }
+        public string hinhAnh { get; set; }
     }
 }

@@ -14,6 +14,9 @@ namespace LCTMoodle.WebServices
     public interface Iwcf_NguoiDung
     {
         [OperationContract]
+        byte[] layHinhAnh(string _Ten);
+
+        [OperationContract]
         int kiemTraDangNhap(string _TenDN, string _MatKhau);
 
         [OperationContract]
