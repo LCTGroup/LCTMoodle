@@ -13,14 +13,96 @@ namespace BUSLayer
 {
     public class HoatDongBUS : BUS
     {
+        public static KetQua kiemTra(HoatDongDTO hoatDong)
+        {
+            List<string> loi = new List<string>();
+
+            #region Bắt lỗi
+            if (!hoatDong.maNguoiTacDong.HasValue)
+            {
+                loi.Add("Người tác động không thể bỏ trống");
+            }
+            //if (hoatDong.nguoiTacDong == null)
+            //{
+            //    loi.Add("Người tác động không thể bỏ trống");
+            //}
+            if (string.IsNullOrWhiteSpace(hoatDong.loaiDoiTuongTacDong))
+            {
+                loi.Add("Loại đối tượng tác động không thể bỏ trống");
+            }
+            if (!hoatDong.maDoiTuongTacDong.HasValue)
+            {
+                loi.Add("Đối tượng tác động không thể bỏ trống");
+            }
+            if (string.IsNullOrWhiteSpace(hoatDong.loaiDoiTuongBiTacDong))
+            {
+                loi.Add("Loại đối tượng bị tác động không thể bỏ trống");
+            }
+            if (!hoatDong.maDoiTuongBiTacDong.HasValue)
+            {
+                loi.Add("Đối tượng bị tác động không thể bỏ trống");
+            }
+            if (!hoatDong.maHanhDong.HasValue)
+            {
+                loi.Add("Hành động không thể bỏ trống");
+            }
+            #endregion
+
+            if (loi.Count > 0)
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = loi
+                };
+            }
+            else
+            {
+                return new KetQua()
+                {
+                    trangThai = 0
+                };
+            }
+        }
+
         public static KetQua them(HoatDongDTO hoatDong)
         {
+            //if ((string.IsNullOrWhiteSpace(hoatDong.loaiDoiTuongTacDong) || !hoatDong.maDoiTuongTacDong.HasValue) &&
+            //    hoatDong.nguoiTacDong != null)
+            //{
+            //    hoatDong.loaiDoiTuongTacDong = "ND";
+            //    hoatDong.maDoiTuongTacDong = hoatDong.nguoiTacDong.ma;
+            //}
+            if (string.IsNullOrWhiteSpace(hoatDong.loaiDoiTuongTacDong) || !hoatDong.maDoiTuongTacDong.HasValue)
+            {
+                hoatDong.loaiDoiTuongTacDong = "ND";
+                hoatDong.maDoiTuongTacDong = hoatDong.maNguoiTacDong;
+            }
+
+            var ketQua = kiemTra(hoatDong);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
             return HoatDongDAO.them(hoatDong);
         }
 
         public static KetQua them(HoatDongDTO hoatDong, GiaTriHoatDongDTO giaTriHoatDong)
         {
-            var ketQua = HoatDongDAO.them(hoatDong);
+            if (string.IsNullOrWhiteSpace(hoatDong.loaiDoiTuongTacDong) || !hoatDong.maDoiTuongTacDong.HasValue)
+            {
+                hoatDong.loaiDoiTuongTacDong = "ND";
+                hoatDong.maDoiTuongTacDong = hoatDong.maNguoiTacDong;
+            }
+
+            var ketQua = kiemTra(hoatDong);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            ketQua = HoatDongDAO.them(hoatDong);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
@@ -31,7 +113,19 @@ namespace BUSLayer
 
         public static KetQua them(HoatDongDTO hoatDong, List<GiaTriHoatDongDTO> dsGiaTriHoatDong)
         {
-            var ketQua = HoatDongDAO.them(hoatDong);
+            if (string.IsNullOrWhiteSpace(hoatDong.loaiDoiTuongTacDong) || !hoatDong.maDoiTuongTacDong.HasValue)
+            {
+                hoatDong.loaiDoiTuongTacDong = "ND";
+                hoatDong.maDoiTuongTacDong = hoatDong.maNguoiTacDong;
+            }
+
+            var ketQua = kiemTra(hoatDong);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            ketQua = HoatDongDAO.them(hoatDong);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
@@ -54,5 +148,14 @@ namespace BUSLayer
             return HoatDongDAO.layTheoMa(maHoatDong, lienKet);
         }
 
+        public static KetQua lay_CuaDoiTuong(string loaiDoiTuong, int maDoiTuong, int? trang = null, int? soLuongMoiTrang = null, LienKet lienKet = null)
+        {
+            return HoatDongDAO.lay_CuaDoiTuong(loaiDoiTuong, maDoiTuong, trang, soLuongMoiTrang, lienKet);
+        }
+
+        public static KetQua lay_CuaDanhSachDoiTuong(string loaiDoiTuong, string dsMaDoiTuong, int? trang = null, int? soLuongMoiTrang = null, LienKet lienKet = null)
+        {
+            return HoatDongDAO.lay_CuaDanhSachDoiTuong(loaiDoiTuong, dsMaDoiTuong, trang, soLuongMoiTrang, lienKet);
+        }
     }
 }

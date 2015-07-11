@@ -8,7 +8,7 @@ namespace DTOLayer
 {
     public class GiaTriHoatDongDTO : DTO
     {
-        public int? maHoatDong;
+        public HoatDongDTO hoatDong;
         public string giaTriCu;
         public string giaTriMoi;
         public string giaTri;

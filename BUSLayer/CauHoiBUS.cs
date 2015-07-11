@@ -179,7 +179,7 @@ namespace BUSLayer
             return CauHoiDAO.capNhatTheoMa(maCauHoi, layBangCapNhat(cauHoi, form.Keys.ToArray()), lienKet);
         }
 
-        public static KetQua DuyetHienThiCauHoi(int? maCauHoi, bool trangThai)
+        public static KetQua duyetHienThiCauHoi(int? maCauHoi, bool trangThai)
         {
             return CauHoiDAO.capNhatTheoMa_DuyetHienThi(maCauHoi, trangThai);
         }
