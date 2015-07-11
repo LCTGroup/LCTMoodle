@@ -17,6 +17,33 @@ CREATE TABLE dbo.CotDiem (
 )
 
 GO
+--Trigger xóa cột điểm
+--Cập nhật thứ tự
+--Xóa điểm
+ALTER TRIGGER dbo.xoaCotDiem_TRIGGER
+ON dbo.CotDiem
+AFTER DELETE
+AS
+BEGIN
+	--Cập nhật thứ tự
+	UPDATE CD
+		SET
+			CD.ThuTu = CD.ThuTu - 1
+		FROM
+			dbo.CotDiem CD
+				INNER JOIN deleted d ON 
+					CD.MaKhoaHoc = d.MaKhoaHoc AND
+					CD.ThuTu > d.ThuTu
+	
+	--Xóa điểm
+	DELETE CD_ND
+		FROM
+			CotDiem_NguoiDung CD_ND
+				INNER JOIN deleted d ON
+					CD_ND.MaCotDiem = d.Ma
+END
+
+GO
 --Thêm cột điểm
 ALTER PROC dbo.themCotDiem (
 	@0 NVARCHAR(MAX), --Ten
@@ -99,24 +126,6 @@ AS
 BEGIN
 	DELETE FROM dbo.CotDiem
 		WHERE Ma = @0
-END
-
-GO
---[Trigger] Xóa cột điểm
-CREATE TRIGGER dbo.xoaCotDiem_TRIGGER
-	ON dbo.CotDiem
-	AFTER DELETE
-AS
-BEGIN
-	UPDATE CD
-		SET
-			CD.ThuTu = CD.ThuTu - 1
-		FROM
-			dbo.CotDiem CD
-				INNER JOIN deleted d
-				ON 
-					CD.MaKhoaHoc = d.MaKhoaHoc AND
-					CD.ThuTu > d.ThuTu
 END
 
 GO

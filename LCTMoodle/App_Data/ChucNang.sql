@@ -44,3 +44,7 @@ ALTER DATABASE rtcmfraf_Moodle
 	
 --Đổi tên
 EXEC sp_rename 'dbo.BaiTapNop.ThoiDiemCham', 'ThoiDiemChuyenDiem', 'COLUMN';
+
+--Đệ quy trigger
+ALTER DATABASE rtcmfraf_Moodle
+	SET RECURSIVE_TRIGGERS ON;

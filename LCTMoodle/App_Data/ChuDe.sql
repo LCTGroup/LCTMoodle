@@ -14,6 +14,58 @@ CREATE TABLE dbo.ChuDe (
 )
 
 GO
+--Trigger xóa chủ đề
+--Xóa hình đại diện
+--Xóa hết chủ đề con
+--Thay đổi cây của các con
+--Đưa đối tượng thuộc chủ đề lên chủ đề cha
+ALTER TRIGGER dbo.xoaChuDe_TRIGGER
+ON dbo.ChuDe
+AFTER DELETE
+AS
+BEGIN
+	IF (EXISTS
+		(SELECT 1
+			FROM deleted))
+	BEGIN
+		--Xóa hình đại diện
+		DELETE TT
+			FROM 
+				dbo.TapTin_ChuDe_HinhDaiDien TT
+					INNER JOIN deleted d ON
+						TT.Ma = d.MaHinhDaiDien
+
+		--Xóa chủ đề con
+		DELETE CD
+			FROM
+				dbo.ChuDe CD 
+					INNER JOIN deleted d ON
+						CD.MaCha = d.Ma
+		
+		--Tìm câu hỏi, khóa học sử dụng chủ đề đưa lên lấy chủ đề cha
+		UPDATE CH
+			SET CH.MaChuDe = 0
+			FROM
+				dbo.CauHoi CH
+					INNER JOIN deleted d ON
+						CH.MaChuDe = d.Ma
+		UPDATE KH
+			SET KH.MaChuDe = 0
+			FROM
+				dbo.KhoaHoc KH
+					INNER JOIN deleted d ON
+						KH.MaChuDe = d.Ma
+
+		--Xóa chủ đề
+		DELETE CD
+			FROM 
+				dbo.ChuDe CD
+					INNER JOIN deleted d ON
+						CD.Ma = d.Ma
+	END
+END
+
+GO
 --Thêm chủ đề
 ALTER PROC dbo.themChuDe (
 	@0 NVARCHAR(MAX), --Tên chủ đề

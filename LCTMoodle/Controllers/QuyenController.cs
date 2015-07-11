@@ -347,7 +347,7 @@ namespace LCTMoodle.Controllers
             #region Kiểm tra quyền
             if (Session["NguoiDung"] == null)
             {
-                return Redirect("/tb=" + HttpUtility.UrlEncode("Bạn cần đăng nhập để sử dụng chức năng này."));
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng nhập để sử dụng chức năng này."));
             }
 	        #endregion
 
