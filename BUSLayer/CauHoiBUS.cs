@@ -203,6 +203,5 @@ namespace BUSLayer
         {
             return CauHoiDAO.lay_TimKiem(tuKhoa, lienKet, cachHienThi);
         }
-
     }
 }
