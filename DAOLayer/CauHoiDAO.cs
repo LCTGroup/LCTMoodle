@@ -62,6 +62,11 @@ namespace DAOLayer
                     case "DuyetHienThi":
                         cauHoi.DuyetHienThi = layBool(dong, i); break;
                     default:
+                        if (cauHoi.duLieuThem == null)
+                        {
+                            cauHoi.duLieuThem = new Dictionary<string, object>();
+                        }
+                        cauHoi.duLieuThem.Add(dong.GetName(i), dong[i]);
                         break;
                 }                
             }
@@ -215,6 +220,22 @@ namespace DAOLayer
                         cachHienThi
                     },
                     lienKet                    
+                );
+        }
+
+        public static KetQua lay_TimKiemPhanTrang(string where = null, string orderBy = null, int? trang = null, int? soDongMoiTrang = null, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layCauHoi_TimKiemPhanTrang",
+                    new object[]
+                    {
+                        where,
+                        orderBy,
+                        trang,
+                        soDongMoiTrang
+                    },
+                    lienKet
                 );
         }
     }

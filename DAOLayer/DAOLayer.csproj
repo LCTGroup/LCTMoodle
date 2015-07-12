@@ -44,6 +44,7 @@
     <Compile Include="GiaTriHoatDongDAO.cs" />
     <Compile Include="HoatDongDAO.cs" />
     <Compile Include="BaiVietTaiLieuDAO.cs" />
+    <Compile Include="TinNhanDAO.cs" />
     <Compile Include="TraLoi_DiemDAO.cs" />
     <Compile Include="CauHoi_DiemDAO.cs" />
     <Compile Include="CotDiem_NguoiDungDAO.cs" />

@@ -1,8 +1,9 @@
 ﻿.khung-chi-tiet-tin-nhan {
     border: 1px solid #ddd;
     display: flex;
-    padding: 5px;
+    padding: 10px;
     flex-direction: column;
+    background-color: #fcfcfc;
 }
 
     .dong-tin {
@@ -12,14 +13,16 @@
         margin: 10px 0;
     }
         .dong-tin .hinh-dai-dien {
-            width: 42px;
-            height: 42px;
-            max-height: 42px;
-            max-width: 42px;
-            min-width: 42px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
             .dong-tin .hinh-dai-dien img {
-                width: 100%;
+                width: 42px;
+                height: 42px;
+                max-height: 42px;
+                max-width: 42px;
+                min-width: 42px;
             }
             .dong-tin .hinh-dai-dien span {
                 color: #888;
@@ -33,23 +36,23 @@
             position: relative;
         }            
 
-/*#region Tin nhắn chủ */
+/*#region Tin nhắn khách */
 
-.chu {
+.khach {
     }
-        .chu .chi-tiet {
+        .khach .chi-tiet {
             margin-left: 20px;
             border: 1px solid #fcfcfc;
             background-color: #fff;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
         }
-        .chu .chi-tiet:after {
+        .khach .chi-tiet:after {
             content: '';
             width: 0; 
             height: 0; 
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent; 
-            border-right:10px solid #ccc; 
+            border-right:10px solid #ddd; 
             position: absolute;
             left: -11px;
             top: 11px;
@@ -57,18 +60,18 @@
 
 /*#endregion */
 
-/*#region Tin nhắn khách */
+/*#region Tin nhắn chủ */
 
-.khach {
+.chu {
         justify-content: flex-end;
     }
-        .khach .chi-tiet {
+        .chu .chi-tiet {
             margin-right: 20px;
             border: 1px solid #004263;
             background-color: #004263;
             color: #fcfcfc;
         }
-        .khach .chi-tiet:after {
+        .chu .chi-tiet:after {
             content: '';
             width: 0; 
             height: 0; 
@@ -81,4 +84,20 @@
         }
 
 /*#endregion */
-    
+
+/*#region Trả lời tin nhắn */
+
+.khung-tra-loi-tin-nhan {
+    border: 1px solid #ddd;
+    margin-top: 5px;
+}
+
+/*#endregion */
+
+/*#region Form trả lời tin nhắn */
+
+.tra-loi-tin-nhan {
+    margin-top: 10px;
+}
+
+/*#endregion */

@@ -1,72 +1,50 @@
-﻿
+﻿@using DTOLayer;
+@using LCTMoodle.LCTView;
+@model List<TinNhanDTO>
 @{
     ViewBag.Title = "ChiTietTinNhan";
     Layout = "~/Views/LCT/Khung.cshtml";
+
+    string tenTaiKhoanKhach = ViewData["TenTaiKhoanKhach"] as string;
+    int maNguoiNhan = (int)ViewData["MaNguoiDungKhach"];
 }
 @section Styles {
     <link rel="stylesheet" type="text/css" href="/ChiTietTinNhan.css/NguoiDung" />
 }
+@section Scripts {
+    <script src="/TinNhan.js/NguoiDung"></script>
+}
 
 <article class="hop">
-    <section class="tieu-de">Hội thoại với tài khoản <b>LBC</b></section>
+    <section class="tieu-de">Hội thoại với tài khoản <b>@(tenTaiKhoanKhach != null ? tenTaiKhoanKhach : "Không xác định")</b></section>
     <section class="noi-dung">
         <article class="khung-chi-tiet-tin-nhan">
-            <section class="dong-tin khach">
-                <div class="chi-tiet">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </div>
-                <div class="hinh-dai-dien">
-                    <img src="/HinhDaiDienMacDinh.png/NguoiDung">
-                    <span>lbc</span>
-                </div>
-            </section>
-            <section class="dong-tin chu">
-                <div class="hinh-dai-dien">
-                    <img src="/HinhDaiDienMacDinh.png/NguoiDung">
-                    <span>lbc</span>
-                </div>
-                <div class="chi-tiet">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </div>
-            </section>
-            <section class="dong-tin khach">
-                <div class="chi-tiet">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </div>
-                <div class="hinh-dai-dien">
-                    <img src="/HinhDaiDienMacDinh.png/NguoiDung">
-                    <span>lbc</span>
-                </div>
-            </section>
-            <section class="dong-tin chu">
-                <div class="hinh-dai-dien">
-                    <img src="/HinhDaiDienMacDinh.png/NguoiDung">
-                    <span>lbc</span>
-                </div>
-                <div class="chi-tiet">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </div>
-            </section>
+            @foreach(var tinNhan in Model)
+            {
+                @Html.Partial("/Views/NguoiDung/_Item_TinNhan.cshtml", tinNhan, ViewData)
+            }            
         </article>
+        
+        <!-- Form thêm tin nhắn -->
+        <article class="tra-loi-tin-nhan hop-2-vien">            
+            <form class="lct-form noi-dung" id="them_tin_nhan">
+                <article>
+                    <ul>
+                        <li>
+                            <section class="noi-dung">
+                                <article class="input">
+                                    <textarea name="NoiDung" id="noi_dung" data-mac-dinh=""></textarea>
+                                    <input type="hidden" name="MaNguoiNhan" value="@maNguoiNhan" />
+                                </article>
+                            </section>
+                        </li>
+                    </ul>
+                    <section class="khung-button">
+                        <button type="submit">Gửi tin nhắn</button>
+                    </section>
+                </article>
+            </form>
+        </article>
+        <!---->
     </section>
 </article>

@@ -1,5 +1,7 @@
 ﻿use rtcmfraf_Moodle;
 
+
+select * from nguoiDung
 GO
 --Người dùng
 CREATE TABLE dbo.NguoiDung 
@@ -12,7 +14,7 @@ CREATE TABLE dbo.NguoiDung
 	Ho NVARCHAR(MAX) NOT NULL,
 	TenLot NVARCHAR(MAX),
 	Ten NVARCHAR(MAX) NOT NULL,
-	NgaySinh DATETIME,
+	NgaySinh DATETIME DEFAULT GETDATE('1/1/1997'),
 	DiaChi NVARCHAR(MAX),
 	SoDienThoai NVARCHAR(MAX),
 	MaHinhDaiDien INT,
@@ -51,7 +53,8 @@ BEGIN
 
 	SELECT @@IDENTITY Ma
 END
-
+exec themNguoiDung 'ss','ss','sdsa@sd.asd', , 'asd', null, 'asd', '2/2/2015', null, null,null,null
+select * from nguoiDung
 GO
 --Cập nhật người dùng - chặn
 CREATE PROC dbo.capNhatNguoiDungTheoMa_Chan

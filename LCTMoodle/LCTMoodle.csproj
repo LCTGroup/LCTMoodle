@@ -207,6 +207,7 @@
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
+    <Content Include="Content\scripts\NguoiDung\TinNhan.js" />
     <Content Include="Content\scripts\NguoiDung\PhucHoiMatKhau.js" />
     <Content Include="Content\scripts\NguoiDung\DoiMatKhau.js" />
     <Content Include="Content\scripts\NguoiDung\KichHoatNguoiDung.js" />
@@ -521,6 +522,7 @@
     <Content Include="Views\NguoiDung\TinNhan.cshtml" />
     <Content Include="Views\NguoiDung\ChiTietTinNhan.cshtml" />
     <Content Include="Views\LCT\Khung.cshtml" />
+    <Content Include="Views\NguoiDung\_Item_TinNhan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

@@ -20,7 +20,7 @@ namespace LCTMoodle.Controllers
                 ViewData["KhoaHoc"] = ketQua.ketQua as List<KhoaHocDTO>;
             }
 
-            ketQua = CauHoiBUS.layDanhSach(10);
+            ketQua = CauHoiBUS.layDanhSach(10, new LienKet() { "NguoiTao", "HinhDaiDien" });
             if (ketQua.trangThai == 0)
             {
                 ViewData["CauHoi"] = ketQua.ketQua as List<CauHoiDTO>;
