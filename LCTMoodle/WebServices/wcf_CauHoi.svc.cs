@@ -183,6 +183,8 @@ namespace LCTMoodle.WebServices
             return lst_CauHoi;
         }
 
+        public List<clientmodel_CauHoi> layTheoTieuChi(string tieuChi, int soCauHoi);
+
         /// <summary>
         /// Webservice tìm kiếm câu hỏi
         /// </summary>

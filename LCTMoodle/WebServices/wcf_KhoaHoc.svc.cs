@@ -159,8 +159,9 @@ namespace LCTMoodle.WebServices
         /// Webservice lấy khóa học theo mã người dùng
         /// </summary>
         /// <param name="maNguoiDung"></param>
+        /// <param name="soKhoaHoc"></param>
         /// <returns>List<clientmodel_KhoaHoc></returns>
-        public List<clientmodel_KhoaHoc> layKhoaHocThamGiaTheoMaNguoiDung(int maNguoiDung)
+        public List<clientmodel_KhoaHoc> layKhoaHocThamGiaTheoMaNguoiDung(int maNguoiDung , int soKhoaHoc)
         {
             KetQua ketQua = KhoaHocBUS.layTheoMaNguoiDung(maNguoiDung, new LienKet { "HinhDaiDien", "NguoiTao" });
             List<KhoaHocDTO>[] lst_KhoaHocTongHop = ketQua.ketQua as List<KhoaHocDTO>[];
@@ -170,44 +171,95 @@ namespace LCTMoodle.WebServices
             {
                 if(lst_KhoaHocTongHop[0].Count > 0)
                 {
-                    foreach(var khoaHoc in lst_KhoaHocTongHop[0] as List<KhoaHocDTO>)
+                    if(soKhoaHoc != 0)
                     {
-                        if(khoaHoc.ma != null)
+                        int dem = 0;
+                        foreach (var khoaHoc in lst_KhoaHocTongHop[0] as List<KhoaHocDTO>)
                         {
-                            lst_KhoaHoc.Add(new clientmodel_KhoaHoc()
+                            if(dem < soKhoaHoc)
                             {
-                                ma = khoaHoc.ma.Value,
-                            });
-                        }
+                                if (khoaHoc.ma != null)
+                                {
+                                    lst_KhoaHoc.Add(new clientmodel_KhoaHoc()
+                                    {
+                                        ma = khoaHoc.ma.Value,
+                                    });
+                                }
 
-                        if(khoaHoc.ten != null)
-                        {
-                            lst_KhoaHoc[lst_KhoaHoc.Count - 1].ten = khoaHoc.ten;
-                        }
-                        
-                        if(khoaHoc.moTa != null)
-                        {
-                            lst_KhoaHoc[lst_KhoaHoc.Count - 1].moTa = khoaHoc.moTa;
-                        }
+                                if (khoaHoc.ten != null)
+                                {
+                                    lst_KhoaHoc[lst_KhoaHoc.Count - 1].ten = khoaHoc.ten;
+                                }
 
-                        if(khoaHoc.nguoiTao.tenTaiKhoan != null)
-                        {
-                            lst_KhoaHoc[lst_KhoaHoc.Count - 1].nguoiTao = khoaHoc.nguoiTao.tenTaiKhoan;
-                        }
+                                if (khoaHoc.moTa != null)
+                                {
+                                    lst_KhoaHoc[lst_KhoaHoc.Count - 1].moTa = khoaHoc.moTa;
+                                }
 
-                        if(khoaHoc.thoiDiemTao != null)
-                        {
-                            lst_KhoaHoc[lst_KhoaHoc.Count - 1].ngayTao = khoaHoc.thoiDiemTao.Value;
-                        }
+                                if (khoaHoc.nguoiTao.tenTaiKhoan != null)
+                                {
+                                    lst_KhoaHoc[lst_KhoaHoc.Count - 1].nguoiTao = khoaHoc.nguoiTao.tenTaiKhoan;
+                                }
 
-                        if(khoaHoc.thoiDiemHetHan != null)
-                        {
-                            lst_KhoaHoc[lst_KhoaHoc.Count - 1].ngayHetHan = khoaHoc.thoiDiemHetHan.Value;
-                        }
+                                if (khoaHoc.thoiDiemTao != null)
+                                {
+                                    lst_KhoaHoc[lst_KhoaHoc.Count - 1].ngayTao = khoaHoc.thoiDiemTao.Value;
+                                }
 
-                        if(khoaHoc.hinhDaiDien.ma != null && khoaHoc.hinhDaiDien.duoi != null)
+                                if (khoaHoc.thoiDiemHetHan != null)
+                                {
+                                    lst_KhoaHoc[lst_KhoaHoc.Count - 1].ngayHetHan = khoaHoc.thoiDiemHetHan.Value;
+                                }
+
+                                if (khoaHoc.hinhDaiDien.ma != null && khoaHoc.hinhDaiDien.duoi != null)
+                                {
+                                    lst_KhoaHoc[lst_KhoaHoc.Count - 1].hinhAnh = khoaHoc.hinhDaiDien.ma.Value + khoaHoc.hinhDaiDien.duoi;
+                                }
+                                dem++;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var khoaHoc in lst_KhoaHocTongHop[0] as List<KhoaHocDTO>)
                         {
-                            lst_KhoaHoc[lst_KhoaHoc.Count - 1].hinhAnh = khoaHoc.hinhDaiDien.ma.Value + khoaHoc.hinhDaiDien.duoi;
+                            if (khoaHoc.ma != null)
+                            {
+                                lst_KhoaHoc.Add(new clientmodel_KhoaHoc()
+                                {
+                                    ma = khoaHoc.ma.Value,
+                                });
+                            }
+
+                            if (khoaHoc.ten != null)
+                            {
+                                lst_KhoaHoc[lst_KhoaHoc.Count - 1].ten = khoaHoc.ten;
+                            }
+
+                            if (khoaHoc.moTa != null)
+                            {
+                                lst_KhoaHoc[lst_KhoaHoc.Count - 1].moTa = khoaHoc.moTa;
+                            }
+
+                            if (khoaHoc.nguoiTao.tenTaiKhoan != null)
+                            {
+                                lst_KhoaHoc[lst_KhoaHoc.Count - 1].nguoiTao = khoaHoc.nguoiTao.tenTaiKhoan;
+                            }
+
+                            if (khoaHoc.thoiDiemTao != null)
+                            {
+                                lst_KhoaHoc[lst_KhoaHoc.Count - 1].ngayTao = khoaHoc.thoiDiemTao.Value;
+                            }
+
+                            if (khoaHoc.thoiDiemHetHan != null)
+                            {
+                                lst_KhoaHoc[lst_KhoaHoc.Count - 1].ngayHetHan = khoaHoc.thoiDiemHetHan.Value;
+                            }
+
+                            if (khoaHoc.hinhDaiDien.ma != null && khoaHoc.hinhDaiDien.duoi != null)
+                            {
+                                lst_KhoaHoc[lst_KhoaHoc.Count - 1].hinhAnh = khoaHoc.hinhDaiDien.ma.Value + khoaHoc.hinhDaiDien.duoi;
+                            }
                         }
                     }
                 }
@@ -215,19 +267,6 @@ namespace LCTMoodle.WebServices
 
             return lst_KhoaHoc;
         }
-
-        /// <summary>
-        /// Webservice lấy khóa học theo mã người dùng và trạng thái
-        /// </summary>
-        /// <param name="maNguoiDung"></param>
-        /// <param name="trangThai"></param>
-        /// <returns>string</returns>
-        public string layTheoMaNguoiDungVaTrangThai(int maNguoiDung, int trangThai)
-        {
-            KetQua ketQua = KhoaHocBUS.layTheoMaNguoiDungVaTrangThai(maNguoiDung, trangThai);
-            return "123";
-        }
-
 
         /// <summary>
         /// Webservice lấy khóa học theo tiêu chí và số khóa học truyền vào
@@ -362,5 +401,16 @@ namespace LCTMoodle.WebServices
             return lst_KhoaHoc;
         }
 
+        /// <summary>
+        /// Webservie kiểm tra khóa học được tham gia hay chưa
+        /// </summary>
+        /// <param name="maNguoiDung"></param>
+        /// <param name="maKhoaHoc"></param>
+        /// <returns></returns>
+        public int kiemTraThamGia(int maNguoiDung, int maKhoaHoc)
+        {
+            KetQua ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
+            return (int)ketQua.ketQua;
+        }
     }
 }

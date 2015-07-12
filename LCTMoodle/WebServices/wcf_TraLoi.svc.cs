@@ -13,8 +13,6 @@ using System.Drawing;
 
 namespace LCTMoodle.WebServices
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "wcf_TraLoi" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select wcf_TraLoi.svc or wcf_TraLoi.svc.cs at the Solution Explorer and start debugging.
     public class wcf_TraLoi : Iwcf_TraLoi
     {
         private const string _Loai = "NguoiDung_HinhDaiDien";
