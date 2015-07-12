@@ -18,6 +18,41 @@ namespace BUSLayer
             return TapTinDAO.layTheoMa(loai, ma);
         }
 
+        public static KetQua them(byte[] duLieu, string tenTapTin, int maNguoiTao, string contenttype)
+        {
+            TapTinDTO tapTin = new TapTinDTO()
+            {
+                ten = tenTapTin,
+                loai = contenttype,
+                duoi = Path.GetExtension(tenTapTin),
+                nguoiTao = layDTO<NguoiDungDTO>(maNguoiTao),
+            };
+
+            KetQua ketQua = TapTinDAO.them(tapTin);
+
+            if(ketQua.trangThai == 0)
+            {
+                TapTinDTO tapTinDaLuu = ketQua.ketQua as TapTinDTO;
+
+                string duongDan = TapTinHelper.layDuongDanGoc() + "Tam/" + tapTinDaLuu.ma + tapTinDaLuu.duoi;
+
+                //Lưu tập tin
+                try
+                {
+                    File.WriteAllBytes(duongDan, duLieu);
+                }
+                catch (Exception loi)
+                {
+                    return new KetQua()
+                    {
+                        trangThai = 2,
+                        ketQua = loi.Message
+                    };
+                }
+            }
+            return ketQua;
+        }
+
         public static KetQua them(System.Web.HttpPostedFileBase tapTinLuu)
         {
             TapTinDTO tapTin = new TapTinDTO()

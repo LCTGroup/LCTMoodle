@@ -8,6 +8,7 @@ using DTOLayer;
 using System.IO;
 using System.Web;
 using Data;
+using Helpers;
 
 namespace BUSLayer
 {
@@ -108,6 +109,81 @@ namespace BUSLayer
             }
 
             return new KetQua(0, false);
+        }
+
+        public static KetQua danhSachQuyenCuaNguoiDung(int maNguoiDung)
+        {
+            var ketQua = QuyenDAO.layTheoMaNguoiDung_ToanBoQuyen(maNguoiDung);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Người dùng không có quyền");
+            }
+            var ds = ketQua.ketQua as List<QuyenDTO>;
+
+            //Phạm vi - mã đối tượng - dánh sách quyền
+            var duLieu = new Dictionary<string, Dictionary<int, List<string>>>();
+
+            string phamVi;
+            int maDoiTuong;
+            foreach (var q in ds)
+            {
+                //Phạm vi
+                phamVi = q.phamVi;
+                if (!duLieu.ContainsKey(phamVi))
+                {
+                    duLieu.Add(phamVi, new Dictionary<int,List<string>>());
+                }
+
+                //Đối tượng
+                maDoiTuong = LCTHelper.layGiaTri<int>(q.duLieuThem, "MaDoiTuong", 0);
+                if (!duLieu[phamVi].ContainsKey(maDoiTuong))
+                {
+                    duLieu[phamVi].Add(maDoiTuong, new List<string>());
+                }
+
+                duLieu[phamVi][maDoiTuong].Add(q.giaTri);
+            }
+
+            return new KetQua(duLieu);
+        }
+
+        public static KetQua layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_MangMaDoiTuong(string phamViNhomNguoiDung, int maNguoiDung, string phamVi, string giaTri)
+        {
+            var ketQua = NhomNguoiDungDAO.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong(phamViNhomNguoiDung, maNguoiDung, phamVi, giaTri);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua();
+            }
+
+            var chuoiMaDoiTuong = ketQua.ketQua as string;
+            if (chuoiMaDoiTuong == "")
+            {
+                return new KetQua();
+            }
+
+            return new KetQua(chuoiMaDoiTuong.Split('|').Select(int.Parse).ToArray());
+        }
+
+        public static KetQua layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong(string phamViNhomNguoiDung, int maNguoiDung, string phamVi, string giaTri)
+        {
+            var ketQua = NhomNguoiDungDAO.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong(phamViNhomNguoiDung, maNguoiDung, phamVi, giaTri);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1);
+            }
+
+            var chuoiMaDoiTuong = ketQua.ketQua as string;
+            if (chuoiMaDoiTuong == "")
+            {
+                return new KetQua(1);
+            }
+
+            return ketQua;
+        }
+
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
+        {
+            return QuyenDAO.layTheoMa(ma, lienKet);
         }
     }
 }

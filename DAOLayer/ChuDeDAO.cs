@@ -66,6 +66,9 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "Cay":
+                        chuDe.cay = layString(dong, i);
+                        break;
                     default:
                         if (chuDe.duLieuThem == null)
                         {

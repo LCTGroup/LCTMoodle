@@ -104,46 +104,49 @@
                     </tr>
                 </thead>
                 <tbody id="ds_bai_nop">
-                    @foreach (var baiNop in dsNop)
+                    @if (dsNop != null) 
                     {
-                        <tr data-ma="@baiNop.ma" 
-                            @if (!string.IsNullOrWhiteSpace(baiNop.ghiChu)) 
-                            {
-                                @:data-co-ghi-chu data-ghi-chu="@baiNop.ghiChu"
-                            }
-                            @if (baiNop.daXoa)
-                            {
-                                @:data-da-xoa
-                            }
-                        >
-                            <th class="khong-vien"><a href="/NguoiDung/Xem/@baiNop.nguoiTao.ma">@baiNop.nguoiTao.ho @baiNop.nguoiTao.tenLot</a></th>
-                            <th class="khong-vien"><a href="/NguoiDung/Xem/@baiNop.nguoiTao.ma">@baiNop.nguoiTao.ten</a><a class="nut-ghi-chu" data-chuc-nang="ghi-chu"></a></th>
-                            <td>
-                            @if (baiNop.tapTin == null)
-                            {
-                                <a href="@baiNop.duongDan" target="_blank"><span>@baiNop.duongDan</span></a>
-                            }
-                            else
-                            {
-                                <a class="tap-tin" href="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma">
-                                    <i></i>
-                                    <span>@baiNop.tapTin.ten</span>
-                                </a>
-                            }
-                            </td>
-                            <td><span data-doi-tuong="diem">@baiNop.diem</span></td>
-                            <td>
-                                <section>
-                                    <a data-chuc-nang="xem" class="button xem" title="Xem trước"></a>
-                                    <a data-chuc-nang="ghi-chu" class="button ghi-chu" title="Ghi chú"></a>
-                                </section>
-                                <section>
-                                    <a data-chuc-nang="cham-diem" class="button diem" title="Cho điểm"></a>
-                                    <a data-chuc-nang="xoa" class="button xoa" title="Xóa"></a>
-                                </section>
-                            </td>
-                            <td class="lct-checkbox"><label class="checkbox-radio-label"><input type="checkbox" data-doi-tuong="nut-chon"><u></u></label></td>
-                        </tr>
+                        foreach (var baiNop in dsNop)
+                        {
+                            <tr data-ma="@baiNop.ma" 
+                                @if (!string.IsNullOrWhiteSpace(baiNop.ghiChu)) 
+                                {
+                                    @:data-co-ghi-chu data-ghi-chu="@baiNop.ghiChu"
+                                }
+                                @if (baiNop.daXoa)
+                                {
+                                    @:data-da-xoa
+                                }
+                            >
+                                <th class="khong-vien"><a href="/NguoiDung/Xem/@baiNop.nguoiTao.ma">@baiNop.nguoiTao.ho @baiNop.nguoiTao.tenLot</a></th>
+                                <th class="khong-vien"><a href="/NguoiDung/Xem/@baiNop.nguoiTao.ma">@baiNop.nguoiTao.ten</a><a class="nut-ghi-chu" data-chuc-nang="ghi-chu"></a></th>
+                                <td>
+                                @if (baiNop.tapTin == null)
+                                {
+                                    <a href="@baiNop.duongDan" target="_blank"><span>@baiNop.duongDan</span></a>
+                                }
+                                else
+                                {
+                                    <a class="tap-tin" href="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma">
+                                        <i></i>
+                                        <span>@baiNop.tapTin.ten</span>
+                                    </a>
+                                }
+                                </td>
+                                <td><span data-doi-tuong="diem">@baiNop.diem</span></td>
+                                <td>
+                                    <section>
+                                        <a data-chuc-nang="xem" class="button xem" title="Xem trước"></a>
+                                        <a data-chuc-nang="ghi-chu" class="button ghi-chu" title="Ghi chú"></a>
+                                    </section>
+                                    <section>
+                                        <a data-chuc-nang="cham-diem" class="button diem" title="Cho điểm"></a>
+                                        <a data-chuc-nang="xoa" class="button xoa" title="Xóa"></a>
+                                    </section>
+                                </td>
+                                <td class="lct-checkbox"><label class="checkbox-radio-label"><input type="checkbox" data-doi-tuong="nut-chon"><u></u></label></td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>

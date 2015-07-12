@@ -13,6 +13,22 @@ CREATE TABLE dbo.BaiVietTaiLieu(
 )
 
 GO
+--Trigger xóa
+--Xóa tập tin
+CREATE TRIGGER dbo.xoaBaiVietTaiLieu_TRIGGER
+ON dbo.BaiVietTaiLieu
+AFTER DELETE
+AS
+BEGIN
+	--Xóa tập tin
+	DELETE TT
+		FROM 
+			dbo.TapTin_BaiVietTaiLieu_TapTin TT
+				INNER JOIN deleted d ON
+					TT.Ma = d.MaTapTin
+END
+
+GO
 --Thêm bài viết tài liệu
 ALTER PROC dbo.themBaiVietTaiLieu(
 	@0 NVARCHAR(MAX), --TieuDe

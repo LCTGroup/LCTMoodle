@@ -26,7 +26,7 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
 	('ND', 201, 1,	'',									'QLDB',						0,		-1),
 
-	('ND', 202, 0,	N'Quản lý người dùng',				'QuanLyNguoiDung',			0,		1),		--|
+	('ND', 202, 0,	N'Quản lý người dùng',				'QLNguoiDung',			0,		1),		--|
 	
 --3xx: Chủ đề
 --305
@@ -59,7 +59,7 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 --	  PV   Ma,  C	Tên									Giá trị						Cha		TT
 	('KH', 530, 1,	'',									'QLDB',						0,		-1),
 
-	('KH', 520, 1,	N'Thêm, xóa, sửa khóa học',			'QLNoiDung',				0,		1),		--|
+	('KH', 520, 1,	N'Quản lý khóa học',				'QLNoiDung',				0,		1),		--|
 	('KH', 501, 1,	N'Quản lý quyền',					'QLQuyen',					0,		2),		--|
 
 	('KH', 502, 0,	N'Quản lý',							NULL,						0,		1),		--|
@@ -70,20 +70,18 @@ INSERT INTO dbo.Quyen (PhamVi, Ma, LaQuyenChung, Ten, GiaTri, MaCha, ThuTu) VALU
 	('KH', 531, 0,	N'Quản lý thông tin',				'QLThongTin',				505,	1),		--| | |
 
 	('KH', 506, 0,	N'Diễn đàn',						NULL,						505,	2),		--| | |
-	('KH', 510, 0,	N'Quản lý nội dung bài viết',		'DD_QLNoiDung',				506,	1),		--| | | |
+	('KH', 510, 0,	N'Quản lý nội dung diễn đàn',		'DD_QLNoiDung',				506,	1),		--| | | |
 	('KH', 511, 0,	N'Quản lý điểm thảo luận',			'DD_QLDiem',				506,	2),		--| | | |
 
 	('KH', 507, 0,	N'Bài giảng',						NULL,						505,	3),		--| | |
 	('KH', 524, 0,	N'Đăng bài giảng',					'BG_Them',					507,	1),		--| | | |
 	('KH', 513, 0,	N'Sửa bài giảng',					'BG_Sua',					507,	2),		--| | | |
 	('KH', 514, 0,	N'Xóa bài giảng',					'BG_Xoa',					507,	3),		--| | | |
-	('KH', 515, 0,	N'Thay đổi thứ tự bài giảng',		'BG_ThuTu',					507,	3),		--| | | |
 
 	('KH', 508, 0,	N'Tài liệu',						NULL,						505,	4),		--| | |
 	('KH', 526, 0,	N'Đăng tài liệu',					'TL_Them',					508,	1),		--| | | |
 	('KH', 527, 0,	N'Sửa tài liệu',					'TL_Sua',					508,	2),		--| | | |
 	('KH', 528, 0,	N'Xóa tài liệu',					'TL_Xoa',					508,	3),		--| | | |
-	('KH', 529, 0,	N'Thay đổi thứ tự bài giảng',		'TL_ThuTu',					508,	3),		--| | | |
 
 	('KH', 509, 0,	N'Bài tập',							NULL,						505,	5),		--| | |
 	('KH', 525, 0,	N'Đăng bài tập',					'BT_Them',					509,	1),		--| | | |

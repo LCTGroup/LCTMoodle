@@ -25,7 +25,7 @@ namespace BUSLayer
             var ketQua = CauHoiDAO.layTheoMa(maCauHoi);
             if (ketQua.trangThai != 0)
             {
-                return new KetQua(3,"Câu hỏi không tồn tại");
+                return new KetQua(3, "Câu hỏi không tồn tại");
             }
 
             CauHoiDTO cauHoi = ketQua.ketQua as CauHoiDTO;
@@ -51,7 +51,23 @@ namespace BUSLayer
 
             #endregion
             
-            return CauHoi_DiemDAO.them(maCauHoi, maNguoiTao, diem);
+            ketQua = CauHoi_DiemDAO.them(maCauHoi, maNguoiTao, diem);
+
+            //Thêm hoạt động
+            if (ketQua.trangThai == 0)
+            {
+                HoatDongBUS.them(new HoatDongDTO()
+                    {
+                        //nguoiTacDong = layDTO<NguoiDungDTO>(maNguoiTao),
+                        maNguoiTacDong = maNguoiTao,
+                        loaiDoiTuongBiTacDong = "HD",
+                        maDoiTuongBiTacDong = maCauHoi,
+                        maHanhDong = diem ? 400 : 401,
+                        duongDan = "/HoiDap/" + maCauHoi
+                    });
+            }
+
+            return ketQua;
         }
 
         public static KetQua xoa(int? maCauHoi, int? maNguoiVote)

@@ -27,9 +27,10 @@ namespace LCTMoodle.LCTView
             }
 
             return new HtmlString("<a class=" + 
-                (thamSo.ContainsKey("class") ? thamSo["class"] : null) + " style=" + 
-                (thamSo.ContainsKey("style") ? thamSo["style"] : null) + " href='/NguoiDung/Xem/" + 
-                nguoiDung.ma + "'>" + nguoiDung.ho + " " + nguoiDung.tenLot + " " + nguoiDung.ten + "</a>");
+                (thamSo.ContainsKey("class") ? thamSo["class"] : null) + " style=" + (thamSo.ContainsKey("style") ? thamSo["style"] : null) + 
+                " href='/NguoiDung/Xem/" + nguoiDung.ma + "'>" + 
+                nguoiDung.ho + " " + nguoiDung.tenLot + " " + nguoiDung.ten + 
+                "</a>");
         }
 
         public static HtmlString hinhDaiDien(NguoiDungDTO nguoiDung, Dictionary<string, string> thamSo = null)
@@ -44,10 +45,9 @@ namespace LCTMoodle.LCTView
                 thamSo = new Dictionary<string, string>();
             }
 
-            return new HtmlString("<img class=" + 
-                (thamSo.ContainsKey("class") ? thamSo["class"] : null) + " style=" + 
-                (thamSo.ContainsKey("style") ? thamSo["style"] : null) + " href='/NguoiDung/Xem/' alt='" +
-                nguoiDung.ho + " " + nguoiDung.tenLot + " " + nguoiDung.ten + "' src='" +
+            return new HtmlString("<img class=" + (thamSo.ContainsKey("class") ? thamSo["class"] : null) + 
+                " style=" + (thamSo.ContainsKey("style") ? thamSo["style"] : null) + 
+                " alt='" + nguoiDung.ho + " " + nguoiDung.tenLot + " " + nguoiDung.ten + "' src='" +
                 (nguoiDung.hinhDaiDien == null ? "/HinhDaiDienMacDinh.png/NguoiDung" : "/LayHinh/NguoiDung_HinhDaiDien/" + nguoiDung.hinhDaiDien.ma) + "'></img>");
             
         }

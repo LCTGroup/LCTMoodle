@@ -304,5 +304,33 @@ namespace BUSLayer
         {
             return ChuDeDAO.lay_TimKiemPhanTrang(where, orderBy, trang, soDongMoiTrang, lienKet);
         }
+
+        public static KetQua thuocCay(int maChuDeCon, int maChuDeCha)
+        {
+            if (maChuDeCon == maChuDeCha)
+            {
+                return new KetQua(true);
+            }
+
+            var ketQua = ChuDeDAO.layTheoMa(maChuDeCon);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(false);
+            }
+
+            var chuDeCon = ketQua.ketQua as ChuDeDTO;
+
+            return new KetQua(chuDeCon.cay != null && chuDeCon.cay.IndexOf("|" + maChuDeCha + "|") != -1);
+        }
+
+        public static KetQua thuocCay(ChuDeDTO chuDeCon, int maChuDeCha)
+        {
+            if (chuDeCon == null || chuDeCon.ma.Value == maChuDeCha)
+            {
+                return new KetQua(true);
+            }
+
+            return new KetQua(chuDeCon.cay != null && chuDeCon.cay.IndexOf("|" + maChuDeCha + "|") != -1);
+        }
     }
 }

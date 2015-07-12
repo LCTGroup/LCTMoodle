@@ -14,6 +14,58 @@ CREATE TABLE dbo.ChuDe (
 )
 
 GO
+--Trigger xóa chủ đề
+--Xóa hình đại diện
+--Xóa hết chủ đề con
+--Thay đổi cây của các con
+--Đưa đối tượng thuộc chủ đề lên chủ đề cha
+ALTER TRIGGER dbo.xoaChuDe_TRIGGER
+ON dbo.ChuDe
+AFTER DELETE
+AS
+BEGIN
+	IF (EXISTS
+		(SELECT 1
+			FROM deleted))
+	BEGIN
+		--Xóa hình đại diện
+		DELETE TT
+			FROM 
+				dbo.TapTin_ChuDe_HinhDaiDien TT
+					INNER JOIN deleted d ON
+						TT.Ma = d.MaHinhDaiDien
+
+		--Xóa chủ đề con
+		DELETE CD
+			FROM
+				dbo.ChuDe CD 
+					INNER JOIN deleted d ON
+						CD.MaCha = d.Ma
+		
+		--Tìm câu hỏi, khóa học sử dụng chủ đề đưa lên lấy chủ đề cha
+		UPDATE CH
+			SET CH.MaChuDe = 0
+			FROM
+				dbo.CauHoi CH
+					INNER JOIN deleted d ON
+						CH.MaChuDe = d.Ma
+		UPDATE KH
+			SET KH.MaChuDe = 0
+			FROM
+				dbo.KhoaHoc KH
+					INNER JOIN deleted d ON
+						KH.MaChuDe = d.Ma
+
+		--Xóa chủ đề
+		DELETE CD
+			FROM 
+				dbo.ChuDe CD
+					INNER JOIN deleted d ON
+						CD.Ma = d.Ma
+	END
+END
+
+GO
 --Thêm chủ đề
 ALTER PROC dbo.themChuDe (
 	@0 NVARCHAR(MAX), --Tên chủ đề
@@ -60,6 +112,7 @@ BEGIN
 		CD.ThoiDiemTao,
 		CD.MaCha,
 		CD.MaHinhDaiDien,
+		CD.Cay,
 		COUNT(DISTINCT CD_Con.Ma) 'SLChuDeCon',
 		COUNT(DISTINCT KH.Ma) 'SLKhoaHocCon'
 		FROM 
@@ -77,7 +130,8 @@ BEGIN
 			CD.MaNguoiTao,
 			CD.ThoiDiemTao,
 			CD.MaCha,
-			CD.MaHinhDaiDien
+			CD.MaHinhDaiDien,
+			CD.Cay
 END
 
 GO
@@ -95,6 +149,7 @@ BEGIN
 		CD.ThoiDiemTao,
 		CD.MaCha,
 		CD.MaHinhDaiDien,
+		CD.Cay,
 		COUNT(DISTINCT CD_Con.Ma) 'SLChuDeCon',
 		COUNT(DISTINCT KH.Ma) 'SLKhoaHocCon'
 		FROM 
@@ -112,7 +167,8 @@ BEGIN
 			CD.MaNguoiTao,
 			CD.ThoiDiemTao,
 			CD.MaCha,
-			CD.MaHinhDaiDien
+			CD.MaHinhDaiDien,
+			CD.Cay
 END
 
 GO
@@ -128,26 +184,19 @@ END
 
 GO
 --Tìm kiếm chủ đề
-CREATE PROC dbo.layChuDe_TimKiem (
+ALTER PROC dbo.layChuDe_TimKiem (
 	@0 NVARCHAR(MAX) --Từ khóa
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		Ten,
-		MoTa,
-		MaNguoiTao,
-		ThoiDiemTao,
-		MaCha,
-		MaHinhDaiDien
+	SELECT *
 		FROM dbo.ChuDe
 		WHERE Ten LIKE '%' + REPLACE(@0, ' ', '%') + '%'
 END
 
 GO
 --Cập nhật chủ đề
-CREATE PROC dbo.capNhatChuDeTheoMa (
+ALTER PROC dbo.capNhatChuDeTheoMa (
 	@0 INT, --Ma
 	@1 dbo.BangCapNhat READONLY
 )
@@ -164,16 +213,7 @@ BEGIN
 		')
 	END	
 
-	SELECT TOP 1
-		Ma,
-		Ten,
-		MoTa,
-		MaNguoiTao,
-		ThoiDiemTao,
-		MaCha,
-		MaHinhDaiDien
-		FROM dbo.ChuDe
-		WHERE Ma = @0
+	EXEC dbo.layChuDeTheoMa @0
 END
 
 GO

@@ -6,18 +6,46 @@
 }
 
     .khung-tren .hinh-dai-dien {
-        max-height: 100px;
-        min-height: 100px;
-        max-width: 100px;
+        height: 100px;
         min-width: 100px;
-        position: relative;
+        max-width: 100px;
     }
 
-    .khung-tren .ten-khoa-hoc {
-        line-height: 50px;
-        color: #555;
-        font-size: 2em;
+        .khung-tren .hinh-dai-dien img {
+            height: 100px;
+            width: 100px;
+        }
+
+    .khung-tren .thong-tin {
+
     }
+
+        .khung-tren .ten {
+            line-height: 50px;
+            color: #555;
+            font-size: 25px;
+        }
+
+        .khung-tren .ds-giang-vien {
+            display: inline-flex;
+            flex-wrap: wrap;
+        }
+
+            .khung-tren .giang-vien {
+                display: flex;
+                align-items: center;
+            }
+
+                .khung-tren .giang-vien .hinh-giang-vien {
+                    min-width: 35px;
+                    max-width: 35px;
+                    height: 35px;
+                }
+
+                    .khung-tren .giang-vien .hinh-giang-vien img {
+                        width: 35px;
+                        height: 35px;
+                    }
 
 /*#endregion */
 

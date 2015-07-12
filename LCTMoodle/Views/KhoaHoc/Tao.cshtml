@@ -49,21 +49,24 @@
                         </article>
                     </section>
                 </li>
-                <li>
-                    <section class="tieu-de">
-                        <label>
-                            Chủ đề
-                        </label>
-                    </section>
-                    <section class="noi-dung">
-                        <article class="input">
-                            <input @if (Model != null && Model.chuDe != null) 
-                                   {
-                                       @: data-ma-mac-dinh="@Model.chuDe.ma" data-ten-mac-dinh="@Model.chuDe.ten"
-                                   } data-validate="bat-buoc" data-input-type="chu-de" name="MaChuDe" placeholder="Khóa học của bạn thuộc chủ đề nào?" />
-                        </article>
-                    </section>
-                </li>
+                @if (ViewData.ContainsKey("ChuDe"))
+                {
+                    <li>
+                        <section class="tieu-de">
+                            <label>
+                                Chủ đề
+                            </label>
+                        </section>
+                        <section class="noi-dung">
+                            <article class="input">
+                                <input @if (Model != null && Model.chuDe != null) 
+                                       {
+                                           @: data-ma-mac-dinh="@Model.chuDe.ma" data-ten-mac-dinh="@Model.chuDe.ten"
+                                       } data-data="@Newtonsoft.Json.JsonConvert.SerializeObject(new { chuoiMaChuDe = ViewData["ChuDe"] })" data-validate="bat-buoc" data-input-type="chu-de" name="MaChuDe" placeholder="Khóa học của bạn thuộc chủ đề nào?" />
+                            </article>
+                        </section>
+                    </li>
+                }
                 <li>
                     <section class="tieu-de">
                         <label>

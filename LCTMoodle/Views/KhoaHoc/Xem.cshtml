@@ -58,6 +58,9 @@
         }
     }
 
+    chucNang.Add("Thông tin khóa học");
+    chucNang.Add("href='/KhoaHoc/ThongTin/" + Model.ma + "'");
+
     chucNang.Add("Danh sách thành viên");
     chucNang.Add("href='/KhoaHoc/DanhSachThanhVien/" + Model.ma + "'");
 
@@ -91,12 +94,6 @@
     chucNang.Add("Xem điểm khóa học");
     chucNang.Add("href='/KhoaHoc/Xem-BangDiem/" + Model.ma + "'");
     
-    if (QuyenHelper.co(dsQuyen, "QLNoiDung"))
-    {
-        chucNang.Add("Xóa khóa học");
-        chucNang.Add("data-chuc-nang='xoa-kh'");
-    }
-
     ViewData["ChucNang"] = chucNang;
 }
 

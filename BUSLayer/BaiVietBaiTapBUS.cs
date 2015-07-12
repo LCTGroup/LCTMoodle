@@ -38,6 +38,10 @@ namespace BUSLayer
             {
                 loi.Add("Khóa học không được bỏ trống");
             }
+            if (coKiemTra("ThoiDiemHetHan", truong, kiemTra) && baiViet.thoiDiemHetHan.HasValue && baiViet.thoiDiemHetHan.Value < DateTime.Now)
+            {
+                loi.Add("Thời điểm hết hạn không hợp lệ");
+            }
             #endregion
 
             if (loi.Count > 0)
@@ -93,6 +97,7 @@ namespace BUSLayer
                         break;
                 }
             }
+            baiViet.thoiDiemHetHan = DateTime.Now;
         }
 
         public static BangCapNhat layBangCapNhat(BaiVietBaiTapDTO baiTap, string[] keys)

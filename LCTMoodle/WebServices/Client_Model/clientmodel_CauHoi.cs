@@ -8,11 +8,13 @@ namespace LCTMoodle.WebServices.Client_Model
 {
     public class clientmodel_CauHoi
     {
-        public int Ma { get; set; }
-        public string TieuDe { get; set; }
-        public string NoiDung { get; set; }
-        public string NguoiTao { get; set; }
-        public int SoTraLoi { get; set; }
-        public string HinhAnh { get; set; }
+        public int ma { get; set; }
+        public string tieuDe { get; set; }
+        public string noiDung { get; set; }
+        public string nguoiTao { get; set; }
+        public int soTraLoi { get; set; }
+        public DateTime ngayTao { get; set; }
+        public DateTime ngayCapNhat { get; set; }
+        public string hinhAnh { get; set; }
     }
 }

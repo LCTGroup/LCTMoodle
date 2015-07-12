@@ -1,10 +1,16 @@
 ﻿@using LCTMoodle.LCTView
 @model DTOLayer.KhoaHocDTO
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
 
 <li class="item">
     <section class="khung-thong-tin">
         <section class="hinh-dai-dien">
-            <img src="@(Model.hinhDaiDien != null ? "/LayHinh/KhoaHoc_HinhDaiDien/" + Model.hinhDaiDien.ma : "#")" />
+            @KhoaHocView.hinhDaiDien(Model)
         </section>
         <section class="thong-tin">
             <section class="khung-giang-vien">

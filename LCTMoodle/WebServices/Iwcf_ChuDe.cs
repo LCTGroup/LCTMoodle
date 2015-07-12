@@ -14,18 +14,18 @@ namespace LCTMoodle.WebServices
     public interface Iwcf_ChuDe
     {
         [OperationContract]
-        byte[] layHinhAnh(string _Ten);
+        byte[] layHinhAnh(string ten);
 
         [OperationContract]
-        clientmodel_HinhAnh layHinhAnhChiSo(int _ChiSo, string _Ten);
+        clientmodel_HinhAnh layHinhAnhChiSo(int chiSo, string ten);
 
         [OperationContract]
-        ChuDeDTO layTheoMa(int _Ma);
+        ChuDeDTO layTheoMa(int ma);
 
         [OperationContract]
-        List<ChuDeDTO> layTheoMaCha(int _MaChuDeCha);
+        List<clientmodel_ChuDe> layTheoMaCha(int maChuDeCha);
 
         [OperationContract]
-        List<ChuDeDTO> timKiem(string _TuKhoa);
+        List<clientmodel_ChuDe> timKiem(string tuKhoa);
     }
 }

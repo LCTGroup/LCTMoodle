@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using DTOLayer;
+using LCTMoodle.WebServices.Client_Model;
 
 namespace LCTMoodle.WebServices
 {
@@ -12,6 +14,21 @@ namespace LCTMoodle.WebServices
     public interface Iwcf_NguoiDung
     {
         [OperationContract]
-        int kiemTraDangNhap(string _TenDN, string _MatKhau);
+        byte[] layHinhAnh(string ten);
+
+        [OperationContract]
+        int kiemTraDangNhap(string tenDN, string matKhau);
+
+        [OperationContract]
+        clientmodel_DangNhap themNguoiDung();
+
+        [OperationContract]
+        clientmodel_NguoiDung layNguoiDungTheoMa(int ma);
+
+        [OperationContract]
+        clientmodel_DangNhap dangNhap(string tenDN, string matKhau);
+
+        [OperationContract]
+        clientmodel_DangNhap dangKy(string tenDN, string matKhau, string email, string hoTen, DateTime ngaySinh, int maHinh);
     }
 }

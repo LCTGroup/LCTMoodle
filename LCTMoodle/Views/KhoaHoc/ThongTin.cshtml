@@ -1,12 +1,94 @@
-﻿@{
-    ViewBag.Title = "ThongTinKhoaHoc";
+﻿@using LCTMoodle.LCTView
+@using Helpers
+@using BUSLayer
+@model DTOLayer.KhoaHocDTO
+@{
     Layout = "~/Views/LCT/Khung.cshtml";
+
+    ViewData["TieuDe"] = "Thông tin - " + Model.ten;
 
     ViewData["DieuHuong"] = new List<string>()
     {
-        "Khóa học", "/KhoaHoc/",
+        Model.ten, "/KhoaHoc/" + Model.ma.Value,
         "Thông tin khóa học", "/KhoaHoc/ThongTinKhoaHoc/"
     };
+
+    List<string> chucNang = new List<string>();
+    
+    chucNang.Add("Danh sách thành viên");
+    chucNang.Add("href='/KhoaHoc/DanhSachThanhVien/" + Model.ma + "'");
+
+    var maNguoiDung = Session["NguoiDung"] as int?;
+    string[] dsQuyen;
+
+    if (maNguoiDung.HasValue)
+    {
+        dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value, maNguoiDung);
+    }
+    else
+    {
+        dsQuyen = null;
+    }
+
+    if (QuyenHelper.co(dsQuyen, "QLQuyen"))
+    {
+        chucNang.Add("Quản lý quyền");
+        chucNang.Add("href='/QuanlyQuyen/KH/" + Model.ma + "'");
+    }
+
+    chucNang.Add("Chương trình khóa học");
+    chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + Model.ma + "'");
+
+    if (QuyenHelper.co(dsQuyen, "QLBangDiem"))
+    {
+        chucNang.Add("Quản lý bảng điểm");
+        chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + Model.ma + "'");
+    }
+
+    chucNang.Add("Xem điểm khóa học");
+    chucNang.Add("href='/KhoaHoc/Xem-BangDiem/" + Model.ma + "'");
+
+    if (QuyenHelper.co(dsQuyen, "QLThongTin"))
+    {
+        chucNang.Add("Sửa thông tin");
+        chucNang.Add("href='/KhoaHoc/Tao/" + Model.ma + "'");
+    }
+    else if (maNguoiDung.HasValue)
+    {
+        //Lấy chủ đề mà người dùng có thể sửa
+        //Ở hệ thống
+        var ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("HT", maNguoiDung.Value, "KH", "QLNoiDung");
+        if (ketQua.trangThai != 0)
+        {
+            ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("CD", maNguoiDung.Value, "KH", "QLNoiDung");
+        }
+        
+        if (ketQua.trangThai == 0)
+        {
+            string chuoiMaChuDe = ketQua.ketQua as string;
+
+            //Kiểm tra người dùng có thể sửa khóa học này không
+            foreach (var maChuDe in chuoiMaChuDe.Split('|').Select(int.Parse))
+            {
+                ketQua = ChuDeBUS.thuocCay(Model.chuDe, maChuDe);
+                if (ketQua.trangThai == 0 && (bool)ketQua.ketQua)
+                {
+                    chucNang.Add("Sửa thông tin");
+                    chucNang.Add("href='/KhoaHoc/Tao/" + Model.ma + "'");
+
+                    break;
+                }
+            }
+        }
+    }
+    
+    if (QuyenHelper.co(dsQuyen, "QLNoiDung"))
+    {       
+        chucNang.Add("Xóa khóa học");
+        chucNang.Add("data-chuc-nang='xoa-kh'");
+    }
+
+    ViewData["ChucNang"] = chucNang;
 }
 @section Styles {
     <link rel="stylesheet" href="/ThongTin.css/KhoaHoc/" />
@@ -21,44 +103,93 @@
     <article class="noi-dung">
         <section>
             <article class="khung-tren">
-                <div class="hinh-dai-dien">
-                    Hình của khóa học
-                </div>
-                <div class="thong-tin-khoa-hoc">
-                    <div class="ten-khoa-hoc">Tên khóa học</div>
-                </div>
+                <section class="hinh-dai-dien">
+                    @KhoaHocView.hinhDaiDien(Model)
+                </section>
+                <section class="thong-tin">
+                    <section class="ten">@Model.ten</section>
+                    <section class="ds-giang-vien">
+                        @if (Model.danhSachGiangVien != null)
+                        {
+                            foreach (var giangVien in Model.danhSachGiangVien)
+                            {
+                                <article class="giang-vien">
+                                    <section class="hinh-giang-vien">
+                                        @NguoiDungView.hinhDaiDien(giangVien)
+                                    </section>
+                                    <section class="ten-giang-vien">
+                                        @NguoiDungView.link(giangVien)
+                                    </section>
+                                </article>
+                            }
+                        }
+                    </section>
+                </section>
             </article>
         </section>
     </article>
 </section>
 
 <section class="hop hop-1-vien">
-    <section class="tieu-de">Thông tin cơ bản</section>
+    <section class="tieu-de">Thông tin</section>
     <section class="noi-dung khung-duoi">
-        <div class="dong-noi-dung">
-            <div class="tieu-de">Tiêu đề</div>
-            <div class="noi-dung">tiêu đề</div>
-        </div>
-        <div class="dong-noi-dung">
-            <div class="tieu-de">Tiêu đề</div>
-            <div class="noi-dung">tiêu đề</div>
-        </div>
-        <div class="dong-noi-dung">
-            <div class="tieu-de">Tiêu đề</div>
-            <div class="noi-dung">tiêu đề</div>
-        </div>
-        <div class="dong-noi-dung">
-            <div class="tieu-de">Tiêu đề</div>
-            <div class="noi-dung">tiêu đề</div>
-        </div>
-        <div class="dong-noi-dung">
-            <div class="tieu-de">Tiêu đề</div>
-            <div class="noi-dung">tiêu đề</div>
-        </div>
-        <div class="dong-noi-dung">
-            <div class="tieu-de">Tiêu đề</div>
-            <div class="noi-dung">tiêu đề</div>
-        </div>
+        @if (Model.chuDe != null)
+        {
+            <article class="dong-noi-dung">
+                <section class="tieu-de">Chủ đề</section>
+                <section class="noi-dung">@Model.chuDe.ten</section>
+            </article>   
+        }
+        <article class="dong-noi-dung">
+            <section class="tieu-de">Thời hạn khóa học</section>
+            <section class="noi-dung">
+                @if (Model.hanDangKy.HasValue)
+                {
+                    @Model.hanDangKy.Value.ToString("H:mm d/M/yyyy")
+                }
+                else
+                {
+                    @: Không thời hạn
+                }
+            </section>
+        </article>
+        <article class="dong-noi-dung">
+            <section class="tieu-de">Điều kiện vào nhóm</section>
+            <section class="noi-dung">
+                @if (Model.canDangKy)
+                {
+                    if (Model.hanDangKy.HasValue)
+                    {
+                        @:Đăng ký trước @Model.hanDangKy.Value.ToString("H:m d/M/yyyy")
+                    }
+                    else
+                    {
+                        @:Đăng ký để vào nhóm
+                    }
+                }
+                else
+                {
+                    @:Tham gia trực tiếp
+                }
+            </section>
+        </article>
+        <article class="dong-noi-dung">
+            <section class="tieu-de">Phí tham gia</section>
+            <section class="noi-dung">
+                @if (Model.phiThamGia.HasValue && Model.phiThamGia.Value != 0)
+                {
+                    @Model.phiThamGia.Value
+                }
+                else
+                {
+                    @:Không có phí
+                }
+            </section>
+        </article>
+        <article class="dong-noi-dung">
+            <section class="tieu-de">Chế độ riêng tư</section>
+            <section class="noi-dung">@(Model.cheDoRiengTu == "NoiBo" ? "Nội bộ" : "Công khai")</section>
+        </article>
     </section>
 </section>
 

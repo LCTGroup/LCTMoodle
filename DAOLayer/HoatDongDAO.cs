@@ -20,21 +20,43 @@ namespace DAOLayer
                 switch (dong.GetName(i))
                 {
                     case "Ma":
-                        hoatDong.ma = layInt(dong, i); break;
+                        hoatDong.ma = layInt(dong, i); 
+                        break;
                     case "MaNguoiTacDong":
-                        hoatDong.maNguoiTacDong = layInt(dong, i); break;
+                        hoatDong.maNguoiTacDong = layInt(dong, i);
+                        //maTam = layInt(dong, i);
+
+                        //if (maTam.HasValue)
+                        //{
+                        //    hoatDong.nguoiTacDong = LienKet.co(lienKet, "NguoiTacDong") ?
+                        //        layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam, lienKet["NguoiTacDong"])) :
+                        //        new NguoiDungDTO()
+                        //        {
+                        //            ma = maTam
+                        //        }; 
+                        //}
+                        break;
                     case "LoaiDoiTuongTacDong":
-                        hoatDong.loaiDoiTuongTacDong = layString(dong, i); break;
+                        hoatDong.loaiDoiTuongTacDong = layString(dong, i); 
+                        break;
                     case "MaDoiTuongTacDong":
-                        hoatDong.maDoiTuongTacDong = layInt(dong, i); break;
+                        hoatDong.maDoiTuongTacDong = layInt(dong, i); 
+                        break;
                     case "LoaiDoiTuongBiTacDong":
-                        hoatDong.loaiDoiTuongBiTacDong = layString(dong, i); break;
+                        hoatDong.loaiDoiTuongBiTacDong = layString(dong, i); 
+                        break;
                     case "MaDoiTuongBiTacDong":
-                        hoatDong.maDoiTuongBiTacDong = layInt(dong, i); break;
+                        hoatDong.maDoiTuongBiTacDong = layInt(dong, i); 
+                        break;
                     case "MaHanhDong":
-                        hoatDong.maHanhDong = layInt(dong, i); break;
+                        hoatDong.maHanhDong = layInt(dong, i);
+                        break;
+                    case "DuongDan":
+                        hoatDong.duongDan = layString(dong, i);
+                        break;
                     case "ThoiDiem":
-                        hoatDong.thoiDiem = layDateTime(dong, i); break;                        
+                        hoatDong.thoiDiem = layDateTime(dong, i); 
+                        break;                        
                     default:
                         break;
                 }                
@@ -42,24 +64,11 @@ namespace DAOLayer
 
             if (LienKet.co(lienKet, "GiaTriHoatDong"))
             {
-                var ketQua = GiaTriHoatDongDAO.layTheoMaHoatDong(hoatDong.ma);
-                if (ketQua.trangThai != 0)
-                {
-                    hoatDong.giaTriHoatDong = null;
-                }
-                else
-                {
-                    List<GiaTriHoatDongDTO> giaTriHoatDong = ketQua.ketQua as List<GiaTriHoatDongDTO>;
-                    hoatDong.giaTriHoatDong = giaTriHoatDong;
-                }
+                var ketQua = layDanhSachDTO<GiaTriHoatDongDTO>(GiaTriHoatDongDAO.layTheoMaHoatDong(hoatDong.ma, lienKet["GiaTriHoatDong"]));
             }
             if (LienKet.co(lienKet, "LoiNhanHanhDong"))
             {
-                var ketQua = GiaTriHoatDongDAO.layTheoMaHoatDong(hoatDong.ma);
-                if (ketQua.trangThai != 0)
-                {
-                    hoatDong.loiNhanHanhDong = null;
-                }
+                hoatDong.loiNhanHanhDong = layDTO<LoiNhanHanhDongDTO>(LoiNhanHanhDongDAO.layTheoMaHanhDong(hoatDong.maHanhDong, lienKet["LoiNhanHanhDong"]));
             }
 
             return hoatDong;
@@ -77,19 +86,52 @@ namespace DAOLayer
                         hoatDong.maDoiTuongTacDong,
                         hoatDong.loaiDoiTuongBiTacDong,
                         hoatDong.maDoiTuongBiTacDong,
-                        hoatDong.maHanhDong
+                        hoatDong.maHanhDong,
+                        hoatDong.duongDan
                     }
                 );
         }
 
         public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
-            return layDanhSachDong
+            return layDong
                 (
-                    "layTheoMaHoatDong",
+                    "layHoatDongTheoMa",
                     new object[]
                     {
                         ma
+                    },
+                    lienKet
+                );
+        }
+
+        public static KetQua lay_CuaDoiTuong(string loaiDoiTuong, int? maDoiTuong, int? trang = null, int? soLuongMoiTrang = null, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layHoatDong_CuaDoiTuong",
+                    new object[]
+                    {
+                        loaiDoiTuong, 
+                        maDoiTuong,
+                        trang,
+                        soLuongMoiTrang
+                    },
+                    lienKet
+                );
+        }
+
+        public static KetQua lay_CuaDanhSachDoiTuong(string loaiDoiTuong, string dsMaDoiTuong, int? trang = null, int? soLuongMoiTrang = null, LienKet lienKet = null)
+        {
+            return layDanhSachDong
+                (
+                    "layHoatDong_CuaDanhSachDoiTuong",
+                    new object[]
+                    {
+                        loaiDoiTuong, 
+                        dsMaDoiTuong,
+                        trang,
+                        soLuongMoiTrang
                     },
                     lienKet
                 );

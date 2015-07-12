@@ -20,13 +20,26 @@ namespace DAOLayer
                 switch (dong.GetName(i))
                 {
                     case "MaHoatDong":
-                        giaTriHoatDong.maHoatDong = layInt(dong, i); break;
-                    case "GiaTriCu":
-                        giaTriHoatDong.giaTriCu = layString(dong, i); break;
-                    case "GiaTriMoi":
-                        giaTriHoatDong.giaTriMoi = layString(dong, i); break;
+                        maTam = layInt(dong, i);
+                        if (maTam.HasValue)
+                        {
+                            giaTriHoatDong.hoatDong = LienKet.co(lienKet, "HoatDong") ?
+                                layDTO<HoatDongDTO>(HoatDongDAO.layTheoMa(maTam, lienKet["HoatDong"])) :
+                                new HoatDongDTO()
+                                {
+                                    ma = maTam
+                                }; 
+                        }
+                        break;
                     case "GiaTri":
-                        giaTriHoatDong.giaTriMoi = layString(dong, i); break;
+                        giaTriHoatDong.giaTriMoi = layString(dong, i); 
+                        break;
+                    case "GiaTriCu":
+                        giaTriHoatDong.giaTriCu = layString(dong, i); 
+                        break;
+                    case "GiaTriMoi":
+                        giaTriHoatDong.giaTriMoi = layString(dong, i); 
+                        break;
                     default:
                         break;
                 }
@@ -41,15 +54,15 @@ namespace DAOLayer
                     "ThemGiaTriHoatDong",
                     new object[] 
                     {
-                        giaTriHoatDong.maHoatDong,
+                        layMa(giaTriHoatDong.hoatDong),
+                        giaTriHoatDong.giaTri,
                         giaTriHoatDong.giaTriCu,
-                        giaTriHoatDong.giaTriMoi,
-                        giaTriHoatDong.giaTri
+                        giaTriHoatDong.giaTriMoi
                     }
                 );
         }
 
-        public static KetQua layTheoMaHoatDong(int? maHoatDong)
+        public static KetQua layTheoMaHoatDong(int? maHoatDong, LienKet lienKet = null)
         {
             return layDanhSachDong
                 (
@@ -57,9 +70,9 @@ namespace DAOLayer
                     new object[]
                     {
                         maHoatDong
-                    }
+                    },
+                    lienKet
                 );
         }
-        
     }
 }

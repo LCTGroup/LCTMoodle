@@ -154,6 +154,13 @@ namespace BUSLayer
         public static KetQua them(Form form)
         {
             #region Kiểm tra điều kiện
+            //Lấy người tạo
+            var maNguoiTao = form.layInt("MaNguoiTao");
+            if (!maNguoiTao.HasValue)
+            {
+                return new KetQua(3, "Người tạo không được bỏ trống");
+            }
+
             //Kiểm tra có thuộc tính giảng viên không
             var maGiangVien = form.layInt("MaGiangVien");
             if (!maGiangVien.HasValue)
@@ -161,17 +168,37 @@ namespace BUSLayer
                 return new KetQua(3, "Khóa học cần có giảng viên");
             }
 
-            //Lấy người tạo
-            var maNguoiTao = form.layInt("MaNguoiTao");
+            //Kiểm tra thuộc tính chủ đề
+            var maChuDe = form.layInt("MaChuDe");
+            if (!maChuDe.HasValue)
+            {
+                return new KetQua(3, "Khóa học cần có chủ đề");
+            }
 
             //Lấy quyền tạo khóa học của người dùng
-            if (!coQuyen("QLNoiDung", "KH", 0, maNguoiTao))
+            //Lấy chủ đề mà người dùng có thể tạo
+            //Ở hệ thống
+            var ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("HT", maNguoiTao.Value, "KH", "QLNoiDung");
+            if (ketQua.trangThai != 0)
             {
-                return new KetQua()
+                //Ở chủ đề
+                ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("CD", maNguoiTao.Value, "KH", "QLNoiDung");
+
+                if (ketQua.trangThai != 0)
                 {
-                    trangThai = 3,
-                    ketQua = "Bạn không có quyền tạo khóa học"
-                };
+                    //Nếu không tìm thấy ở 2 phạm vi tren => ko có quyền
+                    return new KetQua(3, "Bạn không có quyền tạo khóa học");
+                }
+            }
+
+            //Kiểm tra người dùng có thể tạo khóa học ở chủ đề này không
+            foreach (var maCD in (ketQua.ketQua as string).Split('|').Select(int.Parse))
+            {
+                ketQua = ChuDeBUS.thuocCay(maChuDe.Value, maCD);
+                if (ketQua.trangThai != 0 || !(bool)ketQua.ketQua)
+                {
+                    return new KetQua(3, "Bạn không có quyền tạo khóa học");
+                }
             }
             #endregion
 
@@ -179,7 +206,7 @@ namespace BUSLayer
 		    var khoaHoc = new KhoaHocDTO();
             gan(ref khoaHoc, form);
 
-            var ketQua = kiemTra(khoaHoc);
+            ketQua = kiemTra(khoaHoc);
 
             if (ketQua.trangThai != 0)
             {
@@ -226,17 +253,14 @@ namespace BUSLayer
             var maNguoiSua = form.layInt("MaNguoiSua");
             var ma = form.layInt("Ma");
 
-            //Lấy quyền tạo khóa học của người dùng
-            if (!coQuyen("QLNoiDung", "KH", ma.Value, maNguoiSua))
+            if (!maNguoiSua.HasValue)
             {
-                return new KetQua()
-                {
-                    trangThai = 3,
-                    ketQua = "Bạn không có quyền sửa khóa học"
-                };
+                return new KetQua(3, "Người sửa không thể bỏ trống.");
             }
-            #endregion
 
+            //Lấy mã chủ đề
+            var maChuDe = form.layInt("MaChuDe");
+            
             //Lấy khóa học
             var ketQua = KhoaHocDAO.layTheoMa(ma);
             if (ketQua.trangThai != 0)
@@ -245,7 +269,73 @@ namespace BUSLayer
             }
 
             var khoaHoc = ketQua.ketQua as KhoaHocDTO;
+            
+            //Nếu có thay đổi chủ đề => kiểm tra quyền trên chủ đề mới
+            //Nếu không => kiểm tra quyền cập nhật thông tin hoặc quyền trên chủ đề hiện tại
+            if (maChuDe.HasValue)
+            {
+                //Lấy quyền tạo khóa học của người dùng
+                //Lấy chủ đề mà người dùng có thể tạo
+                //Ở hệ thống
+                ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("HT", maNguoiSua.Value, "KH", "QLNoiDung");
+                if (ketQua.trangThai != 0)
+                {
+                    //Ở chủ đề
+                    ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("CD", maNguoiSua.Value, "KH", "QLNoiDung");
 
+                    if (ketQua.trangThai != 0)
+                    {
+                        //Nếu không tìm thấy ở 2 phạm vi tren => ko có quyền
+                        return new KetQua(3, "Bạn không có quyền sửa khóa học");
+                    }
+                }
+
+                //Kiểm tra người dùng có thể quyền tạo khóa học ở chủ đề này không
+                foreach (var maCD in (ketQua.ketQua as string).Split('|').Select(int.Parse))
+                {
+                    ketQua = ChuDeBUS.thuocCay(maChuDe.Value, maCD);
+                    if (ketQua.trangThai != 0 || !(bool)ketQua.ketQua)
+                    {
+                        return new KetQua(3, "Bạn cần có quyền tạo khóa học trên chủ đề mới.");
+                    }
+                }
+            }
+            else
+            {
+                //Cần có quyền quản lý thông tin khóa học
+                if (!coQuyen("QLThongTin", "KH", ma.Value, maNguoiSua))
+                {
+                    //Hoặc có quyền quản lý nội dung khóa học ở chủ đề hoặc hệ thống
+
+                    //Lấy quyền tạo khóa học của người dùng
+                    //Lấy chủ đề mà người dùng có thể tạo
+                    //Ở hệ thống
+                    ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("HT", maNguoiSua.Value, "KH", "QLNoiDung");
+                    if (ketQua.trangThai != 0)
+                    {
+                        //Ở chủ đề
+                        ketQua = QuyenBUS.layTheoMaNguoiDungVaPhamViQuyenVaGiaTriQuyen_ChuoiMaDoiTuong("CD", maNguoiSua.Value, "KH", "QLNoiDung");
+
+                        if (ketQua.trangThai != 0)
+                        {
+                            //Nếu không tìm thấy ở 2 phạm vi trên => ko có quyền
+                            return new KetQua(3, "Bạn không có quyền sửa khóa học");
+                        }
+                    }
+
+                    //Kiểm tra người dùng có thể quyền sửa khóa học ở chủ đề hiện tại của khóa học
+                    foreach (var maCD in (ketQua.ketQua as string).Split('|').Select(int.Parse))
+                    {
+                        ketQua = ChuDeBUS.thuocCay(khoaHoc.chuDe.ma.Value, maCD);
+                        if (ketQua.trangThai != 0 || !(bool)ketQua.ketQua)
+                        {
+                            return new KetQua(3, "Bạn không có quyền sửa khóa học.");
+                        }
+                    }
+                }
+            }
+            #endregion
+            
             gan(ref khoaHoc, form);
 
             kiemTra(khoaHoc, form.Keys.ToArray());
@@ -291,14 +381,13 @@ namespace BUSLayer
 
         public static KetQua layTheoMaNguoiDung(int maNguoiDung, LienKet lienKet = null)
         {
-            if (lienKet == null)
+            LienKet lk = new LienKet() 
             {
-                lienKet = new LienKet();
-            }
-            lienKet.Add("KhoaHoc");
+                { "KhoaHoc", lienKet }
+            };
                 
             //Lấy toàn bộ khóa học mà người dùng liên quan
-            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDung(maNguoiDung, lienKet);
+            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDung(maNguoiDung, lk);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;

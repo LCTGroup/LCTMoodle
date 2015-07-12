@@ -21,6 +21,77 @@ CREATE TABLE dbo.KhoaHoc(
 )
 
 GO
+--Trigger xóa
+--Xóa bài viết
+--Xóa cột điểm
+--Xóa chương trình
+--Xóa nhóm người dùng
+--Xóa thành viên
+--Xóa hình đại diện
+ALTER TRIGGER dbo.xoaKhoaHoc_TRIGGER
+ON dbo.KhoaHoc
+AFTER DELETE
+AS
+BEGIN
+	--Xóa bài viết
+	DELETE BVBG
+		FROM 
+			dbo.BaiVietBaiGiang BVBG
+				INNER JOIN deleted d ON
+					BVBG.MaKhoaHoc = d.Ma
+	DELETE BVBT
+		FROM 
+			dbo.BaiVietBaiTap BVBT
+				INNER JOIN deleted d ON
+					BVBT.MaKhoaHoc = d.Ma
+	DELETE BVDD
+		FROM 
+			dbo.BaiVietDienDan BVDD
+				INNER JOIN deleted d ON
+					BVDD.MaKhoaHoc = d.Ma
+	DELETE BVTL
+		FROM 
+			dbo.BaiVietTaiLieu BVTL
+				INNER JOIN deleted d ON
+					BVTL.MaKhoaHoc = d.Ma
+
+	--Xóa cột điểm
+	DELETE CD
+		FROM 
+			dbo.CotDiem CD
+				INNER JOIN deleted d ON
+					CD.MaKhoaHoc = d.Ma
+
+	--Xóa chương trình
+	DELETE CT
+		FROM 
+			dbo.ChuongTrinh CT
+				INNER JOIN deleted d ON
+					CT.MaKhoaHoc = d.Ma
+
+	--Xóa nhóm người dùng
+	DELETE NND
+		FROM
+			dbo.NhomNguoiDung_KH NND
+				INNER JOIN deleted d ON
+					NND.MaDoiTuong = d.Ma
+
+	--Xóa thành viên
+	DELETE KH_ND
+		FROM
+			dbo.KhoaHoc_NguoiDung KH_ND
+				INNER JOIN deleted d ON
+					KH_ND.MaKhoaHoc = d.Ma
+
+	--Xóa hình đại diện
+	DELETE TT
+		FROM
+			dbo.TapTin_KhoaHoc_HinhDiaDien TT
+				INNER JOIN deleted d ON
+					TT.Ma = d.MaHinhDaiDien
+END
+
+GO
 --Thêm khóa học
 ALTER PROC dbo.themKhoaHoc(
 	@0 NVARCHAR(MAX), --Ten

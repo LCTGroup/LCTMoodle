@@ -403,3 +403,53 @@ BEGIN
 
 	SELECT 0
 END
+
+GO
+--Lấy tất cả quyền theo mã người dùng
+ALTER PROC dbo.layQuyenTheoMaNguoiDung_ToanBoQuyen (
+	@0 INT --MaNguoiDung
+)
+AS
+BEGIN
+	SELECT
+		Q.*,
+		NND_Q.MaDoiTuong
+		FROM 
+			--Lấy các nhóm mà người dùng thuộc
+			dbo.NhomNguoiDung_HT_NguoiDung NND_ND
+				--Lấy các quyền các nhóm đó có
+				INNER JOIN dbo.NhomNguoiDung_HT_Quyen NND_Q ON
+					NND_ND.MaNguoiDung = @0 AND
+					NND_ND.MaNhomNguoiDung = NND_Q.MaNhomNguoiDung
+				--Lấy thông tin quyền
+				INNER JOIN dbo.Quyen Q ON
+					NND_Q.MaQuyen = Q.Ma
+	UNION
+	SELECT
+		Q.*,
+		NND_Q.MaDoiTuong
+		FROM 
+			--Lấy các nhóm mà người dùng thuộc
+			dbo.NhomNguoiDung_CD_NguoiDung NND_ND
+				--Lấy các quyền các nhóm đó có
+				INNER JOIN dbo.NhomNguoiDung_CD_Quyen NND_Q ON
+					NND_ND.MaNguoiDung = @0 AND
+					NND_ND.MaNhomNguoiDung = NND_Q.MaNhomNguoiDung
+				--Lấy thông tin quyền
+				INNER JOIN dbo.Quyen Q ON
+					NND_Q.MaQuyen = Q.Ma
+	UNION
+	SELECT
+		Q.*,
+		NND_Q.MaDoiTuong
+		FROM 
+			--Lấy các nhóm mà người dùng thuộc
+			dbo.NhomNguoiDung_KH_NguoiDung NND_ND
+				--Lấy các quyền các nhóm đó có
+				INNER JOIN dbo.NhomNguoiDung_KH_Quyen NND_Q ON
+					NND_ND.MaNguoiDung = @0 AND
+					NND_ND.MaNhomNguoiDung = NND_Q.MaNhomNguoiDung
+				--Lấy thông tin quyền
+				INNER JOIN dbo.Quyen Q ON
+					NND_Q.MaQuyen = Q.Ma
+END

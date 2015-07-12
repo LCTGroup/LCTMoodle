@@ -44,10 +44,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LCTHelper.cs" />
+    <Compile Include="HoatDongHelper.cs" />
     <Compile Include="NguoiDungHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuyenHelper.cs" />
     <Compile Include="TapTinHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DTOLayer\DTOLayer.csproj">
+      <Project>{f03e2462-211a-47ab-bb76-9ad537ea4734}</Project>
+      <Name>DTOLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

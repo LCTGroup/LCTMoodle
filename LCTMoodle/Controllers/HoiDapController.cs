@@ -239,7 +239,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyDuyetHienThiCauHoi(int? maCauHoi, bool trangThai)
         {
-            return Json(CauHoiBUS.DuyetHienThiCauHoi(maCauHoi, trangThai));
+            return Json(CauHoiBUS.duyetHienThiCauHoi(maCauHoi, trangThai));
         }
 
         [HttpPost]

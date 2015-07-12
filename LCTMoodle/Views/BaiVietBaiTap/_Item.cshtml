@@ -25,21 +25,25 @@
         coQuyenChamDiem = QuyenHelper.co(dsQuyen, "QLBangDiem");
         
         //Kiểm tra người dùng có phải là thành viên không để sử dụng chức năng nộp bài
-        if (ViewData.ContainsKey("LaHocVien"))
+        coQuyenNopBai = !Model.thoiDiemHetHan.HasValue || Model.thoiDiemHetHan.Value > DateTime.Now;
+        if (coQuyenNopBai)
         {
-            coQuyenNopBai = (bool)ViewData["LaHocVien"];
-        }
-        else
-        {
-            var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
-            if (ketQua.trangThai != 0)
+            if (ViewData.ContainsKey("LaHocVien"))
             {
-                coQuyenNopBai = false;
+                coQuyenNopBai = (bool)ViewData["LaHocVien"];
             }
             else
             {
-                var thanhVien = ketQua.ketQua as DTOLayer.KhoaHoc_NguoiDungDTO;
-                coQuyenNopBai = thanhVien.trangThai == 0 && thanhVien.laHocVien;
+                var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
+                if (ketQua.trangThai != 0)
+                {
+                    coQuyenNopBai = false;
+                }
+                else
+                {
+                    var thanhVien = ketQua.ketQua as DTOLayer.KhoaHoc_NguoiDungDTO;
+                    coQuyenNopBai = thanhVien.trangThai == 0 && thanhVien.laHocVien;
+                }
             }
         }
     }

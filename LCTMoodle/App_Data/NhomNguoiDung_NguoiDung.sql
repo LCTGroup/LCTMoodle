@@ -11,6 +11,46 @@ CREATE TABLE dbo.NhomNguoiDung_CD_NguoiDung (
 )
 
 GO
+--Trigger xóa
+--Cập nhật thuộc tính CoQuyenNhom.. của người dùng
+CREATE TRIGGER dbo.xoaNhomNguoiDung_KH_NguoiDung_TRIGGER
+ON dbo.NhomNguoiDung_KH_NguoiDung
+AFTER DELETE
+AS
+BEGIN
+	--Cập nhật thuộc tính CoQuyenNhom.. của người dùng
+	UPDATE ND
+		SET ND.CoQuyenNhomKH = 0
+		FROM 
+			(SELECT d.MaNguoiDung
+				FROM
+					deleted d
+						LEFT JOIN dbo.NhomNguoiDung_KH_NguoiDung NND_ND ON
+							d.MaNguoiDung = NND_ND.MaNguoiDung
+				GROUP BY d.MaNguoiDung
+				HAVING COUNT(NND_ND.MaNguoiDung) = 0) d
+				INNER JOIN dbo.NguoiDung ND ON
+					d.MaNguoiDung = ND.Ma
+END
+
+GO
+--Trigger thêm
+--Cập nhật thuộc tính CoQuyenNhom.. của người dùng
+CREATE TRIGGER dbo.themNhomNguoiDung_KH_NguoiDung_TRIGGER
+ON dbo.NhomNguoiDung_KH_NguoiDung
+AFTER INSERT
+AS
+BEGIN
+	--Cập nhật thuộc tính CoQuyenNhom.. của người dùng
+	UPDATE ND
+		SET ND.CoQuyenNhomKH = 1
+		FROM
+			inserted i
+				INNER JOIN dbo.NguoiDung ND ON
+					i.ManguoiDung = ND.Ma
+END
+
+GO
 --Lấy theo mã người dùng
 CREATE PROC dbo.layNhomNguoiDung_NguoiDungTheoMaNhomNguoiDungVaMaNguoiDung (
 	@0 NVARCHAR(MAX), --PhamVi
@@ -44,11 +84,6 @@ BEGIN
 	EXEC('
 		INSERT INTO dbo.NhomNguoiDung_' + @0 + '_NguoiDung (MaNhomNguoiDung, MaNguoiDung)
 			VALUES (' + @1 + ', ' + @2 + ')
-			
-		--Cập nhật CoQuyenNhom
-		UPDATE dbo.NguoiDung
-			SET CoQuyenNhom' + @0 + ' = 1
-			WHERE Ma = ' + @2 + '
 	')
 END
 
@@ -65,18 +100,6 @@ BEGIN
 		DELETE FROM dbo.NhomNguoiDung_' + @0 + '_NguoiDung
 			WHERE 
 				MaNhomnguoiDung = ' + @1 + ' AND
-				MaNguoiDung = ' + @2 + '
-
-		--Kiểm tra nếu người dùng này không còn nằm trong nhóm người dùng *PV* nào nữa thì sẽ xóa
-		IF (NOT EXISTS (
-			SELECT TOP 1 1
-				FROM dbo.NhomNguoiDung_' + @0 + '_NguoiDung
-				WHERE MaNguoiDung = ' + @2 + '
-		))
-		BEGIN
-			UPDATE dbo.NguoiDung
-				SET CoQuyenNhom' + @0 + ' = NULL
-				WHERE Ma = ' + @2 + '
-		END
+				MaNguoiDung = ' + @2 + '		
 	')
 END

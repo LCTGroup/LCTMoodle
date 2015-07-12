@@ -16,6 +16,21 @@ CREATE TABLE dbo.BaiTapNop (
 )
 
 GO
+--Trigger xóa
+--Xóa tập tin
+CREATE TRIGGER dbo.XoaBaiTapNop_TRIGGER
+ON dbo.BaiTapNop
+AFTER DELETE
+AS
+BEGIN
+	DELETE TT
+		FROM 
+			dbo.TapTin_BaiTapNop_TapTin TT
+				INNER JOIN deleted d ON
+					TT.Ma = d.MaTapTin		
+END
+
+GO
 --Thêm bài tập nộp
 --Hoặc cập nhật nếu đã có
 ALTER PROC dbo.themHoacCapNhatBaiTapNop (
