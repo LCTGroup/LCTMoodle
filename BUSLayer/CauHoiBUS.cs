@@ -209,6 +209,7 @@ namespace BUSLayer
             return CauHoiDAO.lay_TimKiem(tuKhoa, lienKet, cachHienThi);
         }
 
+
         public static KetQua timKiemPhanTrang(int trang, int soDongMoiTrang, string where = null, string orderBy = null, LienKet lienKet = null)
         {
             return CauHoiDAO.lay_TimKiemPhanTrang(where, orderBy, trang, soDongMoiTrang, lienKet);

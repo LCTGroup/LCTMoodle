@@ -23,7 +23,13 @@ namespace LCTMoodle.WebServices
         clientmodel_CauHoi layTheoMa(int ma);
 
         [OperationContract]
-        List<clientmodel_CauHoi> lay(int soPT);
+        List<clientmodel_CauHoi> layTheoMaNguoiTao(int maNguoiTao);
+
+        [OperationContract]
+        List<clientmodel_CauHoi> layMoiNhat(int soPT);
+
+        [OperationContract]
+        List<clientmodel_CauHoi> layTheoTieuChi(string tieuChi, int soCauHoi);
 
         [OperationContract]
         List<clientmodel_CauHoi> timKiem(string tuKhoa);
