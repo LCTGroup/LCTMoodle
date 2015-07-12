@@ -52,6 +52,10 @@
             chucNang.Add("Danh sách người dùng bị chặn");
             chucNang.Add("href='/NguoiDung/DanhSachNguoiDungBiChan/'");
         }
+        
+        chucNang.Add("Xem Tin Nhắn");
+        chucNang.Add("href='/NguoiDung/TinNhan/" + maNguoiDung.Value + "'");
+        
         ViewData["ChucNang"] = chucNang;
     }
 }
@@ -99,7 +103,7 @@
         </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Giới tính</div>
-            <div class="noi-dung" data-change="Email">@Helpers.NguoiDungHelper.chuyenGioiTinh(Model.gioiTinh)</div>
+            <div class="noi-dung" data-change="Email">@(Model.gioiTinh != null ? Helpers.NguoiDungHelper.chuyenGioiTinh(Model.gioiTinh) : "Không xác định")</div>
         </div>
         <div class="dong-noi-dung">
             <div class="tieu-de">Ngày sinh</div>

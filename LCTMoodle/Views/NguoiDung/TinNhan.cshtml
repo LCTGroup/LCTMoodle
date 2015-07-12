@@ -4,6 +4,12 @@
 @{
     ViewBag.Title = "TinNhan";
     Layout = "~/Views/LCT/Khung.cshtml";
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Tin Nhắn", "/NguoiDung/TinNhan/" + Session["NguoiDung"],
+    };
+    
+    
 }
 
 @section Styles {

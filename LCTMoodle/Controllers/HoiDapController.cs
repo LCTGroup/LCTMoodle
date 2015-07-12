@@ -171,7 +171,7 @@ namespace LCTMoodle.Controllers
             return Json(CauHoiBUS.xoaTheoMa(ma, (int?)Session["NguoiDung"]));
         }
 
-        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0, int trang = 1)
+        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0, int trang = 1, string cachHienThi = "")
         {
             //Sửa số dòng mỗi trang nhớ sửa ở view
             var ketQua = CauHoiBUS.timKiemPhanTrang(trang, Data.GiaTri.soLuongCauHoiMoiTrang,
@@ -179,7 +179,7 @@ namespace LCTMoodle.Controllers
                 (maChuDe != 0 ?
                 "AND MaChuDe = " + maChuDe :
                 null),
-                null,
+                cachHienThi + " DESC",
                 new LienKet() { "NguoiTao", "ChuDe" });
 
             if (ketQua.trangThai == 0)
