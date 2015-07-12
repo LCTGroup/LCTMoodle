@@ -120,10 +120,72 @@ namespace LCTMoodle.WebServices
                 }
             }
             return cm_CauHoi;
-        }       
+        }
 
         /// <summary>
-        /// Webservice lấy danh sách câu hỏi
+        /// Webservice lấy câu hỏi theo mã người tạo
+        /// </summary>
+        /// <param name="maNguoiTao"></param>
+        /// <returns>List<clientmodel_CauHoi></returns>
+        public List<clientmodel_CauHoi> layTheoMaNguoiTao(int maNguoiTao)
+        {
+            KetQua ketQua = CauHoiBUS.layTheoMaNguoiDung(maNguoiTao, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
+            List<clientmodel_CauHoi> lst_CauHoi = new List<clientmodel_CauHoi>();
+
+            if (ketQua.trangThai == 0)
+            {
+                foreach (var cauHoi in ketQua.ketQua as List<CauHoiDTO>)
+                {
+                    if (cauHoi.ma != null)
+                    {
+                        lst_CauHoi.Add(new clientmodel_CauHoi()
+                        {
+                            ma = cauHoi.ma.Value,
+                        });
+                    }
+
+                    if (cauHoi.tieuDe != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].tieuDe = cauHoi.tieuDe;
+                    }
+
+                    if (cauHoi.noiDung != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].noiDung = cauHoi.noiDung;
+                    }
+
+                    if (cauHoi.nguoiTao.tenTaiKhoan != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].nguoiTao = cauHoi.nguoiTao.tenTaiKhoan;
+                    }
+
+                    if (cauHoi.soLuongTraLoi != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].soTraLoi = cauHoi.soLuongTraLoi.Value;
+                    }
+
+                    if (cauHoi.thoiDiemTao != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].ngayTao = cauHoi.thoiDiemTao.Value;
+                    }
+
+                    if (cauHoi.thoiDiemCapNhat != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].ngayCapNhat = cauHoi.thoiDiemCapNhat.Value;
+                    }
+
+                    if (cauHoi.nguoiTao.hinhDaiDien.ma != null && cauHoi.nguoiTao.hinhDaiDien.duoi != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].hinhAnh = cauHoi.nguoiTao.hinhDaiDien.ma.Value + cauHoi.nguoiTao.hinhDaiDien.duoi;
+                    }
+                }
+            }
+
+            return lst_CauHoi;
+        }
+
+        /// <summary>
+        /// Webservice lấy câu hỏi mới nhất
         /// </summary>
         /// <param name="soPT"></param>
         /// <returns>List<clientmodel_CauHoi></returns>
@@ -183,6 +245,12 @@ namespace LCTMoodle.WebServices
             return lst_CauHoi;
         }
 
+        /// <summary>
+        /// Webservice lấy câu hỏi theo tiêu chí
+        /// </summary>
+        /// <param name="tieuChi"></param>
+        /// <param name="soCauHoi"></param>
+        /// <returns>List<clientmodel_CauHoi></returns>
         public List<clientmodel_CauHoi> layTheoTieuChi(string tieuChi, int soCauHoi)
         {
             KetQua ketQua = CauHoiBUS.layDanhSach(soCauHoi, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } }, tieuChi);

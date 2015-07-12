@@ -10,7 +10,7 @@ $(function () {
 
     khoiTaoLCTForm($('#tieu_chi_hien_thi'));
 
-    khoiTaoKhungTimKiemLCT($_danhSach, $_khungTim, '/HoiDap/_DanhSach_Tim', {
+    khoiTaoKhungTimKiemLCT2($_danhSach, $_khungTim, $('[data-doi-tuong="phan-trang"]'), '/HoiDap/_DanhSach_Tim', {
         data: function () {
             return { cachHienThi: _cachHienThi };
         }

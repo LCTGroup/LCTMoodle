@@ -9,5 +9,6 @@ namespace Data
     public class GiaTri
     {
         public static int soLuongKhoaHocMoiTrang = 4;
+        public static int soLuongCauHoiMoiTrang = 8;
     }
 }

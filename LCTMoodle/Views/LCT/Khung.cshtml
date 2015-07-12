@@ -72,7 +72,7 @@
                             <li>
                                 <a href="javascript:void(0)" data-mo-doi-tuong="HopDieuKhien">
                                     @NguoiDungView.hinhDaiDien(nguoiDung)
-                                    <span>@nguoiDung.tenTaiKhoan</span>
+                                    <span>@nguoiDung.ho @nguoiDung.tenLot @nguoiDung.ten</span>
                                 </a>
                                 <div class="hop-dieu-khien" data-doi-tuong="HopDieuKhien">
                                     <ul>
@@ -213,8 +213,8 @@
                                     <section class="chuc-nang">
                                         <ul id="danh_sach_chuc_nang_lct" class="danh-sach">
                                             @{
-                                List<string> danhSach = ViewData["ChucNang"] as List<string>;
-                                int soLuong = danhSach.Count;
+                                                List<string> danhSach = ViewData["ChucNang"] as List<string>;
+                                                int soLuong = danhSach.Count;
                                             }
                                             @for (int i = 0; i < soLuong; i += 2)
                                             {
@@ -245,7 +245,7 @@
                                                     </div>
                                                     <div class="thong-tin">
                                                         @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
-                                                        <span>@cauHoi.nguoiTao.tenTaiKhoan - @cauHoi.thoiDiemTao.Value.ToString("hh:mm tt")</span>
+                                                        <span>@cauHoi.nguoiTao.ho @cauHoi.nguoiTao.tenLot @cauHoi.nguoiTao.ten - @cauHoi.thoiDiemTao.Value.ToString("hh:mm tt")</span>
                                                     </div>
                                                 </li>
                                             }

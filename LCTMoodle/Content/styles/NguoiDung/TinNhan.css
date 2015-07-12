@@ -1,5 +1,5 @@
 ﻿.khung-tin-nhan {
-    padding: 5px;
+    padding: 10px;
     border: 1px solid #ddd;
     display: flex;
     flex-direction: row;
@@ -13,11 +13,16 @@
         max-height: 42px;
         max-width: 42px;
     }
+        .khung-tin-nhan img {
+            width: 100%;
+            height: 100%;
+        }
 
     .khung-tin-nhan .noi-dung {
         display: flex;
         flex-direction: column;
         width: 100%;
+        margin-left: 10px;
     }
         .khung-tin-nhan .chi-tiet {
 

@@ -1,0 +1,45 @@
+﻿@using DTOLayer;
+@using LCTMoodle.LCTView;
+
+@model TinNhanDTO
+
+@if (Model.nguoiGui.ma != (int)Session["NguoiDung"])
+{
+    <section class="dong-tin khach">
+        <div class="hinh-dai-dien">
+            @if (Model.nguoiGui == null)
+            {
+                <img src="/HinhDaiDienMacDinh.png/NguoiDung">
+                <span>không xác định</span>
+            }
+            else
+            {
+                @NguoiDungView.hinhDaiDien(Model.nguoiGui);
+                <span>@Model.nguoiGui.ho @Model.nguoiGui.tenLot @Model.nguoiGui.ten</span>
+            }
+        </div>
+        <div class="chi-tiet">
+            @Model.noiDung
+        </div>
+    </section>
+}
+else
+{
+    <section class="dong-tin chu">
+        <div class="chi-tiet">
+            @Model.noiDung
+        </div>
+        <div class="hinh-dai-dien">
+            @if (Model.nguoiGui == null)
+            {
+                <img src="/HinhDaiDienMacDinh.png/NguoiDung">
+                <span>không xác định</span>
+            }
+            else
+            {
+                @NguoiDungView.hinhDaiDien(Model.nguoiGui);
+                <span>@Model.nguoiGui.ho @Model.nguoiGui.tenLot @Model.nguoiGui.ten</span>
+            }
+        </div>
+    </section>
+}

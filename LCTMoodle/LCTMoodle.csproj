@@ -154,6 +154,8 @@
     <Compile Include="LCTView\NguoiDungView.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_CauHoi.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_ChuDe.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_DangKy.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_ThongBao.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_HinhAnh.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_DangNhap.cs" />
@@ -163,6 +165,7 @@
     <Compile Include="WebServices\Iwcf_ChuDe.cs" />
     <Compile Include="WebServices\Iwcf_KhoaHoc.cs" />
     <Compile Include="WebServices\Iwcf_NguoiDung.cs" />
+    <Compile Include="WebServices\Iwcf_Quyen.cs" />
     <Compile Include="WebServices\Iwcf_TraLoi.cs" />
     <Compile Include="WebServices\wcf_CauHoi.svc.cs">
       <DependentUpon>wcf_CauHoi.svc</DependentUpon>
@@ -175,6 +178,9 @@
     </Compile>
     <Compile Include="WebServices\wcf_NguoiDung.svc.cs">
       <DependentUpon>wcf_NguoiDung.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\wcf_Quyen.svc.cs">
+      <DependentUpon>wcf_Quyen.svc</DependentUpon>
     </Compile>
     <Compile Include="WebServices\wcf_TraLoi.svc.cs">
       <DependentUpon>wcf_TraLoi.svc</DependentUpon>
@@ -222,6 +228,7 @@
     <Content Include="Content\scripts\LCT\Form.js" />
     <Content Include="Content\scripts\LCT\jquery.js" />
     <Content Include="Content\scripts\LCT\Khung.js" />
+    <Content Include="Content\scripts\NguoiDung\TinNhan.js" />
     <Content Include="Content\scripts\NguoiDung\PhucHoiMatKhau.js" />
     <Content Include="Content\scripts\NguoiDung\DoiMatKhau.js" />
     <Content Include="Content\scripts\NguoiDung\KichHoatNguoiDung.js" />
@@ -431,6 +438,7 @@
     <Content Include="WebServices\wcf_ChuDe.svc" />
     <Content Include="WebServices\wcf_KhoaHoc.svc" />
     <Content Include="WebServices\wcf_NguoiDung.svc" />
+    <Content Include="WebServices\wcf_Quyen.svc" />
     <Content Include="WebServices\wcf_TraLoi.svc" />
   </ItemGroup>
   <ItemGroup>
@@ -538,6 +546,7 @@
     <Content Include="Views\NguoiDung\TinNhan.cshtml" />
     <Content Include="Views\NguoiDung\ChiTietTinNhan.cshtml" />
     <Content Include="Views\LCT\Khung.cshtml" />
+    <Content Include="Views\NguoiDung\_Item_TinNhan.cshtml" />
     <Content Include="Views\Quyen\_QuyenNguoiDung.cshtml" />
     <Content Include="Views\Quyen\QuyenCuaToi.cshtml" />
   </ItemGroup>

@@ -12,7 +12,7 @@ namespace LCTMoodle.Controllers
 {
     public class NguoiDungController : LCTController
     {
-        public ActionResult Xem(int? ma)
+        public ActionResult Xem(int ma)
         {
             #region Kiểm tra điều kiện
 
@@ -56,14 +56,63 @@ namespace LCTMoodle.Controllers
                 }).ketQua);
         }
 
-        public ActionResult TinNhan(int? maNguoiDung)
+        public ActionResult TinNhan(int ma)
         {
-            return View();
+            var ketQua = TinNhanDAO.layDanhSachTinNhanTheoMaNguoiDung(ma, new LienKet() { "NguoiDung" });
+            if (ketQua.trangThai != 0)
+            {
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Lỗi."));
+            }
+            return View(ketQua.ketQua);
         }
 
-        public ActionResult ChiTietTinNhan(string tenTaiKhoanNguoiGui)
+        public ActionResult ChiTietTinNhan(string tenTaiKhoanKhach)
         {
-            return View();
+            #region Kiểm tra điều kiện
+
+            int? maNguoiDung = Session["NguoiDung"] as int?;
+            if (!maNguoiDung.HasValue)
+            {
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn chưa đăng nhập."));
+            }
+
+            #endregion
+
+            var ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenTaiKhoanKhach);
+            if (ketQua.trangThai != 0)
+            {
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Người dùng không tồn tại."));
+            }
+            var khach = ketQua.ketQua as NguoiDungDTO;
+
+            ketQua = TinNhanBUS.lay(khach.ma.Value, maNguoiDung.Value, new LienKet() { "NguoiDung" });
+            if (ketQua.trangThai != 0)
+            {
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Nội dung tin nhắn không tồn tại."));
+            }
+
+            ViewData["TenTaiKhoanKhach"] = tenTaiKhoanKhach;
+            ViewData["MaNguoiDungKhach"] = khach.ma;
+
+            return View(ketQua.ketQua);
+        }
+
+        [HttpPost]
+        public ActionResult XuLyThemTinNhan(FormCollection form)
+        {
+            var ketQua = TinNhanBUS.them(chuyenForm(form), new LienKet() { "NguoiDung" });
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua);
+            }
+
+            ViewData["TinNhanMoi"] = true;
+
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = renderPartialViewToString(ControllerContext, "/NguoiDung/_Item_TinNhan.cshtml", ketQua.ketQua, new ViewDataDictionary() { { "TinNhanMoi", ViewData["TinNhanMoi"] } })
+            });
         }
 
         public ActionResult DangNhap()

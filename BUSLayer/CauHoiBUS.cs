@@ -194,6 +194,11 @@ namespace BUSLayer
             return CauHoiDAO.lay(soDong, tieuChiHienThi, lienKet);
         }
 
+        public static KetQua layTheoMaNguoiDung(int maNguoiTao, LienKet lienKet = null)
+        {
+            return CauHoiDAO.layTheoMaNguoiTao(maNguoiTao, lienKet);
+        }
+
         public static KetQua layTheoMaChuDe_TimKiem(int? ma, string tuKhoa, LienKet lienKet = null, string cachHienThi = null)
         {
             return CauHoiDAO.layTheoMaChuDe_TimKiem(ma, tuKhoa, lienKet, cachHienThi);
@@ -203,5 +208,12 @@ namespace BUSLayer
         {
             return CauHoiDAO.lay_TimKiem(tuKhoa, lienKet, cachHienThi);
         }
+
+
+        public static KetQua timKiemPhanTrang(int trang, int soDongMoiTrang, string where = null, string orderBy = null, LienKet lienKet = null)
+        {
+            return CauHoiDAO.lay_TimKiemPhanTrang(where, orderBy, trang, soDongMoiTrang, lienKet);
+        }
+
     }
 }

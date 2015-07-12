@@ -69,36 +69,81 @@ namespace LCTMoodle.WebServices
             }
         }
 
-
-        clientmodel_DangNhap dangKy(string tenDN, string matKhau, string email, string hoTen, DateTime ngaySinh, int maHinh)
+        /// <summary>
+        /// Webservice đăng ký thành viên
+        /// </summary>
+        /// <param name="tenDN"></param>
+        /// <param name="matKhau"></param>
+        /// <param name="email"></param>
+        /// <param name="hoTen"></param>
+        /// <param name="ngaySinh"></param>
+        /// <param name="chapNhanDieuKhoan">0,1</param>
+        /// <param name="duLieuAnh"></param>
+        /// <param name="tenAnh"></param>
+        /// <param name="contenttype"></param>
+        /// <returns></returns>
+        public clientmodel_DangKy dangKy(string tenDN, string matKhau, string email, string hoTen, DateTime ngaySinh, int chapNhanDieuKhoan, byte[] duLieuAnh, string tenAnh, string contenttype)
         {
-            Form form = new Form()
+            int maHinh = -1;
+            KetQua ketQuaLuuHinh = TapTinBUS.them(duLieuAnh, tenAnh, 0, contenttype);
+            TapTinDTO dto_TapTin = ketQuaLuuHinh.ketQua as TapTinDTO;
+
+            if (ketQuaLuuHinh.trangThai == 0)
             {
-                {"TenTaiKhoan","hp94"},
-                {"MatKhau","huyphong"},
-                {"Email","benny9407@yahoo.com.vn"},
-                {"Ho","Nguyen"},
-                {"TenLot","Huy"},
-                {"Ten","Phong"},
-                {"NgaySinh","14/02/1994"},
-                {"ChapNhanQuyDinh","1"},
-            };
+                maHinh = dto_TapTin.ma.Value;    
+            }
 
-            
+            string ho = layHo(hoTen);
+            string tenLot = layTenLot(hoTen);
+            string ten = layTen(hoTen);
 
-            KetQua ketQua = NguoiDungBUS.them(form);
-            clientmodel_DangNhap cm_NguoiDung = new clientmodel_DangNhap();
-
-            if(ketQua.trangThai == 0)
+            Form form;
+            if(maHinh != -1)
             {
-
+                form = new Form()
+                {
+                    {"TenTaiKhoan",tenDN},
+                    {"MatKhau",matKhau},
+                    {"Email",email},
+                    {"Ho",ho},
+                    {"TenLot",tenLot},
+                    {"Ten",ten},
+                    {"NgaySinh",ngaySinh.ToShortDateString()},
+                    {"ChapNhanQuyDinh",chapNhanDieuKhoan.ToString()},
+                    {"MaHinhDaiDien",maHinh.ToString()},
+                };
             }
             else
             {
-                
+                form = new Form()
+                {
+                    {"TenTaiKhoan",tenDN},
+                    {"MatKhau",matKhau},
+                    {"Email",email},
+                    {"Ho",ho},
+                    {"TenLot",tenLot},
+                    {"Ten",ten},
+                    {"NgaySinh",ngaySinh.ToShortDateString()},
+                    {"ChapNhanQuyDinh",chapNhanDieuKhoan.ToString()},
+                };
             }
 
-            return cm_NguoiDung;
+
+            KetQua ketQua = NguoiDungBUS.them(form);
+            clientmodel_DangKy cm_DangKy = new clientmodel_DangKy();
+
+            if(ketQua.trangThai == 0)
+            {
+                cm_DangKy.ma = (int)ketQua.ketQua;
+                cm_DangKy.trangThai = ketQua.trangThai;
+            }
+            else
+            {
+                cm_DangKy.trangThai = ketQua.trangThai;
+                cm_DangKy.lst_ThongBao = ketQua.ketQua as List<string>;
+            }
+
+            return cm_DangKy;
         }
 
         /// <summary>
@@ -192,6 +237,57 @@ namespace LCTMoodle.WebServices
             return cm_NguoiDung;
         }
 
+        /// <summary>
+        /// Webservice thay đổi mật khẩu
+        /// </summary>
+        /// <param name="tenTaiKhoan"></param>
+        /// <param name="matKhauCu"></param>
+        /// <param name="matKhauMoi"></param>
+        /// <returns>clientmodel_DoiMatKhau</returns>
+        public clientmodel_ThongBao thayDoiMatKhau(string tenTaiKhoan, string matKhauCu, string matKhauMoi)
+        {
+            KetQua ketQua = NguoiDungBUS.xuLyDoiMatKhau(tenTaiKhoan, matKhauCu, matKhauMoi);
+            clientmodel_ThongBao cm_DoiMatKhau = new clientmodel_ThongBao();
+
+            if(ketQua.trangThai == 0)
+            {
+                cm_DoiMatKhau.trangThai = ketQua.trangThai;
+                cm_DoiMatKhau.thongBao = "Thành Công";
+            }
+            else
+            {
+                cm_DoiMatKhau.trangThai = ketQua.trangThai;
+                cm_DoiMatKhau.thongBao = ketQua.ketQua as string;
+            }
+
+            return cm_DoiMatKhau;
+        }
+
+        public clientmodel_ThongBao kichHoatTaiKhoan(string tenTaiKhoan, string matKhau, string maKichHoat)
+        {
+            Form form = new Form()
+            {
+                {"TenTaiKhoan",tenTaiKhoan},
+                {"MatKhau",matKhau},
+                {"MaKichHoat",maKichHoat},
+            };
+
+            KetQua ketQua = NguoiDungBUS.kichHoatTaiKhoan(form);
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+
+            if(ketQua.trangThai == 0)
+            {
+                cm_ThongBao.trangThai = ketQua.trangThai;
+                cm_ThongBao.thongBao = "Thành Công";
+            }
+            else
+            {
+                cm_ThongBao.trangThai = ketQua.trangThai;
+                cm_ThongBao.thongBao = ketQua.ketQua as string;
+            }
+
+            return cm_ThongBao;
+        }
 
         public int themAnhDaiDien(byte[] hinhAnh, string tenAnh, int nguoiTao, string contenttype)
         {
@@ -228,19 +324,5 @@ namespace LCTMoodle.WebServices
             string[] chuoi = hoTen.Split(' ');
             return chuoi[chuoi.Count() - 1];
         }
-
-
-        public clientmodel_DangNhap themNguoiDung()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        clientmodel_DangNhap Iwcf_NguoiDung.dangKy(string tenDN, string matKhau, string email, string hoTen, DateTime ngaySinh, int maHinh)
-        {
-            throw new NotImplementedException();
-        }
-
-        
     }
 }

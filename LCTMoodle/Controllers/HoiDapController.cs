@@ -17,10 +17,10 @@ namespace LCTMoodle.Controllers
 
         public ActionResult Index()
         {
-            KetQua ketQua = CauHoiBUS.layDanhSach(null, new LienKet() { "NguoiTao", "ChuDe" }, "MoiNhat");
+            KetQua ketQua = CauHoiBUS.timKiemPhanTrang(1, Data.GiaTri.soLuongCauHoiMoiTrang, null, null, new LienKet() { "NguoiTao", "HinhDaiDien" });
             if (ketQua.trangThai != 0)
             {
-                return RedirectToAction("Index", "TrangChu");
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Lỗi."));
             }            
             return View(ketQua.ketQua);
         }
@@ -171,31 +171,28 @@ namespace LCTMoodle.Controllers
             return Json(CauHoiBUS.xoaTheoMa(ma, (int?)Session["NguoiDung"]));
         }
 
-        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0, string cachHienThi = null)
+        public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0, int trang = 1)
         {
-            KetQua ketQua;
-            if (maChuDe == 0)
-            {
-                ketQua = CauHoiBUS.lay_TimKiem(tuKhoa, new LienKet() { 
-                    "NguoiTao",
-                    "HinhDaiDien"
-                },
-                cachHienThi
-                );
-            }
-            else
-            {
-                ketQua = CauHoiBUS.layTheoMaChuDe_TimKiem(maChuDe, tuKhoa, new LienKet() { 
-                    "NguoiTao",
-                    "HinhDaiDien"
-                },
-                cachHienThi
-                );
-            }
+            //Sửa số dòng mỗi trang nhớ sửa ở view
+            var ketQua = CauHoiBUS.timKiemPhanTrang(trang, Data.GiaTri.soLuongCauHoiMoiTrang,
+                "TieuDe LIKE '%" + tuKhoa + "%'" +
+                (maChuDe != 0 ?
+                "AND MaChuDe = " + maChuDe :
+                null),
+                null,
+                new LienKet() { "NguoiTao", "ChuDe" });
 
             if (ketQua.trangThai == 0)
             {
-                ketQua.ketQua = renderPartialViewToString(ControllerContext, "HoiDap/_DanhSachCauHoi.cshtml", ketQua.ketQua);
+                ketQua.ketQua = new
+                {
+                    danhSach = renderPartialViewToString(ControllerContext, "HoiDap/_DanhSachCauHoi.cshtml", ketQua.ketQua),
+                    phanTrang = renderPartialViewToString(ControllerContext, "LCT/_PhanTrang.cshtml", null, new ViewDataDictionary()
+                        {
+                            { "TongSoLuong", LCTHelper.layGiaTri<int>((ketQua.ketQua as List<CauHoiDTO>)[0].duLieuThem, "TongSoDong", 0) },
+                            { "SoLuongMoiTrang", Data.GiaTri.soLuongCauHoiMoiTrang }
+                        })
+                };
             }
 
             return Json(ketQua, JsonRequestBehavior.AllowGet);

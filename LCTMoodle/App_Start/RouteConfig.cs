@@ -98,6 +98,12 @@ namespace LCTMoodle
             //);
 
             routes.MapRoute(
+                name: "NguoiDung/ChiTietTinNhan/{tenTaiKhoanNguoiGui}",
+                url: "{controller}/{action}/{tenTaiKhoanKhach}",
+                defaults: new { controller = "NguoiDung", action = "ChiTietTinNhan", tenTaiKhoanNguoiGui = UrlParameter.Optional }
+                );
+
+            routes.MapRoute(
                 name: "MacDinh",
                 url: "{controller}/{action}/{ma}",
                 defaults: new { controller = "TrangChu", action = "Index", ma = UrlParameter.Optional }
