@@ -13,22 +13,6 @@ namespace LCTMoodle.Controllers
 {
     public class KhoaHocController : LCTController
     {
-
-        public ActionResult ThongTin(int ma)
-        {
-            #region Kiểm tra điều kiện
-            //Lấy khóa học
-            var ketQua = KhoaHocBUS.layTheoMa(ma, new LienKet() { "GiangVien", "ChuDe" });
-            if (ketQua.trangThai != 0)
-            {
-                return Redirect("/?tb=" + HttpUtility.UrlEncode("Khóa học không tồn tại"));
-            }
-            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
-            #endregion
-
-            return View(khoaHoc);
-        }
-
         public ActionResult Xem(int ma)
         {
             #region Lấy khóa học
@@ -66,6 +50,21 @@ namespace LCTMoodle.Controllers
             {
                 return View("DangKyThamGia", khoaHoc);
             } 
+            #endregion
+
+            return View(khoaHoc);
+        }
+
+        public ActionResult ThongTin(int ma)
+        {
+            #region Kiểm tra điều kiện
+            //Lấy khóa học
+            var ketQua = KhoaHocBUS.layTheoMa(ma, new LienKet() { "GiangVien", "ChuDe" });
+            if (ketQua.trangThai != 0)
+            {
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Khóa học không tồn tại"));
+            }
+            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
             #endregion
 
             return View(khoaHoc);
@@ -325,7 +324,7 @@ namespace LCTMoodle.Controllers
             return Json(KhoaHoc_NguoiDungBUS.huyDangKy(ma));
         }
 
-        public ActionResult DanhSachThanhVien(int ma)
+        public ActionResult ThanhVien(int ma)
         {
             #region Lấy khóa học
             KetQua ketQua = KhoaHocBUS.layTheoMa(ma);
