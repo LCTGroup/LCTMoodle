@@ -180,5 +180,10 @@ namespace BUSLayer
 
             return ketQua;
         }
+
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
+        {
+            return QuyenDAO.layTheoMa(ma, lienKet);
+        }
     }
 }

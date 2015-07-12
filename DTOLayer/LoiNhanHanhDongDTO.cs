@@ -11,7 +11,5 @@ namespace DTOLayer
         public int? maHanhDong;
         public string chuDong;
         public string biDong;
-        public string chuDongNgoai;
-        public string biDongngoai;
     }
 }

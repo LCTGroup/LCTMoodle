@@ -14,21 +14,20 @@ namespace DAOLayer
         {
             LoiNhanHanhDongDTO loiNhanHanhDong = new LoiNhanHanhDongDTO();
 
-            int? maTam;
+            //int? maTam;
             for (int i = 0; i < dong.FieldCount; i++)
             {
                 switch (dong.GetName(i))
                 {
                     case "MaHanhDong":
-                        loiNhanHanhDong.maHanhDong = layInt(dong, i); break;
+                        loiNhanHanhDong.maHanhDong = layInt(dong, i); 
+                        break;
                     case "ChuDong":
-                        loiNhanHanhDong.chuDong = layString(dong, i); break;
+                        loiNhanHanhDong.chuDong = layString(dong, i); 
+                        break;
                     case "BiDong":
-                        loiNhanHanhDong.biDong = layString(dong, i); break;
-                    case "ChuDongNgoai":
-                        loiNhanHanhDong.chuDongNgoai = layString(dong, i); break;
-                    case "BiDongNgoai":
-                        loiNhanHanhDong.biDongngoai = layString(dong, i); break;
+                        loiNhanHanhDong.biDong = layString(dong, i);
+                        break;
                     default:
                         break;
                 }
@@ -36,7 +35,7 @@ namespace DAOLayer
             return loiNhanHanhDong;
         }
 
-        public static KetQua layTheoMaHanhDong(int? maHanhDong)
+        public static KetQua layTheoMaHanhDong(int? maHanhDong, LienKet lienKet = null)
         {
             return layDong
                 (
@@ -44,7 +43,8 @@ namespace DAOLayer
                     new object[]
                     {
                         maHanhDong
-                    }
+                    },
+                    lienKet
                 );
         }
     }

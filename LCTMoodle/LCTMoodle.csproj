@@ -147,6 +147,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LCTView\HoatDongView.cs" />
     <Compile Include="LCTView\KhoaHocView.cs" />
     <Compile Include="LCTView\QuyenView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

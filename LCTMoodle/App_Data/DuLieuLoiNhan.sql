@@ -1,6 +1,6 @@
 ﻿--Mỗi khi thay đổi => chạy toàn bộ file này
 GO
-truncate table dbo.LoiNhanHoatDong
+truncate table dbo.LoiNhanHanhDong
 
 --Mã
 	--1xx: Hệ thống
@@ -10,44 +10,53 @@ truncate table dbo.LoiNhanHoatDong
 	--5xx: Khóa học
 	--6xx: Quyền
 
+-- {BD}: Tên của đối tượng bị động
+-- {CD}: Tên của đối tượng chủ động
+-- {ND}: Tên của người dùng tác động
+-- {GTC}: Giá trị cũ
+-- {GTM}: Giá trị mới
+
 GO
-INSERT INTO dbo.LoiNhanHoatDong (MaHanhDong, LoiNhanChuDong, LoiNhanBiDong) VALUES
---	MaHanhDong		ChuDong,		BiDong,			ChuDongNgoai,		BiDongNgoai
+INSERT INTO dbo.LoiNhanHanhDong (MaHanhDong, ChuDong, BiDong) VALUES
+--	MaHanhDong		ChuDong,		BiDong
 
 --1xx: Hệ thống
-	(100,			
-			'',				
-			'',
-			'',
-			''),	
+	(100,		
+			N'',
+			N''),	
 --2xx: Người dùng
 --	MaHanhDong		LoiNhanChuDong,		LoiNhanBiDong
-	(200,			'b',				'b'),
+	(200,		
+			N'',
+			N''),	
 
 --3xx: Chủ đề
 --	MaHanhDong		LoiNhanChuDong,		LoiNhanBiDong
-	(300,			'c',				'c'),
+	(300,		
+			N'',
+			N''),		
 
 --4xx: Hỏi đáp
 --	MaHanhDong		LoiNhanChuDong,		LoiNhanBiDong
 
---	Lời nhắn cho điểm cộng câu hỏi
+	--Cộng điểm câu hỏi
 	(400,
-		'Bạn đã cho điểm cộng câu hỏi {BD}',
-		'Câu hỏi {CD} đã được bạn cho điểm cộng',
-		NULL,
-		NULL),
-
+		N'{ND} đã cho điểm cộng câu hỏi {BD}',
+		N'Câu hỏi {BD} đã được {ND} cho điểm cộng'),
+		
+	--Trừ điểm câu hỏi
 	(401,
-		'Bạn đã cho điểm trừ câu hỏi {BD}',
-		'Câu hỏi {CD} đã được bạn cho điểm trừ',
-		NULL,
-		NULL),
+		N'{ND} đã cho điểm trừ câu hỏi {BD}',
+		N'Câu hỏi {BD} đã bị {ND} cho điểm trừ'),
 
 --5xx: Khóa học
 --	MaHanhDong		LoiNhanChuDong,		LoiNhanBiDong
-	(500,			'e',				'e'),
+	(500,		
+			N'',
+			N''),		
 
 --6xx: Quyền
 --	MaHanhDong		LoiNhanChuDong,		LoiNhanBiDong
-	(600,			'f',				'f')
+	(600,		
+			N'',
+			N'')
