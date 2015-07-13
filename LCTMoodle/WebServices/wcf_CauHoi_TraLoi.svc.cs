@@ -13,7 +13,7 @@ using System.Drawing;
 
 namespace LCTMoodle.WebServices
 {
-    public class wcf_TraLoi : Iwcf_TraLoi
+    public class wcf_TraLoi : Iwcf_CauHoi_TraLoi
     {
         private const string _Loai = "NguoiDung_HinhDaiDien";
 
@@ -64,10 +64,10 @@ namespace LCTMoodle.WebServices
             return cm_HinhAnh;
         }
 
-        public List<clientmodel_TraLoi> layTheoMaCauHoi(int ma)
+        public List<clientmodel_CauHoi_TraLoi> layTheoMaCauHoi(int ma)
         {
             KetQua ketQua = TraLoiBUS.layTheoMaCauHoi(ma, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
-            List<clientmodel_TraLoi> lst_TraLoi = new List<clientmodel_TraLoi>();
+            List<clientmodel_CauHoi_TraLoi> lst_TraLoi = new List<clientmodel_CauHoi_TraLoi>();
 
             if(ketQua.trangThai == 0)
             {
@@ -75,7 +75,7 @@ namespace LCTMoodle.WebServices
                 {
                     if(traLoi.ma != null)
                     {
-                        lst_TraLoi.Add(new clientmodel_TraLoi()
+                        lst_TraLoi.Add(new clientmodel_CauHoi_TraLoi()
                         {
                             ma = traLoi.ma.Value,
                             duyet = traLoi.duyet,

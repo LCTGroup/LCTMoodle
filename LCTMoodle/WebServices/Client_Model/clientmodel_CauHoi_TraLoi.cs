@@ -5,7 +5,7 @@ using System.Web;
 
 namespace LCTMoodle.WebServices.Client_Model
 {
-    public class clientmodel_TraLoi
+    public class clientmodel_CauHoi_TraLoi
     {
         public int ma { get; set; }
         public string noiDung { get; set; }

@@ -308,6 +308,11 @@ namespace LCTMoodle.WebServices
             return lst_CauHoi;
         }
 
+        public List<clientmodel_CauHoi> layDanhSachDuyet()
+        {
+            
+        }
+
         /// <summary>
         /// Webservice tìm kiếm câu hỏi
         /// </summary>
@@ -385,6 +390,75 @@ namespace LCTMoodle.WebServices
                 lst_CauHoi = ketQua.ketQua as List<CauHoiDTO>;
             }
             return lst_CauHoi;
+        }
+
+        /// <summary>
+        /// Webservice thêm câu hỏi
+        /// </summary>
+        /// <param name="maNguoiTao"></param>
+        /// <param name="maChuDe"></param>
+        /// <param name="tieuDe"></param>
+        /// <param name="noiDung"></param>
+        /// <returns>int</returns>
+        public int themCauHoi(int maNguoiTao, int maChuDe, string tieuDe, string noiDung)
+        {
+            Form form = new Form()
+            {
+                {"MaNguoiTao",maNguoiTao.ToString()},
+                {"MaChuDe",maChuDe.ToString()},
+                {"TieuDe",tieuDe.ToString()},
+                {"NoiDung",noiDung.ToString()},
+            };
+
+            KetQua ketQua = CauHoiBUS.them(form);
+            return (int)ketQua.ketQua;
+        }
+
+        /// <summary>
+        /// Webservice xóa câu hỏi
+        /// </summary>
+        /// <param name="maCauHoi"></param>
+        /// <param name="maNguoiDung"></param>
+        /// <returns>clientmodel_ThongBao</returns>
+        public clientmodel_ThongBao xoaCauHoi(int maCauHoi, int maNguoiDung)
+        {
+            KetQua ketQua = CauHoiBUS.xoaTheoMa(maCauHoi, maNguoiDung);
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+
+            cm_ThongBao.thongBao = ketQua.ketQua as string;
+            cm_ThongBao.trangThai = ketQua.trangThai;
+
+            return cm_ThongBao;
+        }
+
+        /// <summary>
+        /// Webservice sửa câu hỏi
+        /// </summary>
+        /// <param name="maNguoiTao"></param>
+        /// <param name="maCauHoi"></param>
+        /// <param name="tieuDe"></param>
+        /// <param name="noiDung"></param>
+        /// <returns>clientmodel_ThongBao</returns>
+        public clientmodel_ThongBao suaCauHoi(int maNguoiTao, int maCauHoi, string tieuDe, string noiDung)
+        {
+            Form form = new Form()
+            {
+                {"MaNguoiSua",maNguoiTao.ToString()},
+                {"Ma",maCauHoi.ToString()},
+                {"TieuDe",tieuDe.ToString()},
+                {"NoiDung",noiDung.ToString()},
+            };
+
+            KetQua ketQua = CauHoiBUS.capNhat(form, new LienKet { "NguoiDung", "HinhDaiDien", "TraLoi" });
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+
+            cm_ThongBao.trangThai = ketQua.trangThai;
+            if(ketQua.ketQua != null)
+            {
+                cm_ThongBao.thongBao = ketQua.ketQua as string;
+            }
+
+            return cm_ThongBao;
         }
     }
 }

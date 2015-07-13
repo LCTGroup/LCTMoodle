@@ -32,9 +32,21 @@ namespace LCTMoodle.WebServices
         List<clientmodel_CauHoi> layTheoTieuChi(string tieuChi, int soCauHoi);
 
         [OperationContract]
+        List<clientmodel_CauHoi> layDanhSachDuyet();
+
+        [OperationContract]
         List<clientmodel_CauHoi> timKiem(string tuKhoa);
 
         [OperationContract]
         List<CauHoiDTO> timKiemTheoChuDe(int maChuDe, string tuKhoa);
+
+        [OperationContract]
+        int themCauHoi(int maNguoiTao, int maChuDe, string tieuDe, string noiDung);
+
+        [OperationContract]
+        clientmodel_ThongBao xoaCauHoi(int maCauHoi, int maNguoiDung);
+
+        [OperationContract]
+        clientmodel_ThongBao suaCauHoi(int maNguoiTao, int maCauHoi, string tieuDe, string noiDung);
     }
 }
