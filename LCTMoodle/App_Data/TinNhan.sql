@@ -73,4 +73,4 @@ BEGIN
 		ORDER BY ThoiDiemGui DESC
 END
 
-layTinNhanTheoMaNguoiDung 2
+themTinNhan 1,2, "Làm báo cáo chưa?"
