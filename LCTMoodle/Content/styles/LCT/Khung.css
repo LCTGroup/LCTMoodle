@@ -1051,6 +1051,14 @@ main {
     display: flex;
 }
 
+.empty {
+    padding: 10px;
+    color: #888;
+    text-align: center;
+    border: 1px solid #ddd;
+    background-color: #fcfcfc;
+}
+
 /*#region Cột trái */
 
 main > .cot-trai {

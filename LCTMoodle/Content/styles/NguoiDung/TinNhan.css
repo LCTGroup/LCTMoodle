@@ -5,7 +5,11 @@
     flex-direction: row;
     background-color: #fff;
     margin-bottom: 5px;
+    transition: 0.5s;
 }
+    .khung-tin-nhan:hover {
+        background-color: #fcfcfc;
+    }
 
     .khung-tin-nhan .hinh-dai-dien {
         width: 42px;
@@ -32,3 +36,11 @@
             color: #888;
             margin-top: 5px;
         }
+
+/*#region Thẻ a */
+
+.khung-bao-tin-nhan a:hover {
+    text-decoration: none;
+}
+
+/*#endregion */

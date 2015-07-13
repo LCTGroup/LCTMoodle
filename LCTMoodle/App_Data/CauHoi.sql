@@ -253,7 +253,8 @@ END
 
 GO
 --Lấy phân trang
-CREATE PROC dbo.layCauHoi_TimKiemPhanTrang (
+CREATE PROC dbo.layCauHoi_TimKiemPhanTrang 
+(
 	@0 NVARCHAR(MAX), --WHERE
 	@1 NVARCHAR(MAX), --ORDER
 	@2 INT, --Trang

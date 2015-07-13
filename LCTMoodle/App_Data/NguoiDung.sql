@@ -1,7 +1,5 @@
 ﻿use rtcmfraf_Moodle;
 
-
-select * from nguoiDung
 GO
 --Người dùng
 CREATE TABLE dbo.NguoiDung 
@@ -26,7 +24,7 @@ CREATE TABLE dbo.NguoiDung
 	CoQuyenNhomKH BIT,
 	DiemHoiDap INT DEFAULT 0,
 	ThoiDiemPhucHoiMatKhau DATETIME DEFAULT GETDATE(),
-	TrangThaiHoatDong BIT DEFAULT 1
+	DaDuyet BIT DEFAULT 1
 )
 
 GO
@@ -53,8 +51,7 @@ BEGIN
 
 	SELECT @@IDENTITY Ma
 END
-exec themNguoiDung 'ss','ss','sdsa@sd.asd', , 'asd', null, 'asd', '2/2/2015', null, null,null,null
-select * from nguoiDung
+
 GO
 --Cập nhật người dùng - chặn
 CREATE PROC dbo.capNhatNguoiDungTheoMa_Chan

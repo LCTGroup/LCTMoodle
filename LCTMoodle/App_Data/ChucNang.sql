@@ -43,7 +43,7 @@ ALTER DATABASE rtcmfraf_Moodle
 	COLLATE Vietnamese_CI_A
 	
 --Đổi tên
-EXEC sp_rename 'dbo.BaiTapNop.ThoiDiemCham', 'ThoiDiemChuyenDiem', 'COLUMN';
+EXEC sp_rename 'dbo.NguoiDung.TrangThaiHoatDong', 'DaDuyet', 'COLUMN';
 
 --Đệ quy trigger
 ALTER DATABASE rtcmfraf_Moodle

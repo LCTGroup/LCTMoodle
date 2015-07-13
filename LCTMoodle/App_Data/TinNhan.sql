@@ -6,7 +6,7 @@ CREATE TABLE dbo.TinNhan
 	MaNguoiGui INT,
 	MaNguoiNhan INT,
 	NoiDung NVARCHAR(MAX),
-	ThoiGianGui DATETIME DEFAULT GETDATE(),
+	ThoiDiemGui DATETIME DEFAULT GETDATE(),
 	DaDoc BIT DEFAULT 0
 )
 
@@ -45,7 +45,7 @@ END
 
 GO
 --Lấy danh sách tin nhắn của người dùng
-CREATE PROC dbo.layTinNhanTheoMaNguoiDung
+ALTER PROC dbo.layTinNhanTheoMaNguoiDung
 (
 	@0 INT --Mã người dùng
 )
@@ -72,3 +72,5 @@ BEGIN
 		WHERE Dong = 1
 		ORDER BY ThoiDiemGui DESC
 END
+
+themTinNhan 1,2, "Làm báo cáo chưa?"

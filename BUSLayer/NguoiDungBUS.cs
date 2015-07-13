@@ -274,7 +274,7 @@ namespace BUSLayer
 
             NguoiDungDAO.capNhatTheoTenTaiKhoan_KichHoat(tenTaiKhoan, null);
 
-            ketQua = NguoiDungBUS.xuLyDangNhap(tenTaiKhoan, matKhau, true);
+            ketQua = NguoiDungBUS.xuLyDangNhap(tenTaiKhoan, matKhau, false);
             if (ketQua.trangThai != 0)
             {
                 //Cập nhật lại mã kích hoạt cũ để trạng thái tài khoản trở thành như ban đầu

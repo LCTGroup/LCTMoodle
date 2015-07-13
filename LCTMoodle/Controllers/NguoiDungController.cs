@@ -58,10 +58,19 @@ namespace LCTMoodle.Controllers
 
         public ActionResult TinNhan(int ma)
         {
-            var ketQua = TinNhanDAO.layDanhSachTinNhanTheoMaNguoiDung(ma, new LienKet() { "NguoiDung" });
-            if (ketQua.trangThai != 0)
+            #region Kiểm tra điều kiện
+
+            if (ma != (int)Session["NguoiDung"])
             {
-                return Redirect("/?tb=" + HttpUtility.UrlEncode("Lỗi."));
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn không có quyền xem tin nhắn người khác."));
+            }
+
+            #endregion
+
+            var ketQua = TinNhanDAO.layDanhSachTinNhanTheoMaNguoiDung(ma, new LienKet() { "NguoiDung" });
+            if (ketQua.trangThai != 0 && ketQua.trangThai != 1)
+            {
+                return Redirect("HoiDap/?tb=" + HttpUtility.UrlEncode("Lấy tin nhắn lỗi."));
             }
             return View(ketQua.ketQua);
         }
