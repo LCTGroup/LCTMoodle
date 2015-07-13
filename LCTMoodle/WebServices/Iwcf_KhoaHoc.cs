@@ -20,7 +20,7 @@ namespace LCTMoodle.WebServices
         clientmodel_HinhAnh layHinhAnhChiSo(int chiSo, string ten);
 
         [OperationContract]
-        KhoaHocDTO layTheoMa(int ma);
+        clientmodel_KhoaHoc layTheoMa(int ma);
 
         [OperationContract]
         List<KhoaHocDTO> lay();
