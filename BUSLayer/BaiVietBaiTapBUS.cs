@@ -97,7 +97,6 @@ namespace BUSLayer
                         break;
                 }
             }
-            baiViet.thoiDiemHetHan = DateTime.Now;
         }
 
         public static BangCapNhat layBangCapNhat(BaiVietBaiTapDTO baiTap, string[] keys)

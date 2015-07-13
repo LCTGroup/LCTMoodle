@@ -145,7 +145,7 @@ END
 
 GO
 --Lấy theo mã
-CREATE PROC dbo.layTheoMa(
+CREATE PROC dbo.layChuongTrinhTheoMa (
 	@0 INT --Ma
 )
 AS

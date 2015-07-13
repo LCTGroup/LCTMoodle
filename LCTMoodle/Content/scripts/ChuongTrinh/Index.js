@@ -56,7 +56,7 @@ function khoiTaoItem($item) {
                     ten: 'Có',
                     loai: 'can-than',
                     xuLy: function () {
-                        var $tai = moBieuTuongThongBao($_Khung);
+                        var $tai = moBieuTuongTai($_Khung);
                         $.ajax({
                             url: '/ChuongTrinh/XuLyXoa/' + $item.attr('data-ma'),
                             type: 'POST',

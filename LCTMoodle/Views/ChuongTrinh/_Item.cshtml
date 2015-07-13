@@ -3,12 +3,12 @@
 @model DTOLayer.ChuongTrinhDTO
 @{
     var maNguoiDung = Session["NguoiDung"] as int?;
-    var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
+    var maKhoaHoc = Model.khoaHoc.ma.Value;
 
     string[] dsQuyen;
     bool coQuyenQLChuongTrinh;
 
-    if (!maNguoiDung.HasValue)
+    if (maNguoiDung.HasValue)
     {
         if (ViewData.ContainsKey("DSQuyen"))
         {
