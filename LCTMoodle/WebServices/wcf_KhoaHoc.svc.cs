@@ -70,17 +70,51 @@ namespace LCTMoodle.WebServices
         /// Webservice lấy khóa học theo mã
         /// </summary>
         /// <param name="ma"></param>
-        /// <returns>KhoaHocDTO</returns>
-        public KhoaHocDTO layTheoMa(int ma)
+        /// <returns>clientmodel_KhoaHoc</returns>
+        public clientmodel_KhoaHoc layTheoMa(int ma)
         {
-            KetQua ketQua = KhoaHocBUS.layTheoMa(ma, new LienKet { "HinhDaiDien" });
+            KetQua ketQua = KhoaHocBUS.layTheoMa(ma, new LienKet { "HinhDaiDien" , "NguoiTao" });
             KhoaHocDTO dto_KhoaHoc = new KhoaHocDTO();
+            clientmodel_KhoaHoc cm_KhoaHoc = new clientmodel_KhoaHoc();
 
             if(ketQua.trangThai == 0)
             {
-                dto_KhoaHoc = ketQua.ketQua as KhoaHocDTO;
+                if(dto_KhoaHoc.ma != null)
+                {
+                    cm_KhoaHoc.ma = dto_KhoaHoc.ma.Value;
+                }
+
+                if(dto_KhoaHoc.ten != null)
+                {
+                    cm_KhoaHoc.nguoiTao = dto_KhoaHoc.ten;
+                }
+
+                if(dto_KhoaHoc.moTa != null)
+                {
+                    cm_KhoaHoc.moTa = dto_KhoaHoc.moTa;
+                }
+
+                if(dto_KhoaHoc.thoiDiemTao != null)
+                {
+                    cm_KhoaHoc.ngayTao = dto_KhoaHoc.thoiDiemTao.Value;
+                }
+
+                if(dto_KhoaHoc.thoiDiemHetHan != null)
+                {
+                    cm_KhoaHoc.ngayHetHan = dto_KhoaHoc.thoiDiemHetHan.Value;
+                }
+
+                if(dto_KhoaHoc.nguoiTao.tenTaiKhoan != null)
+                {
+                    cm_KhoaHoc.nguoiTao = dto_KhoaHoc.nguoiTao.tenTaiKhoan;
+                }
+
+                if(dto_KhoaHoc.hinhDaiDien.ma != null && dto_KhoaHoc.hinhDaiDien.duoi != null)
+                {
+                    cm_KhoaHoc.hinhAnh = dto_KhoaHoc.hinhDaiDien.ma.Value + dto_KhoaHoc.hinhDaiDien.duoi;
+                }
             }
-            return dto_KhoaHoc;
+            return cm_KhoaHoc;
         }
 
         /// <summary>
