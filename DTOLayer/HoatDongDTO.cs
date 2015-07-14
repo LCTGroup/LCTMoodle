@@ -10,19 +10,30 @@ namespace DTOLayer
     {
         public int? maNguoiTacDong;
         /// <summary>
-        /// HT, ND, CD, HD, KH, Q
+        /// Hệ thống: HT ---
+        /// Người dùng: ND ---
+        /// Chủ đề: CD ---
+        /// Câu hỏi: CH ---
+        /// Trả lời: TL ---
+        /// Khóa học: KH ---
+        /// Quyền: Q
         /// </summary>
         public string loaiDoiTuongTacDong;
         public int? maDoiTuongTacDong;
         /// <summary>
-        /// HT, ND, CD, HD, KH, Q
+        /// Hệ thống: HT ---
+        /// Người dùng: ND ---
+        /// Chủ đề: CD ---
+        /// Câu hỏi: CH ---
+        /// Trả lời: TL ---
+        /// Khóa học: KH ---
+        /// Quyền: Q
         /// </summary>
         public string loaiDoiTuongBiTacDong;
         public int? maDoiTuongBiTacDong;
-        public int? maHanhDong;
         public string duongDan;
         public DateTime? thoiDiem;
         public List<GiaTriHoatDongDTO> giaTriHoatDong;
-        public LoiNhanHanhDongDTO loiNhanHanhDong;
+        public HanhDongDTO hanhDong;
     }
 }

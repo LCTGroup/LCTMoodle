@@ -24,17 +24,6 @@ namespace DAOLayer
                         break;
                     case "MaNguoiTacDong":
                         hoatDong.maNguoiTacDong = layInt(dong, i);
-                        //maTam = layInt(dong, i);
-
-                        //if (maTam.HasValue)
-                        //{
-                        //    hoatDong.nguoiTacDong = LienKet.co(lienKet, "NguoiTacDong") ?
-                        //        layDTO<NguoiDungDTO>(NguoiDungDAO.layTheoMa(maTam, lienKet["NguoiTacDong"])) :
-                        //        new NguoiDungDTO()
-                        //        {
-                        //            ma = maTam
-                        //        }; 
-                        //}
                         break;
                     case "LoaiDoiTuongTacDong":
                         hoatDong.loaiDoiTuongTacDong = layString(dong, i); 
@@ -49,7 +38,17 @@ namespace DAOLayer
                         hoatDong.maDoiTuongBiTacDong = layInt(dong, i); 
                         break;
                     case "MaHanhDong":
-                        hoatDong.maHanhDong = layInt(dong, i);
+                        maTam = layInt(dong, i);
+
+                        if (maTam.HasValue)
+                        {
+                            hoatDong.hanhDong = LienKet.co(lienKet, "HanhDong") ?
+                                layDTO<HanhDongDTO>(HanhDongDAO.layTheoMa(maTam, lienKet["HanhDong"])) :
+                                new HanhDongDTO()
+                                {
+                                    ma = maTam
+                                }; 
+                        }
                         break;
                     case "DuongDan":
                         hoatDong.duongDan = layString(dong, i);
@@ -65,10 +64,6 @@ namespace DAOLayer
             if (LienKet.co(lienKet, "GiaTriHoatDong"))
             {
                 var ketQua = layDanhSachDTO<GiaTriHoatDongDTO>(GiaTriHoatDongDAO.layTheoMaHoatDong(hoatDong.ma, lienKet["GiaTriHoatDong"]));
-            }
-            if (LienKet.co(lienKet, "LoiNhanHanhDong"))
-            {
-                hoatDong.loiNhanHanhDong = layDTO<LoiNhanHanhDongDTO>(LoiNhanHanhDongDAO.layTheoMaHanhDong(hoatDong.maHanhDong, lienKet["LoiNhanHanhDong"]));
             }
 
             return hoatDong;
@@ -86,7 +81,7 @@ namespace DAOLayer
                         hoatDong.maDoiTuongTacDong,
                         hoatDong.loaiDoiTuongBiTacDong,
                         hoatDong.maDoiTuongBiTacDong,
-                        hoatDong.maHanhDong,
+                        layMa(hoatDong.hanhDong),
                         hoatDong.duongDan
                     }
                 );

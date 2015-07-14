@@ -22,10 +22,6 @@ namespace BUSLayer
             {
                 loi.Add("Người tác động không thể bỏ trống");
             }
-            //if (hoatDong.nguoiTacDong == null)
-            //{
-            //    loi.Add("Người tác động không thể bỏ trống");
-            //}
             if (string.IsNullOrWhiteSpace(hoatDong.loaiDoiTuongTacDong))
             {
                 loi.Add("Loại đối tượng tác động không thể bỏ trống");
@@ -42,7 +38,7 @@ namespace BUSLayer
             {
                 loi.Add("Đối tượng bị tác động không thể bỏ trống");
             }
-            if (!hoatDong.maHanhDong.HasValue)
+            if (hoatDong.hanhDong == null)
             {
                 loi.Add("Hành động không thể bỏ trống");
             }
@@ -67,12 +63,6 @@ namespace BUSLayer
 
         public static KetQua them(HoatDongDTO hoatDong)
         {
-            //if ((string.IsNullOrWhiteSpace(hoatDong.loaiDoiTuongTacDong) || !hoatDong.maDoiTuongTacDong.HasValue) &&
-            //    hoatDong.nguoiTacDong != null)
-            //{
-            //    hoatDong.loaiDoiTuongTacDong = "ND";
-            //    hoatDong.maDoiTuongTacDong = hoatDong.nguoiTacDong.ma;
-            //}
             if (string.IsNullOrWhiteSpace(hoatDong.loaiDoiTuongTacDong) || !hoatDong.maDoiTuongTacDong.HasValue)
             {
                 hoatDong.loaiDoiTuongTacDong = "ND";

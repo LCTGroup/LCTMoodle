@@ -1,2 +1,1 @@
-select * from nguoidung
-update nguoidung set makichhoat = null where ma >= 341
+update nguoidung set email = '' where ma = 1

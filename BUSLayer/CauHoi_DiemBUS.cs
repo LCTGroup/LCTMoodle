@@ -62,7 +62,7 @@ namespace BUSLayer
                         maNguoiTacDong = maNguoiTao,
                         loaiDoiTuongBiTacDong = "HD",
                         maDoiTuongBiTacDong = maCauHoi,
-                        maHanhDong = diem ? 400 : 401,
+                        hanhDong = layDTO<HanhDongDTO>(diem ? 400 : 401),
                         duongDan = "/HoiDap/" + maCauHoi
                     });
             }
