@@ -74,7 +74,7 @@ namespace LCTMoodle.WebServices
         public clientmodel_KhoaHoc layTheoMa(int ma)
         {
             KetQua ketQua = KhoaHocBUS.layTheoMa(ma, new LienKet { "HinhDaiDien" , "NguoiTao" });
-            KhoaHocDTO dto_KhoaHoc = new KhoaHocDTO();
+            KhoaHocDTO dto_KhoaHoc = ketQua.ketQua as KhoaHocDTO;
             clientmodel_KhoaHoc cm_KhoaHoc = new clientmodel_KhoaHoc();
 
             if(ketQua.trangThai == 0)
@@ -86,7 +86,7 @@ namespace LCTMoodle.WebServices
 
                 if(dto_KhoaHoc.ten != null)
                 {
-                    cm_KhoaHoc.nguoiTao = dto_KhoaHoc.ten;
+                    cm_KhoaHoc.ten = dto_KhoaHoc.ten;
                 }
 
                 if(dto_KhoaHoc.moTa != null)
