@@ -279,7 +279,6 @@ function khoiTaoKhungTimKiemLCT2($danhSach, $khungTim, $khungPhanTrang, duongDan
     });
 
     $khungPhanTrang.chon = function (trang) {
-        console.log($khungPhanTrang.find('[data-trang="' + trang + '"]'));
         $khungPhanTrang.find('.chon').removeClass('chon');
         $khungPhanTrang.find('[data-trang="' + trang + '"]').addClass('chon');
     }

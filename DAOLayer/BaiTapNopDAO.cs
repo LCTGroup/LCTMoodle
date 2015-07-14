@@ -88,7 +88,7 @@ namespace DAOLayer
             return baiTapNop;
         }
 
-        public static KetQua themHoacCapNhat(BaiTapNopDTO baiTapNop)
+        public static KetQua themHoacCapNhat(BaiTapNopDTO baiTapNop, LienKet lienKet = null)
         {
             return layDong
             (
@@ -99,7 +99,8 @@ namespace DAOLayer
                     baiTapNop.duongDan,
                     layMa(baiTapNop.nguoiTao),
                     layMa(baiTapNop.baiVietBaiTap)
-                }
+                },
+                lienKet
             );
         }
 

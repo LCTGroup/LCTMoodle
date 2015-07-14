@@ -1,0 +1,68 @@
+﻿@using BUSLayer
+@using DTOLayer
+@using Helpers
+@{
+    string loai = (string)ViewData["Loai"];
+    int ma = (int)ViewData["Ma"];
+}
+
+<article class="hop-1-vien">
+    @{
+        KetQua ketQua = TapTinBUS.lay(loai, ma);
+
+        if (ketQua.trangThai == 0)
+        {
+            TapTinDTO tapTin = ketQua.ketQua as TapTinDTO;
+
+            string duongDan = TapTinHelper.layDuongDan(loai, tapTin.ma + tapTin.duoi);
+            if (System.IO.File.Exists(duongDan))
+            {
+                switch (tapTin.duoi.Substring(1))
+                {
+                    case "jpg":
+                    case "jpeg":
+                    case "png":
+                        <article class="noi-dung khung-popup-tap-tin">
+                            <img src="/LayHinh/@loai/@ma" />
+                        </article>
+                        break;
+                    case "txt":
+                        <article class="noi-dung khung-popup-tap-tin">                            
+                            @TapTinHelper.doc_string(duongDan)
+                        </article>
+                        break;
+                    case "cs":
+                    case "css":
+                    case "js":
+                    case "rb":
+                    case "php":
+                    case "cshtml":
+                    case "cpp":
+                    case "html":
+                    case "haml":
+                        <article data-doi-tuong="khung-noi-dung" class="noi-dung khung-popup-tap-tin" data-loai="code">                            
+                            <pre><code>@TapTinHelper.doc_string(duongDan)</code></pre>                            
+                        </article>
+                        break;
+                    default:
+                        <article class="noi-dung khung-popup-tap-tin">                            
+                            Không hỗ trợ đọc tập tin này 
+                        </article>
+                        break;
+                }
+            }
+            else
+            {
+                <article class="noi-dung khung-popup-tap-tin">                            
+                    Không hỗ trợ đọc tập tin này 
+                </article>
+            }
+        }
+        else
+        {
+            <article class="noi-dung khung-popup-tap-tin">                            
+                Không hỗ trợ đọc tập tin này 
+            </article>
+        }
+    }
+</article>

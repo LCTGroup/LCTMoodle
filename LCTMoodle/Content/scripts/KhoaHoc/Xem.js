@@ -549,6 +549,8 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
         });
     });
 
+    khoiTaoNutMoPopupTapTin($danhSachBaiViet.find('[data-chuc-nang="mo-popup-tap-tin"]'));
+
     khoiTaoKhungBinhLuan($danhSachBaiViet.find('[data-doi-tuong="khung-binh-luan"]'));
 
     function khoiTaoKhungBinhLuan($khung) {
@@ -739,7 +741,9 @@ function khoiTaoItem_DienDan($danhSachBaiViet) {
                         })
                     }
                 });
-            })
+            });
+
+            khoiTaoNutMoPopupTapTin($items.find('[data-chuc-nang="mo-popup-tap-tin"]'));
         }
     }
 }
@@ -920,6 +924,8 @@ function khoiTaoItem_BaiGiang($danhSachBaiGiang) {
             moPopupThongBao('Sửa bài viết thất bại');
         });
     });
+
+    khoiTaoNutMoPopupTapTin($danhSachBaiGiang.find('[data-chuc-nang="mo-popup-tap-tin"]'));
 }
 
 function moItem_BaiGiang($baiGiang) {
@@ -1111,6 +1117,8 @@ function khoiTaoItem_TaiLieu($danhSachTaiLieu) {
             moPopupThongBao('Sửa bài viết thất bại');
         });
     });
+
+    khoiTaoNutMoPopupTapTin($danhSachTaiLieu.find('[data-chuc-nang="mo-popup-tap-tin"]'));
 }
 
 function moItem_TaiLieu($baiGiang) {
@@ -1264,7 +1272,25 @@ function khoiTaoItem_BaiTap($danhSachBaiTap) {
                                 break;
                         }
 
-                        $nut = $form.find('button');
+                        var $baiCuaToi = $hienThi.next('[data-doi-tuong="bai-nop-cua-toi"]');
+                        if ($baiCuaToi.length == 0) {
+                            $baiCuaToi = $('<a data-doi-tuong="bai-nop-cua-toi" class="bai-nop-cua-toi"></a>')
+                            $hienThi.after($baiCuaToi);
+                        }
+
+                        var baiNop = data.ketQua;
+                        if (baiNop.duongDan) {
+                            $baiCuaToi.attr('href', baiNop.duongDan);
+                            $baiCuaToi.html('<span>' + baiNop.duongDan + '</span>');
+                        }
+                        else {
+                            $baiCuaToi.html('<img src="/LayHinh/BaiTapNop_TapTin/' + baiNop.tapTin.ma + '" /><span>' + baiNop.tapTin.ten + '</span>');
+                            if (coHoTroXem(baiNop.tapTin.duoi)) {
+                                khoiTaoNutMoPopupTapTin($baiCuaToi);
+                            }
+                        }
+
+                        var $nut = $form.find('button');
                         $nut.text('Cập nhật');
                         $nut.parent().addClass('nop-lai')
                         khoiTaoLCTFormMacDinh($form);
@@ -1376,7 +1402,9 @@ function khoiTaoItem_BaiTap($danhSachBaiTap) {
             data: { maBaiTap: $(this).closest('[data-doi-tuong="muc-bai-viet"]').attr('data-ma') },
             width: '400px'
         });
-    })
+    });
+
+    khoiTaoNutMoPopupTapTin($danhSachBaiTap.find('[data-chuc-nang="mo-popup-tap-tin"]'));
 }
 
 //#endregion

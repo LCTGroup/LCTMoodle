@@ -82,7 +82,6 @@ function khoiTaoItem($item) {
                                 $popup.tat();
 
                                 var item = data.ketQua;
-                                console.log(item.laDiemCong);
                                 $item.find('[data-doi-tuong="ten"]').text(item.ten);
                                 $item.find('[data-doi-tuong="mo-ta"]').text(item.moTa);
                                 $item.find('[data-doi-tuong="he-so"]').text(item.laDiemCong ? '+' : item.heSo);

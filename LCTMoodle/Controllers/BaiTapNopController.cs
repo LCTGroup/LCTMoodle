@@ -19,7 +19,8 @@ namespace LCTMoodle.Controllers
             {
                 form.Add("MaNguoiTao", ((int)Session["NguoiDung"]).ToString());
             }
-            return Json(BaiTapNopBUS.themHoacCapNhat(form));
+
+            return Json(BaiTapNopBUS.themHoacCapNhat(form, new LienKet() { "TapTin" }));
         }
 
         public ActionResult _DanhSachNop(int maBaiTap)

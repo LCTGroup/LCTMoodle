@@ -7,8 +7,8 @@
 
     if (maNguoiDung.HasValue)
     {
-        coQuyenQLNoiDung = Model.nguoiTao.ma == maNguoiDung || (bool)ViewData["CoQuyenQLNoiDung"];
-        coQuyenQLDiem = (bool)ViewData["CoQuyenQLDiem"];
+        coQuyenQLNoiDung = Model.nguoiTao.ma == maNguoiDung || (ViewData.ContainsKey("CoQuyenQLNoiDung") && (bool)ViewData["CoQuyenQLNoiDung"]);
+        coQuyenQLDiem = ViewData.ContainsKey("CoQuyenQLDiem") && (bool)ViewData["CoQuyenQLDiem"];
     }
     else
     {
@@ -29,13 +29,17 @@
         <section class="noi-dung">
             @Model.noiDung
         </section>
-        @if (@Model.tapTin != null)
+        @if (Model.tapTin != null)
         {
             <section class="tap-tin">
-                <a href="/LayTapTin/BinhLuanBaiVietDienDan_TapTin/@Model.tapTin.ma">
+                <a @if (Helpers.TapTinHelper.coHoTroXem(Model.tapTin.duoi)) 
+                {     
+                    @: data-chuc-nang="mo-popup-tap-tin"
+                } href="/LayTapTin/BinhLuanBaiVietDienDan_TapTin/@Model.tapTin.ma">
                     <img src="/LayHinh/BinhLuanBaiVietDienDan_TapTin/@Model.tapTin.ma" />
                     <span>@Model.tapTin.ten</span>
                 </a>
+
             </section>
         }
         <section class="thong-tin">

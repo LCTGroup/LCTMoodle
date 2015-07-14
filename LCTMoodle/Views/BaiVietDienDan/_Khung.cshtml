@@ -2,6 +2,11 @@
 @using LCTMoodle.LCTView
 @model List<DTOLayer.BaiVietDienDanDTO>
 @{
+    if (!ViewData.ContainsKey("MaKhoaHoc"))
+    {
+        @:Mã khóa học không được truyền
+        return;
+    }
     int maKhoaHoc = (int)ViewData["MaKhoaHoc"];
     int? maNguoiDung = Session["NguoiDung"] as int?;
 

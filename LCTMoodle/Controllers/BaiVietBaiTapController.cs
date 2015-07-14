@@ -65,7 +65,11 @@ namespace LCTMoodle.Controllers
             List<BaiVietBaiTapDTO> danhSachBaiViet;
             if (ma == 0)
             {
-                ketQua = BaiVietBaiTapBUS.layTheoMaKhoaHoc(maKhoaHoc, new LienKet() { "TapTin", "NguoiTao", "BaiTapNop" });
+                ketQua = BaiVietBaiTapBUS.layTheoMaKhoaHoc(maKhoaHoc, new LienKet() { 
+                    "TapTin", 
+                    "NguoiTao", 
+                    { "BaiTapNop", new LienKet() { "TapTin" } }
+                });
                 danhSachBaiViet =
                     ketQua.trangThai == 0 ?
                     ketQua.ketQua as List<BaiVietBaiTapDTO> :

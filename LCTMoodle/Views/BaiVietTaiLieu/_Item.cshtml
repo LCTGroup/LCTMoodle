@@ -41,10 +41,13 @@
         @if (@Model.tapTin != null)
         {
             <section class="tap-tin">
-                <a href="/LayTapTin/BaiVietTaiLieu_TapTin/@Model.tapTin.ma">
+                <a @if (TapTinHelper.coHoTroXem(Model.tapTin.duoi)) {     
+                    @: data-chuc-nang="mo-popup-tap-tin"
+                } href="/LayTapTin/BaiVietTaiLieu_TapTin/@Model.tapTin.ma">
                     <img src="/LayHinh/BaiVietTaiLieu_TapTin/@Model.tapTin.ma" />
                     <span>@Model.tapTin.ten</span>
                 </a>
+
             </section>
         }
     </section>

@@ -122,7 +122,6 @@
     <Folder Include="Plugin\ckeditor\samples\plugins\magicline\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\toolbar\" />
     <Folder Include="Plugin\ckeditor\samples\plugins\wysiwygarea\" />
-    <Folder Include="Views\TapTin\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -148,6 +147,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="LCTView\HoatDongView.cs" />
+    <Compile Include="LCTView\ChuDeView.cs" />
     <Compile Include="LCTView\KhoaHocView.cs" />
     <Compile Include="LCTView\QuyenView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -210,8 +210,6 @@
     <Content Include="bin\Ionic.Zip.dll" />
     <Content Include="Content\fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Content\images\ChuDe\ChuDe.png" />
-    <Content Include="Content\images\ChuDe\MacDinh\he-thong.png" />
-    <Content Include="Content\images\ChuDe\MacDinh\khoa-hoc.png" />
     <Content Include="Content\images\HeThong\HeThong.png" />
     <Content Include="Content\images\HoiDap\HoiDap.png" />
     <Content Include="Content\images\KhoaHoc\KhoaHoc.png" />
@@ -564,6 +562,7 @@
     <Content Include="Views\NguoiDung\_Item_TinNhan.cshtml" />
     <Content Include="Views\Quyen\_QuyenNguoiDung.cshtml" />
     <Content Include="Views\Quyen\QuyenCuaToi.cshtml" />
+    <Content Include="Views\TapTin\_Popup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

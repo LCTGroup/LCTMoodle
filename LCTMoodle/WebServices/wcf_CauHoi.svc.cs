@@ -310,7 +310,7 @@ namespace LCTMoodle.WebServices
 
         public List<clientmodel_CauHoi> layDanhSachDuyet()
         {
-            
+            return null;
         }
 
         /// <summary>

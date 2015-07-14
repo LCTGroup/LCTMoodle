@@ -127,7 +127,10 @@
                                 }
                                 else
                                 {
-                                    <a class="tap-tin" href="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma">
+                                    <a @if (TapTinHelper.coHoTroXem(baiNop.tapTin.duoi))
+                                    {    
+                                        @: data-chuc-nang="mo-popup-tap-tin"
+                                    } class="tap-tin" href="/LayTapTin/BaiTapNop_TapTin/@baiNop.tapTin.ma">
                                         <i></i>
                                         <span>@baiNop.tapTin.ten</span>
                                     </a>

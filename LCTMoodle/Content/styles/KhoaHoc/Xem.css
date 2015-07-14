@@ -785,6 +785,22 @@
                 border: 1px solid #eee;
                 background-color: #e00;
             }
+            
+            [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop a.bai-nop-cua-toi {
+                display: block;
+                margin-top: 5px;
+            }
+            
+                [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop a.bai-nop-cua-toi img {
+                    width: 20px;
+                    height: 20px;
+                    vertical-align: bottom;
+                    margin-right: 3px;
+                }
+            
+                [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop a.bai-nop-cua-toi:hover {
+                    text-decoration: none;
+                }
 
 /*#endregion */
 

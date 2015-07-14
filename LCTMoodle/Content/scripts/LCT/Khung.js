@@ -240,7 +240,7 @@ function moPopupFull(thamSo) {
 
         $noiDungPopup = $popup.find('#noi_dung_popup');
 
-        $noiDungPopup.css('width', 'width' in thamSo ? thamSo.width : '90vw');
+        $noiDungPopup.css('width', 'width' in thamSo ? thamSo.width : 'auto');
         $noiDungPopup.css('height', 'height' in thamSo ? thamSo.height : 'auto');
 
         $noiDungPopup.html(thamSo.html);
@@ -272,7 +272,7 @@ function moPopupFull(thamSo) {
                 $noiDungPopup = $popup.find('#noi_dung_popup');
 
                 $noiDungPopup.css({
-                    width: 'width' in thamSo ? thamSo.width : '90vw',
+                    width: 'width' in thamSo ? thamSo.width : 'auto',
                     height: 'height' in thamSo ? thamSo.height : 'auto'
                 });
                 $noiDungPopup.html(data.ketQua);
@@ -721,4 +721,43 @@ function khoiTaoPhanTrang($khungPhanTrang) {
 
         $khungPhanTrang.trigger('chon', $nut.attr('data-trang'));
     });
+}
+
+function khoiTaoNutMoPopupTapTin($nuts) {
+    $nuts.off('click.popup_tap_tin').on('click.popup_tap_tin', function (e) {
+        e.preventDefault();
+        var $nut = $(this);
+
+        moPopupFull({
+            url: '/Popup' + $nut.attr('href'),
+            thanhCong: function ($popup) {
+                var $khung = $popup.find('[data-doi-tuong="khung-noi-dung"]');
+                
+                switch ($khung.attr('data-loai')) {
+                    case 'code':
+                        hienThiCode($khung.find('pre code'));
+                    default:
+                        break;
+                }
+            }
+        });
+    })
+}
+
+function coHoTroXem(duoi) {
+    return $.inArray(duoi.substr(1), [
+        'jpg',
+        'jpeg',
+        'png',
+        'txt',
+        'cs',
+        'css',
+        'js',
+        'rb',
+        'php',
+        'cshtml',
+        'cpp',
+        'html',
+        'haml'
+    ]) !== -1;
 }

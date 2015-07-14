@@ -37,7 +37,7 @@ namespace Helpers
             return Array.IndexOf(new string[]
             { 
                 "jpg",
-                "jpge",
+                "jpeg",
                 "png",
                 "txt", 
                 "cs", 

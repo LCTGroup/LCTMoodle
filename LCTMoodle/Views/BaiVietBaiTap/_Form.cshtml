@@ -2,6 +2,12 @@
 @using LCTMoodle.LCTView
 @model DTOLayer.BaiVietBaiTapDTO
 @{
+    if (!ViewData.ContainsKey("MaKhoaHoc"))
+    {
+        @:Mã khóa học không được truyền
+        return;
+    }
+    
     var maNguoiDung = Session["NguoiDung"] as int?;
     var maKhoaHoc = (int)ViewData["MaKhoaHoc"];
 
@@ -108,6 +114,20 @@
                             {  
                                 @:data-ngay-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("d/M/yyyy")" data-gio-mac-dinh="@Model.thoiDiemHetHan.Value.ToString("H:mm")"
                             } />
+                    </article>
+                </section>
+            </li>
+            <li data-an>
+                <section class="tieu-de">
+                    <label>Cách nộp</label>
+                </section>
+                <section class="noi-dung">
+                    <article class="input" data-chi-an>
+                        <select name="CachNop">
+                            <option data-mac-dinh value="0">Tập tin hoặc đường dẫn</option>
+                            <option value="1">Tập tin</option>
+                            <option value="2">Đường dẫn</option>
+                        </select>
                     </article>
                 </section>
             </li>

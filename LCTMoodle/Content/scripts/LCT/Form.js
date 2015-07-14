@@ -244,9 +244,6 @@ function khoiTaoTapTinInput_LCT($form) {
         }
 
         var dungLuongGioiHan = $phanTu.attr('data-dung-luong');
-        console.log(dungLuongGioiHan);
-        console.log(tapTin.size);
-        console.log(tapTin.size > dungLuongGioiHan);
         if (dungLuongGioiHan && tapTin.size > dungLuongGioiHan) {
             moPopupThongBao('Dung lượng phải nhỏ hơn ' + (dungLuongGioiHan / 1024) + 'KB');
             return;

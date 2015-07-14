@@ -15,6 +15,10 @@ namespace DTOLayer
         /// 0: Tham khảo --- 1: Điểm cộng --- 2: Điểm
         /// </summary>
         public int? loai;
+        /// <summary>
+        /// 0: Tập tin hoặc đường dẫn --- 1: Tập tin --- Đường dẫn
+        /// </summary>
+        public int? cachNop;
         public DateTime? thoiDiemHetHan;
         public DateTime? thoiDiemTao;
         public NguoiDungDTO nguoiTao;

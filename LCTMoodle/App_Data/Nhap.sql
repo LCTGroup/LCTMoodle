@@ -1,1 +1,1 @@
-update nguoidung set email = '' where ma = 1
+select * from taptin_baivietbaitap_taptin

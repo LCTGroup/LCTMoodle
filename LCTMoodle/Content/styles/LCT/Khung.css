@@ -238,7 +238,7 @@ body.tai > .khung {
     position: absolute;
     top: 1px;
     right: 1px;
-    z-index: 9;
+    z-index: 1;
 }
 
     .khung-chuc-nang-lct button {
@@ -595,7 +595,7 @@ body.khong-scroll > .khung {
     }
 
         .popup-full-container.popup-mo .popup-full {
-            animation: mo-popup-full 0.3s;
+            animation: mo-popup-full 0.5s;
         }
 
 @keyframes mo-popup-noi-dung { 
@@ -617,13 +617,17 @@ body.khong-scroll > .khung {
             padding: 5px;
             border: 1px solid #ddd;
             position: relative;
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow: auto;
         }
 
             .popup-full-container.popup-mo  > .popup-full > .khung-noi-dung {
-                animation: mo-popup-noi-dung 0.3s;
+                animation: mo-popup-noi-dung 0.5s;
             }
+            
+
+        .popup-full-container > .popup-full .khung-popup-tap-tin {
+            padding: 10px;
+        }
 
 /*#endregion */
 

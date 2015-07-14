@@ -6,11 +6,12 @@
     
     bool
         daNop = false,
-        coQuyenNopBai = (bool)ViewData["CoQuyenNopBai"],
+        coQuyenNopBai = ViewData.ContainsKey("CoQuyenNopBai") && (bool)ViewData["CoQuyenNopBai"],
         coQuyenQLBaiNop = QuyenHelper.co(dsQuyen, "BT_QLBaiNop");
-        
+
+    int cachNop = ViewData.ContainsKey("CachNop") ? (int)ViewData["CachNop"] : 0;
 }
-<section class="danh-sach-nop">
+<section class="danh-sach-nop" data-doi-tuong="danh-sach-nop">
     @if (Model != null)
     {
         DTOLayer.BaiTapNopDTO baiNopCuaNguoiDung = null;
@@ -39,10 +40,7 @@
             {
                 <a title="@baiNopCuaNguoiDung.ghiChu" class="diem">@baiNopCuaNguoiDung.diem.Value</a>
             }
-        }
-
-        if (daNop)
-        {
+            
             if (Model.Count > 1)
             {
                 <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="4">
@@ -53,6 +51,22 @@
             {
                 <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="2">
                     <span><b>Bạn</b> đã nộp</span>
+                </a>
+            }
+
+            if (baiNopCuaNguoiDung.tapTin == null)
+            {
+                <a data-doi-tuong="bai-nop-cua-toi" class="bai-nop-cua-toi" href="@baiNopCuaNguoiDung.duongDan">
+                    <span>@baiNopCuaNguoiDung.duongDan</span>
+                </a>
+            }
+            else
+            {
+                <a @if (TapTinHelper.coHoTroXem(baiNopCuaNguoiDung.tapTin.duoi)) 
+                {  
+                    @: data-chuc-nang="mo-popup-tap-tin"
+                } data-doi-tuong="bai-nop-cua-toi" class="bai-nop-cua-toi" href="/LayTapTin/BaiTapNop_TapTin/@baiNopCuaNguoiDung.tapTin.ma">
+                    <img src="/LayHinh/BaiTapNop_TapTin/@baiNopCuaNguoiDung.tapTin.ma" /><span>@baiNopCuaNguoiDung.tapTin.ten</span>
                 </a>
             }
         }
@@ -76,23 +90,46 @@
     <form data-doi-tuong="nop-bai-form" class="lct-form khung-nop" data-an-rang-buoc>
         <input type="hidden" name="MaBaiVietBaiTap" value="@ViewData["MaBaiVietBaiTap"]" />
         <ul style="flex-wrap: nowrap; padding: 5px 10px 10px;">
-            <li style="margin: 0; min-width: 32px; max-width: 32px;">
-                <i data-chuc-nang="thay-doi-input" title="Nộp bằng đường dẫn" data-value="duong-dan" style="line-height: 32px; width: 32px; font-size: 20px; color: #888; cursor: pointer;" class="pe-7s-cloud"></i>
-            </li>
-            <li data-doi-tuong="tap-tin" style="width: 100%; margin: 0;">
-                <section class="noi-dung">
-                    <article class="input">
-                        <input name="MaTapTin" data-validate="bat-buoc" type="file" />
-                    </article>
-                </section>
-            </li>
-            <li data-doi-tuong="duong-dan" style="width: 100%; margin: 0; display: none;">
-                <section class="noi-dung">
-                    <article class="input">
-                        <input disabled="disabled" name="DuongDan" data-validate="bat-buoc" type="text" placeholder="Nhập đường dẫn" />
-                    </article>
-                </section>
-            </li>
+            @if (cachNop == 0)
+            {
+                <li style="margin: 0; min-width: 32px; max-width: 32px;">
+                    <i data-chuc-nang="thay-doi-input" title="Nộp bằng đường dẫn" data-value="duong-dan" style="line-height: 32px; width: 32px; font-size: 20px; color: #888; cursor: pointer;" class="pe-7s-cloud"></i>
+                </li>   
+                <li data-doi-tuong="duong-dan" style="width: 100%; margin: 0; display: none;">
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input disabled="disabled" name="DuongDan" data-validate="bat-buoc" type="text" placeholder="Nhập đường dẫn" />
+                        </article>
+                    </section>
+                </li> 
+                <li data-doi-tuong="tap-tin" style="width: 100%; margin: 0;">
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input name="MaTapTin" data-validate="bat-buoc" type="file" />
+                        </article>
+                    </section>
+                </li>   
+            }
+            else if (cachNop == 1)
+            {
+                <li data-doi-tuong="tap-tin" style="width: 100%; margin: 0;">
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input name="MaTapTin" data-validate="bat-buoc" type="file" />
+                        </article>
+                    </section>
+                </li>   
+            }
+            else if (cachNop == 2)
+            {
+                <li data-doi-tuong="duong-dan" style="width: 100%; margin: 0;">
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input disabled="disabled" name="DuongDan" data-validate="bat-buoc" type="text" placeholder="Nhập đường dẫn" />
+                        </article>
+                    </section>
+                </li> 
+            }
             @if (daNop)
             {
                 <li class="nut nop-lai">

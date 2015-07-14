@@ -141,6 +141,13 @@ namespace LCTMoodle.Controllers
             }
         }
 
+        public ActionResult Popup(string loai, int ma)
+        {
+            ViewData["Loai"] = loai;
+            ViewData["Ma"] = ma;
+            return Json(new KetQua(0, renderPartialViewToString(ControllerContext, "TapTin/_Popup.cshtml", null, ViewData)), JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult XuLyThem(FormCollection form)
         {

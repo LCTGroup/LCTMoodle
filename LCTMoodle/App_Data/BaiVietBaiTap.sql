@@ -12,7 +12,8 @@ CREATE TABLE dbo.BaiVietBaiTap (
 	MaNguoiTao INT NOT NULL,
 	MaKhoaHoc INT NOT NULL,
 	Loai INT NOT NULL,
-	ThoiDiemCapNhat DATETIME
+	ThoiDiemCapNhat DATETIME,
+	CachNop INT NOT NULL DEFAULT 0
 )
 
 GO
@@ -46,14 +47,15 @@ ALTER PROC dbo.themBaiVietBaiTap(
 	@1 NVARCHAR(MAX), --NoiDung
 	@2 INT, --MaTapTin
 	@3 INT, --Loai
-	@4 DATETIME, --ThoiDiemHetHan
-	@5 INT, --MaNguoiTao
-	@6 INT --MaKhoaHoc
+	@4 INT, --CachNop
+	@5 DATETIME, --ThoiDiemHetHan
+	@6 INT, --MaNguoiTao
+	@7 INT --MaKhoaHoc
 )
 AS
 BEGIN
-	INSERT INTO dbo.BaiVietBaiTap(TieuDe, NoiDung, MaTapTin, Loai, ThoiDiemHetHan, MaNguoiTao, MaKhoaHoc)
-		VALUES (@0, @1, @2, @3, @4, @5, @6)
+	INSERT INTO dbo.BaiVietBaiTap(TieuDe, NoiDung, MaTapTin, Loai, CachNop, ThoiDiemHetHan, MaNguoiTao, MaKhoaHoc)
+		VALUES (@0, @1, @2, @3, @4, @5, @6, @7)
 
 	SELECT *
 		FROM dbo.BaiVietBaiTap
