@@ -68,7 +68,7 @@
                 </section>
                 <section class="bai-viet">
                     <section class="thoi-gian">                        
-                        @Model.thoiDiemTao.Value.ToString("H:mm d/M/yyyy")
+                        @View.HienThiThoiGian(Model.thoiDiemTao.Value)
                     </section>
                 </section>
             </section>
@@ -80,7 +80,7 @@
             @if (Model.thoiDiemHetHan.HasValue)
             {
                 <section class="thoi-han">
-                    Thời hạn: <span>@Model.thoiDiemHetHan.Value.ToString("H:mm d/M/yyyy")</span>
+                    Thời hạn: <span>@View.HienThiThoiGian(Model.thoiDiemHetHan)</span>
                 </section>   
             }
             <section class="noi-dung noi-dung-ckeditor">

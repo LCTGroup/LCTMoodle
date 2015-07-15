@@ -145,7 +145,7 @@
             <section class="noi-dung">
                 @if (Model.hanDangKy.HasValue)
                 {
-                    @Model.hanDangKy.Value.ToString("H:mm d/M/yyyy")
+                    @View.HienThiThoiGian(Model.hanDangKy)
                 }
                 else
                 {
@@ -160,7 +160,7 @@
                 {
                     if (Model.hanDangKy.HasValue)
                     {
-                        @:Đăng ký trước @Model.hanDangKy.Value.ToString("H:m d/M/yyyy")
+                        @:Đăng ký trước @View.HienThiThoiGian(Model.hanDangKy)
                     }
                     else
                     {

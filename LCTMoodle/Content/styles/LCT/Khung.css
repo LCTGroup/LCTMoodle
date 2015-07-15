@@ -416,6 +416,7 @@ body.tai > .khung {
 .noi-dung-ckeditor h5,
 .noi-dung-ckeditor h6 {
     margin: 5px 0;
+    font-size: 1.5em;
 }
 
 .noi-dung-ckeditor p {
