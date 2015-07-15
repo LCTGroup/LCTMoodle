@@ -151,7 +151,13 @@ namespace BUSLayer
             return bangCapNhat;
         }
 
-        public static KetQua them(Form form)
+        /// <summary>
+        /// Thêm khóa học
+        /// </summary>
+        /// <param name="form">Các trường dữ liệu cần thêm</param>
+        /// <param name="lienKet"></param>
+        /// <returns>Khóa học vừa thêm</returns>
+        public static KetQua them(Form form, LienKet lienKet = null)
         {
             #region Kiểm tra điều kiện
             //Lấy người tạo
@@ -213,7 +219,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            ketQua = KhoaHocDAO.them(khoaHoc);
+            ketQua = KhoaHocDAO.them(khoaHoc, lienKet);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
@@ -222,6 +228,20 @@ namespace BUSLayer
 
             #region Tạo nhóm cho khóa học
             khoaHoc = ketQua.ketQua as KhoaHocDTO;
+
+            //Thêm giảng viên vào khóa học
+            ketQua = KhoaHoc_NguoiDungDAO.them(new KhoaHoc_NguoiDungDTO()
+            {
+                khoaHoc = khoaHoc,
+                nguoiDung = layDTO<NguoiDungDTO>(maGiangVien),
+                trangThai = 0
+            });
+
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(3, "Đưa giảng viên vào nhóm thất bại");
+            }
+
             ketQua = NhomNguoiDungBUS.themNhomMacDinh("KH", khoaHoc.ma.Value);
             if (ketQua.trangThai > 1)
             {
@@ -379,6 +399,16 @@ namespace BUSLayer
             return KhoaHocDAO.layTheoMaChuDe_TimKiem(maChuDe, tuKhoa, lienKet);
         }
 
+        /// <summary>
+        /// Lấy danh sách khóa học của người dùng
+        /// </summary>
+        /// <param name="maNguoiDung">Mã người dùng cần lấy</param>
+        /// <param name="lienKet"></param>
+        /// <returns>Mảng kết quả gồm 4 phần tử: 
+        /// 0: Đã tham gia --
+        /// 1: Đang đăng ký --
+        /// 2: Đang được mời --
+        /// 3: Đã bị chặn</returns>
         public static KetQua layTheoMaNguoiDung(int maNguoiDung, LienKet lienKet = null)
         {
             LienKet lk = new LienKet() 

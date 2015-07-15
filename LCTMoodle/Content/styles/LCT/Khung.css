@@ -238,7 +238,7 @@ body.tai > .khung {
     position: absolute;
     top: 1px;
     right: 1px;
-    z-index: 9;
+    z-index: 1;
 }
 
     .khung-chuc-nang-lct button {
@@ -595,7 +595,7 @@ body.khong-scroll > .khung {
     }
 
         .popup-full-container.popup-mo .popup-full {
-            animation: mo-popup-full 0.3s;
+            animation: mo-popup-full 0.5s;
         }
 
 @keyframes mo-popup-noi-dung { 
@@ -617,13 +617,17 @@ body.khong-scroll > .khung {
             padding: 5px;
             border: 1px solid #ddd;
             position: relative;
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow: auto;
         }
 
             .popup-full-container.popup-mo  > .popup-full > .khung-noi-dung {
-                animation: mo-popup-noi-dung 0.3s;
+                animation: mo-popup-noi-dung 0.5s;
             }
+            
+
+        .popup-full-container > .popup-full .khung-popup-tap-tin {
+            padding: 10px;
+        }
 
 /*#endregion */
 
@@ -907,15 +911,91 @@ body.dang-tai-lct header .top-header {
                                     }
                     /*#endregion */
 
+                    /*#region Hộp tin nhắn */
+
+                    .hop-tin-nhan {
+                        flex-direction: column;
+                        width: 350px;
+                        max-height: 500px;
+                        right: 173px;
+                        background-color: #fcfcfc;
+                        border: 1px solid #ddd;
+                        top: 34px;
+                        position: fixed;
+                        display: none;
+                    }
+
+                        .hop-tin-nhan:after,
+                        .hop-tin-nhan:before {
+                            content: '';
+                            display: block;
+                            border: 5px solid transparent;
+                            right: 47px;
+                            position: absolute;
+                        }
+
+                        .hop-tin-nhan:before {
+                            top: -10px;
+                            border-bottom-color: #ddd;
+                        }
+                        .hop-tin-nhan:after {
+                            top: -8px;
+                            border-bottom-color: #08c;
+                        }
+
+                    .hop-tin-nhan .khung-bao-tin-nhan {
+                        border-top: 3px solid #08c;
+                    }
+
+                    .hop-tin-nhan ul {
+                        max-height: 269px;
+                        overflow-x: hidden;
+                        overflow-y: auto;
+                    }
+
+                    .hop-tin-nhan li {
+                        border-bottom: 1px solid #eee;                            
+                    }
+                    .hop-tin-nhan li:last-child {
+                        border-bottom: none;
+                    }
+                        .hop-tin-nhan li:hover {
+                            background-color: #eee;
+                        }
+                            
+                    .hop-tin-nhan a {
+                        display: flex;
+                        padding: 5px;
+                    }
+
+                    .hop-tin-nhan .hinh-dai-dien {
+                        width: 34px;
+                        height: 34px;
+                    }
+                        .hop-tin-nhan img {
+                            width: 100%;
+                        }
+
+                    .hop-tin-nhan .tin-nhan {
+                        margin-left: 5px;
+                    }
+                        .hop-tin-nhan .noi-dung {
+                            width: 301px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                        .hop-tin-nhan .thoi-gian {
+                            font-size: 11px;
+                            color: #ccc;
+                        }
+                    /*#endregion */
+
         /*#endregion */        
 
     /*#endregion */
 
-    /*#region Hộp tin nhắn */
-
-
-
-    /*#endregion */
+    
 
 /*#endregion */
 

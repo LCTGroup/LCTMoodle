@@ -27,6 +27,13 @@ namespace LCTMoodle
             );
 
             routes.MapRoute(
+                name: "PopupLayTapTin",
+                url: "Popup/LayTapTin/{loai}/{ma}",
+                defaults: new { controller = "TapTin", action = "Popup" },
+                constraints: new { ma = @"\d+" }
+            );
+
+            routes.MapRoute(
                 name: "LayHinh",
                 url: "LayHinh/{loai}/{ma}",
                 defaults: new { controller = "TapTin", action = "LayHinh" },

@@ -62,7 +62,7 @@
     chucNang.Add("href='/KhoaHoc/ThongTin/" + Model.ma + "'");
 
     chucNang.Add("Danh sách thành viên");
-    chucNang.Add("href='/KhoaHoc/DanhSachThanhVien/" + Model.ma + "'");
+    chucNang.Add("href='/KhoaHoc/ThanhVien/" + Model.ma + "'");
 
     var maNguoiDung = Session["NguoiDung"] as int?;
     string[] dsQuyen;
@@ -99,10 +99,12 @@
 
 @section Styles {
     <link href="/Xem.css/KhoaHoc/" rel="stylesheet" />
+    <link href="/Plugin/highlight/hightlight.css" rel="stylesheet" />
 }
 
 @section Scripts {
     <script src="/Xem.js/KhoaHoc/"></script>
+    <script src="/Plugin/highlight/highlight.js"></script>
     <script>
         maKhoaHoc = '@Model.ma';
         tieuDe = '@Html.Raw(Model.ten)' + ' - LCTMoodle';

@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoiNhanHanhDongDTO.cs" />
+    <Compile Include="HanhDongDTO.cs" />
     <Compile Include="GiaTriHoatDongDTO.cs" />
     <Compile Include="HoatDongDTO.cs" />
     <Compile Include="BaiVietTaiLieuDTO.cs" />

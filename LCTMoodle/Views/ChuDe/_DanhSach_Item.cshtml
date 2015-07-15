@@ -1,4 +1,5 @@
 ﻿@using Helpers
+@using LCTMoodle.LCTView
 @model DTOLayer.ChuDeDTO
 @{
     bool coChon = ViewData["CoChon"] != null && (bool)ViewData["CoChon"];
@@ -7,7 +8,7 @@
 
 <li data-doi-tuong="muc" data-loai="ds-nut" data-ma="@Model.ma" title="Có @LCTHelper.layString(Model.duLieuThem, "SLChuDeCon", "0") chủ đề và @LCTHelper.layString(Model.duLieuThem, "SLKhoaHocCon", "0") khóa học thuộc chủ đề này">
     <section class="mo-ta">
-        <img src="@(Model.hinhDaiDien != null ? "/LayHinh/chude_hinhdaidien/" + Model.hinhDaiDien.ma : "#")">
+        @ChuDeView.hinhDaiDien(Model)
         <p>
             @Model.moTa
         </p>
@@ -15,7 +16,7 @@
     <a data-doi-tuong="ten" data-chuc-nang="mo-nut" class="ten">@Model.ten</a>
     @if (!coChon)
     {
-        <section class="khung-chuc-nang-lct" style="top: 2px; right: 2px;">
+        <section class="khung-chuc-nang-lct ben-trai" style="top: 2px; right: 2px;">
             <ul data-doi-tuong="cncd-@Model.ma">
                 @if (coQuyenQL)
                 {

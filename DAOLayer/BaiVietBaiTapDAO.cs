@@ -34,7 +34,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             baiViet.tapTin = LienKet.co(lienKet, "TapTin") ?
-                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("BaiVietDienDan_TapTin", maTam.Value, lienKet["TapTin"])) :
+                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("BaiVietBaiTap_TapTin", maTam.Value, lienKet["TapTin"])) :
                                 new TapTinDTO()
                                 {
                                     ma = maTam
@@ -43,6 +43,9 @@ namespace DAOLayer
                         break;
                     case "Loai":
                         baiViet.loai = layInt(dong, i);
+                        break;
+                    case "CachNop":
+                        baiViet.cachNop = layInt(dong, i);
                         break;
                     case "ThoiDiemHetHan":
                         baiViet.thoiDiemHetHan = layDateTime(dong, i);
@@ -96,6 +99,7 @@ namespace DAOLayer
                     baiTap.noiDung,
                     layMa(baiTap.tapTin),
                     baiTap.loai,
+                    baiTap.cachNop,
                     baiTap.thoiDiemHetHan,
                     layMa(baiTap.nguoiTao),
                     layMa(baiTap.khoaHoc)

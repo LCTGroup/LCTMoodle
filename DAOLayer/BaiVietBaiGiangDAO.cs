@@ -37,7 +37,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             baiViet.tapTin = LienKet.co(lienKet, "TapTin") ?
-                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("BaiVietDienDan_TapTin", maTam.Value, lienKet["TapTin"])) :
+                                layDTO<TapTinDTO>(TapTinDAO.layTheoMa("BaiVietBaiGiang_TapTin", maTam.Value, lienKet["TapTin"])) :
                                 new TapTinDTO()
                                 {
                                     ma = maTam

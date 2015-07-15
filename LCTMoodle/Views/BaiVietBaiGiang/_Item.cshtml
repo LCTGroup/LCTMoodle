@@ -38,13 +38,17 @@
         <section class="noi-dung noi-dung-ckeditor">
             @Html.Raw(Model.noiDung)
         </section>        
-        @if (@Model.tapTin != null)
+        @if (Model.tapTin != null)
         {
             <section class="tap-tin">
-                <a href="/LayTapTin/BaiVietBaiGiang_TapTin/@Model.tapTin.ma">
+                <a @if (TapTinHelper.coHoTroXem(Model.tapTin.duoi))
+                {   
+                    @: data-chuc-nang="mo-popup-tap-tin"
+                } href="/LayTapTin/BaiVietBaiGiang_TapTin/@Model.tapTin.ma">
                     <img src="/LayHinh/BaiVietBaiGiang_TapTin/@Model.tapTin.ma" />
                     <span>@Model.tapTin.ten</span>
                 </a>
+
             </section>
         }
     </section>

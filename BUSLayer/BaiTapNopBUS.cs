@@ -17,10 +17,6 @@ namespace BUSLayer
             List<string> loi = new List<string>();
 
             #region Bắt lỗi
-            if (baiNop.tapTin == null && string.IsNullOrWhiteSpace(baiNop.duongDan))
-            {
-                loi.Add("Nội dung không được bỏ trống");
-            }
             if (baiNop.nguoiTao == null)
             {
                 loi.Add("Người tạo không được bỏ trống");
@@ -28,6 +24,31 @@ namespace BUSLayer
             if (baiNop.baiVietBaiTap == null)
             {
                 loi.Add("Bài tập được nộp không được bỏ trống");
+            }
+            else
+            {
+                int cachNop = baiNop.baiVietBaiTap.cachNop.HasValue ? baiNop.baiVietBaiTap.cachNop.Value : 0;
+                if (cachNop == 0)
+                {
+                    if (baiNop.tapTin == null && string.IsNullOrWhiteSpace(baiNop.duongDan))
+                    {
+                        loi.Add("Nội dung không hợp lệ");
+                    }
+                }
+                else if (cachNop == 1)
+                {
+                    if (baiNop.tapTin == null)
+                    {
+                        loi.Add("Nội dung không hợp lệ");
+                    }
+                }
+                else if (cachNop == 2)
+                {
+                    if (string.IsNullOrWhiteSpace(baiNop.duongDan))
+                    {
+                        loi.Add("Nội dung không hợp lệ");
+                    }
+                }
             }
             #endregion
 
@@ -77,7 +98,7 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua themHoacCapNhat(Form form)
+        public static KetQua themHoacCapNhat(Form form, LienKet lienKet = null)
         {
             #region Kiểm tra điều kiện
             //Lấy người dùng
@@ -134,6 +155,7 @@ namespace BUSLayer
 
             gan(ref baiNop, form);
 
+            baiNop.baiVietBaiTap = baiTap;
             ketQua = kiemTra(baiNop);
 
             if (ketQua.trangThai != 0)
@@ -141,7 +163,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return BaiTapNopDAO.themHoacCapNhat(baiNop);
+            return BaiTapNopDAO.themHoacCapNhat(baiNop, lienKet);
         }
 
         public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap)

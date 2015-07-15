@@ -138,7 +138,7 @@ namespace BUSLayer
                 };
             }
 
-            if (coQuyen("BG_Them", "KH", maKhoaHoc.Value, maNguoiTao))
+            if (!coQuyen("BG_Them", "KH", maKhoaHoc.Value, maNguoiTao))
             {
                 return new KetQua()
                 {

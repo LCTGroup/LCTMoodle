@@ -28,28 +28,33 @@ else
         <section class="noi-dung khung-bao-tin-nhan">
             @foreach (var tinNhan in Model)
             {
-                <a href="/NguoiDung/ChiTietTinNhan/@tinNhan.nguoiGui.tenTaiKhoan">
+                NguoiDungDTO nguoiHienThi = new NguoiDungDTO();
+                nguoiHienThi = (tinNhan.nguoiGui.ma == (int)Session["NguoiDung"] ? tinNhan.nguoiNhan : tinNhan.nguoiGui );
+                
+                <a href="/NguoiDung/ChiTietTinNhan/@nguoiHienThi.tenTaiKhoan">
                     <article class="khung-tin-nhan">
                         <section class="hinh-dai-dien">
-                            @if (tinNhan.nguoiGui == null)
-                                    {
-                                    <img src="/HinhDaiDienMacDinh.png/NguoiDung" />
-                                    }
-                                    else
-                                    {
-                                    @NguoiDungView.hinhDaiDien(tinNhan.nguoiGui)
-                                    }
+                            @if (nguoiHienThi.hinhDaiDien == null)
+                            {
+                                <img src="/HinhDaiDienMacDinh.png/NguoiDung" />
+                            }
+                            else
+                            {
+                                @NguoiDungView.hinhDaiDien(nguoiHienThi)
+                            }
                         </section>
                         <section class="noi-dung">
                             <div class="chi-tiet">@tinNhan.noiDung</div>
-                            @if (tinNhan.nguoiGui == null)
-                                    {
-                                    <div class="nguoi-gui">không xác định</div>
-                                    }
-                                    else
-                                    {
-                                    <div class="nguoi-gui">@tinNhan.nguoiGui.ho @tinNhan.nguoiGui.tenLot @tinNhan.nguoiGui.ten - @(DateTime.Compare(tinNhan.thoiDiemGui.Value, DateTime.Now) <= 0 ? tinNhan.thoiDiemGui.Value.ToString("H:mm") : tinNhan.thoiDiemGui.Value.ToString("d/M/yyyy"))</div>
-                                    }
+                            @if (nguoiHienThi == null)
+                            {
+                                <div class="nguoi-gui">không xác định</div>
+                            }
+                            else
+                            {
+                                <div class="nguoi-gui">                                            
+                                    @(nguoiHienThi.ho + " " + nguoiHienThi.tenLot + " " + nguoiHienThi.ten) - @View.HienThiThoiGian(tinNhan.thoiDiemGui)
+                                </div>
+                            }
                         </section>
                     </article>
                 </a>

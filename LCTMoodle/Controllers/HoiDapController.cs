@@ -168,13 +168,30 @@ namespace LCTMoodle.Controllers
 
             public ActionResult _DanhSach_Tim(string tuKhoa = "", int maChuDe = 0, int trang = 1, string cachHienThi = "")
             {
+                string order;
+                switch (cachHienThi)
+                {
+                    case "MoiNhat":
+                        order = "ThoiDiemCapNhat DESC";
+                        break;
+                    case "DiemCaoNhat":
+                        order = "Diem DESC";
+                        break;
+                    case "TraLoiNhieuNhat":
+                        order = "SoLuongTraLoi DESC";
+                        break;
+                    default:
+                        order = null;
+                        break;
+                }
+
                 //Sửa số dòng mỗi trang nhớ sửa ở view
                 var ketQua = CauHoiBUS.timKiemPhanTrang(trang, Data.GiaTri.soLuongCauHoiMoiTrang,
                     "TieuDe LIKE '%" + tuKhoa + "%'" +
                     (maChuDe != 0 ?
                     "AND MaChuDe = " + maChuDe :
                     null),
-                    cachHienThi + " DESC",
+                    order,
                     new LienKet() { "NguoiTao", "ChuDe" });
 
                 if (ketQua.trangThai == 0)

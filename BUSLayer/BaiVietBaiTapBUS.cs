@@ -26,9 +26,13 @@ namespace BUSLayer
             {
                 loi.Add("Nội dung không được bỏ trống");
             }
-            if (coKiemTra("Loai", truong, kiemTra) && !baiViet.loai.HasValue)
+            if (coKiemTra("Loai", truong, kiemTra) && !baiViet.loai.HasValue && Array.IndexOf(new int[] { 0, 1, 2 }, baiViet.loai.Value) == -1)
             {
-                loi.Add("Khóa học không được bỏ trống");
+                loi.Add("Loại bài tập không hợp lệ");
+            }
+            if (coKiemTra("CachNop", truong, kiemTra) && !baiViet.cachNop.HasValue && Array.IndexOf(new int[] { 0, 1, 2 }, baiViet.cachNop.Value) == -1)
+            {
+                loi.Add("Cách thức nộp bài không hợp lệ");
             }
             if (coKiemTra("MaNguoiTao", truong, kiemTra) && baiViet.nguoiTao == null)
             {
@@ -84,6 +88,9 @@ namespace BUSLayer
                     case "Loai":
                         baiViet.loai = form.layInt(key);
                         break;
+                    case "CachNop":
+                        baiViet.cachNop = form.layInt(key);
+                        break;
                     case "CoThoiDiemHetHan":
                         baiViet.thoiDiemHetHan = form.layBool("CoThoiDiemHetHan") ? form.layDateTime("ThoiDiemHetHan") : null;
                         break;
@@ -97,7 +104,6 @@ namespace BUSLayer
                         break;
                 }
             }
-            baiViet.thoiDiemHetHan = DateTime.Now;
         }
 
         public static BangCapNhat layBangCapNhat(BaiVietBaiTapDTO baiTap, string[] keys)
@@ -118,6 +124,9 @@ namespace BUSLayer
                         break;
                     case "Loai":
                         bangCapNhat.Add("Loai", baiTap.loai.HasValue ? baiTap.loai.Value.ToString() : null, 1);
+                        break;
+                    case "CachNop":
+                        bangCapNhat.Add("CachNop", baiTap.cachNop.HasValue ? baiTap.cachNop.Value.ToString() : null, 1);
                         break;
                     case "CoThoiDiemHetHan":
                         bangCapNhat.Add("ThoiDiemHetHan", baiTap.thoiDiemHetHan.HasValue ? baiTap.thoiDiemHetHan.Value.ToString("d/M/yyyy H:mm") : null, 3);

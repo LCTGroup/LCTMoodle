@@ -89,10 +89,13 @@
             @if (Model.tapTin != null)
             {
                 <section class="tap-tin">
-                    <a href="/LayTapTin/BaiVietBaiTap_TapTin/@Model.tapTin.ma">
+                    <a @if (TapTinHelper.coHoTroXem(Model.tapTin.duoi)) {    
+                        @: data-chuc-nang="mo-popup-tap-tin"
+                    } href="/LayTapTin/BaiVietBaiTap_TapTin/@Model.tapTin.ma">
                         <img src="/LayHinh/BaiVietBaiTap_TapTin/@Model.tapTin.ma" />
                         <span>@Model.tapTin.ten</span>
                     </a>
+
                 </section>
             }
         </section>
@@ -130,6 +133,7 @@
             { "MaBaiVietBaiTap", Model.ma },
             { "CoQuyenNopBai", coQuyenNopBai },
             { "DSQuyen", dsQuyen },
+            { "CachNop", Model.cachNop.Value }
         })
     </section>   
 </li>

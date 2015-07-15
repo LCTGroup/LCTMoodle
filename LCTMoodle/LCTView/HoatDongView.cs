@@ -12,7 +12,7 @@ namespace LCTMoodle.LCTView
         //Tạm thời chỉ đọc chủ động
         public static HtmlString link(HoatDongDTO hoatDong, Dictionary<string, string> thamSo = null)
         {
-            if (hoatDong == null || hoatDong.loiNhanHanhDong == null)
+            if (hoatDong == null || hoatDong.hanhDong.loiNhan == null)
             {
                 return null;
             }
@@ -24,7 +24,7 @@ namespace LCTMoodle.LCTView
 
             var maNguoiDung = HttpContext.Current.Session["NguoiDung"] as int?;
 
-            string chuoi = hoatDong.loiNhanHanhDong.chuDong;
+            string chuoi = hoatDong.hanhDong.loiNhan;
             KetQua ketQua;
             #region ND
 		    if (chuoi.IndexOf("{ND}") != -1)
