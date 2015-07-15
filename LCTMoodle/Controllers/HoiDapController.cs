@@ -21,8 +21,7 @@ namespace LCTMoodle.Controllers
             {
                 string order = "ThoiDiemCapNhat DESC";
                 string where = "DuyetHienThi = 1";
-                //KetQua ketQua = CauHoiBUS.timKiemPhanTrang(1, Data.GiaTri.soLuongCauHoiMoiTrang, where, order, new LienKet() { "NguoiTao", "HinhDaiDien", "TraLoi" });
-                var ketQua = CauHoiBUS.layDanhSach(null, new LienKet() { "NguoiTao", "HinhDaiDien", "TraLoi" }, "MoiNhat");
+                KetQua ketQua = CauHoiBUS.timKiemPhanTrang(1, Data.GiaTri.soLuongCauHoiMoiTrang, where, order, new LienKet() { "NguoiTao", "HinhDaiDien", "TraLoi" });
                 if (ketQua.trangThai != 0)
                 {
                     return Redirect("/?tb=" + HttpUtility.UrlEncode("Lỗi."));
