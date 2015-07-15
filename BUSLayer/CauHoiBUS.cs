@@ -13,6 +13,11 @@ namespace BUSLayer
 {
     public class CauHoiBUS : BUS
     {
+        /// <summary>
+        /// Gán
+        /// </summary>
+        /// <param name="cauHoi">Đối tượng câu hỏi cần gán giá trị</param>
+        /// <param name="form">Các giá trị gán vào câu hỏi</param>
         public static void gan(ref CauHoiDTO cauHoi, Form form)
         {
             if (cauHoi == null)
@@ -42,6 +47,13 @@ namespace BUSLayer
             }
         }
         
+        /// <summary>
+        /// Kiểm tra
+        /// </summary>
+        /// <param name="cauHoi">Đối tượng câu hỏi cần kiểm tra</param>
+        /// <param name="truong">Các trường cần kiểm tra</param>
+        /// <param name="kiemTra">Trạng thái bắt buộc kiểm tra</param>
+        /// <returns>KetQua</returns>
         public static KetQua kiemTra(CauHoiDTO cauHoi, string[] truong = null, bool kiemTra = true)
         {
             List<string> loi = new List<string>();
@@ -78,6 +90,12 @@ namespace BUSLayer
             }
         }
         
+        /// <summary>
+        /// Lấy bảng cập nhật
+        /// </summary>
+        /// <param name="cauHoi">Đối tượng câu hỏi</param>
+        /// <param name="keys">Các trường cần cập nhật</param>
+        /// <returns>BangCapNhat</returns>
         public static BangCapNhat layBangCapNhat(CauHoiDTO cauHoi, string[] keys)
         {
             BangCapNhat bangCapNhat = new BangCapNhat();
@@ -100,7 +118,15 @@ namespace BUSLayer
             }
             return bangCapNhat;
         }
-       
+
+        #region Thêm
+
+        /// <summary>
+        /// Thêm câu hỏi
+        /// </summary>
+        /// <param name="form">Các trường cần thêm</param>
+        /// <returns>KetQua</returns>
+        /// ketQua: int - Mã câu hỏi
         public static KetQua them(Form form)
         {
             #region Kiểm tra điều kiện
@@ -121,11 +147,21 @@ namespace BUSLayer
             {
                 return ketQua;
             }
-            
+
             return CauHoiDAO.them(cauHoi);
         }
 
-        public static KetQua xoaTheoMa(int? ma, int? maNguoiXoa)
+        #endregion
+
+        #region Xóa
+
+        /// <summary>
+        /// Xóa theo mã
+        /// </summary>
+        /// <param name="ma">Mã câu hỏi</param>
+        /// <param name="maNguoiXoa">Mã người xóa</param>
+        /// <returns></returns>
+        public static KetQua xoaTheoMa(int ma, int? maNguoiXoa)
         {
             #region Kiểm tra điều kiện
 
@@ -147,8 +183,20 @@ namespace BUSLayer
             return CauHoiDAO.xoaTheoMa(ma);
         }
 
+        #endregion
+
+        #region Sửa
+
+        /// <summary>
+        /// Cập nhật câu hỏi
+        /// </summary>
+        /// <param name="form">Các trường cần cập nhật</param>
+        /// <param name="lienKet">Giá trị liên kết với các bảng liên quan</param>
+        /// <returns>KetQua</returns>
+        /// ketQua: CauHoiDTO
         public static KetQua capNhat(Form form, LienKet lienKet = null)
         {
+
             #region Kiểm tra điều kiện
 
             int? maNguoiSua = form.layInt("MaNguoiSua");
@@ -166,7 +214,7 @@ namespace BUSLayer
                 return new KetQua(3, "Bạn không có quyền sửa câu hỏi này");
             }
 
-            #endregion            
+            #endregion
 
             gan(ref cauHoi, form);
 
@@ -179,32 +227,92 @@ namespace BUSLayer
             return CauHoiDAO.capNhatTheoMa(maCauHoi, layBangCapNhat(cauHoi, form.Keys.ToArray()), lienKet);
         }
 
-        public static KetQua duyetHienThiCauHoi(int? maCauHoi, bool trangThai)
+        /// <summary>
+        /// Duyệt hiển thị câu hỏi
+        /// </summary>
+        /// <param name="maCauHoi">Mã câu hỏi cần duyệt</param>
+        /// <param name="trangThai">Trạng thái hiển thị câu hỏi</param>
+        /// Hiển thị: true
+        /// Không hiển thị: false
+        /// <param name="nguoiDuyet">Mã người duyệt</param>
+        /// <returns>KetQua</returns>
+        public static KetQua duyetHienThiCauHoi(int maCauHoi, bool trangThai, int? nguoiDuyet)
         {
+            #region Kiểm tra điều kiện
+
+            if (!nguoiDuyet.HasValue)
+            {
+                return new KetQua(4, "Bạn chưa đăng nhập");
+            }
+
+            if (!QuyenBUS.coQuyen("DuyetCauHoi", "HD", maCauHoi, nguoiDuyet))
+            {
+                return new KetQua(3, "Bạn chưa đủ quyền để duyệt câu hỏi");
+            }
+
+            #endregion
+
             return CauHoiDAO.capNhatTheoMa_DuyetHienThi(maCauHoi, trangThai);
         }
 
-        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
-        {            
+        #endregion
+
+        #region Lấy
+
+        /// <summary>
+        /// Lấy câu hỏi theo mã
+        /// </summary>
+        /// <param name="ma">Mã câu hỏi cần lấy</param>
+        /// <param name="lienKet">Giá trị liên kết dữ liệu với các bảng liên quan</param>
+        /// "NguoiTao": NguoiDungDTO
+        /// "ChuDe" : ChuDeDTO
+        /// <returns>KetQua</returns>
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
+        {
             return CauHoiDAO.layTheoMa(ma, lienKet);
         }
 
+        /// <summary>
+        /// Lấy danh sách câu hỏi chưa được duyệt hiển thị
+        /// </summary>
+        /// <returns>KetQua</returns>
         public static KetQua layDanhSachChuaDuyet()
         {
             return CauHoiDAO.layCauHoi_ChuaDuyet();
         }
 
+        /// <summary>
+        /// Lấy danh sách n câu hỏi
+        /// </summary>
+        /// <param name="soDong">Số câu hỏi cần lấy</param>
+        /// <param name="lienKet">Giá trị liên kết dữ liệu với các bảng liên quan</param>
+        /// <param name="tieuChiHienThi">Tiêu chí hiển thị</param>
+        /// <returns>KetQua</returns>
         public static KetQua layDanhSach(int? soDong = null, LienKet lienKet = null, string tieuChiHienThi = null)
         {
             return CauHoiDAO.lay(soDong, tieuChiHienThi, lienKet);
         }
 
+        /// <summary>
+        /// Lấy câu hỏi theo mã người tạo
+        /// </summary>
+        /// <param name="maNguoiTao">Mã người tạo câu hỏi</param>
+        /// <param name="lienKet">Giá trị liên kết dữ liệu với các bảng liên quan</param>
+        /// <returns>KetQua</returns>
         public static KetQua layTheoMaNguoiDung(int maNguoiTao, LienKet lienKet = null)
         {
             return CauHoiDAO.layTheoMaNguoiTao(maNguoiTao, lienKet);
         }
 
-        public static KetQua layTheoMaChuDe_TimKiem(int? ma, string tuKhoa, LienKet lienKet = null, string cachHienThi = null)
+        /// <summary>
+        /// Tìm các câu hỏi theo mã chủ đề
+        /// </summary>
+        /// <param name="ma"></param>
+        /// <param name="tuKhoa">Từ khóa cần tìm</param>
+        /// <param name="lienKet">Giá trị liên kết dữ liệu với các bảng liên quan</param>
+        /// <param name="cachHienThi">Tiêu chí hiển thị</param>
+        /// <returns>KetQua</returns>
+        public static KetQua layTheoMaChuDe_TimKiem(int ma, string tuKhoa, LienKet lienKet = null, string cachHienThi = null)
         {
             return CauHoiDAO.layTheoMaChuDe_TimKiem(ma, tuKhoa, lienKet, cachHienThi);
         }
@@ -214,10 +322,21 @@ namespace BUSLayer
             return CauHoiDAO.lay_TimKiem(tuKhoa, lienKet, cachHienThi);
         }
 
+        /// <summary>
+        /// Tìm kiếm phân trang câu hỏi
+        /// </summary>
+        /// <param name="trang">Số trang hiển thị mặc định</param>
+        /// <param name="soDongMoiTrang">Số đối tượng có trong một trang</param>
+        /// <param name="where">Câu điều kiện where</param>
+        /// <param name="orderBy">Câu sắp xếp Order By</param>
+        /// <param name="lienKet">Giá trị liên kết dữ liệu với các bảng liên quan</param>
+        /// <returns>KetQua</returns>
         public static KetQua timKiemPhanTrang(int trang, int soDongMoiTrang, string where = null, string orderBy = null, LienKet lienKet = null)
         {
             return CauHoiDAO.lay_TimKiemPhanTrang(where, orderBy, trang, soDongMoiTrang, lienKet);
         }
+
+        #endregion
 
     }
 }

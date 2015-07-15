@@ -38,7 +38,7 @@ namespace BUSLayer
                 };
             }
 
-            ketQua = NguoiDungBUS.layTheoMa(maNguoiTao);
+            ketQua = NguoiDungBUS.layTheoMa(maNguoiTao.Value);
             if (ketQua.trangThai != 0)
             {
                 return new KetQua(4, "Người dùng không tồn tại");
@@ -79,7 +79,7 @@ namespace BUSLayer
                 };
             }
 
-            ketQua = NguoiDungBUS.layTheoMa(maNguoiTao);
+            ketQua = NguoiDungBUS.layTheoMa(maNguoiTao.Value);
             if (ketQua.trangThai != 0)
             {
                 return new KetQua(4, "Người dùng không tồn tại");

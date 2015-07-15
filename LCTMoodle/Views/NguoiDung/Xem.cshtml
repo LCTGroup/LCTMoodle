@@ -181,7 +181,7 @@
 {
     <article class="hop">
         <section class="tieu-de">Thông tin hỏi đáp</section>
-        <section class="noi-dung">
+        <section class="noi-dung danh-sach-cau-hoi">
             @if (ViewData["DanhSachCauHoi"] != null)
             {
                 List<DTOLayer.CauHoiDTO> dsCauHoi = ViewData["DanhSachCauHoi"] as List<DTOLayer.CauHoiDTO>;
@@ -189,7 +189,7 @@
             }
             else
             {
-                <p align="center">Bạn chưa có câu hỏi nào</p>
+                <p class="empty">Bạn chưa có câu hỏi nào</p>
             }
         </section>
     </article>

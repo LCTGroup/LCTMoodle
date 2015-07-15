@@ -106,6 +106,7 @@
     <section class="noi-dung danh-sach-cau-hoi" id="danh_sach">
         @Html.Partial("~/Views/HoiDap/_DanhSachCauHoi.cshtml", Model)
     </section>
+
     @Html.Partial("~/Views/LCT/_PhanTrang.cshtml", null, new ViewDataDictionary()
     {
         { "TongSoLuong", LCTHelper.layGiaTri<int>(Model[0].duLieuThem, "TongSoDong", 0) },

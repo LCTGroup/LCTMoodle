@@ -1,9 +1,10 @@
 ﻿@using LCTMoodle.LCTView
+@using Helpers
 @model DTOLayer.CauHoiDTO
 
 <article class="cau-hoi">
 
-    <div class="chi-tiet">
+    <div class="chi-tiet @(CauHoiHelper.coCauTraLoiDung(Model) == true ? "co-tra-loi-dung" : null)">
 
         <div class="tieu-de">
             <a href="/HoiDap/@Model.ma">

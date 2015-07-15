@@ -227,11 +227,11 @@ namespace BUSLayer
             return NguoiDungDAO.capNhat(ma, layBangCapNhat(nguoiDung, form.Keys.ToArray()));
         }
         
-        public static KetQua chanNguoiDung(int? maNguoiDung, bool trangThai, int? maNguoiChan)
+        public static KetQua chanNguoiDung(int maNguoiDung, bool trangThai, int? maNguoiChan)
         {
             #region Kiểm tra điều kiện
 
-            if (!maNguoiDung.HasValue)
+            if (!maNguoiChan.HasValue)
             {
                 return new KetQua(4, "Bạn chưa đăng nhập");
             }
@@ -293,7 +293,7 @@ namespace BUSLayer
             return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
         }
         
-        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
         {
             return NguoiDungDAO.layTheoMa(ma, lienKet);
         }
