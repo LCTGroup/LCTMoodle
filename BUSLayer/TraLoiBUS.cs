@@ -120,10 +120,10 @@ namespace BUSLayer
                 HoatDongBUS.them(new HoatDongDTO()
                 {
                     maNguoiTacDong = maNguoiDung,
-                    loaiDoiTuongBiTacDong = "TL",
-                    maDoiTuongBiTacDong = ketQuaTraLoi.ma,
+                    loaiDoiTuongBiTacDong = "CH",
+                    maDoiTuongBiTacDong = ketQuaTraLoi.cauHoi.ma,
                     hanhDong = layDTO<HanhDongDTO>(410),
-                    duongDan = "/HoiDap/" + ketQuaTraLoi.ma
+                    duongDan = "/HoiDap/" + ketQuaTraLoi.cauHoi.ma
                 });
             }
             return ketQua;

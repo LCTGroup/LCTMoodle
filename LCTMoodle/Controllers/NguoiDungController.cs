@@ -62,7 +62,7 @@ namespace LCTMoodle.Controllers
         {
             if (Session["NguoiDung"] != null)
             {
-                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng xuất trước khi đăng nhập tài khoản khác."));
+                return Redirect("/");
             }
 
             //Tắt hiển thị cột trái, cột phải
@@ -86,12 +86,12 @@ namespace LCTMoodle.Controllers
             return View();
         }
 
-        public ActionResult TinNhan(int ma)
+        public ActionResult TinNhan(int? ma)
         {
 
             #region Kiểm tra điều kiện
 
-            if (ma != (int)Session["NguoiDung"])
+            if (ma != Session["NguoiDung"] as int?)
             {
                 return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn không có quyền xem tin nhắn người khác."));
             }
@@ -306,6 +306,17 @@ namespace LCTMoodle.Controllers
             return Json(new KetQua(0, renderPartialViewToString(ControllerContext, "NguoiDung/_DieuKhoan.cshtml")), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult _DanhSachXacNhanThem(int maTapTin)
+        {
+            var ketQua = NguoiDungBUS.docTapTin_xls(Helpers.TapTinHelper.layDuongDan("Tam", "1.xls"));
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new KetQua(renderPartialViewToString(ControllerContext, "NguoiDung/_DanhSachXacNhanThem.cshtml", ketQua.ketQua)), JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Xử lý
@@ -363,7 +374,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThemTinNhan(FormCollection form)
         {
-            var ketQua = TinNhanBUS.them(chuyenForm(form), new LienKet() { "NguoiDung" }, Session["NguoiDung"] as int?);
+            var ketQua = TinNhanBUS.them(chuyenForm(form), new LienKet() { "NguoiDung" });
             if (ketQua.trangThai != 0)
             {
                 return Json(ketQua);
@@ -374,56 +385,6 @@ namespace LCTMoodle.Controllers
                 trangThai = 0,
                 ketQua = renderPartialViewToString(ControllerContext, "/NguoiDung/_Item_TinNhan.cshtml", ketQua.ketQua)
             });
-        }
-
-        [HttpPost]
-        public ActionResult XuLyThemDanhSach(string dsBinhThuong, string dsTaiKhoan, string dsEmail)
-        {
-            string dsMaNguoiDung = "";
-            KetQua ketQua;
-
-            List<NguoiDungDTO> dsNguoiDungBT = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsBinhThuong);
-            if (dsNguoiDungBT.Count != 0)
-            {
-                ketQua = NguoiDungBUS.them(dsNguoiDungBT);
-                if (ketQua.trangThai != 0)
-                {
-                    return Json(ketQua);
-                }
-                dsMaNguoiDung += "|" + ketQua.ketQua as string;
-            }
-
-            List<NguoiDungDTO> dsNguoiDungTK = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsTaiKhoan);
-            if (dsNguoiDungTK.Count != 0)
-            {
-                foreach (var nguoiDung in dsNguoiDungTK)
-                {
-                    ketQua = NguoiDungBUS.layTheoTenTaiKhoan(nguoiDung.tenTaiKhoan);
-                    if (ketQua.trangThai != 0)
-                    {
-                        return Json(new KetQua(3, "Tài khoản \"" + nguoiDung.tenTaiKhoan + "\" không hợp lệ"));
-                    }
-                    dsMaNguoiDung += "|" + (ketQua.ketQua as NguoiDungDTO).ma;
-                }
-            }
-
-            List<NguoiDungDTO> dsNguoiDungE = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsEmail);
-            if (dsNguoiDungTK.Count != 0)
-            {
-                foreach (var nguoiDung in dsNguoiDungTK)
-                {
-                    ketQua = NguoiDungBUS.layTheoEmail(nguoiDung.email);
-                    if (ketQua.trangThai != 0)
-                    {
-                        return Json(new KetQua(3, "Email \"" + nguoiDung.email + "\" không hợp lệ"));
-                    }
-                    dsMaNguoiDung += "|" + (ketQua.ketQua as NguoiDungDTO).ma;
-                }
-            }
-
-            dsMaNguoiDung = dsMaNguoiDung.Substring(1);
-            //return Json(KhoaHoc_NguoiDungBUS.them(24));
-            return null;
         }
 
         #endregion

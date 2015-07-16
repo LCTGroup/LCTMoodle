@@ -1,0 +1,41 @@
+﻿@model DTOLayer.KhoaHocDTO
+@{
+    Layout = "~/Views/LCT/Khung.cshtml";
+    ViewData["TieuDe"] = "Thêm thành viên - " + Model.ten;
+}
+
+@section Styles {
+    <link href="/DanhSachXacNhanThem.css/NguoiDung" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="/ThemThanhVien.js/KhoaHoc"></script>
+    <script src="/DanhSachXacNhanThem.js/NguoiDung"></script>
+}
+
+<section id="khung_them" class="hop hop-2-vien">
+    <section class="tieu-de">
+        Thêm thành viên
+    </section>
+    <section class="noi-dung lct-form">
+        <article>
+            <ul>
+                <li>
+                    <section class="tieu-de">
+                        <label>
+                            Tập tin excel (*.xls)
+                        </label>
+                    </section>
+                    <section class="noi-dung">
+                        <article class="input">
+                            <input type="file" data-duoi="xls" />
+                        </article>
+                    </section>
+                </li>
+            </ul>
+        </article>
+    </section>
+</section>
+<section id="khung_chua_xac_nhan">
+
+</section>

@@ -15,7 +15,7 @@
         custom: [{
             input: $khungTim.find('[data-doi-tuong=chu-de-tim]'),
             event: {
-                valueChanged: function () {
+                valueChange: function () {
                     maChuDeTim = this.value || 0;
 
                     if (maChuDeTim != 0) {
@@ -180,7 +180,7 @@ function khoiTaoKhungTimKiemLCT2($danhSach, $khungTim, $khungPhanTrang, duongDan
         custom: [{
             input: $khungTim.find('[data-doi-tuong=chu-de-tim]'),
             event: {
-                valueChanged: function () {
+                valueChange: function () {
                     maChuDeTim = this.value || 0;
 
                     if (maChuDeTim != 0) {
