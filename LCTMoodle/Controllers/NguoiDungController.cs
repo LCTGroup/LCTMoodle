@@ -62,7 +62,7 @@ namespace LCTMoodle.Controllers
         {
             if (Session["NguoiDung"] != null)
             {
-                return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn cần đăng xuất trước khi đăng nhập tài khoản khác."));
+                return Redirect("/");
             }
 
             //Tắt hiển thị cột trái, cột phải
@@ -86,12 +86,12 @@ namespace LCTMoodle.Controllers
             return View();
         }
 
-        public ActionResult TinNhan(int ma)
+        public ActionResult TinNhan(int? ma)
         {
 
             #region Kiểm tra điều kiện
 
-            if (ma != (int)Session["NguoiDung"])
+            if (ma != Session["NguoiDung"] as int?)
             {
                 return Redirect("/?tb=" + HttpUtility.UrlEncode("Bạn không có quyền xem tin nhắn người khác."));
             }
@@ -374,7 +374,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThemTinNhan(FormCollection form)
         {
-            var ketQua = TinNhanBUS.them(chuyenForm(form), new LienKet() { "NguoiDung" }, Session["NguoiDung"] as int?);
+            var ketQua = TinNhanBUS.them(chuyenForm(form), new LienKet() { "NguoiDung" });
             if (ketQua.trangThai != 0)
             {
                 return Json(ketQua);

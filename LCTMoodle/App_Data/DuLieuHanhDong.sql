@@ -84,7 +84,7 @@ INSERT INTO dbo.HanhDong (Ma, LoiNhan) VALUES
 	(409, N'{ND} đã duyệt hiển thị cho câu hỏi {BD}'),
 
 	--Thêm câu trả lời
-	(410, N'{ND} đã thêm câu trả lời {BD}'),
+	(410, N'{ND} đã trả lời cho câu hỏi {BD}'),
 
 	--Xóa câu trả lời
 	(411, N'{ND} đã xóa câu trả lời {BD}'),
