@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 using System.Threading.Tasks;
 using DTOLayer;
 
@@ -166,6 +167,21 @@ namespace BUSLayer
                 return macDinh;
             }
         } 
+
+        /// <summary>
+        /// Lấy bảng mã
+        /// </summary>
+        /// <param name="dsMa">Danh sách mã (1,2,3,4,5,6)</param>
+        /// <returns>DataTable Mã</returns>
+        protected static DataTable layBangMa(string dsMa)
+        {
+            var bang = new DataTable();
+            bang.Columns.Add("Ma");
+
+            dsMa.Split(',').Select(x => bang.Rows.Add(new object[] { int.Parse(x) }));
+
+            return bang;
+        }
         #endregion
     }
 }

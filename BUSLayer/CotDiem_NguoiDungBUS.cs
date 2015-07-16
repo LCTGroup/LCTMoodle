@@ -53,7 +53,7 @@ namespace BUSLayer
             }
         }
 
-        public static DataTable toDataTable(List<CotDiem_NguoiDungDTO> dsDiem)
+        private static DataTable toTable(List<CotDiem_NguoiDungDTO> dsDiem)
         {
             DataTable bang = new DataTable();
             bang.Columns.AddRange(new DataColumn[] {
@@ -205,7 +205,7 @@ namespace BUSLayer
                 };
             }
 
-            return CotDiem_NguoiDungDAO.capNhat_Nhieu(toDataTable(dsDiem));
+            return CotDiem_NguoiDungDAO.capNhat_Nhieu(toTable(dsDiem));
         }
 
         public static KetQua chuyenDiemBaiTapNop(int maBaiTap, int maNguoiSua)
@@ -277,7 +277,7 @@ namespace BUSLayer
                 dsDiem.Add(diem);
             }
 
-            ketQua = CotDiem_NguoiDungDAO.capNhat_Nhieu(toDataTable(dsDiem));
+            ketQua = CotDiem_NguoiDungDAO.capNhat_Nhieu(toTable(dsDiem));
             
             if (ketQua.trangThai == 0)
             {

@@ -126,25 +126,20 @@ function xuLyThem() {
 
     $dsTheoEmail.each(function () {
         $dong = $(this);
-        dsTaiKhoan.push({
+        dsEmail.push({
             ma: $dong.find('[data-doi-tuong="dem"]').text(),
             email: $dong.find('[data-name="email"]').text()
         });
     });
 
-    console.log({
-        dsBinhThuong: dsBinhThuong,
-        dsTaiKhoan: dsTaiKhoan,
-        dsEmail: dsEmail
-    });
     var $tai = moBieuTuongTai($_khungXacNhan);
     $.ajax({
         url: '/NguoiDung/XuLyThemDanhSach',
         method: 'POST',
         data: {
-            dsBinhThuong: dsBinhThuong,
-            dsTaiKhoan: dsTaiKhoan,
-            dsEmail: dsEmail
+            dsBinhThuong: JSON.stringify(dsBinhThuong),
+            dsTaiKhoan: JSON.stringify(dsTaiKhoan),
+            dsEmail: JSON.stringify(dsEmail)
         },
         dataType: 'JSON'
     }).always(function () {

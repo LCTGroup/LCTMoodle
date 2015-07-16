@@ -53,6 +53,40 @@ BEGIN
 END
 
 GO
+--Thêm người dùng _ danh sách
+CREATE PROC dbo.themNguoiDung_DanhSach (
+	@0 BangNguoiDung READONLY
+)
+AS
+BEGIN
+	DECLARE @bangMa TABLE (Ma INT)
+
+	INSERT INTO dbo.NguoiDung(TenTaiKhoan, MatKhau, Email, Ho, TenLot, Ten, MaKichHoat) 
+		OUTPUT inserted.Ma INTO @bangMa
+		SELECT
+			TenTaiKhoan,
+			MatKhau,
+			Email,
+			Ho,
+			TenLot,
+			Ten,
+			MaKichHoat
+			FROM @0
+
+	DECLARE @dsMa VARCHAR(MAX) = ''
+
+	SELECT @dsMa += CAST(Ma AS VARCHAR(MAX)) + '|'
+		FROM @bangMa
+
+	SELECT CASE 
+		WHEN @dsMa = '' THEN
+			''
+		ELSE
+			LEFT(@dsMa, LEN(@dsMa) - 1)
+		END
+END
+
+GO
 --Cập nhật người dùng - chặn
 CREATE PROC dbo.capNhatNguoiDungTheoMa_Chan
 (

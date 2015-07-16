@@ -189,5 +189,19 @@ namespace DAOLayer
                     }
                 );
         }
+
+        public static KetQua them_DanhSach(int? maKhoaHoc, DataTable bangMaNguoiDung, int? trangThai, int? maNguoiThem)
+        {
+            return khongTruyVan
+                (
+                    "themKhoaHoc_NguoiDung_DanhSach",
+                    new object[] { 
+                        maKhoaHoc,
+                        bangMaNguoiDung,
+                        trangThai,
+                        maNguoiThem
+                    }
+                );
+        }
     }
 }

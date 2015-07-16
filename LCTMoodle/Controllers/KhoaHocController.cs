@@ -315,7 +315,11 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyDangKyThamGia(int ma)
         {
-            return Json(KhoaHoc_NguoiDungBUS.dangKyThamGia(ma));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+            return Json(KhoaHoc_NguoiDungBUS.dangKyThamGia(ma, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]

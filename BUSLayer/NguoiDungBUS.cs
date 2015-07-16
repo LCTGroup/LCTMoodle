@@ -10,6 +10,7 @@ using System.IO;
 using Data;
 using Helpers;
 using System.Data.OleDb;
+using System.Data;
 
 namespace BUSLayer
 {
@@ -759,6 +760,7 @@ namespace BUSLayer
             gan(ref nguoiDung, form);
 
             ketQua = NguoiDungBUS.kiemTra(nguoiDung, form.Keys.ToArray());
+
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
@@ -767,7 +769,8 @@ namespace BUSLayer
             ketQua = NguoiDungDAO.capNhat(nguoiDung.ma, layBangCapNhat(nguoiDung, form.Keys.ToArray()));
             if (ketQua.trangThai == 0)
             {
-                HoatDongBUS.them(new HoatDongDTO() { 
+                HoatDongBUS.them(new HoatDongDTO()
+                {
                     maDoiTuongTacDong = nguoiDung.ma,
                     loaiDoiTuongBiTacDong = "ND",
                     maDoiTuongBiTacDong = nguoiDung.ma,
@@ -775,6 +778,78 @@ namespace BUSLayer
                     duongDan = "/NguoiDung/" + nguoiDung.ma
                 });
             }
+
+            return ketQua;
+        }
+
+        public static KetQua layTheoEmail(string email, LienKet lienKet = null)
+        {
+            return NguoiDungDAO.layTheoEmail(email, lienKet);
+        }
+            
+        private static DataTable toTable(List<NguoiDungDTO> dsNguoiDung)
+        {
+            DataTable bang = new DataTable();
+            bang.Columns.AddRange(new DataColumn[] {
+                new DataColumn("TenTaiKhoan"),
+                new DataColumn("MatKhau"),
+                new DataColumn("Email"),
+                new DataColumn("Ho"),
+                new DataColumn("TenLot"),
+                new DataColumn("Ten"),
+                new DataColumn("MaKichHoat")
+            });
+
+            foreach (var nguoiDung in dsNguoiDung)
+            {
+                bang.Rows.Add(new object[]
+                {
+                    nguoiDung.tenTaiKhoan,
+                    nguoiDung.matKhau,
+                    nguoiDung.email,
+                    nguoiDung.ho,
+                    nguoiDung.tenLot,
+                    nguoiDung.ten,
+                    nguoiDung.maKichHoat
+                });
+            }
+
+            return bang;
+        }
+
+        public static KetQua them(List<NguoiDungDTO> dsNguoiDung)
+        {
+            int slNguoiDung = dsNguoiDung.Count;
+            KetQua ketQua;
+            for (var i = 0; i < slNguoiDung; i++)
+            {
+                dsNguoiDung[i].maKichHoat = NguoiDungHelper.phatSinhMaKichHoat();
+                dsNguoiDung[i].matKhau = NguoiDungHelper.layMaMD5(dsNguoiDung[i].matKhau);
+                dsNguoiDung[i].ngaySinh = new DateTime(1997, 1, 1);
+                ketQua = kiemTra(dsNguoiDung[i]);
+                if (ketQua.trangThai != 0)
+                {
+                    return ketQua;
+                }
+            }
+
+            ketQua = NguoiDungDAO.them(toTable(dsNguoiDung));
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            foreach (var nguoiDung in dsNguoiDung)
+            {
+                string duongDanKichHoat = @"http://moodle.lctgroup.org/NguoiDung/KichHoat?tenTaiKhoan=" + nguoiDung.tenTaiKhoan;
+                string mailDangKy = nguoiDung.email;
+                string tieuDe = "Kích hoạt tài khoản LCTMoodle";
+                string noiDung = "Mã kích hoạt tài khoản của bạn là: <b>" + nguoiDung.maKichHoat +
+                    "</b><br><br>Đường dẫn kích hoạt: <a href=\"" + duongDanKichHoat + "\">Nhấp vào đây</a>";
+
+                NguoiDungHelper.guiEmail(tieuDe, noiDung, mailDangKy);
+            }
+
             return ketQua;
         }
 
@@ -788,6 +863,5 @@ namespace BUSLayer
         }
 
         #endregion
-
     }
 }
