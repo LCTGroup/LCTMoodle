@@ -435,7 +435,7 @@ namespace BUSLayer
             return NguoiDungDAO.lay_TimKiem(tuKhoa);
         }
 
-        public static KetQua docTapTin(string duongDan)
+        public static KetQua docTapTin_xls(string duongDan)
         {
             try
             {

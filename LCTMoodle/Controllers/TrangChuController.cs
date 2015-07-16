@@ -14,8 +14,6 @@ namespace LCTMoodle.Controllers
     {
         public ActionResult Index()
         {
-            return View("~/Views/NguoiDung/DanhSachXacNhanThem.cshtml", NguoiDungBUS.docTapTin(Helpers.TapTinHelper.layDuongDan("Tam", "1.xls")).ketQua);
-            return null;
             var ketQua = KhoaHocBUS.timKiemPhanTrang(1, 8, null, null, new LienKet() { "GiangVien" });
             if (ketQua.trangThai == 0)
             {
