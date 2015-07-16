@@ -503,5 +503,11 @@ namespace LCTMoodle.Controllers
 
             return Json(KhoaHocBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
+
+        [HttpPost]
+        public ActionResult XuLyThemDanhSachThanhVien(string dsBinhThuong, string dsTaiKhoan, string dsEmail)
+        {
+            return Json(KhoaHoc_NguoiDungBUS.themDanhSachThanhVien(dsBinhThuong, dsTaiKhoan, dsEmail));
+        }
 	}
 }

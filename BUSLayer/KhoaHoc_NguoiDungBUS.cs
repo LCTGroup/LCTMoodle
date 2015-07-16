@@ -7,7 +7,7 @@ using DAOLayer;
 using DTOLayer;
 using System.IO;
 using Data;
-using System.Web;
+using Newtonsoft.Json;
 
 namespace BUSLayer
 {
@@ -53,22 +53,66 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua them(int maKhoaHoc, string dsMaNguoiDung, int maNguoiThem)
+        public static KetQua themDanhSachThanhVien(string dsBinhThuong, string dsTaiKhoan, string dsEmail, int maKhoaHoc, int maNguoiThem)
         {
             #region Kiểm tra điều kiện
-            //Kiểm tra khóa học
-            var ketQua = KhoaHocDAO.layTheoMa(maKhoaHoc);
+            var ketQua = KhoaHocBUS.layTheoMa(maKhoaHoc);
             if (ketQua.trangThai != 0)
             {
                 return new KetQua(1, "Khóa học không tồn tại");
             }
+            var khoaHoc = ketQua.ketQua as KhoaHocDTO;
 
-            //Kiểm tra quyền
-            if (!coQuyen("QLThanhVien", "KH", maKhoaHoc, maNguoiThem))
+            if (!BUS.coQuyen("QLThanhVien", "KH", maKhoaHoc, maNguoiThem))
             {
-                return new KetQua(3, "Bạn không có quyền thực hiện chức năng");
+                return new KetQua(3, "Cần có quyền quản lý thành viên để thực hiện chức năng này");
             }
             #endregion
+
+            string dsMaNguoiDung = "";
+
+            List<NguoiDungDTO> dsNguoiDungBT = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsBinhThuong);
+            if (dsNguoiDungBT.Count != 0)
+            {
+                ketQua = NguoiDungBUS.them(dsNguoiDungBT);
+                if (ketQua.trangThai != 0)
+                {
+                    return ketQua;
+                }
+
+                dsMaNguoiDung += "|" + ketQua.ketQua as string;
+            }
+
+            List<NguoiDungDTO> dsNguoiDungTK = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsTaiKhoan);
+            if (dsNguoiDungTK.Count != 0)
+            {
+                foreach (var nguoiDung in dsNguoiDungTK)
+                {
+                    ketQua = NguoiDungBUS.layTheoTenTaiKhoan(nguoiDung.tenTaiKhoan);
+                    if (ketQua.trangThai != 0)
+                    {
+                        return ketQua;
+                    }
+
+                    dsMaNguoiDung += "|" + (ketQua.ketQua as NguoiDungDTO).ma;
+                }
+            }
+
+            List<NguoiDungDTO> dsNguoiDungE = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsEmail);
+            if (dsNguoiDungTK.Count != 0)
+            {
+                foreach (var nguoiDung in dsNguoiDungTK)
+                {
+                    ketQua = NguoiDungBUS.layTheoEmail(nguoiDung.email);
+                    if (ketQua.trangThai != 0)
+                    {
+                        return ketQua;
+                    }
+                    dsMaNguoiDung += "|" + (ketQua.ketQua as NguoiDungDTO).ma;
+                }
+            }
+
+            dsMaNguoiDung = dsMaNguoiDung.Substring(1);
 
             return KhoaHoc_NguoiDungDAO.them_DanhSach(maKhoaHoc, layBangMa(dsMaNguoiDung), 0, maNguoiThem);
         }
