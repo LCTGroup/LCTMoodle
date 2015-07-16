@@ -155,28 +155,31 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LCTView\NguoiDungView.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_CauHoi.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_CauHoi_TraLoi.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_ChuDe.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_DangKy.cs" />
-    <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_BaiGiang.cs" />
-    <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_BaiTap.cs" />
-    <Compile Include="WebServices\Client_Model\clientmodel_ThongBao.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_DangNhap.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_HinhAnh.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc.cs" />
-    <Compile Include="WebServices\Client_Model\clientmodel_DangNhap.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_BaiGiang.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_BaiTap.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_BaiTap_Nop.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_NguoiDung.cs" />
-    <Compile Include="WebServices\Client_Model\clientmodel_CauHoi_TraLoi.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_ThongBao.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi.cs" />
+    <Compile Include="WebServices\Iwcf_CauHoi_TraLoi.cs" />
     <Compile Include="WebServices\Iwcf_ChuDe.cs" />
     <Compile Include="WebServices\Iwcf_KhoaHoc.cs" />
-    <Compile Include="WebServices\Iwcf_KhoaHoc_BaiGiang.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="WebServices\Iwcf_KhoaHoc_BaiGiang.cs" />
     <Compile Include="WebServices\Iwcf_KhoaHoc_BaiTap.cs" />
+    <Compile Include="WebServices\Iwcf_KhoaHoc_BaiTap_Nop.cs" />
     <Compile Include="WebServices\Iwcf_NguoiDung.cs" />
     <Compile Include="WebServices\Iwcf_Quyen.cs" />
-    <Compile Include="WebServices\Iwcf_CauHoi_TraLoi.cs" />
     <Compile Include="WebServices\wcf_CauHoi.svc.cs">
       <DependentUpon>wcf_CauHoi.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\wcf_CauHoi_TraLoi.svc.cs">
+      <DependentUpon>wcf_CauHoi_TraLoi.svc</DependentUpon>
     </Compile>
     <Compile Include="WebServices\wcf_ChuDe.svc.cs">
       <DependentUpon>wcf_ChuDe.svc</DependentUpon>
@@ -186,19 +189,18 @@
     </Compile>
     <Compile Include="WebServices\wcf_KhoaHoc_BaiGiang.svc.cs">
       <DependentUpon>wcf_KhoaHoc_BaiGiang.svc</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="WebServices\wcf_KhoaHoc_BaiTap.svc.cs">
       <DependentUpon>wcf_KhoaHoc_BaiTap.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\wcf_KhoaHoc_BaiTap_Nop.svc.cs">
+      <DependentUpon>wcf_KhoaHoc_BaiTap_Nop.svc</DependentUpon>
     </Compile>
     <Compile Include="WebServices\wcf_NguoiDung.svc.cs">
       <DependentUpon>wcf_NguoiDung.svc</DependentUpon>
     </Compile>
     <Compile Include="WebServices\wcf_Quyen.svc.cs">
       <DependentUpon>wcf_Quyen.svc</DependentUpon>
-    </Compile>
-    <Compile Include="WebServices\wcf_CauHoi_TraLoi.svc.cs">
-      <DependentUpon>wcf_CauHoi_TraLoi.svc</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -450,13 +452,14 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="WebServices\wcf_CauHoi.svc" />
+    <Content Include="WebServices\wcf_CauHoi_TraLoi.svc" />
     <Content Include="WebServices\wcf_ChuDe.svc" />
     <Content Include="WebServices\wcf_KhoaHoc.svc" />
     <Content Include="WebServices\wcf_KhoaHoc_BaiGiang.svc" />
     <Content Include="WebServices\wcf_KhoaHoc_BaiTap.svc" />
+    <Content Include="WebServices\wcf_KhoaHoc_BaiTap_Nop.svc" />
     <Content Include="WebServices\wcf_NguoiDung.svc" />
     <Content Include="WebServices\wcf_Quyen.svc" />
-    <Content Include="WebServices\wcf_CauHoi_TraLoi.svc" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

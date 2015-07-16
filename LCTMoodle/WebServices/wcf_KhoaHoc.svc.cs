@@ -444,7 +444,24 @@ namespace LCTMoodle.WebServices
         public int kiemTraThamGia(int maNguoiDung, int maKhoaHoc)
         {
             KetQua ketQua = KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
-            return (int)ketQua.ketQua;
+            return ketQua.trangThai;
         }
+
+
+        public clientmodel_ThongBao thamGiaKhoaHoc(int maNguoiDung, int maKhoaHoc)
+        {
+            KetQua ketQua = KhoaHoc_NguoiDungBUS.dangKyThamGia(maKhoaHoc, maNguoiDung);
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+
+            cm_ThongBao.trangThai = ketQua.trangThai;
+            if(ketQua.trangThai != 0)
+            {
+                cm_ThongBao.thongBao = ketQua.ketQua as string;
+            }
+
+            return cm_ThongBao;
+        }
+
+
     }
 }

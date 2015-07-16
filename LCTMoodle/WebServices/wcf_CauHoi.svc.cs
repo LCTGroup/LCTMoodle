@@ -99,6 +99,11 @@ namespace LCTMoodle.WebServices
                     cm_CauHoi.nguoiTao = dto_CauHoi.nguoiTao.tenTaiKhoan;
                 }
 
+                if(dto_CauHoi.nguoiTao.ma != null)
+                {
+                    cm_CauHoi.maNguoiTao = dto_CauHoi.nguoiTao.ma.Value;
+                }
+
                 if(dto_CauHoi.soLuongTraLoi != null)
                 {
                     cm_CauHoi.soTraLoi = dto_CauHoi.soLuongTraLoi.Value;
@@ -157,6 +162,11 @@ namespace LCTMoodle.WebServices
                     if (cauHoi.nguoiTao.tenTaiKhoan != null)
                     {
                         lst_CauHoi[lst_CauHoi.Count - 1].nguoiTao = cauHoi.nguoiTao.tenTaiKhoan;
+                    }
+
+                    if (cauHoi.nguoiTao.ma != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].maNguoiTao = cauHoi.nguoiTao.ma.Value;
                     }
 
                     if (cauHoi.soLuongTraLoi != null)
@@ -221,6 +231,11 @@ namespace LCTMoodle.WebServices
                         lst_CauHoi[lst_CauHoi.Count - 1].nguoiTao = cauHoi.nguoiTao.tenTaiKhoan;
                     }
 
+                    if (cauHoi.nguoiTao.ma != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].maNguoiTao = cauHoi.nguoiTao.ma.Value;
+                    }
+
                     if (cauHoi.soLuongTraLoi != null)
                     {
                         lst_CauHoi[lst_CauHoi.Count - 1].soTraLoi = cauHoi.soLuongTraLoi.Value;
@@ -283,6 +298,11 @@ namespace LCTMoodle.WebServices
                         lst_CauHoi[lst_CauHoi.Count - 1].nguoiTao = cauHoi.nguoiTao.tenTaiKhoan;
                     }
 
+                    if(cauHoi.nguoiTao.ma != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].maNguoiTao = cauHoi.nguoiTao.ma.Value;
+                    }
+
                     if (cauHoi.soLuongTraLoi != null)
                     {
                         lst_CauHoi[lst_CauHoi.Count - 1].soTraLoi = cauHoi.soLuongTraLoi.Value;
@@ -308,9 +328,64 @@ namespace LCTMoodle.WebServices
             return lst_CauHoi;
         }
 
+        /// <summary>
+        /// Webservice lấy danh sach câu hỏi chưa duyệt
+        /// </summary>
+        /// <returns>List<clientmodel_CauHoi></returns>
         public List<clientmodel_CauHoi> layDanhSachDuyet()
         {
-            return null;
+            KetQua ketQua = CauHoiBUS.layDanhSachChuaDuyet();
+            List<clientmodel_CauHoi> lst_CauHoiDuyet = new List<clientmodel_CauHoi>();
+
+            if(ketQua.trangThai == 0)
+            {
+                foreach(var cauHoi in ketQua.ketQua as List<CauHoiDTO>)
+                {
+                    if (cauHoi.ma != null)
+                    {
+                        lst_CauHoiDuyet.Add(new clientmodel_CauHoi()
+                        {
+                            ma = cauHoi.ma.Value,
+                        });
+                    }
+
+                    if (cauHoi.tieuDe != null)
+                    {
+                        lst_CauHoiDuyet[lst_CauHoiDuyet.Count - 1].tieuDe = cauHoi.tieuDe;
+                    }
+
+                    if (cauHoi.noiDung != null)
+                    {
+                        lst_CauHoiDuyet[lst_CauHoiDuyet.Count - 1].noiDung = cauHoi.noiDung;
+                    }
+
+                    if (cauHoi.nguoiTao.tenTaiKhoan != null)
+                    {
+                        lst_CauHoiDuyet[lst_CauHoiDuyet.Count - 1].nguoiTao = cauHoi.nguoiTao.tenTaiKhoan;
+                    }
+
+                    if (cauHoi.soLuongTraLoi != null)
+                    {
+                        lst_CauHoiDuyet[lst_CauHoiDuyet.Count - 1].soTraLoi = cauHoi.soLuongTraLoi.Value;
+                    }
+
+                    if (cauHoi.thoiDiemTao != null)
+                    {
+                        lst_CauHoiDuyet[lst_CauHoiDuyet.Count - 1].ngayTao = cauHoi.thoiDiemTao.Value;
+                    }
+
+                    if (cauHoi.thoiDiemCapNhat != null)
+                    {
+                        lst_CauHoiDuyet[lst_CauHoiDuyet.Count - 1].ngayCapNhat = cauHoi.thoiDiemCapNhat.Value;
+                    }
+
+                    //if (cauHoi.nguoiTao.hinhDaiDien.ma != null && cauHoi.nguoiTao.hinhDaiDien.duoi != null)
+                    //{
+                    //    lst_CauHoiDuyet[lst_CauHoiDuyet.Count - 1].hinhAnh = cauHoi.nguoiTao.hinhDaiDien.ma.Value + cauHoi.nguoiTao.hinhDaiDien.duoi;
+                    //}
+                }
+            }
+            return lst_CauHoiDuyet;
         }
 
         /// <summary>
@@ -348,6 +423,11 @@ namespace LCTMoodle.WebServices
                     if (cauHoi.nguoiTao.tenTaiKhoan != null)
                     {
                         lst_CauHoi[lst_CauHoi.Count - 1].nguoiTao = cauHoi.nguoiTao.tenTaiKhoan;
+                    }
+
+                    if (cauHoi.nguoiTao.ma != null)
+                    {
+                        lst_CauHoi[lst_CauHoi.Count - 1].maNguoiTao = cauHoi.nguoiTao.ma.Value;
                     }
 
                     if (cauHoi.soLuongTraLoi != null)
@@ -399,19 +479,30 @@ namespace LCTMoodle.WebServices
         /// <param name="maChuDe"></param>
         /// <param name="tieuDe"></param>
         /// <param name="noiDung"></param>
-        /// <returns>int</returns>
-        public int themCauHoi(int maNguoiTao, int maChuDe, string tieuDe, string noiDung)
+        /// <returns>clientmodel_ThongBao</returns>
+        public clientmodel_ThongBao themCauHoi(int maNguoiTao, string tieuDe, string noiDung)
         {
             Form form = new Form()
             {
                 {"MaNguoiTao",maNguoiTao.ToString()},
-                {"MaChuDe",maChuDe.ToString()},
                 {"TieuDe",tieuDe.ToString()},
                 {"NoiDung",noiDung.ToString()},
             };
 
             KetQua ketQua = CauHoiBUS.them(form);
-            return (int)ketQua.ketQua;
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+
+            if(ketQua.trangThai == 0)
+            {
+                cm_ThongBao.trangThai = ketQua.trangThai;
+                cm_ThongBao.thongBao = "Câu hỏi đã được đưa vào danh sách duyệt";
+            }
+            else
+            {
+                cm_ThongBao.trangThai = ketQua.trangThai;
+                cm_ThongBao.thongBao = ketQua.ketQua as string;
+            }
+            return cm_ThongBao;
         }
 
         /// <summary>
