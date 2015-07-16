@@ -209,11 +209,6 @@ namespace LCTMoodle.Controllers
                 return Json(ketQua, JsonRequestBehavior.AllowGet);
             }
 
-            public ActionResult _LichSuCauHoi()
-            {
-                return View();
-            }
-
             #endregion
 
             #region Xử lý
