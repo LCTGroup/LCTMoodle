@@ -1,6 +1,4 @@
-﻿
-$(function ($khungXacNhan) {
-    $khungXacNhan = $('#khung_xac_nhan');
+﻿function khoiTaoKhungDanhSachXacNhanThem($khungXacNhan, url) {
     var $khungNoiDung = $khungXacNhan.find('tbody');
 
     capNhatThuTu();
@@ -132,7 +130,7 @@ $(function ($khungXacNhan) {
 
         var $tai = moBieuTuongTai($khungXacNhan);
         $.ajax({
-            url: '/NguoiDung/XuLyThemDanhSach',
+            url: url,
             method: 'POST',
             data: {
                 dsBinhThuong: JSON.stringify(dsBinhThuong),
@@ -165,4 +163,4 @@ $(function ($khungXacNhan) {
     }
 
     //#endregion
-});
+};

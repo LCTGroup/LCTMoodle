@@ -41,17 +41,15 @@ namespace LCTMoodle.Controllers
 
             #endregion
 
-            if (ma != null && coQuyenXemHoiDap)
+            if (coQuyenXemHoiDap)
             {
-                ViewData["DanhSachCauHoi"] = null;
+                ViewData["DSLichSuCauHoi"] = null;
 
-                KetQua ketQua = CauHoiDAO.layTheoMaNguoiTao(ma, new LienKet() { 
-                    "NguoiTao",
-                    "HinhDaiDien"
-                });
+                string dsMa = CauHoiDAO.layCauHoi_DanhSachMaLienQuan(ma).ketQua as string;
+                KetQua ketQua = HoatDongBUS.lay_CuaDanhSachDoiTuong("CH", dsMa, 1, 5, new LienKet() { "HanhDong" });
                 if (ketQua.trangThai == 0)
                 {
-                    ViewData["DanhSachCauHoi"] = ketQua.ketQua as List<CauHoiDTO>;
+                    ViewData["DSLichSuCauHoi"] = ketQua.ketQua;
                 }
             }
             return View(NguoiDungBUS.layTheoMa(ma, new LienKet() 
@@ -203,7 +201,7 @@ namespace LCTMoodle.Controllers
 
             if (Session["NguoiDung"] != null)
             {
-                return Redirect("/tb=" + HttpUtility.UrlEncode("Tài khoản của bạn đã được kích hoạt"));
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Tài khoản đang đăng nhập đã được kích hoạt. Để kích hoạt tài khoản khác xin vui lòng đăng xuất."));
             }
 
             #endregion
@@ -310,7 +308,7 @@ namespace LCTMoodle.Controllers
 
         public ActionResult _DanhSachXacNhanThem(int maTapTin)
         {
-            var ketQua = NguoiDungBUS.docTapTin(Helpers.TapTinHelper.layDuongDan("Tam", "1.xls"));
+            var ketQua = NguoiDungBUS.docTapTin_xls(Helpers.TapTinHelper.layDuongDan("Tam", "1.xls"));
             if (ketQua.trangThai != 0)
             {
                 return Json(ketQua, JsonRequestBehavior.AllowGet);

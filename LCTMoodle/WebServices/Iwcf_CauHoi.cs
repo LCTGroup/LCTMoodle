@@ -41,7 +41,7 @@ namespace LCTMoodle.WebServices
         List<CauHoiDTO> timKiemTheoChuDe(int maChuDe, string tuKhoa);
 
         [OperationContract]
-        int themCauHoi(int maNguoiTao, int maChuDe, string tieuDe, string noiDung);
+        clientmodel_ThongBao themCauHoi(int maNguoiTao, string tieuDe, string noiDung);
 
         [OperationContract]
         clientmodel_ThongBao xoaCauHoi(int maCauHoi, int maNguoiDung);

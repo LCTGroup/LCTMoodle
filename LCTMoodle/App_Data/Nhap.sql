@@ -1,1 +1,1 @@
-update nguoidung set email = 'lebinhchieu@gmail.com' where ma = 1
+select * from hoatdong

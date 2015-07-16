@@ -70,6 +70,70 @@ namespace LCTMoodle.WebServices
         }
 
         /// <summary>
+        /// Webservice lấy người dùng theo mã
+        /// </summary>
+        /// <param name="ma"></param>
+        /// <returns>clientmodel_NguoiDung</returns>
+        public clientmodel_NguoiDung layNguoiDungTheoMa(int ma)
+        {
+            KetQua ketQua = NguoiDungBUS.layTheoMa(ma, new LienKet { "HinhDaiDien" });
+            NguoiDungDTO dto_NguoiDung = ketQua.ketQua as NguoiDungDTO;
+            clientmodel_NguoiDung cm_NguoiDung = new clientmodel_NguoiDung();
+
+            if (ketQua.trangThai == 0)
+            {
+                if (dto_NguoiDung.ma != null)
+                {
+                    cm_NguoiDung.ma = dto_NguoiDung.ma.Value;
+                }
+
+                if (dto_NguoiDung.ho != null && dto_NguoiDung.ten != null)
+                {
+                    if (dto_NguoiDung.tenLot != null)
+                    {
+                        cm_NguoiDung.hoTen = string.Format("{0} {1} {2}", dto_NguoiDung.ho, dto_NguoiDung.tenLot, dto_NguoiDung.ten);
+                    }
+                    else
+                    {
+                        cm_NguoiDung.hoTen = string.Format("{0} {1}", dto_NguoiDung.ho, dto_NguoiDung.ten);
+                    }
+                }
+
+                if (dto_NguoiDung.tenTaiKhoan != null)
+                {
+                    cm_NguoiDung.tenDN = dto_NguoiDung.tenTaiKhoan;
+                }
+
+                if (dto_NguoiDung.ngaySinh != null)
+                {
+                    cm_NguoiDung.ngaySinh = dto_NguoiDung.ngaySinh.Value;
+                }
+
+                if (dto_NguoiDung.email != null)
+                {
+                    cm_NguoiDung.email = dto_NguoiDung.email;
+                }
+
+                if (dto_NguoiDung.soDienThoai != null)
+                {
+                    cm_NguoiDung.soDienThoai = dto_NguoiDung.soDienThoai;
+                }
+
+                if (dto_NguoiDung.diaChi != null)
+                {
+                    cm_NguoiDung.diaChi = dto_NguoiDung.diaChi;
+                }
+
+                if (dto_NguoiDung.hinhDaiDien.ma != null && dto_NguoiDung.hinhDaiDien.duoi != null)
+                {
+                    cm_NguoiDung.hinhAnh = dto_NguoiDung.hinhDaiDien.ma.Value + dto_NguoiDung.hinhDaiDien.duoi;
+                }
+            }
+
+            return cm_NguoiDung;
+        }
+
+        /// <summary>
         /// Webservice đăng ký thành viên
         /// </summary>
         /// <param name="tenDN"></param>
@@ -82,7 +146,7 @@ namespace LCTMoodle.WebServices
         /// <param name="tenAnh"></param>
         /// <param name="contenttype"></param>
         /// <returns></returns>
-        public clientmodel_DangKy dangKy(string tenDN, string matKhau, string email, string hoTen, DateTime ngaySinh, int chapNhanDieuKhoan, byte[] duLieuAnh, string tenAnh, string contenttype)
+        public clientmodel_DangKy dangKy(string tenDN, string matKhau, string email, string hoTen, DateTime ngaySinh, int chapNhanDieuKhoan, byte[] duLieuAnh = null, string tenAnh = null, string contenttype = null)
         {
             int maHinh = -1;
             KetQua ketQuaLuuHinh = TapTinBUS.them(duLieuAnh, tenAnh, 0, contenttype);
@@ -147,70 +211,6 @@ namespace LCTMoodle.WebServices
         }
 
         /// <summary>
-        /// Webservice lấy người dùng theo mã
-        /// </summary>
-        /// <param name="ma"></param>
-        /// <returns>clientmodel_NguoiDung</returns>
-        public clientmodel_NguoiDung layNguoiDungTheoMa(int ma)
-        {
-            KetQua ketQua = NguoiDungBUS.layTheoMa(ma, new LienKet { "HinhDaiDien" });
-            NguoiDungDTO dto_NguoiDung = ketQua.ketQua as NguoiDungDTO;
-            clientmodel_NguoiDung cm_NguoiDung = new clientmodel_NguoiDung();
-
-            if(ketQua.trangThai == 0)
-            {
-                if(dto_NguoiDung.ma != null)
-                {
-                    cm_NguoiDung.ma = dto_NguoiDung.ma.Value;
-                }
-
-                if(dto_NguoiDung.ho != null && dto_NguoiDung.ten != null)
-                {
-                    if(dto_NguoiDung.tenLot != null)
-                    {
-                        cm_NguoiDung.hoTen = string.Format("{0} {1} {2}", dto_NguoiDung.ho, dto_NguoiDung.tenLot, dto_NguoiDung.ten);
-                    }
-                    else
-                    {
-                        cm_NguoiDung.hoTen = string.Format("{0} {1}", dto_NguoiDung.ho, dto_NguoiDung.ten);
-                    }
-                }
-
-                if(dto_NguoiDung.tenTaiKhoan != null)
-                {
-                    cm_NguoiDung.tenDN = dto_NguoiDung.tenTaiKhoan;
-                }
-
-                if(dto_NguoiDung.ngaySinh != null)
-                {
-                    cm_NguoiDung.ngaySinh = dto_NguoiDung.ngaySinh.Value;
-                }
-
-                if(dto_NguoiDung.email != null)
-                {
-                    cm_NguoiDung.email = dto_NguoiDung.email;
-                }
-
-                if(dto_NguoiDung.soDienThoai != null)
-                {
-                    cm_NguoiDung.soDienThoai = dto_NguoiDung.soDienThoai;
-                }
-
-                if(dto_NguoiDung.diaChi != null)
-                {
-                    cm_NguoiDung.diaChi = dto_NguoiDung.diaChi;
-                }
-
-                if(dto_NguoiDung.hinhDaiDien.ma != null && dto_NguoiDung.hinhDaiDien.duoi != null)
-                {
-                    cm_NguoiDung.hinhAnh = dto_NguoiDung.hinhDaiDien.ma.Value + dto_NguoiDung.hinhDaiDien.duoi;
-                }
-            }
-
-            return cm_NguoiDung;
-        }
-
-        /// <summary>
         /// Webservice kiểm tra đăng nhập va trả vê thông báo
         /// </summary>
         /// <param name="tenDN"></param>
@@ -235,6 +235,74 @@ namespace LCTMoodle.WebServices
             }
 
             return cm_NguoiDung;
+        }
+
+        /// <summary>
+        /// Webservice cập nhật thông tin người dùng
+        /// </summary>
+        /// <param name="maNguoiDung"></param>
+        /// <param name="gioiTinh"></param>
+        /// <param name="hoTen"></param>
+        /// <param name="ngaySinh"></param>
+        /// <param name="diaChi"></param>
+        /// <param name="duLieuAnh"></param>
+        /// <param name="tenAnh"></param>
+        /// <param name="contenttype"></param>
+        /// <returns>clientmodel_DangKy</returns>
+        public clientmodel_DangKy capNhatNguoiDung(string maNguoiDung, int gioiTinh, string hoTen, DateTime ngaySinh, string diaChi, byte[] duLieuAnh = null, string tenAnh = null, string contenttype = null)
+        {
+            int maHinh = -1;
+            KetQua ketQuaLuuHinh = TapTinBUS.them(duLieuAnh, tenAnh, 0, contenttype);
+            TapTinDTO dto_TapTin = ketQuaLuuHinh.ketQua as TapTinDTO;
+
+            if (ketQuaLuuHinh.trangThai == 0)
+            {
+                maHinh = dto_TapTin.ma.Value;
+            }
+
+            Form form;
+            if(maHinh != -1)
+            {
+                form = new Form()
+                {
+                    {"Ma",maNguoiDung.ToString()},
+                    {"GioiTinh",gioiTinh.ToString()},
+                    {"Ho",layHo(hoTen)},
+                    {"TenLot",layTenLot(hoTen)},
+                    {"Ten",layTen(hoTen)},
+                    {"NgaySinh",ngaySinh.ToShortDateString()},
+                    {"DiaChi",diaChi},
+                    {"MaHinhDaiDien",maHinh.ToString()},
+                };
+            }
+            else
+            {
+                form = new Form()
+                {
+                    {"Ma",maNguoiDung.ToString()},
+                    {"GioiTinh",gioiTinh.ToString()},
+                    {"Ho",layHo(hoTen)},
+                    {"TenLot",layTenLot(hoTen)},
+                    {"Ten",layTen(hoTen)},
+                    {"NgaySinh",ngaySinh.ToShortDateString()},
+                    {"DiaChi",diaChi},
+                };
+            }
+
+            KetQua ketQua = NguoiDungBUS.capNhat(form);
+            clientmodel_DangKy cm_CapNhat = new clientmodel_DangKy();
+
+            if (ketQua.trangThai == 0)
+            {
+                cm_CapNhat.trangThai = ketQua.trangThai;
+            }
+            else
+            {
+                cm_CapNhat.trangThai = ketQua.trangThai;
+                cm_CapNhat.lst_ThongBao = ketQua.ketQua as List<string>;
+            }
+
+            return cm_CapNhat;
         }
 
         /// <summary>
@@ -263,6 +331,13 @@ namespace LCTMoodle.WebServices
             return cm_DoiMatKhau;
         }
 
+        /// <summary>
+        /// Webservice kích hoạt tài khoản
+        /// </summary>
+        /// <param name="tenTaiKhoan"></param>
+        /// <param name="matKhau"></param>
+        /// <param name="maKichHoat"></param>
+        /// <returns>clientmodel_ThongBao</returns>
         public clientmodel_ThongBao kichHoatTaiKhoan(string tenTaiKhoan, string matKhau, string maKichHoat)
         {
             Form form = new Form()

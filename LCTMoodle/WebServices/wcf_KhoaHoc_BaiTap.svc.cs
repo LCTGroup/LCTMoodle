@@ -73,7 +73,7 @@ namespace LCTMoodle.WebServices
         /// <returns>clientmodel_KhoaHoc_BaiTap</returns>
         public clientmodel_KhoaHoc_BaiTap layTheoMa(int maBaiTap)
         {
-            KetQua ketQua = BaiVietBaiTapBUS.layTheoMa(maBaiTap, new LienKet() { { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
+            KetQua ketQua = BaiVietBaiTapBUS.layTheoMa(maBaiTap, new LienKet() {"TapTin", { "NguoiTao", new LienKet() { "HinhDaiDien" } } });
             BaiVietBaiTapDTO dto_BaiTap = ketQua.ketQua as BaiVietBaiTapDTO;
             clientmodel_KhoaHoc_BaiTap cm_BaiTap = new clientmodel_KhoaHoc_BaiTap();
 
@@ -94,9 +94,27 @@ namespace LCTMoodle.WebServices
                     cm_BaiTap.noiDung = dto_BaiTap.noiDung;
                 }
 
+                if(dto_BaiTap.tapTin != null)
+                {
+                    if (dto_BaiTap.tapTin.ma != null)
+                    {
+                        cm_BaiTap.maFile = dto_BaiTap.tapTin.ma.Value;
+                    }
+
+                    if (dto_BaiTap.tapTin.ten != null)
+                    {
+                        cm_BaiTap.tenFile = dto_BaiTap.tapTin.ten;
+                    }
+                }
+
+                if(dto_BaiTap.nguoiTao.ma != null)
+                {
+                    cm_BaiTap.maNguoiTao = dto_BaiTap.nguoiTao.ma.Value;
+                }
+
                 if(dto_BaiTap.nguoiTao.tenTaiKhoan != null)
                 {
-                    cm_BaiTap.nguoiTao = dto_BaiTap.nguoiTao.tenTaiKhoan;
+                    cm_BaiTap.tenTaiKhoan = dto_BaiTap.nguoiTao.tenTaiKhoan;
                 }
 
                 if(dto_BaiTap.thoiDiemTao != null)
@@ -151,7 +169,7 @@ namespace LCTMoodle.WebServices
 
                     if(baiTap.nguoiTao.tenTaiKhoan != null)
                     {
-                        lst_BaiTap[lst_BaiTap.Count - 1].nguoiTao = baiTap.nguoiTao.tenTaiKhoan;
+                        lst_BaiTap[lst_BaiTap.Count - 1].tenTaiKhoan = baiTap.nguoiTao.tenTaiKhoan;
                     }
 
                     if(baiTap.thoiDiemTao != null)

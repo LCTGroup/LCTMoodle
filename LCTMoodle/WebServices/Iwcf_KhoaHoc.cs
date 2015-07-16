@@ -42,5 +42,8 @@ namespace LCTMoodle.WebServices
 
         [OperationContract]
         int kiemTraThamGia(int maNguoiDung, int maKhoaHoc);
+
+        [OperationContract]
+        clientmodel_ThongBao thamGiaKhoaHoc(int maNguoiDung, int maKhoaHoc);
     }
 }

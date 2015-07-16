@@ -36,7 +36,7 @@ namespace DAOLayer
         {
             return layDong
                 (
-                    "layLoiNhanTheoMa",
+                    "layHanhDongTheoMa",
                     new object[]
                     {
                         ma

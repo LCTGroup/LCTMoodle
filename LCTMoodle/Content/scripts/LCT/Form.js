@@ -287,10 +287,10 @@ function khoiTaoTapTinInput_LCT($form) {
                 $phanTu.find('~ input[type="hidden"]').val(data.ketQua.ma).change();
             }
             else {
-                alert('Thêm file thất bại');
+                moPopupThongBao('Thêm file thất bại');
             }
         }).fail(function () {
-            alert('Thêm file thất bại')
+            moPopupThongBao('Thêm file thất bại');
         });
     });
 
@@ -1183,12 +1183,12 @@ function khoiTaoSukienInput_LCT($form, thamSo) {
             }
 
             if ('event' in this) {
-                if ('valueChanged' in this.event) {
-                    if ($input.is('[data-input-type="goi-y"]')) {
-                        $input.next().on('change', this.event.valueChanged);
+                if ('valueChange' in this.event) {
+                    if ($input.is('[data-input-type="goi-y"], [type="file"]')) {
+                        $input.next().on('change', this.event.valueChange);
                     }
                     
-                    delete this.event.valueChanged;
+                    delete this.event.valueChange;
                 }
 
                 $input.on(this.event);
