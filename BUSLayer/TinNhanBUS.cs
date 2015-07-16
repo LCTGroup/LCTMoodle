@@ -77,9 +77,9 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua them(Form form, LienKet lienKet = null)
+        public static KetQua them(Form form, LienKet lienKet = null, int? maNguoiNhan = null)
         {
-            if (Session["NguoiDung"] == null)
+            if (!maNguoiNhan.HasValue)
             {
                 return new KetQua(3, "Bạn chưa đăng nhập");
             }
