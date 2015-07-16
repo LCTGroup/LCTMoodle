@@ -430,9 +430,9 @@ namespace BUSLayer
             return NguoiDungDAO.layTheoMaNhomNguoiDung(phamVi, maNhomNguoiDung);
         }
 
-        public static KetQua timKiem(string tuKhoa)
+        public static KetQua timKiem(string tuKhoa, LienKet lienKet = null)
         {
-            return NguoiDungDAO.lay_TimKiem(tuKhoa);
+            return NguoiDungDAO.lay_TimKiem(tuKhoa, lienKet);
         }
 
         public static KetQua docTapTin_xls(string duongDan)
