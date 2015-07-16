@@ -36,5 +36,8 @@ namespace LCTMoodle.WebServices
 
         [OperationContract]
         clientmodel_ThongBao kichHoatTaiKhoan(string tenTaiKhoan, string matKhau, string maKichHoat);
+
+        [OperationContract]
+        List<clientmodel_NguoiDung> timKiemNguoiDung(string tuKhoa);
     }
 }

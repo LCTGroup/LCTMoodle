@@ -117,6 +117,13 @@ namespace LCTMoodle.WebServices
             return lst_TinNhan;
         }
 
+        /// <summary>
+        /// Webservice thêm tin nhắn
+        /// </summary>
+        /// <param name="maNguoiGui"></param>
+        /// <param name="maNguoiNhan"></param>
+        /// <param name="noiDung"></param>
+        /// <returns>clientmodel_ThongBao</returns>
         public clientmodel_ThongBao themTinNhan(int maNguoiGui, int maNguoiNhan, string noiDung)
         {
             Form form = new Form()
@@ -128,6 +135,8 @@ namespace LCTMoodle.WebServices
 
             KetQua ketQua = TinNhanBUS.them(form, new LienKet { "NguoiDung" });
             clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+            cm_ThongBao.trangThai = ketQua.trangThai;
+            cm_ThongBao.thongBao = ketQua.ketQua as string;
             return cm_ThongBao;
         }
     }
