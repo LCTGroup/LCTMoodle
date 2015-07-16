@@ -363,7 +363,7 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThemTinNhan(FormCollection form)
         {
-            var ketQua = TinNhanBUS.them(chuyenForm(form), new LienKet() { "NguoiDung" }, Session["NguoiDung"] as int?);
+            var ketQua = TinNhanBUS.them(chuyenForm(form), new LienKet() { "NguoiDung" });
             if (ketQua.trangThai != 0)
             {
                 return Json(ketQua);
