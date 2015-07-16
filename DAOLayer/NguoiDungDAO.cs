@@ -93,6 +93,18 @@ namespace DAOLayer
             );
         }
 
+        public static KetQua them(System.Data.DataTable bangNguoiDung)
+        {
+            return layGiaTri<string>
+                (
+                    "themNguoiDung_DanhSach",
+                    new object[]
+                    {
+                        bangNguoiDung
+                    }
+                );
+        }
+
         public static KetQua capNhat(int? ma, BangCapNhat bangCapNhat)
         {
             return khongTruyVan

@@ -20,3 +20,17 @@ TABLE (
 	Diem FLOAT,
 	MaNguoiTao INT NOT NULL
 )
+
+GO
+--Bảng người dùng để thêm người dùng bằng danh sách
+CREATE TYPE dbo.BangNguoiDung
+AS
+TABLE (
+	TenTaiKhoan NVARCHAR(MAX),
+	MatKhau NVARCHAR(MAX),
+	Email NVARCHAR(MAX),
+	Ho NVARCHAR(MAX),
+	TenLot NVARCHAR(MAX),
+	Ten NVARCHAR(MAX),
+	MaKichHoat NVARCHAR(MAX)
+)

@@ -381,7 +381,33 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyThemDanhSach(string dsBinhThuong, string dsTaiKhoan, string dsEmail)
         {
-            List<NguoiDungDTO> dsNguoiDungBT = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsTaiKhoan);
+            string dsMaNguoiDung = "";
+            KetQua ketQua;
+
+            List<NguoiDungDTO> dsNguoiDungBT = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsBinhThuong);
+            if (dsNguoiDungBT.Count != 0)
+            {
+                ketQua = NguoiDungBUS.them(dsNguoiDungBT);
+                if (ketQua.trangThai != 0)
+                {
+                    return Json(ketQua);
+                }
+                dsMaNguoiDung += ketQua.ketQua as string + "|";
+            }
+
+            //List<NguoiDungDTO> dsNguoiDungTK = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsTaiKhoan);
+            //if (dsNguoiDungTK.Count != 0)
+            //{
+            //    var ketQua = NguoiDungBUS.layTheoTenTaiKhoan(dsNguoiDungTK)
+
+            //    ketQua = NguoiDungBUS.them(dsNguoiDungBT);
+            //    if (ketQua.trangThai != 0)
+            //    {
+            //        return Json(ketQua);
+            //    }
+            //    dsMaNguoiDung += ketQua.ketQua as string + "|";
+            //}
+
             return null;
         }
 

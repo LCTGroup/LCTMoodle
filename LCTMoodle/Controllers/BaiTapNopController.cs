@@ -48,7 +48,11 @@ namespace LCTMoodle.Controllers
             }
             #endregion
 
-            ketQua = BaiTapNopBUS.layTheoMaBaiVietBaiTap(maBaiTap);
+            ketQua = BaiTapNopBUS.layTheoMaBaiVietBaiTap(maBaiTap, new LienKet()
+            {
+                "NguoiTao",
+                "TapTin"
+            });
             List<BaiTapNopDTO> danhSachBaiTapNop =
                 ketQua.trangThai == 0 ?
                     ketQua.ketQua as List<BaiTapNopDTO> :

@@ -166,13 +166,9 @@ namespace BUSLayer
             return BaiTapNopDAO.themHoacCapNhat(baiNop, lienKet);
         }
 
-        public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap)
+        public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap, LienKet lienKet = null)
         {
-            return BaiTapNopDAO.layTheoMaBaiVietBaiTap(maBaiVietBaiTap, new LienKet()
-            {
-                "NguoiTao",
-                "TapTin"
-            });
+            return BaiTapNopDAO.layTheoMaBaiVietBaiTap(maBaiVietBaiTap);
         }
 
         public static KetQua layTheoMa(int ma, LienKet lienKet = null)
