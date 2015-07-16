@@ -117,16 +117,18 @@ namespace LCTMoodle.WebServices
             return lst_TinNhan;
         }
 
-        //public clientmodel_ThongBao themTinNhan(int maNguoiGui, int maNguoiNhan, string noiDung)
-        //{
-        //    Form form = new Form()
-        //    {
-        //        {"MaNguoiGui",maNguoiGui.ToString()},
-        //        {"MaNguoiNhan",maNguoiNhan.ToString()},
-        //        {"NoiDung",noiDung.ToString()},
-        //    };
+        public clientmodel_ThongBao themTinNhan(int maNguoiGui, int maNguoiNhan, string noiDung)
+        {
+            Form form = new Form()
+            {
+                {"MaNguoiGui",maNguoiGui.ToString()},
+                {"MaNguoiNhan",maNguoiNhan.ToString()},
+                {"NoiDung",noiDung.ToString()},
+            };
 
-        //    KetQua ketQua = TinNhanBUS.them(form);
-        //}
+            KetQua ketQua = TinNhanBUS.them(form, new LienKet { "NguoiDung" });
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+            return cm_ThongBao;
+        }
     }
 }
