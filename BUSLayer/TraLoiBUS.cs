@@ -14,6 +14,7 @@ namespace BUSLayer
 {
     public class TraLoiBUS : BUS
     {
+
         public static KetQua kiemTra(TraLoiDTO traLoi, string[] truong = null, bool kiemTra = true)
         {
             List<string> loi = new List<string>();
@@ -45,7 +46,7 @@ namespace BUSLayer
                 };
             }
         }
-        
+
         public static void gan(ref TraLoiDTO traLoi, Form form)
         {
             if (traLoi == null)
@@ -56,7 +57,7 @@ namespace BUSLayer
             foreach (string key in form.Keys.ToArray())
             {
                 switch (key)
-                {                    
+                {
                     case "NoiDung":
                         traLoi.noiDung = form.layString(key);
                         break;
@@ -81,7 +82,7 @@ namespace BUSLayer
                 {
                     case "NoiDung":
                         bangCapNhat.Add("NoiDung", traLoi.noiDung, 2);
-                        break;                    
+                        break;
                     default:
                         break;
                 }
@@ -89,6 +90,8 @@ namespace BUSLayer
             return bangCapNhat;
         }
         
+        #region Thêm
+
         public static KetQua them(Form form)
         {
             #region Kiểm tra điều kiện
@@ -100,8 +103,8 @@ namespace BUSLayer
             }
 
             #endregion
-            
-            TraLoiDTO traLoi = new TraLoiDTO();            
+
+            TraLoiDTO traLoi = new TraLoiDTO();
             gan(ref traLoi, form);
 
             KetQua ketQua = TraLoiBUS.kiemTra(traLoi);
@@ -109,8 +112,26 @@ namespace BUSLayer
             {
                 return ketQua;
             }
-            return TraLoiDAO.them(traLoi, new LienKet() { "NguoiTao" });
+
+            ketQua = TraLoiDAO.them(traLoi, new LienKet() { "NguoiTao" });
+            if (ketQua.trangThai == 0)
+            {
+                var ketQuaTraLoi = ketQua.ketQua as TraLoiDTO;
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = maNguoiDung,
+                    loaiDoiTuongBiTacDong = "TL",
+                    maDoiTuongBiTacDong = ketQuaTraLoi.ma,
+                    hanhDong = layDTO<HanhDongDTO>(410),
+                    duongDan = "/HoiDap/" + ketQuaTraLoi.ma
+                });
+            }
+            return ketQua;
         }
+
+        #endregion
+
+        #region Xóa
 
         public static KetQua xoaTheoMa(int? ma, int? maNguoiXoa)
         {
@@ -129,24 +150,25 @@ namespace BUSLayer
             }
 
             #endregion
-            
-            return TraLoiDAO.xoaTheoMa(ma);
+
+            ketQua = TraLoiDAO.xoaTheoMa(ma);
+            if (ketQua.trangThai == 0)
+            {
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = maNguoiXoa,
+                    loaiDoiTuongBiTacDong = "TL",
+                    maDoiTuongBiTacDong = traLoi.ma,
+                    hanhDong = layDTO<HanhDongDTO>(411),
+                    duongDan = "/HoiDap/"
+                });
+            }
+            return ketQua;
         }
 
-        public static KetQua layTheoMaCauHoi(int maCauHoi, LienKet lienKet = null)
-        {
-            return TraLoiDAO.layTheoMaCauHoi(maCauHoi, lienKet);
-        }
+        #endregion
 
-        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
-        {
-            return TraLoiDAO.layTheoMa(ma, lienKet);
-        }
-
-        public static KetQua laySoLuongTraLoiTrongCauHoi(int maCauHoi)
-        {
-            return TraLoiDAO.layTraLoiTheoMaCauHoi_SoLuong(maCauHoi);
-        }
+        #region Sửa
 
         public static KetQua capNhat(Form form, LienKet lienKet = null)
         {
@@ -155,7 +177,7 @@ namespace BUSLayer
             int? maNguoiSua = form.layInt("MaNguoiSua");
             int? maTraLoi = form.layInt("Ma");
 
-            KetQua ketQua = TraLoiBUS.layTheoMa(maTraLoi.Value, new LienKet(){ "CauHoi" });
+            KetQua ketQua = TraLoiBUS.layTheoMa(maTraLoi.Value, new LienKet() { "CauHoi" });
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
@@ -172,23 +194,117 @@ namespace BUSLayer
             gan(ref traLoi, form);
 
             ketQua = TraLoiBUS.kiemTra(traLoi, form.Keys.ToArray());
-            if (ketQua.trangThai != 0) 
+            if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            return TraLoiDAO.capNhatTheoMa(maTraLoi, layBangCapNhat(traLoi, form.Keys.ToArray()), lienKet);
+            ketQua = TraLoiDAO.capNhatTheoMa(maTraLoi, layBangCapNhat(traLoi, form.Keys.ToArray()), lienKet);
+            if (ketQua.trangThai == 0)
+            {
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = maNguoiSua,
+                    loaiDoiTuongBiTacDong = "TL",
+                    maDoiTuongBiTacDong = traLoi.ma,
+                    hanhDong = layDTO<HanhDongDTO>(410),
+                    duongDan = "/HoiDap/" + traLoi.cauHoi.ma
+                });
+            }
+            return ketQua;
         }
 
-        public static KetQua capNhatDuyetTheoMa(int? ma, bool duyet)
+        public static KetQua capNhatDuyetTheoMa(int? ma, bool duyet, int? maNguoiDuyet)
         {
 
-            return TraLoiDAO.capNhatDuyetTheoMa(ma, duyet);
+            #region Kiểm tra điều kiện
+
+            if (!maNguoiDuyet.HasValue)
+            {
+                return new KetQua(4);
+            }
+
+            var ketQua = TraLoiBUS.layTheoMa(ma, new LienKet() { "CauHoi" });
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(3, "Lấy trả lời thất bại");
+            }
+            var traLoi = ketQua.ketQua as TraLoiDTO;
+            
+            if (maNguoiDuyet != traLoi.cauHoi.nguoiTao.ma)
+            {
+                return new KetQua(3, "Bạn không đủ quyền duyệt trả lời");
+            }
+
+            #endregion
+
+            ketQua = TraLoiDAO.capNhatDuyetTheoMa(ma, duyet);
+            if (ketQua.trangThai == 0)
+            {
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = maNguoiDuyet,
+                    loaiDoiTuongBiTacDong = "TL",
+                    maDoiTuongBiTacDong = traLoi.ma,
+                    hanhDong = layDTO<HanhDongDTO>(414),
+                    duongDan = "/HoiDap/" + traLoi.cauHoi.ma
+                });
+            }
+            return ketQua;
         }
 
-        public static KetQua duyetHienThiTraLoi(int? maTraLoi, bool trangThai)
+        public static KetQua duyetHienThiTraLoi(int? maTraLoi, bool trangThai, int? maNguoiDuyet)
         {
-            return TraLoiDAO.capNhatTheoMa_DuyetHienThi(maTraLoi, trangThai);
+            #region Kiểm tra điều kiện
+
+            if (!maNguoiDuyet.HasValue)
+            {
+                return new KetQua(4);
+            }
+
+            if (!QuyenBUS.coQuyen("DuyetTraLoi", "HD", 0, maNguoiDuyet))
+            {
+                return new KetQua(3, "Bạn không đủ quyền duyệt trả lời");
+            }
+
+            #endregion
+            
+            var ketQua = TraLoiDAO.capNhatTheoMa_DuyetHienThi(maTraLoi, trangThai);
+            if (ketQua.trangThai == 0)
+            {
+                int maCauHoi = (TraLoiBUS.layTheoMa(maTraLoi, new LienKet() { "CauHoi" }).ketQua as TraLoiDTO).cauHoi.ma.Value;
+                HoatDongBUS.them(new HoatDongDTO()
+                {                    
+                    maNguoiTacDong = maNguoiDuyet,
+                    loaiDoiTuongBiTacDong = "TL",
+                    maDoiTuongBiTacDong = maTraLoi,
+                    hanhDong = layDTO<HanhDongDTO>(413),
+                    duongDan = "/HoiDap/" + maCauHoi
+                });
+            }
+            return ketQua;
         }
+
+        #endregion
+
+        #region Lấy
+
+        public static KetQua layTheoMaCauHoi(int maCauHoi, LienKet lienKet = null)
+        {
+            return TraLoiDAO.layTheoMaCauHoi(maCauHoi, lienKet);
+        }
+
+        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
+        {
+            return TraLoiDAO.layTheoMa(ma, lienKet);
+        }
+
+        public static KetQua laySoLuongTraLoiTrongCauHoi(int maCauHoi)
+        {
+            return TraLoiDAO.layTraLoiTheoMaCauHoi_SoLuong(maCauHoi);
+        }
+
+        #endregion
+        
     }
 }

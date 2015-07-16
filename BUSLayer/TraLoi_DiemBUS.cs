@@ -51,7 +51,21 @@ namespace BUSLayer
 
             #endregion
             
-            return TraLoi_DiemDAO.them(maTraLoi, maNguoiTao, diem);
+            ketQua = TraLoi_DiemDAO.them(maTraLoi, maNguoiTao, diem);
+            if (ketQua.trangThai == 0)
+            {
+                int maCauHoi = (TraLoiBUS.layTheoMa(maTraLoi).ketQua as TraLoiDTO).cauHoi.ma.Value;
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = maNguoiTao,
+                    loaiDoiTuongBiTacDong = "TL",
+                    maDoiTuongBiTacDong = maTraLoi,
+                    hanhDong = layDTO<HanhDongDTO>(diem ? 403 : 404),
+                    duongDan = "/HoiDap/" + maCauHoi
+                });
+            }
+            
+            return ketQua;
         }
 
         public static KetQua xoa(int? maTraLoi, int? maNguoiTao)
@@ -92,7 +106,21 @@ namespace BUSLayer
 
             #endregion
 
-            return TraLoi_DiemDAO.xoaTheoMaTraLoiVaMaNguoiTao(maTraLoi, maNguoiTao);
+            ketQua = TraLoi_DiemDAO.xoaTheoMaTraLoiVaMaNguoiTao(maTraLoi, maNguoiTao);
+            if (ketQua.trangThai == 0)
+            {
+                int maCauHoi = (TraLoiBUS.layTheoMa(maTraLoi).ketQua as TraLoiDTO).cauHoi.ma.Value;
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = maNguoiTao,
+                    loaiDoiTuongBiTacDong = "TL",
+                    maDoiTuongBiTacDong = maTraLoi,
+                    hanhDong = layDTO<HanhDongDTO>(405),
+                    duongDan = "/HoiDap/"
+                });
+            }
+            
+            return ketQua;
         }
 
         public static int trangThaiVoteCuaNguoiDungTrongTraLoi(int? maTraLoi, int? maNguoiDung)

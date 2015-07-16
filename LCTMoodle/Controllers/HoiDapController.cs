@@ -209,6 +209,11 @@ namespace LCTMoodle.Controllers
                 return Json(ketQua, JsonRequestBehavior.AllowGet);
             }
 
+            public ActionResult _LichSuCauHoi()
+            {
+                return View();
+            }
+
             #endregion
 
             #region Xử lý
@@ -358,7 +363,7 @@ namespace LCTMoodle.Controllers
 
             public ActionResult XuLyDuyetHienThiTraLoi(int? maTraLoi, bool trangThai)
             {
-                return Json(TraLoiBUS.duyetHienThiTraLoi(maTraLoi, trangThai));
+                return Json(TraLoiBUS.duyetHienThiTraLoi(maTraLoi, trangThai, Session["NguoiDung"] as int?));
             }
 
             public ActionResult XemChiTietTraLoi(int maTraLoi = 0)
@@ -460,7 +465,7 @@ namespace LCTMoodle.Controllers
             [HttpPost]
             public ActionResult XuLyDuyetTraLoi(int maTraLoi, bool trangThaiDuyet)
             {
-                return Json(TraLoiBUS.capNhatDuyetTheoMa(maTraLoi, trangThaiDuyet));
+                return Json(TraLoiBUS.capNhatDuyetTheoMa(maTraLoi, trangThaiDuyet, Session["NguoiDung"] as int?));
             }
 
             #endregion

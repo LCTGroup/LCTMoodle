@@ -148,7 +148,20 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return CauHoiDAO.them(cauHoi);
+            ketQua = CauHoiDAO.them(cauHoi);
+            if (ketQua.trangThai == 0)
+            {
+                int? maCauHoi = (ketQua.ketQua) as int?;
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = maNguoiTao,
+                    loaiDoiTuongBiTacDong = "CH",
+                    maDoiTuongBiTacDong = maCauHoi,
+                    hanhDong = layDTO<HanhDongDTO>(406),
+                    duongDan = "/HoiDap/" + maCauHoi
+                });
+            }
+            return ketQua;
         }
 
         #endregion
@@ -180,7 +193,19 @@ namespace BUSLayer
 
             #endregion
 
-            return CauHoiDAO.xoaTheoMa(ma);
+            ketQua = CauHoiDAO.xoaTheoMa(ma);
+            if (ketQua.trangThai == 0)
+            {
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = maNguoiXoa,
+                    loaiDoiTuongBiTacDong = "CH",
+                    maDoiTuongBiTacDong = ma,
+                    hanhDong = layDTO<HanhDongDTO>(407),
+                    duongDan = "/HoiDap/"
+                });
+            }
+            return ketQua;
         }
 
         #endregion
@@ -223,8 +248,21 @@ namespace BUSLayer
             {
                 return ketQua;
             }
+            
+            ketQua = CauHoiDAO.capNhatTheoMa(maCauHoi, layBangCapNhat(cauHoi, form.Keys.ToArray()), lienKet);
+            if (ketQua.trangThai == 0)
+            {
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = maNguoiSua,
+                    loaiDoiTuongBiTacDong = "CH",
+                    maDoiTuongBiTacDong = cauHoi.ma,
+                    hanhDong = layDTO<HanhDongDTO>(408),
+                    duongDan = "/HoiDap/" + cauHoi.ma
+                });
+            }
 
-            return CauHoiDAO.capNhatTheoMa(maCauHoi, layBangCapNhat(cauHoi, form.Keys.ToArray()), lienKet);
+            return ketQua;
         }
 
         /// <summary>
@@ -252,7 +290,20 @@ namespace BUSLayer
 
             #endregion
 
-            return CauHoiDAO.capNhatTheoMa_DuyetHienThi(maCauHoi, trangThai);
+            var ketQua =  CauHoiDAO.capNhatTheoMa_DuyetHienThi(maCauHoi, trangThai);
+            if (ketQua.trangThai == 0)
+            {
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = nguoiDuyet,
+                    loaiDoiTuongBiTacDong = "CH",
+                    maDoiTuongBiTacDong = maCauHoi,
+                    hanhDong = layDTO<HanhDongDTO>(409),
+                    duongDan = "/HoiDap/" + maCauHoi
+                });
+            }
+
+            return ketQua;
         }
 
         #endregion
@@ -264,8 +315,7 @@ namespace BUSLayer
         /// </summary>
         /// <param name="ma">Mã câu hỏi cần lấy</param>
         /// <param name="lienKet">Giá trị liên kết dữ liệu với các bảng liên quan</param>
-        /// "NguoiTao": NguoiDungDTO
-        /// "ChuDe" : ChuDeDTO
+        /// 
         /// <returns>KetQua</returns>
         public static KetQua layTheoMa(int ma, LienKet lienKet = null)
         {
