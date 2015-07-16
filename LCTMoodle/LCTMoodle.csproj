@@ -166,6 +166,7 @@
     <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_BaiTap_Nop.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_NguoiDung.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_ThongBao.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_TinNhan.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi_TraLoi.cs" />
     <Compile Include="WebServices\Iwcf_ChuDe.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="WebServices\Iwcf_KhoaHoc_BaiTap_Nop.cs" />
     <Compile Include="WebServices\Iwcf_NguoiDung.cs" />
     <Compile Include="WebServices\Iwcf_Quyen.cs" />
+    <Compile Include="WebServices\Iwcf_TinNhan.cs" />
     <Compile Include="WebServices\wcf_CauHoi.svc.cs">
       <DependentUpon>wcf_CauHoi.svc</DependentUpon>
     </Compile>
@@ -201,6 +203,9 @@
     </Compile>
     <Compile Include="WebServices\wcf_Quyen.svc.cs">
       <DependentUpon>wcf_Quyen.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\wcf_TinNhan.svc.cs">
+      <DependentUpon>wcf_TinNhan.svc</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -460,6 +465,7 @@
     <Content Include="WebServices\wcf_KhoaHoc_BaiTap_Nop.svc" />
     <Content Include="WebServices\wcf_NguoiDung.svc" />
     <Content Include="WebServices\wcf_Quyen.svc" />
+    <Content Include="WebServices\wcf_TinNhan.svc" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
