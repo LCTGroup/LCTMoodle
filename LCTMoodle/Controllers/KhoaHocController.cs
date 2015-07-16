@@ -505,9 +505,14 @@ namespace LCTMoodle.Controllers
         }
 
         [HttpPost]
-        public ActionResult XuLyThemDanhSachThanhVien(string dsBinhThuong, string dsTaiKhoan, string dsEmail)
+        public ActionResult XuLyThemDanhSachThanhVien(int ma, string dsBinhThuong, string dsTaiKhoan, string dsEmail)
         {
-            return Json(KhoaHoc_NguoiDungBUS.themDanhSachThanhVien(dsBinhThuong, dsTaiKhoan, dsEmail));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(KhoaHoc_NguoiDungBUS.themDanhSachThanhVien(dsBinhThuong, dsTaiKhoan, dsEmail, ma, (int)Session["NguoiDung"]));
         }
 	}
 }
