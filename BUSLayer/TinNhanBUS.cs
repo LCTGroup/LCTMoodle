@@ -77,13 +77,13 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua them(Form form, LienKet lienKet = null, int? maNguoiNhan = null)
+        public static KetQua them(Form form, LienKet lienKet = null, int? maNguoiGui = null)
         {
-            if (!maNguoiNhan.HasValue)
+            if (!maNguoiGui.HasValue)
             {
                 return new KetQua(3, "Bạn chưa đăng nhập");
             }
-            form.Add("MaNguoiGui", Session["NguoiDung"].ToString());
+            form.Add("MaNguoiGui", maNguoiGui.ToString());
 
             TinNhanDTO tinNhan = new TinNhanDTO();            
             gan(ref tinNhan, form);
