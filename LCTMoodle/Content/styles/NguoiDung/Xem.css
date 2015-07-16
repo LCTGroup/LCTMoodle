@@ -1,4 +1,16 @@
-﻿/*#region Khung chọn hiển thị */
+﻿/*#region General */
+
+.empty {
+    padding: 10px;
+    text-align: center;
+    color: #888;
+    background-color: #fcfcfc;
+    border: 1px solid #ddd;
+}
+
+/*#endregion */
+
+/*#region Khung chọn hiển thị */
 
 .khung-chon-hien-thi {
     margin-bottom: 20px;
@@ -127,10 +139,30 @@
     .khung-hien-thi .noi-dung.active {
         display: block;
     }
-    .khung-hien-thi .noi-dung .empty {
-        text-align: center;
-        border: 1px solid #ccc;
-        padding: 5px;
-        color: #888;
-    }    
+
 /*#endregion*/
+
+/*#region Lịch sử câu hỏi */
+
+.lich-su-cau-hoi {
+
+}
+    .lich-su-cau-hoi ul {
+
+    }
+    .lich-su-cau-hoi li {
+        border: 1px solid #ddd;
+        margin-bottom: 5px;
+    }
+    .lich-su-cau-hoi a {
+        display: block;
+        padding: 10px;
+        color: #666;
+        background-color: #fcfcfc;
+    }
+        .lich-su-cau-hoi a:hover {
+            text-decoration: none;
+            background-color: #f4f4f4;
+        }
+
+/*#endregion */

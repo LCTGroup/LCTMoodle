@@ -38,6 +38,7 @@ namespace LCTMoodle
         {
             
         }
+        
         protected void Session_Start()
         {
             NguoiDungBUS.kiemTraCookie();

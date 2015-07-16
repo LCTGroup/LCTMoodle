@@ -94,18 +94,21 @@ namespace BUSLayer
                     thongBao.Add("Bạn chưa đủ tuổi để trở thành viên LCTMoodle");
                 }
             }
-            if (coKiemTra("Email", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.email))
+            if (coKiemTra("Email", truong, kiemTra))
             {
-                thongBao.Add("Email không được bỏ trống");
-            }
-            else if (!LCTHelper.laEmail(nguoiDung.email))
-            {
-                thongBao.Add("Email không hợp lệ");
-            }
-            if (coKiemTra("Email", truong, kiemTra) && NguoiDungBUS.tonTaiEmail(nguoiDung.email))
-            {
-                thongBao.Add("Email đã tồn tại. Vui lòng chọn email khác");
-            }
+                if (string.IsNullOrWhiteSpace(nguoiDung.email))
+                {
+                    thongBao.Add("Email không được bỏ trống");
+                }
+                else if (!LCTHelper.laEmail(nguoiDung.email))
+                {
+                    thongBao.Add("Email không hợp lệ");
+                }
+                else if (NguoiDungBUS.tonTaiEmail(nguoiDung.email))
+                {
+                    thongBao.Add("Email đã tồn tại. Vui lòng chọn email khác");
+                }
+            }                       
             if (coKiemTra("Ho", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.ho))
             {
                 thongBao.Add("Họ không được bỏ trống");
@@ -163,6 +166,8 @@ namespace BUSLayer
             return bangCapNhat;
         }
 
+        #region Thêm
+
         public static KetQua them(Form form)
         {
             bool chapNhanQuyDinh = form.layBool("ChapNhanQuyDinh");
@@ -177,13 +182,13 @@ namespace BUSLayer
             }
 
             string maKichHoat = NguoiDungHelper.phatSinhMaKichHoat();
-            NguoiDungDTO nguoiDung = new NguoiDungDTO() 
+            NguoiDungDTO nguoiDung = new NguoiDungDTO()
             {
                 maKichHoat = maKichHoat
             };
             gan(ref nguoiDung, form);
-            
-            KetQua ketQua = kiemTra(nguoiDung);           
+
+            KetQua ketQua = kiemTra(nguoiDung);
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
@@ -194,17 +199,30 @@ namespace BUSLayer
             {
                 return ketQua;
             }
-            
-            string duongDanKichHoat = @"http://localhost:1711/NguoiDung/KichHoat?tenTaiKhoan=" + form.layString("TenTaiKhoan");
+
+            string duongDanKichHoat = @"http://moodle.lctgroup.org/NguoiDung/KichHoat?tenTaiKhoan=" + form.layString("TenTaiKhoan");
             string mailDangKy = form.layString("Email");
             string tieuDe = "Kích hoạt tài khoản LCTMoodle";
             string noiDung = "Mã kích hoạt tài khoản của bạn là: <b>" + maKichHoat +
                 "</b><br><br>Đường dẫn kích hoạt: <a href=\"" + duongDanKichHoat + "\">Nhấp vào đây</a>";
 
             NguoiDungHelper.guiEmail(tieuDe, noiDung, mailDangKy);
-            
+
+            HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = nguoiDung.ma,
+                    loaiDoiTuongBiTacDong = "HT",
+                    maDoiTuongBiTacDong = nguoiDung.ma,
+                    hanhDong = layDTO<HanhDongDTO>(100),
+                    duongDan = "/NguoiDung/" + nguoiDung.ma
+                });
+
             return ketQua;
         }
+
+        #endregion
+
+        #region Sửa
 
         public static KetQua capNhat(Form form)
         {
@@ -216,93 +234,35 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;            
-            
+            NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
+
             gan(ref nguoiDung, form);
-            
+
             ketQua = NguoiDungBUS.kiemTra(nguoiDung, form.Keys.ToArray());
             if (ketQua.trangThai != 0)
             {
                 return ketQua;
             }
 
-            return NguoiDungDAO.capNhat(ma, layBangCapNhat(nguoiDung, form.Keys.ToArray()));
-        }
-        
-        public static KetQua chanNguoiDung(int maNguoiDung, bool trangThai, int? maNguoiChan)
-        {
-            #region Kiểm tra điều kiện
-
-            if (!maNguoiChan.HasValue)
+            ketQua = NguoiDungDAO.capNhat(ma, layBangCapNhat(nguoiDung, form.Keys.ToArray()));
+            if (ketQua.trangThai == 0)
             {
-                return new KetQua(4, "Bạn chưa đăng nhập");
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = nguoiDung.ma,
+                    loaiDoiTuongBiTacDong = "ND",
+                    maDoiTuongBiTacDong = nguoiDung.ma,
+                    hanhDong = layDTO<HanhDongDTO>(200),
+                    duongDan = "/NguoiDung/" + nguoiDung.ma
+                });
             }
 
-            if (!QuyenBUS.coQuyen("QLNguoiDung", "ND", 0, maNguoiChan))
-            {
-                return new KetQua(3, "Bạn không có quyền chặn người dùng");
-            }
-
-            #endregion
-
-            return NguoiDungDAO.capNhatTheoMa_Chan(maNguoiDung, trangThai);
-        }
-
-        public static KetQua kichHoatTaiKhoan(Form form)
-        {
-            string tenTaiKhoan = form.layString("TenTaiKhoan");
-            string matKhau = form.layString("MatKhau");
-            string maKichHoat = form.layString("MaKichHoat");
-            
-            KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenTaiKhoan);
-            if (ketQua.trangThai != 0)
-            {
-                return ketQua;
-            }
-
-            NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
-            if (nguoiDung.maKichHoat == null)
-            {
-                ketQua.trangThai = 5;
-                ketQua.ketQua = "Tài khoản đã được kích hoạt. Bạn đã có thể đăng nhập vào LCTMoodle";
-                return ketQua;
-            }
-            if (nguoiDung.maKichHoat != maKichHoat)
-            {
-                ketQua.trangThai = 3;
-                ketQua.ketQua = "Mã kích hoạt không đúng";
-                return ketQua;
-            }
-
-            NguoiDungDAO.capNhatTheoTenTaiKhoan_KichHoat(tenTaiKhoan, null);
-
-            ketQua = NguoiDungBUS.xuLyDangNhap(tenTaiKhoan, matKhau, false);
-            if (ketQua.trangThai != 0)
-            {
-                //Cập nhật lại mã kích hoạt cũ để trạng thái tài khoản trở thành như ban đầu
-                NguoiDungDAO.capNhatTheoTenTaiKhoan_KichHoat(tenTaiKhoan, maKichHoat);
-                
-                ketQua.trangThai = 3;
-                ketQua.ketQua = "Sai Mật khẩu";
-                return ketQua;
-            }
-
-            return ketQua;            
-        }
-
-        public static KetQua layTheoTenTaiKhoan(string tenTaiKhoan)
-        {
-            return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
-        }
-        
-        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
-        {
-            return NguoiDungDAO.layTheoMa(ma, lienKet);
+            return ketQua;
         }
 
         public static KetQua phucHoiMatKhau(Form form)
         {
-            string email = form.layString("Email");            
+            string email = form.layString("Email");
 
             KetQua ketQua = NguoiDungDAO.layTheoEmail(email);
             if (ketQua.trangThai != 0)
@@ -324,10 +284,10 @@ namespace BUSLayer
             {
                 return new KetQua(3, "Còn " + (10 - Math.Floor(NgayConLai.TotalDays)) + " ngày nữa bạn mới có thể phục hồi mật khẩu.");
             }
-            
+
             if (nguoiDung.email == email)
             {
-                string matKhauMoi = NguoiDungHelper.phatSinhMatKhauMoi(6);                
+                string matKhauMoi = NguoiDungHelper.phatSinhMatKhauMoi(6);
 
                 ketQua = NguoiDungBUS.xuLyDoiMatKhau(nguoiDung.tenTaiKhoan, nguoiDung.matKhau, matKhauMoi, false);
                 if (ketQua.trangThai != 0)
@@ -340,6 +300,15 @@ namespace BUSLayer
                 {
                     return new KetQua("Không thể cập nhật thời điểm phục hồi mật khẩu");
                 }
+
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = nguoiDung.ma,
+                    loaiDoiTuongBiTacDong = "ND",
+                    maDoiTuongBiTacDong = nguoiDung.ma,
+                    hanhDong = layDTO<HanhDongDTO>(201),
+                    duongDan = "/NguoiDung/" + nguoiDung.ma
+                });
 
                 string tieuDe = "Phục hồi mật khẩu tài khoản LCTMoodle";
                 string noiDung = "Thông tin tài khoản được phục hồi:<br> Tên tài khoản: " + nguoiDung.tenTaiKhoan + "<br>Mật khẩu mới: " + matKhauMoi;
@@ -357,92 +326,44 @@ namespace BUSLayer
             }
         }
 
-        //Hàm cùng tên
-        public static KetQua xuLyDangNhap(string tenTaiKhoan, string matKhau, bool ghiNho = false)
+        public static KetQua chanNguoiDung(int maNguoiDung, bool trangThai, int? maNguoiChan)
         {
-            if (!tonTaiTenTaiKhoan(tenTaiKhoan))
+            #region Kiểm tra điều kiện
+
+            if (!maNguoiChan.HasValue)
             {
-                return new KetQua()
+                return new KetQua(4, "Bạn chưa đăng nhập");
+            }
+
+            if (!QuyenBUS.coQuyen("QLNguoiDung", "ND", 0, maNguoiChan))
+            {
+                return new KetQua(3, "Bạn không có quyền chặn người dùng");
+            }
+
+            #endregion
+
+            var ketQua = NguoiDungDAO.capNhatTheoMa_Chan(maNguoiDung, trangThai);
+            if (ketQua.trangThai == 0)
+            {
+                HoatDongBUS.them(new HoatDongDTO()
                 {
-                    trangThai = 3,
-                    ketQua = "Tài khoản không tồn tại"
-                };
-            }
-            
-            KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenTaiKhoan);
-            if (ketQua.trangThai != 0)
-            {
-                return ketQua;
-            }
-            
-            NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
-            if (nguoiDung.daDuyet == false)
-            {
-                return new KetQua(3, "Tài khoản đã bị chặn");
+                    maNguoiTacDong = maNguoiChan,
+                    loaiDoiTuongBiTacDong = "ND",
+                    maDoiTuongBiTacDong = maNguoiDung,
+                    hanhDong = layDTO<HanhDongDTO>(202),
+                    duongDan = "/NguoiDung/" + maNguoiDung
+                });
             }
 
-            if (nguoiDung.maKichHoat != null)
-            {
-                return new KetQua()
-                {
-                    trangThai = 5,
-                    ketQua = "Tài khoản chưa được kích hoạt. Bạn vui lòng kiểm tra email để kích hoạt tài khoản."
-                };
-            }
-
-            if ((NguoiDungHelper.layMaMD5(matKhau) == nguoiDung.matKhau) || (matKhau == nguoiDung.matKhau))
-            {
-                //Lưu mã người dùng vào Session
-                HttpContext.Current.Session["NguoiDung"] = nguoiDung.ma;
-
-                if (ghiNho)
-                {
-                    //Lưu Cookie
-                    HttpCookie cookieNguoiDung = new HttpCookie("NguoiDung");
-                    cookieNguoiDung.Values.Add("TenTaiKhoan", nguoiDung.tenTaiKhoan);
-                    cookieNguoiDung.Values.Add("MatKhau", nguoiDung.matKhau);
-                    cookieNguoiDung.Expires = DateTime.Now.AddDays(7);
-
-                    HttpContext.Current.Response.Cookies.Add(cookieNguoiDung);
-                }
-
-                ketQua.ketQua = nguoiDung;
-                return ketQua;
-            }
-            
-            ketQua.trangThai = 3;
-            ketQua.ketQua = "Mật khẩu không đúng";
-            
             return ketQua;
         }
 
-        public static KetQua xuLyDangNhap(Form form)
+        public static KetQua kichHoatTaiKhoan(Form form)
         {
             string tenTaiKhoan = form.layString("TenTaiKhoan");
             string matKhau = form.layString("MatKhau");
-            bool ghiNho = form.layBool("GhiNho");
-            
-            return NguoiDungBUS.xuLyDangNhap(tenTaiKhoan, matKhau, ghiNho);
-        }
-                
-        public static void xuLyDangXuat()
-        {
-            //Xóa Cookie
-            HttpCookie cookie = HttpContext.Current.Request.Cookies["NguoiDung"];
+            string maKichHoat = form.layString("MaKichHoat");
 
-            if (cookie != null)
-            {
-                cookie.Value = null;
-                cookie.Expires = DateTime.Now.AddDays(-1);
-                HttpContext.Current.Response.Cookies.Add(cookie);                
-            }
-                       
-            //Xóa session            
-            HttpContext.Current.Session["NguoiDung"] = null;
-        }
-        
-        public static KetQua xuLyDoiMatKhau(string tenTaiKhoan, string matKhauCu, string MatKhauMoi, bool maHoaMatKhauCu = true)
-        {
             KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenTaiKhoan);
             if (ketQua.trangThai != 0)
             {
@@ -450,54 +371,140 @@ namespace BUSLayer
             }
 
             NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
-            if (maHoaMatKhauCu)
+            if (nguoiDung.maKichHoat == null)
             {
-                if (nguoiDung.matKhau != NguoiDungHelper.layMaMD5(matKhauCu))
-                {
-                    return new KetQua()
-                    {
-                        trangThai = 3,
-                        ketQua = "Nhập sai mật khẩu"
-                    };
-                }
+                ketQua.trangThai = 5;
+                ketQua.ketQua = "Tài khoản đã được kích hoạt. Bạn đã có thể đăng nhập vào LCTMoodle";
+                return ketQua;
             }
-            else
+            if (nguoiDung.maKichHoat != maKichHoat)
             {
-                if (nguoiDung.matKhau != matKhauCu)
-                {
-                    return new KetQua()
-                    {
-                        trangThai = 3,
-                        ketQua = "Nhập sai mật khẩu"
-                    };
-                }
-            }
-            
-
-            Form form = new Form()
-            {
-                { "MatKhau", MatKhauMoi }
-            };
-            gan(ref nguoiDung, form);
-
-            ketQua = NguoiDungBUS.kiemTra(nguoiDung, form.Keys.ToArray());
-            if (ketQua.trangThai != 0)
-            {
+                ketQua.trangThai = 3;
+                ketQua.ketQua = "Mã kích hoạt không đúng";
                 return ketQua;
             }
 
-            return NguoiDungDAO.capNhat(nguoiDung.ma, layBangCapNhat(nguoiDung, form.Keys.ToArray()));
-        }
-        
-        public static KetQua xuLyDoiMatKhau(Form form)
-        {
-            string tenTaiKhoan = form.layString("TenTaiKhoan");
-            string matKhauCu = form.layString("MatKhauCu");
-            string matKhauMoi = form.layString("MatKhauMoi");
+            ketQua = NguoiDungDAO.capNhatTheoTenTaiKhoan_KichHoat(tenTaiKhoan, null);
+            if (ketQua.trangThai == 0)
+            {
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = nguoiDung.ma,
+                    loaiDoiTuongBiTacDong = "ND",
+                    maDoiTuongBiTacDong = nguoiDung.ma,
+                    hanhDong = layDTO<HanhDongDTO>(203),
+                    duongDan = "/NguoiDung/" + nguoiDung.ma
+                });
+            }
 
-            return xuLyDoiMatKhau(tenTaiKhoan, matKhauCu, matKhauMoi);
+            ketQua = NguoiDungBUS.xuLyDangNhap(tenTaiKhoan, matKhau, false);
+            if (ketQua.trangThai != 0)
+            {
+                //Cập nhật lại mã kích hoạt cũ để trạng thái tài khoản trở thành như ban đầu
+                NguoiDungDAO.capNhatTheoTenTaiKhoan_KichHoat(tenTaiKhoan, maKichHoat);
+
+                ketQua.trangThai = 3;
+                ketQua.ketQua = "Sai Mật khẩu";
+                return ketQua;
+            }
+
+            return ketQua;
         }
-        
+
+        #endregion
+
+        #region Lấy
+
+        public static KetQua layTheoTenTaiKhoan(string tenTaiKhoan)
+        {
+            return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
+        }
+
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
+        {
+            return NguoiDungDAO.layTheoMa(ma, lienKet);
+        }
+
+        public static KetQua layTheoMaNhomNguoiDung(string phamVi, int maNhomNguoiDung)
+        {
+            return NguoiDungDAO.layTheoMaNhomNguoiDung(phamVi, maNhomNguoiDung);
+        }
+
+        public static KetQua timKiem(string tuKhoa)
+        {
+            return NguoiDungDAO.lay_TimKiem(tuKhoa);
+        }
+
+        public static KetQua docTapTin(string duongDan)
+        {
+            try
+            {
+                string con = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source='" + duongDan + "';Extended Properties='Excel 8.0;HDR=Yes;IMEX=1'";
+                List<NguoiDungDTO> dsNguoiDung = new List<NguoiDungDTO>();
+                using (OleDbConnection ketNoi = new OleDbConnection(con))
+                {
+                    ketNoi.Open();
+                    string tenBang = ketNoi.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null).Rows[0]["TABLE_NAME"].ToString();
+
+                    OleDbCommand command = new OleDbCommand("SELECT * FROM [" + tenBang + "]", ketNoi);
+                    using (OleDbDataReader dong = command.ExecuteReader())
+                    {
+                        KetQua ketQua;
+                        while (dong.Read())
+                        {
+                            NguoiDungDTO nguoiDung = new NguoiDungDTO();
+
+                            for (int i = 0; i < dong.FieldCount; i++)
+                            {
+                                switch (dong.GetName(i))
+                                {
+                                    case "TenTaiKhoan":
+                                        bool a = dong.IsDBNull(i);
+                                        object b = dong[i];
+                                        nguoiDung.tenTaiKhoan = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    case "MatKhau":
+                                        nguoiDung.matKhau = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    case "Email":
+                                        nguoiDung.email = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    case "Ho":
+                                        nguoiDung.ho = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    case "TenLot":
+                                        nguoiDung.tenLot = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    case "Ten":
+                                        nguoiDung.ten = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            nguoiDung.ngaySinh = new DateTime(1997, 1, 1);
+
+                            ketQua = kiemTra2(nguoiDung);
+                            if (ketQua.trangThai != 0)
+                            {
+                                nguoiDung.duLieuThem = new Dictionary<string, object>()
+                                { 
+                                    { "Loi", ketQua.ketQua }
+                                };
+                            }
+
+                            dsNguoiDung.Add(nguoiDung);
+                        }
+                    }
+                    ketNoi.Close();
+                }
+                return new KetQua(dsNguoiDung);
+            }
+            catch (Exception ex)
+            {
+                return new KetQua(2, ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region Kiểm tra
+
         public static bool tonTaiTenTaiKhoan(string tenTaiKhoan)
         {
             KetQua ketQua = NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
@@ -516,11 +523,6 @@ namespace BUSLayer
                 return true;
             }
             return false;
-        }
-
-        public static KetQua layTheoMaNhomNguoiDung(string phamVi, int maNhomNguoiDung)
-        {
-            return NguoiDungDAO.layTheoMaNhomNguoiDung(phamVi, maNhomNguoiDung);
         }
 
         public static KetQua kiemTraDangNhap()
@@ -543,7 +545,7 @@ namespace BUSLayer
         public static KetQua kiemTraCookie()
         {
             HttpCookie ckNguoiDung = HttpContext.Current.Request.Cookies.Get("NguoiDung");
-            
+
             if (ckNguoiDung == null)
             {
                 return new KetQua()
@@ -552,7 +554,7 @@ namespace BUSLayer
                     ketQua = "Không tồn tại Cookie"
                 };
             }
-            
+
             Form formNguoiDung = new Form() 
             {
                 { "TenTaiKhoan", ckNguoiDung["TenTaiKhoan"] },
@@ -561,11 +563,6 @@ namespace BUSLayer
             };
 
             return NguoiDungBUS.xuLyDangNhap(formNguoiDung);
-        }
-
-        public static KetQua timKiem(string tuKhoa)
-        {
-            return NguoiDungDAO.lay_TimKiem(tuKhoa);
         }
 
         public static KetQua kiemTra2(NguoiDungDTO nguoiDung, string[] truong = null, bool kiemTra = true)
@@ -636,72 +633,160 @@ namespace BUSLayer
             return ketQua;
         }
 
-        public static KetQua docTapTin(string duongDan)
+        #endregion
+
+        #region Xử lý
+
+        public static KetQua xuLyDangNhap(string tenTaiKhoan, string matKhau, bool ghiNho = false)
         {
-            try
+            if (!tonTaiTenTaiKhoan(tenTaiKhoan))
             {
-                string con = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source='" + duongDan + "';Extended Properties='Excel 8.0;HDR=Yes;IMEX=1'";
-                List<NguoiDungDTO> dsNguoiDung = new List<NguoiDungDTO>();
-                using (OleDbConnection ketNoi = new OleDbConnection(con))
+                return new KetQua()
                 {
-                    ketNoi.Open();
-                    string tenBang = ketNoi.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null).Rows[0]["TABLE_NAME"].ToString();
-
-                    OleDbCommand command = new OleDbCommand("SELECT * FROM [" + tenBang + "]", ketNoi);
-                    using (OleDbDataReader dong = command.ExecuteReader())
-                    {
-                        KetQua ketQua;
-                        while (dong.Read())
-                        {
-                            NguoiDungDTO nguoiDung = new NguoiDungDTO();
-
-                            for (int i = 0; i < dong.FieldCount; i++)
-                            {
-                                switch (dong.GetName(i))
-                                {
-                                    case "TenTaiKhoan":
-                                        bool a = dong.IsDBNull(i);
-                                        object b = dong[i];
-                                        nguoiDung.tenTaiKhoan = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
-                                    case "MatKhau":
-                                        nguoiDung.matKhau = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
-                                    case "Email":
-                                        nguoiDung.email = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
-                                    case "Ho":
-                                        nguoiDung.ho = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
-                                    case "TenLot":
-                                        nguoiDung.tenLot = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
-                                    case "Ten":
-                                        nguoiDung.ten = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
-                                    default:
-                                        break;
-                                }
-                            }
-
-                            nguoiDung.ngaySinh = new DateTime(1997, 1, 1);
-
-                            ketQua = kiemTra2(nguoiDung);
-                            if (ketQua.trangThai != 0)
-                            {
-                                nguoiDung.duLieuThem = new Dictionary<string, object>()
-                                { 
-                                    { "Loi", ketQua.ketQua }
-                                };
-                            }
-
-                            dsNguoiDung.Add(nguoiDung);
-                        }
-                    }
-                    ketNoi.Close();
-                }
-                return new KetQua(dsNguoiDung);
+                    trangThai = 3,
+                    ketQua = "Tài khoản không tồn tại"
+                };
             }
-            catch (Exception ex)
+
+            KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenTaiKhoan);
+            if (ketQua.trangThai != 0)
             {
-                return new KetQua(2, ex.Message);
+                return ketQua;
             }
+
+            NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
+            if (nguoiDung.daDuyet == false)
+            {
+                return new KetQua(3, "Tài khoản đã bị chặn");
+            }
+
+            if (nguoiDung.maKichHoat != null)
+            {
+                return new KetQua()
+                {
+                    trangThai = 5,
+                    ketQua = "Tài khoản chưa được kích hoạt. Bạn vui lòng kiểm tra email để kích hoạt tài khoản."
+                };
+            }
+
+            if ((NguoiDungHelper.layMaMD5(matKhau) == nguoiDung.matKhau) || (matKhau == nguoiDung.matKhau))
+            {
+                //Lưu mã người dùng vào Session
+                HttpContext.Current.Session["NguoiDung"] = nguoiDung.ma;
+
+                if (ghiNho)
+                {
+                    //Lưu Cookie
+                    HttpCookie cookieNguoiDung = new HttpCookie("NguoiDung");
+                    cookieNguoiDung.Values.Add("TenTaiKhoan", nguoiDung.tenTaiKhoan);
+                    cookieNguoiDung.Values.Add("MatKhau", nguoiDung.matKhau);
+                    cookieNguoiDung.Expires = DateTime.Now.AddDays(7);
+
+                    HttpContext.Current.Response.Cookies.Add(cookieNguoiDung);
+                }
+
+                ketQua.ketQua = nguoiDung;
+                return ketQua;
+            }
+
+            ketQua.trangThai = 3;
+            ketQua.ketQua = "Mật khẩu không đúng";
+
+            return ketQua;
         }
 
+        //Hàm cùng tên
+        public static KetQua xuLyDangNhap(Form form)
+        {
+            string tenTaiKhoan = form.layString("TenTaiKhoan");
+            string matKhau = form.layString("MatKhau");
+            bool ghiNho = form.layBool("GhiNho");
+
+            return NguoiDungBUS.xuLyDangNhap(tenTaiKhoan, matKhau, ghiNho);
+        }
+
+        public static void xuLyDangXuat()
+        {
+            //Xóa Cookie
+            HttpCookie cookie = HttpContext.Current.Request.Cookies["NguoiDung"];
+
+            if (cookie != null)
+            {
+                cookie.Value = null;
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                HttpContext.Current.Response.Cookies.Add(cookie);
+            }
+
+            //Xóa session            
+            HttpContext.Current.Session["NguoiDung"] = null;
+        }
+
+        public static KetQua xuLyDoiMatKhau(string tenTaiKhoan, string matKhauCu, string MatKhauMoi, bool maHoaMatKhauCu = true)
+        {
+            KetQua ketQua = NguoiDungBUS.layTheoTenTaiKhoan(tenTaiKhoan);
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            NguoiDungDTO nguoiDung = ketQua.ketQua as NguoiDungDTO;
+            if (maHoaMatKhauCu)
+            {
+                if (nguoiDung.matKhau != NguoiDungHelper.layMaMD5(matKhauCu))
+                {
+                    return new KetQua()
+                    {
+                        trangThai = 3,
+                        ketQua = "Nhập sai mật khẩu"
+                    };
+                }
+            }
+            else
+            {
+                if (nguoiDung.matKhau != matKhauCu)
+                {
+                    return new KetQua()
+                    {
+                        trangThai = 3,
+                        ketQua = "Nhập sai mật khẩu"
+                    };
+                }
+            }
+
+            Form form = new Form()
+            {
+                { "MatKhau", MatKhauMoi }
+            };
+            gan(ref nguoiDung, form);
+
+            ketQua = NguoiDungBUS.kiemTra(nguoiDung, form.Keys.ToArray());
+
+            if (ketQua.trangThai != 0)
+            {
+                return ketQua;
+            }
+
+            ketQua = NguoiDungDAO.capNhat(nguoiDung.ma, layBangCapNhat(nguoiDung, form.Keys.ToArray()));
+            if (ketQua.trangThai == 0)
+            {
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maDoiTuongTacDong = nguoiDung.ma,
+                    loaiDoiTuongBiTacDong = "ND",
+                    maDoiTuongBiTacDong = nguoiDung.ma,
+                    hanhDong = layDTO<HanhDongDTO>(205),
+                    duongDan = "/NguoiDung/" + nguoiDung.ma
+                });
+            }
+
+            return ketQua;
+        }
+
+        public static KetQua layTheoEmail(string email, LienKet lienKet = null)
+        {
+            return NguoiDungDAO.layTheoEmail(email, lienKet);
+        }
+            
         private static DataTable toTable(List<NguoiDungDTO> dsNguoiDung)
         {
             DataTable bang = new DataTable();
@@ -754,7 +839,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            foreach(var nguoiDung in dsNguoiDung)
+            foreach (var nguoiDung in dsNguoiDung)
             {
                 string duongDanKichHoat = @"http://moodle.lctgroup.org/NguoiDung/KichHoat?tenTaiKhoan=" + nguoiDung.tenTaiKhoan;
                 string mailDangKy = nguoiDung.email;
@@ -768,9 +853,15 @@ namespace BUSLayer
             return ketQua;
         }
 
-        public static KetQua layTheoEmail(string email, LienKet lienKet = null)
+        public static KetQua xuLyDoiMatKhau(Form form)
         {
-            return NguoiDungDAO.layTheoEmail(email, lienKet);
+            string tenTaiKhoan = form.layString("TenTaiKhoan");
+            string matKhauCu = form.layString("MatKhauCu");
+            string matKhauMoi = form.layString("MatKhauMoi");
+
+            return xuLyDoiMatKhau(tenTaiKhoan, matKhauCu, matKhauMoi);
         }
+
+        #endregion
     }
 }

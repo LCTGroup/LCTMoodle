@@ -12,7 +12,7 @@ namespace LCTMoodle.LCTView
         //Tạm thời chỉ đọc chủ động
         public static HtmlString link(HoatDongDTO hoatDong, Dictionary<string, string> thamSo = null)
         {
-            if (hoatDong == null || hoatDong.hanhDong.loiNhan == null)
+            if (hoatDong == null || hoatDong.hanhDong == null)
             {
                 return null;
             }
@@ -26,6 +26,7 @@ namespace LCTMoodle.LCTView
 
             string chuoi = hoatDong.hanhDong.loiNhan;
             KetQua ketQua;
+
             #region ND
 		    if (chuoi.IndexOf("{ND}") != -1)
             {
@@ -92,7 +93,7 @@ namespace LCTMoodle.LCTView
                             chuoi = chuoi.Replace("{CD}", "hệ thống chủ đề");
                         }
                         break;
-                    case "HD":
+                    case "CH":
                         if (hoatDong.maDoiTuongTacDong.HasValue)
                         {
                             ketQua = CauHoiBUS.layTheoMa(hoatDong.maDoiTuongTacDong.Value);
@@ -206,7 +207,7 @@ namespace LCTMoodle.LCTView
                             chuoi = chuoi.Replace("{BD}", "hệ thống chủ đề");
                         }
                         break;
-                    case "HD":
+                    case "CH":
                         if (hoatDong.maDoiTuongBiTacDong.HasValue)
                         {
                             ketQua = CauHoiBUS.layTheoMa(hoatDong.maDoiTuongBiTacDong.Value);
@@ -279,10 +280,10 @@ namespace LCTMoodle.LCTView
 
             chuoi = char.ToUpper(chuoi[0]) + chuoi.Substring(1);
 
-            return new HtmlString("<a class=" +
-                (thamSo.ContainsKey("class") ? thamSo["class"] : null) + " style=" + (thamSo.ContainsKey("style") ? thamSo["style"] : null) +
+            return new HtmlString("<a class='" +
+                (thamSo.ContainsKey("class") ? thamSo["class"] : null) + "' style='" + (thamSo.ContainsKey("style") ? thamSo["style"] : null) + "' " +
                 (string.IsNullOrWhiteSpace(hoatDong.duongDan) ? null : "href='" + hoatDong.duongDan + "'>") +
-                chuoi +
+                "[" + View.HienThiThoiGian(hoatDong.thoiDiem) + "] - " + chuoi +
                 "</a>");
         }
 

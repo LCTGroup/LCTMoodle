@@ -1,5 +1,7 @@
 ﻿@using Helpers
 @using LCTMoodle.LCTView
+@using DTOLayer;
+@using BUSLayer;
 @model DTOLayer.NguoiDungDTO
 @{
     ViewData["Title"] = "Người Dùng";    
@@ -56,12 +58,11 @@
         chucNang.Add("Xem Tin Nhắn");
         chucNang.Add("href='/NguoiDung/TinNhan/" + maNguoiDung.Value + "'");
         
-        ViewData["ChucNang"] = chucNang;
+        ViewData["ChucNang"] = chucNang;     
     }
 }
 @section Styles {
     <link rel="stylesheet" href="/Index.css/NguoiDung/" />
-    <link rel="stylesheet" href="/Index.css/HoiDap/" />
     <link rel="stylesheet" href="/Xem.css/NguoiDung/" />
 }
 @section Scripts {
@@ -179,18 +180,12 @@
 
 @if (coQuyenXemHoiDap)
 {
+    List<HoatDongDTO> dsLichSuCauHoi = ViewData["DSLichSuCauHoi"] as List<HoatDongDTO>;
+    
     <article class="hop">
         <section class="tieu-de">Thông tin hỏi đáp</section>
-        <section class="noi-dung danh-sach-cau-hoi">
-            @if (ViewData["DanhSachCauHoi"] != null)
-            {
-                List<DTOLayer.CauHoiDTO> dsCauHoi = ViewData["DanhSachCauHoi"] as List<DTOLayer.CauHoiDTO>;
-                @Html.Partial("~/Views/HoiDap/_DanhSachCauHoi.cshtml", dsCauHoi)
-            }
-            else
-            {
-                <p class="empty">Bạn chưa có câu hỏi nào</p>
-            }
+        <section class="noi-dung">
+            @Html.Partial("~/Views/HoiDap/_LichSuCauHoi.cshtml", dsLichSuCauHoi)
         </section>
     </article>
 }

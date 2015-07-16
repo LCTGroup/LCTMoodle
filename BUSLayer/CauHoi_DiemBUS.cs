@@ -58,9 +58,8 @@ namespace BUSLayer
             {
                 HoatDongBUS.them(new HoatDongDTO()
                     {
-                        //nguoiTacDong = layDTO<NguoiDungDTO>(maNguoiTao),
                         maNguoiTacDong = maNguoiTao,
-                        loaiDoiTuongBiTacDong = "HD",
+                        loaiDoiTuongBiTacDong = "CH",
                         maDoiTuongBiTacDong = maCauHoi,
                         hanhDong = layDTO<HanhDongDTO>(diem ? 400 : 401),
                         duongDan = "/HoiDap/" + maCauHoi
@@ -104,7 +103,20 @@ namespace BUSLayer
 
             #endregion
 
-            return CauHoi_DiemDAO.xoaTheoMaCauHoiVaMaNguoiTao(maCauHoi, maNguoiVote);
+            ketQua = CauHoi_DiemDAO.xoaTheoMaCauHoiVaMaNguoiTao(maCauHoi, maNguoiVote);
+            if (ketQua.trangThai == 0)
+            {
+                HoatDongBUS.them(new HoatDongDTO()
+                {
+                    maNguoiTacDong = maNguoiVote,
+                    loaiDoiTuongBiTacDong = "CH",
+                    maDoiTuongBiTacDong = maCauHoi,
+                    hanhDong = layDTO<HanhDongDTO>(402),
+                    duongDan = "/HoiDap/"
+                });
+            }
+
+            return ketQua;
         }
 
         public static int trangThaiVoteCuaNguoiDungTrongCauHoi(int? maCauHoi, int? maNguoiDungHienTai)

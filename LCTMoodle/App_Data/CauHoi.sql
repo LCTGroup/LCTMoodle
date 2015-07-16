@@ -168,6 +168,28 @@ BEGIN
 END
 
 GO
+--Lây mã câu hỏi theo mã người tạo
+ALTER PROC dbo.layCauHoi_DanhSachMaLienQuan
+(
+	@0 INT --Mã người tạo
+)
+AS
+BEGIN
+	DECLARE @dsMa VARCHAR(MAX) = ''
+
+	SELECT @dsMa += CAST(Ma AS VARCHAR(MAX)) + ','
+		FROM dbo.CauHoi
+		WHERE MaNguoiTao = @0
+		
+	SELECT CASE
+		WHEN @dsMa = '' THEN
+			''
+		ELSE
+			LEFT(@dsMa, LEN(@dsMa) - 1)
+		END
+END
+
+GO
 --Lấy toàn bộ Câu Hỏi
 ALTER PROC dbo.layCauHoi 
 (
