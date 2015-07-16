@@ -1,4 +1,4 @@
-﻿var $_khung, $_khungChuaXacNhan;
+﻿var maKhoaHoc, $_khung, $_khungChuaXacNhan;
 
 $(function () {
     $_khung = $('#khung_them');
@@ -28,7 +28,7 @@ function khoiTaoInputFile($form) {
                             }).done(function (data) {
                                 if (data.trangThai == 0) {
                                     var $khungXacNhan = $(data.ketQua);
-                                    khoiTaoKhungDanhSachXacNhanThem($khungXacNhan, '/KhoaHoc/XuLyThemDanhSachThanhVien')
+                                    khoiTaoKhungDanhSachXacNhanThem($khungXacNhan, '/KhoaHoc/XuLyThemDanhSachThanhVien/' + maKhoaHoc)
                                     $_khungChuaXacNhan.html($khungXacNhan);
                                 }
                                 else {

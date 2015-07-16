@@ -99,9 +99,9 @@ namespace BUSLayer
             }
 
             List<NguoiDungDTO> dsNguoiDungE = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsEmail);
-            if (dsNguoiDungTK.Count != 0)
+            if (dsNguoiDungE.Count != 0)
             {
-                foreach (var nguoiDung in dsNguoiDungTK)
+                foreach (var nguoiDung in dsNguoiDungE)
                 {
                     ketQua = NguoiDungBUS.layTheoEmail(nguoiDung.email);
                     if (ketQua.trangThai != 0)
@@ -113,7 +113,6 @@ namespace BUSLayer
             }
 
             dsMaNguoiDung = dsMaNguoiDung.Substring(1);
-
             return KhoaHoc_NguoiDungDAO.them_DanhSach(maKhoaHoc, layBangMa(dsMaNguoiDung), 0, maNguoiThem);
         }
 

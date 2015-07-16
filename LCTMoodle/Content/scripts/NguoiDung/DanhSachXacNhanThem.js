@@ -140,9 +140,19 @@
             dataType: 'JSON'
         }).always(function () {
             $tai.tat();
+            $khungXacNhan.remove();
         }).done(function (data) {
             if (data.trangThai == 0) {
-                alert('ok');
+                moPopup({
+                    tieuDe: 'Thông báo',
+                    thongBao: 'Thành công',
+                    bieuTuong: 'thanh-cong',
+                    nut: [
+                        {
+                            ten: 'Tiếp tục thêm'
+                        }
+                    ]
+                })
             }
             else {
                 moPopupThongBao(data);
