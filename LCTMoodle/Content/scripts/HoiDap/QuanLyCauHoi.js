@@ -65,7 +65,7 @@ function khoiTaoQuanLyCauHoi($dsCauHoi) {
         var $tai = moBieuTuongTai($itemCauHoi);
 
         $.ajax({
-            url: '/HoiDap/XemChiTietCauHoi',
+            url: '/HoiDap/XemMoPhongCauHoi',
             method: 'POST',
             data: { ma: $maCauHoi }
         }).always(function () {

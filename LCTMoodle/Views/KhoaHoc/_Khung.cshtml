@@ -31,7 +31,7 @@
                                         @Html.Raw(System.Text.RegularExpressions.Regex.Replace(danhSachBaiGiang[0].noiDung, "<.*?>", ""))
                                     </section>
                                     <section class="thong-tin-dang">
-                                        @danhSachBaiGiang[0].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        @View.HienThiThoiGian(danhSachBaiGiang[0].thoiDiemTao)
                                         - @NguoiDungView.link(danhSachBaiGiang[0].nguoiTao)
                                     </section>
                                 </section>
@@ -45,7 +45,7 @@
                                         </a>
                                     </section>
                                     <section class="thong-tin-dang">
-                                        @danhSachBaiGiang[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        @View.HienThiThoiGian(danhSachBaiGiang[i].thoiDiemTao)
                                         - @NguoiDungView.link(danhSachBaiGiang[i].nguoiTao)
                                     </section>
                                 </li>
@@ -76,7 +76,7 @@
                                         @Html.Raw(System.Text.RegularExpressions.Regex.Replace(danhSachBaiTap[0].noiDung, "<.*?>", ""))
                                     </section>
                                     <section class="thong-tin-dang">
-                                        @danhSachBaiTap[0].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        @View.HienThiThoiGian(danhSachBaiTap[0].thoiDiemTao)
                                         - @NguoiDungView.link(danhSachBaiTap[0].nguoiTao)
                                     </section>
                                 </section>
@@ -90,7 +90,7 @@
                                         </a>
                                     </section>
                                     <section class="thong-tin-dang">
-                                        @danhSachBaiTap[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        @View.HienThiThoiGian(danhSachBaiTap[i].thoiDiemTao)
                                         - @NguoiDungView.link(danhSachBaiTap[i].nguoiTao)
                                     </section>
                                 </li>
@@ -121,7 +121,7 @@
                                         @Html.Raw(System.Text.RegularExpressions.Regex.Replace(danhSachDienDan[0].noiDung, "<.*?>", ""))
                                     </section>
                                     <section class="thong-tin-dang">
-                                        @danhSachDienDan[0].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        @View.HienThiThoiGian(danhSachDienDan[0].thoiDiemTao)
                                         - @NguoiDungView.link(danhSachDienDan[0].nguoiTao)
                                     </section>
                                 </section>
@@ -135,7 +135,7 @@
                                         </a>
                                     </section>
                                     <section class="thong-tin-dang">
-                                        @danhSachDienDan[i].thoiDiemTao.Value.ToString("d/M/yyyy H:mm")
+                                        @View.HienThiThoiGian(danhSachDienDan[i].thoiDiemTao)
                                         - @NguoiDungView.link(danhSachDienDan[i].nguoiTao)
                                     </section>
                                 </li>

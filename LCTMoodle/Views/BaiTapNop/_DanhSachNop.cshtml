@@ -34,7 +34,7 @@
                                 <section class="thong-tin">
                                     @NguoiDungView.link(baiNop.nguoiTao, new Dictionary<string, string>() { { "class", "nguoi-nop" } })
                                     <span class="thoi-gian">
-                                        @baiNop.thoiDiemTao.Value.ToString("H:mm d/M/yyyy")
+                                        @View.HienThiThoiGian(baiNop.thoiDiemTao)
                                     </span>
                                 </section>
                                 <section class="bai-nop">

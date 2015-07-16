@@ -33,6 +33,11 @@ namespace Helpers
 
         public static bool coHoTroXem(string duoi)
         {
+            if (duoi == null)
+            {
+                return false;
+            }
+
             duoi = duoi.Substring(1);
             return Array.IndexOf(new string[]
             { 

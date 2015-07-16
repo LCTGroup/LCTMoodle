@@ -46,7 +46,7 @@
             <span data-doi-tuong="diem-binh-luan" class="diem">@if (Model.diem.HasValue && Model.diem.Value != 0)
             { @Model.diem.Value }</span>
             <span class="thoi-gian">
-                @Model.thoiDiemTao.Value.ToString("H:mm d/M/yyyy")
+                @View.HienThiThoiGian(Model.thoiDiemTao)
             </span>
         </section>
     </section>

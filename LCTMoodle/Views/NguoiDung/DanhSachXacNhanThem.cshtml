@@ -1,0 +1,124 @@
+﻿@model List<DTOLayer.NguoiDungDTO>
+@{
+    Layout = "/Views/LCT/Khung.cshtml";
+
+    ViewData["TieuDe"] = "Xác nhận tài khoản";
+}
+
+@section Styles {
+    <link href="/DanhSachXacNhanThem.css/NguoiDung" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="/DanhSachXacNhanThem.js/NguoiDung"></script>
+}
+
+<article id="khung_xac_nhan" class="hop hop-2-vien khung-xac-nhan">
+    <section class="tieu-de">Xác nhận tài khoản</section>
+    <section class="khung-chuc-nang lct-form">
+        <a data-chuc-nang="hoan-tat" class="button">Hoàn tất</a>
+    </section>
+    <section class="noi-dung">
+        <article style="border: 0; background-color: transparent;">
+            <table class="lct-bang">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Họ</th>
+                        <th>Tên lót</th>
+                        <th>Tên</th>
+                        <th>Tài khoản</th>
+                        <th>Mật khẩu</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        string
+                            trungTenTaiKhoan,
+                            trungEmail,
+                            loiHo,
+                            loiTen,
+                            loiTenTaiKhoan,
+                            loiMatKhau,
+                            loiEmail;
+                        foreach (var taiKhoan in Model)
+                        {
+                            trungTenTaiKhoan = trungEmail = loiHo = loiTen = loiTenTaiKhoan = loiMatKhau = loiEmail = null;
+                            if (taiKhoan.duLieuThem != null && taiKhoan.duLieuThem.ContainsKey("Loi"))
+                            {
+                                var loi = taiKhoan.duLieuThem["Loi"] as DTOLayer.Loi;
+
+                                if (loi.ContainsKey("Ho"))
+                                {
+                                    loiHo = loi["Ho"].thongBao;
+                                }
+                                if (loi.ContainsKey("Ten"))
+                                {
+                                    loiTen = loi["Ten"].thongBao;
+                                }
+                                if (loi.ContainsKey("TenTaiKhoan"))
+                                {
+                                    if (loi["TenTaiKhoan"].loai == 2)
+                                    {
+                                        trungTenTaiKhoan = "";
+                                    }
+                                    loiTenTaiKhoan = loi["TenTaiKhoan"].thongBao;
+                                }
+                                if (loi.ContainsKey("MatKhau"))
+                                {
+                                    loiMatKhau = loi["MatKhau"].thongBao;
+                                }
+                                if (loi.ContainsKey("Email"))
+                                {
+                                    if (loi["Email"].loai == 2)
+                                    {
+                                        trungEmail = "";
+                                    }
+                                    loiEmail = loi["Email"].thongBao;
+                                }
+                            }
+                            <tr>
+                                <td>
+                                    <span data-doi-tuong="dem"></span>
+                                    <section class="khung-chuc-nang-lct ben-phai" style="top: 1px; right: initial; left: 1px;">
+                                        <ul data-doi-tuong="cnbt-@taiKhoan.tenTaiKhoan">
+                                            @if (trungTenTaiKhoan != null)
+                                            {
+                                                <li>
+                                                    <a data-chuc-nang="lay-theo-tai-khoan" data-value="1">Lấy theo tài khoản</a>
+                                                </li>
+                                            }
+                                            @if (trungEmail != null)
+                                            {
+                                                <li>
+                                                    <a data-chuc-nang="lay-theo-email" data-value="1">Lấy theo email</a>
+                                                </li>
+                                            }
+                                            <li>
+                                                <a data-chuc-nang="bo-qua" data-value="1">Bỏ qua</a>
+                                            </li>
+                                        </ul>
+                                        <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbt-@taiKhoan.tenTaiKhoan">
+                                            <i class="pe-7f-config"></i>
+                                        </button>
+                                    </section>
+                                </td>
+                                <td @if (loiHo != null) { <text>class="loi" title="@loiHo"</text> } data-name="ho">@taiKhoan.ho</td>
+                                <td data-name="tenLot">@taiKhoan.tenLot</td>
+                                <td @if (loiTen != null) { <text>class="loi" title="@loiTen"</text> } data-name="ten">@taiKhoan.ten</td>
+                                <td @if (loiTenTaiKhoan != null) { <text>class="loi" title="@loiTenTaiKhoan"</text> } data-name="tenTaiKhoan">@taiKhoan.tenTaiKhoan</td>
+                                <td @if (loiMatKhau != null) { <text>class="loi" title="@loiMatKhau"</text> } data-name="matKhau">@taiKhoan.matKhau</td>
+                                <td @if (loiEmail != null) { <text>class="loi" title="@loiEmail"</text> } data-name="email">@taiKhoan.email</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </article>
+    </section>
+    <section class="khung-chuc-nang lct-form">
+        <a data-chuc-nang="hoan-tat" class="button">Hoàn tất</a>
+    </section>
+</article>

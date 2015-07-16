@@ -22,7 +22,19 @@ $(function () {
     khoiTaoLCTKhung_Lich($('#lich_aside'));
 
     thongBaoTrang_LCT();
+
+    khoiTaoScroll($('#tin_nhan_lct'), 45);
 });
+
+function khoiTaoScroll($khung, nhay) {
+    $khung.on('mousewheel', function (e) {
+        e.preventDefault();
+        e = e.originalEvent;
+        var d = e.wheelDelta;
+
+        this.scrollTop += (d < 0 ? 1 : -1) * (nhay || 30);
+    })
+}
 
 function thongBaoTrang_LCT() {
     var tb = layQueryString('tb');

@@ -1,4 +1,7 @@
-﻿.khung-tin-nhan {
+﻿
+/*#region Khung tin nhắn */
+
+.khung-tin-nhan {
     padding: 10px;
     border: 1px solid #ddd;
     display: flex;
@@ -36,6 +39,8 @@
             color: #888;
             margin-top: 5px;
         }
+
+/*#endregion */
 
 /*#region Thẻ a */
 

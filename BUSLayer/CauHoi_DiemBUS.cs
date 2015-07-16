@@ -38,7 +38,7 @@ namespace BUSLayer
                 };
             }
 
-            ketQua = NguoiDungBUS.layTheoMa(maNguoiTao);
+            ketQua = NguoiDungBUS.layTheoMa(maNguoiTao.Value);
             if (ketQua.trangThai != 0)
             {
                 return new KetQua(4, "Người dùng không tồn tại");
@@ -70,7 +70,7 @@ namespace BUSLayer
             return ketQua;
         }
 
-        public static KetQua xoa(int? maCauHoi, int? maNguoiVote)
+        public static KetQua xoa(int maCauHoi, int? maNguoiVote)
         {
             #region Kiểm tra điều kiện
 
@@ -91,7 +91,7 @@ namespace BUSLayer
                 return new KetQua(3, "Bạn không được cập nhật điểm cho câu hỏi của mình");
             }
 
-            ketQua = NguoiDungBUS.layTheoMa(maNguoiVote);
+            ketQua = NguoiDungBUS.layTheoMa(maNguoiVote.Value);
             if (ketQua.trangThai != 0)
             {
                 return new KetQua(4, "Người dùng không tồn tại");

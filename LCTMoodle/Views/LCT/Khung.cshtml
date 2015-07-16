@@ -6,7 +6,6 @@
 
     KetQua ketQua;
     NguoiDungDTO nguoiDung = null;
-
     if (Session["NguoiDung"] != null)
     {
         ketQua = BUSLayer.NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]);
@@ -25,7 +24,6 @@
     {
         dsCauHoi = ketQua.ketQua as List<CauHoiDTO>;
     }
-
 }
 <!DOCTYPE html>
 
@@ -67,7 +65,116 @@
                     {
 
                         <ul class="da-dang-nhap">
-                            <li><a href="#"><i class="pe-7s-chat"></i></a></li>
+                            <li>
+                                <a href="javascript:void(0)" data-mo-doi-tuong="hop-tin-nhan">
+                                    <i class="pe-7s-chat"></i>
+                                </a>
+                                <section class="hop-tin-nhan" data-doi-tuong="hop-tin-nhan">
+                                    <div class="khung-bao-tin-nhan">
+                                        <ul id="tin_nhan_lct">
+                                            <li>
+                                                <a>
+                                                    <div class="hinh-dai-dien">
+                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
+                                                    </div>
+                                                    <div class="tin-nhan">
+                                                        <div class="noi-dung">Tin nhắn mới</div>
+                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a>
+                                                    <div class="hinh-dai-dien">
+                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
+                                                    </div>
+                                                    <div class="tin-nhan">
+                                                        <div class="noi-dung">Tin nhắn mới</div>
+                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a>
+                                                    <div class="hinh-dai-dien">
+                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
+                                                    </div>
+                                                    <div class="tin-nhan">
+                                                        <div class="noi-dung">Tin nhắn mới</div>
+                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a>
+                                                    <div class="hinh-dai-dien">
+                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
+                                                    </div>
+                                                    <div class="tin-nhan">
+                                                        <div class="noi-dung">Tin nhắn mới</div>
+                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a>
+                                                    <div class="hinh-dai-dien">
+                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
+                                                    </div>
+                                                    <div class="tin-nhan">
+                                                        <div class="noi-dung">Tin nhắn mới</div>
+                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a>
+                                                    <div class="hinh-dai-dien">
+                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
+                                                    </div>
+                                                    <div class="tin-nhan">
+                                                        <div class="noi-dung">Tin nhắn mới</div>
+                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a>
+                                                    <div class="hinh-dai-dien">
+                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
+                                                    </div>
+                                                    <div class="tin-nhan">
+                                                        <div class="noi-dung">Tin nhắn mới</div>
+                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a>
+                                                    <div class="hinh-dai-dien">
+                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
+                                                    </div>
+                                                    <div class="tin-nhan">
+                                                        <div class="noi-dung">Tin nhắn mới</div>
+                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a>
+                                                    <div class="hinh-dai-dien">
+                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
+                                                    </div>
+                                                    <div class="tin-nhan">
+                                                        <div class="noi-dung">Tin nhắn mới</div>
+                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </section>
+                            </li>
                             <li><a href="#"><i class="pe-7s-global"></i></a></li>
                             <li>
                                 <a href="javascript:void(0)" data-mo-doi-tuong="HopDieuKhien">
@@ -230,7 +337,7 @@
 
                         <article class="hop-chuc-nang">
                             <section class="ten-chuc-nang">
-                                Câu hỏi mới trong ngày
+                                Câu hỏi mới
                             </section>
                             <section class="noi-dung-hop-cau-hoi">
                                 <ul>
@@ -245,7 +352,7 @@
                                                     </div>
                                                     <div class="thong-tin">
                                                         @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
-                                                        <span>@cauHoi.nguoiTao.ho @cauHoi.nguoiTao.tenLot @cauHoi.nguoiTao.ten - @cauHoi.thoiDiemTao.Value.ToString("hh:mm tt")</span>
+                                                        <span>@cauHoi.nguoiTao.ho @cauHoi.nguoiTao.tenLot @cauHoi.nguoiTao.ten</span>                                                        
                                                     </div>
                                                 </li>
                                             }

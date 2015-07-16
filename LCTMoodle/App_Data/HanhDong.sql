@@ -1,6 +1,6 @@
 ﻿GO
 --Bảng lời nhắn hành động
-CREATE TABLE dbo.LoiNhanHanhDong (
+CREATE TABLE dbo.HanhDong (
 	Ma INT PRIMARY KEY NOT NULL,
 	LoiNhan NVARCHAR(MAX) NOT NULL
 )

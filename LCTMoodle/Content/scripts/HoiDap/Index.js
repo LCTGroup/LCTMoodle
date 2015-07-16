@@ -1,6 +1,6 @@
 ﻿var $_danhSach;
 var $_khungTim;
-var _cachHienThi = "MoiNhat";
+var _cachHienThi = "ThoiDiemCapNhat";
 
 //#region Khởi tạo
 

@@ -277,11 +277,6 @@ body.tai > .khung {
         z-index: 1;
     }
 
-        .khung-chuc-nang-lct.ben-trai ul {
-            top: -4px;
-            right: 22px;
-        }
-
         .khung-chuc-nang-lct ul:before,
         .khung-chuc-nang-lct ul:after {
             content: '';
@@ -292,24 +287,31 @@ body.tai > .khung {
             position: absolute;
         }
         
-        .khung-chuc-nang-lct:not(.ben-trai) ul:before,
-        .khung-chuc-nang-lct:not(.ben-trai) ul:after  {
+        .khung-chuc-nang-lct:not(.ben-trai):not(.ben-phai) ul:before,
+        .khung-chuc-nang-lct:not(.ben-trai):not(.ben-phai) ul:after  {
             right: 5px;
         }
-
-        .khung-chuc-nang-lct:not(.ben-trai) ul:before {
+        
+        .khung-chuc-nang-lct:not(.ben-trai):not(.ben-phai) ul:before {
             border-bottom-color: #ddd;
             top: -10px;
         }
-
-        .khung-chuc-nang-lct:not(.ben-trai) ul:after {
+        
+        .khung-chuc-nang-lct:not(.ben-trai):not(.ben-phai) ul:after {
             border-bottom-color: #fff;
             top: -9px;
         }
         
         .khung-chuc-nang-lct.ben-trai ul:before,
-        .khung-chuc-nang-lct.ben-trai ul:after {
+        .khung-chuc-nang-lct.ben-trai ul:after,
+        .khung-chuc-nang-lct.ben-phai ul:before,
+        .khung-chuc-nang-lct.ben-phai ul:after {
             top: 5px;
+        }
+
+        .khung-chuc-nang-lct.ben-trai ul {
+            top: -4px;
+            right: 22px;
         }
 
         .khung-chuc-nang-lct.ben-trai ul:before {
@@ -320,6 +322,29 @@ body.tai > .khung {
         .khung-chuc-nang-lct.ben-trai ul:after {
             border-left-color: #fff;
             right: -9px;
+        }
+
+        .khung-chuc-nang-lct.ben-phai ul {
+            top: -4px;
+            left: 22px;
+            right: initial;
+        }
+
+        .khung-chuc-nang-lct.ben-phai ul:before {
+            border-right-color: #ddd;
+            left: -10px;
+            right: initial;
+        }
+
+        .khung-chuc-nang-lct.ben-phai ul:after {
+            border-right-color: #fff;
+            left: -9px;
+            right: initial;
+        }
+
+        .khung-chuc-nang-lct.ben-phai li a:before {
+            left: initial;
+            right: 0;
         }
 
     .khung-chuc-nang-lct li a {
@@ -416,6 +441,7 @@ body.tai > .khung {
 .noi-dung-ckeditor h5,
 .noi-dung-ckeditor h6 {
     margin: 5px 0;
+    font-size: 1.5em;
 }
 
 .noi-dung-ckeditor p {
@@ -624,10 +650,39 @@ body.khong-scroll > .khung {
                 animation: mo-popup-noi-dung 0.5s;
             }
             
+    .popup-full-container > .popup-full .khung-popup-tap-tin {
+        position: relative;
+    }
 
-        .popup-full-container > .popup-full .khung-popup-tap-tin {
+        .popup-full-container > .popup-full .khung-popup-tap-tin .noi-dung {
             padding: 10px;
         }
+
+        .popup-full-container > .popup-full .khung-popup-tap-tin .chuc-nang {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            opacity: 0;
+            transition: 0.5s;
+            background-color: #000;
+            text-align: right;
+        }
+        
+            .popup-full-container > .popup-full .khung-popup-tap-tin .chuc-nang:hover {
+                opacity: .6;
+            }
+
+            .popup-full-container > .popup-full .khung-popup-tap-tin .chuc-nang a {
+                padding: 5px 10px;
+                display: inline-block;
+                color: #fff;
+                font-weight: bold;
+            }
+
+                .popup-full-container > .popup-full .khung-popup-tap-tin .chuc-nang a:hover {
+                    text-decoration: none;
+                }
 
 /*#endregion */
 
@@ -911,9 +966,91 @@ body.dang-tai-lct header .top-header {
                                     }
                     /*#endregion */
 
+                    /*#region Hộp tin nhắn */
+
+                    .hop-tin-nhan {
+                        flex-direction: column;
+                        width: 350px;
+                        max-height: 500px;
+                        right: 173px;
+                        background-color: #fcfcfc;
+                        border: 1px solid #ddd;
+                        top: 34px;
+                        position: fixed;
+                        display: none;
+                    }
+
+                        .hop-tin-nhan:after,
+                        .hop-tin-nhan:before {
+                            content: '';
+                            display: block;
+                            border: 5px solid transparent;
+                            right: 47px;
+                            position: absolute;
+                        }
+
+                        .hop-tin-nhan:before {
+                            top: -10px;
+                            border-bottom-color: #ddd;
+                        }
+                        .hop-tin-nhan:after {
+                            top: -8px;
+                            border-bottom-color: #08c;
+                        }
+
+                    .hop-tin-nhan .khung-bao-tin-nhan {
+                        border-top: 3px solid #08c;
+                    }
+
+                    .hop-tin-nhan ul {
+                        max-height: 269px;
+                        overflow-x: hidden;
+                        overflow-y: auto;
+                    }
+
+                    .hop-tin-nhan li {
+                        border-bottom: 1px solid #eee;                            
+                    }
+                    .hop-tin-nhan li:last-child {
+                        border-bottom: none;
+                    }
+                        .hop-tin-nhan li:hover {
+                            background-color: #eee;
+                        }
+                            
+                    .hop-tin-nhan a {
+                        display: flex;
+                        padding: 5px;
+                    }
+
+                    .hop-tin-nhan .hinh-dai-dien {
+                        width: 34px;
+                        height: 34px;
+                    }
+                        .hop-tin-nhan img {
+                            width: 100%;
+                        }
+
+                    .hop-tin-nhan .tin-nhan {
+                        margin-left: 5px;
+                    }
+                        .hop-tin-nhan .noi-dung {
+                            width: 301px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                        .hop-tin-nhan .thoi-gian {
+                            font-size: 11px;
+                            color: #ccc;
+                        }
+                    /*#endregion */
+
         /*#endregion */        
 
     /*#endregion */
+
+    
 
 /*#endregion */
 

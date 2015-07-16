@@ -1,4 +1,4 @@
-﻿@model DTOLayer.NguoiDungDTO
+﻿@model string
 @{
     ViewData["Title"] = "Kích hoạt tài khoản";    
     Layout = "~/Views/LCT/Khung.cshtml";          
@@ -26,8 +26,8 @@
                                 <label>Tên tài khoản:</label>
                             </section>
                             <section class="noi-dung">
-                                <label class="ten-tai-khoan-kich-hoat">@Model.tenTaiKhoan</label>
-                                <input type="hidden" name="TenTaiKhoan" value="@Model.tenTaiKhoan" />
+                                <label class="ten-tai-khoan-kich-hoat">@Model</label>
+                                <input type="hidden" name="TenTaiKhoan" value="@Model" />
                             </section>
                         </li>
                         <li>

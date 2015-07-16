@@ -9,6 +9,7 @@ using DTOLayer;
 using System.IO;
 using Data;
 using Helpers;
+using System.Data.OleDb;
 
 namespace BUSLayer
 {
@@ -227,11 +228,11 @@ namespace BUSLayer
             return NguoiDungDAO.capNhat(ma, layBangCapNhat(nguoiDung, form.Keys.ToArray()));
         }
         
-        public static KetQua chanNguoiDung(int? maNguoiDung, bool trangThai, int? maNguoiChan)
+        public static KetQua chanNguoiDung(int maNguoiDung, bool trangThai, int? maNguoiChan)
         {
             #region Kiểm tra điều kiện
 
-            if (!maNguoiDung.HasValue)
+            if (!maNguoiChan.HasValue)
             {
                 return new KetQua(4, "Bạn chưa đăng nhập");
             }
@@ -293,7 +294,7 @@ namespace BUSLayer
             return NguoiDungDAO.layTheoTenTaiKhoan(tenTaiKhoan);
         }
         
-        public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
         {
             return NguoiDungDAO.layTheoMa(ma, lienKet);
         }
@@ -564,6 +565,140 @@ namespace BUSLayer
         public static KetQua timKiem(string tuKhoa)
         {
             return NguoiDungDAO.lay_TimKiem(tuKhoa);
+        }
+
+        public static KetQua kiemTra2(NguoiDungDTO nguoiDung, string[] truong = null, bool kiemTra = true)
+        {
+            Loi loi = new Loi();
+
+            #region Kiểm tra Valid
+
+            if (coKiemTra("Ho", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.ho))
+            {
+                loi.Add("Ho", 1, "Họ không được bỏ trống");
+            }
+            if (coKiemTra("Ten", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.ho))
+            {
+                loi.Add("Ten", 1, "Tên không được bỏ trống");
+            }
+            if (coKiemTra("TenTaiKhoan", truong, kiemTra))
+            {
+                if (string.IsNullOrWhiteSpace(nguoiDung.tenTaiKhoan))
+                {
+                    loi.Add("TenTaiKhoan", 1, "Tên tài khoản không được bỏ trống");
+                }
+                else if (NguoiDungBUS.tonTaiTenTaiKhoan(nguoiDung.tenTaiKhoan))
+                {
+                    loi.Add("TenTaiKhoan", 2, "Tên tài khoản bị trùng");
+                }
+            }
+            if (coKiemTra("MatKhau", truong, kiemTra) && string.IsNullOrWhiteSpace(nguoiDung.matKhau))
+            {
+                loi.Add("MatKhau", 1, "Mật khẩu không được bỏ trống");
+            }
+            if (coKiemTra("NgaySinh", truong, kiemTra))
+            {
+                if (!nguoiDung.ngaySinh.HasValue)
+                {
+                    loi.Add("NgaySinh", 1, "Ngày sinh không được bỏ trống");
+                }
+                else
+                {
+                    var namSinh = Convert.ToDateTime(nguoiDung.ngaySinh).Year;
+                    var namHienTai = DateTime.Now.Year;
+                    if (namHienTai - namSinh < 13)
+                    {
+                        loi.Add("NgaySinh", 1, "Bạn chưa đủ tuổi để trở thành viên LCTMoodle");
+                    }
+                }
+            }
+            if (coKiemTra("Email", truong, kiemTra))
+            {
+                if (string.IsNullOrWhiteSpace(nguoiDung.email))
+                {
+                    loi.Add("Email", 1, "Email không được bỏ trống");
+                }
+                else if (!LCTHelper.laEmail(nguoiDung.email))
+                {
+                    loi.Add("Email", 1, "Email không hợp lệ");
+                }
+                else if (NguoiDungBUS.tonTaiEmail(nguoiDung.email))
+                {
+                    loi.Add("Email", 2, "Email đã tồn tại");
+                }
+            }
+            #endregion
+
+            KetQua ketQua = new KetQua();
+            ketQua.trangThai = (loi.Count > 0) ? 3 : 0;
+            ketQua.ketQua = loi;
+            return ketQua;
+        }
+
+        public static KetQua docTapTin(string duongDan)
+        {
+            try
+            {
+                string con = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source='" + duongDan + "';Extended Properties='Excel 8.0;HDR=Yes;IMEX=1'";
+                List<NguoiDungDTO> dsNguoiDung = new List<NguoiDungDTO>();
+                using (OleDbConnection ketNoi = new OleDbConnection(con))
+                {
+                    ketNoi.Open();
+                    string tenBang = ketNoi.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null).Rows[0]["TABLE_NAME"].ToString();
+
+                    OleDbCommand command = new OleDbCommand("SELECT * FROM [" + tenBang + "]", ketNoi);
+                    using (OleDbDataReader dong = command.ExecuteReader())
+                    {
+                        KetQua ketQua;
+                        while (dong.Read())
+                        {
+                            NguoiDungDTO nguoiDung = new NguoiDungDTO();
+
+                            for (int i = 0; i < dong.FieldCount; i++)
+                            {
+                                switch (dong.GetName(i))
+                                {
+                                    case "TenTaiKhoan":
+                                        bool a = dong.IsDBNull(i);
+                                        object b = dong[i];
+                                        nguoiDung.tenTaiKhoan = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    case "MatKhau":
+                                        nguoiDung.matKhau = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    case "Email":
+                                        nguoiDung.email = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    case "Ho":
+                                        nguoiDung.ho = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    case "TenLot":
+                                        nguoiDung.tenLot = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    case "Ten":
+                                        nguoiDung.ten = dong.IsDBNull(i) ? null : dong[i].ToString(); break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            nguoiDung.ngaySinh = new DateTime(1997, 1, 1);
+
+                            ketQua = kiemTra2(nguoiDung);
+                            if (ketQua.trangThai != 0)
+                            {
+                                nguoiDung.duLieuThem = new Dictionary<string, object>()
+                                { 
+                                    { "Loi", ketQua.ketQua }
+                                };
+                            }
+
+                            dsNguoiDung.Add(nguoiDung);
+                        }
+                    }
+                    ketNoi.Close();
+                }
+                return new KetQua(dsNguoiDung);
+            }
+            catch (Exception ex)
+            {
+                return new KetQua(2, ex.Message);
+            }
         }
     }
 }

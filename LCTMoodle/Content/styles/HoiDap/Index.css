@@ -1,84 +1,62 @@
-﻿.danh-sach-cau-hoi .cau-hoi {
+﻿.danh-sach-cau-hoi .cau-hoi
+ {
     background-color: #fff;   
     border: 1px solid #ddd;
     margin-bottom: 10px;
     display: flex;
 }
-    /*Thông tin*/
-    .danh-sach-cau-hoi .cau-hoi .thong-tin {
-        display: flex;
-        padding: 10px;
-        border-right: 1px solid #f5f5f5;
-        background-color: #f8f8f8;            
-    }
-    .danh-sach-cau-hoi .thong-tin.duyet {
-        border-left: 3px solid #08c;
-    }
-    .danh-sach-cau-hoi .thong-tin.da-tra-loi {
-        border-left: 3px solid #f90;
-    }                    
-        .danh-sach-cau-hoi .thong-tin .diem,
-        .danh-sach-cau-hoi .thong-tin .tra-loi {
-            width: 70px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            color: #888;
-        }
-            .danh-sach-cau-hoi .thong-tin .diem:before,
-            .danh-sach-cau-hoi .thong-tin .tra-loi:before {
-                content: '';
-                width: 24px;
-                height: 24px;
-                background: url('/HoiDap.png/HoiDap') no-repeat;
-                margin: 0 auto;
-            }
-            .danh-sach-cau-hoi .thong-tin .tra-loi:before {
-                background-position: -36px -24px;
-            }
-            .danh-sach-cau-hoi .thong-tin .diem:before {
-                background-position: -36px 0;
-            }
-                .danh-sach-cau-hoi .thong-tin span {
-                    text-align: center;
-                    margin-top: 5px;
-                }
-    /*Chi tiết*/
-    .danh-sach-cau-hoi .chi-tiet {
-        width: 100%;
-        padding: 10px;
-        border-left: 3px solid #eee;
-    }
+
+/*#region Chi tiết */
+
+.danh-sach-cau-hoi .chi-tiet {
+    width: 100%;
+    padding: 10px;
+    border-left: 3px solid #eee;
+}
+
+.danh-sach-cau-hoi .chi-tiet.co-tra-loi-dung {
+    border-left: 3px solid #08c;
+}
+
+/*#region Tiêu đề */
+
         .danh-sach-cau-hoi .chi-tiet .tieu-de {                
             font-size: 15px;
             font-weight: bold;
         }
+
             .danh-sach-cau-hoi .chi-tiet .tieu-de a {                
                 color: #333;
             }
-        .danh-sach-cau-hoi .chi-tiet .thong-tin-dang {
-            font-size: 12px;
-            color: #999;
-            text-align: left;
-            margin-top: 10px;
-            display: flex;                
-        }
-    /*Thông tin đăng*/
-    .danh-sach-cau-hoi .thong-tin-dang {
+
+/*#endregion */
+
+/*#region Thông tin đăng */
+
+.danh-sach-cau-hoi .thong-tin-dang {
         display: flex;
         height: 20px;
         position: relative;
+        font-size: 12px;
+        color: #999;
+        text-align: left;
+        margin-top: 10px;
+        display: flex; 
     }
+
         .danh-sach-cau-hoi .thong-tin-dang .nguoi-dang {
         }
+
             .danh-sach-cau-hoi .thong-tin-dang .nguoi-dang a {
                 color: #999;                    
                 display:block;
             }
+
             .danh-sach-cau-hoi .thong-tin-dang .nguoi-dang a:hover,
             .danh-sach-cau-hoi .thong-tin-dang .nguoi-dang a:focus {
                 text-decoration: none;
             }
+
                 .danh-sach-cau-hoi .thong-tin-dang .nguoi-dang img {
                     height: 20px;
                     vertical-align: middle;
@@ -87,11 +65,14 @@
                 .danh-sach-cau-hoi .thong-tin-dang .nguoi-dang span {
                     margin-left: 2px;
                 }
+
         .danh-sach-cau-hoi .thong-tin-dang .thoi-gian-dang {
         }
+
             .danh-sach-cau-hoi .thong-tin-dang .thoi-gian-dang {
 
             }
+
                 .danh-sach-cau-hoi .thong-tin-dang .thoi-gian-dang span:before {
                     content: '.';
                     height: 20px;
@@ -101,3 +82,49 @@
                     vertical-align: middle;
                     line-height: 12px;
                 }
+
+/*#endregion */
+
+/*#endregion */
+
+/*#region Thông tin */
+
+.danh-sach-cau-hoi .cau-hoi .thong-tin {
+    display: flex;
+    padding: 10px;
+    border-right: 1px solid #f5f5f5;
+    background-color: #f8f8f8;            
+}  
+                   
+    .danh-sach-cau-hoi .thong-tin .diem,
+    .danh-sach-cau-hoi .thong-tin .tra-loi {
+        width: 70px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        color: #888;
+    }
+
+        .danh-sach-cau-hoi .thong-tin .diem:before,
+        .danh-sach-cau-hoi .thong-tin .tra-loi:before {
+            content: '';
+            width: 24px;
+            height: 24px;
+            background: url('/HoiDap.png/HoiDap') no-repeat;
+            margin: 0 auto;
+        }
+
+        .danh-sach-cau-hoi .thong-tin .tra-loi:before {
+            background-position: -36px -24px;
+        }
+
+        .danh-sach-cau-hoi .thong-tin .diem:before {
+            background-position: -36px 0;
+        }
+
+            .danh-sach-cau-hoi .thong-tin span {
+                text-align: center;
+                margin-top: 5px;
+            }
+
+/*#endregion */    

@@ -99,5 +99,10 @@ namespace Helpers
 
             return str.ToString();
         }
+
+        public static bool laNguoiGuiTinNhan(int maNguoiGui, int maNguoiDungHienTai)
+        {
+            return maNguoiGui == maNguoiDungHienTai;
+        }
     }
 }

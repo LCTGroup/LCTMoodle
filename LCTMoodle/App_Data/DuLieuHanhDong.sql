@@ -17,46 +17,31 @@ truncate table dbo.LoiNhanHanhDong
 -- {GTM}: Giá trị mới
 
 GO
-INSERT INTO dbo.LoiNhanHanhDong (MaHanhDong, ChuDong, BiDong) VALUES
---	MaHanhDong		ChuDong,		BiDong
+INSERT INTO dbo.HanhDong (Ma, LoiNhan) VALUES
 
 --1xx: Hệ thống
-	(100,		
-			N'',
-			N''),	
+	(100, N''),	
 --2xx: Người dùng
 --	MaHanhDong		LoiNhanChuDong,		LoiNhanBiDong
-	(200,		
-			N'',
-			N''),	
+	(200, N''),	
 
 --3xx: Chủ đề
 --	MaHanhDong		LoiNhanChuDong,		LoiNhanBiDong
-	(300,		
-			N'',
-			N''),		
+	(300, N''),	
 
 --4xx: Hỏi đáp
 --	MaHanhDong		LoiNhanChuDong,		LoiNhanBiDong
 
 	--Cộng điểm câu hỏi
-	(400,
-		N'{ND} đã cho điểm cộng câu hỏi {BD}',
-		N'Câu hỏi {BD} đã được {ND} cho điểm cộng'),
+	(400, N'{ND} đã cho điểm cộng câu hỏi {BD}'),
 		
 	--Trừ điểm câu hỏi
-	(401,
-		N'{ND} đã cho điểm trừ câu hỏi {BD}',
-		N'Câu hỏi {BD} đã bị {ND} cho điểm trừ'),
+	(401, N'{ND} đã cho điểm trừ câu hỏi {BD}'),
 
 --5xx: Khóa học
 --	MaHanhDong		LoiNhanChuDong,		LoiNhanBiDong
-	(500,		
-			N'',
-			N''),		
+	(500, N''),		
 
 --6xx: Quyền
 --	MaHanhDong		LoiNhanChuDong,		LoiNhanBiDong
-	(600,		
-			N'',
-			N'')
+	(600, N'')

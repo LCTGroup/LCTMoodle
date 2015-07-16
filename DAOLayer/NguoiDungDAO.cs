@@ -68,7 +68,7 @@ namespace DAOLayer
             }
 
             return nguoiDung;
-        }  
+        }
 
         public static KetQua them(NguoiDungDTO nguoiDung)
         {

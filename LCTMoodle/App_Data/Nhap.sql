@@ -1,1 +1,1 @@
-select * from baitapnop
+update nguoidung set email = 'lebinhchieu@gmail.com' where ma = 1

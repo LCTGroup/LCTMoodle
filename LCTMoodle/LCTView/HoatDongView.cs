@@ -35,7 +35,7 @@ namespace LCTMoodle.LCTView
                 }
                 else
                 {
-                    ketQua = NguoiDungBUS.layTheoMa(hoatDong.maNguoiTacDong);
+                    ketQua = NguoiDungBUS.layTheoMa(hoatDong.maNguoiTacDong.Value);
                     if (ketQua.trangThai == 0)
                     {
                         var nguoiDung = ketQua.ketQua as NguoiDungDTO;

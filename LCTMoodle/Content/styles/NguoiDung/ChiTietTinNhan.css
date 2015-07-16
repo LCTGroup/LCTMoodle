@@ -1,4 +1,7 @@
-﻿.khung-chi-tiet-tin-nhan {
+﻿
+/*#region Khung chi tiết tin nhắn */
+
+.khung-chi-tiet-tin-nhan {
     border: 1px solid #ddd;
     display: flex;
     padding: 10px;
@@ -6,47 +9,49 @@
     background-color: #fcfcfc;
 }
 
-    .dong-tin {
+    .khung-chi-tiet-tin-nhan .dong-tin {
         display: flex;
         flex-direction: row;
         width: 100%;
         margin: 10px 0;
     }
-        .dong-tin .hinh-dai-dien {
+        .khung-chi-tiet-tin-nhan .dong-tin .hinh-dai-dien {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-            .dong-tin .hinh-dai-dien img {
+            .khung-chi-tiet-tin-nhan .dong-tin .hinh-dai-dien img {
                 width: 42px;
                 height: 42px;
                 max-height: 42px;
                 max-width: 42px;
                 min-width: 42px;
             }
-            .dong-tin .hinh-dai-dien span {
+            .khung-chi-tiet-tin-nhan .dong-tin .hinh-dai-dien span {
                 color: #888;
                 font-size: 11px;
                 text-align: center;
                 display: block;
             }
-        .dong-tin .chi-tiet {
+        .khung-chi-tiet-tin-nhan .dong-tin .chi-tiet {
             width: 60%;
             padding: 10px;
             position: relative;
-        }            
+        }
+
+/*#endregion */
 
 /*#region Tin nhắn khách */
 
-.khach {
+.khung-chi-tiet-tin-nhan .khach {
     }
-        .khach .chi-tiet {
+        .khung-chi-tiet-tin-nhan .khach .chi-tiet {
             margin-left: 20px;
             border: 1px solid #fcfcfc;
             background-color: #fff;
             border: 1px solid #ddd;
         }
-        .khach .chi-tiet:after {
+        .khung-chi-tiet-tin-nhan .khach .chi-tiet:after {
             content: '';
             width: 0; 
             height: 0; 
@@ -62,16 +67,16 @@
 
 /*#region Tin nhắn chủ */
 
-.chu {
+.khung-chi-tiet-tin-nhan .chu {
         justify-content: flex-end;
     }
-        .chu .chi-tiet {
+        .khung-chi-tiet-tin-nhan .chu .chi-tiet {
             margin-right: 20px;
             border: 1px solid #004263;
             background-color: #004263;
             color: #fcfcfc;
         }
-        .chu .chi-tiet:after {
+        .khung-chi-tiet-tin-nhan .chu .chi-tiet:after {
             content: '';
             width: 0; 
             height: 0; 

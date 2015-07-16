@@ -18,7 +18,7 @@
                 <span>@Model.nguoiGui.ho @Model.nguoiGui.tenLot @Model.nguoiGui.ten</span>
             }
         </div>
-        <div class="chi-tiet">
+        <div class="chi-tiet" title="@View.HienThiThoiGian(Model.thoiDiemGui)">
             @Model.noiDung
         </div>
     </section>
@@ -26,7 +26,7 @@
 else
 {
     <section class="dong-tin chu">
-        <div class="chi-tiet">
+        <div class="chi-tiet" title="@View.HienThiThoiGian(Model.thoiDiemGui)">
             @Model.noiDung
         </div>
         <div class="hinh-dai-dien">

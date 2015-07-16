@@ -6,7 +6,7 @@
     int ma = (int)ViewData["Ma"];
 }
 
-<article class="hop-1-vien">
+<article class="hop-1-vien khung-popup-tap-tin">
     @{
         KetQua ketQua = TapTinBUS.lay(loai, ma);
 
@@ -22,14 +22,14 @@
                     case "jpg":
                     case "jpeg":
                     case "png":
-                        <article class="noi-dung khung-popup-tap-tin">
+                        <section class="noi-dung">
                             <img src="/LayHinh/@loai/@ma" />
-                        </article>
+                        </section>
                         break;
                     case "txt":
-                        <article class="noi-dung khung-popup-tap-tin">                            
-                            @TapTinHelper.doc_string(duongDan)
-                        </article>
+                    <section class="noi-dung">
+                        @TapTinHelper.doc_string(duongDan)
+                    </section>
                         break;
                     case "cs":
                     case "css":
@@ -40,29 +40,32 @@
                     case "cpp":
                     case "html":
                     case "haml":
-                        <article data-doi-tuong="khung-noi-dung" class="noi-dung khung-popup-tap-tin" data-loai="code">                            
-                            <pre><code>@TapTinHelper.doc_string(duongDan)</code></pre>                            
-                        </article>
+                    <section data-doi-tuong="khung-noi-dung" class="noi-dung" data-loai="code">
+                        <pre><code>@TapTinHelper.doc_string(duongDan)</code></pre>
+                    </section>
                         break;
                     default:
-                        <article class="noi-dung khung-popup-tap-tin">                            
-                            Không hỗ trợ đọc tập tin này 
-                        </article>
+                    <section class="noi-dung">
+                        Không hỗ trợ đọc tập tin này
+                    </section>
                         break;
                 }
             }
             else
             {
-                <article class="noi-dung khung-popup-tap-tin">                            
-                    Không hỗ trợ đọc tập tin này 
-                </article>
+                <section class="noi-dung">
+                    Không hỗ trợ đọc tập tin này
+                </section>
             }
         }
         else
         {
-            <article class="noi-dung khung-popup-tap-tin">                            
-                Không hỗ trợ đọc tập tin này 
-            </article>
+            <section class="noi-dung">
+                Không hỗ trợ đọc tập tin này
+            </section>
         }
     }
+    <section class="chuc-nang">
+        <a href="/LayTapTin/@loai/@ma">Tải tập tin</a>
+    </section>
 </article>
