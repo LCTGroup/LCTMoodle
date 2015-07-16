@@ -168,7 +168,7 @@ namespace BUSLayer
 
         public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap, LienKet lienKet = null)
         {
-            return BaiTapNopDAO.layTheoMaBaiVietBaiTap(maBaiVietBaiTap);
+            return BaiTapNopDAO.layTheoMaBaiVietBaiTap(maBaiVietBaiTap, lienKet);
         }
 
         public static KetQua layTheoMa(int ma, LienKet lienKet = null)

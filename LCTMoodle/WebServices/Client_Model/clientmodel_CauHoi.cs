@@ -11,6 +11,7 @@ namespace LCTMoodle.WebServices.Client_Model
         public int ma { get; set; }
         public string tieuDe { get; set; }
         public string noiDung { get; set; }
+        public int maNguoiTao { get; set; }
         public string nguoiTao { get; set; }
         public int soTraLoi { get; set; }
         public DateTime ngayTao { get; set; }
