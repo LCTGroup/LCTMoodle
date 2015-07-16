@@ -308,6 +308,17 @@ namespace LCTMoodle.Controllers
             return Json(new KetQua(0, renderPartialViewToString(ControllerContext, "NguoiDung/_DieuKhoan.cshtml")), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult _DanhSachXacNhanThem(int maTapTin)
+        {
+            var ketQua = NguoiDungBUS.docTapTin(Helpers.TapTinHelper.layDuongDan("Tam", "1.xls"));
+            if (ketQua.trangThai != 0)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new KetQua(renderPartialViewToString(ControllerContext, "NguoiDung/_DanhSachXacNhanThem.cshtml", ketQua.ketQua)), JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Xử lý

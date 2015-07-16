@@ -235,6 +235,7 @@
     <Content Include="Content\scripts\HoiDap\TaoCauHoi.js" />
     <Content Include="Content\scripts\KhoaHoc\DanhSachThanhVien.js" />
     <Content Include="Content\scripts\KhoaHoc\DanhSach.js" />
+    <Content Include="Content\scripts\KhoaHoc\ThemThanhVien.js" />
     <Content Include="Content\scripts\KhoaHoc\Xem.js" />
     <Content Include="Content\scripts\KhoaHoc\Tao.js" />
     <Content Include="Content\scripts\LCT\TimKiem.js" />
@@ -567,7 +568,8 @@
     <Content Include="Views\Quyen\_QuyenNguoiDung.cshtml" />
     <Content Include="Views\Quyen\QuyenCuaToi.cshtml" />
     <Content Include="Views\TapTin\_Popup.cshtml" />
-    <Content Include="Views\NguoiDung\DanhSachXacNhanThem.cshtml" />
+    <Content Include="Views\NguoiDung\_DanhSachXacNhanThem.cshtml" />
+    <Content Include="Views\KhoaHoc\ThemThanhVien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

@@ -1,14 +1,13 @@
-﻿var $_khungXacNhan, $_khungNoiDung;
-
-$(function () {
-    $_khungXacNhan = $('#khung_xac_nhan');
-    $_khungNoiDung = $_khungXacNhan.find('tbody');
+﻿
+$(function ($khungXacNhan) {
+    $khungXacNhan = $('#khung_xac_nhan');
+    var $khungNoiDung = $khungXacNhan.find('tbody');
 
     capNhatThuTu();
 
-    khoiTaoTatMoDoiTuong($_khungNoiDung.find('[data-chuc-nang="tat-mo"]'), true);
+    khoiTaoTatMoDoiTuong($khungNoiDung.find('[data-chuc-nang="tat-mo"]'), true);
 
-    $_khungNoiDung.find('[data-chuc-nang="bo-qua"]').on('click', function () {
+    $khungNoiDung.find('[data-chuc-nang="bo-qua"]').on('click', function () {
         var $nut = $(this);
         var $dong = $nut.closest('tr');
 
@@ -28,7 +27,7 @@ $(function () {
         }
     });
 
-    $_khungNoiDung.find('[data-chuc-nang="lay-theo-tai-khoan"]').on('click', function () {
+    $khungNoiDung.find('[data-chuc-nang="lay-theo-tai-khoan"]').on('click', function () {
         var $nut = $(this);
         var $dong = $nut.closest('tr');
 
@@ -48,7 +47,7 @@ $(function () {
         }
     });
 
-    $_khungNoiDung.find('[data-chuc-nang="lay-theo-email"]').on('click', function () {
+    $khungNoiDung.find('[data-chuc-nang="lay-theo-email"]').on('click', function () {
         var $nut = $(this);
         var $dong = $nut.closest('tr');
 
@@ -68,8 +67,8 @@ $(function () {
         }
     });
 
-    $_khungXacNhan.find('[data-chuc-nang="hoan-tat"]').on('click', function () {
-        var $loi = $_khungNoiDung.find('tr:not([data-thiet-lap]):has(.loi)');
+    $khungXacNhan.find('[data-chuc-nang="hoan-tat"]').on('click', function () {
+        var $loi = $khungNoiDung.find('tr:not([data-thiet-lap]):has(.loi)');
 
         if ($loi.length > 0) {
             moPopup({
@@ -91,79 +90,79 @@ $(function () {
             xuLyThem();
         }
     });
+
+    //#region Chức năng
+
+    function xuLyThem() {
+        var $dsBinhThuong = $khungNoiDung.find('tr:not([data-thiet-lap]):not(:has(.loi))'),
+            $dsTheoTaiKhoan = $khungNoiDung.find('tr[data-thiet-lap="tk"]'),
+            $dsTheoEmail = $khungNoiDung.find('tr[data-thiet-lap="e"]');
+
+        var dsBinhThuong = [],
+            dsTaiKhoan = [],
+            dsEmail = [];
+
+        var $dong, dong, $o;
+        $dsBinhThuong.each(function () {
+            $dong = $(this);
+            dong = { ma: $dong.find('[data-doi-tuong="dem"]').text() };
+            $dong.find('[data-name]').each(function () {
+                $o = $(this);
+                dong[$o.attr('data-name')] = $o.text();
+            });
+
+            dsBinhThuong.push(dong)
+        });
+
+        $dsTheoTaiKhoan.each(function () {
+            $dong = $(this);
+            dsTaiKhoan.push({
+                ma: $dong.find('[data-doi-tuong="dem"]').text(),
+                tenTaiKhoan: $dong.find('[data-name="tenTaiKhoan"]').text()
+            });
+        });
+
+        $dsTheoEmail.each(function () {
+            $dong = $(this);
+            dsEmail.push({
+                ma: $dong.find('[data-doi-tuong="dem"]').text(),
+                email: $dong.find('[data-name="email"]').text()
+            });
+        });
+
+        var $tai = moBieuTuongTai($khungXacNhan);
+        $.ajax({
+            url: '/NguoiDung/XuLyThemDanhSach',
+            method: 'POST',
+            data: {
+                dsBinhThuong: JSON.stringify(dsBinhThuong),
+                dsTaiKhoan: JSON.stringify(dsTaiKhoan),
+                dsEmail: JSON.stringify(dsEmail)
+            },
+            dataType: 'JSON'
+        }).always(function () {
+            $tai.tat();
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                alert('ok');
+            }
+            else {
+                moPopupThongBao(data);
+            }
+        }).fail(function () {
+            moPopupThongBao('Thêm thất bại');
+        });
+    }
+
+    //#endregion
+
+    //#region Hỗ trợ
+
+    function capNhatThuTu() {
+        $khungNoiDung.find('tr').each(function (index) {
+            $(this).find('td:eq(0) [data-doi-tuong="dem"]').text(index + 1);
+        });
+    }
+
+    //#endregion
 });
-
-//#region Chức năng
-
-function xuLyThem() {
-    var $dsBinhThuong = $_khungNoiDung.find('tr:not([data-thiet-lap]):not(:has(.loi))'),
-        $dsTheoTaiKhoan = $_khungNoiDung.find('tr[data-thiet-lap="tk"]'),
-        $dsTheoEmail = $_khungNoiDung.find('tr[data-thiet-lap="e"]');
-    
-    var dsBinhThuong = [],
-        dsTaiKhoan = [],
-        dsEmail = [];
-
-    var $dong, dong, $o;
-    $dsBinhThuong.each(function () {
-        $dong = $(this);
-        dong = { ma: $dong.find('[data-doi-tuong="dem"]').text() };
-        $dong.find('[data-name]').each(function () {
-            $o = $(this);
-            dong[$o.attr('data-name')] = $o.text();
-        });
-
-        dsBinhThuong.push(dong)
-    });
-
-    $dsTheoTaiKhoan.each(function () {
-        $dong = $(this);
-        dsTaiKhoan.push({
-            ma: $dong.find('[data-doi-tuong="dem"]').text(),
-            tenTaiKhoan: $dong.find('[data-name="tenTaiKhoan"]').text()
-        });
-    });
-
-    $dsTheoEmail.each(function () {
-        $dong = $(this);
-        dsEmail.push({
-            ma: $dong.find('[data-doi-tuong="dem"]').text(),
-            email: $dong.find('[data-name="email"]').text()
-        });
-    });
-
-    var $tai = moBieuTuongTai($_khungXacNhan);
-    $.ajax({
-        url: '/NguoiDung/XuLyThemDanhSach',
-        method: 'POST',
-        data: {
-            dsBinhThuong: JSON.stringify(dsBinhThuong),
-            dsTaiKhoan: JSON.stringify(dsTaiKhoan),
-            dsEmail: JSON.stringify(dsEmail)
-        },
-        dataType: 'JSON'
-    }).always(function () {
-        $tai.tat();
-    }).done(function (data) {
-        if (data.trangThai == 0) {
-            alert('ok');
-        }
-        else {
-            moPopupThongBao(data);
-        }
-    }).fail(function () {
-        moPopupThongBao('Thêm thất bại');
-    });
-}
-
-//#endregion
-
-//#region Hỗ trợ
-
-function capNhatThuTu() {
-    $_khungNoiDung.find('tr').each(function (index) {
-        $(this).find('td:eq(0) [data-doi-tuong="dem"]').text(index + 1);
-    });
-}
-
-//#endregion
