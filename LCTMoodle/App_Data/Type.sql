@@ -1,6 +1,14 @@
 ﻿use rtcmfraf_Moodle;
 
 GO
+--Bảng mã
+CREATE TYPE dbo.BangMa
+AS
+TABLE (
+	Ma INT
+)
+
+GO
 --Bảng cập nhật chứa dữ liệu cập nhật cho các trường
 CREATE TYPE dbo.BangCapNhat
 AS

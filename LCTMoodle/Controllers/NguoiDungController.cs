@@ -392,22 +392,39 @@ namespace LCTMoodle.Controllers
                 {
                     return Json(ketQua);
                 }
-                dsMaNguoiDung += ketQua.ketQua as string + "|";
+                dsMaNguoiDung += "|" + ketQua.ketQua as string;
             }
 
-            //List<NguoiDungDTO> dsNguoiDungTK = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsTaiKhoan);
-            //if (dsNguoiDungTK.Count != 0)
-            //{
-            //    var ketQua = NguoiDungBUS.layTheoTenTaiKhoan(dsNguoiDungTK)
+            List<NguoiDungDTO> dsNguoiDungTK = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsTaiKhoan);
+            if (dsNguoiDungTK.Count != 0)
+            {
+                foreach (var nguoiDung in dsNguoiDungTK)
+                {
+                    ketQua = NguoiDungBUS.layTheoTenTaiKhoan(nguoiDung.tenTaiKhoan);
+                    if (ketQua.trangThai != 0)
+                    {
+                        return Json(new KetQua(3, "Tài khoản \"" + nguoiDung.tenTaiKhoan + "\" không hợp lệ"));
+                    }
+                    dsMaNguoiDung += "|" + (ketQua.ketQua as NguoiDungDTO).ma;
+                }
+            }
 
-            //    ketQua = NguoiDungBUS.them(dsNguoiDungBT);
-            //    if (ketQua.trangThai != 0)
-            //    {
-            //        return Json(ketQua);
-            //    }
-            //    dsMaNguoiDung += ketQua.ketQua as string + "|";
-            //}
+            List<NguoiDungDTO> dsNguoiDungE = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsEmail);
+            if (dsNguoiDungTK.Count != 0)
+            {
+                foreach (var nguoiDung in dsNguoiDungTK)
+                {
+                    ketQua = NguoiDungBUS.layTheoEmail(nguoiDung.email);
+                    if (ketQua.trangThai != 0)
+                    {
+                        return Json(new KetQua(3, "Email \"" + nguoiDung.email + "\" không hợp lệ"));
+                    }
+                    dsMaNguoiDung += "|" + (ketQua.ketQua as NguoiDungDTO).ma;
+                }
+            }
 
+            dsMaNguoiDung = dsMaNguoiDung.Substring(1);
+            //return Json(KhoaHoc_NguoiDungBUS.them(24));
             return null;
         }
 

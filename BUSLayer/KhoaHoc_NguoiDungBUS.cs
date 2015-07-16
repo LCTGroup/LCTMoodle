@@ -53,23 +53,28 @@ namespace BUSLayer
             }
         }
 
-        public static KetQua dangKyThamGia(int maKhoaHoc)
+        public static KetQua them(int maKhoaHoc, string dsMaNguoiDung, int maNguoiThem)
         {
             #region Kiểm tra điều kiện
-            //Kiểm tra xem người dùng đã đăng nhập hay chưa
-            //Lấy người dùng hiện tại
-            #region Lấy và kiểm tra người dùng hiện tại
-            if (Session["NguoiDung"] == null)
+            //Kiểm tra khóa học
+            var ketQua = KhoaHocDAO.layTheoMa(maKhoaHoc);
+            if (ketQua.trangThai != 0)
             {
-                return new KetQua()
-                {
-                    trangThai = 4
-                };
+                return new KetQua(1, "Khóa học không tồn tại");
             }
-            //Lấy mã người dùng hiện tại
-            int maNguoiDung = (int)Session["NguoiDung"];
+
+            //Kiểm tra quyền
+            if (!coQuyen("QLThanhVien", "KH", maKhoaHoc, maNguoiThem))
+            {
+                return new KetQua(3, "Bạn không có quyền thực hiện chức năng");
+            }
             #endregion
 
+            return KhoaHoc_NguoiDungDAO.them_DanhSach(maKhoaHoc, layBangMa(dsMaNguoiDung), 0, maNguoiThem);
+        }
+
+        public static KetQua dangKyThamGia(int maKhoaHoc, int maNguoiDung)
+        {
             //Lấy khóa học & kiểm tra khóa học có tồn tại hay không
             #region Lấy & kiểm tra tồn tại
             //Lấy khóa học để kiểm tra hạn đăng ký nếu có
@@ -134,7 +139,6 @@ namespace BUSLayer
                 };
             }
             #endregion 
-            #endregion
 
             //Tạo đối tượng thành viên và kiểm tra hợp lệ
             #region Tạo thành viên, kiểm tra

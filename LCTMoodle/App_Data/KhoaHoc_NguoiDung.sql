@@ -27,6 +27,21 @@ BEGIN
 END
 
 GO
+--Thêm danh sách
+CREATE PROC dbo.themKhoaHoc_NguoiDung_DanhSach (
+	@0 INT, --MaKhoaHoc
+	@1 dbo.BangMa READONLY, --Bảng MaNguoiDung
+	@2 INT, --TrangThai
+	@3 INT --MaNguoiThem
+)
+AS
+BEGIN
+	INSERT INTO dbo.KhoaHoc_NguoiDung (MaKhoaHoc, MaNguoiDung, TrangThai, MaNguoiThem)
+		SELECT @0, Ma, @2, @3
+			FROM @1
+END
+
+GO
 --Lấy theo mã khóa học và mã người dùng
 ALTER PROC dbo.layKhoaHoc_NguoiDungTheoMaKhoaHocVaMaNguoiDung (
 	@0 INT, --MaKhoaHoc
