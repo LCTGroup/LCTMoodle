@@ -18,7 +18,7 @@ namespace LCTMoodle.WebServices
         [OperationContract]
         List<clientmodel_TinNhan> layTinNhanChoNguoiDung(int maNguoiGui, int maNguoiNhan);
 
-        //[OperationContract]
-        //clientmodel_ThongBao themTinNhan(int maNguoiGui, int maNguoiNhan, string noiDung);
+        [OperationContract]
+        clientmodel_ThongBao themTinNhan(int maNguoiGui, int maNguoiNhan, string noiDung);
     }
 }

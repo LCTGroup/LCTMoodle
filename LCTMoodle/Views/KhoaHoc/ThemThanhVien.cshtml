@@ -1,7 +1,46 @@
-﻿@model DTOLayer.KhoaHocDTO
+﻿@using LCTMoodle.LCTView
+@using Helpers
+@model DTOLayer.KhoaHocDTO
 @{
     Layout = "~/Views/LCT/Khung.cshtml";
     ViewData["TieuDe"] = "Thêm thành viên - " + Model.ten;
+
+    ViewData["DieuHuong"] = new List<string>() {
+        Model.ten, "/KhoaHoc/" + Model.ma,
+        "Danh sách thành viên", "/KhoaHoc/ThanhVien/" + Model.ma,
+        "Thêm thành viên", "/KhoaHoc/ThemThanhVien/" + Model.ma
+    };
+    
+    List<string> chucNang = new List<string>();
+
+    chucNang.Add("Nội dung khóa học");
+    chucNang.Add("href='/KhoaHoc/" + Model.ma + "'");
+
+    chucNang.Add("Danh sách thành viên");
+    chucNang.Add("href='/KhoaHoc/ThanhVien/" + Model.ma + "'");
+
+    var dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
+    bool coQuyenQLThanhVien = QuyenHelper.co(dsQuyen, "QLThanhVien");
+
+    if (QuyenHelper.co(dsQuyen, "QLQuyen"))
+    {
+        chucNang.Add("Quản lý quyền");
+        chucNang.Add("href='/QuanlyQuyen/KH/" + Model.ma + "'");
+    }
+
+    chucNang.Add("Chương trình khóa học");
+    chucNang.Add("href='/KhoaHoc/ChuongTrinh/" + Model.ma + "'");
+
+    if (QuyenHelper.co(dsQuyen, "QLBangDiem"))
+    {
+        chucNang.Add("Quản lý bảng điểm");
+        chucNang.Add("href='/KhoaHoc/Tao-BangDiem/" + Model.ma + "'");
+    }
+
+    chucNang.Add("Xem điểm khóa học");
+    chucNang.Add("href='/KhoaHoc/Xem-BangDiem/" + Model.ma + "'");
+
+    ViewData["ChucNang"] = chucNang;
 }
 
 @section Styles {
@@ -11,6 +50,9 @@
 @section Scripts {
     <script src="/ThemThanhVien.js/KhoaHoc"></script>
     <script src="/DanhSachXacNhanThem.js/NguoiDung"></script>
+    <script>
+        maKhoaHoc = '@Model.ma';
+    </script>
 }
 
 <section id="khung_them" class="hop hop-2-vien">

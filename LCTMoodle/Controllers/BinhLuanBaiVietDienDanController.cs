@@ -23,7 +23,11 @@ namespace LCTMoodle.Controllers
             Form form = chuyenForm(formCollection);
             form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
 
-            KetQua ketQua = BinhLuanBaiVietDienDanBUS.them(form);
+            KetQua ketQua = BinhLuanBaiVietDienDanBUS.them(form, new LienKet()
+            {
+                "NguoiTao",
+                "TapTin"
+            });
 
             ViewData["CoQuyenQLNoiDung"] = true;
             ViewData["CoQuyenQLDiem"] = false;
@@ -65,7 +69,11 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyCapNhat(FormCollection formCollection)
         {
-            var ketQua = BinhLuanBaiVietDienDanBUS.capNhatTheoMa(chuyenForm(formCollection));
+            var ketQua = BinhLuanBaiVietDienDanBUS.capNhatTheoMa(chuyenForm(formCollection), new LienKet()
+            {
+                "NguoiTao",
+                "TapTin"
+            });
             if (ketQua.trangThai != 0)
             {
                 return Json(ketQua);
@@ -93,7 +101,11 @@ namespace LCTMoodle.Controllers
             #endregion
 
             //Lấy danh sách bình luận
-            ketQua = BinhLuanBaiVietDienDanBUS.layTheoMaBaiVietDienDan(maBaiVietDienDan);
+            ketQua = BinhLuanBaiVietDienDanBUS.layTheoMaBaiVietDienDan(maBaiVietDienDan, new LienKet()
+            {
+                "NguoiTao",
+                "TapTin"
+            });
             var dsBinhLuan = ketQua.trangThai == 0 ?
                 ketQua.ketQua as List<BinhLuanBaiVietDienDanDTO> :
                 null;

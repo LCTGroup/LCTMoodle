@@ -83,8 +83,19 @@
                             color: #333;
                         }
 
+                .khung-khoa-hoc .danh-sach .thong-tin .sl-thanh-vien {
+                    text-align: right;
+                    display: block;
+                    color: #555;
+                    font-size: 12px;
+                }
+
+                    .khung-khoa-hoc .danh-sach .thong-tin .sl-thanh-vien:after {
+                        content: 'thành viên';
+                    }
+
                 .khung-khoa-hoc .danh-sach .thong-tin .mo-ta {
-                    
+                    color: #333;
                 }
 
         .khung-khoa-hoc .danh-sach .ten {

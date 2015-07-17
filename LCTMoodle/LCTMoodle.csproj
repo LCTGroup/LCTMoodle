@@ -164,6 +164,7 @@
     <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_BaiGiang.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_BaiTap.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_BaiTap_Nop.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_DienDan.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_NguoiDung.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_ThongBao.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_TinNhan.cs" />
@@ -174,6 +175,9 @@
     <Compile Include="WebServices\Iwcf_KhoaHoc_BaiGiang.cs" />
     <Compile Include="WebServices\Iwcf_KhoaHoc_BaiTap.cs" />
     <Compile Include="WebServices\Iwcf_KhoaHoc_BaiTap_Nop.cs" />
+    <Compile Include="WebServices\Iwcf_KhoaHoc_DienDan.cs" />
+    <Compile Include="WebServices\Iwcf_KhoaHoc_DienDan_BinhLuan.cs" />
+    <Compile Include="WebServices\Iwcf_KhoaHoc_TaiLieu.cs" />
     <Compile Include="WebServices\Iwcf_NguoiDung.cs" />
     <Compile Include="WebServices\Iwcf_Quyen.cs" />
     <Compile Include="WebServices\Iwcf_TinNhan.cs" />
@@ -197,6 +201,15 @@
     </Compile>
     <Compile Include="WebServices\wcf_KhoaHoc_BaiTap_Nop.svc.cs">
       <DependentUpon>wcf_KhoaHoc_BaiTap_Nop.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\wcf_KhoaHoc_DienDan.svc.cs">
+      <DependentUpon>wcf_KhoaHoc_DienDan.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\wcf_KhoaHoc_DienDan_BinhLuan.svc.cs">
+      <DependentUpon>wcf_KhoaHoc_DienDan_BinhLuan.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\wcf_KhoaHoc_TaiLieu.svc.cs">
+      <DependentUpon>wcf_KhoaHoc_TaiLieu.svc</DependentUpon>
     </Compile>
     <Compile Include="WebServices\wcf_NguoiDung.svc.cs">
       <DependentUpon>wcf_NguoiDung.svc</DependentUpon>
@@ -464,6 +477,9 @@
     <Content Include="WebServices\wcf_KhoaHoc_BaiGiang.svc" />
     <Content Include="WebServices\wcf_KhoaHoc_BaiTap.svc" />
     <Content Include="WebServices\wcf_KhoaHoc_BaiTap_Nop.svc" />
+    <Content Include="WebServices\wcf_KhoaHoc_DienDan.svc" />
+    <Content Include="WebServices\wcf_KhoaHoc_DienDan_BinhLuan.svc" />
+    <Content Include="WebServices\wcf_KhoaHoc_TaiLieu.svc" />
     <Content Include="WebServices\wcf_NguoiDung.svc" />
     <Content Include="WebServices\wcf_Quyen.svc" />
     <Content Include="WebServices\wcf_TinNhan.svc" />

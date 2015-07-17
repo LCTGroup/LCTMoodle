@@ -24,11 +24,13 @@ AS
 BEGIN
 	INSERT INTO dbo.KhoaHoc_NguoiDung (MaKhoaHoc, MaNguoiDung, TrangThai, MaNguoiThem)
 		VALUES (@0, @1, @2, @3)
+
+	EXEC capNhatKhoaHocTheoMa_SoLuongThanhVien @0
 END
 
 GO
 --Thêm danh sách
-CREATE PROC dbo.themKhoaHoc_NguoiDung_DanhSach (
+ALTER PROC dbo.themKhoaHoc_NguoiDung_DanhSach (
 	@0 INT, --MaKhoaHoc
 	@1 dbo.BangMa READONLY, --Bảng MaNguoiDung
 	@2 INT, --TrangThai
@@ -36,9 +38,16 @@ CREATE PROC dbo.themKhoaHoc_NguoiDung_DanhSach (
 )
 AS
 BEGIN
+	DELETE KH_ND
+		FROM dbo.KhoaHoc_NguoiDung KH_ND
+			INNER JOIN @1 B ON
+				KH_ND.MaNguoiDung = B.Ma
+
 	INSERT INTO dbo.KhoaHoc_NguoiDung (MaKhoaHoc, MaNguoiDung, TrangThai, MaNguoiThem)
 		SELECT @0, Ma, @2, @3
 			FROM @1
+
+	EXEC capNhatKhoaHocTheoMa_SoLuongThanhVien @0
 END
 
 GO
@@ -58,7 +67,7 @@ END
 
 GO
 --Xóa theo mã khóa học và mã người dùng
-CREATE PROC dbo.xoaKhoaHoc_NguoiDungTheoMaKhoaHocVaMaNguoiDung (
+ALTER PROC dbo.xoaKhoaHoc_NguoiDungTheoMaKhoaHocVaMaNguoiDung (
 	@0 INT, --MaKhoaHoc
 	@1 INT --MaNguoiDung
 )
@@ -68,6 +77,8 @@ BEGIN
 		WHERE 
 			MaNguoiDung = @1 AND
 			MaKhoaHoc = @0
+
+	EXEC capNhatKhoaHocTheoMa_SoLuongThanhVien @0
 END
 
 GO
@@ -102,6 +113,8 @@ BEGIN
 		WHERE 
 			MaKhoaHoc = @0 AND
 			MaNguoiDung = @1
+
+	EXEC capNhatKhoaHocTheoMa_SoLuongThanhVien @0
 END
 
 GO

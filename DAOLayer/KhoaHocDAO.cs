@@ -94,6 +94,9 @@ namespace DAOLayer
                     case "CanDuyetBaiViet":
                         khoaHoc.canDuyetBaiViet = layBool(dong, i);
                         break;
+                    case "SoLuongThanhVien":
+                        khoaHoc.soLuongThanhVien = layInt(dong, i);
+                        break;
                     default:
                         if (khoaHoc.duLieuThem == null)
                         {

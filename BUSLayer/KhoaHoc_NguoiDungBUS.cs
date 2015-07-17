@@ -99,9 +99,9 @@ namespace BUSLayer
             }
 
             List<NguoiDungDTO> dsNguoiDungE = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsEmail);
-            if (dsNguoiDungTK.Count != 0)
+            if (dsNguoiDungE.Count != 0)
             {
-                foreach (var nguoiDung in dsNguoiDungTK)
+                foreach (var nguoiDung in dsNguoiDungE)
                 {
                     ketQua = NguoiDungBUS.layTheoEmail(nguoiDung.email);
                     if (ketQua.trangThai != 0)
@@ -113,7 +113,6 @@ namespace BUSLayer
             }
 
             dsMaNguoiDung = dsMaNguoiDung.Substring(1);
-
             return KhoaHoc_NguoiDungDAO.them_DanhSach(maKhoaHoc, layBangMa(dsMaNguoiDung), 0, maNguoiThem);
         }
 
@@ -205,23 +204,9 @@ namespace BUSLayer
             return KhoaHoc_NguoiDungDAO.them(thanhVien);
         }
 
-        public static KetQua huyDangKy(int maKhoaHoc)
+        public static KetQua huyDangKy(int maKhoaHoc, int maNguoiDung)
         {
             #region Kiểm tra điều kiện
-            //Kiểm tra xem người dùng đã đăng nhập hay chưa
-            //Lấy người dùng hiện tại
-            #region Lấy và kiểm tra người dùng hiện tại
-            if (Session["NguoiDung"] == null)
-            {
-                return new KetQua()
-                {
-                    trangThai = 4
-                };
-            }
-            //Lấy mã người dùng hiện tại
-            int maNguoiDung = (int)Session["NguoiDung"];
-            #endregion
-
             //Kiểm tra xem thành viên có phải đã đăng ký hay không
             #region Kiểm tra đã đăng ký
             KetQua ketQua = KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
@@ -238,29 +223,16 @@ namespace BUSLayer
                     ketQua = new List<string>() { "Bạn chưa đăng ký" }
                 };
             }
-            #endregion 
+            #endregion
             #endregion
 
             //Hủy đăng ký
             return KhoaHoc_NguoiDungDAO.xoaTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
         }
 
-        public static KetQua roiKhoaHoc(int maKhoaHoc)
+        public static KetQua roiKhoaHoc(int maKhoaHoc, int maNguoiDung)
         {
             #region Kiểm tra điều kiện
-            #region Lấy người dùng hiện tại
-            if (Session["NguoiDung"] == null)
-            {
-                return new KetQua()
-                {
-                    trangThai = 4
-                };
-            }
-            //Lấy mã người dùng hiện tại
-            int maNguoiDung = (int)Session["NguoiDung"];
-            #endregion
-
-            //Kiểm tra người dùng có phải là thành viên của khóa học không
             #region Kiểm tra trạng thái người dùng
             KetQua ketQua = KhoaHoc_NguoiDungDAO.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung);
             if (ketQua.trangThai > 1)

@@ -24,5 +24,6 @@ namespace DTOLayer
         public bool coBangDiemDanh;
         public bool canDuyetBaiViet;
         public List<NguoiDungDTO> danhSachGiangVien;
+        public int? soLuongThanhVien;
     }
 }
