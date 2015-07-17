@@ -15,6 +15,11 @@ namespace LCTMoodle.WebServices
 {
     public class wcf_NguoiDung : Iwcf_NguoiDung
     {
+        List<clientmodel_NguoiDung> timKiemNguoiDung(string tuKhoa)
+        {
+            return null;
+        }
+
         private const string _Loai = "NguoiDung_HinhDaiDien";
 
         /// <summary>

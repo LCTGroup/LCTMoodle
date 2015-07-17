@@ -98,7 +98,7 @@ namespace BUSLayer
             return bangCapNhat;
         }
 
-        public static KetQua them(Form form)
+        public static KetQua them(Form form, LienKet lienKet = null)
         {
             var binhLuan = new BinhLuanBaiVietDienDanDTO();
             gan(ref binhLuan, form);
@@ -110,23 +110,15 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return BinhLuanBaiVietDienDanDAO.them(binhLuan, new LienKet()
-            {
-                "NguoiTao",
-                "TapTin"
-            });
+            return BinhLuanBaiVietDienDanDAO.them(binhLuan, lienKet);
         }
 
-        public static KetQua layTheoMaBaiVietDienDan(int maBaiVietDienDan)
+        public static KetQua layTheoMaBaiVietDienDan(int maBaiVietDienDan, LienKet lienKet = null)
         {
-            return BinhLuanBaiVietDienDanDAO.layTheoMaBaiVietDienDan(maBaiVietDienDan, new LienKet()
-            {
-                "NguoiTao",
-                "TapTin"
-            });
+            return BinhLuanBaiVietDienDanDAO.layTheoMaBaiVietDienDan(maBaiVietDienDan, lienKet);
         }
 
-        public static KetQua capNhatTheoMa(Form form)
+        public static KetQua capNhatTheoMa(Form form, LienKet lienKet = null)
         {
             int? ma = form.layInt("Ma");
             if (!ma.HasValue)
@@ -160,16 +152,12 @@ namespace BUSLayer
                 return new KetQua(1);
             }
 
-            return BinhLuanBaiVietDienDanDAO.capNhatTheoMa(ma, bang, new LienKet()
-            {
-                "NguoiTao",
-                "TapTin"
-            });
+            return BinhLuanBaiVietDienDanDAO.capNhatTheoMa(ma, bang, lienKet);
         }
 
-        public static KetQua layTheoMa(int ma)
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
         {
-            return BinhLuanBaiVietDienDanDAO.layTheoMa(ma);
+            return BinhLuanBaiVietDienDanDAO.layTheoMa(ma, lienKet);
         }
 
         public static KetQua capNhatDiem(int ma, int diem, int maNguoiSua)
