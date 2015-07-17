@@ -254,7 +254,7 @@ namespace LCTMoodle.WebServices
         /// <param name="tenAnh"></param>
         /// <param name="contenttype"></param>
         /// <returns>clientmodel_DangKy</returns>
-        public clientmodel_DangKy capNhatNguoiDung(string maNguoiDung, int gioiTinh, string hoTen, DateTime ngaySinh, string diaChi, byte[] duLieuAnh = null, string tenAnh = null, string contenttype = null)
+        public clientmodel_DangKy capNhatNguoiDung(string maNguoiDung, int gioiTinh, string hoTen, DateTime ngaySinh, string soDienThoai, string diaChi, byte[] duLieuAnh = null, string tenAnh = null, string contenttype = null)
         {
             int maHinh = -1;
             KetQua ketQuaLuuHinh = TapTinBUS.them(duLieuAnh, tenAnh, 0, contenttype);
@@ -276,6 +276,7 @@ namespace LCTMoodle.WebServices
                     {"TenLot",layTenLot(hoTen)},
                     {"Ten",layTen(hoTen)},
                     {"NgaySinh",ngaySinh.ToShortDateString()},
+                    {"SoDienThoai",soDienThoai},
                     {"DiaChi",diaChi},
                     {"MaHinhDaiDien",maHinh.ToString()},
                 };
@@ -290,6 +291,7 @@ namespace LCTMoodle.WebServices
                     {"TenLot",layTenLot(hoTen)},
                     {"Ten",layTen(hoTen)},
                     {"NgaySinh",ngaySinh.ToShortDateString()},
+                    {"SoDienThoai",soDienThoai},
                     {"DiaChi",diaChi},
                 };
             }
@@ -367,6 +369,71 @@ namespace LCTMoodle.WebServices
             }
 
             return cm_ThongBao;
+        }
+
+        /// <summary>
+        /// Webservice tìm kiếm người dùng theo từ khóa
+        /// </summary>
+        /// <param name="tuKhoa"></param>
+        /// <returns>List<clientmodel_NguoiDung></returns>
+        public List<clientmodel_NguoiDung> timKiemNguoiDung(string tuKhoa)
+        {
+            KetQua ketQua = NguoiDungBUS.timKiem(tuKhoa, new LienKet { "HinhDaiDien" });
+            List<clientmodel_NguoiDung> lst_NguoiDung = new List<clientmodel_NguoiDung>();
+
+            if(ketQua.trangThai == 0)
+            {
+                foreach(var nguoiDung in ketQua.ketQua as List<NguoiDungDTO>)
+                {
+                    if(nguoiDung.ma != null)
+                    {
+                        lst_NguoiDung.Add(new clientmodel_NguoiDung()
+                        {
+                            ma = nguoiDung.ma.Value,
+                        });
+                    }
+
+                    if(nguoiDung.tenLot != null)
+                    {
+                        lst_NguoiDung[lst_NguoiDung.Count - 1].hoTen = string.Format("{0} {1} {2}", nguoiDung.ho, nguoiDung.tenLot, nguoiDung.ten);
+                    }
+                    else
+                    {
+                        lst_NguoiDung[lst_NguoiDung.Count - 1].hoTen = string.Format("{0} {1}", nguoiDung.ho, nguoiDung.ten);
+                    }
+
+                    if(nguoiDung.tenTaiKhoan != null)
+                    {
+                        lst_NguoiDung[lst_NguoiDung.Count - 1].tenDN = nguoiDung.tenTaiKhoan;
+                    }
+
+                    if(nguoiDung.ngaySinh != null)
+                    {
+                        lst_NguoiDung[lst_NguoiDung.Count - 1].ngaySinh = nguoiDung.ngaySinh.Value;
+                    }
+
+                    if(nguoiDung.email != null)
+                    {
+                        lst_NguoiDung[lst_NguoiDung.Count - 1].email = nguoiDung.email;
+                    }
+
+                    if(nguoiDung.soDienThoai != null)
+                    {
+                        lst_NguoiDung[lst_NguoiDung.Count - 1].soDienThoai = nguoiDung.soDienThoai;
+                    }
+
+                    if(nguoiDung.diaChi != null)
+                    {
+                        lst_NguoiDung[lst_NguoiDung.Count - 1].diaChi = nguoiDung.diaChi;
+                    }
+
+                    if(nguoiDung.hinhDaiDien != null)
+                    {
+                        lst_NguoiDung[lst_NguoiDung.Count - 1].hinhAnh = nguoiDung.hinhDaiDien.ma.Value + nguoiDung.hinhDaiDien.duoi;
+                    }
+                }
+            }
+            return lst_NguoiDung;
         }
 
         public int themAnhDaiDien(byte[] hinhAnh, string tenAnh, int nguoiTao, string contenttype)

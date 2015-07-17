@@ -15,7 +15,6 @@ namespace LCTMoodle.WebServices
     // NOTE: In order to launch WCF Test Client for testing this service, please select wcf_Quyen.svc or wcf_Quyen.svc.cs at the Solution Explorer and start debugging.
     public class wcf_Quyen : Iwcf_Quyen
     {
-
         /// <summary>
         /// WebService lấy danh sách quyền
         /// </summary>
