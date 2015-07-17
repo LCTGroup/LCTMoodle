@@ -724,17 +724,6 @@ function khoiTaoLCTKhung_Lich($lich) {
     }
 }
 
-function khoiTaoPhanTrang($khungPhanTrang) {
-    $khungPhanTrang.find('[data-chuc-nang="phan-trang"]').on('click', function () {
-        $khungPhanTrang.find('.chon').removeClass('chon');
-
-        var $nut = $(this);
-        $nut.addClass('chon');
-
-        $khungPhanTrang.trigger('chon', $nut.attr('data-trang'));
-    });
-}
-
 function khoiTaoNutMoPopupTapTin($nuts) {
     $nuts.off('click.popup_tap_tin').on('click.popup_tap_tin', function (e) {
         e.preventDefault();
@@ -772,4 +761,158 @@ function coHoTroXem(duoi) {
         'html',
         'haml'
     ]) !== -1;
+}
+
+/*
+    $danhSach: Danh sách chứa nội dung
+    $khungPhanTrang: Khung phân trang
+    thamSo:
+        url: Bắt buộc
+        data: 
+            Dữ liệu truyền đi khi chuyển trang
+            Có thể là {} hoặc function return {}
+        khoiTaoDanhSach:
+            Hàm khởi tạo danh sách khi chuyển trang
+            Tham số là danh sách
+*/
+function khoiTaoPhanTrang_ChonTrang($danhSach, $khungPhanTrang, thamSo) {
+    if (typeof (thamSo) === 'undefined' || typeof (thamSo.url) === 'undefined') {
+        return;
+    }
+
+    $khungPhanTrang.find('[data-trang="' + (thamSo.trang || 1) + '"]').addClass('chon');
+
+    $khungPhanTrang.find('[data-chuc-nang="chuyen-trang"]').on('click', function () {
+        var $nut = $(this);
+
+        if ($nut.hasClass('chon')) {
+            return;
+        }
+
+        var data;
+        if ('data' in thamSo) {
+            if (typeof (thamSo.data) === 'function') {
+                data = thamSo.data();
+            }
+            else {
+                data = thamSo.data;
+            }
+        }
+
+        if (typeof (data) !== 'object') {
+            data = {}
+        }
+
+        data.trang = $nut.attr('data-trang');
+
+        var $tai = moBieuTuongTai($danhSach);
+        $.ajax({
+            url: thamSo.url,
+            data: data,
+            dataType: 'JSON'
+        }).always(function () {
+            $tai.tat();
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                $danhSach.html(data.ketQua);
+
+                if ('khoiTaoDanhSach' in thamSo) {
+                    thamSo.khoiTaoThamSo($danhSach);
+                }
+
+                $khungPhanTrang.find('.chon').removeClass('chon');
+                $nut.addClass('chon');
+            }
+            else {
+                moPopupThongBao(data);
+            }
+        }).fail(function () {
+            moPopupThongBao('Mở trang thất bại');
+        });
+    });
+}
+
+/*
+    $danhSach: Danh sách chứa nội dung
+    thamSo:
+        url: Bắt buộc
+        data: 
+            Dữ liệu truyền đi khi lấy trang
+            Có thể là {} hoặc function return {}
+        khoiTaoDanhSach:
+            Hàm khởi tạo danh sách khi lấy trang về
+            Tham số là danh sách
+        suKien: Mặc định là scroll
+            ('scroll' hoặc $...)
+            Giá trị có thể là scroll hoặc 1 đối tượng nhấn
+            Nếu là scroll, khi scroll xuống cuối danh sách sẽ load thêm
+            Nếu là đối tượng nhấn, khi nhấn nút sẽ load thêm
+            
+*/
+function khoiTaoPhanTrang_SuKien($danhSach, thamSo) {
+    if (typeof (thamSo) === 'undefined' || typeof (thamSo.url) === 'undefined') {
+        return;
+    }
+
+    $danhSach.attr('data-trang', 1);
+    $danhSach.data('dang-lay', false);
+
+    if ('suKien' in thamSo && thamSo.suKien != 'scroll') {
+        thamSo.suKien.on('click', function () {
+            layTrangMoi();
+        })
+    }
+    else {
+        $danhSach.on('scroll', function () {
+            if ($danhSach.scrollTop() + $danhSach.innerHeight() >= this.scrollHeight) {
+                layTrangMoi();
+            }
+        })
+    }
+
+    function layTrangMoi() {
+        if ($danhSach.data('dang-lay')) {
+            return;
+        }
+
+        var data;
+        if ('data' in thamSo) {
+            if (typeof (thamSo.data) === 'function') {
+                data = thamSo.data();
+            }
+            else {
+                data = thamSo.data;
+            }
+        }
+
+        if (typeof (data) !== 'object') {
+            data = {}
+        }
+
+        data.trang = $danhSach.attr('data-trang');
+
+        $danhSach.data('dang-lay', true);
+        $.ajax({
+            url: thamSo.url,
+            data: data,
+            dataType: 'JSON'
+        }).always(function () {
+            $danhSach.data('dang-lay', false);
+        }).done(function (data) {
+            if (data.trangThai == 0) {
+                var $ds = $(data.ketQua);
+
+                if ('khoiTaoDanhSach' in thamSo) {
+                    thamSo.khoiTaoThamSo($ds);
+                }
+                
+                $danhSach.append($ds).attr('data-trang', data.trang + 1);
+            }
+            else {
+                moPopupThongBao(data);
+            }
+        }).fail(function () {
+            moPopupThongBao('Mở trang thất bại');
+        });
+    }
 }

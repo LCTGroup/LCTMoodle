@@ -29,13 +29,19 @@ namespace DAOLayer
                         hoatDong.loaiDoiTuongTacDong = layString(dong, i); 
                         break;
                     case "MaDoiTuongTacDong":
-                        hoatDong.maDoiTuongTacDong = layInt(dong, i); 
+                        hoatDong.maDoiTuongTacDong = layInt(dong, i);
                         break;
                     case "LoaiDoiTuongBiTacDong":
-                        hoatDong.loaiDoiTuongBiTacDong = layString(dong, i); 
+                        hoatDong.loaiDoiTuongBiTacDong = layString(dong, i);
                         break;
                     case "MaDoiTuongBiTacDong":
-                        hoatDong.maDoiTuongBiTacDong = layInt(dong, i); 
+                        hoatDong.maDoiTuongBiTacDong = layInt(dong, i);
+                        break;
+                    case "LoaiDoiTuongPhamVi":
+                        hoatDong.loaiDoiTuongPhamVi = layString(dong, i);
+                        break;
+                    case "MaDoiTuongPhamVi":
+                        hoatDong.maDoiTuongPhamVi = layInt(dong, i);
                         break;
                     case "MaHanhDong":
                         maTam = layInt(dong, i);
@@ -81,6 +87,8 @@ namespace DAOLayer
                         hoatDong.maDoiTuongTacDong,
                         hoatDong.loaiDoiTuongBiTacDong,
                         hoatDong.maDoiTuongBiTacDong,
+                        hoatDong.loaiDoiTuongPhamVi,
+                        hoatDong.maDoiTuongPhamVi,
                         layMa(hoatDong.hanhDong),
                         hoatDong.duongDan
                     }

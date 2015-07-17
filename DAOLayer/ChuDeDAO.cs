@@ -115,12 +115,25 @@ namespace DAOLayer
                 lienKet
             );
         }
-        
+
         public static KetQua layTheoMa(int? ma, LienKet lienKet = null)
         {
             return layDong
             (
                 "layChuDeTheoMa",
+                new object[] 
+                { 
+                    ma
+                },
+                lienKet
+            );
+        }
+
+        public static KetQua layTheoMa_KhongDem(int? ma, LienKet lienKet = null)
+        {
+            return layDong
+            (
+                "layChuDeTheoMa_KhongDem",
                 new object[] 
                 { 
                     ma

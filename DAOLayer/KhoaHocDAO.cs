@@ -34,7 +34,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             khoaHoc.chuDe = LienKet.co(lienKet, "ChuDe") ?
-                                layDTO<ChuDeDTO>(ChuDeDAO.layTheoMa(maTam, lienKet["ChuDe"])) :
+                                layDTO<ChuDeDTO>(ChuDeDAO.layTheoMa_KhongDem(maTam, lienKet["ChuDe"])) :
                                 new ChuDeDTO()
                                 {
                                     ma = maTam

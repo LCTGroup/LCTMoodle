@@ -7,6 +7,8 @@ CREATE TABLE dbo.HoatDong (
 	MaDoiTuongTacDong INT NOT NULL,
 	LoaiDoiTuongBiTacDong NVARCHAR(MAX) NOT NULL,
 	MaDoiTuongBiTacDong INT NOT NULL,
+	LoaiDoiTuongPhamVi NVARCHAR(MAX),
+	MaDoiTuongPhamVi INT,
 	MaHanhDong INT NOT NULL,
 	DuongDan NVARCHAR(MAX),
 	ThoiDiem DATETIME DEFAULT GETDATE()
@@ -20,13 +22,15 @@ ALTER PROC dbo.themHoatDong (
 	@2 INT, --Mã đối tượng tác động
 	@3 NVARCHAR(MAX), --Loại đối tượng bị tác động
 	@4 INT, --Mã đối tượng bị tác động
-	@5 INT, --Mã hành động
-	@6 NVARCHAR(MAX) --Đường dẫn
+	@5 NVARCHAR(MAX), --Loại đối tượng phạm vi
+	@6 INT, --Mã đối tượng phạm vi
+	@7 INT, --Mã hành động
+	@8 NVARCHAR(MAX) --Đường dẫn
 )
 AS
 BEGIN
-	INSERT INTO dbo.HoatDong (MaNguoiTacDong, LoaiDoiTuongTacDong, MaDoiTuongTacDong, LoaiDoiTuongBiTacDong, MaDoiTuongBiTacDong, MaHanhDong, DuongDan)
-		VALUES (@0, @1, @2, @3, @4, @5, @6)
+	INSERT INTO dbo.HoatDong (MaNguoiTacDong, LoaiDoiTuongTacDong, MaDoiTuongTacDong, LoaiDoiTuongBiTacDong, MaDoiTuongBiTacDong, LoaiDoiTuongPhamVi, MaDoiTuongPhamVi, MaHanhDong, DuongDan)
+		VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8)
 END
 
 GO
@@ -74,7 +78,9 @@ BEGIN
 						(loaiDoiTuongTacDong = ''' + @0 + ''' AND
 							maDoiTuongTacDong = ' + @1 + ') OR
 						(loaiDoiTuongBiTacDong = ''' + @0 + ''' AND
-							maDoiTuongBiTacDong = ' + @1 + ')
+							maDoiTuongBiTacDong = ' + @1 + ') OR
+						(loaiDoiTuongPhamVi = ''' + @0 + ''' AND
+							maDoiTuongPhamVi = ' + @1 + ')
 			) AS KH
 			' + @trang + '
 			ORDER BY ThoiDiem DESC
@@ -114,7 +120,9 @@ BEGIN
 						(loaiDoiTuongTacDong = ''' + @0 + ''' AND
 							maDoiTuongTacDong IN (' + @1 + ')) OR
 						(loaiDoiTuongBiTacDong = ''' + @0 + ''' AND
-							maDoiTuongBiTacDong IN (' + @1 + '))
+							maDoiTuongBiTacDong IN (' + @1 + ')) OR
+						(loaiDoiTuongPhamVi = ''' + @0 + ''' AND
+							maDoiTuongPhamVi IN (' + @1 + '))
 			) AS KH
 			' + @trang + '
 			ORDER BY ThoiDiem DESC

@@ -31,6 +31,8 @@ namespace DTOLayer
         /// </summary>
         public string loaiDoiTuongBiTacDong;
         public int? maDoiTuongBiTacDong;
+        public string loaiDoiTuongPhamVi;
+        public int? maDoiTuongPhamVi;
         public string duongDan;
         public DateTime? thoiDiem;
         public List<GiaTriHoatDongDTO> giaTriHoatDong;
