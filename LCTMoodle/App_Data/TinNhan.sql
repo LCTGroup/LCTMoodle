@@ -43,6 +43,22 @@ BEGIN
 END
 
 GO
+--C--Cập nhật trạng thái đã đọc tin nhắn trong cả cuộc hội thoại
+CREATE PROC dbo.capNhatTinNhanTheoMaNguoiGuiVaMaNguoiNhan_DaDoc
+(
+	@0 INT, --Mã người gửi
+	@1 INT, --Mã người nhận
+	@2 BIT --Trạng thái đã đọc
+)
+AS
+BEGIN
+	UPDATE dbo.TinNhan
+	SET DaDoc = @2
+	WHERE MaNguoiGui = @0 AND MaNguoiNhan = @1
+END
+
+
+GO
 --Lấy tin nhắn theo mã người gửi
 ALTER PROC dbo.layTinNhanTheoMaNguoiGuiVaMaNguoiNhan
 (

@@ -76,7 +76,7 @@ namespace DAOLayer
                 );
         }
 
-        public static KetQua capNhatTheoMa_DaDoc(int? maTinNhan, bool daDoc)
+        public static KetQua capNhatTheoMa_DaDoc(int maTinNhan, bool daDoc)
         {
             return khongTruyVan
                 (
@@ -84,6 +84,20 @@ namespace DAOLayer
                     new object[] 
                     {
                         maTinNhan,
+                        daDoc
+                    }
+                );
+        }
+
+        public static KetQua capNhatTheoMaNguoiGuiVaMaNguoiNhan_DaDoc(int maNguoiGui, int maNguoiNhan, bool daDoc)
+        {
+            return khongTruyVan
+                (
+                    "capNhatTinNhanTheoMaNguoiGuiVaMaNguoiNhan_DaDoc",
+                    new object[] 
+                    {
+                        maNguoiGui,
+                        maNguoiNhan,
                         daDoc
                     }
                 );
