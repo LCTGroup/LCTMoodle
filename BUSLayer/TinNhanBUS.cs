@@ -77,6 +77,8 @@ namespace BUSLayer
             }
         }
 
+        #region Thêm
+
         public static KetQua them(Form form, LienKet lienKet = null)
         {
             int? maNguoiGui = form.layInt("MaNguoiGui");
@@ -91,6 +93,45 @@ namespace BUSLayer
             return TinNhanDAO.them(tinNhan, lienKet);
         }
 
+	    #endregion
+        
+        #region Xóa
+
+	    #endregion
+
+        #region Sửa
+
+		/// <summary>
+		 /// Cập nhật trạng thái đã đọc tin nhắn
+		 /// </summary>
+		 /// <param name="maTinNhan">Mã tin nhắn đã đọc</param>
+		 /// <param name="daDoc">Trạng thái
+         /// true: đã đọc | false: chưa đọc
+         /// </param>
+		 /// <returns>KetQua</returns>
+        public static KetQua capNhatTrangThaiDaDocTinNhan(int maTinNhan, bool daDoc)
+        {
+            return TinNhanDAO.capNhatTheoMa_DaDoc(maTinNhan, daDoc);
+        }
+
+        /// <summary>
+        /// Cập nhật tin nhắn theo mã người gửi và mã người nhận
+        /// </summary>
+        /// <param name="maNguoiGui">Mã người gửi</param>
+        /// <param name="maNguoiNhan">Mã người nhận</param>
+        /// <param name="daDoc">Trạng thái
+        /// true: đã đọc | false: chưa đọc
+        /// </param>
+        /// <returns>KetQua</returns>
+        public static KetQua capNhatTrangThaiDaDocTinNhan(int maNguoiGui, int maNguoiNhan, bool daDoc)
+        {
+            return TinNhanDAO.capNhatTheoMaNguoiGuiVaMaNguoiNhan_DaDoc(maNguoiGui, maNguoiNhan, daDoc);
+        }
+
+	    #endregion
+
+        #region Lấy
+
         public static KetQua lay(int maNguoiGui, int maNguoiNhan, LienKet lienKet = null)
         {
             return TinNhanDAO.layTheoMaNguoiGuiVaMaNguoiNhan(maNguoiGui, maNguoiNhan, lienKet);
@@ -100,5 +141,7 @@ namespace BUSLayer
         {
             return TinNhanDAO.layDanhSachTinNhanTheoMaNguoiDung(maNguoiDung, lienKet);
         }
+
+        #endregion
     }
 }
