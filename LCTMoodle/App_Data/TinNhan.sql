@@ -43,8 +43,8 @@ BEGIN
 END
 
 GO
---C--Cập nhật trạng thái đã đọc tin nhắn trong cả cuộc hội thoại
-CREATE PROC dbo.capNhatTinNhanTheoMaNguoiGuiVaMaNguoiNhan_DaDoc
+--Cập nhật trạng thái đã đọc tin nhắn trong cả cuộc hội thoại
+ALTER PROC dbo.capNhatTinNhanTheoMaNguoiGuiVaMaNguoiNhan_DaDoc
 (
 	@0 INT, --Mã người gửi
 	@1 INT, --Mã người nhận
@@ -54,7 +54,7 @@ AS
 BEGIN
 	UPDATE dbo.TinNhan
 	SET DaDoc = @2
-	WHERE MaNguoiGui = @0 AND MaNguoiNhan = @1
+	WHERE MaNguoiGui = @0 AND MaNguoiNhan = @1 AND DaDoc <> @2
 END
 
 
