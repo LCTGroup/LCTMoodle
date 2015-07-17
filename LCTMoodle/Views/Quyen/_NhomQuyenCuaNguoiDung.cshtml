@@ -1,0 +1,116 @@
+﻿@using Helpers
+@using BUSLayer
+@using DTOLayer
+@{
+    if (Session["NguoiDung"] == null)
+    {
+        return;
+    }
+
+    var ketQua = NhomNguoiDungBUS.layTheoMaNguoiDung((int)Session["NguoiDung"]);
+    if (ketQua.trangThai != 0)
+    {
+        return;
+    }
+
+    var dsNhom = ketQua.ketQua as object[];
+}
+
+<article class="hop">
+    <section class="tieu-de">Nhóm mà bạn thuộc</section>
+    <section class="noi-dung khung-quyen">        
+        @* Hệ thống *@
+        @if (dsNhom[0] != null)
+        {
+            <article class="pham-vi">
+                <section class="ten">
+                    Hệ thống
+                </section>
+                <section class="ds-chuc-nang">
+                    @foreach (var nhom in (dsNhom[0] as Dictionary<int, List<NhomNguoiDungDTO>>)[0])
+                    {
+                        <a>@nhom.ten</a>
+                    }
+                </section>
+            </article>
+        }
+        @* Chủ đề *@
+        @if (dsNhom[1] != null)
+        {
+            <article class="pham-vi">
+                @foreach (var pair in dsNhom[1] as Dictionary<int, List<NhomNguoiDungDTO>>)
+                {
+                    if (pair.Key == 0)
+                    {
+                        <section class="ten">
+                            Chủ đề gốc
+                        </section>
+                        <section class="ds-chuc-nang">                        
+                            @foreach (var nhom in pair.Value)
+                            {
+                                <a>@nhom.ten</a>
+                            }
+                        </section>
+                    }
+                    else
+                    {
+                        ketQua = ChuDeBUS.layTheoMa_KhongDem(pair.Key);
+                        if (ketQua.trangThai != 0)
+                        {
+                            continue;
+                        }
+                        var chuDe = ketQua.ketQua as ChuDeDTO;
+                        <section class="ten">
+                            Chủ đề @chuDe.ten
+                        </section>
+                        <section class="ds-chuc-nang">                        
+                            @foreach (var nhom in pair.Value)
+                            {
+                                <a>@nhom.ten</a>
+                            }
+                        </section>
+                    }
+                }
+            </article>
+        }
+        @* Khóa học *@
+        @if (dsNhom[2] != null)
+        {
+            <article class="pham-vi">
+                @foreach (var pair in dsNhom[2] as Dictionary<int, List<NhomNguoiDungDTO>>)
+                {
+                    if (pair.Key == 0)
+                    {
+                        <section class="ten">
+                            Khóa học gốc
+                        </section>
+                        <section class="ds-chuc-nang">                        
+                            @foreach (var nhom in pair.Value)
+                            {
+                                <a>@nhom.ten</a>
+                            }
+                        </section>
+                    }
+                    else
+                    {
+                        ketQua = KhoaHocBUS.layTheoMa(pair.Key);
+                        if (ketQua.trangThai != 0)
+                        {
+                            continue;
+                        }
+                        var khoaHoc = ketQua.ketQua as KhoaHocDTO;
+                        <section class="ten">
+                            Khóa học @khoaHoc.ten
+                        </section>
+                        <section class="ds-chuc-nang">                        
+                            @foreach (var nhom in pair.Value)
+                            {
+                                <a>@nhom.ten</a>
+                            }
+                        </section>
+                    }
+                }
+            </article>
+        }
+    </section>
+</article>

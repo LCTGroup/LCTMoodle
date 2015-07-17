@@ -1576,7 +1576,7 @@
             background-color: #fff;
             border: 1px solid #ddd;
             z-index: 5;
-            max-height: 100px;
+            max-height: 123px;
             overflow-y: scroll;
         }
 

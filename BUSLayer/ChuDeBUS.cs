@@ -157,6 +157,11 @@ namespace BUSLayer
             return ChuDeDAO.layTheoMa(ma, lienKet);
         }
 
+        public static KetQua layTheoMa_KhongDem(int ma, LienKet lienKet = null)
+        {
+            return ChuDeDAO.layTheoMa_KhongDem(ma, lienKet);
+        }
+
         public static KetQua layTheoMaCha(int maCha, LienKet lienKet = null)
         {
             return ChuDeDAO.layTheoMaCha(maCha, lienKet);
@@ -191,7 +196,7 @@ namespace BUSLayer
                     ketQua = "Mã chủ đề không được bỏ trống"
                 };
             }
-            var ketQua = ChuDeDAO.layTheoMa(ma);
+            var ketQua = ChuDeDAO.layTheoMa_KhongDem(ma);
             if (ketQua.trangThai != 0)
             {
                 return new KetQua()
@@ -246,7 +251,7 @@ namespace BUSLayer
             }
 
             //Lấy chủ đề
-            var ketQua = ChuDeDAO.layTheoMa(ma);
+            var ketQua = ChuDeDAO.layTheoMa_KhongDem(ma);
             if (ketQua.trangThai != 0)
             {
                 return new KetQua()
@@ -275,7 +280,7 @@ namespace BUSLayer
         {
             #region Kiểm tra điều kiện
             //Lấy chủ đề
-            var ketQua = ChuDeDAO.layTheoMa(ma);
+            var ketQua = ChuDeDAO.layTheoMa_KhongDem(ma);
             if (ketQua.trangThai != 0)
             {
                 return new KetQua()
@@ -312,7 +317,7 @@ namespace BUSLayer
                 return new KetQua(true);
             }
 
-            var ketQua = ChuDeDAO.layTheoMa(maChuDeCon);
+            var ketQua = ChuDeDAO.layTheoMa_KhongDem(maChuDeCon);
             if (ketQua.trangThai != 0)
             {
                 return new KetQua(false);

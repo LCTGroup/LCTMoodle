@@ -136,6 +136,18 @@ END
 
 GO
 --Lấy chủ đề theo mã chủ đề
+CREATE PROC dbo.layChuDeTheoMa_KhongDem (
+	@0 INT --Ma
+)
+AS
+BEGIN
+	SELECT *
+		FROM dbo.ChuDe CD 
+		WHERE CD.Ma = @0
+END
+
+GO
+--Lấy chủ đề theo mã chủ đề
 ALTER PROC dbo.layChuDeTheoMa (
 	@0 INT --Ma
 )

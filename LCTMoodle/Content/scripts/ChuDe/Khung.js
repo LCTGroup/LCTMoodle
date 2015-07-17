@@ -239,6 +239,7 @@
     function khoiTaoCay_Item($danhSachItem) {
         //Khởi tạo mở nút
         khoiTaoMoNut($danhSachItem.find('[data-chuc-nang="mo-nut"]'));
+        khoiTaoScroll($danhSachItem.find('[data-doi-tuong="danh-sach-muc"]'), 31);
     }
 
     function khoiTaoCayCon_Item($danhSachItem) {
