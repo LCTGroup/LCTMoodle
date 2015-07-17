@@ -13,5 +13,8 @@ namespace LCTMoodle.WebServices
     {
         [OperationContract]
         string[] layQuyenNguoiDungTheoDoiTuong(int maNguoiDung, string phamVi, int maDoiTuong);
+
+        [OperationContract]
+        bool coQuyen(int maNguoiDung, string phamVi, int maDoiTuong, string quyen);
     }
 }
