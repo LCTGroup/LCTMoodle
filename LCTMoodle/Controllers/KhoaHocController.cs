@@ -418,7 +418,12 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyHuyDangKy(int ma)
         {
-            return Json(KhoaHoc_NguoiDungBUS.huyDangKy(ma));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(KhoaHoc_NguoiDungBUS.huyDangKy(ma, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]
@@ -479,7 +484,12 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyRoiKhoaHoc(int ma)
         {
-            return Json(KhoaHoc_NguoiDungBUS.roiKhoaHoc(ma));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(KhoaHoc_NguoiDungBUS.roiKhoaHoc(ma, (int)Session["NguoiDung"]));
         }
 
         [HttpPost]

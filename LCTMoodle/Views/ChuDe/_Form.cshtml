@@ -46,11 +46,10 @@
                 </section>
                 <section class="noi-dung">
                     <article class="input">
-                        <input
-                            @if (Model != null && Model.hinhDaiDien != null)
-                            {
-                                @: data-ma-mac-dinh="@Model.hinhDaiDien.ma" data-loai-mac-dinh="ChuDe_HinhDaiDien"
-                            } type="file" name="MaHinhDaiDien" />
+                        <input data-dung-luong="5120" data-duoi="jpeg jpg png"
+                               @if (Model != null && Model.hinhDaiDien != null) { @: data-ma-mac-dinh="@Model.hinhDaiDien.ma" data-loai-mac-dinh="ChuDe_HinhDaiDien"
+                                                           } type="file" name="MaHinhDaiDien" />
+
                     </article>
                 </section>
             </li>
