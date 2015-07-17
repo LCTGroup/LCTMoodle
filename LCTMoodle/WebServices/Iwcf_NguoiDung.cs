@@ -29,7 +29,7 @@ namespace LCTMoodle.WebServices
         clientmodel_DangKy dangKy(string tenDN, string matKhau, string email, string hoTen, DateTime ngaySinh, int chapNhanDieuKhoan, byte[] duLieuAnh = null, string tenAnh = null, string contenttype = null);
 
         [OperationContract]
-        clientmodel_DangKy capNhatNguoiDung(string maNguoiDung, int gioiTinh, string hoTen, DateTime ngaySinh, string diaChi, byte[] duLieuAnh = null, string tenAnh = null, string contenttype = null);
+        clientmodel_DangKy capNhatNguoiDung(string maNguoiDung, int gioiTinh, string hoTen, DateTime ngaySinh, string soDienThoai, string diaChi, byte[] duLieuAnh = null, string tenAnh = null, string contenttype = null);
 
         [OperationContract]
         clientmodel_ThongBao thayDoiMatKhau(string tenTaiKhoan, string matKhauCu, string matKhauMoi);
