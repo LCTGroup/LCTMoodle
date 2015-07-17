@@ -76,6 +76,19 @@ namespace DAOLayer
                 );
         }
 
+        public static KetQua capNhatTheoMa_DaDoc(int? maTinNhan, bool daDoc)
+        {
+            return khongTruyVan
+                (
+                    "capNhatTinNhanTheoMa_DaDoc",
+                    new object[] 
+                    {
+                        maTinNhan,
+                        daDoc
+                    }
+                );
+        }
+
         public static KetQua layTheoMaNguoiGuiVaMaNguoiNhan(int? maNguoiGui, int? maNguoiNhan, LienKet lienKet = null)
         {
             return layDanhSachDong

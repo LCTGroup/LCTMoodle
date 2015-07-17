@@ -77,6 +77,8 @@ namespace BUSLayer
             }
         }
 
+        #region Thêm
+
         public static KetQua them(Form form, LienKet lienKet = null)
         {
             int? maNguoiGui = form.layInt("MaNguoiGui");
@@ -91,6 +93,23 @@ namespace BUSLayer
             return TinNhanDAO.them(tinNhan, lienKet);
         }
 
+	    #endregion
+        
+        #region Xóa
+
+	    #endregion
+
+        #region Sửa
+		 
+        public static KetQua capNhatTrangThaiDaDocTinNhan(int maTinNhan, bool daDoc)
+        {
+            return TinNhanDAO.capNhatTheoMa_DaDoc(maTinNhan, daDoc);
+        }
+
+	    #endregion
+
+        #region Lấy
+
         public static KetQua lay(int maNguoiGui, int maNguoiNhan, LienKet lienKet = null)
         {
             return TinNhanDAO.layTheoMaNguoiGuiVaMaNguoiNhan(maNguoiGui, maNguoiNhan, lienKet);
@@ -100,5 +119,7 @@ namespace BUSLayer
         {
             return TinNhanDAO.layDanhSachTinNhanTheoMaNguoiDung(maNguoiDung, lienKet);
         }
+
+        #endregion
     }
 }
