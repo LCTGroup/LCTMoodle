@@ -178,8 +178,11 @@ namespace BUSLayer
             var bang = new DataTable();
             bang.Columns.Add("Ma");
 
-            dsMa.Split(',').Select(x => bang.Rows.Add(new object[] { int.Parse(x) }));
-
+            string[] mangMa = dsMa.Split(',');
+            foreach(var ma in mangMa)
+            {
+                bang.Rows.Add(new object[] { ma });
+            }
             return bang;
         }
         #endregion

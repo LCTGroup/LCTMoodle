@@ -25,6 +25,12 @@
 
     var dsQuyen = QuyenView.layDSQuyen("KH", Model.ma.Value);
     bool coQuyenQLThanhVien = QuyenHelper.co(dsQuyen, "QLThanhVien");
+    
+    if (coQuyenQLThanhVien)
+    {
+        chucNang.Add("Thêm thành viên");
+        chucNang.Add("href='/KhoaHoc/ThemThanhVien/" + Model.ma + "'");
+    }
 
     if (QuyenHelper.co(dsQuyen, "QLQuyen"))
     {
