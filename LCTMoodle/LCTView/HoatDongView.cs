@@ -85,12 +85,12 @@ namespace LCTMoodle.LCTView
                             }
                             else
                             {
-                                chuoi = chuoi.Replace("{CD}", "hệ thống chủ đề");
+                                chuoi = chuoi.Replace("{CD}", "ở hệ thống");
                             }
                         }
                         else
                         {
-                            chuoi = chuoi.Replace("{CD}", "hệ thống chủ đề");
+                            chuoi = chuoi.Replace("{CD}", "ở hệ thống");
                         }
                         break;
                     case "CH":
@@ -199,12 +199,12 @@ namespace LCTMoodle.LCTView
                             }
                             else
                             {
-                                chuoi = chuoi.Replace("{BD}", "hệ thống chủ đề");
+                                chuoi = chuoi.Replace("{BD}", "ở hệ thống");
                             }
                         }
                         else
                         {
-                            chuoi = chuoi.Replace("{BD}", "hệ thống chủ đề");
+                            chuoi = chuoi.Replace("{BD}", "ở hệ thống");
                         }
                         break;
                     case "CH":
@@ -273,6 +273,29 @@ namespace LCTMoodle.LCTView
                         break;
                     default:
                         chuoi = chuoi.Replace("{BD}", "hệ thống");
+                        break;
+                }
+            }
+            #endregion
+
+            #region PV
+            if (chuoi.IndexOf("{PV}") != -1 && 
+                !string.IsNullOrWhiteSpace(hoatDong.loaiDoiTuongPhamVi) &&
+                hoatDong.maDoiTuongPhamVi.HasValue)
+            {
+                switch (hoatDong.loaiDoiTuongPhamVi)
+                {
+                    case "KH":
+                        ketQua = KhoaHocBUS.layTheoMa(hoatDong.maDoiTuongPhamVi.Value);
+                        if (ketQua.trangThai == 0)
+                        {
+                            var khoaHoc = ketQua.ketQua as NguoiDungDTO;
+                            chuoi = chuoi.Replace("{PV}", khoaHoc.ten);
+                        }
+                        else
+                        {
+                            chuoi = chuoi.Replace("{PV}", "ở hệ thống");
+                        }
                         break;
                 }
             }

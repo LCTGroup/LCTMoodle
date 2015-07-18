@@ -131,19 +131,24 @@ namespace LCTMoodle.Controllers
                     }
                     return View(khoaHoc);
                 }
-            }
-            string chuoiMaChuDe = ketQua.ketQua as string;
+                string chuoiMaChuDe = ketQua.ketQua as string;
 
-            //Kiểm tra người dùng có thể sửa khóa học này không
-            foreach(var maChuDe in chuoiMaChuDe.Split('|').Select(int.Parse))
-            {
-                ketQua = ChuDeBUS.thuocCay(khoaHoc.chuDe, maChuDe);
-                if (ketQua.trangThai == 0 && (bool)ketQua.ketQua)
+                //Kiểm tra người dùng có thể sửa khóa học này không
+                foreach (var maChuDe in chuoiMaChuDe.Split('|').Select(int.Parse))
                 {
-                    //Trường hợp có quyền tạo trên chủ đề
-                    ViewData["ChuDe"] = chuoiMaChuDe;
-                    return View(khoaHoc);
+                    ketQua = ChuDeBUS.thuocCay(khoaHoc.chuDe, maChuDe);
+                    if (ketQua.trangThai == 0 && (bool)ketQua.ketQua)
+                    {
+                        //Trường hợp có quyền tạo trên chủ đề
+                        ViewData["ChuDe"] = chuoiMaChuDe;
+                        return View(khoaHoc);
+                    }
                 }
+            }
+            else
+            {
+                ViewData["ChuDe"] = "0";
+                return View(khoaHoc);
             }
 
             if (!BUS.coQuyen("QLThongTin", "KH", khoaHoc.ma.Value, maNguoiDung))
