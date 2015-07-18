@@ -13,9 +13,18 @@ namespace LCTMoodle.WebServices
     public interface Iwcf_KhoaHoc_DienDan_BinhLuan
     {
         [OperationContract]
+        byte[] layHinhAnh(string ten);
+
+        [OperationContract]
+        clientmodel_HinhAnh layHinhAnhChiSo(int chiSo, string ten);
+
+        [OperationContract]
         clientmodel_KhoaHoc_DienDan_BinhLuan layTheoMa(int maBinhLuan);
 
         [OperationContract]
         List<clientmodel_KhoaHoc_DienDan_BinhLuan> layDanhSachTheoMaDienDan(int maDienDan);
+
+        [OperationContract]
+        clientmodel_ThongBao themBinhLuan(int maNguoiThem, int maDienDan, string noiDung, byte[] tapTin = null, string tenTapTin = null, string contenttype = null);
     }
 }
