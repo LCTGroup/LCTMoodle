@@ -77,7 +77,7 @@ END
 
 GO
 --Cập nhật theo mã
-CREATE PROC dbo.capNhatNhomNguoiDungTheoMa (
+ALTER PROC dbo.capNhatNhomNguoiDungTheoMa (
 	@0 VARCHAR(MAX), --PhamVi
 	@1 INT, --Mã
 	@2 dbo.BangCapNhat READONLY
@@ -286,7 +286,7 @@ END
 
 GO
 --Tạo nhóm mặc định
-ALTER PROC themNhomNguoiDung_MacDinh (
+CREATE PROC dbo.themNhomNguoiDung_MacDinh (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT --MaDoiTuong
 )
