@@ -13,6 +13,12 @@ namespace LCTMoodle.WebServices
     public interface Iwcf_TinNhan
     {
         [OperationContract]
+        byte[] layHinhAnh(string ten);
+
+        [OperationContract]
+        clientmodel_HinhAnh layHinhAnhChiSo(int chiSo, string ten);
+
+        [OperationContract]
         List<clientmodel_TinNhan> layDanhSachTheoMaNguoiDung(int maNguoiDung);
 
         [OperationContract]
