@@ -19,10 +19,18 @@
     <section class="tieu-de">Hội thoại với tài khoản <b>@(tenTaiKhoanKhach != null ? tenTaiKhoanKhach : "Không xác định")</b></section>
     <section class="noi-dung">
         <article class="khung-chi-tiet-tin-nhan">
-            @foreach(var tinNhan in Model)
+            @if (Model != null)
             {
-                @Html.Partial("/Views/NguoiDung/_Item_TinNhan.cshtml", tinNhan, ViewData)
-            }            
+                foreach(var tinNhan in Model)
+                {
+                    @Html.Partial("/Views/NguoiDung/_Item_TinNhan.cshtml", tinNhan, ViewData)
+                } 
+            }
+            else
+            {
+                <p class="empty">Hiện chưa có tin nhắn nào giữa hai người. Hãy gửi tin nhắn tới bạn của bạn</p>
+            }
+                       
         </article>
         
         <!-- Form thêm tin nhắn -->

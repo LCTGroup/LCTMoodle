@@ -68,8 +68,7 @@ function khoiTaoDangKy($form) {
                     var ketQua;
                     $.ajax({
                         url: '/NguoiDung/KiemTraTenTaiKhoan',
-                        data: { tenTaiKhoan: $('#TenTaiKhoan').val() },
-                        async: false
+                        data: { tenTaiKhoan: $('#TenTaiKhoan').val() }
                     }).done(function (data) {
                         ketQua = !data;
                     }).fail(function () {
@@ -88,8 +87,7 @@ function khoiTaoDangKy($form) {
                     var ketQua;
                     $.ajax({
                         url: '/NguoiDung/KiemTraEmail',
-                        data: { email: $('#email').val() },
-                        async: false
+                        data: { email: $('#email').val() }
                     }).done(function (data) {
                         ketQua = !data;
                     }).fail(function () {
