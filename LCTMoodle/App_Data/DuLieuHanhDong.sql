@@ -48,6 +48,8 @@ INSERT INTO dbo.HanhDong (Ma, LoiNhan) VALUES
 
 --3xx: Chủ đề
 --	Ma		LoiNhan
+
+	--Tên
 	(300, N''),	
 
 --4xx: Hỏi đáp

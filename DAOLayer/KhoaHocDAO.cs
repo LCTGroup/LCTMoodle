@@ -34,7 +34,7 @@ namespace DAOLayer
                         if (maTam.HasValue)
                         {
                             khoaHoc.chuDe = LienKet.co(lienKet, "ChuDe") ?
-                                layDTO<ChuDeDTO>(ChuDeDAO.layTheoMa(maTam, lienKet["ChuDe"])) :
+                                layDTO<ChuDeDTO>(ChuDeDAO.layTheoMa_KhongDem(maTam, lienKet["ChuDe"])) :
                                 new ChuDeDTO()
                                 {
                                     ma = maTam
@@ -93,6 +93,9 @@ namespace DAOLayer
                         break;
                     case "CanDuyetBaiViet":
                         khoaHoc.canDuyetBaiViet = layBool(dong, i);
+                        break;
+                    case "SoLuongThanhVien":
+                        khoaHoc.soLuongThanhVien = layInt(dong, i);
                         break;
                     default:
                         if (khoaHoc.duLieuThem == null)

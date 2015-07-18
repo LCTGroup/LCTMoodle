@@ -228,5 +228,71 @@ namespace BUSLayer
         {
             return NhomNguoiDungDAO.layTheoMa(phamVi, ma);
         }
+
+        /// <summary>
+        /// Lấy danh sách nhóm người dùng mà người dùng thuộc
+        /// </summary>
+        /// <param name="maNguoiDung">Mã người dùng cần lấy</param>
+        /// <returns>
+        /// Mảng gồm 3 phần tử: 0 - Hệ thống, 1 - Chủ đề, 2 - Khóa học ---
+        /// Mỗi phần tử là 1 Dictionary với key là mã đối tượng, list nhóm
+        /// </returns>
+        public static KetQua layTheoMaNguoiDung(int maNguoiDung)
+        {
+            var dsNhom = new object[3];
+            Dictionary<int, List<NhomNguoiDungDTO>> ds;
+
+            //Lấy nhóm người dùng hệ thống
+            var ketQua = NhomNguoiDungDAO.layTheoMaNguoiDung("HT", maNguoiDung);
+            if (ketQua.trangThai == 0)
+            {
+                ds = new Dictionary<int, List<NhomNguoiDungDTO>>();
+                ds.Add(0, ketQua.ketQua as List<NhomNguoiDungDTO>);
+
+                dsNhom[0] = ds;
+            }
+
+            //Lấy nhóm người dùng chủ đề
+            ketQua = NhomNguoiDungDAO.layTheoMaNguoiDung("CD", maNguoiDung);
+            if (ketQua.trangThai == 0)
+            {
+                ds = new Dictionary<int, List<NhomNguoiDungDTO>>();
+                var dsNhomKH = ketQua.ketQua as List<NhomNguoiDungDTO>;
+                foreach (var nhom in dsNhomKH)
+                {
+                    var ma = nhom.doiTuong.ma.Value;
+                    if (!ds.ContainsKey(ma))
+                    {
+                        ds.Add(ma, new List<NhomNguoiDungDTO>());
+                    }
+
+                    ds[ma].Add(nhom);
+                }
+
+                dsNhom[1] = ds;
+            }
+
+            //Lấy nhóm người dùng hệ thống
+            ketQua = NhomNguoiDungDAO.layTheoMaNguoiDung("CD", maNguoiDung);
+            if (ketQua.trangThai == 0)
+            {
+                ds = new Dictionary<int, List<NhomNguoiDungDTO>>();
+                var dsNhomCD = ketQua.ketQua as List<NhomNguoiDungDTO>;
+                foreach (var nhom in dsNhomCD)
+                {
+                    var ma = nhom.doiTuong.ma.Value;
+                    if (!ds.ContainsKey(ma))
+                    {
+                        ds.Add(ma, new List<NhomNguoiDungDTO>());
+                    }
+
+                    ds[ma].Add(nhom);
+                }
+
+                dsNhom[2] = ds;
+            }
+
+            return new KetQua(dsNhom);
+        }
     }
 }

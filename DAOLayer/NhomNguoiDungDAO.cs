@@ -165,5 +165,18 @@ namespace DAOLayer
                     }
                 );
         }
+
+        public static KetQua layTheoMaNguoiDung(string phamVi, int? maNguoiDung)
+        {
+            return layDanhSachDong
+                (
+                    "layNhomNguoiDungTheoMaNguoiDung",
+                    new object[]
+                    {
+                        phamVi,
+                        maNguoiDung
+                    }
+                );
+        }
     }
 }

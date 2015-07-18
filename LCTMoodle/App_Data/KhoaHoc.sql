@@ -107,8 +107,8 @@ ALTER PROC dbo.themKhoaHoc(
 )
 AS
 BEGIN
-	INSERT INTO dbo.KhoaHoc (Ten, MoTa, MaHinhDaiDien, MaChuDe, MaNguoiTao, ThoiDiemHetHan, CanDangKy, HanDangKy, PhiThamGia, CheDoRiengTu)
-		VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9)
+	INSERT INTO dbo.KhoaHoc (Ten, MoTa, MaHinhDaiDien, MaChuDe, MaNguoiTao, ThoiDiemHetHan, CanDangKy, HanDangKy, PhiThamGia, CheDoRiengTu, SoLuongThanhVien)
+		VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, 1)
 		
 	SELECT *
 		FROM dbo.KhoaHoc
@@ -249,3 +249,23 @@ BEGIN
 			ORDER BY ' + @1 + '
 	')
 END
+
+GO
+--Cập nhật số lượng thành viên của khóa học
+ALTER PROC dbo.capNhatKhoaHocTheoMa_SoLuongThanhVien (
+	@0 INT --MaKhoaHoc
+)
+AS
+BEGIN
+	DECLARE @soLuongThanhVien INT = 0
+	SELECT @soLuongThanhVien = COUNT(1)
+		FROM dbo.KhoaHoc_NguoiDung
+		WHERE 
+			MaKhoaHoc = @0 AND
+			TrangThai = 0
+
+	UPDATE dbo.KhoaHoc
+		SET SoLuongThanhVien = @soLuongThanhVien
+		WHERE Ma = @0
+END
+select * from khoahoc

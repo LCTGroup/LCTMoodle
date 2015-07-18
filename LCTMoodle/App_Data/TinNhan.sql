@@ -29,6 +29,36 @@ BEGIN
 END
 
 GO
+--Cập nhật trạng thái đã đọc tin nhắn
+CREATE PROC dbo.capNhatTinNhanTheoMa_DaDoc
+(
+	@0 INT, --Mã tin nhắn
+	@1 BIT --Trạng thái
+)
+AS
+BEGIN
+	UPDATE dbo.TinNhan
+	SET DaDoc = @1
+	WHERE Ma = @0
+END
+
+GO
+--Cập nhật trạng thái đã đọc tin nhắn trong cả cuộc hội thoại
+ALTER PROC dbo.capNhatTinNhanTheoMaNguoiGuiVaMaNguoiNhan_DaDoc
+(
+	@0 INT, --Mã người gửi
+	@1 INT, --Mã người nhận
+	@2 BIT --Trạng thái đã đọc
+)
+AS
+BEGIN
+	UPDATE dbo.TinNhan
+	SET DaDoc = @2
+	WHERE MaNguoiGui = @0 AND MaNguoiNhan = @1 AND DaDoc <> @2
+END
+
+
+GO
 --Lấy tin nhắn theo mã người gửi
 ALTER PROC dbo.layTinNhanTheoMaNguoiGuiVaMaNguoiNhan
 (

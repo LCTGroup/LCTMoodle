@@ -267,6 +267,24 @@ BEGIN
 END
 
 GO
+--Lấy nhóm quyền của người dùng
+ALTER PROC dbo.layNhomNguoiDungTheoMaNguoiDung (
+	@0 VARCHAR(MAX), --PhamVi
+	@1 INT --MaNguoiDung
+)
+AS
+BEGIN
+	EXEC('
+		SELECT NND.*
+			FROM 
+				NhomNguoiDung_' + @0 + '_NguoiDung NND_ND
+					INNER JOIN NhomNguoiDung_' + @0 + ' NND ON
+						NND_ND.MaNguoiDung = ' + @1 + ' AND
+						NND_ND.MaNhomNguoiDung = NND.Ma
+	')
+END
+
+GO
 --Tạo nhóm mặc định
 ALTER PROC themNhomNguoiDung_MacDinh (
 	@0 NVARCHAR(MAX), --PhamVi
