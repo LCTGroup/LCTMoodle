@@ -63,7 +63,8 @@ namespace LCTMoodle.Controllers
                         "TraLoi",
                         new LienKet() 
                         {
-                            "NguoiTao"
+                            "NguoiTao",
+                            "CauHoi"
                         }
                     },
                     "ChuDe"

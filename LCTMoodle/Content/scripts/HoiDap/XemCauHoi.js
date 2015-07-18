@@ -396,10 +396,7 @@ function khoiTaoTraLoi($dsTraLoi) {
                 $traLoi.toggleClass('duyet');
             }
             else {
-                moPopup({
-                    tieuDe: 'Thông báo',
-                    thongBao: 'Lỗi duyệt trả lời'
-                });
+                moPopupThongBao(data);
             }
         });
     });
