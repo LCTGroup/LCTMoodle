@@ -195,15 +195,15 @@ namespace BUSLayer
                     //Nếu không tìm thấy ở 2 phạm vi tren => ko có quyền
                     return new KetQua(3, "Bạn không có quyền tạo khóa học");
                 }
-            }
 
-            //Kiểm tra người dùng có thể tạo khóa học ở chủ đề này không
-            foreach (var maCD in (ketQua.ketQua as string).Split('|').Select(int.Parse))
-            {
-                ketQua = ChuDeBUS.thuocCay(maChuDe.Value, maCD);
-                if (ketQua.trangThai != 0 || !(bool)ketQua.ketQua)
+                //Kiểm tra người dùng có thể tạo khóa học ở chủ đề này không
+                foreach (var maCD in (ketQua.ketQua as string).Split('|').Select(int.Parse))
                 {
-                    return new KetQua(3, "Bạn không có quyền tạo khóa học");
+                    ketQua = ChuDeBUS.thuocCay(maChuDe.Value, maCD);
+                    if (ketQua.trangThai != 0 || !(bool)ketQua.ketQua)
+                    {
+                        return new KetQua(3, "Bạn không có quyền tạo khóa học");
+                    }
                 }
             }
             #endregion
@@ -308,15 +308,15 @@ namespace BUSLayer
                         //Nếu không tìm thấy ở 2 phạm vi tren => ko có quyền
                         return new KetQua(3, "Bạn không có quyền sửa khóa học");
                     }
-                }
 
-                //Kiểm tra người dùng có thể quyền tạo khóa học ở chủ đề này không
-                foreach (var maCD in (ketQua.ketQua as string).Split('|').Select(int.Parse))
-                {
-                    ketQua = ChuDeBUS.thuocCay(maChuDe.Value, maCD);
-                    if (ketQua.trangThai != 0 || !(bool)ketQua.ketQua)
+                    //Kiểm tra người dùng có thể quyền tạo khóa học ở chủ đề này không
+                    foreach (var maCD in (ketQua.ketQua as string).Split('|').Select(int.Parse))
                     {
-                        return new KetQua(3, "Bạn cần có quyền tạo khóa học trên chủ đề mới.");
+                        ketQua = ChuDeBUS.thuocCay(maChuDe.Value, maCD);
+                        if (ketQua.trangThai != 0 || !(bool)ketQua.ketQua)
+                        {
+                            return new KetQua(3, "Bạn cần có quyền tạo khóa học trên chủ đề mới.");
+                        }
                     }
                 }
             }
