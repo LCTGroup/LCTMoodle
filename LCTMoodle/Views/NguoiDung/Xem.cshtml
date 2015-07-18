@@ -189,7 +189,22 @@
     <article class="hop">
         <section class="tieu-de">Thông tin hỏi đáp</section>
         <section class="noi-dung">
-            @Html.Partial("~/Views/HoiDap/_LichSuCauHoi.cshtml", dsLichSuCauHoi)
+            <section class="khung-tab">
+                <ul>
+                    <li class="active" data-hien-thi-tab="cau-hoi">
+                        <i></i>
+                        <span>Câu hỏi</span>
+                    </li>
+                    <li data-hien-thi-tab="tra-loi">
+                        <i></i>
+                        <span>Trả lời</span>
+                    </li>
+                </ul>
+            </section>
+            <section class="noi-dung-tab" id="noi_dung_tab">
+                @Html.Partial("~/Views/HoiDap/_LichSuCauHoi.cshtml", dsLichSuCauHoi)
+            </section>
+            
         </section>
     </article>
 }

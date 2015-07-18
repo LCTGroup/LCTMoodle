@@ -256,7 +256,6 @@ namespace BUSLayer
                     duongDan = "/NguoiDung/" + nguoiDung.ma
                 });
             }
-
             return ketQua;
         }
 

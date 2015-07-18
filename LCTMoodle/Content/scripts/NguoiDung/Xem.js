@@ -6,13 +6,15 @@ var $_khungHienThi;
 $(function () {
     $_khungChonHienThi = $('#khung_chon_hien_thi');
     $_khungHienThi = $('#khung_hien_thi');
+    $_tabHoiDap = $('[data-hien-thi-tab]');
 
     khoiTaoKhungChonHienThi($_khungChonHienThi);
+    khoiTaoTab($_tabHoiDap);
 });
 
 //#endregion
 
-//#region Khung
+//#region Hàm
 
 function khoiTaoKhungChonHienThi($khungChonHienThi)
 {
@@ -56,6 +58,18 @@ function hienThiNoiDung(objValue) {
     $_khungHienThi.find('.noi-dung').removeClass('active');
 
     $('#' + objValue).addClass('active');
+}
+
+//#endregion
+
+//#region Tab
+
+function khoiTaoTab($tab) {
+    $tab.on('click', function (e) {
+        var $active = $('.khung-tab .active');
+        $active.removeClass('active');
+        $(this).addClass('active');
+    });
 }
 
 //#endregion
