@@ -288,5 +288,64 @@ namespace LCTMoodle.WebServices
 
             return cm_ThongBao;
         }
+
+        /// <summary>
+        /// Webservice sauwr thông tin bình luận
+        /// </summary>
+        /// <param name="maNguoiSua"></param>
+        /// <param name="maBinhLuan"></param>
+        /// <param name="noiDung"></param>
+        /// <param name="tapTin"></param>
+        /// <param name="tenTapTin"></param>
+        /// <param name="contenttype"></param>
+        /// <returns>clientmodel_ThongBao</returns>
+        public clientmodel_ThongBao suaBinhLuan(int maNguoiSua, int maBinhLuan, string noiDung, byte[] tapTin = null, string tenTapTin = null, string contenttype = null)
+        {
+            int maTapTin = -1;
+
+            if (tapTin != null && tenTapTin != null && contenttype != null)
+            {
+                KetQua ketQuaTapTin = TapTinBUS.them(tapTin, tenTapTin, 0, contenttype);
+                TapTinDTO dto_TapTin = ketQuaTapTin.ketQua as TapTinDTO;
+
+                if (ketQuaTapTin.trangThai == 0)
+                {
+                    maTapTin = dto_TapTin.ma.Value;
+                }
+            }
+
+            Form form;
+
+            if(maTapTin != -1)
+            {
+                form = new Form()
+                {
+                    {"Ma",maBinhLuan.ToString()},
+                    {"MaNguoiTao",maNguoiSua.ToString()},
+                    {"NoiDung",noiDung},
+                    {"MaTapTin",maTapTin.ToString()},
+                };
+            }
+            else
+            {
+                form = new Form()
+                {
+                    {"Ma",maBinhLuan.ToString()},
+                    {"MaNguoiTao",maNguoiSua.ToString()},
+                    {"NoiDung",noiDung},
+                };
+            }
+
+            KetQua ketQua = BinhLuanBaiVietDienDanBUS.capNhatTheoMa(form, new LienKet { "TapTin" });
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+            cm_ThongBao.trangThai = ketQua.trangThai;
+
+            if(ketQua.trangThai == 0)
+            {
+                cm_ThongBao.thongBao = ketQua.ketQua as string;
+            }
+
+            return cm_ThongBao;
+        }
     }
 }

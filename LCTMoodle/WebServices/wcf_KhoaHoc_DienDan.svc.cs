@@ -240,5 +240,61 @@ namespace LCTMoodle.WebServices
 
             return lst_DienDan;
         }
+
+
+        public clientmodel_ThongBao themBaiVietDienDan(int maNguoiThem, int maKhoaHoc, string tieuDe, string noiDung, byte[] tapTin = null, string tenTapTin = null, string contenttype = null)
+        {
+            int maTapTin = -1;
+
+            if (tapTin != null && tenTapTin != null && contenttype != null)
+            {
+                KetQua ketQuaTapTin = TapTinBUS.them(tapTin, tenTapTin, 0, contenttype);
+                TapTinDTO dto_TapTin = ketQuaTapTin.ketQua as TapTinDTO;
+
+                if (ketQuaTapTin.trangThai == 0)
+                {
+                    maTapTin = dto_TapTin.ma.Value;
+                }
+            }
+
+            Form form;
+
+            if(maTapTin != -1)
+            {
+                form = new Form()
+                {
+                    {"MaNguoiTao",maNguoiThem.ToString()},
+                    {"MaKhoaHoc",maKhoaHoc.ToString()},
+                    {"TieuDe",tieuDe},
+                    {"NoiDung",noiDung},
+                    {"MaTapTin",maTapTin.ToString()},
+                };
+            }
+            else
+            {
+                form = new Form()
+                {
+                    {"MaNguoiTao",maNguoiThem.ToString()},
+                    {"MaKhoaHoc",maKhoaHoc.ToString()},
+                    {"TieuDe",tieuDe},
+                    {"NoiDung",noiDung},
+                };
+            }
+
+            KetQua ketQua = BaiVietDienDanBUS.them(form);
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+            cm_ThongBao.trangThai = ketQua.trangThai;
+
+            if(ketQua.trangThai == 0)
+            {
+                cm_ThongBao.thongBao = "Bài viết của bạn đã được đưa vào danh sách duyệt";
+            }
+            else
+            {
+                cm_ThongBao.thongBao = ketQua.ketQua as string;
+            }
+
+            return cm_ThongBao;
+        }
     }
 }
