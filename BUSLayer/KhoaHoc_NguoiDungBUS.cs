@@ -80,7 +80,7 @@ namespace BUSLayer
                     return ketQua;
                 }
 
-                dsMaNguoiDung += "|" + ketQua.ketQua as string;
+                dsMaNguoiDung += "," + ketQua.ketQua as string;
             }
 
             List<NguoiDungDTO> dsNguoiDungTK = JsonConvert.DeserializeObject<List<NguoiDungDTO>>(dsTaiKhoan);
@@ -94,7 +94,7 @@ namespace BUSLayer
                         return ketQua;
                     }
 
-                    dsMaNguoiDung += "|" + (ketQua.ketQua as NguoiDungDTO).ma;
+                    dsMaNguoiDung += "," + (ketQua.ketQua as NguoiDungDTO).ma;
                 }
             }
 
@@ -108,7 +108,7 @@ namespace BUSLayer
                     {
                         return ketQua;
                     }
-                    dsMaNguoiDung += "|" + (ketQua.ketQua as NguoiDungDTO).ma;
+                    dsMaNguoiDung += "," + (ketQua.ketQua as NguoiDungDTO).ma;
                 }
             }
 

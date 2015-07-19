@@ -465,12 +465,7 @@ namespace BUSLayer
 
         public static KetQua layTheoMaNguoiDungVaTrangThai(int maNguoiDung, int trangThai, LienKet lienKet = null)
         {
-            LienKet lk = new LienKet() 
-            {
-                { "KhoaHoc", lienKet }
-            };
-
-            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDungVaTrangThai(maNguoiDung, trangThai, lk);
+            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDungVaTrangThai(maNguoiDung, trangThai);
 
             if (ketQua.trangThai != 0)
             {
@@ -481,7 +476,18 @@ namespace BUSLayer
 
             foreach (var thanhVien in ketQua.ketQua as List<KhoaHoc_NguoiDungDTO>)
             {
-                dsKhoaHoc.Add(thanhVien.khoaHoc);
+                if (trangThai == 0)
+                {
+                    ketQua = KhoaHocDAO.layTheoMa_DemBaiMoiVoiThanhVien(thanhVien.khoaHoc.ma, maNguoiDung, lienKet);
+                }
+                else
+                {
+                    ketQua = KhoaHocDAO.layTheoMa(thanhVien.khoaHoc.ma, lienKet);
+                }
+                if (ketQua.trangThai == 0)
+                {
+                    dsKhoaHoc.Add(ketQua.ketQua as KhoaHocDTO);
+                }
             }
 
             return new KetQua()

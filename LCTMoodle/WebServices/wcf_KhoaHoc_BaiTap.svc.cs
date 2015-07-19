@@ -190,5 +190,58 @@ namespace LCTMoodle.WebServices
             }
             return lst_BaiTap;
         }
+
+
+        public clientmodel_ThongBao_List themBaiTap(int maNguoiThem, int maKhoaHoc, string tieuDe, string noiDung, DateTime thoiHan, int loai = 0, int cachNop = 0, byte[] tapTin = null, string tenTapTin = null, string contenttype = null)
+        {
+            int maTapTin = -1;
+
+            if (tapTin != null && tenTapTin != null && contenttype != null)
+            {
+                KetQua ketQuaTapTin = TapTinBUS.them(tapTin, tenTapTin, 0, contenttype);
+                TapTinDTO dto_TapTin = ketQuaTapTin.ketQua as TapTinDTO;
+
+                if (ketQuaTapTin.trangThai == 0)
+                {
+                    maTapTin = dto_TapTin.ma.Value;
+                }
+            }
+
+            Form form;
+
+            if (maTapTin != -1)
+            {
+                form = new Form()
+                {
+                    {"MaNguoiTao",maNguoiThem.ToString()},
+                    {"MaKhoaHoc",maKhoaHoc.ToString()},
+                    {"ThoiDiemHetHan",noiDung},
+                    {"TieuDe",tieuDe},
+                    {"Loai",loai.ToString()},
+                    {"CachNop",cachNop.ToString()},
+                    {"NoiDung",noiDung},
+                    {"MaTapTin",maTapTin.ToString()},
+                };
+            }
+            else
+            {
+                form = new Form()
+                {
+                    {"MaNguoiTao",maNguoiThem.ToString()},
+                    {"MaKhoaHoc",maKhoaHoc.ToString()},
+                    {"ThoiDiemHetHan",noiDung},
+                    {"TieuDe",tieuDe},
+                    {"NoiDung",noiDung},
+                    {"Loai",loai.ToString()},
+                    {"CachNop",cachNop.ToString()},
+                };
+            }
+
+            KetQua ketQua = BaiVietBaiTapBUS.them(form);
+            clientmodel_ThongBao_List cm_ThongBao = new clientmodel_ThongBao_List();
+            cm_ThongBao.trangThai = ketQua.trangThai;
+
+            return cm_ThongBao;
+        }
     }
 }

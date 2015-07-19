@@ -26,5 +26,11 @@ namespace LCTMoodle.WebServices
 
         [OperationContract]
         clientmodel_ThongBao themBaiVietDienDan(int maNguoiThem, int maKhoaHoc , string tieuDe , string noiDung, byte[] tapTin = null, string tenTapTin = null, string contenttype = null);
+
+        [OperationContract]
+        clientmodel_ThongBao xoaBaiVietDienDan(int maNguoiXoa, int maBaiViet);
+
+        [OperationContract]
+        clientmodel_ThongBao suaBaiVietDienDan(int maNguoiSua, int maBaiViet, string tieuDe, string noiDung, byte[] tapTin = null, string tenTapTin = null, string contenttype = null);
     }
 }

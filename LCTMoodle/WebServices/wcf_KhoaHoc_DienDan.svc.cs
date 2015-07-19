@@ -241,7 +241,17 @@ namespace LCTMoodle.WebServices
             return lst_DienDan;
         }
 
-
+        /// <summary>
+        /// Webservice thêm bài viết diễn đàn
+        /// </summary>
+        /// <param name="maNguoiThem"></param>
+        /// <param name="maKhoaHoc"></param>
+        /// <param name="tieuDe"></param>
+        /// <param name="noiDung"></param>
+        /// <param name="tapTin"></param>
+        /// <param name="tenTapTin"></param>
+        /// <param name="contenttype"></param>
+        /// <returns>clientmodel_ThongBao</returns>
         public clientmodel_ThongBao themBaiVietDienDan(int maNguoiThem, int maKhoaHoc, string tieuDe, string noiDung, byte[] tapTin = null, string tenTapTin = null, string contenttype = null)
         {
             int maTapTin = -1;
@@ -287,7 +297,98 @@ namespace LCTMoodle.WebServices
 
             if(ketQua.trangThai == 0)
             {
-                cm_ThongBao.thongBao = "Bài viết của bạn đã được đưa vào danh sách duyệt";
+                cm_ThongBao.thongBao = "Bài viết của bạn đã được đăng";
+            }
+            else
+            {
+                cm_ThongBao.thongBao = ketQua.ketQua as string;
+            }
+
+            return cm_ThongBao;
+        }
+
+        /// <summary>
+        /// Webservice xóa bài viết diễn đàn
+        /// </summary>
+        /// <param name="maNguoiXoa"></param>
+        /// <param name="maBaiViet"></param>
+        /// <returns>clientmodel_ThongBao</returns>
+        public clientmodel_ThongBao xoaBaiVietDienDan(int maNguoiXoa, int maBaiViet)
+        {
+            KetQua ketQua = BaiVietDienDanBUS.xoaTheoMa(maBaiViet, maNguoiXoa);
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+            cm_ThongBao.trangThai = ketQua.trangThai;
+            
+            if(ketQua.trangThai == 0)
+            {
+                cm_ThongBao.thongBao = "Xóa bài viết diễn đàn thành công";
+            }
+            else
+            {
+                cm_ThongBao.thongBao = ketQua.ketQua as string;
+            }
+
+            return cm_ThongBao;
+        }
+
+        /// <summary>
+        /// Webservice cập nhật thông tin bài viết diễn đàn
+        /// </summary>
+        /// <param name="maNguoiSua"></param>
+        /// <param name="maBaiViet"></param>
+        /// <param name="tieuDe"></param>
+        /// <param name="noiDung"></param>
+        /// <param name="tapTin"></param>
+        /// <param name="tenTapTin"></param>
+        /// <param name="contenttype"></param>
+        /// <returns>clientmodel_ThongBao</returns>
+  
+        public clientmodel_ThongBao suaBaiVietDienDan(int maNguoiSua, int maBaiViet, string tieuDe, string noiDung, byte[] tapTin = null, string tenTapTin = null, string contenttype = null)
+        {
+            int maTapTin = -1;
+
+            if (tapTin != null && tenTapTin != null && contenttype != null)
+            {
+                KetQua ketQuaTapTin = TapTinBUS.them(tapTin, tenTapTin, 0, contenttype);
+                TapTinDTO dto_TapTin = ketQuaTapTin.ketQua as TapTinDTO;
+
+                if (ketQuaTapTin.trangThai == 0)
+                {
+                    maTapTin = dto_TapTin.ma.Value;
+                }
+            }
+
+            Form form;
+
+            if (maTapTin != -1)
+            {
+                form = new Form()
+                {
+                    {"MaNguoiSua",maNguoiSua.ToString()},
+                    {"Ma",maBaiViet.ToString()},
+                    {"TieuDe",tieuDe},
+                    {"NoiDung",noiDung},
+                    {"MaTapTin",maTapTin.ToString()},
+                };
+            }
+            else
+            {
+                form = new Form()
+                {
+                    {"MaNguoiSua",maNguoiSua.ToString()},
+                    {"Ma",maBaiViet.ToString()},
+                    {"TieuDe",tieuDe},
+                    {"NoiDung",noiDung},
+                };
+            }
+
+            KetQua ketQua = BaiVietDienDanBUS.capNhatTheoMa(form);
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+            cm_ThongBao.trangThai = ketQua.trangThai;
+
+            if(ketQua.trangThai == 0)
+            {
+                cm_ThongBao.thongBao = "Bài viết đã được cập nhật";
             }
             else
             {
