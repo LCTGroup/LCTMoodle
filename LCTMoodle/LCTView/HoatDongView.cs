@@ -96,6 +96,7 @@ namespace LCTMoodle.LCTView
                         }
                         break;
                     case "CH":
+                    case "TL":
                         if (hoatDong.maDoiTuongTacDong.HasValue)
                         {
                             ketQua = CauHoiBUS.layTheoMa(hoatDong.maDoiTuongTacDong.Value);
@@ -210,6 +211,7 @@ namespace LCTMoodle.LCTView
                         }
                         break;
                     case "CH":
+                    case "TL":
                         if (hoatDong.maDoiTuongBiTacDong.HasValue)
                         {
                             ketQua = CauHoiBUS.layTheoMa(hoatDong.maDoiTuongBiTacDong.Value);
@@ -399,6 +401,7 @@ namespace LCTMoodle.LCTView
                         }
                         break;
                     case "CH":
+                    case "TL":
                         if (hoatDong.maDoiTuongTacDong.HasValue)
                         {
                             ketQua = CauHoiBUS.layTheoMa(hoatDong.maDoiTuongTacDong.Value);
@@ -513,6 +516,7 @@ namespace LCTMoodle.LCTView
                         }
                         break;
                     case "CH":
+                    case "TL":
                         if (hoatDong.maDoiTuongBiTacDong.HasValue)
                         {
                             ketQua = CauHoiBUS.layTheoMa(hoatDong.maDoiTuongBiTacDong.Value);

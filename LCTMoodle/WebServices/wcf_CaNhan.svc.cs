@@ -102,14 +102,58 @@ namespace LCTMoodle.WebServices
         /// <returns></returns>
         public List<clientmodel_KhoaHoc_BaiTap> khoaHoc(int maNguoiDung)
         {
-            KetQua ketQua = BaiVietBaiTapBUS.layDanhSachCanHoanThanh(maNguoiDung);
+            KetQua ketQua = BaiVietBaiTapBUS.layDanhSachCanHoanThanh(maNguoiDung, new LienKet { "NguoiTao" });
             List<clientmodel_KhoaHoc_BaiTap> lst_CaNhan = new List<clientmodel_KhoaHoc_BaiTap>();
 
             if(ketQua.trangThai == 0)
             {
-                foreach(var baiTap in ketQua.ketQua as List<KhoaHocDTO>)
+                foreach(var baiTap in ketQua.ketQua as List<BaiVietBaiTapDTO>)
                 {
+                    lst_CaNhan.Add(new clientmodel_KhoaHoc_BaiTap(){
+                        ma = baiTap.ma.Value,
+                    });
 
+                    if(baiTap.tieuDe != null)
+                    {
+                        lst_CaNhan[lst_CaNhan.Count - 1].tieuDe = baiTap.tieuDe;
+                    }
+
+                    if(baiTap.noiDung != null)
+                    {
+                        lst_CaNhan[lst_CaNhan.Count - 1].noiDung = baiTap.noiDung;
+                    }
+
+                    if(baiTap.thoiDiemTao != null)
+                    {
+                        lst_CaNhan[lst_CaNhan.Count - 1].ngayTao = baiTap.thoiDiemTao.Value;
+                    }
+
+                    if(baiTap.thoiDiemHetHan != null)
+                    {
+                        lst_CaNhan[lst_CaNhan.Count - 1].ngayHetHan = baiTap.thoiDiemHetHan.Value;
+                    }
+
+                    if(baiTap.nguoiTao != null)
+                    {
+                        if(baiTap.nguoiTao.ma != null)
+                        {
+                            lst_CaNhan[lst_CaNhan.Count - 1].maNguoiTao = baiTap.nguoiTao.ma.Value;
+                        }
+
+                        if(baiTap.nguoiTao.tenLot != null)
+                        {
+                            lst_CaNhan[lst_CaNhan.Count - 1].tenNguoiTao = string.Format("{0} {1} {2}", baiTap.nguoiTao.ho, baiTap.nguoiTao.tenLot, baiTap.nguoiTao.ten);
+                        }
+                        else
+                        {
+                            lst_CaNhan[lst_CaNhan.Count - 1].tenNguoiTao = string.Format("{0} {1}", baiTap.nguoiTao.ho, baiTap.nguoiTao.ten); ;
+                        }
+
+                        if(baiTap.nguoiTao.tenTaiKhoan != null)
+                        {
+                            lst_CaNhan[lst_CaNhan.Count - 1].tenTaiKhoan = baiTap.nguoiTao.tenTaiKhoan;
+                        }
+                    }
                 }
             }
 

@@ -3,87 +3,119 @@
 @model List<DTOLayer.BaiTapNopDTO>
 @{
     string[] dsQuyen = ViewData["DSQuyen"] as string[];
+
+    string danhSachMaThanhVienDaXem = ViewData.ContainsKey("DanhSachMaThanhVienDaXem") ? (string)ViewData["DanhSachMaThanhVienDaXem"] : "|";
     
     bool
+        chuaXem = ViewData.ContainsKey("ChuaXem") && (bool)ViewData["ChuaXem"],
         daNop = false,
         coQuyenNopBai = ViewData.ContainsKey("CoQuyenNopBai") && (bool)ViewData["CoQuyenNopBai"],
         coQuyenQLBaiNop = QuyenHelper.co(dsQuyen, "BT_QLBaiNop");
 
-    int cachNop = ViewData.ContainsKey("CachNop") ? (int)ViewData["CachNop"] : 0;
+    int cachNop = ViewData.ContainsKey("CachNop") ? (int)ViewData["CachNop"] : 0,
+        soLuotXem = danhSachMaThanhVienDaXem.Count(x => x == '|') - 1;
+        
+    DTOLayer.BaiTapNopDTO baiNopCuaNguoiDung = null;
 }
 <section class="danh-sach-nop" data-doi-tuong="danh-sach-nop">
-    @if (Model != null)
-    {
-        DTOLayer.BaiTapNopDTO baiNopCuaNguoiDung = null;
-        if (Session["NguoiDung"] != null)
-        {
-            int maNguoiDung = (int)Session["NguoiDung"];
-            
-            foreach (var baiNop in Model)
+    <section class="khung-thong-tin-bai-nop">
+        <a data-chuc-nang="xem-luot-xem" class="right" data-value="@danhSachMaThanhVienDaXem">
+            @if (soLuotXem == 0)
             {
-                if (baiNop.nguoiTao.ma.Value == maNguoiDung)
+                @:Chưa có ai xem
+            }
+            else
+            {
+                if (chuaXem)
                 {
-                    baiNopCuaNguoiDung = baiNop;
-                    daNop = true;
-                    break;
+                    @:@soLuotXem người đã xem
+                }
+                else
+                {
+                    if (soLuotXem == 1)
+                    {
+                        @:Bạn đã xem
+                    }
+                    else
+                    {
+                        @:Bạn và @(soLuotXem - 1) người đã xem
+                    }
                 }
             }
-        }
-        
-        if (baiNopCuaNguoiDung != null)
-        {
-            if (baiNopCuaNguoiDung.daXoa)
+        </a>
+        <span class="left">
+            @if (Model != null)
             {
-                <a title="@baiNopCuaNguoiDung.ghiChu" class="xoa">!</a>
-            }
-            else if (baiNopCuaNguoiDung.diem.HasValue)
-            {
-                <a title="@baiNopCuaNguoiDung.ghiChu" class="diem">@baiNopCuaNguoiDung.diem.Value</a>
-            }
-            
-            if (Model.Count > 1)
-            {
-                <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="4">
-                    <span><b>Bạn</b></span><span> và <b>@(Model.Count - 1)</b> người khác đã nộp</span>
-                </a>
-            }
-            else
-            {
-                <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="2">
-                    <span><b>Bạn</b> đã nộp</span>
-                </a>
-            }
+                if (Session["NguoiDung"] != null)
+                {
+                    int maNguoiDung = (int)Session["NguoiDung"];
 
-            if (baiNopCuaNguoiDung.tapTin == null)
-            {
-                <a data-doi-tuong="bai-nop-cua-toi" class="bai-nop-cua-toi" href="@baiNopCuaNguoiDung.duongDan">
-                    <span>@baiNopCuaNguoiDung.duongDan</span>
-                </a>
+                    foreach (var baiNop in Model)
+                    {
+                        if (baiNop.nguoiTao.ma.Value == maNguoiDung)
+                        {
+                            baiNopCuaNguoiDung = baiNop;
+                            daNop = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (baiNopCuaNguoiDung != null)
+                {
+                    if (baiNopCuaNguoiDung.daXoa)
+                    {
+                        <a title="@baiNopCuaNguoiDung.ghiChu" class="xoa">!</a>
+                    }
+                    else if (baiNopCuaNguoiDung.diem.HasValue)
+                    {
+                        <a title="@baiNopCuaNguoiDung.ghiChu" class="diem">@baiNopCuaNguoiDung.diem.Value</a>
+                    }
+
+                    if (Model.Count > 1)
+                    {
+                        <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="4">
+                            <span><b>Bạn</b></span><span> và <b>@(Model.Count - 1)</b> người khác đã nộp</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="2">
+                            <span><b>Bạn</b> đã nộp</span>
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="3" class="left">
+                        <span><b>@Model.Count</b> người đã nộp</span>
+                    </a>
+                }
             }
             else
             {
-                <a @if (TapTinHelper.coHoTroXem(baiNopCuaNguoiDung.tapTin.duoi)) 
-                {  
-                    @: data-chuc-nang="mo-popup-tap-tin"
-                } data-doi-tuong="bai-nop-cua-toi" class="bai-nop-cua-toi" href="/LayTapTin/BaiTapNop_TapTin/@baiNopCuaNguoiDung.tapTin.ma">
-                    <img src="/LayHinh/BaiTapNop_TapTin/@baiNopCuaNguoiDung.tapTin.ma" /><span>@baiNopCuaNguoiDung.tapTin.ten</span>
+                <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="1" class="left">
+                    <span>Chưa ai nộp</span>
                 </a>
             }
+        </span>
+    </section>
+    @if (baiNopCuaNguoiDung != null)
+    {
+        if (baiNopCuaNguoiDung.tapTin == null)
+        {
+            <a data-doi-tuong="bai-nop-cua-toi" class="bai-nop-cua-toi" href="@baiNopCuaNguoiDung.duongDan">
+                <span>@baiNopCuaNguoiDung.duongDan</span>
+            </a>
         }
         else
         {
-            <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="3">
-                <span><b>@Model.Count</b> người đã nộp</span>
+            <a @if (TapTinHelper.coHoTroXem(baiNopCuaNguoiDung.tapTin.duoi)) {   @: data-chuc-nang="mo-popup-tap-tin"
+                                                          } data-doi-tuong="bai-nop-cua-toi" class="bai-nop-cua-toi" href="/LayTapTin/BaiTapNop_TapTin/@baiNopCuaNguoiDung.tapTin.ma">
+                <img src="/LayHinh/BaiTapNop_TapTin/@baiNopCuaNguoiDung.tapTin.ma" /><span>@baiNopCuaNguoiDung.tapTin.ten</span>
             </a>
         }
     }
-    else
-    {
-        <a data-doi-tuong="hien-thi" @(coQuyenQLBaiNop ? "data-chuc-nang=xem-danh-sach-nop" : null) data-type="1">                      
-            <span>Chưa ai nộp</span>
-        </a>
-    }
-    
 </section>
 @if (coQuyenNopBai)
 {

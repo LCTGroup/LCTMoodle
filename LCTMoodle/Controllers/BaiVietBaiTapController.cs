@@ -267,5 +267,15 @@ namespace LCTMoodle.Controllers
 
             return Json(CotDiem_NguoiDungBUS.chuyenDiemBaiTapNop(ma, (int)Session["NguoiDung"]));
         }
+
+        [HttpPost]
+        public ActionResult XuLyCapNhatDaXem(int ma)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+            return Json(BaiVietBaiTapBUS.capNhatTheoMa_Xem(ma, (int)Session["NguoiDung"]));
+        }
 	}
 }

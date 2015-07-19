@@ -19,6 +19,6 @@ namespace LCTMoodle.WebServices
         List<clientmodel_CaNhan> traLoi(int maNguoiDung);
 
         [OperationContract]
-        List<clientmodel_CaNhan> khoaHoc(int maNguoiDung);
+        List<clientmodel_KhoaHoc_BaiTap> khoaHoc(int maNguoiDung);
     }
 }

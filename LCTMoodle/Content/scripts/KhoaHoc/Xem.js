@@ -90,7 +90,7 @@ function khoiTaoXuLyChuaXem(url) {
             var scrollTop = $body.scrollTop();
             var windowHeight = window.innerHeight;
 
-            for (var i = 0; i < sl; i++) {
+            for (var i = sl - 1; i >= 0; i--) {
                 var $item = $($_DSChuaXem[i]);
                 var offsetTop = $item.offset().top;
                 var height = $item.height();
@@ -1189,6 +1189,9 @@ function hienThi_BaiTap(ma) {
 
             khoiTaoForm_BaiTap($_KhungHienThi.find('#tao_bai_viet_form'));
             khoiTaoItem_BaiTap($_DanhSach.find('[data-doi-tuong="muc-bai-viet"]'));
+
+            $_DSChuaXem = $_DanhSach.find('[data-chua-xem]');
+            khoiTaoXuLyChuaXem('/BaiVietBaiTap/XuLyCapNhatDaXem');
         }
         else {
             moPopupThongBao(data);

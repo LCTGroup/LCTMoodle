@@ -152,3 +152,17 @@ BEGIN
 		FROM dbo.BaiVietBaiTap
 		WHERE Ma = @0
 END
+
+GO
+--Cập nhật đã xem bài viết
+ALTER PROC dbo.capNhatBaiVietBaiTapTheoMa_Xem (
+	@0 INT, --Ma
+	@1 INT --MaNguoiDung
+)
+AS
+BEGIN
+	DECLARE @maNguoiDung VARCHAR(MAX) = CAST(@1 AS VARCHAR(MAX)) + '|'
+	UPDATE dbo.BaiVietBaiTap
+		SET DanhSachMaThanhVienDaXem = REPLACE(DanhSachMaThanhVienDaXem, '|' + @maNguoiDung, '|') + @maNguoiDung
+		WHERE Ma = @0
+END
