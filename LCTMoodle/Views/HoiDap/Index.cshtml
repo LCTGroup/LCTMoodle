@@ -104,14 +104,25 @@
 <article class="hop">
     <section class="tieu-de">Danh sách câu hỏi</section>
     <section class="noi-dung danh-sach-cau-hoi" id="danh_sach">
-        @Html.Partial("~/Views/HoiDap/_DanhSachCauHoi.cshtml", Model)
+        @if (Model == null || Model.Count == 0)
+        {
+            <p class="empty">Chưa có câu hỏi</p>
+        }
+        else
+        {
+            @Html.Partial("~/Views/HoiDap/_DanhSachCauHoi.cshtml", Model);
+        }
     </section>
-
-    @Html.Partial("~/Views/LCT/_PhanTrang.cshtml", null, new ViewDataDictionary()
+    @if (Model != null)
     {
-        { "TongSoLuong", LCTHelper.layGiaTri<int>(Model[0].duLieuThem, "TongSoDong", 0) },
-        { "SoLuongMoiTrang", Data.GiaTri.soLuongCauHoiMoiTrang }
-    })
+        Html.Partial("~/Views/LCT/_PhanTrang.cshtml", null, new ViewDataDictionary()
+        {
+            { "TongSoLuong", LCTHelper.layGiaTri<int>(Model[0].duLieuThem, "TongSoDong", 0) },
+            { "SoLuongMoiTrang", Data.GiaTri.soLuongCauHoiMoiTrang }
+        });
+    }
+    
+    
 </article>
 
 <!--#endregion -->

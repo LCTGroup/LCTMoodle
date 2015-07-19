@@ -25,7 +25,7 @@
 
         coQuyenSuaTraLoi = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "SuaTraLoi");
         coQuyenXoaTraLoi = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "XoaTraLoi");
-        coQuyenDuyetTraLoi = maNguoiDung != Model.nguoiTao.ma;
+        coQuyenDuyetTraLoi = maNguoiDung == Model.cauHoi.nguoiTao.ma;
     }
     else
     {
@@ -40,7 +40,7 @@
     <li class="hop hop-1-vien tra-loi @(Model.duyet == true ? "duyet" : "binh-thuong")" data-doi-tuong="tra-loi" data-ma="@Model.ma">
         <section class="noi-dung">
             <article class="muc-hoi-dap" data-trang-thai-vote="@trangThaiVoteTraLoi" data-doi-tuong="muc-tra-loi">
-                @if(coQuyenXoaTraLoi || coQuyenSuaTraLoi || coQuyenXoaTraLoi)
+                @if(coQuyenXoaTraLoi || coQuyenSuaTraLoi || coQuyenDuyetTraLoi)
                 {
                     <section class="khung-chuc-nang-lct">
                         <ul data-doi-tuong="traloi-@Model.ma">
@@ -56,7 +56,7 @@
                                     <a data-chuc-nang="xoa-tra-loi">Xóa trả lời</a>
                                 </li>
                             }
-                            @if (coQuyenDuyetTraLoi)
+                            @if (coQuyenDuyetTraLoi && (maNguoiDung != Model.nguoiTao.ma))
                             {
                                 <li>
                                     <a data-chuc-nang="duyet-tra-loi">Duyệt trả lời</a>

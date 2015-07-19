@@ -22,7 +22,7 @@ namespace LCTMoodle.Controllers
                 string order = "ThoiDiemCapNhat DESC";
                 string where = "DuyetHienThi = 1";
                 KetQua ketQua = CauHoiBUS.timKiemPhanTrang(1, Data.GiaTri.soLuongCauHoiMoiTrang, where, order, new LienKet() { "NguoiTao", "HinhDaiDien", "TraLoi" });
-                if (ketQua.trangThai != 0)
+                if (ketQua.trangThai != 0 && ketQua.trangThai != 1)
                 {
                     return Redirect("/?tb=" + HttpUtility.UrlEncode("Lỗi."));
                 }
@@ -63,7 +63,8 @@ namespace LCTMoodle.Controllers
                         "TraLoi",
                         new LienKet() 
                         {
-                            "NguoiTao"
+                            "NguoiTao",
+                            "CauHoi"
                         }
                     },
                     "ChuDe"

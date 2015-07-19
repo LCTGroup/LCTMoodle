@@ -3,19 +3,21 @@
 @model List<HoatDongDTO>
 
 <section class="lich-su-cau-hoi">
-    <ul>
+    
         @if (Model != null)
         {
-            foreach (HoatDongDTO hoatDong in Model)
-            {
+            <ul>
+                @foreach (HoatDongDTO hoatDong in Model)
+                {
                 <li>
                     @HoatDongView.link(hoatDong)
                 </li>
-            }
+                }
+            </ul>
+
         }
         else
         {
             <p class="empty">Chưa có hoạt động</p>
         }
-    </ul>
 </section>

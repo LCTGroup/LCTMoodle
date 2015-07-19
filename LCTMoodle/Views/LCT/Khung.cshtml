@@ -335,33 +335,30 @@
                             }
                         }
 
-                        <article class="hop-chuc-nang">
-                            <section class="ten-chuc-nang">
-                                Câu hỏi mới
-                            </section>
-                            <section class="noi-dung-hop-cau-hoi">
-                                <ul>
-                                    @{
-                                        if (dsCauHoi != null)
+                        @if (dsCauHoi != null)
+                        {
+                            <article class="hop-chuc-nang">
+                                <section class="ten-chuc-nang">
+                                    Câu hỏi mới
+                                </section>
+                                <section class="noi-dung-hop-cau-hoi">
+                                    <ul>
+                                        @foreach (var cauHoi in dsCauHoi)
                                         {
-                                            foreach (var cauHoi in dsCauHoi)
-                                            {
-                                                <li>
-                                                    <div class="tieu-de">
-                                                        <a href="/HoiDap/@cauHoi.ma" title="@cauHoi.tieuDe">@cauHoi.tieuDe</a>
-                                                    </div>
-                                                    <div class="thong-tin">
-                                                        @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
-                                                        <span>@cauHoi.nguoiTao.ho @cauHoi.nguoiTao.tenLot @cauHoi.nguoiTao.ten</span>                                                        
-                                                    </div>
-                                                </li>
-                                            }
+                                            <li>
+                                                <div class="tieu-de">
+                                                    <a href="/HoiDap/@cauHoi.ma" title="@cauHoi.tieuDe">@cauHoi.tieuDe</a>
+                                                </div>
+                                                <div class="thong-tin">
+                                                    @NguoiDungView.hinhDaiDien(cauHoi.nguoiTao)
+                                                    <span>@cauHoi.nguoiTao.ho @cauHoi.nguoiTao.tenLot @cauHoi.nguoiTao.ten</span>                                                        
+                                                </div>
+                                            </li>
                                         }
-                                    }
-                                </ul>
-                                <section>Chưa có câu hỏi mới</section>
-                            </section>
-                        </article>
+                                    </ul>
+                                </section>
+                            </article>
+                        }
                         <article class="hop-chuc-nang">
                             <section class="ten-chuc-nang">
                                 Lịch
