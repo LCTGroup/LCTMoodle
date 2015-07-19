@@ -674,10 +674,31 @@
 
 /*#region Bài tập */
 
+[data-hien-thi="bai-tap"] .danh-sach-bai-viet {
+    display: flex;
+    flex-direction: column;
+}
+
 [data-hien-thi="bai-tap"] .muc-bai-viet {
     border: 1px solid #eee;
     margin-bottom: 10px;
+    position: relative;
+    order: 3;
 }
+
+    [data-hien-thi="bai-tap"] .muc-bai-viet[data-chua-xem]:before {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: 1;
+        transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        top: -10px;
+        left: -10px;
+        border: 10px solid transparent;
+        border-right-color: #08c;
+    }
 
 [data-hien-thi="bai-tap"] .khung-binh-luan {
     border-top: 1px solid #f5f5f5;
@@ -798,6 +819,18 @@
             padding: 5px 10px;
         }
 
+            [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop .khung-thong-tin-bai-nop:after {
+                content: '';
+                display: block;
+                clear: both;
+            }
+
+            [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop:after {
+                content: '';
+                display: block;
+                clear: both;
+            }
+
             [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop a {
                 cursor: pointer;
                 color: #555;
@@ -824,6 +857,7 @@
             [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop a.bai-nop-cua-toi {
                 display: block;
                 margin-top: 5px;
+                clear: both;
             }
             
                 [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop a.bai-nop-cua-toi img {
@@ -836,6 +870,14 @@
                 [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop a.bai-nop-cua-toi:hover {
                     text-decoration: none;
                 }
+
+            [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop .left {
+                float: left;
+            }
+
+            [data-hien-thi="bai-tap"] .khung-nop-bai .danh-sach-nop .right {
+                float: right;
+            }
 
 /*#endregion */
 

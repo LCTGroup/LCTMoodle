@@ -174,5 +174,18 @@ namespace DAOLayer
                 lienKet
             );
         }
+
+        public static KetQua capNhatTheoMa_Xem(int? ma, int? maNguoiDung)
+        {
+            return khongTruyVan
+                (
+                   "capNhatBaiVietBaiTapTheoMa_Xem",
+                   new object[]
+                   {
+                       ma,
+                       maNguoiDung
+                   }
+                );
+        }
     }
 }

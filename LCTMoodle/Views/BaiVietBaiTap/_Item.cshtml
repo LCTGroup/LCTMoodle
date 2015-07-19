@@ -39,7 +39,6 @@
             chuaXem = thanhVien.trangThai == 0 && Model.danhSachMaThanhVienDaXem.IndexOf("|" + maNguoiDung.Value + "|") == -1;
         }
         
-        
         //Kiểm tra người dùng có phải là thành viên không để sử dụng chức năng nộp bài
         if (Model.thoiDiemHetHan.HasValue && Model.thoiDiemHetHan.Value < DateTime.Now)
         {
@@ -70,8 +69,15 @@
         dsQuyen = null;
     }
 }
-
-<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma="@Model.ma">
+@{
+    string style = "", attr = "";
+    if (chuaXem)
+    {
+        style += "order: 2;";
+        attr += "data-chua-xem ";
+    }
+}
+<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma="@Model.ma" @attr style="@style">
     <section class="khung-bai-viet">
         <section class="khung-thong-tin">
             <section class="trai">
@@ -84,7 +90,7 @@
                     @NguoiDungView.link(Model.nguoiTao)
                 </section>
                 <section class="bai-viet">
-                    <section class="thoi-gian">                        
+                    <section class="thoi-gian">
                         @View.HienThiThoiGian(Model.thoiDiemTao.Value)
                     </section>
                 </section>
@@ -98,17 +104,16 @@
             {
                 <section class="thoi-han">
                     Thời hạn: <span>@View.HienThiThoiGian(Model.thoiDiemHetHan)</span>
-                </section>   
+                </section>
             }
             <section class="noi-dung noi-dung-ckeditor">
                 @Html.Raw(Model.noiDung)
-            </section>            
+            </section>
             @if (Model.tapTin != null)
             {
                 <section class="tap-tin">
-                    <a @if (TapTinHelper.coHoTroXem(Model.tapTin.duoi)) {    
-                        @: data-chuc-nang="mo-popup-tap-tin"
-                    } href="/LayTapTin/BaiVietBaiTap_TapTin/@Model.tapTin.ma">
+                    <a @if (TapTinHelper.coHoTroXem(Model.tapTin.duoi)) {     @: data-chuc-nang="mo-popup-tap-tin"
+                                           } href="/LayTapTin/BaiVietBaiTap_TapTin/@Model.tapTin.ma">
                         <img src="/LayHinh/BaiVietBaiTap_TapTin/@Model.tapTin.ma" />
                         <span>@Model.tapTin.ten</span>
                     </a>
@@ -124,13 +129,13 @@
                     {
                         <li>
                             <a data-chuc-nang="sua-bai-viet">Sửa bài viết</a>
-                        </li>   
+                        </li>
                     }
                     @if (coQuyenXoa)
                     {
                         <li>
                             <a data-chuc-nang="xoa-bai-viet">Xóa bài viết</a>
-                        </li>   
+                        </li>
                     }
                 </ul>
                 <button data-chuc-nang="tat-mo" data-mo-doi-tuong="cnbt-@Model.ma">
@@ -150,7 +155,9 @@
             { "MaBaiVietBaiTap", Model.ma },
             { "CoQuyenNopBai", coQuyenNopBai },
             { "DSQuyen", dsQuyen },
-            { "CachNop", Model.cachNop.Value }
+            { "CachNop", Model.cachNop.Value },
+            { "ChuaXem", chuaXem },
+            { "DanhSachMaThanhVienDaXem", Model.danhSachMaThanhVienDaXem }
         })
-    </section>   
+    </section>
 </li>

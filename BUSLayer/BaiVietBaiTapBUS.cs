@@ -319,7 +319,12 @@ namespace BUSLayer
             }
 
             return BaiVietBaiTapDAO.capNhatTheoMa(ma, bang, lienKet);
-        } 
+        }
+
+        public static KetQua capNhatTheoMa_Xem(int ma, int maNguoiDung)
+        {
+            return BaiVietBaiTapDAO.capNhatTheoMa_Xem(ma, maNguoiDung);
+        }
         #endregion
 
         #region Xóa
