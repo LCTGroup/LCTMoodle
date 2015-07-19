@@ -104,9 +104,13 @@
 <article class="hop">
     <section class="tieu-de">Danh sách câu hỏi</section>
     <section class="noi-dung danh-sach-cau-hoi" id="danh_sach">
-        @if (Model != null)
+        @if (Model == null || Model.Count == 0)
         {
-            Html.Partial("~/Views/HoiDap/_DanhSachCauHoi.cshtml", Model);
+            <p class="empty">Chưa có câu hỏi</p>
+        }
+        else
+        {
+            @Html.Partial("~/Views/HoiDap/_DanhSachCauHoi.cshtml", Model);
         }
     </section>
     @if (Model != null)
@@ -117,6 +121,7 @@
             { "SoLuongMoiTrang", Data.GiaTri.soLuongCauHoiMoiTrang }
         });
     }
+    
     
 </article>
 

@@ -165,8 +165,10 @@
     <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_BaiTap.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_BaiTap_Nop.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_DienDan.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_KhoaHoc_DienDan_BinhLuan.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_NguoiDung.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_ThongBao.cs" />
+    <Compile Include="WebServices\Client_Model\clientmodel_ThongBao_List.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_TinNhan.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi_TraLoi.cs" />

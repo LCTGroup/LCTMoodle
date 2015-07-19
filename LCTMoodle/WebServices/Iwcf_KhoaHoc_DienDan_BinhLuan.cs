@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LCTMoodle.WebServices.Client_Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -12,6 +13,21 @@ namespace LCTMoodle.WebServices
     public interface Iwcf_KhoaHoc_DienDan_BinhLuan
     {
         [OperationContract]
-        void DoWork();
+        byte[] layHinhAnh(string ten);
+
+        [OperationContract]
+        clientmodel_HinhAnh layHinhAnhChiSo(int chiSo, string ten);
+
+        [OperationContract]
+        clientmodel_KhoaHoc_DienDan_BinhLuan layTheoMa(int maBinhLuan);
+
+        [OperationContract]
+        List<clientmodel_KhoaHoc_DienDan_BinhLuan> layDanhSachTheoMaDienDan(int maDienDan);
+
+        [OperationContract]
+        clientmodel_ThongBao themBinhLuan(int maNguoiThem, int maDienDan, string noiDung, byte[] tapTin = null, string tenTapTin = null, string contenttype = null);
+
+        [OperationContract]
+        clientmodel_ThongBao suaBinhLuan(int maNguoiSua, int maBinhLuan, string noiDung, byte[] tapTin = null, string tenTapTin = null, string contenttype = null);
     }
 }

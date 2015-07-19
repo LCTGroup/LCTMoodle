@@ -241,3 +241,82 @@
         }
 
 /*#endregion */
+
+/*#region Tab hỏi đáp */
+
+/* #region Tab */
+
+	/* #region khung tab */
+
+	.khung-tab {
+		
+	}
+
+		.khung-tab ul {
+			display: flex;
+			flex-direction: row;
+			align-items: flex-end;
+			position: relative;
+		}
+			.khung-tab ul:after {
+				
+			}
+
+		.khung-tab li {			
+			padding: 7px 15px;
+			cursor: pointer;			
+			color: #fff;
+            order: 1;
+            opacity: 0.8;
+            transition: 0.5s;
+		}
+            .khung-tab li:hover {
+                opacity: 1;
+            }
+			.khung-tab li.active {			
+				padding-top: 12px;
+				margin-bottom: 0;
+			}
+			.khung-tab li.active:after {
+				content: '';
+				position: absolute;
+				bottom: -3px;
+				left: 0;
+				height: 3px;
+				width: 100%;				
+				display: block;				
+			}
+        .khung-tab li i {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            vertical-align: bottom;
+            background-image: url('/KhoaHoc.png/KhoaHoc');
+            background-position-x: -48px;
+        }
+        .khung-tab li span {
+            font-size: 15px;
+        }
+
+		.khung-tab li:nth-child(1),
+		.khung-tab li:nth-child(1):after {
+			background-color: #08c;
+		}
+		.khung-tab li:nth-child(2),
+		.khung-tab li:nth-child(2):after {
+			background-color: #0c0;
+		}		
+
+	/* #endregion */
+
+	/* #region nội dung tab */
+
+	.noi-dung-tab {
+		margin-top: 10px;		
+	}
+
+	/* #endregion*/
+
+/* #endregion */
+
+/*#endregion */
