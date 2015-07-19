@@ -133,3 +133,5 @@ BEGIN
 			ORDER BY ThoiDiem DESC
 	')
 END
+
+exec layHoatDong_CuaDanhSachDoiTuong 'TL',1,1,5

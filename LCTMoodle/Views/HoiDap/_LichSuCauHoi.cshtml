@@ -4,7 +4,11 @@
 
 <section class="lich-su-cau-hoi">
     
-        @if (Model != null)
+        @if (Model == null || Model.Count == 0)
+        {
+            <p class="empty">Chưa có hoạt động</p>
+        }
+        else
         {
             <ul>
                 @foreach (HoatDongDTO hoatDong in Model)
@@ -14,10 +18,5 @@
                 </li>
                 }
             </ul>
-
-        }
-        else
-        {
-            <p class="empty">Chưa có hoạt động</p>
         }
 </section>

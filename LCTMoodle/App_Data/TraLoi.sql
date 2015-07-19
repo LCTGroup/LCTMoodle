@@ -204,3 +204,25 @@ BEGIN
 	FROM dbo.TraLoi
 	WHERE MaCauHoi = @0
 END
+
+GO
+--Lây mã trả lời theo mã người tạo
+ALTER PROC dbo.layTraLoi_DanhSachMaLienQuan
+(
+	@0 INT --Mã người tạo
+)
+AS
+BEGIN
+	DECLARE @dsMa VARCHAR(MAX) = ''
+
+	SELECT @dsMa += CAST(Ma AS VARCHAR(MAX)) + ','
+		FROM dbo.TraLoi
+		WHERE MaNguoiTao = @0
+		
+	SELECT CASE
+		WHEN @dsMa = '' THEN
+			''
+		ELSE
+			LEFT(@dsMa, LEN(@dsMa) - 1)
+		END
+END

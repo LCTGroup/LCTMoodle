@@ -317,6 +317,47 @@ namespace LCTMoodle.Controllers
             return Json(new KetQua(renderPartialViewToString(ControllerContext, "NguoiDung/_DanhSachXacNhanThem.cshtml", ketQua.ketQua)), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult XuLyTaiHoatDongHoiDap(string loaiDTBiTacDong)
+        {
+            #region Kiểm tra điều kiện
+
+            int? maNguoiDung = Session["NguoiDung"] as int?;
+            if (!maNguoiDung.HasValue)
+            {
+                return Json(new KetQua(3, "Bạn chưa đăng nhập"));
+            }
+
+            #endregion
+
+            KetQua ketQua = new KetQua();
+
+            switch (loaiDTBiTacDong)
+            {
+                case "CH":
+                    {
+                        string dsMa = CauHoiBUS.layCauHoi_DanhSachMaLienQuan(maNguoiDung).ketQua as string;
+                        ketQua = HoatDongBUS.lay_CuaDanhSachDoiTuong("CH", dsMa, 1, 5, new LienKet() { "HanhDong" });
+                        break;
+                    }
+
+                case "TL":
+                    {
+                        string dsMa = TraLoiBUS.layTraLoi_DanhSachMaLienQuan(maNguoiDung).ketQua as string;
+                        ketQua = HoatDongBUS.lay_CuaDanhSachDoiTuong("TL", dsMa, 1, 5, new LienKet() { "HanhDong" });
+                        break;
+                    }
+                default:
+                    return Json(new KetQua(1), JsonRequestBehavior.AllowGet);
+            }
+
+            if (ketQua.trangThai != 0 && ketQua.trangThai != 1)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new KetQua(0, renderPartialViewToString(ControllerContext, "HoiDap/_LichSuCauHoi.cshtml", ketQua.ketQua)), JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Xử lý
