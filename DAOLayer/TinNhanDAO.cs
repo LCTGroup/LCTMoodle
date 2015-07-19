@@ -130,5 +130,17 @@ namespace DAOLayer
                 );
         }
 
+        public static KetQua laySoLuongTinNhanChuaDocTheoMaNguoiNhan(int? maNguoiNhan)
+        {
+            return layGiaTri<int>
+                (
+                    "capNhatTinNhanTheoMaNguoiNhanVaMaNguoiGui",
+                    new object[]
+                    {
+                        maNguoiNhan
+                    }
+                );
+        }
+
     }
 }

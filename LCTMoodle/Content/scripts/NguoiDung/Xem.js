@@ -75,7 +75,7 @@ function khoiTaoTab($tab) {
 
         //Load nội dung của tab
         $_LoaiDTBiTacDong = $(this).attr('data-hien-thi-tab');
-        $tai = moBieuTuongTai($noiDungTab);
+        $tai = moBieuTuongTai($tab);
 
         $.ajax({
             url: '/NguoiDung/XuLyTaiHoatDongHoiDap/',

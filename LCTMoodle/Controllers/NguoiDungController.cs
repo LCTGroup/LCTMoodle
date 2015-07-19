@@ -98,7 +98,7 @@ namespace LCTMoodle.Controllers
 
             #endregion
 
-            var ketQua = TinNhanDAO.layDanhSachTinNhanTheoMaNguoiDung(ma, new LienKet() { "NguoiDung" });
+            var ketQua = TinNhanBUS.layDanhSachTinNhanTheoMaNguoiDung(ma.Value, new LienKet() { "NguoiDung" });
             if (ketQua.trangThai != 0 && ketQua.trangThai != 1)
             {
                 return Redirect("/?tb=" + HttpUtility.UrlEncode("Lấy tin nhắn lỗi."));
@@ -126,10 +126,13 @@ namespace LCTMoodle.Controllers
             }
             var khach = ketQua.ketQua as NguoiDungDTO;
 
+            //Chuyển trạng thái tin nhắn sang đã đọc
+            ketQua = TinNhanBUS.capNhatTrangThaiDaDocTinNhan(khach.ma.Value, maNguoiDung.Value, true);
+
             ketQua = TinNhanBUS.lay(khach.ma.Value, maNguoiDung.Value, new LienKet() { "NguoiDung" });
-            if (ketQua.trangThai != 0)
+            if (ketQua.trangThai != 0 && ketQua.trangThai != 1)
             {
-                return Redirect("/?tb=" + HttpUtility.UrlEncode("Nội dung tin nhắn không tồn tại."));
+                return Redirect("/?tb=" + HttpUtility.UrlEncode("Không lấy được ."));
             }
 
             ViewData["TenTaiKhoanKhach"] = tenTaiKhoanKhach;
@@ -317,45 +320,9 @@ namespace LCTMoodle.Controllers
             return Json(new KetQua(renderPartialViewToString(ControllerContext, "NguoiDung/_DanhSachXacNhanThem.cshtml", ketQua.ketQua)), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult XuLyTaiHoatDongHoiDap(string loaiDTBiTacDong)
+        public ActionResult _NhanTin()
         {
-            #region Kiểm tra điều kiện
-
-            int? maNguoiDung = Session["NguoiDung"] as int?;
-            if (!maNguoiDung.HasValue)
-            {
-                return Json(new KetQua(3, "Bạn chưa đăng nhập"));
-            }
-
-            #endregion
-
-            KetQua ketQua = new KetQua();
-
-            switch (loaiDTBiTacDong)
-            {
-                case "CH":
-                    {
-                        string dsMa = CauHoiBUS.layCauHoi_DanhSachMaLienQuan(maNguoiDung).ketQua as string;
-                        ketQua = HoatDongBUS.lay_CuaDanhSachDoiTuong("CH", dsMa, 1, 5, new LienKet() { "HanhDong" });
-                        break;
-                    }
-
-                case "TL":
-                    {
-                        string dsMa = TraLoiBUS.layTraLoi_DanhSachMaLienQuan(maNguoiDung).ketQua as string;
-                        ketQua = HoatDongBUS.lay_CuaDanhSachDoiTuong("TL", dsMa, 1, 5, new LienKet() { "HanhDong" });
-                        break;
-                    }
-                default:
-                    return Json(new KetQua(1), JsonRequestBehavior.AllowGet);
-            }
-
-            if (ketQua.trangThai != 0 && ketQua.trangThai != 1)
-            {
-                return Json(ketQua, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new KetQua(0, renderPartialViewToString(ControllerContext, "HoiDap/_LichSuCauHoi.cshtml", ketQua.ketQua)), JsonRequestBehavior.AllowGet);
+            return Json(new KetQua(0, renderPartialViewToString(ControllerContext, "NguoiDung/_NhanTin.cshtml")), JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -428,6 +395,47 @@ namespace LCTMoodle.Controllers
             });
         }
 
+        public ActionResult XuLyTaiHoatDongHoiDap(string loaiDTBiTacDong)
+        {
+            #region Kiểm tra điều kiện
+
+            int? maNguoiDung = Session["NguoiDung"] as int?;
+            if (!maNguoiDung.HasValue)
+            {
+                return Json(new KetQua(3, "Bạn chưa đăng nhập"));
+            }
+
+            #endregion
+
+            KetQua ketQua = new KetQua();
+
+            switch (loaiDTBiTacDong)
+            {
+                case "CH":
+                    {
+                        string dsMa = CauHoiBUS.layCauHoi_DanhSachMaLienQuan(maNguoiDung).ketQua as string;
+                        ketQua = HoatDongBUS.lay_CuaDanhSachDoiTuong("CH", dsMa, 1, 5, new LienKet() { "HanhDong" });
+                        break;
+                    }
+
+                case "TL":
+                    {
+                        string dsMa = TraLoiBUS.layTraLoi_DanhSachMaLienQuan(maNguoiDung).ketQua as string;
+                        ketQua = HoatDongBUS.lay_CuaDanhSachDoiTuong("TL", dsMa, 1, 5, new LienKet() { "HanhDong" });
+                        break;
+                    }
+                default:
+                    return Json(new KetQua(1), JsonRequestBehavior.AllowGet);
+            }
+
+            if (ketQua.trangThai != 0 && ketQua.trangThai != 1)
+            {
+                return Json(ketQua, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new KetQua(0, renderPartialViewToString(ControllerContext, "HoiDap/_LichSuCauHoi.cshtml", ketQua.ketQua)), JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Kiểm tra
@@ -461,6 +469,34 @@ namespace LCTMoodle.Controllers
                 dsNguoiDung.Add(new
                 {
                     ma = nguoiDung.ma.Value,
+                    ten = nguoiDung.ho + " " + nguoiDung.tenLot + " " + nguoiDung.ten,
+                    moTa = "Tài khoản: " + nguoiDung.tenTaiKhoan + (nguoiDung.ngaySinh.HasValue ? ("\r\nNgày sinh: " + nguoiDung.ngaySinh.Value.ToString("d/M/yyyy")) : null)
+                });
+            }
+
+
+            return Json(new KetQua()
+            {
+                trangThai = 0,
+                ketQua = dsNguoiDung
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult _GoiY_NhanTin(string tuKhoa)
+        {
+            var ketQua = NguoiDungBUS.timKiem(tuKhoa);
+
+            if (ketQua.trangThai != 0)
+            {
+                return Json(new KetQua(1), JsonRequestBehavior.AllowGet);
+            }
+
+            List<object> dsNguoiDung = new List<object>();
+            foreach (var nguoiDung in ketQua.ketQua as List<NguoiDungDTO>)
+            {
+                dsNguoiDung.Add(new
+                {
+                    ma = nguoiDung.tenTaiKhoan,
                     ten = nguoiDung.ho + " " + nguoiDung.tenLot + " " + nguoiDung.ten,
                     moTa = "Tài khoản: " + nguoiDung.tenTaiKhoan + (nguoiDung.ngaySinh.HasValue ? ("\r\nNgày sinh: " + nguoiDung.ngaySinh.Value.ToString("d/M/yyyy")) : null)
                 });

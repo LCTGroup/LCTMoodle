@@ -11,7 +11,7 @@
     transition: 0.5s;
 }
     .khung-tin-nhan:hover {
-        background-color: #fcfcfc;
+        background-color: #eee;
     }
 
     .khung-tin-nhan .hinh-dai-dien {

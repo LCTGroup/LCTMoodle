@@ -109,3 +109,17 @@ BEGIN
 		FROM dbo.BaiVietBaiGiang
 		WHERE Ma = @0
 END
+
+GO
+--Cập nhật đã xem bài viết
+CREATE PROC dbo.capNhatBaiVietBaiGiangTheoMa_Xem (
+	@0 INT, --Ma
+	@1 INT --MaNguoiDung
+)
+AS
+BEGIN
+	DECLARE @maNguoiDung VARCHAR(MAX) = CAST(@1 AS VARCHAR(MAX)) + '|'
+	UPDATE dbo.BaiVietBaiGiang
+		SET DanhSachMaThanhVienDaXem = REPLACE(DanhSachMaThanhVienDaXem, '|' + @maNguoiDung, '|') + @maNguoiDung
+		WHERE Ma = @0
+END

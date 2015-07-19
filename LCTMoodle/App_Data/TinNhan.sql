@@ -54,7 +54,7 @@ AS
 BEGIN
 	UPDATE dbo.TinNhan
 	SET DaDoc = @2
-	WHERE MaNguoiGui = @0 AND MaNguoiNhan = @1 AND DaDoc <> @2
+	WHERE MaNguoiGui = @0 OR MaNguoiNhan = @1 AND DaDoc <> @2
 END
 
 
@@ -103,4 +103,15 @@ BEGIN
 		ORDER BY ThoiDiemGui DESC
 END
 
-themTinNhan 1,2, "Làm báo cáo chưa?"
+GO
+--Số lượng tin nhắn chưa đọc
+CREATE PROC dbo.laySoLuongTinNhanChuaDocTheoMaNguoiNhan
+(
+	@0 INT --Mã người nhận
+)
+AS
+BEGIN
+	SELECT COUNT(*)
+	FROM dbo.TinNhan
+	WHERE MaNguoiNhan = @0 AND DaDoc = 0
+END

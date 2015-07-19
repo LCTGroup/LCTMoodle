@@ -291,9 +291,16 @@
             width: 24px;
             height: 24px;
             vertical-align: bottom;
-            background-image: url('/KhoaHoc.png/KhoaHoc');
-            background-position-x: -48px;
+            background-image: url('/HoiDap.png/HoiDap');
+            background-position-x: -36px;
         }
+            .khung-tab li:nth-child(1) i {
+                background-position-y: -48px;
+            }
+            .khung-tab li:nth-child(2) i {
+                background-position-y: -72px;
+            }
+        
         .khung-tab li span {
             font-size: 15px;
         }

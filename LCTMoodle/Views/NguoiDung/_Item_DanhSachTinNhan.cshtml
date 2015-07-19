@@ -1,0 +1,37 @@
+﻿@using DTOLayer;
+@using LCTMoodle.LCTView;
+@model TinNhanDTO
+
+@if (Model != null)
+{
+    NguoiDungDTO nguoiHienThi = new NguoiDungDTO();
+    nguoiHienThi = (Model.nguoiGui.ma == (int)Session["NguoiDung"] ? Model.nguoiNhan : Model.nguoiGui );
+                
+    <a href="/NguoiDung/ChiTietTinNhan/@nguoiHienThi.tenTaiKhoan">
+        <article class="khung-tin-nhan @(Model.daDoc == false ? "chua-doc" : null)">
+            <section class="hinh-dai-dien">
+                @if (nguoiHienThi.hinhDaiDien == null)
+                {
+                    <img src="/HinhDaiDienMacDinh.png/NguoiDung" />
+                }
+                else
+                {
+                    @NguoiDungView.hinhDaiDien(nguoiHienThi)
+                }
+            </section>
+            <section class="noi-dung">
+                <div class="chi-tiet">@Model.noiDung</div>
+                @if (nguoiHienThi == null)
+                {
+                    <div class="nguoi-gui">không xác định</div>
+                }
+                else
+                {
+                    <div class="nguoi-gui">                                            
+                        @(nguoiHienThi.ho + " " + nguoiHienThi.tenLot + " " + nguoiHienThi.ten) - @View.HienThiThoiGian(Model.thoiDiemGui)
+                    </div>
+                }
+            </section>
+        </article>
+    </a>
+}

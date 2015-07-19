@@ -24,6 +24,8 @@ $(function () {
     thongBaoTrang_LCT();
 
     khoiTaoScroll($('#tin_nhan_lct'), 45);
+
+    khoiTaoNhanTin();
 });
 
 function khoiTaoScroll($khung, nhay) {
@@ -915,4 +917,47 @@ function khoiTaoPhanTrang_SuKien($danhSach, thamSo) {
             moPopupThongBao('Mở trang thất bại');
         });
     }
+}
+
+<<<<<<< HEAD
+function khoiTaoNhanTin() {
+    $('[data-chuc-nang="nhan-tin"]').on('click', function (e) {
+        moPopupFull({
+            url: '/NguoiDung/_NhanTin',
+            width: '500px',
+            thanhCong: function () {
+                var $form = $('#nhan_tin');
+                khoiTaoLCTForm($form, {
+                    submit: function () {
+                        $tenTaiKhoanNguoiDung = $('[name="TenTaiKhoanNguoiNhan"]').val();
+
+                        window.location = "/NguoiDung/ChiTietTinNhan?tenTaiKhoanKhach=" + $tenTaiKhoanNguoiDung;
+                    }
+                });
+            }
+        });
+    });
+=======
+function coTheNhinThay($item) {
+    var topW = $body.scrollTop();
+    var heightW = window.innerHeight;
+    var bottomW = topW + heightW;
+
+    var topI = $item.offset().top;
+    var heightI = $item.height()
+    var bottomI = topI + heightI;
+
+    if (heightW > heightI) {
+        if ((topW < topI && topI < bottomW) ||
+            (topW < bottomI && bottomI < bottomW)) {
+            return true;
+        }
+    }
+    else if ((topI < bottomW && bottomW < bottomI) ||
+        (topI < topW && topW < bottomI)) {
+        return true;
+    }
+
+    return false;
+>>>>>>> aaddac56795521552b333568e6c4b62f0352ee62
 }
