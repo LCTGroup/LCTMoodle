@@ -347,5 +347,29 @@ namespace LCTMoodle.WebServices
 
             return cm_ThongBao;
         }
+
+        /// <summary>
+        /// Webservice Xóa bình luận
+        /// </summary>
+        /// <param name="maNguoiXoa"></param>
+        /// <param name="maBinhLuan"></param>
+        /// <returns>clientmodel_ThongBao</returns>
+        public clientmodel_ThongBao xoaBinhLuan(int maNguoiXoa, int maBinhLuan)
+        {
+            KetQua ketQua = BaiVietDienDanBUS.xoaTheoMa(maBinhLuan, maNguoiXoa);
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+            cm_ThongBao.trangThai = ketQua.trangThai;
+
+            if(ketQua.trangThai == 0)
+            {
+                cm_ThongBao.thongBao = "Xóa bình luận thành công";
+            }
+            else
+            {
+                cm_ThongBao.thongBao = ketQua.ketQua as string;
+            }
+
+            return cm_ThongBao;
+        }
     }
 }
