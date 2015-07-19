@@ -170,6 +170,7 @@
     <Compile Include="WebServices\Client_Model\clientmodel_ThongBao.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_ThongBao_List.cs" />
     <Compile Include="WebServices\Client_Model\clientmodel_TinNhan.cs" />
+    <Compile Include="WebServices\Iwcf_CaNhan.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi.cs" />
     <Compile Include="WebServices\Iwcf_CauHoi_TraLoi.cs" />
     <Compile Include="WebServices\Iwcf_ChuDe.cs" />
@@ -183,6 +184,9 @@
     <Compile Include="WebServices\Iwcf_NguoiDung.cs" />
     <Compile Include="WebServices\Iwcf_Quyen.cs" />
     <Compile Include="WebServices\Iwcf_TinNhan.cs" />
+    <Compile Include="WebServices\wcf_CaNhan.svc.cs">
+      <DependentUpon>wcf_CaNhan.svc</DependentUpon>
+    </Compile>
     <Compile Include="WebServices\wcf_CauHoi.svc.cs">
       <DependentUpon>wcf_CauHoi.svc</DependentUpon>
     </Compile>
@@ -472,6 +476,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="WebServices\wcf_CaNhan.svc" />
     <Content Include="WebServices\wcf_CauHoi.svc" />
     <Content Include="WebServices\wcf_CauHoi_TraLoi.svc" />
     <Content Include="WebServices\wcf_ChuDe.svc" />
