@@ -919,7 +919,6 @@ function khoiTaoPhanTrang_SuKien($danhSach, thamSo) {
     }
 }
 
-<<<<<<< HEAD
 function khoiTaoNhanTin() {
     $('[data-chuc-nang="nhan-tin"]').on('click', function (e) {
         moPopupFull({
@@ -937,7 +936,7 @@ function khoiTaoNhanTin() {
             }
         });
     });
-=======
+    
 function coTheNhinThay($item) {
     var topW = $body.scrollTop();
     var heightW = window.innerHeight;
@@ -959,5 +958,4 @@ function coTheNhinThay($item) {
     }
 
     return false;
->>>>>>> aaddac56795521552b333568e6c4b62f0352ee62
 }
