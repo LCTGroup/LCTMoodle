@@ -180,9 +180,12 @@ namespace LCTMoodle.WebServices
                         lst_KhoaHoc[lst_KhoaHoc.Count - 1].ngayHetHan = khoaHoc.thoiDiemHetHan.Value;
                     }
 
-                    if(khoaHoc.hinhDaiDien.ma != null && khoaHoc.hinhDaiDien.ten != null)
+                    if(khoaHoc.hinhDaiDien != null)
                     {
-                        lst_KhoaHoc[lst_KhoaHoc.Count - 1].hinhAnh = khoaHoc.hinhDaiDien.ma.Value + khoaHoc.hinhDaiDien.duoi;
+                        if (khoaHoc.hinhDaiDien.ma != null && khoaHoc.hinhDaiDien.ten != null)
+                        {
+                            lst_KhoaHoc[lst_KhoaHoc.Count - 1].hinhAnh = khoaHoc.hinhDaiDien.ma.Value + khoaHoc.hinhDaiDien.duoi;
+                        }
                     }
                 }
             }
@@ -245,10 +248,14 @@ namespace LCTMoodle.WebServices
                                     lst_KhoaHoc[lst_KhoaHoc.Count - 1].ngayHetHan = khoaHoc.thoiDiemHetHan.Value;
                                 }
 
-                                if (khoaHoc.hinhDaiDien.ma != null && khoaHoc.hinhDaiDien.duoi != null)
+                                if(khoaHoc.hinhDaiDien != null)
                                 {
-                                    lst_KhoaHoc[lst_KhoaHoc.Count - 1].hinhAnh = khoaHoc.hinhDaiDien.ma.Value + khoaHoc.hinhDaiDien.duoi;
+                                    if (khoaHoc.hinhDaiDien.ma != null && khoaHoc.hinhDaiDien.duoi != null)
+                                    {
+                                        lst_KhoaHoc[lst_KhoaHoc.Count - 1].hinhAnh = khoaHoc.hinhDaiDien.ma.Value + khoaHoc.hinhDaiDien.duoi;
+                                    }
                                 }
+
                                 dem++;
                             }
                         }
@@ -290,9 +297,12 @@ namespace LCTMoodle.WebServices
                                 lst_KhoaHoc[lst_KhoaHoc.Count - 1].ngayHetHan = khoaHoc.thoiDiemHetHan.Value;
                             }
 
-                            if (khoaHoc.hinhDaiDien.ma != null && khoaHoc.hinhDaiDien.duoi != null)
+                            if(khoaHoc.hinhDaiDien != null)
                             {
-                                lst_KhoaHoc[lst_KhoaHoc.Count - 1].hinhAnh = khoaHoc.hinhDaiDien.ma.Value + khoaHoc.hinhDaiDien.duoi;
+                                if (khoaHoc.hinhDaiDien.ma != null && khoaHoc.hinhDaiDien.duoi != null)
+                                {
+                                    lst_KhoaHoc[lst_KhoaHoc.Count - 1].hinhAnh = khoaHoc.hinhDaiDien.ma.Value + khoaHoc.hinhDaiDien.duoi;
+                                }
                             }
                         }
                     }
@@ -461,7 +471,5 @@ namespace LCTMoodle.WebServices
 
             return cm_ThongBao;
         }
-
-
     }
 }

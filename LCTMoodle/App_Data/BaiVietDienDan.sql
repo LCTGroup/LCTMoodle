@@ -11,7 +11,8 @@ CREATE TABLE dbo.BaiVietDienDan(
 	MaNguoiTao INT NOT NULL,
 	MaKhoaHoc INT NOT NULL,
 	Ghim BIT,
-	Diem INT
+	Diem INT,
+	DanhSachMaThanhVienDaXem VARCHAR(MAX) NOT NULL DEFAULT '|'
 )
 
 GO
@@ -174,5 +175,19 @@ BEGIN
 	--Cập nhật điểm
 	UPDATE dbo.BaiVietDienDan
 		SET Diem = @1
+		WHERE Ma = @0
+END
+
+GO
+--Cập nhật đã xem bài viết
+ALTER PROC dbo.capNhatBaiVietDienDanTheoMa_Xem (
+	@0 INT, --Ma
+	@1 INT --MaNguoiDung
+)
+AS
+BEGIN
+	DECLARE @maNguoiDung VARCHAR(MAX) = CAST(@1 AS VARCHAR(MAX)) + '|'
+	UPDATE dbo.BaiVietDienDan
+		SET DanhSachMaThanhVienDaXem = REPLACE(DanhSachMaThanhVienDaXem, '|' + @maNguoiDung, '|') + @maNguoiDung
 		WHERE Ma = @0
 END

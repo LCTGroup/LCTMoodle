@@ -97,6 +97,11 @@ ALTER PROC dbo.layHoatDong_CuaDanhSachDoiTuong (
 )
 AS
 BEGIN
+	IF (@1 IS NULL OR @1 = '')
+	BEGIN
+		RETURN
+	END
+	
 	DECLARE @trang VARCHAR(MAX)
 	IF (@2 IS NULL OR @3 IS NULL)
 	BEGIN

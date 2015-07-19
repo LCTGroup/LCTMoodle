@@ -199,7 +199,7 @@
 
                 .khung-bt-can-hoan-thanh .khung-thoi-gian .khung-tong i:nth-last-child(odd) {
                     background-color: #f90;
-                    opacity: .05;
+                    opacity: .1;
                 }
 
         .khung-bt-can-hoan-thanh .khung-thoi-gian .thoi-gian {

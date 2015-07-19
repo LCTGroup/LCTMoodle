@@ -9,12 +9,29 @@ CREATE TABLE dbo.BaiVietTaiLieu(
 	MaTapTin INT DEFAULT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
 	MaNguoiTao INT NOT NULL,
-	MaKhoaHoc INT NOT NULL
+	MaKhoaHoc INT NOT NULL,
+	DanhSachMaThanhVienDaXem VARCHAR(MAX) NOT NULL DEFAULT '|'
 )
 
 GO
 --Trigger xóa
 --Xóa tập tin
+CREATE TRIGGER dbo.xoaBaiVietTaiLieu_TRIGGER
+ON dbo.BaiVietTaiLieu
+AFTER DELETE
+AS
+BEGIN
+	--Xóa tập tin
+	DELETE TT
+		FROM 
+			dbo.TapTin_BaiVietTaiLieu_TapTin TT
+				INNER JOIN deleted d ON
+					TT.Ma = d.MaTapTin
+END
+
+GO
+--Trigger thêm
+--Bổ sung trường danh sách mã thành viên đã xem
 CREATE TRIGGER dbo.xoaBaiVietTaiLieu_TRIGGER
 ON dbo.BaiVietTaiLieu
 AFTER DELETE
@@ -42,14 +59,7 @@ BEGIN
 	INSERT INTO dbo.BaiVietTaiLieu(TieuDe, NoiDung, MaTapTin, MaNguoiTao, MaKhoaHoc)
 		VALUES (@0, @1, @2, @3, @4)
 
-	SELECT 
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietTaiLieu
 		WHERE Ma = @@IDENTITY
 END
@@ -61,14 +71,7 @@ ALTER PROC dbo.layBaiVietTaiLieuTheoMaKhoaHoc (
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietTaiLieu
 		WHERE MaKhoaHoc = @0
 		ORDER BY ThoiDiemTao ASC
@@ -92,14 +95,7 @@ ALTER PROC dbo.layBaiVietTaiLieuTheoMa (
 )
 AS
 BEGIN
-	SELECT TOP 1
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietTaiLieu
 		WHERE Ma = @0
 END
@@ -123,14 +119,21 @@ BEGIN
 		')
 	END	
 	
-	SELECT TOP 1
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietTaiLieu
+		WHERE Ma = @0
+END
+
+GO
+--Cập nhật đã xem bài viết
+CREATE PROC dbo.capNhatBaiVietTaiLieuTheoMa_Xem (
+	@0 INT, --Ma
+	@1 INT --MaNguoiDung
+)
+AS
+BEGIN
+	DECLARE @maNguoiDung VARCHAR(MAX) = CAST(@1 AS VARCHAR(MAX)) + '|'
+	UPDATE dbo.BaiVietTaiLieu
+		SET DanhSachMaThanhVienDaXem = REPLACE(DanhSachMaThanhVienDaXem, '|' + @maNguoiDung, '|') + @maNguoiDung
 		WHERE Ma = @0
 END

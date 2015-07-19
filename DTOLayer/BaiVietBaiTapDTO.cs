@@ -24,5 +24,6 @@ namespace DTOLayer
         public NguoiDungDTO nguoiTao;
         public KhoaHocDTO khoaHoc;
         public List<BaiTapNopDTO> danhSachBaiTapNop;
+        public string danhSachMaThanhVienDaXem;
     }
 }

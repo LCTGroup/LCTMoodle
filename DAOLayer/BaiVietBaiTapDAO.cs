@@ -76,6 +76,9 @@ namespace DAOLayer
                                 ma = maTam
                             };
                         break;
+                    case "DanhSachMaThanhVienDaXem":
+                        baiViet.danhSachMaThanhVienDaXem = layString(dong, i, "|");
+                        break;
                     default:
                         break;
                 }
@@ -170,6 +173,19 @@ namespace DAOLayer
                 },
                 lienKet
             );
+        }
+
+        public static KetQua capNhatTheoMa_Xem(int? ma, int? maNguoiDung)
+        {
+            return khongTruyVan
+                (
+                   "capNhatBaiVietBaiTapTheoMa_Xem",
+                   new object[]
+                   {
+                       ma,
+                       maNguoiDung
+                   }
+                );
         }
     }
 }

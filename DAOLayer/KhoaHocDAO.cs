@@ -241,5 +241,19 @@ namespace DAOLayer
                     lienKet
                 );
         }
+
+        public static KetQua layTheoMa_DemBaiMoiVoiThanhVien(int? ma, int? maNguoiDung, LienKet lienKet = null)
+        {
+            return layDong
+                (
+                    "layKhoaHocTheoMa_DemBaiMoiVoiThanhVien",
+                    new object[]
+                    {
+                        ma,
+                        maNguoiDung
+                    },
+                    lienKet
+                );     
+        }
     }
 }

@@ -10,7 +10,8 @@ CREATE TABLE dbo.BaiVietBaiGiang (
 	MaTapTin INT,
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
 	MaNguoiTao INT NOT NULL,
-	MaKhoaHoc INT NOT NULL
+	MaKhoaHoc INT NOT NULL,
+	DanhSachMaThanhVienDaXem VARCHAR(MAX) NOT NULL DEFAULT '|'
 )
 
 GO
@@ -44,15 +45,7 @@ BEGIN
 	INSERT INTO dbo.BaiVietBaiGiang(TieuDe, NoiDung, TomTat, MaTapTin, MaNguoiTao, MaKhoaHoc)
 		VALUES (@0, @1, @2, @3, @4, @5)
 
-	SELECT 
-		Ma,
-		TieuDe,
-		NoiDung,
-		TomTat,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietBaiGiang
 		WHERE Ma = @@IDENTITY
 END
@@ -64,15 +57,7 @@ ALTER PROC dbo.layBaiVietBaiGiangTheoMaKhoaHoc (
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		TieuDe,
-		NoiDung,
-		TomTat,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietBaiGiang
 		WHERE MaKhoaHoc = @0
 		ORDER BY ThoiDiemTao ASC
@@ -96,15 +81,7 @@ ALTER PROC dbo.layBaiVietBaiGiangTheoMa (
 )
 AS
 BEGIN
-	SELECT TOP 1
-		Ma,
-		TieuDe,
-		NoiDung,
-		TomTat,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietBaiGiang
 		WHERE Ma = @0
 END
@@ -128,15 +105,21 @@ BEGIN
 		')
 	END	
 	
-	SELECT TOP 1
-		Ma,
-		TieuDe,
-		NoiDung,
-		TomTat,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietBaiGiang
+		WHERE Ma = @0
+END
+
+GO
+--Cập nhật đã xem bài viết
+CREATE PROC dbo.capNhatBaiVietBaiGiangTheoMa_Xem (
+	@0 INT, --Ma
+	@1 INT --MaNguoiDung
+)
+AS
+BEGIN
+	DECLARE @maNguoiDung VARCHAR(MAX) = CAST(@1 AS VARCHAR(MAX)) + '|'
+	UPDATE dbo.BaiVietBaiGiang
+		SET DanhSachMaThanhVienDaXem = REPLACE(DanhSachMaThanhVienDaXem, '|' + @maNguoiDung, '|') + @maNguoiDung
 		WHERE Ma = @0
 END

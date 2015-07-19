@@ -1249,8 +1249,6 @@ main > .cot-trai {
 
 /*#region Khung thông tin */
 
-/*#endregion */
-
 /*#region Thông tin người dùng */
 
 .cot-trai .khung-thong-tin {
@@ -1339,7 +1337,7 @@ main > .cot-trai {
             background-color: #08c;
         }
     .cot-trai nav > ul > li > ul > li > a {
-        padding: 5px 0px 5px 10px;
+        padding: 5px 10px;
         font-size: 13px;
         line-height: 20px;
     }
@@ -1351,6 +1349,32 @@ main > .cot-trai {
             background-color: #08c;
             height: 100%;
         }
+        
+        .cot-trai nav > ul > li > ul > li > a:hover:after {
+            background-color: #08c;
+            height: 100%;
+        }
+
+        .cot-trai nav .khoa-hoc-cua-toi-lct .sl-bai-moi {
+            padding: 0px 5px;
+            border: 1px solid #f0f0f0;
+            font-family: Berlin;
+            background-color: #08c;
+            color: #fff;
+            font-size: 16px;
+            line-height: 0;
+        }
+ 
+        .cot-trai nav .khoa-hoc-cua-toi-lct .sl-bai-moi {
+            padding: 0px 5px;
+            border: 1px solid #f0f0f0;
+            font-family: Berlin;
+            background-color: #08c;
+            color: #fff;
+            font-size: 16px;
+            line-height: 0;
+        }
+/*#endregion */
 
 /*#endregion */
 

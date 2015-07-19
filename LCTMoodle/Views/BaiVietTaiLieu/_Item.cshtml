@@ -6,10 +6,13 @@
     var maNguoiDung = Session["NguoiDung"] as int?;
 
     string[] dsQuyen;
-    bool coQuyenSua, coQuyenXoa;
+    bool coQuyenSua, coQuyenXoa, chuaXem;
 
     if (maNguoiDung.HasValue)
     {
+        var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
+        chuaXem = ketQua.trangThai == 0 && ((ketQua.ketQua as DTOLayer.KhoaHoc_NguoiDungDTO).trangThai == 0 && Model.danhSachMaThanhVienDaXem.IndexOf("|" + maNguoiDung.Value + "|") == -1);
+        
         if (ViewData.ContainsKey("DSQuyen"))
         {
             dsQuyen = ViewData["DSQuyen"] as string[];
@@ -19,31 +22,30 @@
             dsQuyen = QuyenView.layDSQuyen("KH", maKhoaHoc, maNguoiDung);
         }
 
-        coQuyenSua = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BG_Sua");
-        coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BG_Xoa");
+        coQuyenSua = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "TL_Sua");
+        coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "TL_Xoa");
     }
     else
     {
         dsQuyen = null;
-        coQuyenSua = coQuyenXoa = false;
+        chuaXem = coQuyenSua = coQuyenXoa = false;
     }
 }
 
-<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma=@Model.ma>
+<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma="@Model.ma" @(chuaXem ? "data-chua-xem" : null)>
     <h2 class="tieu-de">
-        <i class="pe-7s-notebook"></i>
+        <i class="pe-7s-ribbon"></i>
         @Model.tieuDe
     </h2>
     <section data-doi-tuong="khung-noi-dung" class="khung-noi-dung">
         <section class="noi-dung noi-dung-ckeditor">
             @Html.Raw(Model.noiDung)
-        </section>        
-        @if (@Model.tapTin != null)
+        </section>
+        @if (Model.tapTin != null)
         {
             <section class="tap-tin">
-                <a @if (TapTinHelper.coHoTroXem(Model.tapTin.duoi)) {     
-                    @: data-chuc-nang="mo-popup-tap-tin"
-                } href="/LayTapTin/BaiVietTaiLieu_TapTin/@Model.tapTin.ma">
+                <a @if (TapTinHelper.coHoTroXem(Model.tapTin.duoi)) {      @: data-chuc-nang="mo-popup-tap-tin"
+                                   } href="/LayTapTin/BaiVietTaiLieu_TapTin/@Model.tapTin.ma">
                     <img src="/LayHinh/BaiVietTaiLieu_TapTin/@Model.tapTin.ma" />
                     <span>@Model.tapTin.ten</span>
                 </a>

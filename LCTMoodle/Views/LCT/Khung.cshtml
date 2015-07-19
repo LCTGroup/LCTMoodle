@@ -192,13 +192,20 @@
                                             <a href="/KhoaHocCuaToi">
                                                 Khóa học của tôi
                                             </a>
-                                            <ul>
+                                            <ul class="khoa-hoc-cua-toi-lct">
                                                 @foreach (var khoaHoc in ketQua.ketQua as List<DTOLayer.KhoaHocDTO>)
                                                 {
                                                     if (khoaHoc != null)
                                                     {
                                                         <li>
                                                             <a href="/KhoaHoc/@khoaHoc.ma">
+                                                                @{
+                                                                    string slBaiMoi = Helpers.LCTHelper.layString(khoaHoc.duLieuThem, "SoLuongBaiMoi");
+                                                                    if (slBaiMoi != null && slBaiMoi != "0")
+                                                                    {
+                                                                        @:<span class="sl-bai-moi">@slBaiMoi</span>
+                                                                    }
+                                                                }
                                                                 @khoaHoc.ten
                                                             </a>
                                                         </li>

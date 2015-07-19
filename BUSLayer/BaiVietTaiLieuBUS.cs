@@ -256,5 +256,10 @@ namespace BUSLayer
 
             return BaiVietTaiLieuDAO.capNhatTheoMa(ma, bang, lienKet);
         }
+
+        public static KetQua capNhatTheoMa_Xem(int ma, int maNguoiDung)
+        {
+            return BaiVietTaiLieuDAO.capNhatTheoMa_Xem(ma, maNguoiDung);
+        }
     }
 }

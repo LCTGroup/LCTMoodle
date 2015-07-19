@@ -16,5 +16,6 @@ namespace DTOLayer
         public KhoaHocDTO khoaHoc;
         public bool ghim;
         public int? diem;
+        public string danhSachMaThanhVienDaXem;
     }
 }

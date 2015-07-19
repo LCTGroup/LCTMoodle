@@ -133,9 +133,12 @@ namespace LCTMoodle.WebServices
                         }
                     }
 
-                    if(chuDe.hinhDaiDien.ma != null && chuDe.hinhDaiDien.duoi != null)
+                    if(chuDe.hinhDaiDien != null)
                     {
-                        lst_ChuDe[lst_ChuDe.Count - 1].hinhAnh = chuDe.hinhDaiDien.ma.Value + chuDe.hinhDaiDien.duoi;
+                        if (chuDe.hinhDaiDien.ma != null && chuDe.hinhDaiDien.duoi != null)
+                        {
+                            lst_ChuDe[lst_ChuDe.Count - 1].hinhAnh = chuDe.hinhDaiDien.ma.Value + chuDe.hinhDaiDien.duoi;
+                        }
                     }
                 }
             }

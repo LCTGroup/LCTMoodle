@@ -268,4 +268,44 @@ BEGIN
 		SET SoLuongThanhVien = @soLuongThanhVien
 		WHERE Ma = @0
 END
-select * from khoahoc
+
+GO
+--Lấy khóa học theo mã, đếm
+CREATE PROC dbo.layKhoaHocTheoMa_DemBaiMoiVoiThanhVien (
+	@0 INT, --Ma
+	@1 INT --MaNguoiDung
+)
+AS
+BEGIN
+	DECLARE @maNguoiDung VARCHAR(MAX) = '|' + CAST(@1 AS VARCHAR(MAX)) + '|'
+	DECLARE @slBaiMoi INT = 0
+	
+	SELECT @slBaiMoi += COUNT(1)
+		FROM BaiVietDienDan
+		WHERE 
+			MaKhoaHoc = @0 AND
+			DanhSachMaThanhVienDaXem NOT LIKE @maNguoiDung
+	
+	SELECT @slBaiMoi += COUNT(1)
+		FROM BaiVietBaiTap
+		WHERE 
+			MaKhoaHoc = @0 AND
+			DanhSachMaThanhVienDaXem NOT LIKE @maNguoiDung
+	
+	SELECT @slBaiMoi += COUNT(1)
+		FROM BaiVietBaiGiang
+		WHERE 
+			MaKhoaHoc = @0 AND
+			DanhSachMaThanhVienDaXem NOT LIKE @maNguoiDung
+	
+	SELECT @slBaiMoi += COUNT(1)
+		FROM BaiVietTaiLieu
+		WHERE 
+			MaKhoaHoc = @0 AND
+			DanhSachMaThanhVienDaXem NOT LIKE @maNguoiDung
+
+
+	SELECT *, @slBaiMoi SoLuongBaiMoi
+		FROM dbo.KhoaHoc
+		WHERE Ma = @0
+END
