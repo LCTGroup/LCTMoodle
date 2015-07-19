@@ -87,15 +87,10 @@ function khoiTaoXuLyChuaXem(url) {
     $(window).off('scroll.chua_xem').on('scroll.chua_xem', function () {
         var sl = !$_DSChuaXem ? 0 : $_DSChuaXem.length;
         if (sl > 0) {
-            var scrollTop = $body.scrollTop();
-            var windowHeight = window.innerHeight;
-
             for (var i = sl - 1; i >= 0; i--) {
-                var $item = $($_DSChuaXem[i]);
-                var offsetTop = $item.offset().top;
-                var height = $item.height();
+                var $item = $($_DSChuaXem[i]);                     
 
-                if (Math.abs((scrollTop + windowHeight) - (offsetTop + height)) < height) {
+                if (coTheNhinThay($item)) {
                     $_DSChuaXem.splice(i, 1);
                     
                     $.ajax({
@@ -357,6 +352,8 @@ function khoiTaoForm_DienDan($form) {
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     var $item = $(data.ketQua);
+
+                    $_DSChuaXem = $_DSChuaXem.add($item);
 
                     khoiTaoItem_DienDan($item)
                     $_DanhSach.prepend($item);
@@ -803,6 +800,9 @@ function hienThi_BaiGiang(ma) {
 
             khoiTaoForm_BaiGiang($_KhungHienThi.find('#tao_bai_viet_form'));
             khoiTaoItem_BaiGiang($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
+
+            $_DSChuaXem = $_DanhSach.find('[data-chua-xem]');
+            khoiTaoXuLyChuaXem('/BaiVietBaiGiang/XuLyCapNhatDaXem');
         }
         else {
             moPopupThongBao(data);
@@ -842,6 +842,8 @@ function khoiTaoForm_BaiGiang($form) {
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     var $mucBaiViet = $(data.ketQua);
+
+                    $_DSChuaXem = $_DSChuaXem.add($mucBaiViet);
 
                     khoiTaoItem_BaiGiang($mucBaiViet);
                     $_DanhSach.append($mucBaiViet);
@@ -996,6 +998,9 @@ function hienThi_TaiLieu(ma) {
 
             khoiTaoForm_TaiLieu($_KhungHienThi.find('#tao_bai_viet_form'));
             khoiTaoItem_TaiLieu($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
+
+            $_DSChuaXem = $_DanhSach.find('[data-chua-xem]');
+            khoiTaoXuLyChuaXem('/BaiVietTaiLieu/XuLyCapNhatDaXem');
         }
         else {
             moPopupThongBao(data);
@@ -1035,6 +1040,8 @@ function khoiTaoForm_TaiLieu($form) {
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     var $mucBaiViet = $(data.ketQua);
+
+                    $_DSChuaXem = $_DSChuaXem.add($mucBaiViet);
 
                     khoiTaoItem_TaiLieu($mucBaiViet);
                     $_DanhSach.append($mucBaiViet);
@@ -1152,15 +1159,15 @@ function khoiTaoItem_TaiLieu($danhSachTaiLieu) {
     khoiTaoNutMoPopupTapTin($danhSachTaiLieu.find('[data-chuc-nang="mo-popup-tap-tin"]'));
 }
 
-function moItem_TaiLieu($baiGiang) {
-    if ($baiGiang.hasClass('mo')) {
-        $baiGiang.removeClass('mo');
+function moItem_TaiLieu($taiLieu) {
+    if ($taiLieu.hasClass('mo')) {
+        $taiLieu.removeClass('mo');
     }
     else {
         $_DanhSach.find('.mo[data-doi-tuong="muc-bai-viet"]').removeClass('mo');
-        $baiGiang.addClass('mo');
+        $taiLieu.addClass('mo');
         $body.animate({
-            scrollTop: $baiGiang.offset().top
+            scrollTop: $taiLieu.offset().top - 50
         }, 200);
     }
 }
@@ -1230,10 +1237,12 @@ function khoiTaoForm_BaiTap($form) {
                 $tai.tat();
             }).done(function (data) {
                 if (data.trangThai == 0) {
-                    var $htmlBaiViet = $(data.ketQua);
+                    var $item = $(data.ketQua);
 
-                    khoiTaoItem_BaiTap($htmlBaiViet);
-                    $_DanhSach.prepend($htmlBaiViet);
+                    $_DSChuaXem = $_DSChuaXem.add($item);
+
+                    khoiTaoItem_BaiTap($item);
+                    $_DanhSach.prepend($item);
 
                     khoiTaoLCTFormMacDinh($form);
                     $doiTuongAn.hide();

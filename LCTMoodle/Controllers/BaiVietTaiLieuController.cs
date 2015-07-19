@@ -191,5 +191,15 @@ namespace LCTMoodle.Controllers
                 );
             }
         }
+
+        [HttpPost]
+        public ActionResult XuLyCapNhatDaXem(int ma)
+        {
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+            return Json(BaiVietTaiLieuBUS.capNhatTheoMa_Xem(ma, (int)Session["NguoiDung"]));
+        }
 	}
 }

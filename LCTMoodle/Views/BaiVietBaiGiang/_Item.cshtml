@@ -6,10 +6,13 @@
     var maNguoiDung = Session["NguoiDung"] as int?;
 
     string[] dsQuyen;
-    bool coQuyenSua, coQuyenXoa;
+    bool coQuyenSua, coQuyenXoa, chuaXem;
     
     if (maNguoiDung.HasValue)
     {
+        var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
+        chuaXem = ketQua.trangThai == 0 && ((ketQua.ketQua as DTOLayer.KhoaHoc_NguoiDungDTO).trangThai == 0 && Model.danhSachMaThanhVienDaXem.IndexOf("|" + maNguoiDung.Value + "|") == -1);
+        
         if (ViewData.ContainsKey("DSQuyen"))
         {
             dsQuyen = ViewData["DSQuyen"] as string[];
@@ -25,11 +28,11 @@
     else
     {
         dsQuyen = null;
-        coQuyenSua = coQuyenXoa = false;
+        chuaXem = coQuyenSua = coQuyenXoa = false;
     }
 }
 
-<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma=@Model.ma>
+<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-ma="@Model.ma" @(chuaXem ? "data-chua-xem" : null)>
     <h2 class="tieu-de">
         <i class="pe-7s-notebook"></i>
         @Model.tieuDe

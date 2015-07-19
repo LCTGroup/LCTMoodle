@@ -463,9 +463,14 @@ namespace BUSLayer
             };
         }
 
-        public static KetQua layTheoMaNguoiDungVaTrangThai(int maNguoiDung, int trangThai)
+        public static KetQua layTheoMaNguoiDungVaTrangThai(int maNguoiDung, int trangThai, LienKet lienKet = null)
         {
-            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDungVaTrangThai(maNguoiDung, trangThai, new LienKet() { "KhoaHoc" });
+            LienKet lk = new LienKet() 
+            {
+                { "KhoaHoc", lienKet }
+            };
+
+            var ketQua = KhoaHoc_NguoiDungDAO.layTheoMaNguoiDungVaTrangThai(maNguoiDung, trangThai, lk);
 
             if (ketQua.trangThai != 0)
             {

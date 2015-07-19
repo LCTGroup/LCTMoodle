@@ -533,12 +533,27 @@
     position: relative;
 }
 
+    [data-hien-thi="bai-giang"] .muc-bai-viet[data-chua-xem]:before {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: 1;
+        transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        top: -9px;
+        left: -9px;
+        border: 10px solid transparent;
+        border-right-color: #08c;
+    }
+
     [data-hien-thi="bai-giang"] .muc-bai-viet .tieu-de {
         color: #333;
         font-size: 16px;
         cursor: pointer;
     }
-
+    
+        [data-hien-thi="bai-giang"] .muc-bai-viet[data-chua-xem] .tieu-de,
         [data-hien-thi="bai-giang"] .muc-bai-viet.mo .tieu-de {
             background-color: #fff;
             border: 1px solid #eee;
@@ -553,9 +568,10 @@
             font-size: 26px;
             vertical-align: middle
         }
-
+        
+    
+            [data-hien-thi="bai-giang"] .muc-bai-viet[data-chua-xem] .tieu-de i,
             [data-hien-thi="bai-giang"] .muc-bai-viet.mo .tieu-de i {
-                font-size: 26px;
                 vertical-align: -3px;
             }
 
@@ -566,12 +582,32 @@
         margin-top: 5px;
         display: none;
     }
-
+    
+        [data-hien-thi="bai-giang"] .muc-bai-viet[data-chua-xem] .khung-noi-dung,
         [data-hien-thi="bai-giang"] .muc-bai-viet.mo .khung-noi-dung {
             border-top: 0;
             margin-top: 0;
             display: block;
         }
+        
+            [data-hien-thi="bai-giang"] .muc-bai-viet[data-chua-xem]:not(.mo) .khung-noi-dung {
+                max-height: 100px;
+                overflow: hidden;
+                position: relative;
+            }
+        
+                [data-hien-thi="bai-giang"] .muc-bai-viet[data-chua-xem]:not(.mo) .khung-noi-dung:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 50px;
+                    background-image: -webkit-linear-gradient(transparent, #fff);
+                    background-image: -moz-linear-gradient(transparent, #fff);
+                    background-image: linear-gradient(transparent, #fff);
+                }
         
         [data-hien-thi="bai-giang"] .muc-bai-viet .khung-noi-dung .tap-tin {
             margin-top: 10px;
@@ -607,12 +643,27 @@
     position: relative;
 }
 
+    [data-hien-thi="tai-lieu"] .muc-bai-viet[data-chua-xem]:before {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: 1;
+        transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        top: -9px;
+        left: -9px;
+        border: 10px solid transparent;
+        border-right-color: #08c;
+    }
+
     [data-hien-thi="tai-lieu"] .muc-bai-viet .tieu-de {
         color: #333;
         font-size: 16px;
         cursor: pointer;
     }
-
+    
+        [data-hien-thi="tai-lieu"] .muc-bai-viet[data-chua-xem] .tieu-de,
         [data-hien-thi="tai-lieu"] .muc-bai-viet.mo .tieu-de {
             background-color: #fff;
             border: 1px solid #eee;
@@ -627,9 +678,10 @@
             font-size: 26px;
             vertical-align: middle
         }
-
+        
+    
+            [data-hien-thi="tai-lieu"] .muc-bai-viet[data-chua-xem] .tieu-de i,
             [data-hien-thi="tai-lieu"] .muc-bai-viet.mo .tieu-de i {
-                font-size: 26px;
                 vertical-align: -3px;
             }
 
@@ -640,12 +692,32 @@
         margin-top: 5px;
         display: none;
     }
-
+    
+        [data-hien-thi="tai-lieu"] .muc-bai-viet[data-chua-xem] .khung-noi-dung,
         [data-hien-thi="tai-lieu"] .muc-bai-viet.mo .khung-noi-dung {
             border-top: 0;
             margin-top: 0;
             display: block;
         }
+        
+            [data-hien-thi="tai-lieu"] .muc-bai-viet[data-chua-xem]:not(.mo) .khung-noi-dung {
+                max-height: 100px;
+                overflow: hidden;
+                position: relative;
+            }
+        
+                [data-hien-thi="tai-lieu"] .muc-bai-viet[data-chua-xem]:not(.mo) .khung-noi-dung:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 50px;
+                    background-image: -webkit-linear-gradient(transparent, #fff);
+                    background-image: -moz-linear-gradient(transparent, #fff);
+                    background-image: linear-gradient(transparent, #fff);
+                }
         
         [data-hien-thi="tai-lieu"] .muc-bai-viet .khung-noi-dung .tap-tin {
             margin-top: 10px;

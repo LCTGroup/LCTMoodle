@@ -30,6 +30,22 @@ BEGIN
 END
 
 GO
+--Trigger thêm
+--Bổ sung trường danh sách mã thành viên đã xem
+CREATE TRIGGER dbo.xoaBaiVietTaiLieu_TRIGGER
+ON dbo.BaiVietTaiLieu
+AFTER DELETE
+AS
+BEGIN
+	--Xóa tập tin
+	DELETE TT
+		FROM 
+			dbo.TapTin_BaiVietTaiLieu_TapTin TT
+				INNER JOIN deleted d ON
+					TT.Ma = d.MaTapTin
+END
+
+GO
 --Thêm bài viết tài liệu
 ALTER PROC dbo.themBaiVietTaiLieu(
 	@0 NVARCHAR(MAX), --TieuDe
@@ -105,5 +121,19 @@ BEGIN
 	
 	SELECT *
 		FROM dbo.BaiVietTaiLieu
+		WHERE Ma = @0
+END
+
+GO
+--Cập nhật đã xem bài viết
+CREATE PROC dbo.capNhatBaiVietTaiLieuTheoMa_Xem (
+	@0 INT, --Ma
+	@1 INT --MaNguoiDung
+)
+AS
+BEGIN
+	DECLARE @maNguoiDung VARCHAR(MAX) = CAST(@1 AS VARCHAR(MAX)) + '|'
+	UPDATE dbo.BaiVietTaiLieu
+		SET DanhSachMaThanhVienDaXem = REPLACE(DanhSachMaThanhVienDaXem, '|' + @maNguoiDung, '|') + @maNguoiDung
 		WHERE Ma = @0
 END
