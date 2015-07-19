@@ -112,14 +112,21 @@ namespace LCTMoodle.Controllers
         }
 
         [ValidateInput(false)]
+        [HttpPost]
         public ActionResult XuLyThem(FormCollection formCollection)
         {
-            Form form = chuyenForm(formCollection);
-            if (Session["NguoiDung"] != null)
+            if (Session["NguoiDung"] == null)
             {
-                form.Add("MaNguoiTao", ((int)Session["NguoiDung"]).ToString());
+                return Json(new KetQua(4));
             }
-            KetQua ketQua = BaiVietDienDanBUS.them(form);
+
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
+            KetQua ketQua = BaiVietDienDanBUS.them(form, new LienKet()
+            {
+                "NguoiTao",
+                "TapTin"
+            });
 
             if (ketQua.trangThai == 0)
             {
@@ -155,15 +162,17 @@ namespace LCTMoodle.Controllers
         {
             if (Session["NguoiDung"] == null)
             {
-                return Json(new KetQua()
-                    {
-                        trangThai = 4
-                    });
+                return Json(new KetQua(4));
             }
+
             Form form = chuyenForm(formCollection);
             form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
 
-            KetQua ketQua = BaiVietDienDanBUS.capNhatTheoMa(form);
+            KetQua ketQua = BaiVietDienDanBUS.capNhatTheoMa(form, new LienKet()
+            {
+                "NguoiTao",
+                "TapTin"
+            });
 
             if (ketQua.trangThai == 0)
             {

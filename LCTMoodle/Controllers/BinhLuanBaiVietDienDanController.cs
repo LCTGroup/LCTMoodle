@@ -48,7 +48,12 @@ namespace LCTMoodle.Controllers
         [HttpPost]
         public ActionResult XuLyXoa(int ma)
         {
-            return Json(BinhLuanBaiVietDienDanDAO.xoaTheoMa(ma));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            return Json(BinhLuanBaiVietDienDanBUS.xoaTheoMa(ma, (int)Session["NguoiDung"]));
         }
 
         public ActionResult _Form(int ma)

@@ -152,7 +152,11 @@ namespace LCTMoodle.Controllers
             var form = chuyenForm(formCollection);
             form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
 
-            var ketQua = BaiVietBaiTapBUS.them(form);
+            var ketQua = BaiVietBaiTapBUS.them(form, new LienKet()
+                {
+                    "NguoiTao",
+                    "TapTin"
+                });
 
             if (ketQua.trangThai == 0)
             {
@@ -179,9 +183,21 @@ namespace LCTMoodle.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult XuLyCapNhat(FormCollection form)
+        public ActionResult XuLyCapNhat(FormCollection formCollection)
         {
-            KetQua ketQua = BaiVietBaiTapBUS.capNhatTheoMa(chuyenForm(form));
+            if (Session["NguoiDung"] == null)
+            {
+                return Json(new KetQua(4));
+            }
+
+            Form form = chuyenForm(formCollection);
+            form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
+            KetQua ketQua = BaiVietBaiTapBUS.capNhatTheoMa(form, new LienKet()
+            {
+                "NguoiTao",
+                "TapTin",
+                "BaiTapNop"
+            });
 
             if (ketQua.trangThai == 0)
             {

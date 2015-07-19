@@ -12,6 +12,7 @@ namespace BUSLayer
 {
     public class BaiTapNopBUS : BUS
     {
+        #region Cơ bản
         public static KetQua kiemTra(BaiTapNopDTO baiNop)
         {
             List<string> loi = new List<string>();
@@ -96,8 +97,42 @@ namespace BUSLayer
                         break;
                 }
             }
+        } 
+        #endregion
+
+        #region Lấy
+        /// <summary>
+        /// Lấy danh sách bài tập nộp
+        /// </summary>
+        /// <param name="maBaiVietBaiTap"></param>
+        /// <param name="lienKet"></param>
+        /// <returns>List BaiTapNopDTO</returns>
+        public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap, LienKet lienKet = null)
+        {
+            return BaiTapNopDAO.layTheoMaBaiVietBaiTap(maBaiVietBaiTap, lienKet);
         }
 
+        /// <summary>
+        /// Lấy bài tập nộp theo mã
+        /// </summary>
+        /// <param name="ma"></param>
+        /// <param name="lienKet"></param>
+        /// <returns>BaiTapNopDTO</returns>
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
+        {
+            return BaiTapNopDAO.layTheoMa(ma, lienKet);
+        } 
+        #endregion
+
+        #region Thêm
+        /// <summary>
+        /// Thêm hoặc cập nhật bài tập nộp. 
+        /// Nếu chưa có => thêm.
+        /// Nếu đã có => cập nhật.
+        /// </summary>
+        /// <param name="form"></param>
+        /// <param name="lienKet"></param>
+        /// <returns>BaiTapNopDTO</returns>
         public static KetQua themHoacCapNhat(Form form, LienKet lienKet = null)
         {
             #region Kiểm tra điều kiện
@@ -164,18 +199,17 @@ namespace BUSLayer
             }
 
             return BaiTapNopDAO.themHoacCapNhat(baiNop, lienKet);
-        }
+        } 
+        #endregion
 
-        public static KetQua layTheoMaBaiVietBaiTap(int maBaiVietBaiTap, LienKet lienKet = null)
-        {
-            return BaiTapNopDAO.layTheoMaBaiVietBaiTap(maBaiVietBaiTap, lienKet);
-        }
-
-        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
-        {
-            return BaiTapNopDAO.layTheoMa(ma, lienKet);
-        }
-
+        #region Cập nhật
+        /// <summary>
+        /// Chấm điểm cho bài tập nộp
+        /// </summary>
+        /// <param name="ma"></param>
+        /// <param name="diem"></param>
+        /// <param name="maNguoiCham"></param>
+        /// <returns></returns>
         public static KetQua chamDiem(int ma, double diem, int maNguoiCham)
         {
             #region Kiểm tra điều kiện
@@ -210,6 +244,13 @@ namespace BUSLayer
             return BaiTapNopDAO.capNhatTheoMa_Diem(ma, diem);
         }
 
+        /// <summary>
+        /// Ghi chú cho bài tập nộp
+        /// </summary>
+        /// <param name="ma"></param>
+        /// <param name="ghiChu"></param>
+        /// <param name="maNguoiGhiChu"></param>
+        /// <returns></returns>
         public static KetQua ghiChu(int ma, string ghiChu, int maNguoiGhiChu)
         {
             #region Kiểm tra điều kiện
@@ -236,8 +277,17 @@ namespace BUSLayer
             #endregion
 
             return BaiTapNopDAO.capNhatTheoMa_GhiChu(ma, ghiChu);
-        }
+        } 
+        #endregion
 
+        #region Xóa
+        /// <summary>
+        /// Chuyện trạng thái xóa bài tập nộp
+        /// </summary>
+        /// <param name="ma"></param>
+        /// <param name="lyDo"></param>
+        /// <param name="maNguoiXoa"></param>
+        /// <returns></returns>
         public static KetQua xoa(int ma, string lyDo, int maNguoiXoa)
         {
             #region Kiểm tra điều kiện
@@ -266,12 +316,19 @@ namespace BUSLayer
             return BaiTapNopDAO.capNhatTheoMa_DaXoa(ma, lyDo);
         }
 
+        /// <summary>
+        /// Chuyển trạng thái xóa danh sách bài tập nộp
+        /// </summary>
+        /// <param name="dsMa_string">1,2,3,4,5</param>
+        /// <param name="lyDo"></param>
+        /// <param name="maNguoiXoa"></param>
+        /// <returns></returns>
         public static KetQua xoa(string dsMa_string, string lyDo, int maNguoiXoa)
         {
             int[] dsMa;
             try
             {
-                 dsMa = Array.ConvertAll<string, int>(dsMa_string.Split(','), int.Parse);
+                dsMa = Array.ConvertAll<string, int>(dsMa_string.Split(','), int.Parse);
             }
             catch
             {
@@ -299,7 +356,7 @@ namespace BUSLayer
                 return new KetQua(3, "Lấy bài nộp thất bại");
             }
             var dsBaiNop = ketQua.ketQua as List<BaiTapNopDTO>;
-            foreach(var ma in dsMa)
+            foreach (var ma in dsMa)
             {
                 if (!dsBaiNop.Exists(x => x.ma == ma))
                 {
@@ -315,8 +372,16 @@ namespace BUSLayer
             #endregion
 
             return BaiTapNopDAO.capNhatTheoMa_DaXoa_Nhieu(dsMa_string, lyDo);
-        }
+        } 
+        #endregion
 
+        #region Chức năng
+        /// <summary>
+        /// Nén tập tin của danh sách bài tập nộp
+        /// </summary>
+        /// <param name="dsMa_string">1,2,3,4</param>
+        /// <param name="maNguoiTai"></param>
+        /// <returns>Mảng string với 3 phần tử: 1 - Đường dẫn, 2 - Content type, 3 - Tên tập tin</returns>
         public static KetQua nen(string dsMa_string, int maNguoiTai)
         {
             int[] dsMa;
@@ -375,14 +440,17 @@ namespace BUSLayer
             //Lấy tập tin
             string duongDanGoc = Helpers.TapTinHelper.layDuongDanGoc();
             List<string> dsDuongDan = new List<string>();
-            foreach(var baiNop in dsBaiNop)
+            foreach (var baiNop in dsBaiNop)
             {
-                dsDuongDan.Add(duongDanGoc + "BaiTapNop_TapTin/" + baiNop.tapTin.ma + baiNop.tapTin.duoi);
-                dsDuongDan.Add(
-                    Path.GetFileNameWithoutExtension(baiNop.tapTin.ten) + "_" + 
-                    Helpers.LCTHelper.boDau(baiNop.nguoiTao.ho + baiNop.nguoiTao.tenLot + baiNop.nguoiTao.ten).Replace(" ", "") + "_" +
-                    baiNop.nguoiTao.tenTaiKhoan +
-                    baiNop.tapTin.duoi);
+                if (baiNop.tapTin != null)
+                {
+                    dsDuongDan.Add(duongDanGoc + "BaiTapNop_TapTin/" + baiNop.tapTin.ma + baiNop.tapTin.duoi);
+                    dsDuongDan.Add(
+                        Path.GetFileNameWithoutExtension(baiNop.tapTin.ten) + "_" +
+                        Helpers.LCTHelper.boDau(baiNop.nguoiTao.ho + baiNop.nguoiTao.tenLot + baiNop.nguoiTao.ten).Replace(" ", "") + "_" +
+                        baiNop.nguoiTao.tenTaiKhoan +
+                        baiNop.tapTin.duoi);
+                }
             }
 
             string duongDanTapTinNen;
@@ -396,12 +464,13 @@ namespace BUSLayer
                 return new KetQua(3, "Nén file lỗi");
             }
 
-            return new KetQua(new string []
+            return new KetQua(new string[]
                 {
                     duongDanTapTinNen,
                     "application/zip",
                     baiTap.ma.Value + "_" + Helpers.LCTHelper.boDau(baiTap.tieuDe).Replace(' ', '_') + ".zip"
                 });
-        }
+        } 
+        #endregion
     }
 }

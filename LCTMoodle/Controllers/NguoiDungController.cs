@@ -308,7 +308,7 @@ namespace LCTMoodle.Controllers
 
         public ActionResult _DanhSachXacNhanThem(int maTapTin)
         {
-            var ketQua = NguoiDungBUS.docTapTin_xls(Helpers.TapTinHelper.layDuongDan("Tam", "1.xls"));
+            var ketQua = NguoiDungBUS.docTapTin_xls(Helpers.TapTinHelper.layDuongDan("Tam", maTapTin + ".xls"));
             if (ketQua.trangThai != 0)
             {
                 return Json(ketQua, JsonRequestBehavior.AllowGet);

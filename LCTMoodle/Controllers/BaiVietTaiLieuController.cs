@@ -115,15 +115,16 @@ namespace LCTMoodle.Controllers
         {
             if (Session["NguoiDung"] == null)
             {
-                return Json(new KetQua()
-                {
-                    trangThai = 4
-                });
+                return Json(new KetQua(4));
             }
+
             Form form = chuyenForm(formCollection);
             form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
 
-            KetQua ketQua = BaiVietTaiLieuBUS.them(form);
+            KetQua ketQua = BaiVietTaiLieuBUS.them(form, new LienKet()
+            {
+                "TapTin"
+            });
 
             if (ketQua.trangThai == 0)
             {
@@ -168,7 +169,11 @@ namespace LCTMoodle.Controllers
             Form form = chuyenForm(formCollection);
             form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
 
-            KetQua ketQua = BaiVietTaiLieuBUS.capNhatTheoMa(form);
+            KetQua ketQua = BaiVietTaiLieuBUS.capNhatTheoMa(form, new LienKet()
+            {
+                "NguoiTao",
+                "TapTin"
+            });
 
             if (ketQua.trangThai == 0)
             {

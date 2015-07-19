@@ -123,7 +123,10 @@ namespace LCTMoodle.Controllers
             Form form = chuyenForm(formCollection);
             form.Add("MaNguoiTao", Session["NguoiDung"].ToString());
 
-            KetQua ketQua = BaiVietBaiGiangBUS.them(form);
+            KetQua ketQua = BaiVietBaiGiangBUS.them(form, new LienKet()
+            {
+                "TapTin"
+            });
 
             if (ketQua.trangThai == 0)
             {
@@ -168,7 +171,10 @@ namespace LCTMoodle.Controllers
             Form form = chuyenForm(formCollection);
             form.Add("MaNguoiSua", Session["NguoiDung"].ToString());
 
-            KetQua ketQua = BaiVietBaiGiangBUS.capNhatTheoMa(form);
+            KetQua ketQua = BaiVietBaiGiangBUS.capNhatTheoMa(form, new LienKet()
+            {
+                "TapTin"
+            });
 
             if (ketQua.trangThai == 0)
             {

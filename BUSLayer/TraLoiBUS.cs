@@ -113,7 +113,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            ketQua = TraLoiDAO.them(traLoi, new LienKet() { "NguoiTao" });
+            ketQua = TraLoiDAO.them(traLoi, new LienKet() { "NguoiTao", "CauHoi" });
             if (ketQua.trangThai == 0)
             {
                 var ketQuaTraLoi = ketQua.ketQua as TraLoiDTO;
@@ -233,7 +233,7 @@ namespace BUSLayer
             
             if (maNguoiDuyet != traLoi.cauHoi.nguoiTao.ma)
             {
-                return new KetQua(3, "Bạn không đủ quyền duyệt trả lời");
+                return new KetQua(3, "Bạn không có quyền duyệt trả lời");
             }
 
             #endregion

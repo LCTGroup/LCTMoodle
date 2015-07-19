@@ -183,5 +183,36 @@ namespace BUSLayer
 
             return BinhLuanBaiVietDienDanDAO.capNhatTheoMa_Diem(ma, diem);
         }
+
+        public static KetQua xoaTheoMa(int ma, int maNguoiXoa)
+        {
+            #region Kiểm tra điều kiện
+            //Lấy bình luận
+            var ketQua = BinhLuanBaiVietDienDanDAO.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
+            {
+                return new KetQua(1, "Bình luận không tồn tại");
+            }
+            var binhLuan = ketQua.ketQua as BinhLuanBaiVietDienDanDTO;
+            
+            if (binhLuan.nguoiTao.ma.Value == maNguoiXoa)
+            {
+                //Lấy bài viết bài tập
+                ketQua = BaiVietDienDanDAO.layTheoMa(binhLuan.baiVietDienDan.ma);
+                if (ketQua.trangThai != 0)
+                {
+                    return new KetQua(1, "Bài viết diễn đàn không tồn tại");
+                }
+
+                //Kiểm tra quyền
+                if (!coQuyen("DD_QLNoiDung", "KH", (ketQua.ketQua as BaiVietDienDanDTO).khoaHoc.ma.Value, maNguoiXoa))
+                {
+                    return new KetQua(3, "Bạn không có quyền xóa bình luận");
+                }
+            }
+            #endregion
+
+            return BinhLuanBaiVietDienDanDAO.xoaTheoMa(ma);
+        }
     }
 }

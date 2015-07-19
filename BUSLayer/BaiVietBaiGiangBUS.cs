@@ -13,6 +13,7 @@ namespace BUSLayer
 {
     public class BaiVietBaiGiangBUS : BUS
     {
+        #region Cơ bản
         public static KetQua kiemTra(BaiVietBaiGiangDTO baiViet, string[] truong = null, bool kiemTra = true)
         {
             List<string> loi = new List<string>();
@@ -112,9 +113,41 @@ namespace BUSLayer
                 }
             }
             return bangCapNhat;
+        } 
+        #endregion
+
+        #region Lấy
+        /// <summary>
+        /// Lấy theo mã khóa học
+        /// </summary>
+        /// <param name="maKhoaHoc"></param>
+        /// <param name="lienKet"></param>
+        /// <returns>List BaiVietBaiGiangDTO</returns>
+        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc, LienKet lienKet = null)
+        {
+            return BaiVietBaiGiangDAO.layTheoMaKhoaHoc(maKhoaHoc, lienKet);
         }
 
-        public static KetQua them(Form form)
+        /// <summary>
+        /// Lấy theo mã
+        /// </summary>
+        /// <param name="ma"></param>
+        /// <param name="lienKet"></param>
+        /// <returns>BaiVietBaiGiangDTO</returns>
+        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
+        {
+            return BaiVietBaiGiangDAO.layTheoMa(ma, lienKet);
+        } 
+        #endregion
+
+        #region Thêm
+        /// <summary>
+        /// Thêm
+        /// </summary>
+        /// <param name="form"></param>
+        /// <param name="lienKet"></param>
+        /// <returns>BaiVietBaiGiangDTO</returns>
+        public static KetQua them(Form form, LienKet lienKet = null)
         {
             #region Kiểm tra điều kiện
             //Lấy mã người dùng
@@ -150,7 +183,7 @@ namespace BUSLayer
 
             BaiVietBaiGiangDTO baiVietBaiGiang = new BaiVietBaiGiangDTO();
             gan(ref baiVietBaiGiang, form);
-            
+
             var ketQua = kiemTra(baiVietBaiGiang);
 
             if (ketQua.trangThai != 0)
@@ -158,52 +191,18 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return BaiVietBaiGiangDAO.them(baiVietBaiGiang, new LienKet()
-            {
-                "TapTin"
-            });
-        }
+            return BaiVietBaiGiangDAO.them(baiVietBaiGiang, lienKet);
+        } 
+        #endregion
 
-        public static KetQua layTheoMaKhoaHoc(int maKhoaHoc, LienKet lienKet = null)
-        {
-            return BaiVietBaiGiangDAO.layTheoMaKhoaHoc(maKhoaHoc, lienKet);
-        }
-
-        public static KetQua layTheoMa(int ma, LienKet lienKet = null)
-        {
-            return BaiVietBaiGiangDAO.layTheoMa(ma, lienKet);
-        }
-
-        public static KetQua xoaTheoMa(int ma, int maNguoiXoa)
-        {
-            #region Kiểm tra điều kiện
-            //Lấy bài giảng
-            var ketQua = BaiVietBaiGiangDAO.layTheoMa(ma);
-            if (ketQua.trangThai != 0)
-            {
-                return new KetQua()
-                {
-                    trangThai = 1,
-                    ketQua = "Bài giảng không tồn tại"
-                };
-            }
-
-            var baiGiang = ketQua.ketQua as BaiVietBaiGiangDTO;
-
-            if (baiGiang.nguoiTao.ma != maNguoiXoa && !coQuyen("BG_Xoa", "KH", baiGiang.khoaHoc.ma.Value, maNguoiXoa))
-            {
-                return new KetQua()
-                {
-                    trangThai = 3,
-                    ketQua = "Bạn không có quyền xóa bài giảng"
-                };
-            }
-            #endregion
-
-            return BaiVietBaiGiangDAO.xoaTheoMa(ma);
-        }
-
-        public static KetQua capNhatTheoMa(Form form)
+        #region Cập nhật
+        /// <summary>
+        /// Cập nhật
+        /// </summary>
+        /// <param name="form"></param>
+        /// <param name="lienKet"></param>
+        /// <returns>BaiVietBaiGiangDTO</returns>
+        public static KetQua capNhatTheoMa(Form form, LienKet lienKet = null)
         {
             #region Kiểm tra điều kiện
             //Lấy mã người dùng
@@ -263,11 +262,45 @@ namespace BUSLayer
                 return new KetQua(baiGiang);
             }
 
-            return BaiVietBaiGiangDAO.capNhatTheoMa(ma, bang, new LienKet()
+            return BaiVietBaiGiangDAO.capNhatTheoMa(ma, bang, lienKet);
+        } 
+        #endregion
+
+        #region Xóa
+        /// <summary>
+        /// Xóa theo mã
+        /// </summary>
+        /// <param name="ma"></param>
+        /// <param name="maNguoiXoa"></param>
+        /// <returns></returns>
+        public static KetQua xoaTheoMa(int ma, int maNguoiXoa)
+        {
+            #region Kiểm tra điều kiện
+            //Lấy bài giảng
+            var ketQua = BaiVietBaiGiangDAO.layTheoMa(ma);
+            if (ketQua.trangThai != 0)
             {
-                "NguoiTao",
-                "TapTin"
-            });
-        }
+                return new KetQua()
+                {
+                    trangThai = 1,
+                    ketQua = "Bài giảng không tồn tại"
+                };
+            }
+
+            var baiGiang = ketQua.ketQua as BaiVietBaiGiangDTO;
+
+            if (baiGiang.nguoiTao.ma != maNguoiXoa && !coQuyen("BG_Xoa", "KH", baiGiang.khoaHoc.ma.Value, maNguoiXoa))
+            {
+                return new KetQua()
+                {
+                    trangThai = 3,
+                    ketQua = "Bạn không có quyền xóa bài giảng"
+                };
+            }
+            #endregion
+
+            return BaiVietBaiGiangDAO.xoaTheoMa(ma);
+        } 
+        #endregion
     }
 }

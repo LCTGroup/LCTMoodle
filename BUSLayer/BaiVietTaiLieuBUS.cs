@@ -108,7 +108,7 @@ namespace BUSLayer
             return bangCapNhat;
         }
 
-        public static KetQua them(Form form)
+        public static KetQua them(Form form, LienKet lienKet = null)
         {
             #region Kiểm tra điều kiện
             //Lấy mã người dùng
@@ -153,10 +153,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            return BaiVietTaiLieuDAO.them(taiLieu, new LienKet()
-            {
-                "TapTin"
-            });
+            return BaiVietTaiLieuDAO.them(taiLieu, lienKet);
         }
 
         public static KetQua layTheoMaKhoaHoc(int maKhoaHoc, LienKet lienKet = null)
@@ -198,7 +195,7 @@ namespace BUSLayer
             return BaiVietTaiLieuDAO.xoaTheoMa(ma);
         }
 
-        public static KetQua capNhatTheoMa(Form form)
+        public static KetQua capNhatTheoMa(Form form, LienKet lienKet = null)
         {
             #region Kiểm tra điều kiện
             //Lấy mã người dùng
@@ -257,11 +254,7 @@ namespace BUSLayer
                 return new KetQua(1);
             }
 
-            return BaiVietTaiLieuDAO.capNhatTheoMa(ma, bang, new LienKet()
-            {
-                "NguoiTao",
-                "TapTin"
-            });
+            return BaiVietTaiLieuDAO.capNhatTheoMa(ma, bang, lienKet);
         }
     }
 }

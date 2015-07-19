@@ -41,6 +41,36 @@ BEGIN
 END
 
 GO
+--Lấy bài tập người dùng cần hoàn thành
+CREATE PROC dbo.layBaiVietBaiTap_NguoiDungCanHoanThanh (
+	@0 INT --Mã người dùng
+)
+AS
+BEGIN
+	DECLARE @thoiDiemHienTai DATETIME = GETDATE()
+
+	SELECT BVBT.*
+		FROM
+			--Lấy khóa học mà người dùng là học viên
+			dbo.KhoaHoc_NguoiDung KH_ND
+				INNER JOIN dbo.BaiVietBaiTap BVBT ON
+					KH_ND.MaNguoiDung = @0 AND
+					BVBT.MaKhoaHoc = KH_ND.MaKhoaHoc AND
+					BVBT.ThoiDiemHetHan IS NOT NULL AND
+					BVBT.ThoiDiemHetHan > @thoiDiemHienTai AND
+					KH_ND.TrangThai = 0 AND
+					KH_ND.LaHocVien = 1 AND
+					NOT EXISTS (
+						SELECT 1
+							FROM dbo.BaiTapNop BTN
+							WHERE 
+								BVBT.Ma = BTN.MaBaiVietBaiTap AND
+								BTN.MaNguoiTao = @0 AND
+								BTN.DaXoa <> 1
+					)
+END
+
+GO
 --Thêm bài viết bài tập
 ALTER PROC dbo.themBaiVietBaiTap(
 	@0 NVARCHAR(MAX), --TieuDe

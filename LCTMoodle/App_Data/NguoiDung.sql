@@ -29,7 +29,7 @@ CREATE TABLE dbo.NguoiDung
 
 GO
 --Thêm người dùng
-ALTER PROC dbo.themNguoiDung 
+CREATE PROC dbo.themNguoiDung 
 (
 	@0 NVARCHAR(MAX), --Tên tài khoản
 	@1 NVARCHAR(MAX), --Mật khẩu
@@ -123,7 +123,7 @@ END
 
 GO
 --Cập nhật kích hoạt Người dùng theo tenTaiKhoan
-ALTER PROC dbo.capNhatNguoiDungTheoTenTaiKhoan_KichHoat
+CREATE PROC dbo.capNhatNguoiDungTheoTenTaiKhoan_KichHoat
 (
 	@0 NVARCHAR(MAX), --Tên tài khoản
 	@1 NVARCHAR(MAX) --Giá trị kích hoạt
@@ -222,7 +222,7 @@ END
 
 GO
 --Lấy người dùng theo mã khóa học và từ khóa (Chiêu)
-ALTER PROC dbo.layNguoiDungTheoMaKhoaHoc_TimKiem (
+CREATE PROC dbo.layNguoiDungTheoMaKhoaHoc_TimKiem (
 	@0 INT, --MaKhoaHoc
 	@1 NVARCHAR(MAX) --Từ khóa
 )
@@ -240,7 +240,7 @@ END
 
 GO
 --Lấy người dùng theo mã nhóm người dùng
-ALTER PROC dbo.layNguoiDungTheoMaNhomNguoiDung (
+CREATE PROC dbo.layNguoiDungTheoMaNhomNguoiDung (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT --MaNhomNguoiDung
 )

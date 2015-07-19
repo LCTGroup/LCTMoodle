@@ -25,8 +25,11 @@
         coQuyenChamDiem = QuyenHelper.co(dsQuyen, "QLBangDiem");
         
         //Kiểm tra người dùng có phải là thành viên không để sử dụng chức năng nộp bài
-        coQuyenNopBai = !Model.thoiDiemHetHan.HasValue || Model.thoiDiemHetHan.Value > DateTime.Now;
-        if (coQuyenNopBai)
+        if (Model.thoiDiemHetHan.HasValue && Model.thoiDiemHetHan.Value < DateTime.Now)
+        {
+            coQuyenNopBai = true;
+        }
+        else
         {
             if (ViewData.ContainsKey("LaHocVien"))
             {

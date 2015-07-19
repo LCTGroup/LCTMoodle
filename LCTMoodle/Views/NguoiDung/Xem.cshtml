@@ -127,52 +127,97 @@
 
 <!--#endregion-->
 
-<!--#region Thông tin khóa học -->
+<!--#region Chiêu -->
 
-@if (coQuyenXemKhoaHoc)
-{
-    <section class="hop hop-1-vien">
-        <section class="tieu-de">Thông tin khóa học</section>
-        <section id="khung_chon_hien_thi" class="khung-chon-hien-thi">
-            <ul>
-                <li class="nhiem-vu-moi active">
-                    <a class="clicked" data-chuc-nang="hien-thi" data-value="nhiemvumoi">
-                        <i></i>
-                        <span>Nhiệm vụ mới</span>
-                    </a>
-                </li>
-                <li class="bai-giang-moi">
-                    <a data-chuc-nang="hien-thi" data-value="baigiangmoi">
-                        <i></i>
-                        <span>Bài giảng mới</span>
-                    </a>
-                </li>
-                <li class="bai-tap-moi">
-                    <a data-chuc-nang="hien-thi" data-value="baitapmoi">
-                        <i></i>
-                        <span>Bài tập mới</span>
-                    </a>
-                </li>
-            </ul>
-        </section>
+    <!--#region Thông tin khóa học -->
+
+    @if (coQuyenXemKhoaHoc)
+    {
+        var ketQua = BUSLayer.BaiVietBaiTapBUS.layDanhSachCanHoanThanh(maNguoiDung.Value);
+        if (ketQua.trangThai == 0)
+        {
+            var dsBaiTap = ketQua.ketQua as List<DTOLayer.BaiVietBaiTapDTO>;
+            
+            <article class="hop hop-1-vien">
+                <section class="tieu-de">
+                    Bài tập cần hoàn thành
+                </section>
+                <section class="noi-dung khung-bt-can-hoan-thanh" id="bt_can_hoan_thanh">
+                    <ul>                        
+                        @foreach (var baiTap in dsBaiTap)
+                        {
+                            <li>
+                                <a class="tieu-de" href="/KhoaHoc/@baiTap.khoaHoc.ma.Value/?hienthi=baitap&ma=@baiTap.ma">@baiTap.tieuDe</a>
+                                <section class="thoi-diem">
+                                    <span class="tu">@baiTap.thoiDiemTao.Value.ToString("d/M H:mm")</span>
+                                    <span class="den">@baiTap.thoiDiemHetHan.Value.ToString("d/M H:mm")</span>
+                                </section>
+                                <section class="khung-thoi-gian" title="@LCTMoodle.LCTView.View.HienThiThoiGian(baiTap.thoiDiemHetHan)">
+                                    <section class="thoi-gian">
+                                        <section class="khung-tong">
+                                            @{
+                                                var soCotGio = ((baiTap.thoiDiemHetHan.Value - baiTap.thoiDiemTao.Value).TotalHours + 11) / 12;
+
+                                                for (var i = soCotGio; i > 0; i--)
+                                                {
+                                                    <i></i>
+                                                }
+                                            }
+                                        </section>
+                                        <section style="width: @((DateTime.Now - baiTap.thoiDiemTao.Value).Ticks * 100 / (baiTap.thoiDiemHetHan.Value - baiTap.thoiDiemTao.Value).Ticks)%" class="thoi-gian-da-qua"></section>
+                                    </section>
+                                </section>
+                            </li>
+                        }
+                    </ul>
+                </section>
+            </article>
+        }
+            
+        <section class="hop hop-1-vien">
+            <section class="tieu-de">Thông tin khóa học</section>
+            <section id="khung_chon_hien_thi" class="khung-chon-hien-thi">
+                <ul>
+                    <li class="nhiem-vu-moi active">
+                        <a class="clicked" data-chuc-nang="hien-thi" data-value="nhiemvumoi">
+                            <i></i>
+                            <span>Nhiệm vụ mới</span>
+                        </a>
+                    </li>
+                    <li class="bai-giang-moi">
+                        <a data-chuc-nang="hien-thi" data-value="baigiangmoi">
+                            <i></i>
+                            <span>Bài giảng mới</span>
+                        </a>
+                    </li>
+                    <li class="bai-tap-moi">
+                        <a data-chuc-nang="hien-thi" data-value="baitapmoi">
+                            <i></i>
+                            <span>Bài tập mới</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
     
-        <section id="khung_hien_thi" class="khung-hien-thi">
+            <section id="khung_hien_thi" class="khung-hien-thi">
 
-            <div id="nhiemvumoi" class="noi-dung active">           
-                <p class="empty">Chưa có nhiệm vụ mới</p>       
-            </div>
+                <div id="nhiemvumoi" class="noi-dung active">           
+                    <p class="empty">Chưa có nhiệm vụ mới</p>       
+                </div>
 
-            <div id="baigiangmoi" class="noi-dung">
-                <p class="empty">Chưa có bài giảng mới</p>
-            </div>
+                <div id="baigiangmoi" class="noi-dung">
+                    <p class="empty">Chưa có bài giảng mới</p>
+                </div>
 
-            <div id="baitapmoi" class="noi-dung">
-                <p class="empty">Chưa có bài tập mới</p>
-            </div>
+                <div id="baitapmoi" class="noi-dung">
+                    <p class="empty">Chưa có bài tập mới</p>
+                </div>
 
+            </section>
         </section>
-    </section>
-}
+    }
+
+    <!--#endregion-->
 
 <!--#endregion-->
 
@@ -185,7 +230,7 @@
     <article class="hop">
         <section class="tieu-de">Thông tin hỏi đáp</section>
         <section class="noi-dung">
-            @Html.Partial("~/Views/HoiDap/_LichSuCauHoi.cshtml", dsLichSuCauHoi)
+            @Html.Partial("~/Views/HoiDap/_LichSuCauHoi.cshtml", dsLichSuCauHoi, new ViewDataDictionary())
         </section>
     </article>
 }
