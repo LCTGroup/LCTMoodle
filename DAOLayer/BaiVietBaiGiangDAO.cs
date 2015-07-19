@@ -73,6 +73,9 @@ namespace DAOLayer
                                 };
                         }
                         break;
+                    case "DanhSachMaThanhVienDaXem":
+                        baiViet.danhSachMaThanhVienDaXem = layString(dong, i, "|");
+                        break;
                     default:
                         break;
                 }

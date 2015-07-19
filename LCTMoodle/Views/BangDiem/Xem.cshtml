@@ -95,7 +95,9 @@
                                 {
                                     tongHeSo += cotDiem.heSo.Value;
                                 }
-                                <th class="ngay"><span>@(cotDiem.ngay.HasValue ? cotDiem.ngay.Value.ToString("d/M") : null)</span></th>
+                                <th class="ngay"><span>@(cotDiem.ngay.HasValue ? cotDiem.ngay.Value.ToString("d/M") : null) @if (cotDiem.laDiemCong) {
+                                                                                                                                @: <br /> +                                                                                                                                
+                                                                                                                            }</span></th>
                             }
                             <th data-cot="tb">TB</th>
                             <th data-cot="cong">+</th>
@@ -135,7 +137,7 @@
                                                 <td data-ma="@cotDiem.ma" data-la-cot-diem data-he-so="@cotDiem.heSo" data-loai="@(laDiemCong ? "cong" : "diem")" class="cot-diem" data-diem="@strDiem"><span>@strDiem</span></td>
                                             }
                                         }
-                                        <td data-cot="tb"><span>@((tong / tongHeSo).ToString("0.##"))</span></td>
+                                        <td data-cot="tb"><span>@(tong == 0 ? "0" : (tong / tongHeSo).ToString("0.##"))</span></td>
                                         <td data-cot="cong"><span>@diemCong</span></td>
                                     }
                                 </tr>

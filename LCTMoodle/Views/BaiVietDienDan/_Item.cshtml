@@ -7,7 +7,7 @@
     var maNguoiDung = Session["NguoiDung"] as int?;
 
     string[] dsQuyen;
-    bool coQuyenSua, coQuyenXoa, coQuyenGhim, laThanhVien, coQuyenQLDiem;
+    bool coQuyenSua, coQuyenXoa, coQuyenGhim, laThanhVien, coQuyenQLDiem, chuaXem;
 
     if (maNguoiDung.HasValue)
     {
@@ -47,9 +47,24 @@
         coQuyenQLDiem = coQuyenSua = coQuyenXoa = coQuyenGhim = laThanhVien = false;
         dsQuyen = null;
     }
-}
 
-<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-diem="@Model.diem" data-ma="@Model.ma" @(Model.ghim ? "data-ghim" : null) >
+    var soLuotXem = Model.danhSachMaThanhVienDaXem.Count(x => x == '|') - 1;
+    chuaXem = laThanhVien && Model.danhSachMaThanhVienDaXem.IndexOf("|" + maNguoiDung.Value + "|") == -1;
+}
+@{
+    string style = "", attr = "";
+    if (chuaXem)
+    {
+        style += "order: 2;";
+        attr += "data-chua-xem ";
+    }
+    if (Model.ghim)
+    {
+        style += "order: 1;";
+        attr += "data-ghim ";
+    }
+}
+<li data-doi-tuong="muc-bai-viet" class="muc-bai-viet" data-diem="@Model.diem" data-ma="@Model.ma" @attr style="@style">
     <section class="khung-bai-viet">
         <section class="khung-thong-tin">
             <section class="trai">
@@ -76,7 +91,7 @@
             <section class="noi-dung noi-dung-ckeditor">
                 @Html.Raw(Model.noiDung)
             </section>            
-            @if (@Model.tapTin != null)
+            @if (Model.tapTin != null)
             {
                 <section class="tap-tin">
                     <a @if (TapTinHelper.coHoTroXem(Model.tapTin.duoi)) {     
@@ -85,11 +100,35 @@
                         <img src="/LayHinh/BaiVietDienDan_TapTin/@Model.tapTin.ma" />
                         <span>@Model.tapTin.ten</span>
                     </a>
-
                 </section>
             }
         </section>
-        <section class="khung-chuc-nang"><a href="javascript:void(0)" data-chuc-nang="binh-luan">Bình luận</a></section>
+        <section class="khung-chuc-nang">
+            <a data-chuc-nang="binh-luan" class="left">Bình luận</a>
+            <a data-chuc-nang="xem-luot-xem" class="right" data-value="@Model.danhSachMaThanhVienDaXem">
+            @if (soLuotXem == 0)
+            {
+                @:Chưa có ai xem
+            }
+            else
+            {
+                if (chuaXem)
+                {
+                    @:@soLuotXem người đã xem
+                }
+                else
+                {
+                    if (soLuotXem == 1)
+                    {
+                        @:Bạn đã xem
+                    }
+                    else
+                    {
+                        @:Bạn và @(soLuotXem - 1) người đã xem
+                    }
+                }
+            }</a>
+        </section>
         @if (coQuyenSua || coQuyenXoa || coQuyenGhim)
         {
             <section class="khung-chuc-nang-lct ben-trai" style="top: 10px; right: 10px;">

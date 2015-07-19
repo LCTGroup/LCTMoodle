@@ -247,10 +247,31 @@
 
 /*#region Diễn đàn */
 
+[data-hien-thi="dien-dan"] .danh-sach-bai-viet {
+    display: flex;
+    flex-direction: column;
+}
+
 [data-hien-thi="dien-dan"] .muc-bai-viet {
     border: 1px solid #eee;
     margin-bottom: 10px;
+    position: relative;
+    order: 3;
 }
+
+    [data-hien-thi="dien-dan"] .muc-bai-viet[data-chua-xem]:before {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: 1;
+        transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        top: -10px;
+        left: -10px;
+        border: 10px solid transparent;
+        border-right-color: #08c;
+    }
 
     [data-hien-thi="dien-dan"] .muc-bai-viet[data-ghim] {
         border-color: #ddd;
@@ -368,6 +389,20 @@
         border-top: 1px solid #eee;
         background-color: #fcfcfc;
     }
+    
+        [data-hien-thi="dien-dan"] .khung-bai-viet .khung-chuc-nang:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        [data-hien-thi="dien-dan"] .khung-bai-viet .khung-chuc-nang .left {
+            float: left;
+        }
+
+        [data-hien-thi="dien-dan"] .khung-bai-viet .khung-chuc-nang .right {
+            float: right;
+        }
 
         [data-hien-thi="dien-dan"] .khung-bai-viet .khung-chuc-nang:empty {
             display: none;

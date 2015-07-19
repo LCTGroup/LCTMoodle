@@ -13,7 +13,8 @@ CREATE TABLE dbo.BaiVietBaiTap (
 	MaKhoaHoc INT NOT NULL,
 	Loai INT NOT NULL,
 	ThoiDiemCapNhat DATETIME,
-	CachNop INT NOT NULL DEFAULT 0
+	CachNop INT NOT NULL DEFAULT 0,
+	DanhSachMaThanhVienDaXem VARCHAR(MAX) NOT NULL DEFAULT '|'
 )
 
 GO
@@ -107,7 +108,7 @@ END
 
 GO
 --Xóa bài viết bài tập theo mã
-CREATE PROC dbo.xoaBaiVietBaiTapTheoMa (
+ALTER PROC dbo.xoaBaiVietBaiTapTheoMa (
 	@0 INT --Ma
 )
 AS
@@ -123,7 +124,7 @@ ALTER PROC dbo.layBaiVietBaiTapTheoMa (
 )
 AS
 BEGIN
-	SELECT TOP 1 *
+	SELECT *
 		FROM dbo.BaiVietBaiTap
 		WHERE Ma = @0
 END
@@ -147,7 +148,7 @@ BEGIN
 		')
 	END	
 	
-	SELECT TOP 1 *
+	SELECT *
 		FROM dbo.BaiVietBaiTap
 		WHERE Ma = @0
 END

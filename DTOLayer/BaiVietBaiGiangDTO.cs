@@ -15,5 +15,6 @@ namespace DTOLayer
         public DateTime? thoiDiemTao;
         public NguoiDungDTO nguoiTao;
         public KhoaHocDTO khoaHoc;
+        public string danhSachMaThanhVienDaXem;
     }
 }
