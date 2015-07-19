@@ -8,6 +8,13 @@
     {
         "Tin Nhắn", "/NguoiDung/TinNhan/" + Session["NguoiDung"],
     };
+
+    List<string> chucNang = new List<string>();    
+    {
+        chucNang.Add("Nhắn tin");
+        chucNang.Add("data-chuc-nang=\"nhan-tin\"");
+    }
+    ViewData["ChucNang"] = chucNang;
 }
 
 @section Styles {
@@ -15,6 +22,7 @@
 }
 
 @section Scripts {
+    <script src="/TinNhan.js/NguoiDung"></script>
 }
 
 @if (Model == null)
@@ -28,36 +36,7 @@ else
         <section class="noi-dung khung-bao-tin-nhan">
             @foreach (var tinNhan in Model)
             {
-                NguoiDungDTO nguoiHienThi = new NguoiDungDTO();
-                nguoiHienThi = (tinNhan.nguoiGui.ma == (int)Session["NguoiDung"] ? tinNhan.nguoiNhan : tinNhan.nguoiGui );
-                
-                <a href="/NguoiDung/ChiTietTinNhan/@nguoiHienThi.tenTaiKhoan">
-                    <article class="khung-tin-nhan">
-                        <section class="hinh-dai-dien">
-                            @if (nguoiHienThi.hinhDaiDien == null)
-                            {
-                                <img src="/HinhDaiDienMacDinh.png/NguoiDung" />
-                            }
-                            else
-                            {
-                                @NguoiDungView.hinhDaiDien(nguoiHienThi)
-                            }
-                        </section>
-                        <section class="noi-dung">
-                            <div class="chi-tiet">@tinNhan.noiDung</div>
-                            @if (nguoiHienThi == null)
-                            {
-                                <div class="nguoi-gui">không xác định</div>
-                            }
-                            else
-                            {
-                                <div class="nguoi-gui">                                            
-                                    @(nguoiHienThi.ho + " " + nguoiHienThi.tenLot + " " + nguoiHienThi.ten) - @View.HienThiThoiGian(tinNhan.thoiDiemGui)
-                                </div>
-                            }
-                        </section>
-                    </article>
-                </a>
+                @Html.Partial("~/Views/NguoiDung/_Item_DanhSachTinNhan.cshtml", tinNhan);
             }
         </section>
     </article>

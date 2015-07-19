@@ -1006,44 +1006,78 @@ body.dang-tai-lct header .top-header {
                         max-height: 269px;
                         overflow-x: hidden;
                         overflow-y: auto;
-                    }
-
-                    .hop-tin-nhan li {
-                        border-bottom: 1px solid #eee;                            
-                    }
-                    .hop-tin-nhan li:last-child {
-                        border-bottom: none;
-                    }
-                        .hop-tin-nhan li:hover {
-                            background-color: #eee;
-                        }
+                    }                    
                             
                     .hop-tin-nhan a {
                         display: flex;
-                        padding: 5px;
                     }
+                        .hop-tin-nhan a:hover {
+                            text-decoration: none;
+                        }
+                    
+                        /*#region Chức năng nhắn tin */
 
-                    .hop-tin-nhan .hinh-dai-dien {
-                        width: 34px;
-                        height: 34px;
-                    }
-                        .hop-tin-nhan img {
+                        .hop-tin-nhan .nhan-tin {
+                            text-align: center;
+                            color: #fcfcfc;
+                            background-color: #08c;
+                            cursor: pointer;
+                            padding: 10px;
+                            font-weight: bold;
+                            border-top: 1px solid #ddd;
+                            opacity: 0.8;
+                        }
+                            .hop-tin-nhan .nhan-tin:hover {
+                                opacity: 1;
+                            }
+
+                        /*#endregion */
+
+                        /*#region nội dung tin nhắn */
+
+                        .hop-tin-nhan .khung-tin-nhan {
                             width: 100%;
+                            padding: 10px;
+                            border-bottom: 1px solid #ddd;
+                            display: flex;
+                            flex-direction: row;
+                            background-color: #fff;
+                            transition: 0.2s;
                         }
+                            .hop-tin-nhan .khung-tin-nhan.chua-doc {
+                                background-color: #efefef;
+                            }    
+                            .hop-tin-nhan .khung-tin-nhan:hover {
+                                background-color: #f1f1f1;
+                            }                            
 
-                    .hop-tin-nhan .tin-nhan {
-                        margin-left: 5px;
-                    }
-                        .hop-tin-nhan .noi-dung {
-                            width: 301px;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
+                        .hop-tin-nhan .khung-tin-nhan .hinh-dai-dien {
+                            width: 50px;
+                            height: 50px;
+                            max-height: 50px;
+                            max-width: 50px;
                         }
-                        .hop-tin-nhan .thoi-gian {
-                            font-size: 11px;
-                            color: #ccc;
+                            .hop-tin-nhan .khung-tin-nhan img {
+                                width: 100%;
+                                height: 100%;
+                            }
+                        .hop-tin-nhan .khung-tin-nhan .noi-dung {
+                            display: flex;
+                            flex-direction: column;
+                            width: 100%;
+                            margin-left: 10px;
                         }
+                            .hop-tin-nhan .khung-tin-nhan .chi-tiet {
+
+                            }
+                            .hop-tin-nhan .khung-tin-nhan .nguoi-gui {
+                                font-size: 11px;
+                                color: #888;
+                                margin-top: 5px;
+                            }
+
+                        /*#endregion */
+
                     /*#endregion */
 
         /*#endregion */        

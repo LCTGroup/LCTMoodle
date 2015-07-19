@@ -600,6 +600,8 @@
     <Content Include="Views\NguoiDung\DanhSachXacNhanThem.cshtml" />
     <Content Include="Views\HoiDap\_LichSuCauHoi.cshtml" />
     <Content Include="Views\Quyen\_NhomQuyenCuaNguoiDung.cshtml" />
+    <Content Include="Views\NguoiDung\_NhanTin.cshtml" />
+    <Content Include="Views\NguoiDung\_Item_DanhSachTinNhan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BUSLayer\BUSLayer.csproj">

@@ -6,12 +6,20 @@
 
     KetQua ketQua;
     NguoiDungDTO nguoiDung = null;
+    List<TinNhanDTO> dsTinNhan = null;
+    
     if (Session["NguoiDung"] != null)
     {
         ketQua = BUSLayer.NguoiDungBUS.layTheoMa((int)Session["NguoiDung"]);
         if (ketQua.trangThai == 0)
         {
             nguoiDung = ketQua.ketQua as NguoiDungDTO;
+        }
+
+        ketQua = BUSLayer.TinNhanBUS.layDanhSachTinNhanTheoMaNguoiDung(nguoiDung.ma.Value, new LienKet() { "NguoiDung" });
+        if (ketQua.trangThai == 0)
+        {
+            dsTinNhan = ketQua.ketQua as List<TinNhanDTO>;
         }
     }
 
@@ -24,6 +32,8 @@
     {
         dsCauHoi = ketQua.ketQua as List<CauHoiDTO>;
     }
+
+    
 }
 <!DOCTYPE html>
 
@@ -72,106 +82,17 @@
                                 <section class="hop-tin-nhan" data-doi-tuong="hop-tin-nhan">
                                     <div class="khung-bao-tin-nhan">
                                         <ul id="tin_nhan_lct">
-                                            <li>
-                                                <a>
-                                                    <div class="hinh-dai-dien">
-                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
-                                                    </div>
-                                                    <div class="tin-nhan">
-                                                        <div class="noi-dung">Tin nhắn mới</div>
-                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a>
-                                                    <div class="hinh-dai-dien">
-                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
-                                                    </div>
-                                                    <div class="tin-nhan">
-                                                        <div class="noi-dung">Tin nhắn mới</div>
-                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a>
-                                                    <div class="hinh-dai-dien">
-                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
-                                                    </div>
-                                                    <div class="tin-nhan">
-                                                        <div class="noi-dung">Tin nhắn mới</div>
-                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a>
-                                                    <div class="hinh-dai-dien">
-                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
-                                                    </div>
-                                                    <div class="tin-nhan">
-                                                        <div class="noi-dung">Tin nhắn mới</div>
-                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a>
-                                                    <div class="hinh-dai-dien">
-                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
-                                                    </div>
-                                                    <div class="tin-nhan">
-                                                        <div class="noi-dung">Tin nhắn mới</div>
-                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a>
-                                                    <div class="hinh-dai-dien">
-                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
-                                                    </div>
-                                                    <div class="tin-nhan">
-                                                        <div class="noi-dung">Tin nhắn mới</div>
-                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a>
-                                                    <div class="hinh-dai-dien">
-                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
-                                                    </div>
-                                                    <div class="tin-nhan">
-                                                        <div class="noi-dung">Tin nhắn mới</div>
-                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a>
-                                                    <div class="hinh-dai-dien">
-                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
-                                                    </div>
-                                                    <div class="tin-nhan">
-                                                        <div class="noi-dung">Tin nhắn mới</div>
-                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a>
-                                                    <div class="hinh-dai-dien">
-                                                        <img src="HinhDaiDienMacDinh.png/NguoiDung" />
-                                                    </div>
-                                                    <div class="tin-nhan">
-                                                        <div class="noi-dung">Tin nhắn mới</div>
-                                                        <div class=" thoi-gian">lbc - 15/7/2015</div>
-                                                    </div>
-                                                </a>
-                                            </li>
+                                            @if (dsTinNhan != null)
+                                            {
+                                                foreach(var tinNhan in dsTinNhan)
+                                                {
+                                                    @Html.Partial("~/Views/NguoiDung/_Item_DanhSachTinNhan.cshtml", tinNhan)    
+                                                }
+                                            }
                                         </ul>
+                                        <section class="nhan-tin" data-chuc-nang="nhan-tin">
+                                            Tạo tin nhắn
+                                        </section>
                                     </div>
                                 </section>
                             </li>

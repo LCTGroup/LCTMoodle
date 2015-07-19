@@ -1,11 +1,9 @@
 ﻿//#region Khởi Tạo
 
 $(function () {
-    $form = $('#them_tin_nhan');
+    $form = $('#them_tin_nhan');   
 
     khoiTaoThemTinNhan($form);
-
-    $('#noi_dung').autoResize();
 });
 
 //#endregion
@@ -29,6 +27,7 @@ function khoiTaoThemTinNhan($form)
             }).done(function (data) {
                 if (data.trangThai == 0) {
                     $khungChiTietTinNhan.append(data.ketQua);
+                    $khungChiTietTinNhan.find('.empty').remove();
 
                     khoiTaoLCTFormMacDinh($form);
                 }
@@ -43,3 +42,4 @@ function khoiTaoThemTinNhan($form)
 }
 
 //#endregion
+

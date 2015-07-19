@@ -1,12 +1,29 @@
 ﻿@using DTOLayer;
 @using LCTMoodle.LCTView;
 @model List<TinNhanDTO>
-@{
+@{    
     ViewBag.Title = "ChiTietTinNhan";
     Layout = "~/Views/LCT/Khung.cshtml";
-
+    
     string tenTaiKhoanKhach = ViewData["TenTaiKhoanKhach"] as string;
+    ViewData["DieuHuong"] = new List<string>()
+    {
+        "Người dùng", "/NguoiDung/Xem/" + (int)Session["NguoiDung"],
+        "Tin nhắn", "/NguoiDung/TinNhan/" + (int)Session["NguoiDung"],
+        "Với " + tenTaiKhoanKhach, "/NguoiDung/ChiTietTinNhan?tenTaiKhoanKhach=" + tenTaiKhoanKhach
+    };
+
     int maNguoiNhan = (int)ViewData["MaNguoiDungKhach"];
+
+    List<string> chucNang = new List<string>();
+
+    chucNang.Add("Danh sách tin nhắn");
+    chucNang.Add("href='/NguoiDung/TinNhan/" + (int)Session["NguoiDung"] + "'");
+    
+    chucNang.Add("Nhắn tin");
+    chucNang.Add("data-chuc-nang=\"nhan-tin\"");
+
+    ViewData["ChucNang"] = chucNang;
 }
 @section Styles {
     <link rel="stylesheet" type="text/css" href="/ChiTietTinNhan.css/NguoiDung" />
@@ -19,16 +36,16 @@
     <section class="tieu-de">Hội thoại với tài khoản <b>@(tenTaiKhoanKhach != null ? tenTaiKhoanKhach : "Không xác định")</b></section>
     <section class="noi-dung">
         <article class="khung-chi-tiet-tin-nhan">
-            @if (Model != null)
+            @if (Model == null || Model.Count == 0)
             {
-                foreach(var tinNhan in Model)
-                {
-                    @Html.Partial("/Views/NguoiDung/_Item_TinNhan.cshtml", tinNhan, ViewData)
-                } 
+                <p class="empty">Hiện chưa có tin nhắn nào giữa hai người. Hãy gửi tin nhắn tới bạn của bạn</p>
             }
             else
             {
-                <p class="empty">Hiện chưa có tin nhắn nào giữa hai người. Hãy gửi tin nhắn tới bạn của bạn</p>
+                foreach(var tinNhan in Model)
+                {
+                    @Html.Partial("~/Views/NguoiDung/_Item_TinNhan.cshtml", tinNhan, ViewData)
+                } 
             }
                        
         </article>

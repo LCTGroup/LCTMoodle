@@ -55,8 +55,10 @@
             chucNang.Add("href='/NguoiDung/DanhSachNguoiDungBiChan/'");
         }
         
-        chucNang.Add("Xem Tin Nhắn");
+        chucNang.Add("Danh sách tin nhắn");
         chucNang.Add("href='/NguoiDung/TinNhan/" + maNguoiDung.Value + "'");
+        chucNang.Add("Nhắn tin");
+        chucNang.Add("data-chuc-nang=\"nhan-tin\"");
         
         ViewData["ChucNang"] = chucNang;     
     }
@@ -172,49 +174,7 @@
                     </ul>
                 </section>
             </article>
-        }
-            
-        <section class="hop hop-1-vien">
-            <section class="tieu-de">Thông tin khóa học</section>
-            <section id="khung_chon_hien_thi" class="khung-chon-hien-thi">
-                <ul>
-                    <li class="nhiem-vu-moi active">
-                        <a class="clicked" data-chuc-nang="hien-thi" data-value="nhiemvumoi">
-                            <i></i>
-                            <span>Nhiệm vụ mới</span>
-                        </a>
-                    </li>
-                    <li class="bai-giang-moi">
-                        <a data-chuc-nang="hien-thi" data-value="baigiangmoi">
-                            <i></i>
-                            <span>Bài giảng mới</span>
-                        </a>
-                    </li>
-                    <li class="bai-tap-moi">
-                        <a data-chuc-nang="hien-thi" data-value="baitapmoi">
-                            <i></i>
-                            <span>Bài tập mới</span>
-                        </a>
-                    </li>
-                </ul>
-            </section>
-    
-            <section id="khung_hien_thi" class="khung-hien-thi">
-
-                <div id="nhiemvumoi" class="noi-dung active">           
-                    <p class="empty">Chưa có nhiệm vụ mới</p>       
-                </div>
-
-                <div id="baigiangmoi" class="noi-dung">
-                    <p class="empty">Chưa có bài giảng mới</p>
-                </div>
-
-                <div id="baitapmoi" class="noi-dung">
-                    <p class="empty">Chưa có bài tập mới</p>
-                </div>
-
-            </section>
-        </section>
+        }                    
     }
 
     <!--#endregion-->

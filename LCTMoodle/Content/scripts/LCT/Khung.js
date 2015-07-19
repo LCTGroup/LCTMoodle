@@ -24,6 +24,8 @@ $(function () {
     thongBaoTrang_LCT();
 
     khoiTaoScroll($('#tin_nhan_lct'), 45);
+
+    khoiTaoNhanTin();
 });
 
 function khoiTaoScroll($khung, nhay) {
@@ -915,4 +917,23 @@ function khoiTaoPhanTrang_SuKien($danhSach, thamSo) {
             moPopupThongBao('Mở trang thất bại');
         });
     }
+}
+
+function khoiTaoNhanTin() {
+    $('[data-chuc-nang="nhan-tin"]').on('click', function (e) {
+        moPopupFull({
+            url: '/NguoiDung/_NhanTin',
+            width: '500px',
+            thanhCong: function () {
+                var $form = $('#nhan_tin');
+                khoiTaoLCTForm($form, {
+                    submit: function () {
+                        $tenTaiKhoanNguoiDung = $('[name="TenTaiKhoanNguoiNhan"]').val();
+
+                        window.location = "/NguoiDung/ChiTietTinNhan?tenTaiKhoanKhach=" + $tenTaiKhoanNguoiDung;
+                    }
+                });
+            }
+        });
+    });
 }
