@@ -169,7 +169,7 @@ END
 
 GO
 --Lây mã câu hỏi theo mã người tạo
-ALTER PROC dbo.layCauHoi_DanhSachMaLienQuan
+CREATE PROC dbo.layCauHoi_DanhSachMaLienQuan
 (
 	@0 INT --Mã người tạo
 )

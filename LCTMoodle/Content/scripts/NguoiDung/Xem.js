@@ -65,10 +65,35 @@ function hienThiNoiDung(objValue) {
 //#region Tab
 
 function khoiTaoTab($tab) {
+    $noiDungTab = $('#noi_dung_tab');
+
     $tab.on('click', function (e) {
+        //Chuyển trạng thái tab
         var $active = $('.khung-tab .active');
         $active.removeClass('active');
         $(this).addClass('active');
+
+        //Load nội dung của tab
+        $_LoaiDTBiTacDong = $(this).attr('data-hien-thi-tab');
+        $tai = moBieuTuongTai($noiDungTab);
+
+        $.ajax({
+            url: '/NguoiDung/XuLyTaiHoatDongHoiDap/',
+            method: 'GET',
+            data: { loaiDTBiTacDong: $_LoaiDTBiTacDong }
+        }).always(function () {
+            $tai.tat();
+        }).done(function (data) {
+            if (data.trangThai == 0 || data.trangThai == 1) {
+                var $ketQua = data.ketQua;
+                $noiDungTab.html($ketQua);
+            }
+            else {
+                moPopupThongBao(data);
+            }
+        }).fail(function () {
+            moPopupThongBao("Lỗi server");
+        });
     });
 }
 

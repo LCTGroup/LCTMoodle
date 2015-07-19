@@ -304,6 +304,11 @@ namespace BUSLayer
             return TraLoiDAO.layTraLoiTheoMaCauHoi_SoLuong(maCauHoi);
         }
 
+        public static KetQua layTraLoi_DanhSachMaLienQuan(int? maNguoiTao)
+        {
+            return TraLoiDAO.layTraLoi_DanhSachMaLienQuan(maNguoiTao);
+        }
+
         #endregion
         
     }

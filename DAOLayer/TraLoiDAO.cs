@@ -142,6 +142,17 @@ namespace DAOLayer
                 );
         }
 
+        public static KetQua layTraLoi_DanhSachMaLienQuan(int? maNguoiTao)
+        {
+            return layGiaTri<string>(
+                    "layTraLoi_DanhSachMaLienQuan",
+                    new object[] 
+                    {
+                        maNguoiTao
+                    }
+                );
+        }
+
         public static KetQua capNhatTheoMa(int? ma, BangCapNhat bangCapNhat, LienKet lienKet = null)
         {
             return layDong(

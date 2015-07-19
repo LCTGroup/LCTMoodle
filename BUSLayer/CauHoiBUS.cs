@@ -367,6 +367,13 @@ namespace BUSLayer
             return CauHoiDAO.layTheoMaChuDe_TimKiem(ma, tuKhoa, lienKet, cachHienThi);
         }
 
+        /// <summary>
+        /// Lấy tìm kiếm
+        /// </summary>
+        /// <param name="tuKhoa">Từ khóa</param>
+        /// <param name="lienKet">Liên kết</param>
+        /// <param name="cachHienThi">Cách hiển thị</param>
+        /// <returns>KetQua</returns>
         public static KetQua lay_TimKiem(string tuKhoa, LienKet lienKet = null, string cachHienThi = null)
         {
             return CauHoiDAO.lay_TimKiem(tuKhoa, lienKet, cachHienThi);
@@ -384,6 +391,16 @@ namespace BUSLayer
         public static KetQua timKiemPhanTrang(int trang, int soDongMoiTrang, string where = null, string orderBy = null, LienKet lienKet = null)
         {
             return CauHoiDAO.lay_TimKiemPhanTrang(where, orderBy, trang, soDongMoiTrang, lienKet);
+        }
+
+        /// <summary>
+        /// Lấy danh sách câu hỏi có liên quan tới người dùng
+        /// </summary>
+        /// <param name="maNguoiTao">Mã người dùng</param>
+        /// <returns>KetQua</returns>
+        public static KetQua layCauHoi_DanhSachMaLienQuan(int? maNguoiTao)
+        {
+            return CauHoiDAO.layCauHoi_DanhSachMaLienQuan(maNguoiTao);
         }
 
         #endregion
