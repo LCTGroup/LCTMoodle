@@ -366,8 +366,8 @@ namespace LCTMoodle.Controllers
             {
                 var ketQua = TraLoiBUS.layTheoMa(maTraLoi, new LienKet() { 
                 { "CauHoi", new LienKet() { "NguoiTao", "ChuDe" } },
-                "NguoiTao"
-            });
+                    "NguoiTao"
+                });
                 if (ketQua.trangThai == 0)
                 {
                     ViewData["TraLoi"] = ketQua.ketQua;
