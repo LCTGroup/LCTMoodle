@@ -9,7 +9,8 @@ CREATE TABLE dbo.BaiVietTaiLieu(
 	MaTapTin INT DEFAULT NULL,
 	ThoiDiemTao DATETIME DEFAULT GETDATE() NOT NULL,
 	MaNguoiTao INT NOT NULL,
-	MaKhoaHoc INT NOT NULL
+	MaKhoaHoc INT NOT NULL,
+	DanhSachMaThanhVienDaXem VARCHAR(MAX) NOT NULL DEFAULT '|'
 )
 
 GO
@@ -42,14 +43,7 @@ BEGIN
 	INSERT INTO dbo.BaiVietTaiLieu(TieuDe, NoiDung, MaTapTin, MaNguoiTao, MaKhoaHoc)
 		VALUES (@0, @1, @2, @3, @4)
 
-	SELECT 
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietTaiLieu
 		WHERE Ma = @@IDENTITY
 END
@@ -61,14 +55,7 @@ ALTER PROC dbo.layBaiVietTaiLieuTheoMaKhoaHoc (
 )
 AS
 BEGIN
-	SELECT 
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietTaiLieu
 		WHERE MaKhoaHoc = @0
 		ORDER BY ThoiDiemTao ASC
@@ -92,14 +79,7 @@ ALTER PROC dbo.layBaiVietTaiLieuTheoMa (
 )
 AS
 BEGIN
-	SELECT TOP 1
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietTaiLieu
 		WHERE Ma = @0
 END
@@ -123,14 +103,7 @@ BEGIN
 		')
 	END	
 	
-	SELECT TOP 1
-		Ma,
-		TieuDe,
-		NoiDung,
-		MaTapTin,
-		ThoiDiemTao,
-		MaNguoiTao,
-		MaKhoaHoc
+	SELECT *
 		FROM dbo.BaiVietTaiLieu
 		WHERE Ma = @0
 END

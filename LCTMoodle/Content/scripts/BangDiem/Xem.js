@@ -145,7 +145,7 @@ function capNhatDiemDong($dong) {
     })
 
     diem = Math.round((diem / tongHeSo) * 100) / 100;
-    $dong.find('[data-cot="tb"] span').text(diem);
+    $dong.find('[data-cot="tb"] span').text(diem || 0);
 
     //Lấy điểm cộng
     var diem = 0;
@@ -153,7 +153,7 @@ function capNhatDiemDong($dong) {
         diem += parseFloat($(this).data('diem')) || 0;
     })
     
-    $dong.find('[data-cot="cong"] span').text(diem);
+    $dong.find('[data-cot="cong"] span').text(diem || 0);
 }
 
 //#endregion

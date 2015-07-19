@@ -4,9 +4,10 @@
 @{
     var maKhoaHoc = Model.khoaHoc.ma.Value;
     var maNguoiDung = Session["NguoiDung"] as int?;
-    
-    string[] dsQuyen;    
-    bool coQuyenSua, coQuyenXoa, coQuyenQLBaiNop, coQuyenNopBai, coQuyenChamDiem;
+
+    var soLuotXem = Model.danhSachMaThanhVienDaXem.Count(x => x == '|') - 1;
+    string[] dsQuyen;
+    bool coQuyenSua, coQuyenXoa, coQuyenQLBaiNop, coQuyenNopBai, coQuyenChamDiem, chuaXem;
     
     if (maNguoiDung.HasValue)
     {
@@ -23,6 +24,21 @@
         coQuyenXoa = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BT_Xoa");
         coQuyenQLBaiNop = maNguoiDung == Model.nguoiTao.ma || QuyenHelper.co(dsQuyen, "BT_QLBaiNop");
         coQuyenChamDiem = QuyenHelper.co(dsQuyen, "QLBangDiem");
+
+        var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
+        DTOLayer.KhoaHoc_NguoiDungDTO thanhVien;
+        
+        if (ketQua.trangThai != 0)
+        {
+            thanhVien = null;
+            chuaXem = false;            
+        }
+        else
+        {
+            thanhVien = ketQua.ketQua as DTOLayer.KhoaHoc_NguoiDungDTO;
+            chuaXem = thanhVien.trangThai == 0 && Model.danhSachMaThanhVienDaXem.IndexOf("|" + maNguoiDung.Value + "|") == -1;
+        }
+        
         
         //Kiểm tra người dùng có phải là thành viên không để sử dụng chức năng nộp bài
         if (Model.thoiDiemHetHan.HasValue && Model.thoiDiemHetHan.Value < DateTime.Now)
@@ -37,14 +53,12 @@
             }
             else
             {
-                var ketQua = BUSLayer.KhoaHoc_NguoiDungBUS.layTheoMaKhoaHocVaMaNguoiDung(maKhoaHoc, maNguoiDung.Value);
-                if (ketQua.trangThai != 0)
+                if (thanhVien == null)
                 {
                     coQuyenNopBai = false;
                 }
                 else
                 {
-                    var thanhVien = ketQua.ketQua as DTOLayer.KhoaHoc_NguoiDungDTO;
                     coQuyenNopBai = thanhVien.trangThai == 0 && thanhVien.laHocVien;
                 }
             }
@@ -52,7 +66,7 @@
     }
     else 
     {
-        coQuyenSua = coQuyenXoa = coQuyenQLBaiNop = coQuyenNopBai = coQuyenChamDiem = false;
+        chuaXem = coQuyenSua = coQuyenXoa = coQuyenQLBaiNop = coQuyenNopBai = coQuyenChamDiem = false;
         dsQuyen = null;
     }
 }

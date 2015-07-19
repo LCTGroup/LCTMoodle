@@ -78,6 +78,9 @@ namespace DAOLayer
                     case "Diem":
                         baiViet.diem = layInt(dong, i);
                         break;
+                    case "DanhSachMaThanhVienDaXem":
+                        baiViet.danhSachMaThanhVienDaXem = layString(dong, i, "|");
+                        break;
                     default:
                         break;
                 }
@@ -189,6 +192,19 @@ namespace DAOLayer
                         ma,
                         diem
                     }
+                );
+        }
+
+        public static KetQua capNhatTheoMa_Xem(int? ma, int? maNguoiDung)
+        {
+            return khongTruyVan
+                (
+                   "capNhatBaiVietDienDanTheoMa_Xem",
+                   new object[]
+                   {
+                       ma,
+                       maNguoiDung
+                   }
                 );
         }
     }

@@ -10,7 +10,9 @@
     //Khung chưa toàn bộ
     $_KhungChua,
     //Khung chọn hiển thị
-    $_KhungChonHienThi;
+    $_KhungChonHienThi,
+    //Danh sách bài viết chưa đọc
+    $_DSChuaXem;
 
 //#region Khởi tạo
 
@@ -23,13 +25,13 @@ $(function () {
 
     khoiTaoNutHienThi($_KhungChonHienThi.find('[data-chuc-nang="hien-thi"]'));
     khoiTaoQuayLai();
-
+    
     //Khởi tạo nút
     khoiTaoNutDangKy($('[data-chuc-nang="dang-ky"]'));
     khoiTaoNutThamGia($('[data-chuc-nang="tham-gia"]'));
     khoiTaoNutHuyDangKy($('[data-chuc-nang="huy-dang-ky"]'));
     khoiTaoNutRoiKhoaHoc($('[data-chuc-nang="roi-kh"]'));
-    khoiTaoNutXoaKhoaHoc($('[data-chuc-nang="xoa-kh"]'))
+    khoiTaoNutXoaKhoaHoc($('[data-chuc-nang="xoa-kh"]'));
 });
 
 function hienThi(nhom, ma) {
@@ -78,6 +80,32 @@ function khoiTaoNutHienThi($nut) {
         hienThi(nhom, ma);
 
         history.pushState({ hienThi: nhom }, '', '?hienthi=' + nhom + (ma ? '&ma=' + ma : ''));
+    });
+}
+
+function khoiTaoXuLyChuaXem(url) {
+    $(window).off('scroll.chua_xem').on('scroll.chua_xem', function () {
+        var sl = !$_DSChuaXem ? 0 : $_DSChuaXem.length;
+        if (sl > 0) {
+            var scrollTop = $body.scrollTop();
+            var windowHeight = window.innerHeight;
+
+            for (var i = 0; i < sl; i++) {
+                var $item = $($_DSChuaXem[i]);
+                var offsetTop = $item.offset().top;
+                var height = $item.height();
+
+                if (Math.abs((scrollTop + windowHeight) - (offsetTop + height)) < height) {
+                    $_DSChuaXem.splice(i, 1);
+                    
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: { ma: $item.attr('data-ma') }
+                    });
+                }
+            }
+        }
     });
 }
 
@@ -287,6 +315,9 @@ function hienThi_DienDan(ma)   {
 
             khoiTaoForm_DienDan($_KhungHienThi.find('#tao_bai_viet_form'));
             khoiTaoItem_DienDan($_KhungHienThi.find('[data-doi-tuong="muc-bai-viet"]'));
+
+            $_DSChuaXem = $_DanhSach.find('[data-chua-xem]');
+            khoiTaoXuLyChuaXem('/BaiVietDienDan/XuLyCapNhatDaXem');
         }
         else {
             moPopupThongBao(data);

@@ -315,5 +315,10 @@ namespace BUSLayer
 
             return BaiVietDienDanDAO.capNhatTheoMa_Diem(ma, diem);
         }
+
+        public static KetQua capNhatTheoMa_Xem(int ma, int maNguoiDung)
+        {
+            return BaiVietDienDanDAO.capNhatTheoMa_Xem(ma, maNguoiDung);
+        }
     }
 }
