@@ -936,7 +936,8 @@ function khoiTaoNhanTin() {
             }
         });
     });
-    
+}
+
 function coTheNhinThay($item) {
     var topW = $body.scrollTop();
     var heightW = window.innerHeight;
