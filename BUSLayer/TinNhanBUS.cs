@@ -142,6 +142,11 @@ namespace BUSLayer
             return TinNhanDAO.layDanhSachTinNhanTheoMaNguoiDung(maNguoiDung, lienKet);
         }
 
+        public static KetQua laySoLuongTinNhanChuaDocTheoMaNguoiNhan(int maNguoiNhan)
+        {
+            return TinNhanDAO.laySoLuongTinNhanChuaDocTheoMaNguoiNhan(maNguoiNhan);
+        }
+
         #endregion
     }
 }

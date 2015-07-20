@@ -861,7 +861,8 @@ body.dang-tai-lct header .top-header {
             .hop-nguoi-dung ul.da-dang-nhap > li {
                 float: left;
                 padding: 0 5px;
-                height: 100%;                
+                height: 100%;
+                position: relative;
             }
             .hop-nguoi-dung ul.da-dang-nhap > li:last-of-type {
                 padding: 0 5px 0 20px;
@@ -1014,10 +1015,10 @@ body.dang-tai-lct header .top-header {
                         .hop-tin-nhan a:hover {
                             text-decoration: none;
                         }
-                    
+
                         /*#region Chức năng nhắn tin */
 
-                        .hop-tin-nhan .nhan-tin {
+                        .hop-tin-nhan > .khung-bao-tin-nhan .nhan-tin {
                             text-align: center;
                             color: #fcfcfc;
                             background-color: #08c;
@@ -1034,8 +1035,11 @@ body.dang-tai-lct header .top-header {
                         /*#endregion */
 
                         /*#region nội dung tin nhắn */
-
-                        .hop-tin-nhan .khung-tin-nhan {
+                        .hop-tin-nhan > .khung-bao-tin-nhan .khung-tin-nhan {
+                            margin-bottom: 0;
+                            border: 0;
+                        }
+                        .hop-tin-nhan > .khung-bao-tin-nhan .khung-tin-nhan {
                             width: 100%;
                             padding: 10px;
                             border-bottom: 1px solid #eee;
@@ -1044,33 +1048,33 @@ body.dang-tai-lct header .top-header {
                             background-color: #fff;
                             transition: 0.2s;
                         }
-                            .hop-tin-nhan .khung-tin-nhan.chua-doc {
-                                background-color: #efefef;
+                            .hop-tin-nhan > .khung-bao-tin-nhan .khung-tin-nhan.chua-doc {
+                                background-color: #f4f4f4;
                             }    
-                            .hop-tin-nhan .khung-tin-nhan:hover {
+                            .hop-tin-nhan > .khung-bao-tin-nhan .khung-tin-nhan:hover {
                                 background-color: #f1f1f1;
                             }                            
 
-                        .hop-tin-nhan .khung-tin-nhan .hinh-dai-dien {
-                            width: 50px;
-                            height: 50px;
-                            max-height: 50px;
-                            max-width: 50px;
+                        .hop-tin-nhan > .khung-bao-tin-nhan .khung-tin-nhan .hinh-dai-dien {
+                            width: 42px;
+                            height: 42px;
+                            max-height: 42px;
+                            max-width: 42px;
                         }
-                            .hop-tin-nhan .khung-tin-nhan img {
+                            .hop-tin-nhan > .khung-bao-tin-nhan .khung-tin-nhan img {
                                 width: 100%;
                                 height: 100%;
                             }
-                        .hop-tin-nhan .khung-tin-nhan .noi-dung {
+                        .hop-tin-nhan > .khung-bao-tin-nhan .khung-tin-nhan .noi-dung {
                             display: flex;
                             flex-direction: column;
                             width: 100%;
                             margin-left: 10px;
                         }
-                            .hop-tin-nhan .khung-tin-nhan .chi-tiet {
+                            .hop-tin-nhan > .khung-bao-tin-nhan .khung-tin-nhan .chi-tiet {
 
                             }
-                            .hop-tin-nhan .khung-tin-nhan .nguoi-gui {
+                            .hop-tin-nhan > .khung-bao-tin-nhan .khung-tin-nhan .nguoi-gui {
                                 font-size: 11px;
                                 color: #888;
                                 margin-top: 5px;
@@ -1078,7 +1082,26 @@ body.dang-tai-lct header .top-header {
 
                         /*#endregion */
 
+                        /*#region Số lượng tin nhắn */
+
+                        .so-luong .so-luong-tin-nhan {
+                            position: absolute;
+                            display: block;
+                            left: -4px;
+                            bottom: 0px;
+                            background-color: #fff;
+                            width: 15px;
+                            height: 15px;
+                            text-align: center;
+                            border-radius: 50%;
+                            font-size: 10px;
+                        }
+
+                        /*#endregion */
+
                     /*#endregion */
+
+
 
         /*#endregion */        
 
