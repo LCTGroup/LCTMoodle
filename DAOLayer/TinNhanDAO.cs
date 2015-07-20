@@ -134,7 +134,7 @@ namespace DAOLayer
         {
             return layGiaTri<int>
                 (
-                    "capNhatTinNhanTheoMaNguoiNhanVaMaNguoiGui",
+                    "laySoLuongTinNhanChuaDocTheoMaNguoiNhan",
                     new object[]
                     {
                         maNguoiNhan
