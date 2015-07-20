@@ -207,7 +207,7 @@ END
 
 GO
 --Lây mã trả lời theo mã người tạo
-ALTER PROC dbo.layTraLoi_DanhSachMaLienQuan
+CREATE PROC dbo.layTraLoi_DanhSachMaLienQuan
 (
 	@0 INT --Mã người tạo
 )

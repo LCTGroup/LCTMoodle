@@ -105,7 +105,7 @@ END
 
 GO
 --Số lượng tin nhắn chưa đọc
-CREATE PROC dbo.laySoLuongTinNhanChuaDocTheoMaNguoiNhan
+ALTER PROC dbo.laySoLuongTinNhanChuaDocTheoMaNguoiNhan
 (
 	@0 INT --Mã người nhận
 )

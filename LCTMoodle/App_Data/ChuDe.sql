@@ -136,7 +136,7 @@ END
 
 GO
 --Lấy chủ đề theo mã chủ đề
-CREATE PROC dbo.layChuDeTheoMa_KhongDem (
+ALTER PROC dbo.layChuDeTheoMa_KhongDem (
 	@0 INT --Ma
 )
 AS

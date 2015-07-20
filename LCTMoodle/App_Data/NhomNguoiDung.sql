@@ -18,7 +18,7 @@ GO
 --Trigger xóa nhóm người dùng
 --Xóa nhóm người dùng _ người dùng
 --Xóa nhóm người dùng _ quyền
-CREATE TRIGGER dbo.xoaNhomNguoiDung_KH_TRIGGER
+ALTER TRIGGER dbo.xoaNhomNguoiDung_KH_TRIGGER
 ON dbo.NhomNguoiDung_KH
 AFTER DELETE
 AS
@@ -131,7 +131,7 @@ END
 
 GO
 --Xóa theo mã
-CREATE PROC dbo.xoaNhomNguoiDungTheoMa (
+ALTER PROC dbo.xoaNhomNguoiDungTheoMa (
 	@0 NVARCHAR(MAX), --PhamVi
 	@1 INT --Ma
 )

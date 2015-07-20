@@ -13,6 +13,7 @@ CREATE TABLE dbo.HoatDong (
 	DuongDan NVARCHAR(MAX),
 	ThoiDiem DATETIME DEFAULT GETDATE()
 )
+select * from hoatdong
 
 GO
 --Thêm hoạt động
@@ -35,7 +36,7 @@ END
 
 GO
 --Lấy hoạt động theo mã
-CREATE PROC dbo.layHoatDongTheoMa (
+ALTER PROC dbo.layHoatDongTheoMa (
 	@0 INT --Mã 
 )
 AS
@@ -133,5 +134,3 @@ BEGIN
 			ORDER BY ThoiDiem DESC
 	')
 END
-
-exec layHoatDong_CuaDanhSachDoiTuong 'TL',1,1,5

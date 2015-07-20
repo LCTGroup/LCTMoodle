@@ -73,7 +73,7 @@ END
 
 GO
 --Xóa bài viết diễn đàn theo mã
-CREATE PROC dbo.xoaBaiVietDienDanTheoMa (
+ALTER PROC dbo.xoaBaiVietDienDanTheoMa (
 	@0 INT --Ma
 )
 AS
@@ -120,7 +120,7 @@ END
 
 GO
 --Cập nhật ghim bài viết
-CREATE PROC dbo.capNhatBaiVietDienDanTheoMa_Ghim (
+ALTER PROC dbo.capNhatBaiVietDienDanTheoMa_Ghim (
 	@0 INT, --Ma
 	@1 BIT --Ghim
 )
@@ -133,7 +133,7 @@ END
 
 GO
 --Xóa tất cả ghim theo mã khóa học
-CREATE PROC dbo.capNhatBaiVietDienDanTheoMaKhoaHoc_XoaGhim (
+ALTER PROC dbo.capNhatBaiVietDienDanTheoMaKhoaHoc_XoaGhim (
 	@0 INT --MaKhoaHoc
 )
 AS
@@ -145,7 +145,7 @@ END
 
 GO
 --Cập nhật điểm theo mã bài viết
-CREATE PROC dbo.capNhatBaiVietDienDanTheoMa_Diem (
+ALTER PROC dbo.capNhatBaiVietDienDanTheoMa_Diem (
 	@0 INT, --Ma
 	@1 INT --Diem
 )
@@ -180,7 +180,7 @@ END
 
 GO
 --Cập nhật đã xem bài viết
-ALTER PROC dbo.capNhatBaiVietDienDanTheoMa_Xem (
+CREATE PROC dbo.capNhatBaiVietDienDanTheoMa_Xem (
 	@0 INT, --Ma
 	@1 INT --MaNguoiDung
 )

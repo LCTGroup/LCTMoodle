@@ -21,7 +21,7 @@ GO
 --Trigger xóa
 --Xóa tập tin
 --Xóa bài nộp
-CREATE TRIGGER dbo.xoaBaiVietBaiTap_TRIGGER
+ALTER TRIGGER dbo.xoaBaiVietBaiTap_TRIGGER
 ON dbo.BaiVietBaiTap
 AFTER DELETE
 AS
@@ -43,7 +43,7 @@ END
 
 GO
 --Lấy bài tập người dùng cần hoàn thành
-CREATE PROC dbo.layBaiVietBaiTap_NguoiDungCanHoanThanh (
+ALTER PROC dbo.layBaiVietBaiTap_NguoiDungCanHoanThanh (
 	@0 INT --Mã người dùng
 )
 AS
@@ -155,7 +155,7 @@ END
 
 GO
 --Cập nhật đã xem bài viết
-ALTER PROC dbo.capNhatBaiVietBaiTapTheoMa_Xem (
+CREATE PROC dbo.capNhatBaiVietBaiTapTheoMa_Xem (
 	@0 INT, --Ma
 	@1 INT --MaNguoiDung
 )

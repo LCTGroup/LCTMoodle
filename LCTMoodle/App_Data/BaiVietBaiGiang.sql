@@ -65,7 +65,7 @@ END
 
 GO
 --Xóa bài viết bài giảng theo mã
-CREATE PROC dbo.xoaBaiVietBaiGiangTheoMa (
+ALTER PROC dbo.xoaBaiVietBaiGiangTheoMa (
 	@0 INT --Ma
 )
 AS
