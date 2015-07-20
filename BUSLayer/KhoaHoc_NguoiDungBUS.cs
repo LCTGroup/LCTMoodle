@@ -389,7 +389,7 @@ namespace BUSLayer
                 thanhVien = new KhoaHoc_NguoiDungDTO()
                 {
                     nguoiDung = layDTO<NguoiDungDTO>(maNguoiDung),
-                    nguoiThem = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?),
+                    nguoiThem = layDTO<NguoiDungDTO>(System.Web.HttpContext.Current.Session["NguoiDung"] as int?),
                     khoaHoc = layDTO<KhoaHocDTO>(maKhoaHoc),
                     trangThai = 3
                 };
@@ -403,7 +403,7 @@ namespace BUSLayer
 
             //Trường hợp đã có => cập nhật
             thanhVien = ketQua.ketQua as KhoaHoc_NguoiDungDTO;
-            thanhVien.nguoiThem = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?);
+            thanhVien.nguoiThem = layDTO<NguoiDungDTO>(System.Web.HttpContext.Current.Session["NguoiDung"] as int?);
             thanhVien.trangThai = 3;
             return KhoaHoc_NguoiDungDAO.capNhatTheoMaKhoaHocVaMaNguoiDung_TrangThai(thanhVien);
             #endregion

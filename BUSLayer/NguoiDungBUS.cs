@@ -526,7 +526,7 @@ namespace BUSLayer
 
         public static KetQua kiemTraDangNhap()
         {
-            if (Session["NguoiDung"] == null)
+            if (System.Web.HttpContext.Current.Session["NguoiDung"] == null)
             {
                 return new KetQua()
                 {

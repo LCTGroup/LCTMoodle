@@ -31,7 +31,6 @@ $(function () {
     khoiTaoNutThamGia($('[data-chuc-nang="tham-gia"]'));
     khoiTaoNutHuyDangKy($('[data-chuc-nang="huy-dang-ky"]'));
     khoiTaoNutRoiKhoaHoc($('[data-chuc-nang="roi-kh"]'));
-    khoiTaoNutXoaKhoaHoc($('[data-chuc-nang="xoa-kh"]'));
 });
 
 function hienThi(nhom, ma) {
@@ -212,43 +211,6 @@ function khoiTaoNutXacNhanMoi() {
 
 function khoiTaoNutTuChoiMoi() {
 
-}
-
-function khoiTaoNutXoaKhoaHoc($nuts) {
-    $nuts.on('click', function () {
-        moPopup({
-            tieuDe: 'Xác nhận',
-            thongBao: 'Bạn có chắc muốn xóa khóa học này?',
-            bieuTuong: 'hoi',
-            nut: [
-                {
-                    ten: 'Có',
-                    loai: 'nguy-hiem',
-                    xuLy: function () {
-                        var $tai = moBieuTuongTai();
-                        $.ajax({
-                            url: '/KhoaHoc/XuLyXoa/' + maKhoaHoc,
-                            method: 'POST',
-                            dataType: 'JSON'
-                        }).always(function () {
-                            $tai.tat();
-                        }).done(function (data) {
-                            if (data.trangThai == 0) {
-                                location = '/KhoaHoc/DanhSach'
-                            }
-                            else {
-                                moPopupThongBao(data);
-                            }
-                        }).fail(function () {
-                            moPopupThongBao('Xóa khóa học thất bại');
-                        });
-                    }
-                }, {
-                    ten: 'Không'
-                }
-            ]
-        })
-    });
 }
 
 //#endregion

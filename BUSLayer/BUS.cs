@@ -10,14 +10,12 @@ namespace BUSLayer
 {
     public class BUS
     {
-        protected static System.Web.SessionState.HttpSessionState Session = System.Web.HttpContext.Current.Session;
-
         #region Lấy giá trị
         public static bool coQuyen(string giaTri, string phamVi, int maDoiTuong = 0, int? maNguoiDung = null)
         {
             if (!maNguoiDung.HasValue)
             {
-                maNguoiDung = Session["NguoiDung"] as int?;
+                maNguoiDung = System.Web.HttpContext.Current.Session["NguoiDung"] as int?;
             }
 
             if (!maNguoiDung.HasValue)

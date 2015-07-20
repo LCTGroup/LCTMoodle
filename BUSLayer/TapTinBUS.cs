@@ -60,7 +60,7 @@ namespace BUSLayer
                 ten = tapTinLuu.FileName,
                 loai = tapTinLuu.ContentType,
                 duoi = Path.GetExtension(tapTinLuu.FileName),
-                nguoiTao = layDTO<NguoiDungDTO>(Session["NguoiDung"] as int?)
+                nguoiTao = layDTO<NguoiDungDTO>(System.Web.HttpContext.Current.Session["NguoiDung"] as int?)
             };
 
             KetQua ketQua = TapTinDAO.them(tapTin);

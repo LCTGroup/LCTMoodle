@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-select * from nguoiDung
-
-select * from tinNhan
-=======
-<<<<<<< HEAD
-select * from baivietdiendan
-select * from baiviettailieu
-update baivietdiendan set danhsachmathanhviendaxem = '|' where ma = 3
-update baiviettailieu set danhsachmathanhviendaxem = '|2|'
-
-select * from hoatdong where loaidoituongbitacdong
-=======
->>>>>>> 6e9ca4df64c6a1b9f8bc0cc218c7be6bc55f2465
->>>>>>> aaddac56795521552b333568e6c4b62f0352ee62
+select * from nguoidung where ma = 322
+select * from cauhoi 
+delete from traloi where manguoitao = 322
+select * from traloi where manguoitao = 322
+delete from 
+select * from binhluanbaivietdiendan where manguoitao = 322
+select * from nguoidung where tentaikhoan = '306121265'

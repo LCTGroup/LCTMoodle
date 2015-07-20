@@ -86,7 +86,7 @@ BEGIN
 	--Xóa hình đại diện
 	DELETE TT
 		FROM
-			dbo.TapTin_KhoaHoc_HinhDiaDien TT
+			dbo.TapTin_KhoaHoc_HinhDaiDien TT
 				INNER JOIN deleted d ON
 					TT.Ma = d.MaHinhDaiDien
 END

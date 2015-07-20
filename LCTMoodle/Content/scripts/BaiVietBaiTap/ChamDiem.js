@@ -43,6 +43,8 @@ $(function () {
     khoiTaoNutChonHet_Checkbox($_khungChamDiem.find('[data-chuc-nang="chon-het"]'));
     khoiTaoNutXoa_Nhieu($_khungChamDiem.find('[data-chuc-nang="xoa-nhieu"]'))
     khoiTaoNutTai_Nhieu($_khungChamDiem.find('[data-chuc-nang="tai-nhieu"]'))
+
+    khoiTaoNutMoPopupTapTin($items.find('[data-chuc-nang="mo-popup-tap-tin"]'));
 });
 
 //#region Khởi tạo nút

@@ -104,7 +104,7 @@ function khoiTaoDangKy($form) {
                     var $giaTriNgaySinh = $ngaySinh.split('/');
                     var $namHienTai = new Date().getFullYear();
                    
-                    if ($namHienTai - $giaTriNgaySinh[2] >= 13)
+                    if (($namHienTai - $giaTriNgaySinh[2] >= 13) || $('#ngay_sinh').val() == '')
                     {
                         return true;
                     }

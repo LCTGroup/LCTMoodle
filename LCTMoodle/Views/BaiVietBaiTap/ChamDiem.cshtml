@@ -26,7 +26,7 @@
     chucNang.Add("Danh sách thành viên");
     chucNang.Add("href='/KhoaHoc/ThanhVien/" + khoaHoc.ma.Value + "'");
 
-    var maNguoiDung = Session["NguoiDung"] as int?;
+    var maNguoiDung =System.Web.HttpContext.Current.Session["NguoiDung"] as int?;
     string[] dsQuyen;
 
     if (maNguoiDung.HasValue)
