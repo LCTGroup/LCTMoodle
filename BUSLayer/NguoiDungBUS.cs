@@ -200,7 +200,7 @@ namespace BUSLayer
                 return ketQua;
             }
 
-            string duongDanKichHoat = @"http://lctmoodle.somee.com/NguoiDung/KichHoat?tenTaiKhoan=" + form.layString("TenTaiKhoan");
+            string duongDanKichHoat = @"http://moodle.lctgroup.org/NguoiDung/KichHoat?tenTaiKhoan=" + form.layString("TenTaiKhoan");
             string mailDangKy = form.layString("Email");
             string tieuDe = "Kích hoạt tài khoản LCTMoodle";
             string noiDung = "Mã kích hoạt tài khoản của bạn là: <b>" + maKichHoat +

@@ -1087,8 +1087,8 @@ body.dang-tai-lct header .top-header {
                         .so-luong .so-luong-tin-nhan {
                             position: absolute;
                             display: block;
-                            left: -4px;
-                            bottom: 0px;
+                            right: -1px;
+                            top: 2px;
                             background-color: #fff;
                             width: 15px;
                             height: 15px;
