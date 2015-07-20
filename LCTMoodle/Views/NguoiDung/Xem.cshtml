@@ -97,10 +97,6 @@
             <div class="noi-dung" data-change="TenDangNhap">@Model.tenTaiKhoan</div>
         </div>
         <div class="dong-noi-dung">
-            <div class="tieu-de">Mật khẩu</div>
-            <div class="noi-dung" data-change="MatKhau">**********</div>
-        </div>
-        <div class="dong-noi-dung">
             <div class="tieu-de">Email</div>
             <div class="noi-dung" data-change="Email">@Model.email</div>
         </div>
@@ -166,7 +162,7 @@
                                                 }
                                             }
                                         </section>
-                                        <section style="width: @((DateTime.Now - baiTap.thoiDiemTao.Value).Ticks * 100 / (baiTap.thoiDiemHetHan.Value - baiTap.thoiDiemTao.Value).Ticks)%" class="thoi-gian-da-qua"></section>
+                                        <section style="width: @((DateTime.Now - baiTap.thoiDiemTao.Value).TotalMilliseconds * 100 / (baiTap.thoiDiemHetHan.Value - baiTap.thoiDiemTao.Value).TotalMilliseconds)%" class="thoi-gian-da-qua"></section>
                                     </section>
                                 </section>
                             </li>
