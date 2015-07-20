@@ -457,7 +457,12 @@ namespace LCTMoodle.WebServices
             return ketQua.trangThai;
         }
 
-
+        /// <summary>
+        /// Webservice tham gia khoas học
+        /// </summary>
+        /// <param name="maNguoiDung"></param>
+        /// <param name="maKhoaHoc"></param>
+        /// <returns></returns>
         public clientmodel_ThongBao thamGiaKhoaHoc(int maNguoiDung, int maKhoaHoc)
         {
             KetQua ketQua = KhoaHoc_NguoiDungBUS.dangKyThamGia(maKhoaHoc, maNguoiDung);
@@ -469,6 +474,29 @@ namespace LCTMoodle.WebServices
                 cm_ThongBao.thongBao = ketQua.ketQua as string;
             }
 
+            return cm_ThongBao;
+        }
+
+        /// <summary>
+        /// Webservice rời khóa học
+        /// </summary>
+        /// <param name="maNguoiDung"></param>
+        /// <param name="maKhoaHoc"></param>
+        /// <returns>clientmodel_ThongBao</returns>
+        public clientmodel_ThongBao roiKhoaHoc(int maNguoiDung, int maKhoaHoc)
+        {
+            KetQua ketQua = KhoaHoc_NguoiDungBUS.roiKhoaHoc(maKhoaHoc, maNguoiDung);
+            clientmodel_ThongBao cm_ThongBao = new clientmodel_ThongBao();
+            cm_ThongBao.trangThai = ketQua.trangThai;
+
+            if(ketQua.trangThai == 0)
+            {
+                cm_ThongBao.thongBao = "Bạn đã rời khỏi khóa học";
+            }
+            else
+            {
+                cm_ThongBao.thongBao = ketQua.ketQua as string;
+            }
             return cm_ThongBao;
         }
     }

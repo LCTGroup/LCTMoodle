@@ -19,12 +19,8 @@
         padding-left: 10px;
         padding-right: 10px;
         position: relative;
+        text-align: center;
     }
-
-        .khung-xac-nhan tbody td:nth-child(1) span {
-            font-family: Berlin;
-            font-size: 16px;
-        }
     
         .khung-xac-nhan tbody tr[data-thiet-lap="tk"] td,
         .khung-xac-nhan tbody tr[data-thiet-lap="e"] td,
